@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'package:model/sensor_model.dart';
 
 import '../engine_library.dart';
 import 'device_summary_model.dart';

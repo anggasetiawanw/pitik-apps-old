@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "750861342043",
+    "project_id": "pitik-eksternal-app-staging",
+    "storage_bucket": "pitik-eksternal-app-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750861342043:android:2fa037571eb4088842367e",
+        "android_client_info": {
+          "package_name": "id.pitik.mobile.pitikconnect.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750861342043-ei8fom19q8t91knkr359rc8i8mjgj99k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.pitikconnect.staging",
+            "certificate_hash": "e3351312dc98eb7613e97b7dd906ad4e95b560a9"
+          }
+        },
+        {
+          "client_id": "750861342043-q54hurdvibbk4v4fqgms0e4lj5d89ov2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXP-d7l4q49AwhPZBSsHHI1CgAME1CrYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750861342043-q54hurdvibbk4v4fqgms0e4lj5d89ov2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

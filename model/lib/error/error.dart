@@ -1,5 +1,6 @@
 
 import '../engine_library.dart';
+export 'package:engine/model/base_model.dart';
 import 'error_detail.dart';
 
 /**

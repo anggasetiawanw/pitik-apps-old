@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "994202772938",
+    "project_id": "pitik-connect",
+    "storage_bucket": "pitik-connect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994202772938:android:0104344ac631916f6adb33",
+        "android_client_info": {
+          "package_name": "id.pitik.mobile.pitikconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994202772938-1cag5vqmmur9li1dupal505ksmikime4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDutdG1NoE5ZUVVGDRKy2d9zua01dCT9eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994202772938-1cag5vqmmur9li1dupal505ksmikime4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,21 +15,12 @@ import 'base_entity.dart';
  *@create date 31/07/23
  */
 
-class DBLiteSetting {
-    List<dynamic> getTables() {
-        throw Exception('DBLiteSetting not set, please set call DBLite({required this.dbLiteSetting}); before...!');
-    }
-
-    int getVersion() {
-        throw Exception('DBLiteSetting not set, please set call DBLite({required this.dbLiteSetting}); before...!');
-    }
-}
-
 class DBLite {
     static Database? _database;
-    DBLiteSetting dbLiteSetting;
+    List<dynamic> tables;
+    int version;
 
-    DBLite({required this.dbLiteSetting});
+    DBLite({required this.tables, required this.version});
 
     /// This is a getter function that returns a database object.
     Future<Database> get create async {
@@ -37,7 +28,7 @@ class DBLite {
             return _database!;
         }
         // if _database is null we instantiate it
-        _database = await _createTables(dbLiteSetting.getTables());
+        _database = await _createTables(tables);
         return _database!;
     }
 
@@ -53,9 +44,9 @@ class DBLite {
     ///   A Future<Database>
     _createTables(List<dynamic> persistanceClassList) async {
         Directory documentsDirectory = await getApplicationDocumentsDirectory();
-        String path = '${documentsDirectory.path}/pitik${dbLiteSetting.getVersion()}.db';
+        String path = '${documentsDirectory.path}/pitik$version.db';
 
-        return await openDatabase(path, version: dbLiteSetting.getVersion(), onOpen: (db) {
+        return await openDatabase(path, version: version, onOpen: (db) {
         }, onCreate: (Database db, int version) async {
 
             for (dynamic table in persistanceClassList) {
