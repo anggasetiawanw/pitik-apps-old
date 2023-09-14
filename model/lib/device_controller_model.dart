@@ -1,10 +1,12 @@
+// ignore_for_file: slash_for_doc_comments
+
 import '../engine_library.dart';
 import 'controller_data_model.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 @SetupModel
@@ -31,11 +33,9 @@ class DeviceController{
     @IsChild()
     ControllerData? resetTime;
 
-    DeviceController({this.growthDay, this.fan,this.heater, this.cooler, this.lamp, this.alarm,
-        this.resetTime});
+    DeviceController({this.growthDay, this.fan,this.heater, this.cooler, this.lamp, this.alarm, this.resetTime});
 
     static DeviceController toResponseModel(Map<String, dynamic> map) {
-
         return DeviceController(
             growthDay: Mapper.child<ControllerData>(map['growthDay']),
             fan: Mapper.child<ControllerData>(map['fan']),

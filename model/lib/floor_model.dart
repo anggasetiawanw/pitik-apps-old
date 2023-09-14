@@ -1,7 +1,9 @@
+// ignore_for_file: slash_for_doc_comments
+
 /**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 13/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class Floor{
@@ -11,7 +13,7 @@ class Floor{
     String? floorName;
     String? status;
 
-    Floor({this.id, this.buildingName, this.floorName,this.status});
+    Floor({this.id, this.buildingName, this.floorName, this.status});
 
     static Floor toResponseModel(Map<String, dynamic> map) {
         return Floor(

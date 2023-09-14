@@ -1,12 +1,14 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:model/sensor_model.dart';
 
 import '../engine_library.dart';
 import 'device_summary_model.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 @SetupModel
@@ -28,13 +30,13 @@ class Device{
     @IsChild()
     DeviceSummary? deviceSummary;
 
-    Device({this.id, this.deviceName,this.deviceType, this.sensors = const [], this.coopId, this.roomId,
-        this.status, this.mac, this.deviceId, this.deviceSummary, this.sensorCount});
+    Device({this.id, this.deviceName,this.deviceType, this.sensors = const [], this.coopId, this.roomId, this.status, this.mac, this.deviceId, this.deviceSummary, this.sensorCount});
 
     static Device toResponseModel(Map<String, dynamic> map) {
         if(map['status'] is bool) {
             map['status'] = map['status'].toString();
         }
+
         return Device(
             id: map['id'],
             deviceName: map['deviceName'],

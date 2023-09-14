@@ -1,11 +1,13 @@
+// ignore_for_file: slash_for_doc_comments
+
 import '../engine_library.dart';
 import 'coop_model.dart';
 import 'device_model.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 @SetupModel
@@ -26,8 +28,7 @@ class Room{
     @IsChild()
     Coop? building;
 
-    Room({this.id, this.name, this.status, this.level, this.devices= const[], this.roomCode,
-    this.roomType, this.building});
+    Room({this.id, this.name, this.status, this.level, this.devices= const[], this.roomCode, this.roomType, this.building});
 
     static Room toResponseModel(Map<String, dynamic> map) {
         return Room(

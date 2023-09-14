@@ -1,9 +1,11 @@
+// ignore_for_file: slash_for_doc_comments
+
 import '../engine_library.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 @SetupModel
@@ -35,12 +37,9 @@ class DeviceSetting{
     double? coldAlarm;
     double? hotAlarm;
 
-    DeviceSetting({this.id,this.deviceId, this.fanName, this.temperatureTarget,
-        this.periodic, this.intermitten, this.status, this.errors, this.coopId, this.timeOffFan, this.timeOnFan,
-        this.onlineDuration, this.offlineDuration, this.coolingPadTemperature,
-        this.timeOnCoolingPad, this.timeOffCoolingPad,
-        this.error, this.isOnline, this.offlineTime, this.onlineTime, this.name,
-        this.timeOnLight, this.timeOffLight, this.coldAlarm, this.hotAlarm});
+    DeviceSetting({this.id,this.deviceId, this.fanName, this.temperatureTarget, this.periodic, this.intermitten, this.status, this.errors, this.coopId, this.timeOffFan, this.timeOnFan,
+                   this.onlineDuration, this.offlineDuration, this.coolingPadTemperature, this.timeOnCoolingPad, this.timeOffCoolingPad, this.error, this.isOnline, this.offlineTime,
+                   this.onlineTime, this.name, this.timeOnLight, this.timeOffLight, this.coldAlarm, this.hotAlarm});
 
     static DeviceSetting toResponseModel(Map<String, dynamic> map) {
         if(map['temperatureTarget'] is int) {
