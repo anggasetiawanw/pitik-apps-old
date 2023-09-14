@@ -1,12 +1,14 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../ui/network_service/network_service_activity.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class NetworkStatusService extends GetxService {

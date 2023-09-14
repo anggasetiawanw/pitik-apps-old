@@ -1,9 +1,4 @@
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 31/07/23
- */
-
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'dart:convert';
 
@@ -14,6 +9,12 @@ import '../mirror_feature.dart';
 import 'annotation/is_child.dart';
 import 'annotation/is_children.dart';
 import 'annotation/to_snake_case_key.dart';
+
+/**
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
+ */
 
 class Mapper {
     /// It takes a Dart object and returns a JSON string
@@ -134,9 +135,9 @@ class Mapper {
     static T? child<T>(dynamic data) {
         if (data != null) {
             if (data is Map) {
-                if(data.length < 1){
+                if (data.isEmpty) {
                     return null;
-                }else{
+                } else {
                     ClassMirror classMirror = SetupModel.reflectType(T) as ClassMirror;
                     return classMirror.invoke("toResponseModel", [data]) as T;
                 }
@@ -165,7 +166,6 @@ class Mapper {
         if (data != null) {
             if (data is List) {
                 for (var value in data) {
-
                     if (value is String) {
                         result.add(value.toString() as T);
                     } else if (value is int || value is double || value is bool) {
@@ -179,10 +179,10 @@ class Mapper {
                 List<Map<String, dynamic>> listMap = jsonDecode(data);
 
                 for (var value in listMap) {
-                    if(value != null && value.length > 0){
+                    if (value.isNotEmpty) {
                         ClassMirror classMirror = SetupModel.reflectType(T) as ClassMirror;
                         result.add(classMirror.invoke("toResponseModel", [value]) as T);
-                    }else{
+                    } else {
                         result.add(null);
                     }
                 }

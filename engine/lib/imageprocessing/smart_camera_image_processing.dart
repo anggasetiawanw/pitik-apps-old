@@ -1,4 +1,6 @@
 
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print
+
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -7,7 +9,9 @@ import 'package:image/image.dart' as ui;
 import 'package:permission_handler/permission_handler.dart';
 
 /**
- * @author DICKY <dicky.maulana@pitik.id>
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class SmartCameraImageProcessing {
@@ -76,16 +80,16 @@ class SmartCameraImageProcessing {
         ui.drawString(originalImage, cameraName!, font: ui.arial48, x: 30, y: originalImage.height - 230);
 
         // Coop Name
-        ui.drawString(originalImage, 'Kandang : ${coop == null ? 'N/A' : coop}', font: ui.arial24, x: 30, y: originalImage.height - 176);
+        ui.drawString(originalImage, 'Kandang : ${coop ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 176);
 
         // Floor Name
-        ui.drawString(originalImage, 'Lantai : ${floor == null ? 'N/A' : floor}', font: ui.arial24, x: 30, y: originalImage.height - 150);
+        ui.drawString(originalImage, 'Lantai : ${floor ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 150);
 
         // Camera Position
-        ui.drawString(originalImage, 'Posisi Kamera : ${cameraPosition == null ? 'N/A' : cameraPosition}', font: ui.arial24, x: 30, y: originalImage.height - 124);
+        ui.drawString(originalImage, 'Posisi Kamera : ${cameraPosition ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 124);
 
         // Time Take
-        ui.drawString(originalImage, 'Jam Ambil Gambar : ${timeTake == null ? 'N/A' : timeTake}', font: ui.arial24, x: 30, y: originalImage.height - 98);
+        ui.drawString(originalImage, 'Jam Ambil Gambar : ${timeTake ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 98);
 
         // Temperature
         ui.drawString(originalImage, 'Suhu : ${temperature == null ? 'N/A' : '$temperature °C'}', font: ui.arial24, x: 30, y: originalImage.height - 72);

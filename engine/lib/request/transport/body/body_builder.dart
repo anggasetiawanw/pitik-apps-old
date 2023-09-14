@@ -1,11 +1,12 @@
-import 'dart:convert';
+// ignore_for_file: slash_for_doc_comments, constant_identifier_names
 
+import 'dart:convert';
 import 'package:engine/request/transport/body/xml.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class BodyBuilder {
@@ -22,6 +23,10 @@ class BodyBuilder {
 
     BodyBuilder(int mediaType) {
         _mediaType = mediaType;
+    }
+
+    String getMediaType() {
+        return _mediaType == 0 ? "FORM_ENCODED" : _mediaType == 1 ? "JSON" : _mediaType == 2 ? "MULTIPART" : _mediaType == 3 ? "XML" : "PLAIN";
     }
 
     /// `addForText` is a function that takes in a `key` and a `value` and adds them
@@ -163,10 +168,10 @@ class BodyBuilder {
 
             _bodyFormAndPlain += "<$key>";
             if (value is XmlBody) {
-              XmlBody innerXml = value;
-              toXml(innerXml);
+                XmlBody innerXml = value;
+                toXml(innerXml);
             } else {
-              _bodyFormAndPlain += value;
+                _bodyFormAndPlain += value;
             }
 
             _bodyFormAndPlain += "</$key>";

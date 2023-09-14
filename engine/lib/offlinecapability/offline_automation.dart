@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print
+
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
@@ -10,9 +11,9 @@ import '../util/scheduler.dart';
 import 'offline.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class OfflineAutomation {
@@ -84,7 +85,7 @@ class OfflineAutomation {
                                             onResponseDone: (code, message, body, id, packet) async {
                                                 int? updateStatus = await _updateFlag(key, record.idOffline!);
                                                 if (updateStatus != null && updateStatus > 0) {
-                                                    _deleteByExpiredDateAndFlag(await _getRecord(key, record.idOffline!), key);
+                                                    _deleteByExpiredDateAndFlag(_getRecord(key, record.idOffline!), key);
                                                 }
                                             },
                                             onResponseFail: (code, message, body, id, packet) {},
@@ -96,7 +97,6 @@ class OfflineAutomation {
                                 }
                             }
                         }
-                        ;
                     });
 
                     return true;

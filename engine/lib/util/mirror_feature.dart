@@ -1,8 +1,12 @@
-/*
-  @author AKBAR <akbar.attijani@gmail.com>
- */
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:reflectable/reflectable.dart';
+
+/**
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
+ */
 
 class MirrorFeature {
 

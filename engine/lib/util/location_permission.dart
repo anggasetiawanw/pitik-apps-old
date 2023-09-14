@@ -1,6 +1,14 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+/**
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
+ */
 
 Future<bool> handleLocationPermission() async {
 
@@ -10,7 +18,7 @@ Future<bool> handleLocationPermission() async {
             "Alert",
             "Enable Location, Please",
             snackPosition: SnackPosition.TOP,
-            duration: Duration(seconds: 5),
+            duration: const Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.red,
         );
@@ -24,7 +32,7 @@ Future<bool> handleLocationPermission() async {
             "Alert",
             "Enable Location, Please!",
             snackPosition: SnackPosition.TOP,
-            duration: Duration(seconds: 5),
+            duration: const Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.red,
         );
@@ -32,13 +40,12 @@ Future<bool> handleLocationPermission() async {
     } else if (locationPermission == LocationPermission.denied) {
       // Ask the user for location permission.
       locationPermission = await FlLocation.requestLocationPermission();
-      if (locationPermission == LocationPermission.denied ||
-          locationPermission == LocationPermission.deniedForever){
+      if (locationPermission == LocationPermission.denied || locationPermission == LocationPermission.deniedForever) {
             Get.snackbar(
                 "Alert",
                 "Enable Location, Please!",
                 snackPosition: SnackPosition.TOP,
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
                 );

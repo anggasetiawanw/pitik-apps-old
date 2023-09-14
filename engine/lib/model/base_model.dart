@@ -1,10 +1,12 @@
+// ignore_for_file: slash_for_doc_comments, constant_identifier_names, depend_on_referenced_packages
+
 import 'package:reflectable/reflectable.dart';
 import 'package:flutter/cupertino.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 const SetupModel = BaseModel();

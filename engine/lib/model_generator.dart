@@ -1,12 +1,16 @@
-/*
-  @author DICKY <dicky.maulana@pitik.id>
- */
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
+
+/**
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
+ */
 
 class ModelGenerator {
 
@@ -21,9 +25,9 @@ class ModelGenerator {
     }
 
     void _generateArray(String fileName, List<dynamic> json, bool isResponseDirectory) {
-        json.forEach((element) {
+        for (var element in json) {
             _generateObject(fileName, element, isResponseDirectory);
-        });
+        }
     }
 
     void _generateObject(String classParentName, Map json, bool isResponseDirectory) async {

@@ -1,4 +1,6 @@
 
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, constant_identifier_names, avoid_print
+
 import 'dart:async';
 import 'dart:io';
 
@@ -9,14 +11,16 @@ import 'interface/schedule_listener.dart';
 import 'scheduler.dart';
 
 /**
- * @author DICKY <dicky.maulana@pitik.id>
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class BluetoothLeService {
 
     bool _useTimeout = false;
     int _secondTimeoutTime = 5;
-    Scheduler _scheduler = Scheduler();
+    final Scheduler _scheduler = Scheduler();
 
     final _flutterReactiveBle = FlutterReactiveBle();
     late StreamSubscription _listener;
@@ -166,12 +170,12 @@ class BluetoothLeService {
     String _generateHex(List<int> bytes) {
         List hexChars = [];
         hexChars.length = bytes.length * 2;
-        List<String> HEX_ARRAY = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+        List<String> hexArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 
         for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
-            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
 
         return hexChars.join();

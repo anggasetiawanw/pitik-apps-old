@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
@@ -24,9 +26,9 @@ import 'transport/interface/service_body.dart';
 import 'transport/transporter.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class Service {
@@ -152,7 +154,7 @@ class Service {
                                     throw Exception("Body is empty. For method POST and PUT must be have Body (@Parameter and @Path)");
                                 }
                             } else {
-                                if (body.length < 1) {
+                                if (body.isEmpty) {
                                     throw Exception("Body is empty. For method POST and PUT must be have Body");
                                 }
                             }
@@ -321,7 +323,7 @@ class ServicePeripheral {
     }
 
     void push(BuildContext context, List<dynamic> body, ResponseListener listener) {
-        Transporter transporter = new Transporter()
+        Transporter transporter = Transporter()
             .id(-1)
             .context(context)
             .listener(listener)

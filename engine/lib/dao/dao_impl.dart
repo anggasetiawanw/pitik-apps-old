@@ -1,4 +1,4 @@
-// ignore_for_file: null_check_always_fails, prefer_typing_uninitialized_variables
+// ignore_for_file: null_check_always_fails, prefer_typing_uninitialized_variables, slash_for_doc_comments, avoid_print, depend_on_referenced_packages
 
 import 'package:reflectable/reflectable.dart';
 
@@ -11,11 +11,10 @@ import 'dao_interface.dart';
 import 'db_lite.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
-
 
 abstract class DaoImpl<T> implements DaoInterface {
     String? tableName;
@@ -56,7 +55,6 @@ abstract class DaoImpl<T> implements DaoInterface {
                 }
             }
         } on Exception catch(e, stacktrace) {
-            // ignore: avoid_print
             print(stacktrace);
         }
     }
@@ -188,7 +186,6 @@ abstract class DaoImpl<T> implements DaoInterface {
             }
 
             if (selectResult != null && selectResult.isNotEmpty) {
-                // ignore: avoid_print
                 print("save() on Select -> $select => Exists");
 
                 String update = "UPDATE $tableName SET ";
@@ -201,13 +198,11 @@ abstract class DaoImpl<T> implements DaoInterface {
                 update = update.substring(0, update.length - 1);
                 update += " WHERE $primaryKey = '${column[primaryKey].toString()}'";
 
-                // ignore: avoid_print
                 print('save() on Update -> $update (Parameter = ${column[primaryKey].toString()})');
                 var updateResult = await db.rawUpdate(update);
                 return updateResult;
 
             } else {
-                // ignore: avoid_print
                 print("save() on Select -> $select => Dont Exists");
 
                 String insert = "INSERT INTO $tableName (";
@@ -232,14 +227,12 @@ abstract class DaoImpl<T> implements DaoInterface {
                 values += ")";
                 insert += ") $values";
 
-                // ignore: avoid_print
                 print('save() on Insert -> $insert');
                 var insertResult = await db.rawInsert(insert);
 
                 return insertResult;
             }
         } on Exception catch(e, stacktrace) {
-            // ignore: avoid_print
             print(stacktrace);
         }
 
@@ -319,7 +312,6 @@ abstract class DaoImpl<T> implements DaoInterface {
                 return null;
             }
         } on Exception catch(e, stacktrace) {
-            // ignore: avoid_print
             print(stacktrace);
         }
 
@@ -405,7 +397,6 @@ abstract class DaoImpl<T> implements DaoInterface {
                 return null!;
             }
         } on Exception catch(e, stacktrace) {
-            // ignore: avoid_print
             print(stacktrace);
         }
 

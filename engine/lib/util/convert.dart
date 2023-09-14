@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -5,9 +7,9 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class Convert {
@@ -42,7 +44,7 @@ class Convert {
 
         // final oCcy = new NumberFormat("#.##0,00");
         // String converted = oCcy.format(double.parse(currency));
-        return "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(double.parse(currency))}";
+        return NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(double.parse(currency));
     }
 
     /// It takes a currency value, a currency symbol, a grouping separator, and a
@@ -99,8 +101,8 @@ class Convert {
     /// Returns:
     ///   a randomly generated string of the specified length.
     String getRandomString(int length) {
-        Random _rnd = Random();
-        return String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+        Random rnd = Random();
+        return String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(rnd.nextInt(_chars.length))));
     }
 
     /// The function `getLocalTime` takes a string representation of a date and

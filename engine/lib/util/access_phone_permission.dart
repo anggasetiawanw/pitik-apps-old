@@ -1,15 +1,15 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 24/08/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
-
-
 
 Future<bool> handlePermissionPhoneAccess() async {
 
@@ -28,7 +28,7 @@ Future<bool> handlePermissionPhoneAccess() async {
             "Alert",
             "Enable Phone Access Please",
             snackPosition: SnackPosition.TOP,
-            duration: Duration(seconds: 5),
+            duration: const Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.red,
         );

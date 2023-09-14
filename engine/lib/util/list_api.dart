@@ -1,7 +1,9 @@
+// ignore_for_file: slash_for_doc_comments
+
 /**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ListApi {
@@ -39,7 +41,7 @@ class ListApi {
     }
 
     static String pathDetailRoom(String coopId, String roomId){
-        return "v2/b2b/farm-infrastructure/coops/${coopId}/rooms/${roomId}";
+        return "v2/b2b/farm-infrastructure/coops/$coopId/rooms/$roomId";
     }
 
     static String pathListCoops(){
@@ -47,59 +49,59 @@ class ListApi {
     }
 
     static String pathDetailCoop(String coopId){
-        return "v2/b2b/farm-infrastructure/coops/${coopId}";
+        return "v2/b2b/farm-infrastructure/coops/$coopId";
     }
 
     static String pathModifyInfrastructure(String coopId){
-        return "v2/b2b/farm-infrastructure/coops/${coopId}";
+        return "v2/b2b/farm-infrastructure/coops/$coopId";
     }
 
     static String pathDetailSmartMonitoring(String deviceId){
-        return "v2/b2b/iot-devices/smart-monitoring/${deviceId}";
+        return "v2/b2b/iot-devices/smart-monitoring/$deviceId";
     }
 
     static String pathLatestCondition(String deviceId){
-        return "v2/b2b/iot-devices/smart-monitoring/${deviceId}/latest-conditions";
+        return "v2/b2b/iot-devices/smart-monitoring/$deviceId/latest-conditions";
     }
 
     static String pathModifyDevice(String deviceType, String deviceId, String action){
-        return "v2/b2b/iot-devices/${deviceType}/${deviceId}/${action}";
+        return "v2/b2b/iot-devices/$deviceType/$deviceId/$action";
     }
 
     static String pathHistoricalData(String deviceId){
-        return "v2/b2b/iot-devices/smart-monitoring/${deviceId}/historical";
+        return "v2/b2b/iot-devices/smart-monitoring/$deviceId/historical";
     }
 
     static String pathRegisterDevice(String deviceType){
-        return "v2/b2b/iot-devices/${deviceType}/register";
+        return "v2/b2b/iot-devices/$deviceType/register";
     }
 
     static String pathCameraImages(String coopId, String cameraId){
-        return "v2/b2b/iot-devices/smart-camera/${coopId}/records/${cameraId}";
+        return "v2/b2b/iot-devices/smart-camera/$coopId/records/$cameraId";
     }
 
     static String pathListCamera(String coopId){
-        return "v2/b2b/iot-devices/smart-camera/${coopId}/records";
+        return "v2/b2b/iot-devices/smart-camera/$coopId/records";
     }
 
     static String pathTakeImage(String coopId){
-        return "v2/b2b/iot-devices/smart-camera/jobs/${coopId}";
+        return "v2/b2b/iot-devices/smart-camera/jobs/$coopId";
     }
 
     static String pathdetailSmartController(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/summary?coopId=${coopCodeId}&deviceId=${deviceId}";
+        return "v2/b2b/iot-devices/smart-controller/coop/summary?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
     static String pathdetailGrowthDay(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/growth-day?coopId=${coopCodeId}&deviceId=${deviceId}";
+        return "v2/b2b/iot-devices/smart-controller/coop/growth-day?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
     static String pathDeviceData(String device, String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/${device}?coopId=${coopCodeId}&deviceId=${deviceId}";
+        return "v2/b2b/iot-devices/smart-controller/coop/$device?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
     static String pathSetController(String device, String coopCodeId){
-        return "v2/b2b/iot-devices/smart-controller/coop/${device}/${coopCodeId}";
+        return "v2/b2b/iot-devices/smart-controller/coop/$device/$coopCodeId";
     }
 
     static String pathSmartScaleForDetailAndUpdate(String weighingId) {

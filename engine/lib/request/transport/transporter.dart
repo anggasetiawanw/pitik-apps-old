@@ -1,11 +1,12 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_logging.log, invalid_return_type_for_catch_error
+// ignore_for_file: unnecessary_null_comparison, avoid_logging.log, invalid_return_type_for_catch_error, slash_for_doc_comments, depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:developer' as logging;
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' show Client, Response;
+import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
@@ -16,11 +17,12 @@ import '../../model/string_model.dart';
 import '../../util/mapper/mapper.dart';
 import './body/body_builder.dart';
 import './interface/response_listener.dart';
+import 'transporter_response.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.id>
- *@create date 31/07/23
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class Transporter {
@@ -40,6 +42,8 @@ class Transporter {
 
     dynamic persistanceClass;
     dynamic persistanceClassError;
+
+    String log = "";
 
     /// It sets the context of the transporter to the build context of the widget.
     ///
@@ -238,7 +242,7 @@ class Transporter {
             throw Exception('Context Null Pointer');
         }
 
-        if (persistanceClass != null) {
+        if (persistanceClass != null && persistanceClass != String) {
             bool persistanceAs = false;
             var classMirrorPersistanceAs = SetupModel.reflectType(persistanceClass) as ClassMirror;
 
@@ -248,10 +252,10 @@ class Transporter {
                 }
             }
 
-            if (!persistanceAs) throw Exception('Persistance Class (As) not contains function static => toModel. Please add to function static "toModel"');
+            if (!persistanceAs) throw Exception('Persistance Class (As) not contains function static => toResponseModel. Please add to function static "toResponseModel"');
         }
 
-        if (persistanceClassError != null) {
+        if (persistanceClassError != null && persistanceClass != String) {
             bool persistanceError = false;
             var classMirrorPersistanceError = SetupModel.reflectType(persistanceClassError) as ClassMirror;
 
@@ -261,7 +265,7 @@ class Transporter {
                 }
             }
 
-            if (!persistanceError) throw Exception('Persistance Class (Error) not contains function static => toModel. Please add to function static "toModel"');
+            if (!persistanceError) throw Exception('Persistance Class (Error) not contains function static => toResponseModel. Please add to function static "toResponseModel"');
         }
     }
 
@@ -269,76 +273,54 @@ class Transporter {
     void execute() async {
         validate();
 
-        processing().then((response) {
-            try {
-                if (response.statusCode >= 200 && response.statusCode < 300) {
-                    if (persistanceClass != null) {
-                        if (persistanceClass == StringModel) {
-                            StringModel stringModel = StringModel();
-                            stringModel.data = response.body as String;
+        processing().then((transporterResponse) {
+            _postLog(transporterResponse);
 
-                            String reasonPhrase = "";
-                            if (response.reasonPhrase != null) {
-                                reasonPhrase = response.reasonPhrase;
-                            }
-
-                            transportListener.onResponseDone(response.statusCode, reasonPhrase, stringModel, code, arrPacket);
-                        } else {
-                            persistanceClass = Mapper.childPersistance(response.body, persistanceClass);
-                            String reasonPhrase = "";
-                            if (response.reasonPhrase != null) {
-                                reasonPhrase = response.reasonPhrase;
-                            }
-                            transportListener.onResponseDone(response.statusCode,reasonPhrase, persistanceClass, code, arrPacket);
-                        }
-                    } else {
-                        String reasonPhrase = "";
-                        if (response.reasonPhrase != null) {
-                            reasonPhrase = response.reasonPhrase;
-                        }
-                        transportListener.onResponseDone(response.statusCode, reasonPhrase, response.body, code, arrPacket);
-                    }
-                } 
-                else if (response.statusCode == 401) {
-                    StackTrace? stacktrace;
-                    FirebaseCrashlytics.instance.recordError("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}", stacktrace, fatal:false);
-                    FirebaseCrashlytics.instance.log("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}");
+            if (transporterResponse.statusCode >= 200 && transporterResponse.statusCode < 300) {
+                if (persistanceClass == StringModel) {
+                    StringModel stringModel = StringModel();
+                    stringModel.data = transporterResponse.body as String;
+                    transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, stringModel, code, arrPacket);
+                } else {
+                    persistanceClass = Mapper.childPersistance(transporterResponse.body, persistanceClass);
+                    transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, persistanceClass, code, arrPacket);
+                }
+            } else {
+                if (transporterResponse.statusCode == 401) {
                     transportListener.onTokenInvalid();
-                } 
-                else {
-                    StackTrace? stacktrace;
-                    FirebaseCrashlytics.instance.recordError("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}", stacktrace, fatal:false);
-                    FirebaseCrashlytics.instance.log("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}");
-                    if (persistanceClassError != null) {
-                        String reasonPhrase = "";
-                        if (response.reasonPhrase != null) {
-                            reasonPhrase = response.reasonPhrase;
-                        }
-
-                        try {
-                            persistanceClassError = Mapper.childPersistance(response.body, persistanceClassError);
-                            transportListener.onResponseFail(response.statusCode, reasonPhrase, persistanceClassError, code, arrPacket);
-                        } catch (exception, stacktrace) {
-                            transportListener.onResponseError(exception.toString(), stacktrace, code, arrPacket);
-                            FirebaseCrashlytics.instance.recordError("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}", stacktrace, fatal:false);
-                            FirebaseCrashlytics.instance.log("url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}");
-                        }
-                        
-                       
+                } else {
+                    if (persistanceClassError != null && persistanceClassError != String) {
+                        persistanceClassError = Mapper.childPersistance(transporterResponse.body, persistanceClassError);
+                        transportListener.onResponseFail(transporterResponse.statusCode, transporterResponse.reasonPhrase, persistanceClassError, code, arrPacket);
                     } else {
-                        String reasonPhrase = "";
-                        if (response.reasonPhrase != null) {
-                            reasonPhrase = response.reasonPhrase;
-                        }
-                        transportListener.onResponseFail(response.statusCode, reasonPhrase, response.body, code, arrPacket);
+                        transportListener.onResponseFail(transporterResponse.statusCode, transporterResponse.reasonPhrase, transporterResponse.body, code, arrPacket);
                     }
                 }
-            } catch (exception, stacktrace) {
-              transportListener.onResponseError(exception.toString(), stacktrace, code, arrPacket);
-              // FirebaseCrashlytics.instance.recordError("${F.crashlyticsNote} --> url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}", stacktrace, fatal:false);
-              // FirebaseCrashlytics.instance.log("${F.crashlyticsNote} --> url : $baseUrl$path , method : $method,  headers: $headers  response:  ${response.body}");
             }
+        }).catchError((exception, stacktrace) {
+            _postLogException(stacktrace);
+            transportListener.onResponseError(exception.toString(), stacktrace, code, arrPacket);
         });
+    }
+
+    void _preLog() {
+        log = '{"url": "$baseUrl$path", "mediaType": "${bodyBuilder.getMediaType()}", "headers": [';
+        headers.forEach((k, v) => log += '"$k => $v", ');
+        log += '], "method" : "$method", "request": "${bodyBuilder.toString()}"';
+    }
+
+    void _postLog(TransporterResponse transportResponse) {
+        StackTrace? stacktrace;
+        log += ', "code": ${transportResponse.statusCode}, "message": "${transportResponse.reasonPhrase}", "response": ${transportResponse.body}';
+        FirebaseCrashlytics.instance.recordError(log, stacktrace, fatal: false);
+        FirebaseCrashlytics.instance.log(log);
+    }
+
+    void _postLogException(stacktrace) {
+        StackTrace? stacktrace;
+        log += ', "response": ${stacktrace.toString()}';
+        FirebaseCrashlytics.instance.recordError(log, stacktrace, fatal: false);
+        FirebaseCrashlytics.instance.log(log);
     }
 
     /// It takes the request parameters and sends the request to the server
@@ -347,19 +329,21 @@ class Transporter {
     ///   A Future<dynamic> object.
     Future<dynamic> processing() async {
         if (method == 'POST') {
-            logging.log('============================ POST REQUEST ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            logging.log('======================================================================');
+            String headerPrint = '';
+            headers.forEach((k, v) => headerPrint += 'Header   : $k => $v');
+            logging.log(
+                '============================ POST REQUEST ============================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                '======================================================================\n'
+            );
 
+            _preLog();
             dynamic response;
-            dynamic responseMulti;
+
             if (isMultipart) {
-                var request = http.MultipartRequest(
-                    'POST',
-                    Uri.parse(baseUrl + path),
-                );
+                var request = http.MultipartRequest('POST', Uri.parse(baseUrl + path),);
 
                 Map<String, String> bodyText = {};
                 List<http.MultipartFile> bodyFile = [];
@@ -376,53 +360,56 @@ class Transporter {
                 request.fields.addAll(bodyText);
                 request.files.addAll(bodyFile);
 
-                responseMulti = await _chuckerHttpClient.send(request);
+                dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
+                    const Duration(seconds: 60),
+                    onTimeout: () {
+                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
+                        throw 'Request Timeout';
+                    },
+                );
+                response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
                 response = await _chuckerHttpClient.post(
                     Uri.parse(baseUrl + path),
                     headers: headers,
                     body: bodyBuilder.toString(),
+                ).timeout(
+                    const Duration(seconds: 30),
+                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
                 ).catchError((error) {
-                    gets.Get.snackbar("ERROR", error.toString(),
-                        snackPosition: gets.SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 5),
-                        colorText: Colors.white);
-
+                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
                     return null;
                 });
             }
 
+            TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
             logging.log(
-                '============================ POST RESPONSE ===========================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            if(isMultipart) {
-                String responseString = await responseMulti.stream.bytesToString();
-                response= Response(responseString, (responseMulti as http.StreamedResponse).statusCode, reasonPhrase:responseMulti.reasonPhrase,);
-            }
-            logging.log('Code     : ${response.statusCode}');
-            logging.log('Message  : ${response.reasonPhrase}');
-            logging.log('Response : ${response.body}');
-            logging.log(
-                '======================================================================');
+                '============================ POST RESPONSE ===========================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                    'Code     : ${transporterResponse.statusCode}\n'
+                    'Message  : ${transporterResponse.reasonPhrase}\n'
+                    'Response : ${transporterResponse.body}\n'
+                '======================================================================\n');
 
-            return response;
+            return transporterResponse;
         } else if (method == 'PUT') {
-            logging.log('============================ PUT REQUEST ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            logging.log('=====================================================================');
+            String headerPrint = '';
+            headers.forEach((k, v) => headerPrint += 'Header   : $k => $v');
+            logging.log(
+                '============================ PUT REQUEST ============================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                '=====================================================================\n'
+            );
 
+            _preLog();
             dynamic response;
-            dynamic responseMulti;
+
             if (isMultipart) {
-                var request = http.MultipartRequest(
-                    'PUT',
-                    Uri.parse(baseUrl + path),
-                );
+                var request = http.MultipartRequest('PUT', Uri.parse(baseUrl + path),);
 
                 Map<String, String> bodyText = {};
                 List<http.MultipartFile> bodyFile = [];
@@ -439,50 +426,56 @@ class Transporter {
                 request.fields.addAll(bodyText);
                 request.files.addAll(bodyFile);
 
-                responseMulti = await _chuckerHttpClient.send(request);
+                dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
+                    const Duration(seconds: 60),
+                    onTimeout: () {
+                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
+                        throw 'Request Timeout';
+                    },
+                );
+                response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
                 response = await _chuckerHttpClient.put(
                     Uri.parse(baseUrl + path),
                     headers: headers,
                     body: bodyBuilder.toString(),
+                ).timeout(
+                    const Duration(seconds: 30),
+                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
                 ).catchError((error) {
-                    gets.Get.snackbar("ERROR", error.toString(),
-                        snackPosition: gets.SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 5),
-                        colorText: Colors.white);
+                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
                     return null;
                 });
             }
 
-            logging.log('============================ PUT RESPONSE ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            if(isMultipart) {
-                String responseString = await responseMulti.stream.bytesToString();
-                response= Response(responseString, (responseMulti as http.StreamedResponse).statusCode, reasonPhrase:responseMulti.reasonPhrase,);
-            }
-            logging.log('Code     : ${response.statusCode}');
-            logging.log('Message  : ${response.reasonPhrase}');
-            logging.log('Response : ${response.body}');
-            logging.log('=====================================================================');
+            TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
+            logging.log(
+                '============================ PUT RESPONSE ===========================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                    'Code     : ${transporterResponse.statusCode}\n'
+                    'Message  : ${transporterResponse.reasonPhrase}\n'
+                    'Response : ${transporterResponse.body}\n'
+                '=====================================================================\n');
 
-            return response;
+            return transporterResponse;
         } else if (method == 'PATCH') {
-            logging.log('============================ PATCH REQUEST ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            logging.log('=====================================================================');
+            String headerPrint = '';
+            headers.forEach((k, v) => headerPrint += 'Header   : $k => $v');
+            logging.log(
+                '============================ PATCH REQUEST ============================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                '======================================================================\n'
+            );
 
+            _preLog();
             dynamic response;
-            dynamic responseMulti;
+
             if (isMultipart) {
-                var request = http.MultipartRequest(
-                    'PATCH',
-                    Uri.parse(baseUrl + path),
-                );
+                var request = http.MultipartRequest('PATCH', Uri.parse(baseUrl + path),);
 
                 Map<String, String> bodyText = {};
                 List<http.MultipartFile> bodyFile = [];
@@ -499,90 +492,112 @@ class Transporter {
                 request.fields.addAll(bodyText);
                 request.files.addAll(bodyFile);
 
-                responseMulti = await _chuckerHttpClient.send(request);
+                dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
+                    const Duration(seconds: 60),
+                    onTimeout: () {
+                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
+                        throw 'Request Timeout';
+                    },
+                );
+                response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
                 response = await _chuckerHttpClient.patch(
                     Uri.parse(baseUrl + path),
                     headers: headers,
                     body: bodyBuilder.toString(),
+                ).timeout(
+                    const Duration(seconds: 30),
+                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
                 ).catchError((error) {
-                    gets.Get.snackbar("ERROR", error.toString(),
-                        snackPosition: gets.SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 5),
-                        colorText: Colors.white);
-
+                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
                     return null;
                 });
             }
 
-            logging.log('============================ PATCH RESPONSE ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Request  : $bodyBuilder');
-            if(isMultipart) {
-                String responseString = await responseMulti.stream.bytesToString();
-                response= Response(responseString, (responseMulti as http.StreamedResponse).statusCode, reasonPhrase:responseMulti.reasonPhrase,);
-            }
-            logging.log('Code     : ${response.statusCode}');
-            logging.log('Message  : ${response.reasonPhrase}');
-            logging.log('Response : ${response.body}');
-            logging.log('=====================================================================');
+            TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
+            logging.log(
+                '============================ PATCH RESPONSE ===========================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                    'Code     : ${transporterResponse.statusCode}\n'
+                    'Message  : ${transporterResponse.reasonPhrase}\n'
+                    'Response : ${transporterResponse.body}\n'
+                '=======================================================================\n');
 
-            return response;
+            return transporterResponse;
         } else if (method == 'GET') {
-            logging.log('============================ GET REQUEST ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('=====================================================================');
+            String headerPrint = '';
+            headers.forEach((k, v) => headerPrint += 'Header   : $k => $v');
+            logging.log(
+                '============================ GET REQUEST ============================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                '=====================================================================\n'
+            );
 
+            _preLog();
 
-            final response = await _chuckerHttpClient
-                .get(Uri.parse(baseUrl + path), headers: headers)
-                .catchError((error) {
-                gets.Get.snackbar("ERROR", error.toString(),
-                        snackPosition: gets.SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 5),
-                        colorText: Colors.white);
-                    return null;
-                });
+            final response = await _chuckerHttpClient.get(
+                Uri.parse(baseUrl + path),
+                headers: headers
+            ).timeout(
+                const Duration(seconds: 30),
+                onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
+            ).catchError((error) {
+                gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
+                return null;
+            });
 
-            logging.log('============================ GET RESPONSE ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Code     : ${response.statusCode}');
-            logging.log('Message  : ${response.reasonPhrase}');
-            logging.log('Response : ${response.body}');
-            logging.log('=====================================================================');
+            TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
+            logging.log(
+                '============================ GET RESPONSE ===========================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                    'Code     : ${transporterResponse.statusCode}\n'
+                    'Message  : ${transporterResponse.reasonPhrase}\n'
+                    'Response : ${transporterResponse.body}\n'
+                '=====================================================================\n');
 
-            return response;
+            return transporterResponse;
         } else if (method == 'DELETE') {
-            logging.log('============================ DELETE REQUEST ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('========================================================================');
+            String headerPrint = '';
+            headers.forEach((k, v) => headerPrint += 'Header   : $k => $v');
+            logging.log(
+                '============================ DELETE REQUEST ============================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                '========================================================================\n'
+            );
 
-            final response = await _chuckerHttpClient
-                .delete(Uri.parse(baseUrl + path), headers: this.headers)
-                .catchError((error) {
-                    gets.Get.snackbar("ERROR", error.toString(),
-                        snackPosition: gets.SnackPosition.TOP,
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 5),
-                        colorText: Colors.white);
-                    return null;
-                });
+            _preLog();
 
-            logging.log('============================ DELETE RESPONSE ============================');
-            logging.log('URL      : $baseUrl$path');
-            headers.forEach((k, v) => logging.log('Header   : ${k} => ${v}'));
-            logging.log('Code     : ${response.statusCode}');
-            logging.log('Message  : ${response.reasonPhrase}');
-            logging.log('Response : ${response.body}');
-            logging.log('========================================================================');
+            final response = await _chuckerHttpClient.delete(
+                Uri.parse(baseUrl + path),
+                headers: headers
+            ).timeout(
+                const Duration(seconds: 30),
+                onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
+            ).catchError((error) {
+                gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
+                return null;
+            });
 
-            return response;
+            TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
+            logging.log(
+                '============================ DELETE RESPONSE ===========================\n'
+                    'URL      : $baseUrl$path\n'
+                    '$headerPrint\n'
+                    'Request  : $bodyBuilder\n'
+                    'Code     : ${transporterResponse.statusCode}\n'
+                    'Message  : ${transporterResponse.reasonPhrase}\n'
+                    'Response : ${transporterResponse.body}\n'
+                '========================================================================\n');
+
+            return transporterResponse;
         }
 
         return null;
