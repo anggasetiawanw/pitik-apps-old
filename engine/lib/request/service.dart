@@ -254,6 +254,7 @@ class Service {
                             GET request = MirrorFeature.getAnnotation(v, GET);
                             transporter
                                 .route((pathParameterExist ? body[indexPathParameter].toString() : request.value) + queryString)
+                                .body(BodyBuilder(BodyBuilder.PLAIN).toPlain(''))
                                 .get()
                                 .as(request.as)
                                 .error(request.error)
@@ -267,10 +268,10 @@ class Service {
                                 .error(request.error)
                                 .execute();
                         } else if (MirrorFeature.isAnnotationPresent(v, DELETE)) {
-                            print('pathParameterExist : $pathParameterExist -> index : $indexPathParameter');
                             DELETE request = MirrorFeature.getAnnotation(v, DELETE);
                             transporter
                                 .route((pathParameterExist ? body[indexPathParameter].toString() : request.value) + queryString)
+                                .body(BodyBuilder(BodyBuilder.PLAIN).toPlain(''))
                                 .delete()
                                 .as(request.as)
                                 .error(request.error)

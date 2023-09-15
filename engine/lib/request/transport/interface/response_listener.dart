@@ -7,8 +7,8 @@
  */
 
 class ResponseListener {
-    Function(int code, String message, dynamic body, int id, dynamic packet) onResponseDone;
-    Function(int code, String message, dynamic body, int id, dynamic packet) onResponseFail;
+    Function(int code, String? message, dynamic body, int id, dynamic packet) onResponseDone;
+    Function(int code, String? message, dynamic body, int id, dynamic packet) onResponseFail;
     Function(String exception, StackTrace stacktrace, int id, dynamic packet) onResponseError;
     Function() onTokenInvalid;
 
