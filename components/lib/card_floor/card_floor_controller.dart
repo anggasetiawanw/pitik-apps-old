@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,9 +7,9 @@ import '../edit_field/edit_field.dart';
 import '../get_x_creator.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class CardFloorController extends GetxController {
@@ -30,37 +32,27 @@ class CardFloorController extends GetxController {
     void InvisibleCard() => isShow.value = false;
 
     @override
-    void onInit() {
-        super.onInit();
-    }
-
-    @override
     void onReady() {
         super.onReady();
         addCard();
-    }
-
-    @override
-    void onClose() {
-        super.onClose();
     }
 
     addCard() {
         index.value.add(numberList.value);
         int idx = numberList.value;
 
-        efFloorName.value.add(EditField(
-            controller: GetXCreator.putEditFieldController(
-                "efFloorName${idx}"),
-            label: "Nama Lantai*",
-            hint: "Ketik di sini",
-            alertText: "Kolom Ini Harus Di Isi",
-            textUnit: "",
-            inputType: TextInputType.text,
-            maxInput: 50,
-            onTyping: (value, control) {
-            }
-        ));
+        efFloorName.value.add(
+            EditField(
+                controller: GetXCreator.putEditFieldController("efFloorName$idx"),
+                label: "Nama Lantai*",
+                hint: "Ketik di sini",
+                alertText: "Kolom Ini Harus Di Isi",
+                textUnit: "",
+                inputType: TextInputType.text,
+                maxInput: 50,
+                onTyping: (value, control) {}
+            )
+        );
 
         itemCount.value = index.value.length;
         numberList.value++;

@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:components/switch_button/switch_button_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -16,14 +18,18 @@ import 'graph_view/graph_view_controller.dart';
 import 'item_decrease_temp/item_decrease_temperature_controller.dart';
 import 'item_historical_smartcamera/item_historical_smartcamera_controller.dart';
 import 'item_take_picture/item_take_picture_controller.dart';
+import 'media_field/media_field_controller.dart';
 import 'password_field/password_field_controller.dart';
 import 'spinner_field/spinner_field_controller.dart';
+import 'spinner_multi_field/spinner_multi_field_controller.dart';
+import 'spinner_search/spinner_search_controller.dart';
+import 'suggest_field/suggest_field_controller.dart';
 import 'time_picker/time_picker_controller.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class GetXCreator {
@@ -45,8 +51,12 @@ class GetXCreator {
         return Get.put(ButtonOutlineController(tag: tag), tag: tag);
     }
 
-    static SpinnerFieldController putSpinnerFieldController(String tag) {
-        return Get.put(SpinnerFieldController(tag: tag), tag: tag);
+    static SpinnerFieldController putSpinnerFieldController<T>(String tag) {
+        return Get.put(SpinnerFieldController<T>(tag: tag), tag: tag);
+    }
+
+    static SpinnerMultiFieldController putSpinnerMultiFieldController<T>(String tag) {
+        return Get.put(SpinnerMultiFieldController<T>(tag: tag), tag: tag);
     }
 
     static CardSensorController putCardSensorController(String tag, BuildContext context) {
@@ -100,20 +110,19 @@ class GetXCreator {
         return Get.put(ItemTakePictureCameraController(tag: tag, context: context), tag: tag);
     }
 
-/*
-
     static MediaFieldController putMediaFieldController(String tag) {
         return Get.put(MediaFieldController(tag: tag), tag: tag);
     }
 
-    static SpinnerMultiFieldController putSpinnerMultiFieldController(String tag) {
-        return Get.put(SpinnerMultiFieldController(tag: tag), tag: tag);
+    static SpinnerSearchController putSpinnerSearchController<T>(String tag) {
+        return Get.put(SpinnerSearchController<T>(tag: tag), tag: tag);
     }
 
-    static SuggestFieldController putSuggestFieldController(String tag) {
-        return Get.put(SuggestFieldController(tag: tag), tag: tag);
+    static SuggestFieldController putSuggestFieldController<T>(String tag) {
+        return Get.put(SuggestFieldController<T>(tag: tag), tag: tag);
     }
 
+/*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {
         return Get.put(SkuCardPurchaseController(tag: tag, context: context), tag: tag);
     }

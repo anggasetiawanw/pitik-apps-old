@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments, depend_on_referenced_packages, constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
@@ -9,9 +9,9 @@ import '../global_var.dart';
 import 'time_picker_controller.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class TimePickerField extends StatelessWidget {
@@ -35,8 +35,7 @@ class TimePickerField extends StatelessWidget {
     }
 
     String timePicked = "00:00";
-
-    DateTime _lastDateTime = DateTime.now();
+    final DateTime _lastDateTime = DateTime.now();
 
     DateTime getLastTimeSelected() {
         return _lastDateTime;
@@ -87,17 +86,17 @@ class TimePickerField extends StatelessWidget {
                                                             child: Text(
                                                                 controller.textSeleted.value == "" ? hint : controller.textSeleted.value,
                                                                 overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(color: controller.activeField.isTrue ? controller.textSeleted.value == "" ? Color(0xFF9E9D9D) : GlobalVar.black : GlobalVar.black, fontSize: 14)
-                                                            ),
+                                                                style: TextStyle(color: controller.activeField.isTrue ? controller.textSeleted.value == "" ? const Color(0xFF9E9D9D) : GlobalVar.black : GlobalVar.black, fontSize: 14)
+                                                            )
                                                         )
                                                     ),
                                                     Expanded(
                                                         flex: 1,
                                                         child: SvgPicture.asset(controller.activeField.isTrue ? "images/hour_glass_icon.svg" : "images/hour_glass_disable_icon.svg")
-                                                    ),
-                                                ],
-                                            ),
-                                        ),
+                                                    )
+                                                ]
+                                            )
+                                        )
                                     ),
                                     Align(
                                         alignment: Alignment.topLeft,
@@ -114,15 +113,15 @@ class TimePickerField extends StatelessWidget {
                                                         alertText,
                                                         style: TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
-                                                ],
+                                                ]
                                             )
                                         ) : Container(),
                                     )
-                                ],
+                                ]
                             )
-                        ),
-                    ],
-                ),
+                        )
+                    ]
+                )
             )
         );
     }
@@ -144,15 +143,15 @@ class TimePickerField extends StatelessWidget {
                 cancelTextStyle: TextStyle(color: GlobalVar.primaryOrange),
                 onConfirm: (Picker picker, List<int> value) {
                     // You get your duration here
-                      String hours = "${picker.getSelectedValues()[0]}";
-                      String minutes = "${picker.getSelectedValues()[1]}";
-                      String seconds = "${picker.getSelectedValues()[2]}";
-                      hours = hours.length < 2 ?"0${picker.getSelectedValues()[0]}": hours;
-                      minutes = minutes.length < 2 ?"0${picker.getSelectedValues()[1]}": minutes;
-                      seconds = seconds.length < 2 ?"0${picker.getSelectedValues()[2]}": seconds;
-                      timePicked = "${hours} : ${minutes} : ${seconds}";
-                      onTimeSelected(timePicked);
-                                  },
+                    String hours = "${picker.getSelectedValues()[0]}";
+                    String minutes = "${picker.getSelectedValues()[1]}";
+                    String seconds = "${picker.getSelectedValues()[2]}";
+                    hours = hours.length < 2 ?"0${picker.getSelectedValues()[0]}": hours;
+                    minutes = minutes.length < 2 ?"0${picker.getSelectedValues()[1]}": minutes;
+                    seconds = seconds.length < 2 ?"0${picker.getSelectedValues()[2]}": seconds;
+                    timePicked = "$hours : $minutes : $seconds";
+                    onTimeSelected(timePicked);
+                },
             ).showDialog(context);
         } else if (flag == TIME_HOURS_AND_MINUTES) {
             Picker(
@@ -172,11 +171,10 @@ class TimePickerField extends StatelessWidget {
                     String minutes = "${picker.getSelectedValues()[1]}";
                     hours = hours.length < 2 ?"0${picker.getSelectedValues()[0]}": hours;
                     minutes = minutes.length < 2 ?"0${picker.getSelectedValues()[1]}": minutes;
-                    timePicked = "${hours}:${minutes}";
+                    timePicked = "$hours:$minutes";
                     onTimeSelected(timePicked);
-                                  },
+                },
             ).showDialog(context);
-
         } else {
             Picker(
                 adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
@@ -192,11 +190,10 @@ class TimePickerField extends StatelessWidget {
                 onConfirm: (Picker picker, List<int> value) {
                     String hours = "${picker.getSelectedValues()[0]}";
                     hours = hours.length < 2 ?"0${picker.getSelectedValues()[0]}": hours;
-                    timePicked = "${hours}";
+                    timePicked = hours;
                     onTimeSelected(timePicked);
-                                  },
+                },
             ).showDialog(context);
-
         }
     }
 }

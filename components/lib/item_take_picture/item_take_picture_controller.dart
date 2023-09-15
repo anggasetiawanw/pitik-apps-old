@@ -1,13 +1,15 @@
 
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../edit_field/edit_field.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ItemTakePictureCameraController extends GetxController {
@@ -29,22 +31,6 @@ class ItemTakePictureCameraController extends GetxController {
     void collapse() => expanded.value = false;
     void visibleCard() => isShow.value = true;
     void InvisibleCard() => isShow.value = false;
-
-    @override
-    void onInit() {
-        super.onInit();
-    }
-
-    @override
-    void onReady() {
-        super.onReady();
-    }
-
-    @override
-    void onClose() {
-        super.onClose();
-    }
-
 }
 
 class ItemTakePictureCameraBindings extends Bindings {

@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,9 +10,9 @@ import '../library/engine_library.dart';
 import 'edit_field_qrcode_controller.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class EditFieldQR extends StatelessWidget {
@@ -31,7 +31,7 @@ class EditFieldQR extends StatelessWidget {
     Function(String, EditFieldQR) onTyping;
 
     EditFieldQR({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.textUnit, required this.maxInput, this.inputType = TextInputType.text,
-        this.action = TextInputAction.done, this.hideLabel = false, required this.onTyping, this.width = double.infinity, this.textPrefix, this.isMacAddres=false});
+                 this.action = TextInputAction.done, this.hideLabel = false, required this.onTyping, this.width = double.infinity, this.textPrefix, this.isMacAddres=false});
 
     late String data;
     final editFieldController = TextEditingController();
@@ -111,16 +111,20 @@ class EditFieldQR extends StatelessWidget {
                                                             contentPadding: const EdgeInsets.only(left: 8),
                                                             counterText: "",
                                                             hintText: hint,
-                                                            hintStyle: TextStyle(fontSize: 15, color: Color(0xFF9E9D9D)),
+                                                            hintStyle: const TextStyle(fontSize: 15, color: Color(0xFF9E9D9D)),
                                                             prefixIcon: textPrefix != null ? Padding(
                                                                 padding: const EdgeInsets.only(left: 16.0, top: 15.0, bottom: 15.0, right: 2),
-                                                                child: Text("${textPrefix}",
-                                                                    style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 16)),
+                                                                child: Text(
+                                                                    "$textPrefix",
+                                                                    style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 16)
+                                                                ),
                                                             ): null,
                                                             suffixIcon: Padding(
                                                                 padding: const EdgeInsets.all(16),
-                                                                child: Text(textUnit,
-                                                                    style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)),
+                                                                child: Text(
+                                                                    textUnit,
+                                                                    style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
+                                                                ),
                                                             ),
                                                             fillColor: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
                                                             focusedBorder: OutlineInputBorder(
@@ -143,74 +147,54 @@ class EditFieldQR extends StatelessWidget {
                                                     ),
                                                 ),
                                             ),
-                                            SizedBox(width: 8,),
+                                            const SizedBox(width: 8,),
                                             controller.activeField.isTrue ?
                                             ElevatedButton(
-                                                      onPressed: (){
-                                                          GlobalVar.track("Click_scan_button");
-                                                          Get.toNamed("/scan-barcode", arguments: [
-                                                              {"first": 'First data'},
-                                                              {"second": 'Second data'}
-                                                          ])!.then((result) {
-                                                              String resultString = result[0]["backValue"];
-                                                              if(textPrefix != "" && !resultString.contains(textPrefix!)) {
-                                                                  controller.showAlert();
-                                                              }else{
-                                                                  controller.hideAlert();
-                                                              }
-                                                              editFieldController.text = resultString.replaceAll(textPrefix!, "");
-
-                                                          });
-                                                          // openCamera();
-                                                      },
-                                                      style: ElevatedButton.styleFrom(
-                                                          padding: EdgeInsets.all(0),
-                                                          elevation: 0,
-                                                          backgroundColor: Colors.transparent,
-                                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                          minimumSize: Size(0, 0)
-                                                      ),
-                                                      child: Container(
-                                                          width: 50,
-                                                          height: 50,
-                                                          padding: EdgeInsets.all(10),
-                                                          decoration: BoxDecoration(
-                                                              color: Color(0xFFFEEFD2),
-                                                              borderRadius: BorderRadius.circular(10)
-                                                          ),
-                                                          child:SvgPicture.asset("images/qr_code_icon.svg") ,
-                                                      ),
-
+                                                onPressed: () {
+                                                    GlobalVar.track("Click_scan_button");
+                                                    Get.toNamed("/scan-barcode", arguments: [
+                                                        {"first": 'First data'},
+                                                        {"second": 'Second data'}
+                                                    ])!.then((result) {
+                                                        String resultString = result[0]["backValue"];
+                                                        if (textPrefix != "" && !resultString.contains(textPrefix!)) {
+                                                            controller.showAlert();
+                                                        } else {
+                                                            controller.hideAlert();
+                                                        }
+                                                        editFieldController.text = resultString.replaceAll(textPrefix!, "");
+                                                    });
+                                                  // openCamera();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    padding: const EdgeInsets.all(0),
+                                                    elevation: 0,
+                                                    backgroundColor: Colors.transparent,
+                                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                    minimumSize: const Size(0, 0)
+                                                ),
+                                                child: Container(
+                                                    width: 50,
+                                                    height: 50,
+                                                    padding: const EdgeInsets.all(10),
+                                                    decoration: BoxDecoration(
+                                                        color: const Color(0xFFFEEFD2),
+                                                        borderRadius: BorderRadius.circular(10)
+                                                    ),
+                                                    child:SvgPicture.asset("images/qr_code_icon.svg") ,
+                                                ),
                                             ) :Container(
                                                 width: 50,
                                                 height: 50,
-                                                padding: EdgeInsets.all(10),
+                                                padding: const EdgeInsets.all(10),
                                                 decoration: BoxDecoration(
                                                     color:  GlobalVar.gray,
                                                     borderRadius: BorderRadius.circular(10)
                                                 ),
                                                 child:SvgPicture.asset("images/qr_code_disable_icon.svg") ,
                                             ),
-
-                                            // Container(
-                                            //     width: 40,
-                                            //     height: 40,
-                                            //     margin: EdgeInsets.all(4),
-                                            //     padding: EdgeInsets.all(8),
-                                            //     decoration: BoxDecoration(
-                                            //         color:Color(0xFFFEEFD2),
-                                            //         borderRadius: BorderRadius.only(
-                                            //             topLeft: Radius.circular(4),
-                                            //             topRight: Radius.circular(4),
-                                            //             bottomRight: Radius.circular(4),
-                                            //             bottomLeft: Radius.circular(4))),
-                                            //     child: Center(
-                                            //         child: SvgPicture.asset("images/qr_code_icon.svg"),
-                                            //     ),
-                                            // )
                                         ],
-                                    )
-,
+                                    ),
                                     Align(
                                         alignment: Alignment.topLeft,
                                         child: controller.showTooltip.isTrue
@@ -232,7 +216,7 @@ class EditFieldQR extends StatelessWidget {
                                                 ],
                                             )
                                         )
-                                            : Container(),
+                                        : Container(),
                                     )
                                 ],
                             )
@@ -240,7 +224,7 @@ class EditFieldQR extends StatelessWidget {
                     ],
                 ),
             )
-                : Container(),
+            : Container(),
         );
     }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,9 +7,9 @@ import '../edit_field_qr/edit_field_qrcode.dart';
 import '../get_x_creator.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class CardCameraController extends GetxController {
@@ -42,18 +44,20 @@ class CardCameraController extends GetxController {
         index.value.add(numberList.value);
         int idx = numberList.value;
 
-        efCameraId.value.add(EditFieldQR(
-            controller: GetXCreator.putEditFieldQRController("efCameraId$idx"),
-            label: "Kode Kamera*",
-            textPrefix: prefDevice.value,
-            hint: "XXXXXX",
-            alertText: "Kode Alat Tidak Sesuai",
-            textUnit: "",
-            isMacAddres: false,
-            inputType: TextInputType.text,
-            maxInput: 6,
-            onTyping: (value, control) {}
-        ));
+        efCameraId.value.add(
+            EditFieldQR(
+                controller: GetXCreator.putEditFieldQRController("efCameraId$idx"),
+                label: "Kode Kamera*",
+                textPrefix: prefDevice.value,
+                hint: "XXXXXX",
+                alertText: "Kode Alat Tidak Sesuai",
+                textUnit: "",
+                isMacAddres: false,
+                inputType: TextInputType.text,
+                maxInput: 6,
+                onTyping: (value, control) {}
+            )
+        );
 
         itemCount.value = index.value.length;
         numberList.value++;

@@ -1,6 +1,6 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /**
@@ -9,13 +9,15 @@ import 'package:get/get.dart';
  * @create date 14/09/2023
  */
 
-class SpinnerFieldController<T> extends GetxController {
+class SpinnerSearchController<T> extends GetxController {
     String tag;
-    SpinnerFieldController({required this.tag});
+    SpinnerSearchController({required this.tag});
 
+    final TextEditingController textEditingController = TextEditingController();
     final FocusNode focusNode = FocusNode();
     T? selectedObject;
     RxList<T?> listObject = <T?>[].obs;
+    bool init =false;
     var formKey = GlobalKey<FormState>();
     var showTooltip = false.obs;
     var activeField = true.obs;
@@ -56,12 +58,13 @@ class SpinnerFieldController<T> extends GetxController {
     void onClose() {
         super.onClose();
         focusNode.dispose();
+        textEditingController.dispose();
     }
 }
 
 class SpinnerFieldBinding extends Bindings {
     @override
     void dependencies() {
-        Get.lazyPut<SpinnerFieldController>(() => SpinnerFieldController(tag: ""));
+        Get.lazyPut<SpinnerSearchController>(() => SpinnerSearchController(tag: ""));
     }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,9 +8,9 @@ import '../global_var.dart';
 import 'password_field_controller.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class PasswordField extends StatelessWidget {
@@ -27,9 +27,8 @@ class PasswordField extends StatelessWidget {
     Function(String) onTyping;
 
 
-    PasswordField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.maxInput, this.action = TextInputAction.done, this.hideLabel = false, required this.onTyping,
-    this.alertPasswordLength = "Minimum harus lebih dari 6 karakter", this.alertPassword ="Setidaknya ada kombinasi huruf dan angka"
-    });
+    PasswordField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.maxInput, this.action = TextInputAction.done, this.hideLabel = false,
+                   required this.onTyping, this.alertPasswordLength = "Minimum harus lebih dari 6 karakter", this.alertPassword = "Setidaknya ada kombinasi huruf dan angka"});
 
     var passwordFieldController = TextEditingController();
 
@@ -83,7 +82,7 @@ class PasswordField extends StatelessWidget {
                                                 contentPadding: const EdgeInsets.only(left: 8),
                                                 counterText: "",
                                                 hintText: hint,
-                                                hintStyle: TextStyle(fontSize: 15, color: Color(0xFF9E9D9D)),
+                                                hintStyle: const TextStyle(fontSize: 15, color: Color(0xFF9E9D9D)),
                                                 suffixIcon: Padding(
                                                     padding: const EdgeInsets.all(16),
                                                     child: GestureDetector(
@@ -96,22 +95,21 @@ class PasswordField extends StatelessWidget {
                                                     borderRadius: BorderRadius.circular(10.0),
                                                     borderSide: BorderSide(
                                                         color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white, width: 2.0,
-                                                    ),
+                                                    )
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                     borderSide: BorderSide(
                                                         color: GlobalVar.primaryLight
-                                                    ),
+                                                    )
                                                 ),
                                                 filled: true,
-                                            ),
-                                        ),
+                                            )
+                                        )
                                     ),
                                     Align(
                                         alignment: Alignment.topLeft,
-                                        child: controller.showLengthAlert.isTrue
-                                            ? Container(
+                                        child: controller.showLengthAlert.isTrue ? Container(
                                             padding: const EdgeInsets.only(top: 4),
                                             child: Row(
                                                 children: [
@@ -148,8 +146,7 @@ class PasswordField extends StatelessWidget {
                                     ),                                    
                                     Align(
                                         alignment: Alignment.topLeft,
-                                        child: controller.showTooltip.isTrue
-                                            ? Container(
+                                        child: controller.showTooltip.isTrue ? Container(
                                             padding: const EdgeInsets.only(top: 4),
                                             child: Row(
                                                 children: [
@@ -163,9 +160,9 @@ class PasswordField extends StatelessWidget {
                                                     )
                                                 ],
                                             )
-                                        ) : Container(),
+                                        ) : Container()
                                     )
-                                ],
+                                ]
                             )
                         )
                     ],

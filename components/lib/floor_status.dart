@@ -1,12 +1,13 @@
 
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: slash_for_doc_comments
 
+import 'package:flutter/cupertino.dart';
 import 'global_var.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class FloorStatus extends StatelessWidget{
@@ -17,11 +18,11 @@ class FloorStatus extends StatelessWidget{
     @override
     Widget build(BuildContext context) {
         return Container(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
                 color: floorStatus == null ? GlobalVar.gray :
-                floorStatus == "active" ? Color(0xFFCEFCD8) :
-                Color(0xFFF0F0F0),
+                floorStatus == "active" ? const Color(0xFFCEFCD8) :
+                const Color(0xFFF0F0F0),
                 borderRadius: BorderRadius.circular(6)
             ),
             child: Center(
@@ -30,10 +31,10 @@ class FloorStatus extends StatelessWidget{
                     floorStatus == "active" ? "Aktif" :
                     "Non-Aktif",
                     style: floorStatus == null ? GlobalVar.blackTextStyle :
-                    floorStatus == "active" ? TextStyle(color: Color(0xFF14CB82)) :
-                    TextStyle(color: Color(0xFF2C2B2B))
+                    floorStatus == "active" ? const TextStyle(color: Color(0xFF14CB82)) :
+                    const TextStyle(color: Color(0xFF2C2B2B))
                 )
-            ),
+            )
         );
     }
 }

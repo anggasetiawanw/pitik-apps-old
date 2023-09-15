@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +7,9 @@ import '../global_var.dart';
 import 'button_fill_controller.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ButtonFill extends StatelessWidget {
@@ -33,7 +33,6 @@ class ButtonFill extends StatelessWidget {
                     width: width,
                     height: 50,
                     child: ElevatedButton(
-                    
                         onPressed: controller.activeField.isTrue ? onClick : () {},
                         style: ElevatedButton.styleFrom(
                              elevation: 0,
@@ -48,10 +47,10 @@ class ButtonFill extends StatelessWidget {
                                     label,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(color: Colors.white, fontSize: 14),
-                                ),
+                                )
                             )
-                        ),
-                    ),
+                        )
+                    )
                 )
             )
         );

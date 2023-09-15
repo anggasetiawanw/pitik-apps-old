@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,9 +10,9 @@ import 'library/engine_library.dart';
 import 'library/model_library.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class GlobalVar {
@@ -321,25 +323,22 @@ class GlobalVar {
     static Color grayText = Convert.hexToColor("#5A5A5A");
     static Color gray = Convert.hexToColor("#CACACA");
     static Color green = Convert.hexToColor("#14CB82");
-    static Color subTitleColor = Color(0xFF9E9D9D);
-    static Color globalBG = Color(0xFFF4F4F4);
-    static Color iconHomeBg = Color(0xFFFFF6ED);
-    static Color headerSku = Color(0xFFFDDAA5);
-    static Color outlineColor = Color(0xFFF0F0F0);
-    static Color blueLights = Color(0xFFD0F5FD);
-    static Color blueDark = Color(0xFF198BDB);
+    static Color subTitleColor = const Color(0xFF9E9D9D);
+    static Color globalBG = const Color(0xFFF4F4F4);
+    static Color iconHomeBg = const Color(0xFFFFF6ED);
+    static Color headerSku = const Color(0xFFFDDAA5);
+    static Color outlineColor = const Color(0xFFF0F0F0);
+    static Color blueLights = const Color(0xFFD0F5FD);
+    static Color blueDark = const Color(0xFF198BDB);
     static Mixpanel? mixpanel;
-    static const MethodChannel _channel = const MethodChannel('flutter.moum.sim_info');
+    static const MethodChannel _channel = MethodChannel('flutter.moum.sim_info');
 
     static Future<String> getPhoneCarrier() async {
-        // String carrier_name1 = await _channel.invokeMethod('carrierName');
-        // String carrier_name2 = await _channel.invokeMethod('isoCountryCode');
-        String carrier_name3 = await _channel.invokeMethod('mobileCountryCode');
-        String carrier_name4 = await _channel.invokeMethod('mobileNetworkCode');
-        // print("carrier_name1 ${carrier_name1}");
-        // print("carrier_name2 ${carrier_name2}");
-        print("carrier_name3 ${carrier_name3}");
-        print("carrier_name4 ${carrier_name4}");
+        String carrierName3 = await _channel.invokeMethod('mobileCountryCode');
+        String carrierName4 = await _channel.invokeMethod('mobileNetworkCode');
+
+        print("carrier_name3 $carrierName3");
+        print("carrier_name4 $carrierName4");
 
         return "";
     }
@@ -363,7 +362,7 @@ class GlobalVar {
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle whiteTextStyle = TextStyle(
+    static TextStyle whiteTextStyle = const TextStyle(
         color: Colors.white,
         fontFamily: 'Montserrat_Medium',
     );
@@ -437,8 +436,8 @@ class GlobalVar {
         return _globalContext!;
     }
 
-    static VoidCallback invalidResponse(){
-        return (){
+    static VoidCallback invalidResponse() {
+        return () {
             AuthImpl().delete(null, []);
             // UserGoogleImpl().delete(null, []);
             ProfileImpl().delete(null, []);
@@ -446,7 +445,7 @@ class GlobalVar {
         };
     }
 
-    static void track(String eventName){
+    static void track(String eventName) {
         if (mixpanel != null) {
             mixpanel!.track(eventName);
         }

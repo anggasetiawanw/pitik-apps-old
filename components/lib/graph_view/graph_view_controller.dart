@@ -1,12 +1,14 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../library/model_library.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class GraphViewController extends GetxController {
@@ -118,9 +120,9 @@ class GraphViewController extends GetxController {
         }
 
         // add all data and add 1 data for initialize
-        graphData.forEach((element) {
+        for (var element in graphData) {
             data.add(element);
-        });
+        }
 
         // add order for all data
         for (int i = 0; i < data.length; i++) {

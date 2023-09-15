@@ -1,4 +1,6 @@
 
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,9 +11,9 @@ import '../library/engine_library.dart';
 import '../library/model_library.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ExpandableDeviceController extends GetxController {
@@ -25,16 +27,13 @@ class ExpandableDeviceController extends GetxController {
     Rx<List<GraphLine>> historicalList = Rx<List<GraphLine>>([]);
     Rx<List<GraphView>> graphViews = Rx<List<GraphView>>([]);
 
-
     void expand() {
         expanded.value = true;
     }
     void collapse() => expanded.value = false;
 
-
     GraphView gvSmartMonitoring = GraphView(
-        controller: GetXCreator.putGraphViewController(
-            "gvSmartMonitoring"),
+        controller: GetXCreator.putGraphViewController("gvSmartMonitoring"),
     );
 
     /// The function `getHistoricalData` retrieves historical data for a specific
@@ -57,62 +56,68 @@ class ExpandableDeviceController extends GetxController {
         Service.push(
             service: ListApi.getHistoricalData,
             context: context,
-            body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!,
+            body: [
+                GlobalVar.auth!.token,
+                GlobalVar.auth!.id,
+                GlobalVar.xAppId!,
                 sensorType,
                 day == 0 ? "" : day,
-                ListApi.pathHistoricalData(device.deviceId!)],
+                ListApi.pathHistoricalData(device.deviceId!)
+            ],
             listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet){
-                    if( (body as HistoricalDataResponse).data!.isNotEmpty){
+                onResponseDone: (code, message, body, id, packet) {
+                    if ((body as HistoricalDataResponse).data!.isNotEmpty) {
                         historicalList.value.clear();
                         if((body).data!.length == 1){
                             body.data!.add(body.data![0]);
                         }
-                        for (int i = 0 ; i< (body).data!.length ; i++){
+
+                        for (int i = 0 ; i< (body).data!.length ; i++) {
                             historicalList.value.add(GraphLine(order: i, benchmarkMax: body.data![i]!.benchmarkMax, benchmarkMin: body.data![i]!.benchmarkMin, label: body.data![i]!.label, current: body.data![i]!.current));
                         }
                     }
+
                     loadData(historicalList, sensorType);
                     isLoading.value = false;
                 },
-                onResponseFail: (code, message, body, id, packet){
+                onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;
                     Get.snackbar(
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    isLoading.value = false;
-
-                }, onTokenInvalid: GlobalVar.invalidResponse())
+                onResponseError: (exception, stacktrace, id, packet) =>isLoading.value = false,
+                onTokenInvalid: GlobalVar.invalidResponse()
+            )
         );
     }
 
     void loadData(Rx<List<GraphLine>> historicalList, String sensorType) {
-        if(sensorType == "temperature" || sensorType == "relativeHumidity" || sensorType == "heatStressIndex"){
+        if (sensorType == "temperature" || sensorType == "relativeHumidity" || sensorType == "heatStressIndex") {
             gvSmartMonitoring.controller
                 .setUom('\u00B0C')
                 .setLineCurrentColor(GlobalVar.primaryOrange)
                 .setLineMinColor(GlobalVar.green)
                 .setLineMaxColor(GlobalVar.green)
-                .setBackgroundMax(Color.fromARGB(150, 206, 252, 216))
-                .setBackgroundCurrentTooltip(Color(0xFFFFF6ED))
+                .setBackgroundMax(const Color.fromARGB(150, 206, 252, 216))
+                .setBackgroundCurrentTooltip(const Color(0xFFFFF6ED))
                 .setBackgroundMaxTooltip(GlobalVar.green)
                 .setBackgroundMinTooltip(GlobalVar.green)
                 .setTextColorCurrentTooltip(GlobalVar.primaryOrange)
                 .setTextColorMinTooltip(GlobalVar.green)
                 .setTextColorMaxTooltip(GlobalVar.green);
-        } else if(sensorType == "wind" || sensorType == "lights"){
+        } else if (sensorType == "wind" || sensorType == "lights") {
             gvSmartMonitoring.controller.setLineCurrentColor(GlobalVar.primaryOrange).
             setTextColorCurrentTooltip(GlobalVar.primaryOrange);
-        }else if(sensorType == "ammonia"){
+        } else if (sensorType == "ammonia") {
             gvSmartMonitoring.controller.setLineCurrentColor(GlobalVar.primaryOrange).
             setTextColorCurrentTooltip(GlobalVar.primaryOrange);
         }
+
         gvSmartMonitoring.controller.clearData();
         gvSmartMonitoring.controller.setupData(historicalList.value);
         historicalList.value.clear();

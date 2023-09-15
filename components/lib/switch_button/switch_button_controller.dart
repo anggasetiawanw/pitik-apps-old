@@ -1,10 +1,12 @@
+// ignore_for_file: depend_on_referenced_packages, slash_for_doc_comments
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class SwitchButtonController extends GetxController {

@@ -1,12 +1,14 @@
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ScanBarcodeController extends GetxController {
@@ -16,18 +18,6 @@ class ScanBarcodeController extends GetxController {
     QRViewController? qrviewController;
     final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-    // In order to get hot reload to work we need to pause the camera if the platform
-    // is android, or resume the camera if the platform is iOS.
-    // @override
-    // void reassemble() {
-    //     super.reassemble();
-    //     if (Platform.isAndroid) {
-    //         controller!.pauseCamera();
-    //     }
-    //     controller!.resumeCamera();
-    // }
-
-
     @override
     void dispose() {
         qrviewController?.dispose();
@@ -35,14 +25,14 @@ class ScanBarcodeController extends GetxController {
     }
 
     void onQRViewCreated(QRViewController controller) {
-        this.qrviewController = controller;
+        qrviewController = controller;
         controller.scannedDataStream.listen((scanData) {
-              qrviewController!.pauseCamera();
-              result.value = scanData;
-              Get.back(result: [
-                  {"backValue": result.value.code}
-              ]);
-                  });
+          qrviewController!.pauseCamera();
+          result.value = scanData;
+          Get.back(result: [
+              {"backValue": result.value.code}
+          ]);
+        });
     }
 
     void onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -53,7 +43,6 @@ class ScanBarcodeController extends GetxController {
             );
         }
     }
-
 }
 
 class ScanBarcodeBindings extends Bindings {
@@ -64,6 +53,4 @@ class ScanBarcodeBindings extends Bindings {
     void dependencies() {
         Get.lazyPut(() => ScanBarcodeController(context: context));
     }
-
-
 }

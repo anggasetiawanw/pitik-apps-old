@@ -1,4 +1,6 @@
 
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,9 +8,9 @@ import '../edit_field/edit_field.dart';
 import '../get_x_creator.dart';
 
 /**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
+ * @author DICKY
+ * @email <dicky.maulana@pitik.id>
+ * @create date 14/09/2023
  */
 
 class ItemDecreaseTemperatureController extends GetxController {
@@ -32,50 +34,40 @@ class ItemDecreaseTemperatureController extends GetxController {
     void InvisibleCard() => isShow.value = false;
 
     @override
-    void onInit() {
-        super.onInit();
-    }
-
-    @override
     void onReady() {
         super.onReady();
         addCard();
-    }
-
-    @override
-    void onClose() {
-        super.onClose();
     }
 
     addCard() {
         index.value.add(numberList.value);
         int idx = numberList.value;
 
-        efDayTotal.value.add(EditField(
-            controller: GetXCreator.putEditFieldController(
-                "efDayTotal${idx}"),
-            label: "Total Hari",
-            hint: "Ketik di sini",
-            alertText: "Kolom Ini Harus Di Isi",
-            textUnit: "Hari",
-            inputType: TextInputType.number,
-            maxInput: 50,
-            onTyping: (value, control) {
-            }
-        ));
+        efDayTotal.value.add(
+            EditField(
+                controller: GetXCreator.putEditFieldController("efDayTotal$idx"),
+                label: "Total Hari",
+                hint: "Ketik di sini",
+                alertText: "Kolom Ini Harus Di Isi",
+                textUnit: "Hari",
+                inputType: TextInputType.number,
+                maxInput: 50,
+                onTyping: (value, control) {}
+            )
+        );
 
-        efDecreaseTemp.value.add(EditField(
-            controller: GetXCreator.putEditFieldController(
-                "efDecreaseTemp${idx}"),
-            label: "Pengurangan Suhu",
-            hint: "Ketik di sini",
-            textUnit: "°C",
-            alertText: "Kolom Ini Harus Di Isi",
-            inputType: TextInputType.number,
-            maxInput: 4,
-            onTyping: (value, control) {
-            }
-        ));
+        efDecreaseTemp.value.add(
+            EditField(
+                controller: GetXCreator.putEditFieldController("efDecreaseTemp$idx"),
+                label: "Pengurangan Suhu",
+                hint: "Ketik di sini",
+                textUnit: "°C",
+                alertText: "Kolom Ini Harus Di Isi",
+                inputType: TextInputType.number,
+                maxInput: 4,
+                onTyping: (value, control) {}
+            )
+        );
 
         itemCount.value = index.value.length;
         numberList.value++;
@@ -118,7 +110,6 @@ class ItemDecreaseTemperatureController extends GetxController {
 
         return [isValid, error];
     }
-
 }
 
 class ItemDecreaseTemperatureBindings extends Bindings {
