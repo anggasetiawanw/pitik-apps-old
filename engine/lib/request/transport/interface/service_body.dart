@@ -7,7 +7,11 @@
  */
 
 class ServiceBody<T> {
-    List<dynamic> body(T object) {
-        return [];
+    Future<List<dynamic>> body(T object, List<dynamic> extras) {
+        throw Exception("You're not extends ServiceBody");
+    }
+
+    String getServiceName(T object) {
+        throw Exception("You're not extends ServiceBody");
     }
 }

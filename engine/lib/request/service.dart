@@ -313,17 +313,21 @@ class Service {
 
 class ServicePeripheral {
     final String keyMap;
-    final String service;
     final ServiceBody requestBody;
     final String baseUrl;
+    final List<dynamic> extras;
 
-    ServicePeripheral({this.keyMap = "api", required this.service, required this.requestBody, required this.baseUrl});
+    ServicePeripheral({this.keyMap = "api", required this.requestBody, required this.baseUrl, this.extras = const []});
 
     ServiceBody getRequestBody() {
         return requestBody;
     }
 
-    void push(BuildContext context, List<dynamic> body, ResponseListener listener) {
+    List<dynamic> getExtras() {
+        return extras;
+    }
+
+    void push(String service, BuildContext context, List<dynamic> body, ResponseListener listener) {
         Transporter transporter = Transporter()
             .id(-1)
             .context(context)

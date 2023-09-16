@@ -10,7 +10,6 @@ import 'package:http/http.dart' show Client;
 import 'package:http/http.dart' as http;
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
-import 'package:get/get.dart' as gets;
 
 import '../../model/base_model.dart';
 import '../../model/string_model.dart';
@@ -362,10 +361,7 @@ class Transporter {
 
                 dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
                     const Duration(seconds: 60),
-                    onTimeout: () {
-                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                        throw 'Request Timeout';
-                    },
+                    onTimeout: () => throw 'Request Timeout',
                 );
                 response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
@@ -375,11 +371,8 @@ class Transporter {
                     body: bodyBuilder.toString(),
                 ).timeout(
                     const Duration(seconds: 30),
-                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) {
-                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                    return null;
-                });
+                    onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -428,10 +421,7 @@ class Transporter {
 
                 dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
                     const Duration(seconds: 60),
-                    onTimeout: () {
-                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                        throw 'Request Timeout';
-                    },
+                    onTimeout: () => throw 'Request Timeout',
                 );
                 response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
@@ -441,11 +431,8 @@ class Transporter {
                     body: bodyBuilder.toString(),
                 ).timeout(
                     const Duration(seconds: 30),
-                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) {
-                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                    return null;
-                });
+                    onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -494,10 +481,7 @@ class Transporter {
 
                 dynamic responseMultipart = await _chuckerHttpClient.send(request).timeout(
                     const Duration(seconds: 60),
-                    onTimeout: () {
-                        gets.Get.snackbar("Error", 'Timeout', backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                        throw 'Request Timeout';
-                    },
+                    onTimeout: () => throw 'Request Timeout',
                 );
                 response = http.Response(await responseMultipart.stream.bytesToString(), (responseMultipart as http.StreamedResponse).statusCode, reasonPhrase: responseMultipart.reasonPhrase);
             } else {
@@ -507,11 +491,8 @@ class Transporter {
                     body: bodyBuilder.toString(),
                 ).timeout(
                     const Duration(seconds: 30),
-                    onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) {
-                    gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                    return null;
-                });
+                    onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -544,11 +525,8 @@ class Transporter {
                 headers: headers
             ).timeout(
                 const Duration(seconds: 30),
-                onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
-            ).catchError((error) {
-                gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                return null;
-            });
+                onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
+            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
             logging.log(
@@ -580,11 +558,8 @@ class Transporter {
                 headers: headers
             ).timeout(
                 const Duration(seconds: 30),
-                onTimeout: () => http.Response("{\"status\": 408, \"name\": \"Request Timeout\", \"message\": \"Request Timeout\"\n}", 408, reasonPhrase: 'Request Timeout'),
-            ).catchError((error) {
-                gets.Get.snackbar("Error", error.toString(), backgroundColor: Colors.redAccent, colorText: Colors.white, snackPosition: gets.SnackPosition.TOP);
-                return null;
-            });
+                onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
+            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
             logging.log(

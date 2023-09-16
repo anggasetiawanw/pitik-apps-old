@@ -3,6 +3,9 @@
 import 'package:reflectable/reflectable.dart';
 
 import '../offlinecapability/offline.dart';
+import '../util/mapper/annotation/is_child.dart';
+import '../util/mapper/annotation/is_children.dart';
+import '../util/mapper/mapper.dart';
 import '../util/mirror_feature.dart';
 import 'annotation/attribute.dart';
 import 'annotation/table.dart';
@@ -78,7 +81,7 @@ abstract class DaoImpl<T> implements DaoInterface {
     /// Returns:
     ///   The return value is the primary key of the object that was saved.
     @override
-    Future<int?> save(object) async {
+    Future<int?> save(object, {String? keyForCheck}) async {
         String primaryKey = "";
         String autoIncrement = "";
         bool autoIncrementBool = false;
@@ -112,10 +115,17 @@ abstract class DaoImpl<T> implements DaoInterface {
                         if (fieldValue == null) {
                             column[attribute.name] = attribute.defaultValue;
                         } else {
-                            column[attribute.name] = fieldValue;
+                            if (MirrorFeature.isAnnotationPresent(v, IsChild) || MirrorFeature.isAnnotationPresent(v, IsChildren)) {
+                                column[attribute.name] = Mapper.asJsonString(fieldValue);
+                            } else {
+                                column[attribute.name] = fieldValue;
+                            }
                         }
 
-                        if (attribute.primaryKey) {
+                        if (keyForCheck != null && keyForCheck == attribute.name) {
+                            primaryKey = attribute.name;
+                            dataType = fieldValue.runtimeType;
+                        } else if (attribute.primaryKey) {
                             autoIncrementBool = attribute.autoIncrements;
                             if (attribute.autoIncrements) {
                                 autoIncrement = attribute.name;
@@ -153,7 +163,11 @@ abstract class DaoImpl<T> implements DaoInterface {
                         if (fieldValue == null) {
                             column[attribute.name] = attribute.defaultValue;
                         } else {
-                            column[attribute.name] = fieldValue;
+                            if (MirrorFeature.isAnnotationPresent(v, IsChild) || MirrorFeature.isAnnotationPresent(v, IsChildren)) {
+                                column[attribute.name] = Mapper.asJsonString(fieldValue);
+                            } else {
+                                column[attribute.name] = fieldValue;
+                            }
                         }
 
                         if (attribute.primaryKey) {
@@ -292,7 +306,13 @@ abstract class DaoImpl<T> implements DaoInterface {
                                 }
                             }
 
-                            dynamic fieldValue = instanceMirror.invokeSetter(fieldName, data[attribute.name]);
+                            dynamic fieldValue;
+                            if (MirrorFeature.isAnnotationPresent(v, IsChild) || MirrorFeature.isAnnotationPresent(v, IsChildren)) {
+                                fieldValue = data[attribute.name];
+                            } else {
+                                fieldValue = instanceMirror.invokeSetter(fieldName, data[attribute.name]);
+                            }
+
                             arguments[attribute.name] = fieldValue;
                         }
                     }
@@ -374,7 +394,13 @@ abstract class DaoImpl<T> implements DaoInterface {
                                     }
                                 }
 
-                                dynamic fieldValue = instanceMirror.invokeSetter(fieldName, data[attribute.name]);
+                                dynamic fieldValue;
+                                if (MirrorFeature.isAnnotationPresent(v, IsChild) || MirrorFeature.isAnnotationPresent(v, IsChildren)) {
+                                    fieldValue = data[attribute.name];
+                                } else {
+                                    fieldValue = instanceMirror.invokeSetter(fieldName, data[attribute.name]);
+                                }
+
                                 arguments[fieldName] = fieldValue;
                             }
                         }
@@ -394,13 +420,13 @@ abstract class DaoImpl<T> implements DaoInterface {
 
                 return result;
             } else {
-                return null!;
+                return [];
             }
         } on Exception catch(e, stacktrace) {
             print(stacktrace);
         }
 
-        return null!;
+        return [];
     }
 
     /// > This function takes a query and parameters, and returns a model of type T
