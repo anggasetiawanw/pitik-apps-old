@@ -184,7 +184,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                               ),
                           ),
                           listComponent(() => Get.toNamed(RoutePage.changePassPage, arguments: false), "images/key_icon.svg", "Ubah Kata Sandi"),
-                          listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
+                          listComponent(() => Get.toNamed(RoutePage.privacyPage, arguments: false), "images/privacy.svg", "Kebijakan Privasi"),
                           listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
                           listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
                           listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),

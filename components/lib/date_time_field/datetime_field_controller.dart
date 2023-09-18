@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
+ *@author Robertus Mahardhi Kuncoro
+ *@email <robert.kuncoro@pitik.id>
+ *@create date 09/08/23
  */
 
 class DateTimeFieldController extends GetxController {

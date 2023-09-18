@@ -46,7 +46,7 @@ class LampSetupController extends GetxController {
         hint: "00:00",
         flag: DateTimeField.TIME_FLAG,
         alertText: "Durasi Nyala harus di isi",
-        onDateTimeSelected: (time, field) {
+        onDateTimeSelected: (DateTime time, dateField) {
             dtfLampOn.controller.setTextSelected("${time.hour}:${time.minute}");
         },
     );
@@ -57,7 +57,7 @@ class LampSetupController extends GetxController {
         hint: "00: 00",
         flag: DateTimeField.TIME_FLAG,
         alertText: "Durasi Mati harus di isi",
-        onDateTimeSelected: (time, field) {
+        onDateTimeSelected: (DateTime time, dateField) {
             dtfLampOff.controller.setTextSelected(
                 "${time.hour}:${time.minute}");
         },
@@ -171,7 +171,7 @@ class LampSetupController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
         }
     }

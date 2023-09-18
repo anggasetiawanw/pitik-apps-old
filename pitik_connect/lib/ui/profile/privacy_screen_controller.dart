@@ -22,6 +22,7 @@ class PrivacyScreenController extends GetxController {
     final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
     late Future<bool> isFirstLogin;
     var isLoading = false.obs;
+    var showBtnApprove = false.obs;
 
     late ButtonFill bfAgree = ButtonFill(
         controller: GetXCreator.putButtonFillController("bfAgree"),
@@ -43,11 +44,15 @@ class PrivacyScreenController extends GetxController {
     Future<void> onInit() async {
         super.onInit();
         isLoading.value = true;
+        showBtnApprove.value = Get.arguments;
         isFirstLogin = prefs.then((SharedPreferences prefs) {
             return prefs.getBool('isFirstLogin') ?? true;
         });
         scrollListener();
         bfAgree.controller.disable();
+        // if(showBtnApprove.isFalse){
+        //     bfAgree.controller.disable()
+        // }
         isLoading.value = false;
     }
 

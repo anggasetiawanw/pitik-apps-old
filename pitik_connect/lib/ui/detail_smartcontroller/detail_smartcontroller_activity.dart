@@ -302,7 +302,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                                 width: 40,
                                                                                 height: 40,
                                                                                 decoration: BoxDecoration(
-                                                                                    color:controller.deviceController!.growthDay == null ? Color(0xFFFBB8A4) : Color(0xFFFFF6ED),
+                                                                                    color:controller.deviceController!.growthDay == null ? Color(0xFFFBB8A4) : GlobalVar.iconHomeBg,
                                                                                     borderRadius: BorderRadius.only(
                                                                                         topLeft: Radius.circular(4),
                                                                                         topRight: Radius.circular(4),

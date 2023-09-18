@@ -82,7 +82,7 @@ class BerandaActivity extends StatelessWidget {
                                             width: 36,
                                             height: 36,
                                             decoration: BoxDecoration(
-                                                color:Color(0xFFFFF6ED),
+                                                color:GlobalVar.iconHomeBg,
                                                 borderRadius: BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
@@ -142,7 +142,7 @@ class BerandaActivity extends StatelessWidget {
                                               width: 40,
                                               height: 40,
                                               decoration: BoxDecoration(
-                                                  color:Color(0xFFFFF6ED),
+                                                  color:GlobalVar.iconHomeBg,
                                                   borderRadius: BorderRadius.only(
                                                       topLeft: Radius.circular(4),
                                                       topRight: Radius.circular(4),

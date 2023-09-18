@@ -43,7 +43,7 @@ class DetailSmartCameraController extends GetxController {
 
     ScrollController scrollCameraController = ScrollController();
 
-    scrollPurchaseListener() async {
+    scrollHistoryListener() async {
         scrollCameraController.addListener(() {
             if (scrollCameraController.position.maxScrollExtent ==
                 scrollCameraController.position.pixels) {
@@ -81,7 +81,7 @@ class DetailSmartCameraController extends GetxController {
             service: ListApi.getListDataCamera,
             context: context,
             body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathListCamera(coop.coopId!)],
+                ListApi.pathListCamera(coop.coopId!), pageSmartCamera, limit],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
                     if ((body as CameraListResponse).data!.isNotEmpty) {
@@ -90,7 +90,8 @@ class DetailSmartCameraController extends GetxController {
                         }
                         totalCamera.value = sensorCameras.value.length;
                     }
-                    GlobalVar.sendRenderTimeMixpanel("Open_smart_camera_page", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("Open_smart_camera_page", timeStart, timeEnd);
                     isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet){
@@ -162,7 +163,7 @@ class DetailSmartCameraController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
     }
 

@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:model/auth_model.dart';
+import 'package:model/engine_library.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
@@ -50,6 +51,7 @@ class LoginController extends GetxController {
         textUnit: "",
         inputType: TextInputType.number,
         maxInput: 20,
+        action : TextInputAction.next,
         onTyping: (value, control) {
         }
     );
@@ -59,6 +61,7 @@ class LoginController extends GetxController {
         label: "Password",
         hint: "Ketik Kata Sandi",
         alertText: "Password Harus Di Isi",
+        action : TextInputAction.done,
         maxInput: 20, onTyping: (String ) {  },
     );
     late ButtonFill bfLogin = ButtonFill(
@@ -124,9 +127,7 @@ class LoginController extends GetxController {
                         onTokenInvalid: GlobalVar.invalidResponse()
                     )
                 );
-            } catch(e, stacktrace){
-                print('$e - > $stacktrace');
-            }
+            }catch(e){}
         }
     }
 
@@ -183,7 +184,7 @@ class LoginController extends GetxController {
                         return prefs.getBool('isFirstLogin') ?? true;
                     });
                     if(await isFirstLogin){
-                        Get.toNamed(RoutePage.privacyPage);
+                        Get.toNamed(RoutePage.privacyPage, arguments: true);
                     }else{
                         // if(action == "DEFAULT_PASSWORD"){
                         //     showInformation();

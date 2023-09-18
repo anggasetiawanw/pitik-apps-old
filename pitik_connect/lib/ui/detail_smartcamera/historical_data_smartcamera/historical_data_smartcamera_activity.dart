@@ -59,10 +59,9 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                 children: [
                                     Center(
                                         child: SizedBox(
-                                            child: ProgressLoading(
+                                            child: CircularProgressIndicator(
+                                                color: GlobalVar.primaryOrange
                                             ),
-                                            height: 24,
-                                            width: 24,
                                         ),
                                     ),
                                     SizedBox(height: 120),
@@ -125,10 +124,10 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                           onSelected: (String value){
                                               if(value == "Bagikan"){
                                                   GlobalVar.track("Click_option_menu_bagikan");
-                                                  controller.setContentShare(controller.recordImages.value[index]);
+                                                  controller.setContentShare(controller.recordImages.value[index], false);
                                               }else{
                                                   GlobalVar.track("Click_option_menu_download");
-                                                  controller.setLinkImage(controller.recordImages.value[index].link!);
+                                                  controller.setContentShare(controller.recordImages.value[index], true );
                                               }
                                           },), // </Add>
                                   ),

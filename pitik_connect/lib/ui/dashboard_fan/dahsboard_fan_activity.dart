@@ -76,7 +76,7 @@ class DashboardFan extends StatelessWidget {
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                                color:Color(0xFFFFF6ED),
+                                                color:GlobalVar.iconHomeBg,
                                                 borderRadius: BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),

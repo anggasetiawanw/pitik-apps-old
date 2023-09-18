@@ -1,4 +1,3 @@
-
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -53,11 +52,33 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
             ));
     }
 
+      Widget appBar() {
+          return AppBar(
+              elevation: 0,
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                      Navigator.pop(context);
+                  }),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+              ),
+              backgroundColor: GlobalVar.primaryOrange,
+              centerTitle: true,
+              title: Text(
+                  "Kebijakan Privasi",
+                  style: GlobalVar.whiteTextStyle
+                      .copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
+              ),
+          );
+      }
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(0),
-            child:Container(),
+            preferredSize: const Size.fromHeight(60),
+            child:appBar(),
         ),
         body: Stack(
             children: [
@@ -82,7 +103,10 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                         ],),
                     ),
                 ),
-                bottomNavBar(),
+                controller.showBtnApprove.isTrue ? bottomNavBar() : Container(),
+                // if(controller.showBtnApprove.isTrue)...[
+                //     bottomNavBar()
+                // ]
             ],
         ),
     );
