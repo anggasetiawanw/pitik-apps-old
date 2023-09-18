@@ -1,0 +1,7 @@
+storePassword=12341234
+keyPassword=12341234
+keyAlias=upload
+storeFile=upload-keystore.jks
+
+
+key-decrtypt = pitik@mobile123

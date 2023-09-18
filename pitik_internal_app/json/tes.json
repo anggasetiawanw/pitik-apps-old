@@ -1,0 +1,79 @@
+{
+  "chickInDate": "string",
+  "coopId": "string",
+  "initialPopulation": "integer",
+  "doc->DocModel": {
+    "categoryCode": "string",
+    "categoryName": "string",
+    "subcategoryCode": "string",
+    "subcategoryName": "string",
+    "productCode": "string",
+    "productName": "string",
+    "quantity": "integer",
+    "purchaseUom": "string"
+  },
+  "listData->String": [
+    "data1",
+    "data2"
+  ],
+  "pakan->FeedModel": [
+    {
+      "categoryCode": "string",
+      "categoryName": "string",
+      "subcategoryCode": "string",
+      "subcategoryName": "string",
+      "productCode": "string",
+      "productName": "string",
+      "quantity": "integer",
+      "purchaseUom": "string"
+    }
+  ],
+  "ovk->OvkModel": [
+    {
+      "categoryCode": "string",
+      "categoryName": "string",
+      "subcategoryCode": "string",
+      "subcategoryName": "string",
+      "productCode": "string",
+      "productName": "string",
+      "quantity": "integer",
+      "purchaseUom": "string"
+    }
+  ],
+  "notes": "string",
+  "internalOvkTransferRequest->InternalModel": {
+    "coopSourceId": "string",
+    "coopTargetId": "string",
+    "branchSourceId": "string",
+    "branchTargetId": "string",
+    "farmingCycleId": "string",
+    "datePlanned": "string",
+    "subcategoryCode": "string",
+    "subcategoryName": "string",
+    "productName": "string",
+    "quantity": "integer",
+    "notes": "string",
+    "logisticOption": "string",
+    "details->ProductTesModel": [
+      {
+        "categoryCode": "string",
+        "categoryName": "string",
+        "subcategoryCode": "string",
+        "subcategoryName": "string",
+        "productCode": "string",
+        "productName": "string",
+        "quantity": "integer",
+        "uom": "string"
+      }
+    ],
+    "photos->MediaModel": [
+      {
+        "url": "string"
+      }
+    ],
+    "type": "string",
+    "route": "string"
+  },
+  "mergedLogistic": "boolean",
+  "mergedCoopId": "string"
+}

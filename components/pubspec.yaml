@@ -4,15 +4,11 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=3.1.1 <4.0.0'
+  sdk: ">=3.1.1 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
-    sdk: flutter
-
-dev_dependencies:
-  flutter_test:
     sdk: flutter
   engine:
     path: ../engine
@@ -20,6 +16,8 @@ dev_dependencies:
     path: ../model
   dao_impl:
     path: ../dao_impl
+  global_variable:
+    path: ../global_variable
   flutter_lints: ^2.0.0
   get: ^4.6.5
   mixpanel_flutter: ^2.1.1
@@ -37,6 +35,10 @@ dev_dependencies:
   built_value_generator: ^8.5.0
   reflectable: ^4.0.5
   autocomplete_textfield: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
