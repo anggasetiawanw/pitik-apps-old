@@ -140,18 +140,20 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                         .copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 ),
                 actions: [
-                    GestureDetector(
-                        onTap: () {
-                            _showButtonDialog(context, controller);
-                        },
-                        child: Container(
-                            color: Colors.transparent,
-                            height: 32,
-                            width: 32,
-                            margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                            child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                    if(GlobalVar.canModifyInfrasturucture())...[
+                        GestureDetector(
+                            onTap: () {
+                                _showButtonDialog(context, controller);
+                            },
+                            child: Container(
+                                color: Colors.transparent,
+                                height: 32,
+                                width: 32,
+                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                            ),
                         ),
-                    ),
+                    ]
                 ],
             );
         }

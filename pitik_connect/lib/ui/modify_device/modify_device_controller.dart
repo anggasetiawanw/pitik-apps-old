@@ -203,7 +203,7 @@ class ModifyDeviceController extends GetxController {
             cardSensor.controller.setPrefixDevice("ATC_");
         } else if (deviceType.value == RegisterDeviceController.SMART_CAMERA) {
             cardCamera.controller.visibleCard();
-            cardCamera.controller.setPrefixDevice("BRD");
+            cardCamera.controller.setPrefixDevice("BRD_");
         }
         bfYesModify = ButtonFill(
             controller: GetXCreator.putButtonFillController("bfYesModify"),
@@ -239,7 +239,7 @@ class ModifyDeviceController extends GetxController {
                     for (int i = 0; i < sensors.value.length; i++) {
                         cardCamera.controller.efCameraId.value[i].setInput(
                             sensors.value[i].sensorCode!.replaceAll(
-                                "BRD", ""));
+                                "BRD_", ""));
                     }
                     DateTime timeEnd = DateTime.now();
                     GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_camera", timeStart, timeEnd);
@@ -286,7 +286,7 @@ class ModifyDeviceController extends GetxController {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                            "Kamu bisa mendaftarkan alat dengan dua cara mengisi manual dan scan QRCODE yang tertera pada masing-masing alat." ,
+                            "Kamu bisa mendaftarkan alat dengan dua cara, yaitu mengisi manual dengan mengetik menggunakan huruf kapital A-F dan anga 0-9 atau bisa scan QRCODE yang tertera pada masing-masing alat." ,
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
                         const SizedBox(height: 16),

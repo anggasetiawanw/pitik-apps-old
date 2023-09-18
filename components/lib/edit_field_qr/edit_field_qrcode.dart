@@ -91,11 +91,12 @@ class EditFieldQR extends StatelessWidget {
                                                         controller: editFieldController,
                                                         enabled: controller.activeField.isTrue,
                                                         maxLength: maxInput,
+                                                        textCapitalization: TextCapitalization.characters,
                                                         textInputAction: action,
                                                         keyboardType: inputType,
                                                         inputFormatters: isMacAddres ? [
                                                             MaskTextInputFormatter(mask: "##:##:##:##:##:##:##:##",
-                                                                filter: {"#": RegExp('[0-9A-Fa-f]')}
+                                                                filter: {"#": RegExp('[0-9A-F]')}
                                                             )
                                                         ] :  [
                                                             MaskTextInputFormatter(mask: "######",

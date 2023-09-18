@@ -470,4 +470,11 @@ class GlobalVar {
         Duration totalTime = timeEnd.difference(timeStart);
         GlobalVar.trackWithMap("Render_Time", {'Page' : page , 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
     }
+
+    static bool canModifyInfrasturucture(){
+        if(profileUser!.role == "owner external"){
+            return true;
+        }
+        return false;
+    }
 }

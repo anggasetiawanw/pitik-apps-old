@@ -135,19 +135,21 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                 title:  Obx(() => controller.deviceUpdatedName == "" ?
                 Text("${controller.device.deviceName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),) : Text("${controller.deviceUpdatedName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),)),
                 actions: [
-                    GestureDetector(
-                        onTap: () {
-                            GlobalVar.track("Click_option_menu");
-                            _showButtonDialog(context, controller);
-                        },
-                        child: Container(
-                            color: Colors.transparent,
-                            height: 32,
-                            width: 32,
-                            margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                            child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
-                        ),
-                    ),
+                    if(GlobalVar.canModifyInfrasturucture())...[
+                        GestureDetector(
+                            onTap: () {
+                                GlobalVar.track("Click_option_menu");
+                                _showButtonDialog(context, controller);
+                            },
+                            child: Container(
+                                color: Colors.transparent,
+                                height: 32,
+                                width: 32,
+                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                            ),
+                        )
+                    ]
                 ],
             );
         }

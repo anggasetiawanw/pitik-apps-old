@@ -1,4 +1,5 @@
 
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
@@ -66,6 +67,10 @@ class DashboardDeviceController extends GetxController {
         onSpinnerSelected: (value) {
         }
     );
+    late ButtonFill bfCreateDevice = ButtonFill(
+        controller: GetXCreator.putButtonFillController("createDevice"),
+        label: "Tambah Alat", onClick: () {},
+    );
 
     @override
     void onInit() {
@@ -84,6 +89,9 @@ class DashboardDeviceController extends GetxController {
     @override
     void onReady() {
         super.onReady();
+        if(!GlobalVar.canModifyInfrasturucture()){
+            bfCreateDevice.controller.disable();
+        }
     }
 
     /// The function `getDetailRoom` retrieves the details of a room and populates
