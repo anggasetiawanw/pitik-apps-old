@@ -23,11 +23,11 @@ class NetworkErrorItem extends StatelessWidget {
                         Icon(Icons.wifi, size: 200, color: GlobalVar.primaryOrange,),
                         const SizedBox(height: 30),
                         const Text(
-                            'Internet connection lost!',
+                            'Sedang tidak ada jaringan',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         const Text(
-                            'Check your connection and try again.',
+                            'Periksa kembali koneksi internet kamu !',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                         )
                     ],

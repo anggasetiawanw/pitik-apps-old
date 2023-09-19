@@ -66,7 +66,7 @@ class DashboardLamp extends StatelessWidget {
                                 padding: EdgeInsets.all(12),
                                 margin: EdgeInsets.only(bottom: 12),
                                 decoration: BoxDecoration(
-                                    color: controller.lamps.value[index].error == false ?  Color(0xFFFFFFFF) : Color(0xFFFDDFD1),
+                                    color: controller.lamps.value[index].error == false ?  Colors.white : Color(0xFFFDDFD1),
                                     border: Border.all(width: 1, color: GlobalVar.outlineColor),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(
@@ -77,7 +77,7 @@ class DashboardLamp extends StatelessWidget {
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                                color: controller.lamps.value[index].error == false ?  Color(0xFFFFF6ED) : Color(0xFFFBB8A4),
+                                                color: controller.lamps.value[index].error == false ?  GlobalVar.iconHomeBg : Color(0xFFFBB8A4),
                                                 borderRadius: BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),

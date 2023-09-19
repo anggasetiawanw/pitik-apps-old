@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:carrier_info/carrier_info.dart';
@@ -105,11 +106,11 @@ class BerandaController extends GetxController {
 
 
     @override
-    void onInit() {
+    void onInit() async {
         super.onInit();
         timeStart = DateTime.now();
         isLoading.value = true;
-        initValueMixpanel();
+        await initValueMixpanel();
         getDataCoops();
     }
 
@@ -128,20 +129,22 @@ class BerandaController extends GetxController {
     /// devices.
     Future<void> initValueMixpanel() async {
         // Platform messages may fail, so we use a try/catch PlatformException.
-        final hasPermission = await handlePermissionPhoneAccess();
-        if(hasPermission) {
-            try {
-                if (Platform.isAndroid) {
+        if (Platform.isAndroid) {
+            final hasPermission = await handlePermissionPhoneAccess();
+            if (hasPermission) {
+                try {
                     initMobileNumberState();
-                }
-                if (Platform.isIOS) {
-                    iosInfo = await CarrierInfo.getIosInfo();
-                    if (iosInfo != null && iosInfo!.carrierData.length > 0) {
-                        // ignore: unnecessary_null_comparison
-                        phoneCarrier = iosInfo!.carrierData[0].carrierName == null ? "" : iosInfo!.carrierData[0].carrierName;
-                    }
-                }
             } catch (e) {
+
+                }
+            }
+        } else if (Platform.isIOS) {
+            iosInfo = await CarrierInfo.getIosInfo();
+            if (iosInfo != null && iosInfo!.carrierData.length > 0) {
+                phoneCarrier =
+                iosInfo!.carrierData[0].carrierName == null
+                    ? ""
+                    : iosInfo!.carrierData[0].carrierName;
             }
         }
         initMixpanel();
@@ -154,7 +157,7 @@ class BerandaController extends GetxController {
     Future<void> initMixpanel() async {
 
         final hasPermission = await handleLocationPermission();
-        if (hasPermission){
+        if (await hasPermission){
             final timeLimit = const Duration(seconds: 5);
             await FlLocation.getLocation(timeLimit: timeLimit).then((position) async {
                 if(position.isMock) {
@@ -171,6 +174,7 @@ class BerandaController extends GetxController {
                 }
             });
         }
+
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         if(Platform.isAndroid) {
             AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;

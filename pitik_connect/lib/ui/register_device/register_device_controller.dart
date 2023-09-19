@@ -34,8 +34,6 @@ class RegisterDeviceController extends GetxController {
     static const String SMART_MONITORING = "Smart Monitoring";
     static const String SMART_CONTROLLER = "Smart Controller";
     static const String SMART_CAMERA = "Smart Camera";
-    static const String SMART_SCALE = "Smart Scale";
-
     ScrollController scrollController = ScrollController();
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
 
@@ -143,7 +141,8 @@ class RegisterDeviceController extends GetxController {
         /// argument "Open_form_smart_controller_page". Otherwise, it calls the
         /// `track` function with the argument "Open_form_smart_camera_page".
         deviceType.value == SMART_MONITORING ? GlobalVar.track("Open_form_smart_monitoring_page") : deviceType.value == SMART_CONTROLLER ? GlobalVar.track("Open_form_smart_controller_page") :  GlobalVar.track("Open_form_smart_camera_page") ;
-        GlobalVar.sendRenderTimeMixpanel("Open_form_${deviceType.value == SMART_MONITORING ? "smart_monitoring" : deviceType.value == SMART_CONTROLLER ? "smart_controller" : "smart_camera"}_page", timeStart, DateTime.now());
+        DateTime timeEnd = DateTime.now();
+        GlobalVar.sendRenderTimeMixpanel("Open_form_${deviceType.value == SMART_MONITORING ? "smart_monitoring" : deviceType.value == SMART_CONTROLLER ? "smart_controller" : "smart_camera"}_page", timeStart, timeEnd);
     }
 
     @override
@@ -279,7 +278,7 @@ class RegisterDeviceController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
 
         }
@@ -319,7 +318,7 @@ class RegisterDeviceController extends GetxController {
             }
         }
 
-        return Device(deviceType: deviceType == SMART_MONITORING ? "SMART_MONITORING" : deviceType == SMART_CONTROLLER ? "SMART_CONTROLLER" : deviceType == SMART_CAMERA ? "SMART_CAMERA" : "SMART_SCALE", coopId: coop.coopId, roomId: coop.room!.id,mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ""), sensors: sensors);
+        return Device(deviceType: deviceType == SMART_MONITORING ? "SMART_MONITORING" : deviceType == SMART_CONTROLLER ? "SMART_CONTROLLER" : "SMART_CAMERA",coopId: coop.coopId, roomId: coop.room!.id,mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ""), sensors: sensors);
     }
 
 }

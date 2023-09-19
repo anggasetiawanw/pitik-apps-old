@@ -77,7 +77,7 @@ class DetailSmartMonitorController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
                     if(!(body as LatestConditionResponse).data!.isNullObject()){
-                        deviceSummary = body.data;
+                        deviceSummary = (body).data;
                     }
                     isLoading.value = false;
                 },

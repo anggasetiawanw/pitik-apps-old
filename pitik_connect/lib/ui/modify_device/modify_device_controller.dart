@@ -230,7 +230,8 @@ class ModifyDeviceController extends GetxController {
                             sensors.value[i].sensorCode!.replaceAll(
                                 "ATC_", ""));
                     }
-                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_monitoring", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_monitoring", timeStart, timeEnd);
                 } else if(deviceType== RegisterDeviceController.SMART_CAMERA) {
                     for (int i = 0; i < sensors.value.length - 1; i++) {
                         cardCamera.controller.addCard();
@@ -240,9 +241,11 @@ class ModifyDeviceController extends GetxController {
                             sensors.value[i].sensorCode!.replaceAll(
                                 "BRD", ""));
                     }
-                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_camera", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_camera", timeStart, timeEnd);
                 }else{
-                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_controller", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_controller", timeStart, timeEnd);
                 }
             }
             efDeviceName.controller.invisibleField();
@@ -396,7 +399,7 @@ class ModifyDeviceController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
 
         }

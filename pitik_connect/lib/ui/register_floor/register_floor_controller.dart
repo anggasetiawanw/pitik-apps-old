@@ -128,7 +128,8 @@ class RegisterFloorController extends GetxController {
                     body.data!.forEach((product) => mapList[product!.name!] = false);
                     spBuilding.controller.generateItems(mapList);
                     isLoading.value = false;
-                    GlobalVar.sendRenderTimeMixpanel("Open_create_floor", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("Open_create_floor", timeStart, timeEnd);
                 },
                 onResponseFail: (code, message, body, id, packet){
                     isLoading.value = false;
@@ -226,7 +227,8 @@ class RegisterFloorController extends GetxController {
                         onResponseDone: (code, message, body, id, packet) {
                             Get.offAllNamed(RoutePage.homePage);
                             isLoading.value = false;
-                            GlobalVar.sendRenderTimeMixpanel("Create_floor", timeStart, DateTime.now());
+                            DateTime timeEnd = DateTime.now();
+                            GlobalVar.sendRenderTimeMixpanel("Create_floor", timeStart, timeEnd);
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
@@ -250,7 +252,7 @@ class RegisterFloorController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
 
         } else {
@@ -260,7 +262,7 @@ class RegisterFloorController extends GetxController {
                         snackPosition: SnackPosition.BOTTOM,
                         duration: Duration(seconds: 5),
                         backgroundColor: Color(0xFFFF0000),
-                        colorText: Color(0xFFFFFFFF));
+                        colorText: Colors.white);
                 }
             }
         }
@@ -282,7 +284,7 @@ class RegisterFloorController extends GetxController {
         List<Room?> rooms = [];
         for (int i = 0; i < cardFloor.controller.itemCount.value; i++) {
             int whichItem = cardFloor.controller.index.value[i];
-            rooms.add(Room(name :cardFloor.controller.efFloorName.value[whichItem].getInput(), level: (whichItem + 1)));
+            rooms.add(Room(name :cardFloor.controller.efFloorName.value[whichItem].getInput(), level: (i + 1)));
         }
         return Coop(coopName: spBuilding.controller.textSelected.value,coopType: detailCoop.coopType, rooms: rooms,farmId: GlobalVar.farm!.id);
     }

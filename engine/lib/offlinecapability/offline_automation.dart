@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../dao/dao_impl.dart';
 import '../request/service.dart';
 import '../request/transport/interface/response_listener.dart';
+import '../request/transport/interface/service_body.dart';
 import '../util/interface/schedule_listener.dart';
 import '../util/scheduler.dart';
 import 'offline.dart';
@@ -33,8 +34,8 @@ class OfflineAutomation {
         return await daoImpl.getRecords('idOffline');
     }
 
-    T _getRecord<T extends Offline>(DaoImpl daoImpl, int idOffline) {
-        return daoImpl.queryForModel(daoImpl.instance, 'SELECT * FROM ${daoImpl.tableName} WHERE idOffline = ?', [idOffline]) as T;
+    Future<T> _getRecord<T extends Offline>(DaoImpl daoImpl, int idOffline) async {
+        return await daoImpl.queryForModel(daoImpl.instance, 'SELECT * FROM ${daoImpl.tableName} WHERE idOffline = ?', [idOffline]);
     }
 
     void _deleteByExpiredDateAndFlag(Offline record, DaoImpl daoImpl) {
@@ -62,7 +63,7 @@ class OfflineAutomation {
     }
 
     Future<int?> _updateFlag<T extends Offline>(DaoImpl daoImpl, int idOffline) async {
-        T data = daoImpl.queryForModel(daoImpl.instance, "SELECT * FROM ${daoImpl.tableName} WHERE idOffline = ?", [idOffline]) as T;
+        dynamic data = await daoImpl.queryForModel(daoImpl.instance, "SELECT * FROM ${daoImpl.tableName} WHERE idOffline = ?", [idOffline]);
         data.flag = 1;
 
         return await daoImpl.save(data);
@@ -71,42 +72,43 @@ class OfflineAutomation {
     void launch() async {
         await Scheduler()
             .listener(SchedulerListener(
-                onTick: (packet) {
-                    registered.forEach((key, value) async {
-                        for (Offline record in await _getRecords(key)) {
-                            if (value == null) {
-                                _deleteByExpiredDate(record, key);
-                            } else  {
-                                if (record.flag == 0) {
+            onTick: (packet) {
+                registered.forEach((key, value) async {
+                    for (Offline record in await _getRecords(key)) {
+                        if (value == null) {
+                            _deleteByExpiredDate(record, key);
+                        } else  {
+                            if (record.flag == 0) {
+                                ServiceBody serviceBody = value.getRequestBody();
+                                _getRecord(key, record.idOffline!).then((result) async {
                                     value.push(
+                                        serviceBody.getServiceName(result),
                                         Get.context!,
-                                        value.getRequestBody().body(_getRecord(key, record.idOffline!)),
+                                        await serviceBody.body(result, value.getExtras()),
                                         ResponseListener(
                                             onResponseDone: (code, message, body, id, packet) async {
                                                 int? updateStatus = await _updateFlag(key, record.idOffline!);
                                                 if (updateStatus != null && updateStatus > 0) {
-                                                    _deleteByExpiredDateAndFlag(_getRecord(key, record.idOffline!), key);
+                                                    _deleteByExpiredDateAndFlag(await _getRecord(key, record.idOffline!), key);
                                                 }
                                             },
                                             onResponseFail: (code, message, body, id, packet) {},
                                             onResponseError: (exception, stacktrace, id, packet) {},
                                             onTokenInvalid: () {}
-                                        ));
-                                } else {
-                                    _deleteByExpiredDateAndFlag(record, key);
-                                }
+                                        )
+                                    );
+                                });
+                            } else {
+                                _deleteByExpiredDateAndFlag(record, key);
                             }
                         }
-                    });
+                    };
+                });
 
-                    return true;
-                },
-                onTickDone: (packet) {
-
-                },
-                onTickFail: (packet) {
-
-                }))
+                return true;
+            },
+            onTickDone: (packet) {},
+            onTickFail: (packet) {}))
             .always(true)
             .run(const Duration(minutes: 1));
     }

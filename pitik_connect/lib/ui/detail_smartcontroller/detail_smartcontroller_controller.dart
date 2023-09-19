@@ -74,7 +74,6 @@ class DetailSmartControllerController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        timeStart = DateTime.now();
         coop = Get.arguments[0];
         device = Get.arguments[1];
         isLoading.value = true;
@@ -92,6 +91,7 @@ class DetailSmartControllerController extends GetxController {
     }
 
     void getDetailSmartController(){
+        timeStart = DateTime.now();
         Service.push(
             service: ListApi.getDetailSmartController,
             context: context,
@@ -102,7 +102,8 @@ class DetailSmartControllerController extends GetxController {
                     if((body as DetailControllerResponse).data != null) {
                         deviceController = (body).data;
                     }
-                    GlobalVar.sendRenderTimeMixpanel("Open_smart_controller_page", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("Open_smart_controller_page", timeStart, timeEnd);
                     isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet){

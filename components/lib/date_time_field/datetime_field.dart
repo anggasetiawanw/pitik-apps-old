@@ -8,9 +8,9 @@ import '../global_var.dart';
 import 'datetime_field_controller.dart';
 
 /**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
+ *@author Robertus Mahardhi Kuncoro
+ *@email <robert.kuncoro@pitik.id>
+ *@create date 09/08/23
  */
 
 class DateTimeField extends StatelessWidget {
@@ -84,13 +84,7 @@ class DateTimeField extends StatelessWidget {
                                                             child: Text(
                                                                 controller.textSelected.value == "" ? hint : controller.textSelected.value,
                                                                 overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        controller.activeField.isTrue && controller.textSelected.value != "" ? GlobalVar.black :
-                                                                        controller.activeField.isTrue && controller.textSelected.value == "" ? GlobalVar.grayLightText :
-                                                                        GlobalVar.black,
-                                                                    fontSize: 14
-                                                                )
+                                                                style: TextStyle(color: controller.activeField.isTrue || controller.textSelected.value == "" ? GlobalVar.black : Color(0xFF9E9D9D), fontSize: 14)
                                                             ),
                                                         )
                                                     ),

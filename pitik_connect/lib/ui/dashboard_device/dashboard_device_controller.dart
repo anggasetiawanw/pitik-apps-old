@@ -70,7 +70,6 @@ class DashboardDeviceController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        timeStart = DateTime.now();
         GlobalVar.track("Open_lantai_page");
         coop = Get.arguments;
         isLoading.value = true;
@@ -89,7 +88,8 @@ class DashboardDeviceController extends GetxController {
 
     /// The function `getDetailRoom` retrieves the details of a room and populates
     /// different lists based on the device type.
-    void getDetailRoom() {
+    void getDetailRoom(){
+        timeStart = DateTime.now();
         Service.push(
             service: ListApi.getDetailRoom,
             context: context,
@@ -113,7 +113,8 @@ class DashboardDeviceController extends GetxController {
                             }
                         }
                     }
-                    GlobalVar.sendRenderTimeMixpanel("Open_dashboard_device", timeStart, DateTime.now());
+                    DateTime timeEnd = DateTime.now();
+                    GlobalVar.sendRenderTimeMixpanel("Open_dashboard_device", timeStart, timeEnd);
                     isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {

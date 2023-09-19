@@ -125,6 +125,50 @@ class Mapper {
         }
     }
 
+    /// The function `childrenPersistance` takes in data and a class type, and
+    /// returns a list of converted values based on the data type.
+    ///
+    /// Args:
+    ///   data (dynamic): The `data` parameter is a dynamic variable that can hold
+    /// any type of data. It is used to pass the input data to the function.
+    ///   as (dynamic): The parameter "as" is a type parameter that represents the
+    /// class type that you want to convert the data into. It is used to create an
+    /// instance of the class and invoke the "toResponseModel" method on that
+    /// instance.
+    ///
+    /// Returns:
+    ///   a List.
+    static dynamic childrenPersistance(dynamic data, dynamic as) {
+        List result = [];
+
+        if (data != null) {
+            if (data is List) {
+                for (var value in data) {
+                    if (value is String) {
+                        result.add(value.toString());
+                    } else if (value is int || value is double || value is bool) {
+                        result.add(value);
+                    } else {
+                        ClassMirror classMirror = SetupModel.reflectType(as) as ClassMirror;
+                        result.add(classMirror.invoke("toResponseModel", [value]));
+                    }
+                }
+            } else {
+                List<dynamic> listMap = jsonDecode(data);
+                for (var value in listMap) {
+                    if (value.length > 0) {
+                        ClassMirror classMirror = SetupModel.reflectType(as) as ClassMirror;
+                        result.add(classMirror.invoke("toResponseModel", [value]));
+                    } else {
+                        result.add(null);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     /// It takes a JSON string or a Map and returns an object of type T
     ///
     /// Args:
@@ -176,10 +220,9 @@ class Mapper {
                     }
                 }
             } else {
-                List<Map<String, dynamic>> listMap = jsonDecode(data);
-
+                List<dynamic> listMap = jsonDecode(data);
                 for (var value in listMap) {
-                    if (value.isNotEmpty) {
+                    if (value.length > 0) {
                         ClassMirror classMirror = SetupModel.reflectType(T) as ClassMirror;
                         result.add(classMirror.invoke("toResponseModel", [value]) as T);
                     } else {

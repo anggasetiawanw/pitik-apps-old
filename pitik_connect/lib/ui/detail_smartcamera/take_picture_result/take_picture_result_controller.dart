@@ -45,7 +45,7 @@ class TakePictureResultController extends GetxController {
         label: "Jam Ambil Gambar",
         hint: "Pilih Jam Ambil Gambar",
         flag: DateTimeField.ALL_FLAG,
-        alertText: "Jam Ambil Gambar harus di isi", onDateTimeSelected: (time, field) {
+        alertText: "Jam Ambil Gambar harus di isi", onDateTimeSelected: (DateTime time, dateField) {
         GlobalVar.track("Click_time_filter");
         dtftakePicture.controller.setTextSelected("${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}");
     },

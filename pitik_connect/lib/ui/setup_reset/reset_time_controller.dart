@@ -44,7 +44,7 @@ class ResetTimeController extends GetxController {
         label: "Waktu",
         hint: "00:00:00",
         flag: DateTimeField.TIME_FLAG,
-        alertText: "Durasi Nyala harus di isi", onDateTimeSelected: (time, field) {
+        alertText: "Durasi Nyala harus di isi", onDateTimeSelected: (DateTime time, dateField) {
         dtfLampReset.controller.setTextSelected("${time.hour}:${time.minute}:${time.second}");
     });
 
@@ -137,7 +137,7 @@ class ResetTimeController extends GetxController {
                     snackPosition: SnackPosition.BOTTOM,
                     duration: Duration(seconds: 5),
                     backgroundColor: Color(0xFFFF0000),
-                    colorText: Color(0xFFFFFFFF));
+                    colorText: Colors.white);
             }
 
         }

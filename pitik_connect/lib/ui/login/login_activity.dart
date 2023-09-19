@@ -1,5 +1,6 @@
 
 import 'package:components/global_var.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -70,7 +71,7 @@ class LoginActivity extends StatelessWidget {
                                             children: [
                                                 const SizedBox(height: 8),
                                                 Container(
-                                                    margin: EdgeInsets.only(top: 112),
+                                                    margin: EdgeInsets.only(top: 32),
                                                     child: Column(
                                                         children: [
                                                             Text(
@@ -88,11 +89,17 @@ class LoginActivity extends StatelessWidget {
                                                                         TextSpan(
                                                                             text: "Kebijakan Privasi",
                                                                             style: GlobalVar.primaryTextStyle.copyWith(fontSize: 10),
+                                                                            recognizer: TapGestureRecognizer()..onTap = () {
+                                                                                Get.toNamed(RoutePage.privacyPage, arguments: false);
+                                                                            },
                                                                         ),
                                                                         TextSpan(text: " serta"),
                                                                         TextSpan(
                                                                             text: " Syarat & Ketentuan",
                                                                             style: GlobalVar.primaryTextStyle.copyWith(fontSize: 10),
+                                                                            recognizer: TapGestureRecognizer()..onTap = () {
+                                                                                Get.toNamed(RoutePage.termPage);
+                                                                            },
                                                                         ),
                                                                         TextSpan(text: " kami"),
                                                                     ],
