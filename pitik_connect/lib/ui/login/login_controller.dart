@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:model/auth_model.dart';
-import 'package:model/engine_library.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
@@ -285,13 +284,11 @@ class LoginController extends GetxController {
 
     @override
     void onInit() {
-    // TODO: implement onInit
          super.onInit();
     }
 
     @override
     void onReady() {
-    // TODO: implement onReady
          super.onReady();
          // efNoHp.setInput("081012340011");
     }

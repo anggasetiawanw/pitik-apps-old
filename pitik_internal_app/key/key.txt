@@ -1,0 +1,8 @@
+storePassword=12341234
+keyPassword=12341234
+keyAlias=upload
+storeFile=upload-keystore.jks
+
+
+key-decrtypt = pitik@mobile123
+SONAR = sqp_9b6ff5b658ffaa48223499d1cefa43cc8a4dc494

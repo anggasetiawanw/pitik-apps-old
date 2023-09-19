@@ -133,6 +133,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                                         border: Border.all(width: 2, color: GlobalVar.grayLightText),
                                                                     ),
                                                                     child: GestureDetector(
+                                                                        // ignore: deprecated_member_use
                                                                         child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16, color: GlobalVar.grayLightText),
                                                                         onTap: () {},
                                                                     )

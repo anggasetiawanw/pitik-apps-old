@@ -34,10 +34,6 @@ class CardSensorController extends GetxController {
     void invisibleCard() => isShow.value = false;
     void setPrefixDevice(String prefix) => prefDevice.value = prefix;
 
-    @override
-    void onInit() {
-        super.onInit();
-    }
 
     @override
     void onReady() {
@@ -45,10 +41,6 @@ class CardSensorController extends GetxController {
         addCard();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     addCard() {
         index.value.add(numberList.value);

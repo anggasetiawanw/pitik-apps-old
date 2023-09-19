@@ -1,11 +1,9 @@
-// ignore_for_file: slash_for_doc_comments
+import 'package:model/engine_library.dart';
+import 'package:model/internal_app/module_model.dart';
+import 'package:model/internal_app/role_model.dart';
 
-import '../engine_library.dart';
-
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
+/*
+  @author DICKY <dicky.maulana@pitik.id>
  */
 
 @SetupEntity
@@ -15,6 +13,7 @@ class Profile extends BaseEntity {
     @Attribute(name: "id", primaryKey: true, notNull: true)
     String? id;
 
+    String? cmsId;
     @Attribute(name: "name", length: 100)
     String? name;
 
@@ -38,36 +37,73 @@ class Profile extends BaseEntity {
 
     @Attribute(name: "createdDate", length: 100)
     String? createdDate;
+    @Attribute(name: "userCode", length: 50)
+    String? userCode;
 
-    Profile({this.id, this.name, this.email, this.phoneNumber, this.waNumber, this.role, this.organizationId, this.createdDate, this.organizationName});
+    @Attribute(name: "userName", length: 50)
+    String? userName;
+
+    @Attribute(name: "fullName", length: 100)
+    String? fullName;
+
+    @Attribute(name: "userType", length: 20)
+    String? userType;
+
+    @Attribute(name: "status", type: "INTEGER", length: 2, defaultValue: "0")
+    int? status;
+
+    @Attribute(name: "refOwnerId", length: 100)
+    String? refOwnerId;
+    
+    @IsChildren()
+    List<RoleModel?>? roles;
+
+    @IsChild()
+    ModuleModel? modules;
+
+    Profile({this.id, this.userCode, this.userName, this.fullName, this.email, this.phoneNumber, this.userType, this.status = 1, this.refOwnerId, this.createdDate, this.cmsId, this.roles, this.modules, this.name, this.waNumber, this.role, this.organizationId, this.organizationName});
 
     @override
     Profile toModelEntity(Map<String, dynamic> map) {
         return Profile(
             id: map['id'],
-            name: map['name'],
+            userCode: map['userCode'],
+            userName: map['userName'],
+            fullName: map['fullName'],
             email: map['email'],
             phoneNumber: map['phoneNumber'],
+            userType: map['userType'],
+            // status: map['status'],
+            refOwnerId: map['refOwnerId'],
+            createdDate: map['createdDate'],
+            name: map['name'],
             waNumber: map['waNumber'],
             role: map['role'],
             organizationId: map['organizationId'],
             organizationName: map['organizationName'],
-            createdDate: map['createdDate'],
         );
     }
 
     static Profile toResponseModel(Map<String, dynamic> map) {
         return Profile(
             id: map['id'],
-            name: map['name'],
+            userCode: map['userCode'],
+            userName: map['userName'],
+            fullName: map['fullName'],
             email: map['email'],
             phoneNumber: map['phoneNumber'],
+            userType: map['userType'],
+            // status: map['status'],
+            refOwnerId: map['refOwnerId'],
+            createdDate: map['createdDate'],
+            cmsId: map['cmsId'],
+            roles: Mapper.children<RoleModel>(map['roles']),
+            modules: Mapper.child<ModuleModel>(map['modules']),
+            name: map['name'],
             waNumber: map['waNumber'],
             role: map['role'],
             organizationId: map['organizationId'],
             organizationName: map['organizationName'],
-            createdDate: map['createdDate'],
-
         );
     }
 }

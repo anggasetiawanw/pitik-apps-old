@@ -1,0 +1,102 @@
+{
+  "project_info": {
+    "project_number": "98893830821",
+    "project_id": "pitik-d2c21",
+    "storage_bucket": "pitik-d2c21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98893830821:android:b291df0e7b0189d52bcb4c",
+        "android_client_info": {
+          "package_name": "id.pitik.mobile.mobile_flutter.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98893830821-ju4nllichg9ms18koueksa3g03s6rr2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "53d9e0755f3813f70d53010b7bd93a115f77912a"
+          }
+        },
+        {
+          "client_id": "98893830821-k2t2bd2ha62dog53sga52lmcom56i7ic.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "22f67edbc32a8cad1cea1c5d1efad5f5abd70230"
+          }
+        },
+        {
+          "client_id": "98893830821-mvc6adfarkrmqoeu860dq7vs37eq37ts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "e3351312dc98eb7613e97b7dd906ad4e95b560a9"
+          }
+        },
+        {
+          "client_id": "98893830821-os5r4nu3keg7bb78v3oef8p7njtq7bvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "00b599290dcb30bd005bc62fa5b987dda48c94a1"
+          }
+        },
+        {
+          "client_id": "98893830821-qhfejolajnfea1rhkk0u7hgstb5ec6f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "773fc1279f8f6c223a47de3baf7782e5220e79a2"
+          }
+        },
+        {
+          "client_id": "98893830821-s33uqn1l3so9j7eflgm6i46e97pdhtuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "77e4b1688a49241fe49c8305cfba3c68d6ff82a4"
+          }
+        },
+        {
+          "client_id": "98893830821-vquupg76a6qel0u928911tiippaahneu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile.mobile_flutter.staging",
+            "certificate_hash": "dfe6d0f2b11825205163aaf2e4597c92fd7c5157"
+          }
+        },
+        {
+          "client_id": "98893830821-8ff5ak7gek7kp2incoktafr5alm7m13m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDzutQfAGKhkTjBEq5Nh6vDet9C-5Wj_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98893830821-8ff5ak7gek7kp2incoktafr5alm7m13m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "98893830821-9s1nf0vnt908bikdpr2i2onnt3p7773b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "id.pitik.mobile.mobileFlutter.staging"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
