@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
+import 'package:mobile_number/sim_card.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/home_response.dart';
@@ -117,6 +118,9 @@ class BerandaController extends GetxController {
     @override
     void onReady() {
         super.onReady();
+        if(!GlobalVar.canModifyInfrasturucture()){
+            bfAddCoop.controller.disable();
+        }
     }
     @override
     void onClose() {

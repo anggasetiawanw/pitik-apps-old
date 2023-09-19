@@ -201,7 +201,7 @@ class RegisterDeviceController extends GetxController {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                            "Kamu bisa mendaftarkan alat dengan dua cara mengisi manual dan scan QRCODE yang tertera pada masing-masing alat." ,
+                            "Kamu bisa mendaftarkan alat dengan dua cara, yaitu mengisi manual dengan mengetik menggunakan huruf kapital A-F dan anga 0-9 atau bisa scan QRCODE yang tertera pada masing-masing alat." ,
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
                         const SizedBox(height: 16),

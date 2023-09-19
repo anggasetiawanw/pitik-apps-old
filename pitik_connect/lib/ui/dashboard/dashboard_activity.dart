@@ -52,22 +52,24 @@ class DashboardActivity extends StatelessWidget {
                                         ),
                                         GestureDetector(
                                             onTap: () {
-                                                GlobalVar.track("Click_buat_kandang");
-                                                Get.back();
-                                                Get.toNamed(RoutePage.createCoopPage, arguments: RegisterCoopController.CREATE_COOP);
+                                                if(GlobalVar.canModifyInfrasturucture()){
+                                                    GlobalVar.track("Click_buat_kandang");
+                                                    Get.back();
+                                                    Get.toNamed(RoutePage.createCoopPage, arguments: RegisterCoopController.CREATE_COOP);
+                                                }
                                             },
                                             child:
-                                            MenuBottomSheet(title: "Buat Kandang", subTitle : "Dapat membuat kandang yang terdiri dari beberapa lantai", imagesPath: "images/building_icon.svg",),
+                                            MenuBottomSheet(title: "Buat Kandang", subTitle : "Dapat membuat kandang yang terdiri dari beberapa lantai", imagesPath: GlobalVar.canModifyInfrasturucture() ? "images/building_icon.svg" : "images/building_disable_icon.svg", enable: GlobalVar.canModifyInfrasturucture() ? true : false,),
                                         ),
                                         GestureDetector(
                                             onTap: () {
-                                                if(!GlobalVar.isEmptyCoop){
+                                                if(!GlobalVar.isEmptyCoop && GlobalVar.canModifyInfrasturucture()){
                                                     GlobalVar.track("Click_buat_lantai");
                                                     Get.back();
                                                     Get.toNamed(RoutePage.createFloorPage);
                                                 }
                                             },
-                                            child: MenuBottomSheet(title: "Buat Lantai", subTitle : "Dapat membuat lantai pada kandang tertentu", imagesPath: GlobalVar.isEmptyCoop ? "images/floor_disable_icon.svg" : "images/floor_icon.svg" , enable: GlobalVar.isEmptyCoop ? false : true,),
+                                            child: MenuBottomSheet(title: "Buat Lantai", subTitle : "Dapat membuat lantai pada kandang tertentu", imagesPath: GlobalVar.isEmptyCoop ? "images/floor_disable_icon.svg" : GlobalVar.canModifyInfrasturucture() ? "images/floor_icon.svg" : "images/floor_disable_icon.svg" , enable: GlobalVar.isEmptyCoop ? false : GlobalVar.canModifyInfrasturucture() ? true : false,),
                                         )
                                         ,
                                         const SizedBox(height: GlobalVar.bottomSheetMargin,)

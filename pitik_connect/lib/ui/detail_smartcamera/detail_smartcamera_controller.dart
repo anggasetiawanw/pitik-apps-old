@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:components/button_fill/button_fill.dart';
+import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -53,6 +55,11 @@ class DetailSmartCameraController extends GetxController {
             }
         });
     }
+
+    late ButtonFill bfTakePicture = ButtonFill(
+        controller: GetXCreator.putButtonFillController("takePicture"),
+        label: "Ambil Gambar", onClick: () {},
+    );
     @override
     void onInit() {
         super.onInit();
@@ -72,6 +79,9 @@ class DetailSmartCameraController extends GetxController {
     @override
     void onReady() {
         super.onReady();
+        if(!GlobalVar.canModifyInfrasturucture()){
+            bfTakePicture.controller.disable();
+        }
     }
 
     /// The function `getListCamera` makes an API call to retrieve a list of camera

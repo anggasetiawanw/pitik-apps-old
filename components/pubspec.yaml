@@ -29,7 +29,7 @@ dependencies:
   syncfusion_flutter_charts: ^22.2.9
   dropdown_button2: ^2.1.2
   flutter_picker: ^2.1.0
-  image_picker: ^0.8.6+1
+  image_picker: ^1.0.2
   file_picker: ^5.3.0
   build_runner: ^2.4.4
   built_value_generator: ^8.5.0
