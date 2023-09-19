@@ -17,11 +17,7 @@ import 'package:model/error/error.dart';
 import 'package:model/record_model.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:permission_handler/permission_handler.dart';
-<<<<<<< HEAD
-import 'package:share_plus/share_plus.dart';
-=======
 import 'package:http/http.dart' as http;
->>>>>>> main
 
 /**
  *@author Robertus Mahardhi Kuncoro
