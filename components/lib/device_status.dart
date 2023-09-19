@@ -2,6 +2,7 @@
 // ignore_for_file: slash_for_doc_comments
 
 import 'package:flutter/material.dart';
+
 import 'global_var.dart';
 
 /**
@@ -20,13 +21,13 @@ class DeviceStatus extends StatelessWidget{
     @override
     Widget build(BuildContext context) {
         return Container(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
                 color:
-                errorStatus != null && errorStatus == true ? Color(0xFFDD1E25):
+                errorStatus != null && errorStatus == true ? const Color(0xFFDD1E25):
                 status == null ? GlobalVar.gray :
-                status == true ? Color(0xFFCEFCD8) :
-                Color(0xFFF0F0F0),
+                status == true ? const Color(0xFFCEFCD8) :
+                const Color(0xFFF0F0F0),
                 borderRadius: BorderRadius.circular(6)
             ),
             child: Center(
@@ -36,10 +37,10 @@ class DeviceStatus extends StatelessWidget{
                     status == true ? "Aktif" :
                     "Non-Aktif",
                     style:
-                    errorStatus != null && errorStatus == true ?TextStyle(color: Color(0xFFF0F0F0)):
-                    status == null ? TextStyle(color: Color(0xFF2C2B2B)) :
-                    status == true ? TextStyle(color: Color(0xFF14CB82)) :
-                    TextStyle(color: Color(0xFF2C2B2B))
+                    errorStatus != null && errorStatus == true ?const TextStyle(color: Color(0xFFF0F0F0)):
+                    status == null ? const TextStyle(color: Color(0xFF2C2B2B)) :
+                    status == true ? const TextStyle(color: Color(0xFF14CB82)) :
+                    const TextStyle(color: Color(0xFF2C2B2B))
                 )
             ),
         );
