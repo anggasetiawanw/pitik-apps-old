@@ -13,7 +13,7 @@ dependencies:
   intl: ^0.18.0
   permission_handler: ^10.2.0
   internet_connection_checker: ^1.0.0+1
-  chucker_flutter: ^1.5.1
+  chucker_flutter: ^1.6.0
   build_runner: ^2.4.4
   built_value_generator: ^8.5.0
   reflectable: ^4.0.5
