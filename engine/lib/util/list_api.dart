@@ -36,6 +36,8 @@ class ListApi {
     static const String saveSmartScale = "saveSmartScale";
     static const String updateSmartScale = "updateSmartScale";
 
+    static const String getProductById = "getProductById";
+
     static String pathChangePassword(){
         return "v2/auth/reset-password";
     }
@@ -106,5 +108,9 @@ class ListApi {
 
     static String pathSmartScaleForDetailAndUpdate(String weighingId) {
         return "v2/b2b/weighing/$weighingId";
+    }
+
+     static String pathGetProductById(String productId) {
+        return "v2/sales/product/$productId";
     }
 }

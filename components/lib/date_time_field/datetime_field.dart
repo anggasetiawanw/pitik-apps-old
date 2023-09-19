@@ -84,7 +84,7 @@ class DateTimeField extends StatelessWidget {
                                                             child: Text(
                                                                 controller.textSelected.value == "" ? hint : controller.textSelected.value,
                                                                 overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(color: controller.activeField.isTrue || controller.textSelected.value == "" ? GlobalVar.black : Color(0xFF9E9D9D), fontSize: 14)
+                                                                style: TextStyle(color: controller.activeField.isTrue || controller.textSelected.value == "" ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)
                                                             ),
                                                         )
                                                     ),

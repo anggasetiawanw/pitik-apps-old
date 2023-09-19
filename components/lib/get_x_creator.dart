@@ -1,5 +1,8 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
+import 'package:components/edit_field_two_row/edit_field_two_row_controller.dart';
+import 'package:components/stock_opname_field/stock_opname_field_controller.dart';
+import 'package:components/stock_opname_two_field/stock_opname_two_field_controller.dart';
 import 'package:components/switch_button/switch_button_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -122,6 +125,15 @@ class GetXCreator {
         return Get.put(SuggestFieldController<T>(tag: tag), tag: tag);
     }
 
+    static EditFieldTwoRowController putEditFieldTwoRowController(String tag) {
+        return Get.put(EditFieldTwoRowController(tag: tag), tag: tag);
+    }
+    static StockOpnameTwoFieldController putStockOpnameTwoField<T>(String tag) {
+        return Get.put(StockOpnameTwoFieldController(tag: tag), tag: tag);
+    }
+    static StockOpnameFieldController putStockOpnameField<T>(String tag) {
+        return Get.put(StockOpnameFieldController(tag: tag), tag: tag);
+    }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {
         return Get.put(SkuCardPurchaseController(tag: tag, context: context), tag: tag);

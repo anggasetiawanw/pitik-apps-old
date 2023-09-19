@@ -217,8 +217,8 @@ class ModifyDeviceController extends GetxController {
     void loadData(Device device){
         if(action == EDIT_ACTION) {
             spDeviceStatus.controller.setTextSelected(device.status! == "active" ? "Aktif" :"Non-Aktif");
-            if (device.sensors!.isNotEmpty) {
-                for (var result in device.sensors!) {
+            if (device.sensors.isNotEmpty) {
+                for (var result in device.sensors) {
                     sensors.value.add(result as Sensor);
                 }
                 if(deviceType == RegisterDeviceController.SMART_MONITORING) {

@@ -105,8 +105,8 @@ class DashboardDeviceController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     coopDetail = (body as RoomDetailResponse).data!;
-                    if (coopDetail.room!.devices!.isNotEmpty){
-                        for (var result in body.data!.room!.devices!) {
+                    if (coopDetail.room!.devices.isNotEmpty){
+                        for (var result in body.data!.room!.devices) {
                             if(result!.deviceType == "SMART_MONITORING") {
                                 smartMonitordevices.value.add(result);
                             }

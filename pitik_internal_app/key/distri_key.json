@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pitik-mobile-flutter-staging",
+  "private_key_id": "722928de3d62bcaaa6be0c96d0ca941bb7674dbe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDF6cpfvgW3QRA1\nBqENMVny/TG3fRgSFN0z01D1g8x+/iKrKVP+DCuZ6ccOtSFBMTWivi0q1W7Qalfn\nUnd0X7TdAmXgFnbDqc+V+rJp3hKe6CDIYnPHeakp8BMmeBQ1rJT2TE8OL0vL0hgd\nFglQjaYnqF5924OHzu28MpbPfu1CV7zyMV96XsDLKettYbaiiFGBakf7Cv6AOI8W\no3LwN9JrVpvv7FZ4Df6LOpAtY4wOXG1SmK1IXwy6MLol41pMwCGru6bC+zXGEAXx\nK1qGG1hWXNdITTbYpnekxlAAF3iTBvdk8GuqYr5wRn4YiMTLSMFz2E55XzD2zS3l\nWEvf/boTAgMBAAECggEAKwlCm30rqwS37H/rh33izGboZ7kJAe2NiFZ8NVcaocbL\nbSLIg+bLmGVwhq82cwGrYx8tnTHaLfHh+YhCN4kUQDbkRk08OCH15Owl3cWPkQRz\nFH/sI0U+VsNAts3Hv0AvCDvhuPjp54FhAvomvmB+8AK5wW55dI+3vIPXrXkxSIp/\nvXpV2biY2iyj4Uk/NE11tT11DNGgCM0CjXrAjAO7MkaH3luoHYZTTnjtTagme5HD\nw7GmzTIFxUdmlp3TmxYZpTTydp991B5CtwdRbt5tBBpARGI4uUAlOcQOvll6mDO4\nnXqhNGTlY+iU9GmRs8n+GyC0ipfUaJ0WoHJCz4GPiQKBgQDmT/90BO2FkMU4i9qu\nnT6B/QyWvN08esIS4+iD9PWX0SoFbPWlcNp7cNqbQ6Vpzviqrvt/Fta+VrQHKrfQ\nd4WKrcshsvKOw6kaDf5k0T2tGJEv+M5V2E0u68hryjnvKffUat7udJ/EkKwHn18A\nnevP39m2j2UkFJhNkgxM9xXxZQKBgQDb/LZlUrp+qvHbLL0u1Ip/Xl6xb36rN8Kg\ncKU7ovZdWATZiTSfJqpmCp3T2XWhRgy9BrZESqF96j9R2fKkvnllQ1cm7EBCfeaJ\nyF+OG1VF4YeHXBjqUOZvE50BG0sLT7BT5/4Tebv5X70UyXy4bCtiQw2+IqCgkqL4\nnt84oZVCFwKBgQCh5NH4yA3+uYko+oY6ACaUUUCsJQ6PGOubQ8GKIIMSuOEE91al\nePLbmrTQN3jrK6X4tQ/sgi1plqDt+MVFMP8aQJhtk9CVMkyIGBYe4Eauinpkckz4\nYxe+R9eWjYyz5ZhkJMuYazpzfg6vPQQW9utwMDZl8d5ywlddD7C92WH/UQKBgDct\nXbpwU6Kt0df9kr4KRWrJCstKgeUEKWcAmhEpQM4M47qEdZRtqFPL2eZnJt/6p/tJ\nkbHzXios9RDcr8WumNhTWarDmyKSXZ61iXIlXPAYL1w+N2mePQ4jR0AdzmbZ6ApD\nqDDOWd2kq9Jo70V6rC8LTokgOlXMMeBWSPr1XHClAoGADiWPVapeb98xOO6t4ZWS\nRawinh42SnlO24zqw85wPaanh4Bop9UTy3nmvCCiesgl1Ngw/awuFEXW48lDFLwC\nSO8DptJhmhAWBHGr2UA1SwHmUUuoqoky/gkU05HRgBnluAilbiuWXwTSo2DqLKQA\nlRtYySaZwDbah91RGMlwG/U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "push-to-app-distri@pitik-mobile-flutter-staging.iam.gserviceaccount.com",
+  "client_id": "109718791446374866420",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/push-to-app-distri%40pitik-mobile-flutter-staging.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
