@@ -190,10 +190,8 @@ class SmartScaleWeighingController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        try {
             id.value = Get.arguments[2];
             isLoading.value = true;
-        } catch (exception) {}
 
         coop = Get.arguments[0];
         outstandingTotalWeighingField.controller.disable();
@@ -208,9 +206,7 @@ class SmartScaleWeighingController extends GetxController {
 
                 totalWeighing.setInput(weighingValue.value);
             },
-            onDisabled: () => AppSettings.openBluetoothSettings(callback: () async {
-
-            }),
+            onDisabled: () => AppSettings.openAppSettings(type: AppSettingsType.bluetooth),
             onTimeout: () {
                 isTimeout.value = true;
                 batteryStatus.value = '-';
@@ -351,7 +347,6 @@ class SmartScaleWeighingController extends GetxController {
                                                                     body: [auth.token, auth.id, Mapper.asJsonString(smartScaleData.value), isEdit ? ListApi.pathSmartScaleForDetailAndUpdate(id.value) : null],
                                                                     listener: ResponseListener(
                                                                         onResponseDone: (code, message, body, id, packet) {
-                                                                            print('SAVE SMART SCALE SUCCESS');
                                                                             isLoading.value = false;
                                                                         },
                                                                         onResponseFail: (code, message, body, id, packet) {
