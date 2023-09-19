@@ -17,7 +17,6 @@ import 'package:model/error/error.dart';
 import 'package:model/record_model.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
 
 /**
  *@author Robertus Mahardhi Kuncoro
@@ -204,7 +203,7 @@ class HistoricalDataSmartCameraController extends GetxController {
   Future<void> shareFile(RecordCamera recordCamera, bool isDownload) async {
       permissionReady = await checkPermission();
       if (permissionReady) {
-          final DateTime takePictureDate = Convert.getDatetime(recordCamera!.createdAt!);
+          final DateTime takePictureDate = Convert.getDatetime(recordCamera.createdAt!);
           final imageurl = recordCamera.link!;
           // final imageurl = "https://pitik.id/mitrapeternak/assets/2022/10/gb2.jpg";
           final uri = Uri.parse(imageurl);

@@ -142,9 +142,7 @@ class BerandaController extends GetxController {
             iosInfo = await CarrierInfo.getIosInfo();
             if (iosInfo != null && iosInfo!.carrierData.length > 0) {
                 phoneCarrier =
-                iosInfo!.carrierData[0].carrierName == null
-                    ? ""
-                    : iosInfo!.carrierData[0].carrierName;
+                iosInfo!.carrierData[0].carrierName;
             }
         }
         initMixpanel();
