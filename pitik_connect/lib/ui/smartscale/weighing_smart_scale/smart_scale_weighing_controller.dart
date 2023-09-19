@@ -1,3 +1,4 @@
+
 import 'package:app_settings/app_settings.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
@@ -11,7 +12,6 @@ import 'package:engine/util/bluetooth_le_service.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -21,11 +21,9 @@ import 'package:model/response/smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:model/smart_scale/smart_scale_record_model.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 11/09/2023
 
 class SmartScaleWeighingController extends GetxController {
 
@@ -137,16 +135,16 @@ class SmartScaleWeighingController extends GetxController {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(child: totalChick),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(child: totalWeight),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Container(
                             width: 32,
                             height: 32,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                 border: Border.all(width: 2, color: GlobalVar.primaryOrange),
                             ),
                             child: GestureDetector(
@@ -169,17 +167,17 @@ class SmartScaleWeighingController extends GetxController {
         smartScaleDataWidgetNumber.clear();
         smartScaleDataWidget.forEach((key, value) {
             final numberField = Padding(
-                padding: EdgeInsets.only(bottom: 8, top: 8),
+                padding: const EdgeInsets.only(bottom: 8, top: 8),
                 child: Container(
                     height: 50,
                     width: 40,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                         color: GlobalVar.gray
                     ),
                     child: Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Center(child: Text('$indexNumber', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Color(0xFF9E9D9D))))
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Center(child: Text('$indexNumber', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: const Color(0xFF9E9D9D))))
                     )
                 )
             );
@@ -250,8 +248,10 @@ class SmartScaleWeighingController extends GetxController {
                             smartScaleData.value = SmartScale();
                             smartScaleData.value = (body as SmartScaleResponse).data;
 
-                            if (smartScaleData.value != null && smartScaleData.value!.records.length > 0) {
-                                smartScaleData.value!.records.forEach((element) => addWeighing(element));
+                            if (smartScaleData.value != null && smartScaleData.value!.records.isNotEmpty) {
+                                for (var element in smartScaleData.value!.records) {
+                                  addWeighing(element);
+                                }
                             }
 
                             isLoading.value = false;
@@ -262,7 +262,7 @@ class SmartScaleWeighingController extends GetxController {
                                 "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                             );
                         },
@@ -281,11 +281,11 @@ class SmartScaleWeighingController extends GetxController {
     saveSmartScaleWeighing() {
         AuthImpl().get().then((auth) {
             if (auth != null) {
-                if (smartScaleRecords.length > 0) {
+                if (smartScaleRecords.isNotEmpty) {
                     showModalBottomSheet(
                         isScrollControlled: true,
                         context: Get.context!,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(16),
                                 topRight: Radius.circular(16),
@@ -294,23 +294,23 @@ class SmartScaleWeighingController extends GetxController {
                         builder: (context) => Container(
                             color: Colors.transparent,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 16, right: 16),
+                                padding: const EdgeInsets.only(left: 16, right: 16),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                         Padding(
-                                            padding: EdgeInsets.only(top: 16),
+                                            padding: const EdgeInsets.only(top: 16),
                                             child: Container(
                                                 width: 60,
                                                 height: 4,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
                                                     color: GlobalVar.outlineColor
                                                 )
                                             )
                                         ),
                                         Padding(
-                                            padding: EdgeInsets.only(top: 24),
+                                            padding: const EdgeInsets.only(top: 24),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange))
@@ -318,14 +318,14 @@ class SmartScaleWeighingController extends GetxController {
                                         ),
                                         Align(
                                             alignment: Alignment.centerLeft,
-                                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Color(0xFF9E9D9D)))
+                                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
                                         ),
                                         Padding(
-                                            padding: EdgeInsets.only(top: 24),
+                                            padding: const EdgeInsets.only(top: 24),
                                             child: SvgPicture.asset("images/ask_bottom_sheet_1.svg")
                                         ),
                                         Padding(
-                                            padding: EdgeInsets.only(top: 24, bottom: 32),
+                                            padding: const EdgeInsets.only(top: 24, bottom: 32),
                                             child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
@@ -360,7 +360,7 @@ class SmartScaleWeighingController extends GetxController {
                                                                                 "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                                                                                 snackPosition: SnackPosition.TOP,
                                                                                 colorText: Colors.white,
-                                                                                duration: Duration(seconds: 5),
+                                                                                duration: const Duration(seconds: 5),
                                                                                 backgroundColor: Colors.red,
                                                                             );
                                                                         },
@@ -392,7 +392,7 @@ class SmartScaleWeighingController extends GetxController {
                         "Pesan", "Data timbang masih kosong, silahkan isi data timbang dahulu..!",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 }

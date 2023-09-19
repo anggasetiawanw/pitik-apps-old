@@ -25,11 +25,9 @@ import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/profile_response.dart';
 import 'package:model/response/room_detail_response.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 11/09/2023
 
 @Rest
 class API {

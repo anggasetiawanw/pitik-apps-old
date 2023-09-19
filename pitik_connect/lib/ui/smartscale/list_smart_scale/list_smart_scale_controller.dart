@@ -12,11 +12,9 @@ import 'package:model/error/error.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 08/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 08/09/2023
 
 class ListSmartScaleController extends GetxController {
     BuildContext context;
@@ -82,12 +80,12 @@ class ListSmartScaleController extends GetxController {
                     onResponseDone: (code, message, body, id, packet) {
                         if (pageSmartScale.value == 1) {
                             smartScaleList.clear();
-                            if ((body as ListSmartScaleResponse).data.length > 0) {
+                            if ((body as ListSmartScaleResponse).data.isNotEmpty) {
                                 smartScaleList.value = body.data;
                                 pageSmartScale++;
                             }
                         } else {
-                            if ((body as ListSmartScaleResponse).data.length > 0) {
+                            if ((body as ListSmartScaleResponse).data.isNotEmpty) {
                                 smartScaleList.addAll(body.data);
                                 pageSmartScale++;
                             }
@@ -103,7 +101,7 @@ class ListSmartScaleController extends GetxController {
                             "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
-                            duration: Duration(seconds: 5),
+                            duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
                         );
                     },

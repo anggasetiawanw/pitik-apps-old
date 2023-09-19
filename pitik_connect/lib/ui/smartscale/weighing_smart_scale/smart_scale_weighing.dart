@@ -9,13 +9,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_connect/ui/smartscale/weighing_smart_scale/smart_scale_weighing_controller.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 11/09/2023
 
 class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
+  const SmartScaleWeighing({super.key});
+
 
     @override
     Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                 children: [
                     Obx(() =>
                         controller.isLoading.isTrue ? // IF LOADING IS RUNNING
-                        Center(child: ProgressLoading()) :
+                        const Center(child: ProgressLoading()) :
                         Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                                 children: [
                                     const SizedBox(height: 16),
@@ -53,7 +53,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                                 shape: BoxShape.circle
                                                             )
                                                         ),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         Text("Sudah siap timbang!", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                     ] else ... [
                                                         Container(
@@ -64,7 +64,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                                 shape: BoxShape.circle
                                                             )
                                                         ),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         Text("Belum siap timbang!", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                     ]
                                                 ],
@@ -73,20 +73,20 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                         ],
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.only(top: 16, bottom: 8),
+                                        padding: const EdgeInsets.only(top: 16, bottom: 8),
                                         child: Container(
                                             width: MediaQuery.of(context).size.width,
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                                                borderRadius: const BorderRadius.all(Radius.circular(8)),
                                                 color: GlobalVar.grayBackground
                                             ),
                                             child: Padding(
-                                                padding: EdgeInsets.all(16),
+                                                padding: const EdgeInsets.all(16),
                                                 child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                         Text("Waktu Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
-                                                        SizedBox(height: 4),
+                                                        const SizedBox(height: 4),
                                                         Text(
                                                             "Mulai Timbang ${Convert.getYear(currentDate)}/${Convert.getMonthNumber(currentDate)}/${Convert.getDay(currentDate)} - ${Convert.getHour(currentDate)}.${Convert.getMinute(currentDate)}",
                                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
@@ -99,12 +99,12 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                     Row(
                                         children: [
                                             Expanded(child: controller.totalWeighingField),
-                                            SizedBox(width: 8),
+                                            const SizedBox(width: 8),
                                             Expanded(child: controller.outstandingTotalWeighingField)
                                         ],
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.only(top: 8),
+                                        padding: const EdgeInsets.only(top: 8),
                                         child: Container(
                                             width: MediaQuery.of(context).size.width - 32,
                                             height: 1.6,
@@ -114,22 +114,22 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                     Expanded(
                                         child: ListView(
                                             children: [
-                                                SizedBox(height: 8),
+                                                const SizedBox(height: 8),
                                                 Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                         Expanded(child: controller.totalChicken),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         Expanded(child: controller.totalWeighing),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(width: 8),
                                                         Padding(
-                                                            padding: EdgeInsets.only(top: 28),
+                                                            padding: const EdgeInsets.only(top: 28),
                                                             child: controller.isTimeout.isTrue ?
                                                                 Container(
                                                                     width: 32,
                                                                     height: 32,
                                                                     decoration: BoxDecoration(
-                                                                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                                                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                                                                         border: Border.all(width: 2, color: GlobalVar.grayLightText),
                                                                     ),
                                                                     child: GestureDetector(
@@ -142,7 +142,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                                     width: 32,
                                                                     height: 32,
                                                                     decoration: BoxDecoration(
-                                                                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                                                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                                                                         border: Border.all(width: 2, color: GlobalVar.primaryOrange),
                                                                     ),
                                                                     child: GestureDetector(
@@ -153,26 +153,26 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                         )
                                                     ]
                                                 ),
-                                                if (controller.smartScaleDataWidget.length > 0) ...[
+                                                if (controller.smartScaleDataWidget.isNotEmpty) ...[
                                                     Padding(
-                                                        padding: EdgeInsets.only(top: 12),
+                                                        padding: const EdgeInsets.only(top: 12),
                                                         child: Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                                Container(
+                                                                SizedBox(
                                                                     width: 40,
                                                                     child: Text("No", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                                                 ),
-                                                                SizedBox(width: 8),
+                                                                const SizedBox(width: 8),
                                                                 Expanded(child: Text("Jumlah Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
-                                                                SizedBox(width: 8),
+                                                                const SizedBox(width: 8),
                                                                 Expanded(child: Text("Timbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
-                                                                SizedBox(width: 40),
+                                                                const SizedBox(width: 40),
                                                             ]
                                                         )
                                                     )
                                                 ] else ...[
-                                                    SizedBox()
+                                                    const SizedBox()
                                                 ],
                                                 Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,7 +183,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                         )
                                                     ],
                                                 ),
-                                                SizedBox(height: 120),
+                                                const SizedBox(height: 120),
                                             ]
                                         )
                                     )
@@ -200,10 +200,10 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
     Widget appBar() => AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Get.back()
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text("Timbang Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
@@ -216,7 +216,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
             children: [
                 Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
                             BoxShadow(
@@ -227,7 +227,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                     ),
-                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

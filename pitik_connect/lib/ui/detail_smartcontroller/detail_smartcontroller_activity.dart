@@ -11,11 +11,9 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'detail_smartcontroller_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartController extends GetView<DetailSmartControllerController>{
     const DetailSmartController({
@@ -28,24 +26,24 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
             context: context,
         ));
 
-        _showButtonDialog(BuildContext context, DetailSmartControllerController controller) {
+        showButtonDialog(BuildContext context, DetailSmartControllerController controller) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
                     return Align(
-                        alignment: Alignment(1, -1),
+                        alignment: const Alignment(1, -1),
                         child: GestureDetector(
                             onTap: () {
                                 // _showBottomDialog(context, controller);
                             },
                             child: Container(
-                                margin: EdgeInsets.only(top: 50, right: 30),
+                                margin: const EdgeInsets.only(top: 50, right: 30),
                                 width: 135,
                                 height: 66,
                                 child: Stack(children: [
                                     Container(
-                                        margin: EdgeInsets.only(top: 8),
-                                        padding: EdgeInsets.all(8),
+                                        margin: const EdgeInsets.only(top: 8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(6)),
@@ -61,7 +59,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                           ),
                                                           DefaultTextStyle(
                                                               style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                              child: Text("Edit",),
+                                                              child: const Text("Edit",),
                                                           ),
                                                       ],
                                                   ),
@@ -70,7 +68,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                         Get.back();
                                                         Get.toNamed(RoutePage.modifySmartMonitorPage, arguments:[controller.coop, controller.device, "edit"])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
@@ -85,7 +83,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                           ),
                                                           DefaultTextStyle(
                                                               style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                              child: Text("Ubah Nama"),
+                                                              child: const Text("Ubah Nama"),
                                                           ),
                                                       ],
                                                   ),
@@ -95,7 +93,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                         Get.toNamed(RoutePage.modifySmartMonitorPage, arguments:[controller.coop, controller.device, "rename"])!.then((value) {
                                                             controller.isLoading.value =true;
                                                             value == null ? controller.deviceUpdatedName.value = "" : controller.deviceUpdatedName.value = value[0]["backValue"];
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
@@ -107,7 +105,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
 
                                     ),
                                     Align(
-                                        alignment: Alignment(1, -1),
+                                        alignment: const Alignment(1, -1),
                                         child: Image.asset(
                                             "images/triangle_icon.png",
                                             height: 17,
@@ -126,9 +124,9 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Get.back()),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -143,14 +141,14 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                     if(GlobalVar.canModifyInfrasturucture())...[
                         GestureDetector(
                             onTap: () {
-                                _showButtonDialog(context, controller);
+                                showButtonDialog(context, controller);
                             },
                             child: Container(
                                 color: Colors.transparent,
                                 height: 32,
                                 width: 32,
-                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                                margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: SvgPicture.asset("images/dot_icon.svg"),
                             ),
                         ),
                     ]
@@ -168,13 +166,14 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
             body: Stack(
                 children: [
                     Container(
-                        margin: EdgeInsets.all(16),
+                        margin: const EdgeInsets.all(16),
                         child: Obx(() => controller.isLoading.isTrue ?
-                        Center(
+                        const Center(
                             child : Center(
                                 child:
                                 SizedBox(
-                                    child: ProgressLoading(), height: 124, width: 124,
+                                    height: 124, width: 124,
+                                    child: ProgressLoading(),
                                 ),
                             ) ,
                         ) : controller.deviceController == null ?
@@ -182,7 +181,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                             child: Container(
                                 width: double.infinity,
                                 height: MediaQuery. of(context). size. height,
-                                margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                                margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                 child: Column(
                                     children: [
                                         SvgPicture.asset("images/empty_icon.svg"),
@@ -197,7 +196,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                         Column(
                             children: [
                                 Container(
-                                    margin: EdgeInsets.only(bottom: 10, right: 4, left: 4),
+                                    margin: const EdgeInsets.only(bottom: 10, right: 4, left: 4),
                                     child:
                                     CardListSmartController(
                                         device: controller.device,
@@ -209,7 +208,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                 Expanded(
                                     child: GridView.builder(
                                         // padding: EdgeInsets.symmetric(horizontal: 10),
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2),
                                         itemCount: 7,
                                         itemBuilder: (_, index) {
@@ -218,49 +217,49 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                     if(index == 0 && controller.deviceController!.growthDay != null){
                                                         Get.toNamed(RoutePage.growthSetupPage, arguments: [controller.device , controller.deviceController!.fan])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 1 && controller.deviceController!.fan != null){
                                                         Get.toNamed(RoutePage.fanDashboardPage, arguments: [controller.device, controller.deviceController!.fan])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 2 && controller.deviceController!.heater != null){
                                                         Get.toNamed(RoutePage.heaterSetupPage, arguments: [controller.device, controller.deviceController!.heater])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 3 && controller.deviceController!.cooler != null){
                                                         Get.toNamed(RoutePage.coolerSetupPage, arguments: [controller.device, controller.deviceController!.cooler])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 4 && controller.deviceController!.lamp != null){
                                                         Get.toNamed(RoutePage.lampDashboardPage, arguments: [controller.device, controller.deviceController!.lamp])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 5 && controller.deviceController!.alarm != null){
                                                         Get.toNamed(RoutePage.alarmSetupPage, arguments: [controller.device, controller.deviceController!.alarm])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
                                                     }else if(index == 6 && controller.deviceController!.resetTime != null){
                                                         Get.toNamed(RoutePage.resetTimePage, arguments: [controller.device, controller.deviceController!.resetTime])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 100), () {
+                                                            Timer(const Duration(milliseconds: 100), () {
                                                                 controller.getDetailSmartController();
                                                             });
                                                         });
@@ -271,23 +270,23 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                     child: Container(
                                                         height: 124,
                                                         width: 124,
-                                                        padding: EdgeInsets.all(8),
+                                                        padding: const EdgeInsets.all(8),
                                                         decoration: BoxDecoration(
                                                             color:
                                                             index == 0 && controller.deviceController!.growthDay != null ? null :
-                                                            index == 0 && controller.deviceController!.growthDay == null ?  Color(0xFFFDDFD1) :
+                                                            index == 0 && controller.deviceController!.growthDay == null ?  const Color(0xFFFDDFD1) :
                                                             index == 1 && controller.deviceController!.fan != null ?  null :
-                                                            index == 1 && controller.deviceController!.fan == null ?  Color(0xFFFDDFD1) :
+                                                            index == 1 && controller.deviceController!.fan == null ?  const Color(0xFFFDDFD1) :
                                                             index == 2 && controller.deviceController!.heater != null ?  null :
-                                                            index == 2 && controller.deviceController!.heater == null ?  Color(0xFFFDDFD1) :
+                                                            index == 2 && controller.deviceController!.heater == null ?  const Color(0xFFFDDFD1) :
                                                             index == 3 && controller.deviceController!.cooler != null ?  null :
-                                                            index == 3 && controller.deviceController!.cooler == null ?  Color(0xFFFDDFD1) :
+                                                            index == 3 && controller.deviceController!.cooler == null ?  const Color(0xFFFDDFD1) :
                                                             index == 4 && controller.deviceController!.lamp != null ?  null :
-                                                            index == 4 && controller.deviceController!.lamp == null ?  Color(0xFFFDDFD1) :
+                                                            index == 4 && controller.deviceController!.lamp == null ?  const Color(0xFFFDDFD1) :
                                                             index == 5 && controller.deviceController!.alarm != null ?  null :
-                                                            index == 5 && controller.deviceController!.alarm == null ?  Color(0xFFFDDFD1) :
+                                                            index == 5 && controller.deviceController!.alarm == null ?  const Color(0xFFFDDFD1) :
                                                             index == 6 && controller.deviceController!.resetTime != null ?  null :
-                                                            index == 6 && controller.deviceController!.resetTime == null ?  Color(0xFFFDDFD1) :
+                                                            index == 6 && controller.deviceController!.resetTime == null ?  const Color(0xFFFDDFD1) :
                                                             null,
                                                             border: Border.all(
                                                                 width: 1, color: GlobalVar.outlineColor),
@@ -295,49 +294,46 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                         child: Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                                Container(
-                                                                    // margin: EdgeInsets.all(2),
-                                                                    child: Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                            Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                decoration: BoxDecoration(
-                                                                                    color:controller.deviceController!.growthDay == null ? Color(0xFFFBB8A4) : GlobalVar.iconHomeBg,
-                                                                                    borderRadius: BorderRadius.only(
-                                                                                        topLeft: Radius.circular(4),
-                                                                                        topRight: Radius.circular(4),
-                                                                                        bottomRight: Radius.circular(4),
-                                                                                        bottomLeft: Radius.circular(4))),
-                                                                                child: Center(
-                                                                                    child:
-                                                                                    index == 0 && (controller.deviceController!.growthDay == null || controller.deviceController!.growthDay!.status == false)  ? SvgPicture.asset("images/growth_icon.svg") :
-                                                                                    index == 0 && controller.deviceController!.growthDay != null && controller.deviceController!.growthDay!.status! == true  ? SvgPicture.asset("images/growth_icon.svg") :
-                                                                                    index == 1 && controller.deviceController!.fan != null && controller.deviceController!.fan!.status! == true  ? SvgPicture.asset("images/fan_icon.svg") :
-                                                                                    index == 1 && (controller.deviceController!.fan == null || controller.deviceController!.fan!.status! == false) ? SvgPicture.asset("images/fan_error_icon.svg") :
-                                                                                    index == 2 && controller.deviceController!.heater != null && controller.deviceController!.heater!.status! == true ? SvgPicture.asset("images/heater_icon.svg") :
-                                                                                    index == 2 && (controller.deviceController!.heater == null || controller.deviceController!.heater!.status! == false) ? SvgPicture.asset("images/heater_warning_icon.svg") :
-                                                                                    index == 3 && controller.deviceController!.cooler != null && controller.deviceController!.cooler!.status! == true ? SvgPicture.asset("images/cooler_icon.svg") :
-                                                                                    index == 3 && (controller.deviceController!.cooler == null || controller.deviceController!.cooler!.status! == false) ? SvgPicture.asset("images/cooler_error_icon.svg") :
-                                                                                    index == 4 && controller.deviceController!.lamp != null && controller.deviceController!.lamp!.status! == true ? SvgPicture.asset("images/lamp_icon.svg") :
-                                                                                    index == 4 && (controller.deviceController!.lamp == null || controller.deviceController!.lamp!.status! == false) ? SvgPicture.asset("images/lamp_icon.svg") :
-                                                                                    index == 5 && controller.deviceController!.alarm != null ? SvgPicture.asset("images/alarm_icon.svg") :
-                                                                                    index == 5 && (controller.deviceController!.alarm == null )? SvgPicture.asset("images/alarm_error_icon.svg") :
-                                                                                    index == 6 && controller.deviceController!.resetTime != null ? SvgPicture.asset("images/timer_icon.svg") :
-                                                                                    SvgPicture.asset("images/temperature_icon.svg"),
-                                                                                ),
+                                                                Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                        Container(
+                                                                            width: 40,
+                                                                            height: 40,
+                                                                            decoration: BoxDecoration(
+                                                                                color:controller.deviceController!.growthDay == null ? const Color(0xFFFBB8A4) : GlobalVar.iconHomeBg,
+                                                                                borderRadius: const BorderRadius.only(
+                                                                                    topLeft: Radius.circular(4),
+                                                                                    topRight: Radius.circular(4),
+                                                                                    bottomRight: Radius.circular(4),
+                                                                                    bottomLeft: Radius.circular(4))),
+                                                                            child: Center(
+                                                                                child:
+                                                                                index == 0 && (controller.deviceController!.growthDay == null || controller.deviceController!.growthDay!.status == false)  ? SvgPicture.asset("images/growth_icon.svg") :
+                                                                                index == 0 && controller.deviceController!.growthDay != null && controller.deviceController!.growthDay!.status! == true  ? SvgPicture.asset("images/growth_icon.svg") :
+                                                                                index == 1 && controller.deviceController!.fan != null && controller.deviceController!.fan!.status! == true  ? SvgPicture.asset("images/fan_icon.svg") :
+                                                                                index == 1 && (controller.deviceController!.fan == null || controller.deviceController!.fan!.status! == false) ? SvgPicture.asset("images/fan_error_icon.svg") :
+                                                                                index == 2 && controller.deviceController!.heater != null && controller.deviceController!.heater!.status! == true ? SvgPicture.asset("images/heater_icon.svg") :
+                                                                                index == 2 && (controller.deviceController!.heater == null || controller.deviceController!.heater!.status! == false) ? SvgPicture.asset("images/heater_warning_icon.svg") :
+                                                                                index == 3 && controller.deviceController!.cooler != null && controller.deviceController!.cooler!.status! == true ? SvgPicture.asset("images/cooler_icon.svg") :
+                                                                                index == 3 && (controller.deviceController!.cooler == null || controller.deviceController!.cooler!.status! == false) ? SvgPicture.asset("images/cooler_error_icon.svg") :
+                                                                                index == 4 && controller.deviceController!.lamp != null && controller.deviceController!.lamp!.status! == true ? SvgPicture.asset("images/lamp_icon.svg") :
+                                                                                index == 4 && (controller.deviceController!.lamp == null || controller.deviceController!.lamp!.status! == false) ? SvgPicture.asset("images/lamp_icon.svg") :
+                                                                                index == 5 && controller.deviceController!.alarm != null ? SvgPicture.asset("images/alarm_icon.svg") :
+                                                                                index == 5 && (controller.deviceController!.alarm == null )? SvgPicture.asset("images/alarm_error_icon.svg") :
+                                                                                index == 6 && controller.deviceController!.resetTime != null ? SvgPicture.asset("images/timer_icon.svg") :
+                                                                                SvgPicture.asset("images/temperature_icon.svg"),
                                                                             ),
-                                                                            index == 0 ? DeviceStatus(status:  controller.deviceController!.growthDay!.status!, activeString: "Aktif", inactiveString: "Non-Aktif",):
-                                                                            index == 1 ? DeviceStatus(status:  controller.deviceController!.fan!.status!, activeString: "Aktif", inactiveString: "Non-Aktif",) :
-                                                                            index == 2 ? DeviceStatus(status:  controller.deviceController!.heater!.status!, activeString: "Nyala", inactiveString: "Mati",):
-                                                                            index == 3 ? DeviceStatus(status:  controller.deviceController!.cooler!.status!, activeString: "Nyala", inactiveString: "Mati",):
-                                                                            index == 4 ? DeviceStatus(status:  controller.deviceController!.lamp!.status!, activeString: "Nyala", inactiveString: "Mati",) :
-                                                                            index == 5 ? DeviceStatus(status:  true, activeString: "Normal", inactiveString: "Error",) :
-                                                                            index == 6 ? DeviceStatus(status:  true, activeString: "Default", inactiveString: "Default") :
-                                                                            const SizedBox(height: 0),
-                                                                        ],
-                                                                    ),
+                                                                        ),
+                                                                        index == 0 ? DeviceStatus(status:  controller.deviceController!.growthDay!.status!, activeString: "Aktif", inactiveString: "Non-Aktif",):
+                                                                        index == 1 ? DeviceStatus(status:  controller.deviceController!.fan!.status!, activeString: "Aktif", inactiveString: "Non-Aktif",) :
+                                                                        index == 2 ? DeviceStatus(status:  controller.deviceController!.heater!.status!, activeString: "Nyala", inactiveString: "Mati",):
+                                                                        index == 3 ? DeviceStatus(status:  controller.deviceController!.cooler!.status!, activeString: "Nyala", inactiveString: "Mati",):
+                                                                        index == 4 ? DeviceStatus(status:  controller.deviceController!.lamp!.status!, activeString: "Nyala", inactiveString: "Mati",) :
+                                                                        index == 5 ? const DeviceStatus(status:  true, activeString: "Normal", inactiveString: "Error",) :
+                                                                        index == 6 ? const DeviceStatus(status:  true, activeString: "Default", inactiveString: "Default") :
+                                                                        const SizedBox(height: 0),
+                                                                    ],
                                                                 ),
                                                                 index == 0 ? const SizedBox(height: 20):
                                                                 index == 1 ? const SizedBox(height: 65) :
@@ -367,7 +363,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                               children :[
                                                                                   RichText(
                                                                                       text: TextSpan(
-                                                                                          style: TextStyle(color: Colors.blue), //apply style to all
+                                                                                          style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                           children: [
                                                                                               TextSpan(text: 'Target Suhu Hari Ini', style: GlobalVar.greyTextStyle
                                                                                                   .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -382,7 +378,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
 
                                                                           ) : index == 1 ? Text(" Nyala ${controller.deviceController!.fan!.online} - Mati ${controller.deviceController!.fan!.offline} ", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12))
                                                                               : index == 2 ?  RichText(
-                                                                              text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                              text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                   children: [
                                                                                       TextSpan(text: 'Suhu', style: GlobalVar.greyTextStyle
                                                                                       .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -390,7 +386,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                                           .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
                                                                                   ]
                                                                               ),)  : index == 3 ?  RichText(
-                                                                              text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                              text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                   children: [
                                                                                       TextSpan(text: 'Suhu', style: GlobalVar.greyTextStyle
                                                                                           .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -398,7 +394,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                                           .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
                                                                                   ]
                                                                               ),) : index == 4 ?  RichText(
-                                                                              text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                              text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                   children: [
                                                                                       TextSpan(text: '${controller.deviceController!.lamp!.name!} ', style: GlobalVar.greyTextStyle
                                                                                           .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -411,7 +407,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                   RichText(
-                                                                                      text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                                      text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                           children: [
                                                                                               TextSpan(text: 'Panas ', style: GlobalVar.greyTextStyle
                                                                                                   .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -420,7 +416,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                                           ]
                                                                                       ),),
                                                                                   RichText(
-                                                                                      text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                                      text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                           children: [
                                                                                               TextSpan(text: 'Dingin ', style: GlobalVar.greyTextStyle
                                                                                                   .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -430,7 +426,7 @@ class DetailSmartController extends GetView<DetailSmartControllerController>{
                                                                                       ),),
                                                                               ],
                                                                           ): index == 6 ?  RichText(
-                                                                              text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                              text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                                   children: [
                                                                                       TextSpan(text: 'Waktu Bawaan', style: GlobalVar.greyTextStyle
                                                                                           .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),

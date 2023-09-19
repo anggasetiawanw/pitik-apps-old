@@ -6,11 +6,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 class LicenseScreen extends StatelessWidget {
   const LicenseScreen({super.key});
@@ -21,11 +19,11 @@ class LicenseScreen extends StatelessWidget {
       return AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
@@ -41,19 +39,19 @@ class LicenseScreen extends StatelessWidget {
 
     Widget customExpandale(String title, String text,String url){
         return Container(
-            margin: EdgeInsets.only(top: 24),
-            child: Expandable(controller: GetXCreator.putAccordionController("$url"), headerText: "$title",
-                child: Container(child: RichText(text: TextSpan(children: [
+            margin: const EdgeInsets.only(top: 24),
+            child: Expandable(controller: GetXCreator.putAccordionController(url), headerText: title,
+                child: RichText(text: TextSpan(children: [
                     TextSpan(text: "$text\n", style: GlobalVar.blackTextStyle),
                     TextSpan(
-                        text: "$url",
+                        text: url,
                         style: TextStyle(
                             color: GlobalVar.primaryOrange,
                             decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()..onTap =(){_launchUrl(url);},
                     ),
-                ])),)),
+                ]))),
         );
     }
     return Scaffold(
@@ -64,12 +62,12 @@ class LicenseScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      margin: EdgeInsets.only(top: 16),
+                      margin: const EdgeInsets.only(top: 16),
                       child: Text("Credit Penggunaan Aset Visual", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16 , fontWeight: FontWeight.w500))),
                   customExpandale("Icon","Seluruh Icon (symbol) dalam aplikasi ini menggunakan lisensi gratis dari:", "https://remixicon.com/"),
                   customExpandale("Illustrasi","Penggunaan illustrasi pada aplikasi ini seluruhnya menggunakan lisensi dari:", "https://www.manypixels.co/"),
@@ -84,10 +82,10 @@ class LicenseScreen extends StatelessWidget {
   }
 
    Future<void> _launchUrl(String url) async {
-    final Uri _url = Uri.parse(url);
+    final Uri url0 = Uri.parse(url);
 
-    if (!await launchUrl(_url)) {
-        throw Exception('Could not launch $_url');
+    if (!await launchUrl(url0)) {
+        throw Exception('Could not launch $url0');
     }
   }
 }

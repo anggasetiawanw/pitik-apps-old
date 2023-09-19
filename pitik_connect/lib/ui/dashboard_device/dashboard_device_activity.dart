@@ -18,11 +18,9 @@ import '../../route.dart';
 import '../register_coop/register_coop_controller.dart';
 import 'dashboard_device_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 14/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 14/07/23
 
 
 class DashboardDevice extends GetView<DashboardDeviceController>{
@@ -36,22 +34,22 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
             context: context,
         ));
 
-        final TabDeviceController _tabController = Get.put(TabDeviceController());
+        final TabDeviceController tabController = Get.put(TabDeviceController());
 
-        _showButtonDialog(BuildContext context, DashboardDeviceController controller) {
+        showButtonDialog(BuildContext context, DashboardDeviceController controller) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
                     return Align(
-                        alignment: Alignment(1, -1),
+                        alignment: const Alignment(1, -1),
                         child: Container(
-                            margin: EdgeInsets.only(top: 50, right: 30),
+                            margin: const EdgeInsets.only(top: 50, right: 30),
                             width: 135,
                             height: 72,
                             child: Stack(children: [
                                 Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    padding: EdgeInsets.all(8),
+                                    margin: const EdgeInsets.only(top: 8),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(6)),
@@ -67,7 +65,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                                       controller.smartMonitordevices.value.clear();
                                                       controller.smartControllerdevices.value.clear();
                                                       controller.smartCameradevices.value.clear();
-                                                      Timer(Duration(milliseconds: 500), () {
+                                                      Timer(const Duration(milliseconds: 500), () {
                                                           controller.getDetailRoom();
                                                       });
                                                   });
@@ -80,7 +78,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                                       ),
                                                       DefaultTextStyle(
                                                         style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                        child: Text("Edit Kandang",),
+                                                        child: const Text("Edit Kandang",),
                                                       ),
                                                   ],
                                               ),
@@ -97,7 +95,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                                         controller.smartMonitordevices.value.clear();
                                                         controller.smartControllerdevices.value.clear();
                                                         controller.smartCameradevices.value.clear();
-                                                        Timer(Duration(milliseconds: 500), () {
+                                                        Timer(const Duration(milliseconds: 500), () {
                                                             controller.getDetailRoom();
                                                         });
                                                     });
@@ -108,7 +106,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                                         const SizedBox(width: 8),
                                                         DefaultTextStyle(
                                                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                            child: Text("Edit Lantai"),
+                                                            child: const Text("Edit Lantai"),
                                                             ),
                                                         const SizedBox(height: 12),
                                                     ],
@@ -118,7 +116,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                     )
                                 ),
                                 Align(
-                                    alignment: Alignment(1, -1),
+                                    alignment: const Alignment(1, -1),
                                     child: Image.asset(
                                         "images/triangle_icon.png",
                                         height: 17,
@@ -136,9 +134,9 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Get.back()),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -160,14 +158,14 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                         GestureDetector(
                             onTap: () {
                                 GlobalVar.track("Click_option_menus");
-                                _showButtonDialog(context, controller);
+                                showButtonDialog(context, controller);
                             },
                             child: Container(
                                 color: Colors.transparent,
                                 height: 32,
                                 width: 32,
-                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                                margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: SvgPicture.asset("images/dot_icon.svg"),
                             ),
                         )
                     ]
@@ -177,7 +175,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
 
         Widget tabBar() {
             return Container(
-                padding: EdgeInsets.symmetric(horizontal: 26),
+                padding: const EdgeInsets.symmetric(horizontal: 26),
                 child: Stack(
                     fit: StackFit.passthrough,
                     alignment: Alignment.bottomCenter,
@@ -191,8 +189,8 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                         ),
                         TabBar(
                             isScrollable: true,
-                            controller: _tabController.controller,
-                            tabs: [
+                            controller: tabController.controller,
+                            tabs: const [
                                 Tab(
                                     text: "Smart Monitoring",
                                 ),
@@ -219,7 +217,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
 
         Widget tabViewSmartMonitor() {
             return  Container(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
                 child: ListView.builder(
                     controller: controller.scrollMonitorController,
                     itemCount: controller.isLoadMore.isTrue
@@ -228,13 +226,13 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                     itemBuilder: (context, index) {
                         int length = controller.smartMonitordevices.value.length;
                         if (index >= length) {
-                            return Column(
+                            return const Column(
                                 children: [
                                     Center(
                                         child: SizedBox(
-                                            child: ProgressLoading(),
                                             height: 24,
                                             width: 24,
+                                            child: ProgressLoading(),
                                         ),
                                     ),
                                     SizedBox(height: 120),
@@ -253,13 +251,13 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                             controller.smartControllerdevices.value.clear();
                                             controller.smartCameradevices.value.clear();
                                             controller.smartScaledevices.value.clear();
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.getDetailRoom();
                                             });
                                         });
                                     },
                                 ),
-                                index == controller.smartMonitordevices.value.length - 1 ? SizedBox(height: 120)
+                                index == controller.smartMonitordevices.value.length - 1 ? const SizedBox(height: 120)
                                     : Container(),
                             ],
                         );
@@ -270,7 +268,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
 
         Widget tabViewSmartController() {
             return  Container(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
                 child: ListView.builder(
                     controller: controller.scrollController,
                     itemCount: controller.isLoadMore.isTrue
@@ -279,14 +277,14 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                     itemBuilder: (context, index) {
                         int length = controller.smartControllerdevices.value.length;
                         if (index >= length) {
-                            return Column(
+                            return const Column(
                                 children: [
                                     Center(
                                         child: SizedBox(
-                                            child: ProgressLoading(
-                                            ),
                                             height: 24,
                                             width: 24,
+                                            child: ProgressLoading(
+                                            ),
                                         ),
                                     ),
                                     SizedBox(height: 120),
@@ -305,13 +303,13 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                             controller.smartControllerdevices.value.clear();
                                             controller.smartCameradevices.value.clear();
                                             controller.smartScaledevices.value.clear();
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.getDetailRoom();
                                             });
                                         });
                                     }, isItemList: true,
                                 ),
-                                index == controller.smartControllerdevices.value.length - 1 ? SizedBox(height: 120)
+                                index == controller.smartControllerdevices.value.length - 1 ? const SizedBox(height: 120)
                                     : Container(),
                             ],
                         );
@@ -321,108 +319,102 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
         }
 
         Widget tabViewSmartCamera() {
-            return  Container(
-                // padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
-                child: ListView.builder(
-                    controller: controller.scrollCameraController,
-                    itemCount: controller.isLoadMore.isTrue
-                        ? controller.smartCameradevices.value.length + 1
-                        : controller.smartCameradevices.value.length,
-                    itemBuilder: (context, index) {
-                        int length = controller.smartCameradevices.value.length;
-                        if (index >= length) {
-                            return Column(
-                                children: [
-                                    Center(
-                                        child: SizedBox(
-                                            child: ProgressLoading(
-                                            ),
-                                            height: 24,
-                                            width: 24,
+            return  ListView.builder(
+                controller: controller.scrollCameraController,
+                itemCount: controller.isLoadMore.isTrue
+                    ? controller.smartCameradevices.value.length + 1
+                    : controller.smartCameradevices.value.length,
+                itemBuilder: (context, index) {
+                    int length = controller.smartCameradevices.value.length;
+                    if (index >= length) {
+                        return const Column(
+                            children: [
+                                Center(
+                                    child: SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: ProgressLoading(
                                         ),
                                     ),
-                                    SizedBox(height: 120),
-                                ],
-                            );
-                        }
-                        return Column(
-                            children: [
-                                CardListSmartCamera(
-                                    device: controller.smartCameradevices.value[index],
-                                    imagesPath: "images/smartcamera_icon.svg",
-                                    onTap: () {
-                                        GlobalVar.track("Click_Button_Smart_Camera");
-                                        Get.toNamed(RoutePage.detailSmartCameraPage, arguments: [controller.smartCameradevices.value[index], controller.coopDetail])!.then((value) {
-                                            controller.isLoading.value = true;
-                                            controller.smartMonitordevices.value.clear();
-                                            controller.smartControllerdevices.value.clear();
-                                            controller.smartCameradevices.value.clear();
-                                            controller.smartScaledevices.value.clear();
-                                            Timer(Duration(milliseconds: 500), () {
-                                                controller.getDetailRoom();
-                                            });
-                                        });
-                                    },
                                 ),
-                                index == controller.smartCameradevices.value.length - 1 ? SizedBox(height: 120)
-                                    : Container(),
+                                SizedBox(height: 120),
                             ],
                         );
-                    },
-                ),
+                    }
+                    return Column(
+                        children: [
+                            CardListSmartCamera(
+                                device: controller.smartCameradevices.value[index],
+                                imagesPath: "images/smartcamera_icon.svg",
+                                onTap: () {
+                                    GlobalVar.track("Click_Button_Smart_Camera");
+                                    Get.toNamed(RoutePage.detailSmartCameraPage, arguments: [controller.smartCameradevices.value[index], controller.coopDetail])!.then((value) {
+                                        controller.isLoading.value = true;
+                                        controller.smartMonitordevices.value.clear();
+                                        controller.smartControllerdevices.value.clear();
+                                        controller.smartCameradevices.value.clear();
+                                        controller.smartScaledevices.value.clear();
+                                        Timer(const Duration(milliseconds: 500), () {
+                                            controller.getDetailRoom();
+                                        });
+                                    });
+                                },
+                            ),
+                            index == controller.smartCameradevices.value.length - 1 ? const SizedBox(height: 120)
+                                : Container(),
+                        ],
+                    );
+                },
             );
         }
 
         Widget tabViewSmartScale() {
-            return  Container(
-                // padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
-                child: ListView.builder(
-                    controller: controller.scrollScaleController,
-                    itemCount: controller.isLoadMore.isTrue
-                        ? controller.smartScaledevices.value.length + 1
-                        : controller.smartScaledevices.value.length,
-                    itemBuilder: (context, index) {
-                        int length = controller.smartScaledevices.value.length;
-                        if (index >= length) {
-                            return Column(
-                                children: [
-                                    Center(
-                                        child: SizedBox(
-                                            child: ProgressLoading(
-                                            ),
-                                            height: 24,
-                                            width: 24,
+            return  ListView.builder(
+                controller: controller.scrollScaleController,
+                itemCount: controller.isLoadMore.isTrue
+                    ? controller.smartScaledevices.value.length + 1
+                    : controller.smartScaledevices.value.length,
+                itemBuilder: (context, index) {
+                    int length = controller.smartScaledevices.value.length;
+                    if (index >= length) {
+                        return const Column(
+                            children: [
+                                Center(
+                                    child: SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: ProgressLoading(
                                         ),
                                     ),
-                                    SizedBox(height: 120),
-                                ],
-                            );
-                        }
-                        return Column(
-                            children: [
-                                CardListSmartScale(
-                                    device: controller.smartScaledevices.value[index],
-                                    imagesPath: "images/smartscale_icon.svg",
-                                    onTap: () {
-                                        GlobalVar.track("Click_Button_Smart_Scale");
-                                        Get.toNamed(RoutePage.listSmartScalePage, arguments: [controller.smartScaledevices.value[index], controller.coopDetail])!.then((value) {
-                                            controller.isLoading.value = true;
-                                            controller.smartMonitordevices.value.clear();
-                                            controller.smartControllerdevices.value.clear();
-                                            controller.smartCameradevices.value.clear();
-                                            controller.smartScaledevices.value.clear();
-                                            Timer(Duration(milliseconds: 500), () {
-                                                controller.getDetailRoom();
-                                            });
-                                        });
-                                    },
                                 ),
-                                index == controller.smartScaledevices.value.length - 1 ? SizedBox(height: 120)
-                                    : Container(),
+                                SizedBox(height: 120),
                             ],
                         );
-                    },
-                ),
+                    }
+                    return Column(
+                        children: [
+                            CardListSmartScale(
+                                device: controller.smartScaledevices.value[index],
+                                imagesPath: "images/smartscale_icon.svg",
+                                onTap: () {
+                                    GlobalVar.track("Click_Button_Smart_Scale");
+                                    Get.toNamed(RoutePage.listSmartScalePage, arguments: [controller.smartScaledevices.value[index], controller.coopDetail])!.then((value) {
+                                        controller.isLoading.value = true;
+                                        controller.smartMonitordevices.value.clear();
+                                        controller.smartControllerdevices.value.clear();
+                                        controller.smartCameradevices.value.clear();
+                                        controller.smartScaledevices.value.clear();
+                                        Timer(const Duration(milliseconds: 500), () {
+                                            controller.getDetailRoom();
+                                        });
+                                    });
+                                },
+                            ),
+                            index == controller.smartScaledevices.value.length - 1 ? const SizedBox(height: 120)
+                                : Container(),
+                        ],
+                    );
+                },
             );
         }
 
@@ -435,7 +427,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                 context: context,
                 builder: (context) {
                     return Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(16),
@@ -446,7 +438,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                             mainAxisSize: MainAxisSize.min,
                             children: [
                                 Container(
-                                    margin: EdgeInsets.only(top: 8),
+                                    margin: const EdgeInsets.only(top: 8),
                                     width: 60,
                                     height: 4,
                                     decoration: BoxDecoration(
@@ -460,7 +452,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                         Get.back();
                                         Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Monitoring"])!.then((value) {
                                             controller.isLoading.value = true;
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.smartMonitordevices.value.clear();
                                                 controller.smartControllerdevices.value.clear();
                                                 controller.smartCameradevices.value.clear();
@@ -469,14 +461,14 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                         });
                                     },
                                     child:
-                                    MenuBottomSheet(title: "Smart Monitoring", subTitle : "Monitoring lingkungan kandang seperti Suhu, kelembaban, amonia, angin dan cahaya", imagesPath: "images/smartmonitoring_icon.svg",),),
+                                    const MenuBottomSheet(title: "Smart Monitoring", subTitle : "Monitoring lingkungan kandang seperti Suhu, kelembaban, amonia, angin dan cahaya", imagesPath: "images/smartmonitoring_icon.svg",),),
                                 GestureDetector(
                                     onTap: () {
                                         GlobalVar.track("Click_add_smart_controller");
                                         Get.back();
                                         Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Controller"])!.then((value) {
                                             controller.isLoading.value = true;
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.smartMonitordevices.value.clear();
                                                 controller.smartControllerdevices.value.clear();
                                                 controller.smartCameradevices.value.clear();
@@ -485,14 +477,14 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                         });
                                     },
                                     child:
-                                    MenuBottomSheet(title: "Smart Controller", subTitle : "Kontrol peralatan di kandang seperti kipas, pemanas, pendingin dan alarm", imagesPath: "images/smartcontroller_icon.svg",),),
+                                    const MenuBottomSheet(title: "Smart Controller", subTitle : "Kontrol peralatan di kandang seperti kipas, pemanas, pendingin dan alarm", imagesPath: "images/smartcontroller_icon.svg",),),
                                 GestureDetector(
                                     onTap: () {
                                         GlobalVar.track("Click_add_smart_camera");
                                         Get.back();
                                         Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Camera"])!.then((value) {
                                             controller.isLoading.value = true;
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.smartMonitordevices.value.clear();
                                                 controller.smartControllerdevices.value.clear();
                                                 controller.smartCameradevices.value.clear();
@@ -501,7 +493,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                         });
                                     },
                                     child:
-                                    MenuBottomSheet(title: "Smart Camera", subTitle : "Pantau kondisi lingkungan kandang secara langsung dengan mudah", imagesPath: "images/smartcamera_icon.svg",),
+                                    const MenuBottomSheet(title: "Smart Camera", subTitle : "Pantau kondisi lingkungan kandang secara langsung dengan mudah", imagesPath: "images/smartcamera_icon.svg",),
                                 )
                                 ,
                                 const SizedBox(height: GlobalVar.bottomSheetMargin,)
@@ -519,7 +511,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                     children: [
                         Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: [
                                     BoxShadow(
@@ -530,7 +522,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                             ),
-                            padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -567,17 +559,17 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                             ),
                             Expanded(
                                 child: Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 16),
+                                    margin: const EdgeInsets.symmetric(horizontal: 16),
                                     child: TabBarView(
-                                        controller: _tabController.controller,
+                                        controller: tabController.controller,
                                         children: [
                                             Obx(() => controller.isLoading.isTrue ?
-                                            Center(child: ProgressLoading()) : controller.smartMonitordevices.value.isEmpty ?
+                                            const Center(child: ProgressLoading()) : controller.smartMonitordevices.value.isEmpty ?
                                             Center(
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: MediaQuery. of(context). size. height,
-                                                    margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                                                    margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                                     child: Column(
                                                       children: [
                                                           SvgPicture.asset("images/empty_icon.svg"),
@@ -591,12 +583,12 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                             ) : tabViewSmartMonitor(),
                                             ),
                                             Obx(() => controller.isLoading.isTrue ?
-                                            Center(child: ProgressLoading()) : controller.smartControllerdevices.value.isEmpty ?
+                                            const Center(child: ProgressLoading()) : controller.smartControllerdevices.value.isEmpty ?
                                             Center(
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: MediaQuery. of(context). size. height,
-                                                    margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                                                    margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                                     child: Column(
                                                         children: [
                                                             SvgPicture.asset("images/empty_icon.svg"),
@@ -610,12 +602,12 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                             ) : tabViewSmartController()
                                             ),
                                             Obx(() => controller.isLoading.isTrue ?
-                                            Center(child: ProgressLoading()) : controller.smartCameradevices.value.isEmpty ?
+                                            const Center(child: ProgressLoading()) : controller.smartCameradevices.value.isEmpty ?
                                             Center(
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: MediaQuery. of(context). size. height,
-                                                    margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                                                    margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                                     child: Column(
                                                         children: [
                                                             SvgPicture.asset("images/empty_icon.svg"),
@@ -629,12 +621,12 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                                             ): tabViewSmartCamera()
                                             ),
                                             Obx(() => controller.isLoading.isTrue ?
-                                            Center(child: ProgressLoading()) : controller.smartScaledevices.value.isEmpty ?
+                                            const Center(child: ProgressLoading()) : controller.smartScaledevices.value.isEmpty ?
                                             Center(
                                                 child: Container(
                                                     width: double.infinity,
                                                     height: MediaQuery. of(context). size. height,
-                                                    margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                                                    margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                                     child: Column(
                                                         children: [
                                                             SvgPicture.asset("images/empty_icon.svg"),

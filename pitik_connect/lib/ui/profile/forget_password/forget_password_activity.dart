@@ -10,11 +10,9 @@ import '../../../route.dart';
 import '../change_password/change_password_controller.dart';
 import 'forget_password_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 
 class ForgetPassword extends GetView<ChangePasswordController> {
@@ -29,11 +27,11 @@ class ForgetPassword extends GetView<ChangePasswordController> {
       return AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
@@ -55,7 +53,7 @@ class ForgetPassword extends GetView<ChangePasswordController> {
                   children: [
                       Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
                                   BoxShadow(
@@ -66,7 +64,7 @@ class ForgetPassword extends GetView<ChangePasswordController> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                           ),
-                          padding: EdgeInsets.only(top: 65),
+                          padding: const EdgeInsets.only(top: 65),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -99,7 +97,7 @@ class ForgetPassword extends GetView<ChangePasswordController> {
                               Get.toNamed(RoutePage.helpPage);
                           } ,
                           child: Text("Bantuan", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),)),
-                      SizedBox(height: 64,)
+                      const SizedBox(height: 64,)
                   ],
               ));
       }
@@ -112,19 +110,19 @@ class ForgetPassword extends GetView<ChangePasswordController> {
         ),
         body: Stack(
             children: [
-                Obx(() => controller.isLoading.isTrue ? ProgressLoading() :
+                Obx(() => controller.isLoading.isTrue ? const ProgressLoading() :
                 SingleChildScrollView(
                     child: Container(
-                        padding: EdgeInsets.only(top: 16),
-                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.only(top: 16),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                SizedBox(height: 64,),
+                                const SizedBox(height: 64,),
                                 Text("Jangan Sampai Lupa!", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Text("Masukan nomor hp kamu pada di kolom bawah untuk konfirmasi lupa kata sandi.", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),),
-                                SizedBox(height: 64,),
+                                const SizedBox(height: 64,),
                                 controller.efNoHp,
                                 bottomNavBar()
                             ],),

@@ -18,11 +18,9 @@ import 'package:model/record_model.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 18/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 18/08/23
 
 class HistoricalDataSmartCameraController extends GetxController {
     BuildContext context;
@@ -87,10 +85,6 @@ class HistoricalDataSmartCameraController extends GetxController {
 
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -140,7 +134,7 @@ class HistoricalDataSmartCameraController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -211,11 +205,11 @@ class HistoricalDataSmartCameraController extends GetxController {
               await SmartCameraImageProcessing().shareImage(
                   url: imageurl,
                   cameraName: '${recordCamera.sensor!.sensorCode}',
-                  temperature: recordCamera.temperature == null ? 0 : recordCamera.temperature,
-                  humidity: recordCamera.humidity == null ? 0 : recordCamera.humidity,
-                  coop: '${recordCamera.sensor!.room!.building!.name!}',
-                  floor: '${recordCamera.sensor!.room!.roomType!.name!}',
-                  cameraPosition: '${recordCamera.sensor!.position!}',
+                  temperature: recordCamera.temperature ?? 0,
+                  humidity: recordCamera.humidity ?? 0,
+                  coop: recordCamera.sensor!.room!.building!.name!,
+                  floor: recordCamera.sensor!.room!.roomType!.name!,
+                  cameraPosition: recordCamera.sensor!.position!,
                   timeTake: '${takePictureDate.day}/${takePictureDate.month}/${takePictureDate.year} ${takePictureDate.hour}:${takePictureDate.minute}',
                   isDownload: isDownload
               );
@@ -240,7 +234,7 @@ class HistoricalDataSmartCameraController extends GetxController {
                 "Pesan", "Gambar belum tersedia!",
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: Colors.white,
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 backgroundColor: Colors.red,
             );
             return false;

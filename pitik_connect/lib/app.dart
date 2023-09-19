@@ -9,6 +9,8 @@ import 'package:pitik_connect/route.dart';
 import 'package:pitik_connect/ui/beranda/beranda_controller.dart';
 
 class App extends StatelessWidget {
+  const App({super.key});
+
     @override
     Widget build(BuildContext context) {
         StreamInternetConnection.init();

@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/card_camera/card_camera.dart';
@@ -21,11 +23,9 @@ import 'package:model/device_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/sensor_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/07/23
 
 class RegisterDeviceController extends GetxController {
     BuildContext context;
@@ -145,10 +145,6 @@ class RegisterDeviceController extends GetxController {
         GlobalVar.sendRenderTimeMixpanel("Open_form_${deviceType.value == SMART_MONITORING ? "smart_monitoring" : deviceType.value == SMART_CONTROLLER ? "smart_controller" : "smart_camera"}_page", timeStart, timeEnd);
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -180,7 +176,7 @@ class RegisterDeviceController extends GetxController {
         Get.dialog(Center(
             child: Container(
                 width: 300,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -205,30 +201,28 @@ class RegisterDeviceController extends GetxController {
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
                         const SizedBox(height: 16),
-                        Container(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Container(
-                                        height: 32,
-                                        width: 100,
-                                        color: Colors.transparent,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Container(
+                                    height: 32,
+                                    width: 100,
+                                    color: Colors.transparent,
+                                ),
+                                SizedBox(
+                                    width: 100,
+                                    child: ButtonFill(
+                                        controller:
+                                        GetXCreator.putButtonFillController("Dialog"),
+                                        label: "OK",
+                                        onClick: () => {
+                                            GlobalVar.track("Click_button_ok_popup"),
+                                            isFirstLoad.value = false,
+                                            Get.back(),
+                                        }
                                     ),
-                                    Container(
-                                        width: 100,
-                                        child: ButtonFill(
-                                            controller:
-                                            GetXCreator.putButtonFillController("Dialog"),
-                                            label: "OK",
-                                            onClick: () => {
-                                                GlobalVar.track("Click_button_ok_popup"),
-                                                isFirstLoad.value = false,
-                                                Get.back(),
-                                            }
-                                        ),
-                                    ),
-                                ],
-                            ),
+                                ),
+                            ],
                         ),
                     ],
                 ),
@@ -259,14 +253,14 @@ class RegisterDeviceController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -276,8 +270,8 @@ class RegisterDeviceController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 
@@ -295,9 +289,9 @@ class RegisterDeviceController extends GetxController {
                 efMacAddress.controller.formKey.currentContext!);
             return ret = [false, ""];
         }
-        if(deviceType == RegisterDeviceController.SMART_MONITORING) {
+        if(deviceType.value == RegisterDeviceController.SMART_MONITORING) {
             ret = cardSensor.controller.validation();
-        }else if(deviceType == RegisterDeviceController.SMART_CAMERA){
+        }else if(deviceType.value == RegisterDeviceController.SMART_CAMERA){
             ret = cardCamera.controller.validation();
         }
 
@@ -306,19 +300,19 @@ class RegisterDeviceController extends GetxController {
 
     Device generatePayloadRegisterDevice(){
         List<Sensor?> sensors = [];
-        if(deviceType == SMART_MONITORING){
+        if(deviceType.value == SMART_MONITORING){
             for (int i = 0; i < cardSensor.controller.itemCount.value; i++) {
                 int whichItem = cardSensor.controller.index.value[i];
                 sensors.add(Sensor(sensorCode :"${cardSensor.controller.efSensorId.value[whichItem].getTextPrefix()}${cardSensor.controller.efSensorId.value[whichItem].getInput()}", sensorType: "XIAOMI_SENSOR"));
             }
-        }else if(deviceType == SMART_CAMERA){
+        }else if(deviceType.value == SMART_CAMERA){
             for (int i = 0; i < cardCamera.controller.itemCount.value; i++) {
                 int whichItem = cardCamera.controller.index.value[i];
                 sensors.add(Sensor(sensorCode :"${cardCamera.controller.efCameraId.value[whichItem].getTextPrefix()}${cardCamera.controller.efCameraId.value[whichItem].getInput()}"));
             }
         }
 
-        return Device(deviceType: deviceType == SMART_MONITORING ? "SMART_MONITORING" : deviceType == SMART_CONTROLLER ? "SMART_CONTROLLER" : "SMART_CAMERA",coopId: coop.coopId, roomId: coop.room!.id,mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ""), sensors: sensors);
+        return Device(deviceType: deviceType.value == SMART_MONITORING ? "SMART_MONITORING" : deviceType.value == SMART_CONTROLLER ? "SMART_CONTROLLER" : "SMART_CAMERA",coopId: coop.coopId, roomId: coop.room!.id,mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ""), sensors: sensors);
     }
 
 }

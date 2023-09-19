@@ -14,11 +14,9 @@ import 'package:model/device_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/detail_controller_response.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartControllerController extends GetxController {
     BuildContext context;
@@ -66,7 +64,7 @@ class DetailSmartControllerController extends GetxController {
         label: "Jenis Kandang",
         hint: "Pilih Salah Satu",
         alertText: "Jenis Kandang harus dipilih!",
-        items: {"Open House": false, "Semi House": false, "Close House": false},
+        items: const {"Open House": false, "Semi House": false, "Close House": false},
         onSpinnerSelected: (value) {
         }
     );
@@ -80,15 +78,7 @@ class DetailSmartControllerController extends GetxController {
         getDetailSmartController();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     void getDetailSmartController(){
         timeStart = DateTime.now();
@@ -112,7 +102,7 @@ class DetailSmartControllerController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },

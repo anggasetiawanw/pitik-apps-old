@@ -12,11 +12,9 @@ import 'package:model/sensor_data_model.dart';
 import '../../route.dart';
 import 'detail_smartmonitor_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
     const DetailSmartMonitor({
@@ -28,24 +26,24 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
         final DetailSmartMonitorController controller = Get.put(DetailSmartMonitorController(
             context: context,
         ));
-        _showButtonDialog(BuildContext context, DetailSmartMonitorController controller) {
+        showButtonDialog(BuildContext context, DetailSmartMonitorController controller) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
                     return Align(
-                        alignment: Alignment(1, -1),
+                        alignment: const Alignment(1, -1),
                         child: GestureDetector(
                             onTap: () {
                                 // _showBottomDialog(context, controller);
                             },
                             child: Container(
-                                margin: EdgeInsets.only(top: 50, right: 30),
+                                margin: const EdgeInsets.only(top: 50, right: 30),
                                 width: 135,
                                 height: 66,
                                 child: Stack(children: [
                                     Container(
-                                        margin: EdgeInsets.only(top: 8),
-                                        padding: EdgeInsets.all(8),
+                                        margin: const EdgeInsets.only(top: 8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(6)),
@@ -58,7 +56,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                                                         Get.back();
                                                         Get.toNamed(RoutePage.modifySmartMonitorPage, arguments:[controller.coop, controller.device, "edit"])!.then((value) {
                                                             controller.isLoading.value = true;
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getLatestDataSmartMonitor();
                                                             });
                                                         });
@@ -70,7 +68,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                                                                 width: 8,),
                                                             DefaultTextStyle(
                                                                 style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                                child: Text("Edit"),
+                                                                child: const Text("Edit"),
                                                             ),
                                                         ],
                                                     ),
@@ -82,7 +80,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                                                         Get.toNamed(RoutePage.modifySmartMonitorPage, arguments:[controller.coop, controller.device, "rename"])!.then((value) {
                                                             controller.isLoading.value =true;
                                                             value == null ? controller.deviceUpdatedName.value = "" : controller.deviceUpdatedName.value = value[0]["backValue"];
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getLatestDataSmartMonitor();
                                                             });
                                                         });
@@ -94,7 +92,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                                                                 width: 8,),
                                                             DefaultTextStyle(
                                                                 style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                                child: Text(
+                                                                child: const Text(
                                                                   "Ubah Nama"),
                                                             ),
                                                         ],
@@ -106,7 +104,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
 
                                     ),
                                     Align(
-                                        alignment: Alignment(1, -1),
+                                        alignment: const Alignment(1, -1),
                                         child: Image.asset(
                                             "images/triangle_icon.png",
                                             height: 17,
@@ -124,29 +122,29 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Get.back()),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
                 backgroundColor: GlobalVar.primaryOrange,
                 centerTitle: true,
-                title:  Obx(() => controller.deviceUpdatedName == "" ?
+                title:  Obx(() => controller.deviceUpdatedName.value == "" ?
                 Text("${controller.device.deviceName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),) : Text("${controller.deviceUpdatedName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),)),
                 actions: [
                     if(GlobalVar.canModifyInfrasturucture())...[
                         GestureDetector(
                             onTap: () {
                                 GlobalVar.track("Click_option_menu");
-                                _showButtonDialog(context, controller);
+                                showButtonDialog(context, controller);
                             },
                             child: Container(
                                 color: Colors.transparent,
                                 height: 32,
                                 width: 32,
-                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                                margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: SvgPicture.asset("images/dot_icon.svg"),
                             ),
                         )
                     ]
@@ -156,49 +154,46 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
 
 
         Widget customExpandable(String headerText, String icon, SensorData sensorData) {
-            return  Container(
-                child:
-                ExpandableDevice(
-                    controller: GetXCreator.putAccordionDeviceController("smartMonitorCard${headerText}", context),
-                    headerText: "${headerText[0].toUpperCase()}${headerText.substring(1)}",
-                    value: "${sensorData.value!}",
-                    valueTextColor: sensorData.status == "good" ? 0xFF14CB82 : sensorData.status == "bad" ? 0xFFDD1E25 : 0xFF2C2B2B,
-                    icon: icon,
-                    unitValue: headerText == "temperature"? "°C" : "${sensorData.uom!}",
-                    onExpand : (bool isExpand) {
-                        if(!isExpand){
-                            headerText == "temperature" ? GlobalVar.track("Click_Suhu"):
-                            headerText == "Kelembaban" ? GlobalVar.track("Click_Kelembaban") :
-                            headerText == "Heat Stress" ? GlobalVar.track("Click_Heat_Stress") :
-                            headerText == "Kecepatan Angin" ? GlobalVar.track("Click_Kecepatan_Angin") :
-                            headerText == "Lampu" ? GlobalVar.track("Click_Cahaya") :
-                            headerText == "Amonia" ? GlobalVar.track("Click_Ammonia") :"";
-                        }else{
-                            // controller.getHistoricalData(headerText);
-                        }
-                    },
-                    targetLabel : headerText == "temperature" ? "Target" :
-                    headerText == "Kelembaban" ? "Target" :
-                    headerText == "Heat Stress" ? "" :
-                    headerText == "Kecepatan Angin" ? "" :
-                    headerText == "Lampu" ? "" :
-                    headerText == "Amonia" ? "Standard" :"",
+            return  ExpandableDevice(
+                controller: GetXCreator.putAccordionDeviceController("smartMonitorCard$headerText", context),
+                headerText: "${headerText[0].toUpperCase()}${headerText.substring(1)}",
+                value: "${sensorData.value!}",
+                valueTextColor: sensorData.status == "good" ? 0xFF14CB82 : sensorData.status == "bad" ? 0xFFDD1E25 : 0xFF2C2B2B,
+                icon: icon,
+                unitValue: headerText == "temperature"? "°C" : sensorData.uom!,
+                onExpand : (bool isExpand) {
+                    if(!isExpand){
+                        headerText == "temperature" ? GlobalVar.track("Click_Suhu"):
+                        headerText == "Kelembaban" ? GlobalVar.track("Click_Kelembaban") :
+                        headerText == "Heat Stress" ? GlobalVar.track("Click_Heat_Stress") :
+                        headerText == "Kecepatan Angin" ? GlobalVar.track("Click_Kecepatan_Angin") :
+                        headerText == "Lampu" ? GlobalVar.track("Click_Cahaya") :
+                        headerText == "Amonia" ? GlobalVar.track("Click_Ammonia") :"";
+                    }else{
+                        // controller.getHistoricalData(headerText);
+                    }
+                },
+                targetLabel : headerText == "temperature" ? "Target" :
+                headerText == "Kelembaban" ? "Target" :
+                headerText == "Heat Stress" ? "" :
+                headerText == "Kecepatan Angin" ? "" :
+                headerText == "Lampu" ? "" :
+                headerText == "Amonia" ? "Standard" :"",
 
-                    averageLabel: headerText == "temperature" ? "Rata-Rata" :
-                    headerText == "Kelembaban" ? "Rata-Rata" :
-                    headerText == "Heat Stress" ? "Siklus Sekarang" :
-                    headerText == "Kecepatan Angin" ? "Siklus Sekarang" :
-                    headerText == "Lampu" ? "Siklus Sekarang" :
-                    headerText == "Amonia" ? "Mics-amonia" :"",
+                averageLabel: headerText == "temperature" ? "Rata-Rata" :
+                headerText == "Kelembaban" ? "Rata-Rata" :
+                headerText == "Heat Stress" ? "Siklus Sekarang" :
+                headerText == "Kecepatan Angin" ? "Siklus Sekarang" :
+                headerText == "Lampu" ? "Siklus Sekarang" :
+                headerText == "Amonia" ? "Mics-amonia" :"",
 
-                    device: controller.device,
-                    sensorType: headerText == "temperature" ? "temperature" :
-                    headerText == "Heat Stress" ? "heatStressIndex" :
-                    headerText == "Kecepatan Angin" ? "wind" :
-                    headerText == "Lampu" ? "lights" :
-                    headerText == "Amonia" ? "ammonia" :
-                    "relativeHumidity",
-                ),
+                device: controller.device,
+                sensorType: headerText == "temperature" ? "temperature" :
+                headerText == "Heat Stress" ? "heatStressIndex" :
+                headerText == "Kecepatan Angin" ? "wind" :
+                headerText == "Lampu" ? "lights" :
+                headerText == "Amonia" ? "ammonia" :
+                "relativeHumidity",
             );
         }
 
@@ -212,15 +207,13 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Container(
-                        child: Center(
-                            child: ProgressLoading()),
-                    ) : controller.deviceSummary == null ?
+                    const Center(
+                        child: ProgressLoading()) : controller.deviceSummary == null ?
                     Center(
                         child: Container(
                             width: double.infinity,
                             height: MediaQuery. of(context). size. height,
-                            margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                            margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                             child: Column(
                                 children: [
                                     SvgPicture.asset("images/empty_icon.svg"),
@@ -234,7 +227,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController>{
                     ):
                     SingleChildScrollView(
                       child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

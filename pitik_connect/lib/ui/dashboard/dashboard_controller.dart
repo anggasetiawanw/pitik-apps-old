@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 
 class DashboardController extends GetxController {

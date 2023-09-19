@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/card_floor/card_floor.dart';
@@ -19,11 +21,9 @@ import 'package:model/room_model.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 13/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 13/07/23
 
 class RegisterCoopController extends GetxController {
     BuildContext context;
@@ -69,7 +69,7 @@ class RegisterCoopController extends GetxController {
         label: "Jenis Kandang",
         hint: "Pilih Salah Satu",
         alertText: "Jenis Kandang harus dipilih!",
-        items: {"Open House": false, "Semi House": false, "Closed House": false},
+        items: const {"Open House": false, "Semi House": false, "Closed House": false},
         onSpinnerSelected: (value) {
         }
     );
@@ -79,7 +79,7 @@ class RegisterCoopController extends GetxController {
         label: "Status",
         hint: "Pilih Salah Satu",
         alertText: "Status harus dipilih !",
-        items: {"Aktif": false, "Non Aktif": false},
+        items: const {"Aktif": false, "Non Aktif": false},
         onSpinnerSelected: (value) {
         }
     );
@@ -106,7 +106,7 @@ class RegisterCoopController extends GetxController {
             controller: GetXCreator.putButtonFillController("bfYesRegBuilding"),
             label: "Ya",
             onClick: () {
-                if(modifyType == MODIFY_COOP || modifyType == MODIFY_FLOOR ){
+                if(modifyType.value == MODIFY_COOP || modifyType.value == MODIFY_FLOOR ){
                     modifyInfrastructure();
                 }else{
                     GlobalVar.track("Click_simpan_kandang");
@@ -118,10 +118,6 @@ class RegisterCoopController extends GetxController {
         );
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -131,7 +127,7 @@ class RegisterCoopController extends GetxController {
         cardFloor.controller.visibleCard();
         if(Get.arguments != null) {
             modifyType.value = Get.arguments[0];
-            if(modifyType == MODIFY_COOP) {
+            if(modifyType.value == MODIFY_COOP) {
                 coop.value = Get.arguments[1];
                 cardFloor.controller.invisibleCard();
                 spCoopStatus.controller.visibleSpinner();
@@ -141,7 +137,7 @@ class RegisterCoopController extends GetxController {
                 spBuildingType.controller.textSelected(coop.value.coopType);
                 DateTime timeEnd = DateTime.now();
                 GlobalVar.sendRenderTimeMixpanel("Open_form_edit_coop", timeStart, timeEnd);
-            }else if(modifyType == MODIFY_FLOOR){
+            }else if(modifyType.value == MODIFY_FLOOR){
                 coop.value = Get.arguments[1];
                 cardFloor.controller.invisibleCard();
                 spCoopStatus.controller.visibleSpinner();
@@ -185,7 +181,7 @@ class RegisterCoopController extends GetxController {
                             DateTime timeEnd = DateTime.now();
                             GlobalVar.sendRenderTimeMixpanel("Create_coop_failed", timeStart, timeEnd);
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -194,7 +190,7 @@ class RegisterCoopController extends GetxController {
                             DateTime timeEnd = DateTime.now();
                             GlobalVar.sendRenderTimeMixpanel("Create_coop_failed", timeStart, timeEnd);
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -204,8 +200,8 @@ class RegisterCoopController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 
@@ -221,7 +217,7 @@ class RegisterCoopController extends GetxController {
             timeStart = DateTime.now();
             isLoading.value = true;
             try {
-                Coop payload = modifyType == MODIFY_COOP ? generatePayloadModifyCoop() : generatePayloadModifyFloor();
+                Coop payload = modifyType.value == MODIFY_COOP ? generatePayloadModifyCoop() : generatePayloadModifyFloor();
                 Service.push(
                     service: ListApi.modifyInfrastructure,
                     context: context,
@@ -233,25 +229,25 @@ class RegisterCoopController extends GetxController {
                     listener:ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             DateTime timeEnd = DateTime.now();
-                            GlobalVar.sendRenderTimeMixpanel(modifyType == MODIFY_COOP ? "Edit_coop" : "Edit_floor", timeStart, timeEnd);
+                            GlobalVar.sendRenderTimeMixpanel(modifyType.value == MODIFY_COOP ? "Edit_coop" : "Edit_floor", timeStart, timeEnd);
                             Get.back();
                             isLoading.value = false;
                             },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             DateTime timeEnd = DateTime.now();
-                            GlobalVar.sendRenderTimeMixpanel(modifyType == MODIFY_COOP ? "Edit_coop_failed" : "Edit_floor_faild", timeStart, timeEnd);
+                            GlobalVar.sendRenderTimeMixpanel(modifyType.value == MODIFY_COOP ? "Edit_coop_failed" : "Edit_floor_faild", timeStart, timeEnd);
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             DateTime timeEnd = DateTime.now();
-                            GlobalVar.sendRenderTimeMixpanel(modifyType == MODIFY_COOP ? "Edit_coop_failed" : "Edit_floor_faild", timeStart, timeEnd);
+                            GlobalVar.sendRenderTimeMixpanel(modifyType.value == MODIFY_COOP ? "Edit_coop_failed" : "Edit_floor_faild", timeStart, timeEnd);
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -261,8 +257,8 @@ class RegisterCoopController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
         }
@@ -270,7 +266,7 @@ class RegisterCoopController extends GetxController {
 
     List validation() {
         List ret = [true, ""];
-        if(modifyType == MODIFY_COOP) {
+        if(modifyType.value == MODIFY_COOP) {
             if (efBuildingName
                 .getInput()
                 .isEmpty) {
@@ -289,7 +285,7 @@ class RegisterCoopController extends GetxController {
                     spCoopStatus.controller.formKey.currentContext!);
                 return ret = [false, ""];
             }
-        }else if(modifyType == MODIFY_FLOOR){
+        }else if(modifyType.value == MODIFY_FLOOR){
             if (efFloorName
                 .getInput()
                 .isEmpty) {

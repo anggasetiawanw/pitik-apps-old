@@ -24,11 +24,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 04/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 04/07/23
 
 class LoginController extends GetxController {
     BuildContext context;
@@ -61,7 +59,7 @@ class LoginController extends GetxController {
         hint: "Ketik Kata Sandi",
         alertText: "Password Harus Di Isi",
         action : TextInputAction.done,
-        maxInput: 20, onTyping: (String ) {  },
+        maxInput: 20, onTyping: (value ) {  },
     );
     late ButtonFill bfLogin = ButtonFill(
         controller: GetXCreator.putButtonFillController("bfLogin"),
@@ -83,14 +81,14 @@ class LoginController extends GetxController {
     Future<void> getAuth() async {
         if (validation()) {
             isLoading.value = true;
-            String appId = await FirebaseRemoteConfig.instance.getString("appId");
+            String appId = FirebaseRemoteConfig.instance.getString("appId");
             if(appId.isEmpty) {
-                appId = await FirebaseRemoteConfig.instance.getString("appId");
+                appId = FirebaseRemoteConfig.instance.getString("appId");
             }
             if(await XAppIdImpl().getById(appId) ==null ) XAppIdImpl().save(XAppId(appId: appId));
             GlobalVar.xAppId = appId;
 
-            try {
+                // ignore: use_build_context_synchronously
                 Service.push(
                     apiKey: 'userApi',
                     service: ListApi.auth,
@@ -126,7 +124,6 @@ class LoginController extends GetxController {
                         onTokenInvalid: GlobalVar.invalidResponse()
                     )
                 );
-            }catch(e){}
         }
     }
 
@@ -227,7 +224,7 @@ class LoginController extends GetxController {
             Center(
             child: Container(
                 width: 300,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -251,28 +248,26 @@ class LoginController extends GetxController {
                             "Kata Sandi bawaan harus segera ganti" ,
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
-                        Container(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Container(
-                                        height: 32,
-                                        width: 100,
-                                        color: Colors.transparent,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Container(
+                                    height: 32,
+                                    width: 100,
+                                    color: Colors.transparent,
+                                ),
+                                SizedBox(
+                                    width: 100,
+                                    child: ButtonFill(
+                                        controller:
+                                        GetXCreator.putButtonFillController("Dialog"),
+                                        label: "OK",
+                                        onClick: () => {
+                                            Get.offAllNamed(RoutePage.changePassPage, arguments: true)
+                                        }
                                     ),
-                                    Container(
-                                        width: 100,
-                                        child: ButtonFill(
-                                            controller:
-                                            GetXCreator.putButtonFillController("Dialog"),
-                                            label: "OK",
-                                            onClick: () => {
-                                                Get.offAllNamed(RoutePage.changePassPage, arguments: true)
-                                            }
-                                        ),
-                                    ),
-                                ],
-                            ),
+                                ),
+                            ],
                         ),
                     ],
                 ),
@@ -282,16 +277,7 @@ class LoginController extends GetxController {
         );
     }
 
-    @override
-    void onInit() {
-         super.onInit();
-    }
 
-    @override
-    void onReady() {
-         super.onReady();
-         // efNoHp.setInput("081012340011");
-    }
 }
 
 class LoginActivityBindings extends Bindings {

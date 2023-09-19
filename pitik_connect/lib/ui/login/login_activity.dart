@@ -8,19 +8,17 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'login_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 04/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 04/07/23
 
 
 class LoginActivity extends StatelessWidget {
-    LoginActivity({super.key});
+    const LoginActivity({super.key});
 
     @override
     Widget build(BuildContext context) {
-        final LoginController _controller = Get.put(LoginController(context: context));
+        final LoginController controller = Get.put(LoginController(context: context));
 
         return Scaffold(
             resizeToAvoidBottomInset: true,
@@ -39,39 +37,37 @@ class LoginActivity extends StatelessWidget {
                                     children: [
                                     Container(
                                         width: double.infinity,
-                                        margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                                        margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
                                         child: Column(
                                             children: [
-                                                _controller.efNoHp,
-                                                _controller.efPassword,
-                                                Container(
-                                                    child: GestureDetector(
-                                                        onTap: (){
-                                                            Get.toNamed(RoutePage.forgetPassPage);
-                                                        },
-                                                      child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.end,
-                                                          children: [
-                                                              Text("Lupa Kata Sandi ?", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium,
-                                                                  color: GlobalVar.primaryOrange)),
-                                                          ],
-                                                      ),
-                                                    ) ,
+                                                controller.efNoHp,
+                                                controller.efPassword,
+                                                GestureDetector(
+                                                    onTap: (){
+                                                        Get.toNamed(RoutePage.forgetPassPage);
+                                                    },
+                                                  child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                          Text("Lupa Kata Sandi ?", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium,
+                                                              color: GlobalVar.primaryOrange)),
+                                                      ],
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 48,),
-                                                _controller.bfLogin,
+                                                controller.bfLogin,
                                             ],
                                         ),
                                     ),
                                     Container(
                                         width: double.infinity,
                                         height: 210,
-                                        margin: EdgeInsets.only(left: 56, right: 56),
+                                        margin: const EdgeInsets.only(left: 56, right: 56),
                                         child: Column(
                                             children: [
                                                 const SizedBox(height: 8),
                                                 Container(
-                                                    margin: EdgeInsets.only(top: 32),
+                                                    margin: const EdgeInsets.only(top: 32),
                                                     child: Column(
                                                         children: [
                                                             Text(
@@ -82,8 +78,8 @@ class LoginActivity extends StatelessWidget {
                                                                 "berarti kamu setuju dengan",
                                                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 10),
                                                             ),
-                                                            new RichText(
-                                                                text: new TextSpan(
+                                                            RichText(
+                                                                text: TextSpan(
                                                                     style: GlobalVar.greyTextStyle.copyWith(fontSize: 10),
                                                                     children: <TextSpan>[
                                                                         TextSpan(
@@ -93,7 +89,7 @@ class LoginActivity extends StatelessWidget {
                                                                                 Get.toNamed(RoutePage.privacyPage, arguments: false);
                                                                             },
                                                                         ),
-                                                                        TextSpan(text: " serta"),
+                                                                        const TextSpan(text: " serta"),
                                                                         TextSpan(
                                                                             text: " Syarat & Ketentuan",
                                                                             style: GlobalVar.primaryTextStyle.copyWith(fontSize: 10),
@@ -101,7 +97,7 @@ class LoginActivity extends StatelessWidget {
                                                                                 Get.toNamed(RoutePage.termPage);
                                                                             },
                                                                         ),
-                                                                        TextSpan(text: " kami"),
+                                                                        const TextSpan(text: " kami"),
                                                                     ],
                                                                 ),
                                                             ),
@@ -117,7 +113,7 @@ class LoginActivity extends StatelessWidget {
                     ),
 
                     Obx(() =>
-                    _controller.isLoading.isTrue
+                    controller.isLoading.isTrue
                         ? Center(
                         child: Container(
                             height: MediaQuery.of(context).size.height,
@@ -128,7 +124,7 @@ class LoginActivity extends StatelessWidget {
                             // )
                         ),
                     )
-                        : SizedBox(),
+                        : const SizedBox(),
                     ),
                 ],
             ),

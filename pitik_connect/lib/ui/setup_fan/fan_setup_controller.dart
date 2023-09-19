@@ -17,11 +17,9 @@ import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 28/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 28/07/23
 
 class FanSetupController extends GetxController {
     BuildContext context;
@@ -61,7 +59,7 @@ class FanSetupController extends GetxController {
         flag: TimePickerField.TIME_HOURS_AND_MINUTES,
         alertText: "Durasi Nyala harus di isi",
         onTimeSelected: (String time) {
-        tmPickerDurationOn.controller.setTextSelected("${time}");},
+        tmPickerDurationOn.controller.setTextSelected(time);},
     );
     late TimePickerField tmPickerFanOffDurartion = TimePickerField(
         controller: GetXCreator.putTimePickerController(
@@ -70,7 +68,7 @@ class FanSetupController extends GetxController {
         hint: "00:00:00",
         flag: TimePickerField.TIME_HOURS_AND_MINUTES,
         alertText: "Durasi Mati harus di isi",
-        onTimeSelected: (String time) {tmPickerFanOffDurartion.controller.setTextSelected("${time}"); },
+        onTimeSelected: (String time) {tmPickerFanOffDurartion.controller.setTextSelected(time); },
     );
 
     late SwitchButton sbIntermittern = SwitchButton(
@@ -135,10 +133,6 @@ class FanSetupController extends GetxController {
         );
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -180,14 +174,14 @@ class FanSetupController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -197,8 +191,8 @@ class FanSetupController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 

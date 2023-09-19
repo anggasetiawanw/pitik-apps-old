@@ -16,11 +16,9 @@ import 'package:model/response/fan_list_response.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/08/23
 
 class DashboardLampController extends GetxController {
     BuildContext context;
@@ -59,14 +57,6 @@ class DashboardLampController extends GetxController {
         isLoading.value = true;
         getDataLamps();
     }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     /// The function `getDataCoops` retrieves data from an API and updates the
     /// `coops` list, `farm` variable, and `isLoading` flag based on the response.
@@ -93,12 +83,11 @@ class DashboardLampController extends GetxController {
                     backgroundColor: Colors.red,
                 );
             }, onResponseError: (exception, stacktrace, id, packet){
-                print("object ${exception}");
                 Get.snackbar(
                     "Pesan",
                     "Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
                 );

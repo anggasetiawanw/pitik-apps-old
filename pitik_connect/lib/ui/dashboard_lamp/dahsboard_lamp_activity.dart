@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:components/device_controller_status.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
@@ -9,17 +10,16 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'dashboard_lamp_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 16/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 16/08/23
 
 
 class DashboardLamp extends StatelessWidget {
-    DashboardLamp({super.key});
+    const DashboardLamp({super.key});
 
-    Widget build(BuildContext context) {
+    @override
+  Widget build(BuildContext context) {
         final DashboardLampController controller =
         Get.put(DashboardLampController(context: context));
 
@@ -27,10 +27,10 @@ class DashboardLamp extends StatelessWidget {
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.of(context).pop(),
                 ),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -48,7 +48,7 @@ class DashboardLamp extends StatelessWidget {
         Widget listLamp() {
             return Expanded(
                 child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: controller.lamps.value.length,
                     itemBuilder: (context, index) {
                         return GestureDetector(
@@ -56,17 +56,17 @@ class DashboardLamp extends StatelessWidget {
                                 Get.toNamed(RoutePage.lampSetupPage, arguments: [controller.lamps.value[index], controller.device, controller.controllerData])!.then((value) {
                                     controller.isLoading.value = true;
                                     controller.lamps.value.clear();
-                                    Timer(Duration(milliseconds: 500), () {
+                                    Timer(const Duration(milliseconds: 500), () {
                                         controller.getDataLamps();
                                     });
                                 });
                             },
                             child: Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.all(12),
-                                margin: EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.all(12),
+                                margin: const EdgeInsets.only(bottom: 12),
                                 decoration: BoxDecoration(
-                                    color: controller.lamps.value[index].error == false ?  Colors.white : Color(0xFFFDDFD1),
+                                    color: controller.lamps.value[index].error == false ?  Colors.white : const Color(0xFFFDDFD1),
                                     border: Border.all(width: 1, color: GlobalVar.outlineColor),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(
@@ -77,8 +77,8 @@ class DashboardLamp extends StatelessWidget {
                                             width: 40,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                                color: controller.lamps.value[index].error == false ?  GlobalVar.iconHomeBg : Color(0xFFFBB8A4),
-                                                borderRadius: BorderRadius.only(
+                                                color: controller.lamps.value[index].error == false ?  GlobalVar.iconHomeBg : const Color(0xFFFBB8A4),
+                                                borderRadius: const BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
                                                     bottomRight: Radius.circular(4),
@@ -89,7 +89,7 @@ class DashboardLamp extends StatelessWidget {
                                         ),
                                         Expanded(
                                             child: Container(
-                                                margin: EdgeInsets.only(left: 8, right: 8),
+                                                margin: const EdgeInsets.only(left: 8, right: 8),
                                                 child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
@@ -100,16 +100,16 @@ class DashboardLamp extends StatelessWidget {
                                                                     style: GlobalVar.blackTextStyle
                                                                         .copyWith(fontWeight: GlobalVar.medium, fontSize: 17, overflow: TextOverflow.ellipsis),
                                                                 ),
-                                                                SizedBox(width: 32,),
+                                                                const SizedBox(width: 32,),
                                                                 DeviceStatus(status: controller.lamps.value[index].status!, activeString: '', inactiveString: '',),
                                                             ],
                                                         ),
-                                                        SizedBox(height: 4,),
+                                                        const SizedBox(height: 4,),
                                                         Row(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                                 RichText(
-                                                                    text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                    text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                         children: [
                                                                             TextSpan(text: 'Nyala ', style: GlobalVar.greyTextStyle
                                                                                 .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -118,7 +118,7 @@ class DashboardLamp extends StatelessWidget {
                                                                         ]
                                                                     ),),
                                                                 RichText(
-                                                                    text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                    text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                         children: [
                                                                             TextSpan(text: ' - Mati ', style: GlobalVar.greyTextStyle
                                                                                 .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -149,10 +149,8 @@ class DashboardLamp extends StatelessWidget {
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Container(
-                        child: Center(
-                            child: ProgressLoading(),
-                        ),
+                    const Center(
+                        child: ProgressLoading(),
                     ) : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children : [

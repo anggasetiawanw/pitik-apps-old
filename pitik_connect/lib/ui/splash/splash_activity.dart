@@ -19,11 +19,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../route.dart';
 
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 04/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 04/07/23
 
 
 class SplashActivity extends StatefulWidget {
@@ -53,15 +51,15 @@ class _SplashActivityState extends State<SplashActivity> {
             }else {
                 if(permissionGPS.isDenied) {
                     Get.snackbar("Alert", "This Apps Need Location Permission",
-                        duration: Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
+                        duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
                 }
                 else if (await Permission.locationWhenInUse.isDenied) {
                     Get.snackbar("Info", "Enable Location, Please!", snackPosition: SnackPosition.BOTTOM,
-                        duration: Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
+                        duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
 
                 }else if(!permissionPhoneAccess) {
                     Get.snackbar("Alert", "Enable Phone Access, Please!", snackPosition: SnackPosition.BOTTOM,
-                        duration: Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
+                        duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
                 }else {
                     // GpsUtil.mock(true);
                 }
@@ -86,7 +84,7 @@ class _SplashActivityState extends State<SplashActivity> {
                     } else {
                         GlobalVar.auth = auth;
                         GlobalVar.profileUser = userProfile;
-                        String appId = await FirebaseRemoteConfig.instance.getString("appId");
+                        String appId = FirebaseRemoteConfig.instance.getString("appId");
                         if(xAppId != null && (appId.isNotEmpty && xAppId.appId != appId) ){
                             xAppId.appId = appId;
                             XAppIdImpl().save(xAppId);
@@ -120,7 +118,7 @@ class _SplashActivityState extends State<SplashActivity> {
         return Scaffold(
             backgroundColor: GlobalVar.primaryOrange,
             body: Center(
-                child: Container(
+                child: SizedBox(
                     height: 192,
                     width: 192,
                     child: SvgPicture.asset("images/white_logo.svg"),

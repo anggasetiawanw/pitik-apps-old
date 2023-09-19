@@ -11,11 +11,9 @@ import '../../../route.dart';
 import 'change_password_controller.dart';
 
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 
 class ChangePassword extends GetView<ChangePasswordController> {
@@ -30,7 +28,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
       return AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
              if(controller.isFromLogin){
                 Get.offAllNamed(RoutePage.homePage);
@@ -38,7 +36,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                 Get.back();
              } 
             }),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
@@ -61,7 +59,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
               context: context,
               builder: (context) {
                   return Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(16),
@@ -72,7 +70,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                               Container(
-                                  margin: EdgeInsets.only(top: 8),
+                                  margin: const EdgeInsets.only(top: 8),
                                   width: 60,
                                   height: 4,
                                   decoration: BoxDecoration(
@@ -81,7 +79,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                                   ),
                               ),
                               Container(
-                                  margin: EdgeInsets.only(top: 24, left: 16, right: 73),
+                                  margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                                   child: Text(
                                       "Apakah kamu yakin data yang dimasukan sudah benar?",
                                       style: GlobalVar.primaryTextStyle
@@ -89,19 +87,19 @@ class ChangePassword extends GetView<ChangePasswordController> {
                                   ),
                               ),
                               Container(
-                                  margin: EdgeInsets.only(top: 8, left: 16, right: 52),
-                                  child: Text(
+                                  margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                                  child: const Text(
                                       "Pastikan semua data yang kamu masukan semua sudah benar",
                                       style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                               ),
                               Container(
-                                  margin: EdgeInsets.only(top: 24),
+                                  margin: const EdgeInsets.only(top: 24),
                                   child: SvgPicture.asset(
                                       "images/ask_bottom_sheet_1.svg",
                                   ),
                               ),
                               Container(
-                                  margin: EdgeInsets.only(top: 24, left: 16, right: 16),
+                                  margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
                                   child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -131,7 +129,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                   children: [
                       Container(
                           width: double.infinity,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
                                   BoxShadow(
@@ -142,7 +140,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                           ),
-                          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -169,20 +167,18 @@ class ChangePassword extends GetView<ChangePasswordController> {
           ),
           body: Stack(
               children: [
-                  Obx(() => controller.isLoading.isTrue ? Container(
-                      child: Center(
-                          child: ProgressLoading(),
-                      ),
+                  Obx(() => controller.isLoading.isTrue ? const Center(
+                      child: ProgressLoading(),
                   ) :
                   SingleChildScrollView(
                       child: Container(
-                          padding: EdgeInsets.only(top: 16),
-                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.only(top: 16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                   Text("Kata Sandi Baru", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text("Perubahan kata sandi diperlukan untuk meningkatkan keamanan Akun Anda. Kata sandi baru Anda harus menggunakan kombinasi huruf dan angka yang unik dengan jumlah karakter minimum 6 dan maksimum 20.", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),),
                                   controller.efOldPassword,
                                   controller.efNewPassword,

@@ -14,11 +14,9 @@ import 'package:get/get.dart';
 import '../../../route.dart';
 import 'list_smart_scale_controller.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 08/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 08/09/2023
 
 class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
 
@@ -27,6 +25,8 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             dateField.controller.setTextSelected("${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}");
         }
     );
+
+  ListSmartScaleActivity({super.key});
 
     @override
     Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ? // IF LOADING IS RUNNING
-                        Center(child: ProgressLoading()) :
+                        const Center(child: ProgressLoading()) :
                         RefreshIndicator(
                             child: controller.smartScaleList.isEmpty ? // IF LOADING IS DONE AND DATA EMPTY
                             Column(
@@ -50,9 +50,9 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                     filterContainer(context),
                                     ListView(
                                         shrinkWrap: true,
-                                        physics: AlwaysScrollableScrollPhysics(),
+                                        physics: const AlwaysScrollableScrollPhysics(),
                                         children: [
-                                            Container(
+                                            SizedBox(
                                                 width: double.infinity,
                                                 height: MediaQuery.of(context).size.height - 150,
                                                 child: Column(
@@ -77,7 +77,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                 ],
                             ),
                             onRefresh: () => Future.delayed(
-                                Duration(milliseconds: 200), () => controller.getSmartScaleListData(isPull: true)
+                                const Duration(milliseconds: 200), () => controller.getSmartScaleListData(isPull: true)
                             )
                         )
                     ),
@@ -88,7 +88,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
     }
 
     Widget filterContainer(BuildContext context) => Padding(
-        padding: EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -98,7 +98,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                     onTap: () => showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(16),
                                 topRight: Radius.circular(16),
@@ -107,23 +107,23 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                         builder: (context) => Container(
                             color: Colors.transparent,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 16, right: 16),
+                                padding: const EdgeInsets.only(left: 16, right: 16),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                         Padding(
-                                            padding: EdgeInsets.only(top: 16),
+                                            padding: const EdgeInsets.only(top: 16),
                                             child: Container(
                                                 width: 60,
                                                 height: 4,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
                                                     color: GlobalVar.outlineColor
                                                 )
                                             )
                                         ),
                                         Padding(
-                                            padding: EdgeInsets.only(top: 24, bottom: 24),
+                                            padding: const EdgeInsets.only(top: 24, bottom: 24),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text("Filter Daftar Timbang", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange))
@@ -131,9 +131,9 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                         ),
                                         dateFilter,
                                         Padding(
-                                            padding: EdgeInsets.only(top: 32, bottom: 32),
+                                            padding: const EdgeInsets.only(top: 32, bottom: 32),
                                             child: ButtonFill(controller: GetXCreator.putButtonFillController("buttonFilterListSmartScale"), label: "Konfirmasi Filter", onClick: () {
-                                                if (dateFilter.controller.textSelected == "") {
+                                                if (dateFilter.controller.textSelected.value == "") {
                                                     dateFilter.controller.showAlert();
                                                 } else {
                                                     Navigator.pop(context);
@@ -155,10 +155,10 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
     Widget appBar() => AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Get.back()
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text("Smart Scale", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
@@ -171,7 +171,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             children: [
                 Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
                             BoxShadow(
@@ -182,7 +182,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                     ),
-                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -196,7 +196,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                             controller.isLoading.value = true;
                                             controller.smartScaleList.clear();
                                             controller.pageSmartScale.value = 0;
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.getSmartScaleListData();
                                             });
                                         });
@@ -210,9 +210,9 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
     );
 
     Widget listSmartScale() => Container(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         child: ListView.builder(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             controller: controller.scrollController,
             itemCount: controller.isLoadMore.isTrue
                 ? controller.smartScaleList.length + 1
@@ -220,13 +220,13 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             itemBuilder: (context, index) {
                 int length = controller.smartScaleList.length;
                 if (index >= length) {
-                    return Column(
+                    return const Column(
                         children: [
                             Center(
                                 child: SizedBox(
-                                    child: ProgressLoading(),
                                     height: 24,
                                     width: 24,
+                                    child: ProgressLoading(),
                                 ),
                             ),
                             SizedBox(height: 120),
@@ -240,18 +240,17 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                             indeksCamera : index,
                             onTap: () {
                                 GlobalVar.track("Click_card_smart_scale_detail");
-                                print('ID - > ${controller.smartScaleList[index]!.id}');
                                 Get.toNamed(RoutePage.weighingSmartScalePage, arguments: [controller.coop, false, controller.smartScaleList[index]!.id])!.then((value) {
                                     controller.isLoading.value = true;
                                     controller.smartScaleList.clear();
                                     controller.pageSmartScale.value = 0;
-                                    Timer(Duration(milliseconds: 500), () {
+                                    Timer(const Duration(milliseconds: 500), () {
                                         controller.getSmartScaleListData();
                                     });
                                 });
                             },
                         ),
-                        index == controller.smartScaleList.length - 1 ? SizedBox(height: 120) : Container(),
+                        index == controller.smartScaleList.length - 1 ? const SizedBox(height: 120) : Container(),
                     ],
                 );
             },

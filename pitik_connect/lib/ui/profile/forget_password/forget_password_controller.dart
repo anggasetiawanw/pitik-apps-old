@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 28/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 28/07/23
 
 class ForgetPasswordController extends GetxController {
     BuildContext context;
@@ -35,20 +33,8 @@ class ForgetPasswordController extends GetxController {
         }
     );
 
-    @override
-    void onInit() {
-        super.onInit();
-    }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     /// The function checks if the input for a phone number is empty and shows an
     /// alert if it is, returning false; otherwise, it returns true.
@@ -68,7 +54,7 @@ class ForgetPasswordController extends GetxController {
     /// forgotten password request, using the provided contact number.
     void openWhatsApp() async{
         var contact = "+6281280709907";
-        var androidUrl = "whatsapp://send?phone=${contact}&Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi";
+        var androidUrl = "whatsapp://send?phone=$contact&Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi";
         var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi')}";
         try{
             if(Platform.isIOS){
