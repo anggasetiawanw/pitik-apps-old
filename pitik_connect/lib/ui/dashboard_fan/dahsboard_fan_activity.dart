@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:components/device_controller_status.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
@@ -9,17 +10,16 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'dashboard_fan_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 
 class DashboardFan extends StatelessWidget {
-    DashboardFan({super.key});
+    const DashboardFan({super.key});
 
-    Widget build(BuildContext context) {
+    @override
+  Widget build(BuildContext context) {
         final DashboardFanController controller =
         Get.put(DashboardFanController(context: context));
 
@@ -27,10 +27,10 @@ class DashboardFan extends StatelessWidget {
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.of(context).pop(),
                 ),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -48,7 +48,7 @@ class DashboardFan extends StatelessWidget {
         Widget listFan() {
             return Expanded(
                 child: ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: controller.fans.value.length,
                     itemBuilder: (context, index) {
                         return GestureDetector(
@@ -56,15 +56,15 @@ class DashboardFan extends StatelessWidget {
                                 Get.toNamed(RoutePage.fanSetupPage, arguments: [controller.fans.value[index], controller.device, controller.controllerData])!.then((value) {
                                     controller.isLoading.value = true;
                                     controller.fans.value.clear();
-                                    Timer(Duration(milliseconds: 500), () {
+                                    Timer(const Duration(milliseconds: 500), () {
                                         controller.getDataFans();
                                     });
                                 });
                             },
                             child: Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.all(12),
-                                margin: EdgeInsets.only(bottom: 12),
+                                padding: const EdgeInsets.all(12),
+                                margin: const EdgeInsets.only(bottom: 12),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 1, color: GlobalVar.outlineColor),
                                     borderRadius: BorderRadius.circular(8)),
@@ -77,7 +77,7 @@ class DashboardFan extends StatelessWidget {
                                             height: 40,
                                             decoration: BoxDecoration(
                                                 color:GlobalVar.iconHomeBg,
-                                                borderRadius: BorderRadius.only(
+                                                borderRadius: const BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
                                                     bottomRight: Radius.circular(4),
@@ -88,7 +88,7 @@ class DashboardFan extends StatelessWidget {
                                         ),
                                          Expanded(
                                            child: Container(
-                                               margin: EdgeInsets.only(left: 8, right: 8),
+                                               margin: const EdgeInsets.only(left: 8, right: 8),
                                              child: Column(
                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                  children: [
@@ -99,16 +99,16 @@ class DashboardFan extends StatelessWidget {
                                                                  style: GlobalVar.blackTextStyle
                                                                      .copyWith(fontWeight: GlobalVar.medium, fontSize: 17, overflow: TextOverflow.ellipsis),
                                                              ),
-                                                             SizedBox(width: 24,),
+                                                             const SizedBox(width: 24,),
                                                              DeviceStatus(status: controller.fans.value[index].status!, activeString: '', inactiveString: '',),
                                                          ],
                                                      ),
-                                                     SizedBox(height: 4,),
+                                                     const SizedBox(height: 4,),
                                                      Row(
                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                          children: [
                                                              RichText(
-                                                                 text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                 text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                      children: [
                                                                          TextSpan(text: 'Target ', style: GlobalVar.greyTextStyle
                                                                              .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -117,7 +117,7 @@ class DashboardFan extends StatelessWidget {
                                                                      ]
                                                                  ),),
                                                              RichText(
-                                                                 text: TextSpan(style: TextStyle(color: Colors.blue), //apply style to all
+                                                                 text: TextSpan(style: const TextStyle(color: Colors.blue), //apply style to all
                                                                      children: [
                                                                          TextSpan(text: ' - Intermitten ', style: GlobalVar.greyTextStyle
                                                                              .copyWith(fontWeight: GlobalVar.medium, fontSize: 12),),
@@ -148,10 +148,8 @@ class DashboardFan extends StatelessWidget {
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Container(
-                        child: Center(
-                            child: ProgressLoading(),
-                        ),
+                    const Center(
+                        child: ProgressLoading(),
                     ) : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children : [

@@ -10,17 +10,16 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'beranda_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 
 class BerandaActivity extends StatelessWidget {
-    BerandaActivity({super.key});
+    const BerandaActivity({super.key});
 
-    Widget build(BuildContext context) {
+    @override
+  Widget build(BuildContext context) {
         final BerandaController controller =
         Get.put(BerandaController(context: context));
 
@@ -28,10 +27,10 @@ class BerandaActivity extends StatelessWidget {
         Widget header() {
             return Stack(
                 children: [
-                    Container(
+                    SizedBox(
                         width: Get.width, child: Image.asset("images/header_bg.png")),
                     Container(
-                        margin: EdgeInsets.only(left: 16, right: 16, top: 42),
+                        margin: const EdgeInsets.only(left: 16, right: 16, top: 42),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -57,18 +56,18 @@ class BerandaActivity extends StatelessWidget {
 
         Widget toolTab() {
             return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                         Container(
-                            margin: EdgeInsets.only(right: 8, left: 8),
+                            margin: const EdgeInsets.only(right: 8, left: 8),
                             child: Text(
                                 "Daftar Kandang",
                                 style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold)
                             ),
                         ),
-                        Container(
+                        SizedBox(
                             height: 36,
                             child: Row(
                                 children: [
@@ -83,7 +82,7 @@ class BerandaActivity extends StatelessWidget {
                                             height: 36,
                                             decoration: BoxDecoration(
                                                 color:GlobalVar.iconHomeBg,
-                                                borderRadius: BorderRadius.only(
+                                                borderRadius: const BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
                                                     bottomRight: Radius.circular(4),
@@ -111,83 +110,79 @@ class BerandaActivity extends StatelessWidget {
                   controller.getDataCoops();
                   return Future<void>.delayed(const Duration(seconds: 3));
                   },
-                child: Container(
-                  child: ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: controller.coops.value.length,
-                      itemBuilder: (context, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                  GlobalVar.track("Click_card_lantai");
-                                  Get.toNamed(RoutePage.dashboardDevicePage, arguments: controller.coops.value[index])!.then((value) {
-                                      controller.isLoading.value = true;
-                                      controller.coops.value.clear();
-                                      Timer(Duration(milliseconds: 500), () {
-                                          controller.getDataCoops();
-                                      });
-                                  });
-                              },
-                              child: Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(12),
-                                  margin: EdgeInsets.only(bottom: 12),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: GlobalVar.outlineColor),
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                          Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                  color:GlobalVar.iconHomeBg,
-                                                  borderRadius: BorderRadius.only(
-                                                      topLeft: Radius.circular(4),
-                                                      topRight: Radius.circular(4),
-                                                      bottomRight: Radius.circular(4),
-                                                      bottomLeft: Radius.circular(4))),
-                                              child: Center(
-                                                  child: SvgPicture.asset("images/building_icon.svg"),
-                                              ),
-                                          ),
-                                           Expanded(
-                                             child: Container(
-                                                 margin: EdgeInsets.only(left: 8, right: 8),
-                                               child: Column(
-                                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                                   children: [
-                                                       Text(
-                                                           controller.coops.value[index].name!,
-                                                           style: GlobalVar.blackTextStyle
-                                                               .copyWith(fontWeight: GlobalVar.medium, fontSize: 17, overflow: TextOverflow.ellipsis),
-                                                       ),
-                                                       SizedBox(height: 4,),
-                                                       Text(
-                                                           "${controller.coops.value[index].room!.name!}",
-                                                           style: GlobalVar.greyTextStyle
-                                                               .copyWith(fontSize: 10,overflow: TextOverflow.ellipsis),
-                                                       )
-                                                   ],
-                                               ),
+                child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: controller.coops.value.length,
+                    itemBuilder: (context, index) {
+                        return GestureDetector(
+                            onTap: () {
+                                GlobalVar.track("Click_card_lantai");
+                                Get.toNamed(RoutePage.dashboardDevicePage, arguments: controller.coops.value[index])!.then((value) {
+                                    controller.isLoading.value = true;
+                                    controller.coops.value.clear();
+                                    Timer(const Duration(milliseconds: 500), () {
+                                        controller.getDataCoops();
+                                    });
+                                });
+                            },
+                            child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(12),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1, color: GlobalVar.outlineColor),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                        Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                                color:GlobalVar.iconHomeBg,
+                                                borderRadius: const BorderRadius.only(
+                                                    topLeft: Radius.circular(4),
+                                                    topRight: Radius.circular(4),
+                                                    bottomRight: Radius.circular(4),
+                                                    bottomLeft: Radius.circular(4))),
+                                            child: Center(
+                                                child: SvgPicture.asset("images/building_icon.svg"),
+                                            ),
+                                        ),
+                                         Expanded(
+                                           child: Container(
+                                               margin: const EdgeInsets.only(left: 8, right: 8),
+                                             child: Column(
+                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                 children: [
+                                                     Text(
+                                                         controller.coops.value[index].name!,
+                                                         style: GlobalVar.blackTextStyle
+                                                             .copyWith(fontWeight: GlobalVar.medium, fontSize: 17, overflow: TextOverflow.ellipsis),
+                                                     ),
+                                                     const SizedBox(height: 4,),
+                                                     Text(
+                                                         controller.coops.value[index].room!.name!,
+                                                         style: GlobalVar.greyTextStyle
+                                                             .copyWith(fontSize: 10,overflow: TextOverflow.ellipsis),
+                                                     )
+                                                 ],
                                              ),
                                            ),
-                                          Container(
-                                          child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                  FloorStatus(floorStatus: controller.coops.value[index].room!.status!),
-                                              ],
-                                          ),
-                                          ),
-                                  ]
-                                  )
-                              ),
-                          );
-                      }),
-              ),
+                                         ),
+                                        Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                                FloorStatus(floorStatus: controller.coops.value[index].room!.status!),
+                                            ],
+                                        ),
+                                ]
+                                )
+                            ),
+                        );
+                    }),
             );
         }
 
@@ -202,7 +197,7 @@ class BerandaActivity extends StatelessWidget {
                                 height: 8,
                             ),
                             Obx(() => controller.isLoading.isTrue ?
-                            Column(
+                            const Column(
                                 children: [
                                     SizedBox(height: 160,),
                                     ProgressLoading(),
@@ -212,8 +207,8 @@ class BerandaActivity extends StatelessWidget {
                             Column(
                                 children: [
                                     Container(
-                                        padding: EdgeInsets.all(12),
-                                        margin: EdgeInsets.all(16),
+                                        padding: const EdgeInsets.all(12),
+                                        margin: const EdgeInsets.all(16),
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 bottom: BorderSide(color: GlobalVar.outlineColor, width: 2),
@@ -221,7 +216,7 @@ class BerandaActivity extends StatelessWidget {
                                                 right: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                                 top: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                             ),
-                                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8), topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8), topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                                         ),
                                         child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +261,7 @@ class BerandaActivity extends StatelessWidget {
                                     Align(
                                         alignment: Alignment.bottomCenter,
                                         child: Container(
-                                            margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 64),
+                                            margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 64),
                                             width: double.infinity,
                                             child: Column(
                                                 children: [

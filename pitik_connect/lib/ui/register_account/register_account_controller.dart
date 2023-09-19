@@ -8,11 +8,9 @@ import 'package:components/spinner_field/spinner_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/07/23
 
 class RegisterAccountController extends GetxController {
     BuildContext context;
@@ -32,7 +30,7 @@ class RegisterAccountController extends GetxController {
         label: "Organisasi/Perusahaan",
         hint: "Pilih Salah Satu",
         alertText: "Organisasi/Perusahaan harus dipilih!",
-        items: {},
+        items: const {},
         onSpinnerSelected: (value) {
         }
     );
@@ -80,7 +78,7 @@ class RegisterAccountController extends GetxController {
         label: "Kata Sandi",
         hint: "Ketik Kata Sandi",
         alertText: "Password Harus Di Isi",
-        maxInput: 20, onTyping: (String ) {  },
+        maxInput: 20, onTyping: (value ) {  },
     );
 
     late PasswordField efConfirmPassword = PasswordField(
@@ -89,7 +87,7 @@ class RegisterAccountController extends GetxController {
         label: "Konfirmasi Kata Sandi",
         hint: "Ketik Kata Sandi",
         alertText: "Konfirmasi Password Harus Di Isi",
-        maxInput: 20, onTyping: (String ) {  },
+        maxInput: 20, onTyping: (value ) {  },
     );
 
     @override
@@ -106,10 +104,6 @@ class RegisterAccountController extends GetxController {
 
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {

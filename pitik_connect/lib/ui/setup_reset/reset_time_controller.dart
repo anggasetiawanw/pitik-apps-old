@@ -15,11 +15,9 @@ import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 16/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 16/08/23
 
 class ResetTimeController extends GetxController {
     BuildContext context;
@@ -85,15 +83,7 @@ class ResetTimeController extends GetxController {
 
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     /// The function `resetTime()` sends a request to reset the time on a device and
     /// handles the response accordingly.
@@ -118,14 +108,14 @@ class ResetTimeController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -135,8 +125,8 @@ class ResetTimeController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 

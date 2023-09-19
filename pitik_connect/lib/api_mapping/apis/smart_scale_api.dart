@@ -12,11 +12,9 @@ import 'package:model/error/error.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/smart_scale_response.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 08/09/2023
- */
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 08/09/2023
 
 @Rest
 class SmartScaleApi {

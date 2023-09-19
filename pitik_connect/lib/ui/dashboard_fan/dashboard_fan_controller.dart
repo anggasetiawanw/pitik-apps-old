@@ -16,11 +16,9 @@ import 'package:model/response/fan_list_response.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/08/23
 
 class DashboardFanController extends GetxController {
     BuildContext context;
@@ -60,14 +58,6 @@ class DashboardFanController extends GetxController {
         isLoading.value = true;
         getDataFans();
     }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
      /// The function `getDataFans` makes an API call to retrieve fan data and
      /// handles the response accordingly.
@@ -94,12 +84,11 @@ class DashboardFanController extends GetxController {
                     backgroundColor: Colors.red,
                 );
             }, onResponseError: (exception, stacktrace, id, packet){
-                print("object ${exception}");
                 Get.snackbar(
                     "Pesan",
                     "Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
                 );

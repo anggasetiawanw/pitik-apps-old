@@ -2,14 +2,12 @@
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 class PerformaActivity extends StatefulWidget {
     const PerformaActivity({super.key});
@@ -57,7 +55,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
 
         Widget nameInfo() {
             return Container(
-                margin: EdgeInsets.only(top: 14),
+                margin: const EdgeInsets.only(top: 14),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -66,7 +64,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                             width: 64,
                             height: 64,
                         ),
-                        SizedBox(
+                        const SizedBox(
                             width: 8,
                         ),
                         Column(
@@ -97,10 +95,10 @@ class _PerformaActivityState extends State<PerformaActivity> {
         Widget header() {
             return Stack(
                 children: [
-                    Container(
+                    SizedBox(
                         width: Get.width, child: Image.asset("images/header_bg.png")),
                     Container(
-                        margin: EdgeInsets.only(left: 16, right: 16, top: 36),
+                        margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -150,7 +148,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                     header(),
                     nameInfo(),
                     Container(
-                        margin: EdgeInsets.only(top: 32,left: 39, right: 39),
+                        margin: const EdgeInsets.only(top: 32,left: 39, right: 39),
                         child: Divider(
                             color: GlobalVar.outlineColor,
                             thickness: 1.6,
@@ -163,7 +161,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                             // Get.offNamed(RoutePage.loginPage);
                         },
                         child: Container(
-                            margin: EdgeInsets.only(right: 30, left: 30, top: 34),
+                            margin: const EdgeInsets.only(right: 30, left: 30, top: 34),
                             child: Row(
                                 children: [
                                     SvgPicture.asset("images/logout_icon.svg", height: 22,width: 20,),
@@ -173,7 +171,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                             ),
                         ),
                     ),
-                    Expanded(child: Container(child: Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),),)),
+                    Expanded(child: Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),)),
                     const SizedBox(height: 80,)
                 ],
             ),

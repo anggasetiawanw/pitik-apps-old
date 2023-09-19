@@ -14,11 +14,9 @@ import 'package:model/device_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/room_detail_response.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 14/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 14/07/23
 
 class DashboardDeviceController extends GetxController {
     BuildContext context;
@@ -63,7 +61,7 @@ class DashboardDeviceController extends GetxController {
         label: "Jenis Kandang",
         hint: "Pilih Salah Satu",
         alertText: "Jenis Kandang harus dipilih!",
-        items: {"Open House": false, "Semi House": false, "Close House": false},
+        items: const {"Open House": false, "Semi House": false, "Close House": false},
         onSpinnerSelected: (value) {
         }
     );
@@ -81,10 +79,6 @@ class DashboardDeviceController extends GetxController {
         getDetailRoom();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -131,7 +125,7 @@ class DashboardDeviceController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },

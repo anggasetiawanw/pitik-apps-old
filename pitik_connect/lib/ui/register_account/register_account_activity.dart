@@ -8,11 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_connect/ui/register_account/register_account_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/07/23
 
 
 class RegisterAccount extends GetView<RegisterAccountController>{
@@ -28,11 +26,11 @@ class RegisterAccount extends GetView<RegisterAccountController>{
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
                         Navigator.pop(context);
                     }),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -55,7 +53,7 @@ class RegisterAccount extends GetView<RegisterAccountController>{
                     children: [
                         Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: [
                                     BoxShadow(
@@ -66,7 +64,7 @@ class RegisterAccount extends GetView<RegisterAccountController>{
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                             ),
-                            padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -96,15 +94,13 @@ class RegisterAccount extends GetView<RegisterAccountController>{
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Container(
-                        child: Center(
-                            child: ProgressLoading(),
-                        ),
+                    const Center(
+                        child: ProgressLoading(),
                     )
                         :
                     SingleChildScrollView(
                         child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16),
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -139,7 +135,7 @@ class RegisterAccount extends GetView<RegisterAccountController>{
             context: context,
             builder: (context) {
                 return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
@@ -150,7 +146,7 @@ class RegisterAccount extends GetView<RegisterAccountController>{
                         mainAxisSize: MainAxisSize.min,
                         children: [
                             Container(
-                                margin: EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 8),
                                 width: 60,
                                 height: 4,
                                 decoration: BoxDecoration(
@@ -159,7 +155,7 @@ class RegisterAccount extends GetView<RegisterAccountController>{
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24, left: 16, right: 73),
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                                 child: Text(
                                     "Apakah kamu yakin data yang dimasukan sudah benar?",
                                     style: GlobalVar.primaryTextStyle
@@ -167,20 +163,20 @@ class RegisterAccount extends GetView<RegisterAccountController>{
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 8, left: 16, right: 52),
-                                child: Text(
+                                margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                                child: const Text(
                                     "Pastikan semua data yang kamu masukan semua sudah benar",
                                     style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 12),
+                                margin: const EdgeInsets.only(top: 12),
                                 child: SvgPicture.asset(
                                     "images/launcher_logo_pitik_connect.svg"
                                     , width: 148, height: 148
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24, left: 16, right: 16),
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [

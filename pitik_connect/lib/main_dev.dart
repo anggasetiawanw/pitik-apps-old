@@ -18,7 +18,7 @@ void main() async {
   initializeReflectable();
   await initPlatformState();
   Service.setApiMapping(ApiMapping());
-  runApp(App());
+  runApp(const App());
 }
 
 Future<void> initPlatformState() async {

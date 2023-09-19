@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
@@ -17,11 +18,9 @@ import 'package:model/response/camera_list_response.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartCameraController extends GetxController {
     BuildContext context;
@@ -71,10 +70,6 @@ class DetailSmartCameraController extends GetxController {
         getListCamera();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -110,7 +105,7 @@ class DetailSmartCameraController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -145,7 +140,7 @@ class DetailSmartCameraController extends GetxController {
                                 isLoading.value = true;
                                 sensorCameras.value.clear();
                                 pageSmartCamera.value = 0;
-                                Timer(Duration(milliseconds: 500), () {
+                                Timer(const Duration(milliseconds: 500), () {
                                     getListCamera();
                                 });
                             });
@@ -153,14 +148,14 @@ class DetailSmartCameraController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -171,8 +166,8 @@ class DetailSmartCameraController extends GetxController {
             catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
     }

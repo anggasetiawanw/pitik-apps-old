@@ -15,11 +15,9 @@ import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 28/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 28/07/23
 
 class AlarmSetupController extends GetxController {
     BuildContext context;
@@ -84,15 +82,7 @@ class AlarmSetupController extends GetxController {
         loadData(controllerData);
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     /// The function loads data into the controller and enables or disables the
     /// temperature inputs based on whether it is in edit mode or not.
@@ -137,14 +127,14 @@ class AlarmSetupController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -154,8 +144,8 @@ class AlarmSetupController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 

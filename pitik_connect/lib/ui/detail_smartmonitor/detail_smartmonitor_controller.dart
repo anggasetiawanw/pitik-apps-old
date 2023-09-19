@@ -12,11 +12,9 @@ import 'package:model/error/error.dart';
 import 'package:model/graph_line.dart';
 import 'package:model/response/latest_condition_response.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartMonitorController extends GetxController {
     BuildContext context;
@@ -56,15 +54,7 @@ class DetailSmartMonitorController extends GetxController {
         getLatestDataSmartMonitor();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     /// The function `getLatestDataSmartMonitor` retrieves the latest data from a
     /// smart monitor device and updates the device summary.
@@ -87,7 +77,7 @@ class DetailSmartMonitorController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },

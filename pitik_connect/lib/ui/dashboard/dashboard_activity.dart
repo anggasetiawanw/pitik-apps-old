@@ -1,9 +1,9 @@
 
 import 'package:components/global_var.dart';
 import 'package:components/menu_bottomsheet.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../route.dart';
 import '../beranda/beranda_activity.dart';
@@ -11,13 +11,13 @@ import '../profile/profile_activity.dart';
 import '../register_coop/register_coop_controller.dart';
 import 'dashboard_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 class DashboardActivity extends StatelessWidget {
+  const DashboardActivity({super.key});
+
     @override
     Widget build(BuildContext context) {
         return GetBuilder<DashboardController>(
@@ -31,7 +31,7 @@ class DashboardActivity extends StatelessWidget {
                         context: context,
                         builder: (context) {
                             return Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(16),
@@ -42,7 +42,7 @@ class DashboardActivity extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                         Container(
-                                            margin: EdgeInsets.only(top: 8),
+                                            margin: const EdgeInsets.only(top: 8),
                                             width: 60,
                                             height: 4,
                                             decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class DashboardActivity extends StatelessWidget {
                     body: SafeArea(
                         child: IndexedStack(
                             index: controller.tabIndex,
-                            children: [
+                            children: const [
                                 BerandaActivity(),
                                 // PerformaActivity(),
                                 // CoopActivity(),
@@ -92,7 +92,7 @@ class DashboardActivity extends StatelessWidget {
                             ],
                         ),
                     ),
-                    floatingActionButton: Container(
+                    floatingActionButton: SizedBox(
                         height: 64,
                         width: 64,
                         child: FloatingActionButton(
@@ -107,7 +107,7 @@ class DashboardActivity extends StatelessWidget {
                     bottomNavigationBar: Container(
                         width: double.infinity,
                         height: 80,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
                             boxShadow: [

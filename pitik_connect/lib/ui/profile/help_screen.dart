@@ -3,11 +3,9 @@ import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 class HelpScreen extends StatelessWidget {
   const HelpScreen({super.key});
@@ -18,11 +16,11 @@ class HelpScreen extends StatelessWidget {
       return AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
@@ -57,8 +55,8 @@ class HelpScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
             child: Container(
-                padding: EdgeInsets.only(top: 16),
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

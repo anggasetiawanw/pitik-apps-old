@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_getters_setters
+
 import 'dart:async';
 import 'dart:io';
 
@@ -18,7 +20,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
-import 'package:mobile_number/sim_card.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/home_response.dart';
@@ -28,11 +29,9 @@ import '../../flavors.dart';
 import '../../route.dart';
 import '../register_coop/register_coop_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 06/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 06/07/23
 
 class BerandaController extends GetxController {
     BuildContext context;
@@ -122,10 +121,6 @@ class BerandaController extends GetxController {
             bfAddCoop.controller.disable();
         }
     }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
 
     /// The function `initValueMixpanel()` initializes the value for Mixpanel by
@@ -136,15 +131,11 @@ class BerandaController extends GetxController {
         if (Platform.isAndroid) {
             final hasPermission = await handlePermissionPhoneAccess();
             if (hasPermission) {
-                try {
-                    initMobileNumberState();
-            } catch (e) {
-
-                }
+                initMobileNumberState();
             }
         } else if (Platform.isIOS) {
             iosInfo = await CarrierInfo.getIosInfo();
-            if (iosInfo != null && iosInfo!.carrierData.length > 0) {
+            if (iosInfo != null && iosInfo!.carrierData.isNotEmpty) {
                 phoneCarrier =
                 iosInfo!.carrierData[0].carrierName;
             }
@@ -159,15 +150,15 @@ class BerandaController extends GetxController {
     Future<void> initMixpanel() async {
 
         final hasPermission = await handleLocationPermission();
-        if (await hasPermission){
-            final timeLimit = const Duration(seconds: 5);
+        if (hasPermission){
+            const timeLimit = Duration(seconds: 5);
             await FlLocation.getLocation(timeLimit: timeLimit).then((position) async {
                 if(position.isMock) {
                     Get.snackbar(
                         "Pesan",
                         "Terjadi Kesalahan, Gps Mock Detected",
                         snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                 } else {
@@ -180,11 +171,11 @@ class BerandaController extends GetxController {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         if(Platform.isAndroid) {
             AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-            deviceTracking = "${androidInfo.model}";
+            deviceTracking = androidInfo.model;
             osVersion = Platform.operatingSystemVersion;
         }else{
             IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-            deviceTracking = "${iosInfo.model}";
+            deviceTracking = iosInfo.model;
             osVersion = Platform.operatingSystem;
         }
 
@@ -192,7 +183,7 @@ class BerandaController extends GetxController {
         GlobalVar.mixpanel!.registerSuperProperties({
             "Phone_Number": GlobalVar.profileUser!.phoneNumber,
             "Username": GlobalVar.profileUser!.phoneNumber,
-            "Location": "${latitude},${longitude}",
+            "Location": "$latitude,$longitude",
             "Device": deviceTracking,
             "Phone_Carrier": phoneCarrier,
             "OS": osVersion,
@@ -245,7 +236,7 @@ class BerandaController extends GetxController {
                     "Pesan",
                     "Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
-                    duration: Duration(seconds: 5),
+                    duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
                 );
@@ -265,7 +256,7 @@ class BerandaController extends GetxController {
     /// Returns:
     ///   an Rx object that contains a list of Coop objects.
     Rx<List<Coop>> ascendingListByStatus(List<Coop?>? coops){
-        Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);;
+        Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
         for (var result in coops!){
             if(result!.room!.status == "active"){
                 coopAscending.value.add(result);
@@ -289,7 +280,7 @@ class BerandaController extends GetxController {
     /// Returns:
     ///   an Rx object that contains a list of Coop objects.
     Rx<List<Coop>> descendingListByStatus(List<Coop?>? coops){
-        Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);;
+        Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
         for (var result in coops!){
             if(result!.room!.status == "inactive"){
                 coopAscending.value.add(result);

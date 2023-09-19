@@ -20,11 +20,9 @@ import 'package:model/growth_day_model.dart';
 import 'package:model/response/growth_day_response.dart';
 import 'package:model/temperature_reduction_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 28/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 28/07/23
 
 class GrowthSetupController extends GetxController {
     BuildContext context;
@@ -83,13 +81,11 @@ class GrowthSetupController extends GetxController {
     late Expandable expandable = Expandable(
         controller: GetXCreator.putAccordionController("expandableReduceTemperature"),
         headerText: "Pengurangan Suhu",
-        child: Container(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    itemDecreaseTemperture
-                ],
-            ),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+                itemDecreaseTemperture
+            ],
         )
     );
 
@@ -210,7 +206,7 @@ class GrowthSetupController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -244,14 +240,14 @@ class GrowthSetupController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -261,8 +257,8 @@ class GrowthSetupController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 
@@ -302,7 +298,7 @@ class GrowthSetupController extends GetxController {
                 temperatureReductions.add(TemperatureReduction(
                     day: (itemDecreaseTemperture.controller.efDayTotal.value[whichItem].getInputNumber())!.toInt(),
                     reduction: itemDecreaseTemperture.controller.efDecreaseTemp.value[whichItem].getInputNumber(),
-                    group: "Group ${whichItem}"
+                    group: "Group $whichItem"
                 ));
         }
         return GrowthDay(deviceId: controllerData.deviceId, requestTemperature : efTargetTemp.getInputNumber(), growthDay: (efAge.getInputNumber())!.toInt(), temperature: efTempDayFirst.getInputNumber(), temperatureReduction: temperatureReductions);

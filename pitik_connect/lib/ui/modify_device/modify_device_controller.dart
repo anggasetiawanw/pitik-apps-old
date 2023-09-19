@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/card_camera/card_camera.dart';
@@ -23,11 +25,9 @@ import 'package:model/sensor_model.dart';
 
 import '../register_device/register_device_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 10/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 10/08/23
 
 class ModifyDeviceController extends GetxController {
     BuildContext context;
@@ -126,7 +126,7 @@ class ModifyDeviceController extends GetxController {
         label: "Status",
         hint: "Pilih Salah Satu",
         alertText: "Status harus dipilih !",
-        items: {"Aktif": false, "Non Aktif": false},
+        items: const {"Aktif": false, "Non Aktif": false},
         onSpinnerSelected: (value) {
         }
     );
@@ -187,10 +187,6 @@ class ModifyDeviceController extends GetxController {
         }
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -221,7 +217,7 @@ class ModifyDeviceController extends GetxController {
                 for (var result in device.sensors) {
                     sensors.value.add(result as Sensor);
                 }
-                if(deviceType == RegisterDeviceController.SMART_MONITORING) {
+                if(deviceType.value == RegisterDeviceController.SMART_MONITORING) {
                     for (int i = 0; i < sensors.value.length - 1; i++) {
                         cardSensor.controller.addCard();
                     }
@@ -232,7 +228,7 @@ class ModifyDeviceController extends GetxController {
                     }
                     DateTime timeEnd = DateTime.now();
                     GlobalVar.sendRenderTimeMixpanel("open_menu_edit_smart_monitoring", timeStart, timeEnd);
-                } else if(deviceType== RegisterDeviceController.SMART_CAMERA) {
+                } else if(deviceType.value== RegisterDeviceController.SMART_CAMERA) {
                     for (int i = 0; i < sensors.value.length - 1; i++) {
                         cardCamera.controller.addCard();
                     }
@@ -265,7 +261,7 @@ class ModifyDeviceController extends GetxController {
         Get.dialog(Center(
             child: Container(
                 width: 300,
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -290,29 +286,27 @@ class ModifyDeviceController extends GetxController {
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
                         const SizedBox(height: 16),
-                        Container(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Container(
-                                        height: 32,
-                                        width: 100,
-                                        color: Colors.transparent,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Container(
+                                    height: 32,
+                                    width: 100,
+                                    color: Colors.transparent,
+                                ),
+                                SizedBox(
+                                    width: 100,
+                                    child: ButtonFill(
+                                        controller:
+                                        GetXCreator.putButtonFillController("Dialog"),
+                                        label: "OK",
+                                        onClick: () => {
+                                            isFirstLoad.value = false,
+                                            Get.back(),
+                                        }
                                     ),
-                                    Container(
-                                        width: 100,
-                                        child: ButtonFill(
-                                            controller:
-                                            GetXCreator.putButtonFillController("Dialog"),
-                                            label: "OK",
-                                            onClick: () => {
-                                                isFirstLoad.value = false,
-                                                Get.back(),
-                                            }
-                                        ),
-                                    ),
-                                ],
-                            ),
+                                ),
+                            ],
                         ),
                     ],
                 ),
@@ -340,7 +334,7 @@ class ModifyDeviceController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -363,7 +357,7 @@ class ModifyDeviceController extends GetxController {
                     service: ListApi.modifyDevice,
                     context: context,
                     body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId,
-                        ListApi.pathModifyDevice(deviceType == RegisterDeviceController.SMART_MONITORING ? "smart-monitoring" : deviceType == RegisterDeviceController.SMART_CAMERA ? "smart-camera" : "smart-controller",
+                        ListApi.pathModifyDevice(deviceType.value == RegisterDeviceController.SMART_MONITORING ? "smart-monitoring" : deviceType.value == RegisterDeviceController.SMART_CAMERA ? "smart-camera" : "smart-controller",
                             device.deviceId!, action),
                         Mapper.asJsonString(payload)],
                     listener:ResponseListener(
@@ -380,14 +374,14 @@ class ModifyDeviceController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -397,8 +391,8 @@ class ModifyDeviceController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 
@@ -416,9 +410,9 @@ class ModifyDeviceController extends GetxController {
                 efMacAddress.controller.formKey.currentContext!);
             return ret = [false, ""];
         }
-        if(deviceType == RegisterDeviceController.SMART_MONITORING) {
+        if(deviceType.value == RegisterDeviceController.SMART_MONITORING) {
             ret = cardSensor.controller.validation();
-        }else if(deviceType == RegisterDeviceController.SMART_CAMERA){
+        }else if(deviceType.value == RegisterDeviceController.SMART_CAMERA){
             ret = cardCamera.controller.validation();
         }
 
@@ -441,7 +435,7 @@ class ModifyDeviceController extends GetxController {
 
     Device generatePayloadModifyDevice(){
         List<Sensor?> sensors = [];
-        if(deviceType == RegisterDeviceController.SMART_MONITORING){
+        if(deviceType.value == RegisterDeviceController.SMART_MONITORING){
             for (int i = 0; i < cardSensor.controller.itemCount.value; i++) {
                 int whichItem = cardSensor.controller.index.value[i];
                 sensors.add(Sensor(
@@ -450,7 +444,7 @@ class ModifyDeviceController extends GetxController {
                         .controller.efSensorId.value[whichItem].getInput()}",
                     sensorType: "XIAOMI_SENSOR"));
             }
-        }else if(deviceType == RegisterDeviceController.SMART_CAMERA){
+        }else if(deviceType.value == RegisterDeviceController.SMART_CAMERA){
             for (int i = 0; i < cardCamera.controller.itemCount.value; i++) {
                 int whichItem = cardCamera.controller.index.value[i];
                 sensors.add(Sensor(

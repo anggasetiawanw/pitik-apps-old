@@ -21,11 +21,9 @@ import 'package:model/room_model.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 13/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 13/07/23
 
 class RegisterFloorController extends GetxController {
     BuildContext context;
@@ -49,7 +47,7 @@ class RegisterFloorController extends GetxController {
         label: "Kandang",
         hint: "Pilih Salah Satu",
         alertText: "Kandang harus dipilih!",
-        items: {},
+        items: const {},
         onSpinnerSelected: (value) {
             if(value != ""){
                 Coop? selectedCoop = coops.value.firstWhere((element) => element.name! == value);
@@ -85,10 +83,6 @@ class RegisterFloorController extends GetxController {
         getCoops();
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     @override
     void onReady() {
@@ -100,7 +94,7 @@ class RegisterFloorController extends GetxController {
     }
 
     void generateListProduct(int idx) {
-        Timer(Duration(milliseconds: 500), () {
+        Timer(const Duration(milliseconds: 500), () {
             idx = idx - 1;
             cardFloor.controller.efFloorName.value[idx].controller.addListener(() {
             });
@@ -125,7 +119,9 @@ class RegisterFloorController extends GetxController {
                         }
                     }
                     Map<String, bool> mapList = {};
-                    body.data!.forEach((product) => mapList[product!.name!] = false);
+                    for (var product in body.data!) {
+                      mapList[product!.name!] = false;
+                    }
                     spBuilding.controller.generateItems(mapList);
                     isLoading.value = false;
                     DateTime timeEnd = DateTime.now();
@@ -137,7 +133,7 @@ class RegisterFloorController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -179,7 +175,7 @@ class RegisterFloorController extends GetxController {
                         "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                     );
                 },
@@ -192,7 +188,7 @@ class RegisterFloorController extends GetxController {
 
     void loadData(Rx<List<Room>> list){
         cardFloor.controller.removeAll();
-        if(list.value.length > 0) {
+        if(list.value.isNotEmpty) {
             for (int i = 0; i < list.value.length; i++) {
                 cardFloor.controller.addCard();
             }
@@ -233,14 +229,14 @@ class RegisterFloorController extends GetxController {
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
                             Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: Duration(seconds: 5),
+                                duration: const Duration(seconds: 5),
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
@@ -250,8 +246,8 @@ class RegisterFloorController extends GetxController {
             } catch (e,st) {
                 Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
                     snackPosition: SnackPosition.BOTTOM,
-                    duration: Duration(seconds: 5),
-                    backgroundColor: Color(0xFFFF0000),
+                    duration: const Duration(seconds: 5),
+                    backgroundColor: const Color(0xFFFF0000),
                     colorText: Colors.white);
             }
 
@@ -260,8 +256,8 @@ class RegisterFloorController extends GetxController {
                 if ((ret[1] as String).isNotEmpty) {
                     Get.snackbar("Pesan", "Duplikat Item Produk, ${ret[1]}",
                         snackPosition: SnackPosition.BOTTOM,
-                        duration: Duration(seconds: 5),
-                        backgroundColor: Color(0xFFFF0000),
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: const Color(0xFFFF0000),
                         colorText: Colors.white);
                 }
             }

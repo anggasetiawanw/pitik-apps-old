@@ -12,11 +12,9 @@ import 'package:get/get.dart';
 import '../../route.dart';
 import 'detail_smartcamera_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/07/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/07/23
 
 class DetailSmartCamera extends GetView<DetailSmartCameraController> {
     const DetailSmartCamera({
@@ -29,26 +27,26 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
             context: context,
         ));
 
-        _showButtonDialog(BuildContext context, DetailSmartCameraController controller) {
+        showButtonDialog(BuildContext context, DetailSmartCameraController controller) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
                     return
 
                         Align(
-                        alignment: Alignment(1, -1),
+                        alignment: const Alignment(1, -1),
                         child: GestureDetector(
                             onTap: () {
                                 // _showBottomDialog(context, controller);
                             },
                             child: Container(
-                                margin: EdgeInsets.only(top: 50, right: 30),
+                                margin: const EdgeInsets.only(top: 50, right: 30),
                                 width: 135,
                                 height: 66,
                                 child: Stack(children: [
                                     Container(
-                                        margin: EdgeInsets.only(top: 8),
-                                        padding: EdgeInsets.all(8),
+                                        margin: const EdgeInsets.only(top: 8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(6)),
@@ -64,7 +62,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                                           ),
                                                           DefaultTextStyle(
                                                               style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                              child: Text("Edit"),
+                                                              child: const Text("Edit"),
                                                           ),
                                                       ],
                                                   ),
@@ -74,7 +72,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                                         Get.toNamed(RoutePage.modifySmartMonitorPage, arguments:[controller.coop, controller.device, "edit"])!.then((value) {
                                                             controller.isLoading.value = true;
                                                             controller.sensorCameras.value.clear();
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getListCamera();
                                                             });
                                                         });
@@ -89,7 +87,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                                           ),
                                                           DefaultTextStyle(
                                                               style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                                              child: Text("Ubah Nama"),
+                                                              child: const Text("Ubah Nama"),
                                                           ),
                                                       ],
                                                   ),
@@ -100,7 +98,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                                             value == null ? controller.deviceUpdatedName.value = "" : controller.deviceUpdatedName.value = value[0]["backValue"];
                                                             controller.isLoading.value =true;
                                                             controller.sensorCameras.value.clear();
-                                                            Timer(Duration(milliseconds: 500), () {
+                                                            Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getListCamera();
                                                             });
                                                         });
@@ -112,7 +110,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
 
                                     ),
                                     Align(
-                                        alignment: Alignment(1, -1),
+                                        alignment: const Alignment(1, -1),
                                         child: Image.asset(
                                             "images/triangle_icon.png",
                                             height: 17,
@@ -131,16 +129,16 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Get.back()),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
                 backgroundColor: GlobalVar.primaryOrange,
                 centerTitle: true,
                 title:
-                Obx(() => controller.deviceUpdatedName == "" ?
+                Obx(() => controller.deviceUpdatedName.value == "" ?
                 Text("${controller.device.deviceName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 ) : Text("${controller.deviceUpdatedName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 )
@@ -150,14 +148,14 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                         GestureDetector(
                             onTap: () {
                                 GlobalVar.track("Click_option_menu");
-                                _showButtonDialog(context, controller);
+                                showButtonDialog(context, controller);
                             },
                             child: Container(
                                 color: Colors.transparent,
                                 height: 32,
                                 width: 32,
-                                margin: EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                                child: Container(child: SvgPicture.asset("images/dot_icon.svg")),
+                                margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
+                                child: SvgPicture.asset("images/dot_icon.svg"),
                             ),
                         ),
                     ]
@@ -167,7 +165,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
 
         Widget listSmartCamera(){
             return  Container(
-                padding: EdgeInsetsDirectional.symmetric(horizontal: 16),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                 child: ListView.builder(
                     controller: controller.scrollCameraController,
                     itemCount: controller.isLoadMore.isTrue
@@ -176,14 +174,14 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                     itemBuilder: (context, index) {
                         int length = controller.sensorCameras.value.length;
                         if (index >= length) {
-                            return Column(
+                            return const Column(
                                 children: [
                                     Center(
                                         child: SizedBox(
-                                            child: ProgressLoading(
-                                            ),
                                             height: 24,
                                             width: 24,
+                                            child: ProgressLoading(
+                                            ),
                                         ),
                                     ),
                                     SizedBox(height: 120),
@@ -197,17 +195,17 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                     indeksCamera : index,
                                     onTap: () {
                                         GlobalVar.track("Click_card_camera");
-                                        Get.toNamed(RoutePage.HistorySmartCameraPage, arguments: [false, controller.sensorCameras.value[index], controller.coop, index])!.then((value) {
+                                        Get.toNamed(RoutePage.historySmartCameraPage, arguments: [false, controller.sensorCameras.value[index], controller.coop, index])!.then((value) {
                                             controller.isLoading.value = true;
                                             controller.sensorCameras.value.clear();
                                             controller.pageSmartCamera.value = 0;
-                                            Timer(Duration(milliseconds: 500), () {
+                                            Timer(const Duration(milliseconds: 500), () {
                                                 controller.getListCamera();
                                             });
                                         });
                                     },
                                 ),
-                                index == controller.sensorCameras.value.length - 1 ? SizedBox(height: 120)
+                                index == controller.sensorCameras.value.length - 1 ? const SizedBox(height: 120)
                                     : Container(),
                             ],
                         );
@@ -224,7 +222,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                     children: [
                         Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: [
                                     BoxShadow(
@@ -235,7 +233,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                             ),
-                            padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -268,7 +266,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Center(
+                    const Center(
                         child:
                         ProgressLoading(),
                     ) : controller.sensorCameras.value.isEmpty ?
@@ -276,7 +274,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                         child: Container(
                             width: double.infinity,
                             height: MediaQuery. of(context). size. height,
-                            margin: EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
+                            margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                             child: Column(
                                 children: [
                                     SvgPicture.asset("images/empty_icon.svg"),
@@ -297,8 +295,8 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                 decoration: BoxDecoration(
                                     color: GlobalVar.primaryLight,
                                     borderRadius: BorderRadius.circular(8)),
-                                margin: EdgeInsets.symmetric(horizontal: 16),
-                                padding: EdgeInsets.all(12),
+                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                padding: const EdgeInsets.all(12),
                                 child : Column(
                                     children: [
                                         Row(
@@ -323,15 +321,15 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(right: 16, left: 16, top: 16),
-                                padding: EdgeInsets.all(8),
+                                margin: const EdgeInsets.only(right: 16, left: 16, top: 16),
+                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                     color: GlobalVar.blueLights,
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Row(
                                     children: [
                                         SvgPicture.asset("images/information_blue_icon.svg"),
-                                        SizedBox(width: 8,),
+                                        const SizedBox(width: 8,),
                                         Expanded(child: Text("Silahkan ambil gambar terlebih dahulu",  style: GlobalVar.blueTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
                                     ],
                                 ),

@@ -11,15 +11,15 @@ import 'main.reflectable.dart';
 void main() {
     F.appFlavor = Flavor.DEV;
     initializeReflectable();
-    runApp(ModelGeneratorMain());
+    runApp(const ModelGeneratorMain());
     ModelGenerator().build(['smart_scale_response.json']);
 }
 
 class ModelGeneratorMain extends StatelessWidget {
-    ModelGeneratorMain({super.key});
+    const ModelGeneratorMain({super.key});
 
     @override
     Widget build(BuildContext context) {
-        return MaterialApp();
+        return const MaterialApp();
     }
 }

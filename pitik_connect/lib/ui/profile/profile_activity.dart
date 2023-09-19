@@ -7,11 +7,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 class ProfileActivity extends StatefulWidget {
   const ProfileActivity({super.key});
@@ -59,7 +57,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
 
     Widget nameInfo() {
       return Container(
-        margin: EdgeInsets.only(top: 14),
+        margin: const EdgeInsets.only(top: 14),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -68,7 +66,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
               width: 64,
               height: 64,
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Column(
@@ -99,10 +97,10 @@ class _ProfileActivityState extends State<ProfileActivity> {
     Widget header() {
         return Stack(
             children: [
-              Container(
+              SizedBox(
                   width: Get.width, child: Image.asset("images/header_bg.png")),
               Container(
-                margin: EdgeInsets.only(left: 16, right: 16, top: 42),
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 42),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -151,14 +149,14 @@ class _ProfileActivityState extends State<ProfileActivity> {
         return GestureDetector(
                 onTap: onTap,
                     child: Container(
-                    margin: EdgeInsets.only( left: 30, top: 24, right: 30),
+                    margin: const EdgeInsets.only( left: 30, top: 24, right: 30),
                     child: Row(
                         children: [
                             SvgPicture.asset(imagePath),
                             const SizedBox(width: 18,),
                             Text(title, style: GlobalVar.blackTextStyle.copyWith(fontSize: 14),),
                            if(title != "Logout")...[
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset("images/arrow_profile.svg")
                            ]
                         ],
@@ -177,7 +175,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                           header(),
                           nameInfo(),
                           Container(
-                              margin: EdgeInsets.only(top: 32,left: 39, right: 39),
+                              margin: const EdgeInsets.only(top: 32,left: 39, right: 39),
                               child: Divider(
                                   color: GlobalVar.outlineColor,
                                   thickness: 1.6,
@@ -191,7 +189,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                           listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
                           listComponent(GlobalVar.invalidResponse(), "images/logout_icon.svg", "Logout"),
                           const SizedBox(height: 16,),
-                          Container(child: Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),),),
+                          Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),),
                           const SizedBox(height: 40,)
                       ],
                   ),

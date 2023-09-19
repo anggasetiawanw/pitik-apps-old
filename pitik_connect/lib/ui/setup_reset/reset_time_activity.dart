@@ -8,11 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_connect/ui/setup_reset/reset_time_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 16/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 16/08/23
 
 class ResetTime extends GetView<ResetTimeController>{
     const ResetTime({
@@ -27,10 +25,10 @@ class ResetTime extends GetView<ResetTimeController>{
             return AppBar(
                 elevation: 0,
                 leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.of(context).pop(),
                 ),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                 ),
@@ -53,7 +51,7 @@ class ResetTime extends GetView<ResetTimeController>{
                     children: [
                         Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: [
                                     BoxShadow(
@@ -64,7 +62,7 @@ class ResetTime extends GetView<ResetTimeController>{
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                             ),
-                            padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -106,27 +104,25 @@ class ResetTime extends GetView<ResetTimeController>{
             body: Stack(
                 children: [
                     Obx(() => controller.isLoading.isTrue ?
-                    Container(
-                        child: Center(
-                            child: ProgressLoading(),
-                        ),
+                    const Center(
+                        child: ProgressLoading(),
                     ) :
                     SingleChildScrollView(
                         child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 16),
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                     Container(
-                                        margin: EdgeInsets.only(top: 16),
-                                        padding: EdgeInsets.all(16),
+                                        margin: const EdgeInsets.only(top: 16),
+                                        padding: const EdgeInsets.all(16),
                                         decoration: BoxDecoration(
                                             color: GlobalVar.blueLights,
                                             borderRadius: BorderRadius.circular(8)),
                                         child: Row(
                                             children: [
                                                 SvgPicture.asset("images/information_blue_icon.svg"),
-                                                SizedBox(width: 8,),
+                                                const SizedBox(width: 8,),
                                                 Expanded(child: Text("Saat ini menggunakan waktu bawaan ", style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip,)),
                                                 Text("${controller.controllerData.onlineTime}", style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)
                                             ],
@@ -156,7 +152,7 @@ class ResetTime extends GetView<ResetTimeController>{
             context: context,
             builder: (context) {
                 return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
@@ -167,7 +163,7 @@ class ResetTime extends GetView<ResetTimeController>{
                         mainAxisSize: MainAxisSize.min,
                         children: [
                             Container(
-                                margin: EdgeInsets.only(top: 8),
+                                margin: const EdgeInsets.only(top: 8),
                                 width: 60,
                                 height: 4,
                                 decoration: BoxDecoration(
@@ -176,7 +172,7 @@ class ResetTime extends GetView<ResetTimeController>{
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24, left: 16, right: 73),
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                                 child: Text(
                                     "Apakah kamu yakin data yang dimasukan sudah benar?",
                                     style: GlobalVar.primaryTextStyle
@@ -184,19 +180,19 @@ class ResetTime extends GetView<ResetTimeController>{
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 8, left: 16, right: 52),
-                                child: Text(
+                                margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                                child: const Text(
                                     "Pastikan semua data yang kamu masukan semua sudah benar",
                                     style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24),
+                                margin: const EdgeInsets.only(top: 24),
                                 child: SvgPicture.asset(
                                     "images/ask_bottom_sheet_1.svg",
                                 ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 24, left: 16, right: 16),
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [

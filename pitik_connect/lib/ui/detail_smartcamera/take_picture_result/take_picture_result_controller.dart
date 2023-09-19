@@ -9,11 +9,9 @@ import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/record_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 28/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 28/08/23
 
 class TakePictureResultController extends GetxController {
     BuildContext context;
@@ -80,15 +78,7 @@ class TakePictureResultController extends GetxController {
 
     }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
 
 }

@@ -4,11 +4,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:pitik_connect/ui/profile/privacy_screen_controller.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 02/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 02/08/23
 
 
 class PrivacyScreen extends GetView<PrivacyScreenController> {
@@ -27,7 +25,7 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                 children: [
                     Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
                                 BoxShadow(
@@ -38,7 +36,7 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                         ),
-                        padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -56,11 +54,11 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
           return AppBar(
               elevation: 0,
               leading: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () {
                       Navigator.pop(context);
                   }),
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
               ),
@@ -85,19 +83,19 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                 SingleChildScrollView(
                     controller: controller.scrollController,
                     child: Container(
-                        padding: EdgeInsets.only(top: 16, bottom: 100),
-                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.only(top: 16, bottom: 100),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(children: [
                             Center(
                                 child: Text("Kebijakan Privasi\nPitik Digital Indonesia",style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top:4),
+                                margin: const EdgeInsets.only(top:4),
                                 child: Center(child:
                                 Text("Terakhir di perbarui 17 Des 2022 - 10:00", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 32),
+                                margin: const EdgeInsets.only(top: 32),
                                 child: Html(data: GlobalVar.privacyPolicy),
                             )
                         ],),

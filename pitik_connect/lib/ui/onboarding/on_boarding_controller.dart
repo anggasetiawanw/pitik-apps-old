@@ -10,11 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../route.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 25/08/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 25/08/23
 
 class OnBoardingController extends GetxController {
     BuildContext context;
@@ -58,20 +56,8 @@ class OnBoardingController extends GetxController {
         }
     );
 
-    @override
-    void onInit() {
-        super.onInit();
-    }
 
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
-    @override
-    void onReady() {
-        super.onReady();
-    }
 
     Future<void> setPreferences() async {
         final SharedPreferences prefs = await pref;
