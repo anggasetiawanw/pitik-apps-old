@@ -1,7 +1,7 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print
 
-import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../dao/dao_impl.dart';
 import '../request/service.dart';
@@ -102,7 +102,7 @@ class OfflineAutomation {
                                 _deleteByExpiredDateAndFlag(record, key);
                             }
                         }
-                    };
+                    }
                 });
 
                 return true;

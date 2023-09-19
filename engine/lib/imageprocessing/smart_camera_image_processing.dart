@@ -2,14 +2,14 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, avoid_print
 
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as ui;
-import 'package:get/get.dart';
-import 'package:share_plus/share_plus.dart';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:image/image.dart' as ui;
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 
 /**
  * @author DICKY <dicky.maulana@pitik.id>
@@ -43,11 +43,12 @@ class SmartCameraImageProcessing {
                 "Message", "Download complete",
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: Colors.green,
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 backgroundColor: Colors.white,
             );
         }else{
-            Share.shareFiles([pathImage!], text: 'Nama Kamera : ${cameraName} \n Kandang : ${coop} \n Lantai : ${floor} \n Jam Ambil Gambar : ${timeTake} \n Temperature : ${temperature} \n Kelembapan : ${humidity} \n');
+            // ignore: deprecated_member_use
+            Share.shareFiles([pathImage], text: 'Nama Kamera : $cameraName \n Kandang : $coop \n Lantai : $floor \n Jam Ambil Gambar : $timeTake \n Temperature : $temperature \n Kelembapan : $humidity \n');
         }
 
     }
@@ -56,8 +57,8 @@ class SmartCameraImageProcessing {
         final response = await http.get(Uri.parse(url));
         final documentDirectory = await _getDownloadPath();
         int dateTime = DateTime. now(). millisecondsSinceEpoch;
-        final file = File('$documentDirectory/${dateTime}.jpg');
-        pathImage = "$documentDirectory/${dateTime}.jpg";
+        final file = File('$documentDirectory/$dateTime.jpg');
+        pathImage = "$documentDirectory/$dateTime.jpg";
 
         file.writeAsBytesSync(response.bodyBytes);
         return file;
@@ -77,7 +78,7 @@ class SmartCameraImageProcessing {
                 "Message", "Cannot get download folder path",
                 snackPosition: SnackPosition.BOTTOM,
                 colorText: Colors.white,
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 backgroundColor: Colors.red,
             );
         }
@@ -104,16 +105,16 @@ class SmartCameraImageProcessing {
         ui.drawString(originalImage, cameraName!, font: ui.arial48, x: 30, y: originalImage.height - 230);
 
         // Coop Name
-        ui.drawString(originalImage, 'Kandang : ${coop == null ? 'N/A' : coop}', font: ui.arial24, x: 30, y: originalImage.height - 176);
+        ui.drawString(originalImage, 'Kandang : ${coop ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 176);
 
         // Floor Name
-        ui.drawString(originalImage, 'Lantai : ${floor == null ? 'N/A' : floor}', font: ui.arial24, x: 30, y: originalImage.height - 150);
+        ui.drawString(originalImage, 'Lantai : ${floor ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 150);
 
         // Camera Position
-        ui.drawString(originalImage, 'Posisi Kamera : ${cameraPosition == null ? 'N/A' : cameraPosition}', font: ui.arial24, x: 30, y: originalImage.height - 124);
+        ui.drawString(originalImage, 'Posisi Kamera : ${cameraPosition ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 124);
 
         // Time Take
-        ui.drawString(originalImage, 'Jam Ambil Gambar : ${timeTake == null ? 'N/A' : timeTake}', font: ui.arial24, x: 30, y: originalImage.height - 98);
+        ui.drawString(originalImage, 'Jam Ambil Gambar : ${timeTake ?? 'N/A'}', font: ui.arial24, x: 30, y: originalImage.height - 98);
 
         // Temperature
         ui.drawString(originalImage, 'Suhu : ${temperature == null ? 'N/A' : '$temperature °C'}', font: ui.arial24, x: 30, y: originalImage.height - 72);
