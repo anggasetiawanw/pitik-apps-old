@@ -126,10 +126,7 @@ class DetailGrPurchase extends GetView<DetailGrPurchaseController>{
                   ),
                 ),
                 Text(
-                  // controller.salerPerson != null
-                  //     ? "${controller.salerPerson}"
-                  //     : "-",
-                  "${controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? "-"}",
+                  controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],

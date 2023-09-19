@@ -35,26 +35,24 @@ class GpsComponent{
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                Container(
-                                    height: 32,
-                                    width: 100,
-                                    color: Colors.transparent,
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Container(
+                                height: 32,
+                                width: 100,
+                                color: Colors.transparent,
+                            ),
+                            SizedBox(
+                                width: 100,
+                                child: ButtonFill(
+                                    controller:
+                                    GetXCreator.putButtonFillController("Dialog"),
+                                    label: "OK",
+                                    onClick: () => Get.back()
                                 ),
-                                SizedBox(
-                                    width: 100,
-                                    child: ButtonFill(
-                                        controller:
-                                        GetXCreator.putButtonFillController("Dialog"),
-                                        label: "OK",
-                                        onClick: () => Get.back()
-                                    ),
-                                ),
-                            ],
-                        ),
+                            ),
+                        ],
                     )
                 ],
             ),),
@@ -90,26 +88,24 @@ class GpsComponent{
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                             ),
                             const SizedBox(height: 16),
-                            Container(
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Container(
-                                            height: 32,
-                                            width: 100,
-                                            color: Colors.transparent,
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    Container(
+                                        height: 32,
+                                        width: 100,
+                                        color: Colors.transparent,
+                                    ),
+                                    SizedBox(
+                                        width: 100,
+                                        child: ButtonFill(
+                                            controller:
+                                            GetXCreator.putButtonFillController("Dialog"),
+                                            label: "OK",
+                                            onClick: () => Get.back()
                                         ),
-                                        SizedBox(
-                                            width: 100,
-                                            child: ButtonFill(
-                                                controller:
-                                                GetXCreator.putButtonFillController("Dialog"),
-                                                label: "OK",
-                                                onClick: () => Get.back()
-                                            ),
-                                        ),
-                                    ],
-                                ),
+                                    ),
+                                ],
                             )
                         ],
                     ),

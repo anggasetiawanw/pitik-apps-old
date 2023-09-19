@@ -155,8 +155,8 @@ class EditDataSalesOrder extends StatelessWidget {
                 child: Column(children: [
                   controller.spinnerCustomer,
                   controller.spinnerOrderType,
-                  Obx(() => controller.produkType == "Non-LB" ? controller.skuCard : cardSKULB()),
-                  Obx(() => controller.produkType == "Non-LB" ? Container() : controller.skuCardRemark,),
+                  Obx(() => controller.produkType.value == "Non-LB" ? controller.skuCard : cardSKULB()),
+                  Obx(() => controller.produkType.value == "Non-LB" ? Container() : controller.skuCardRemark,),
                   Container(
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.only(top: 16),
@@ -166,7 +166,7 @@ class EditDataSalesOrder extends StatelessWidget {
                       border: Border.all(color: AppColors.outlineColor, width: 1),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Obx(() => controller.produkType == "Non-LB" ? Column(
+                    child: Obx(() => controller.produkType.value == "Non-LB" ? Column(
                       children: [
                         Row(
                             children: [

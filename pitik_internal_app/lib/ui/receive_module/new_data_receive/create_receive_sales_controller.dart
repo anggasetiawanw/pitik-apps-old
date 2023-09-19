@@ -112,7 +112,7 @@ class CreateGrOrderController extends GetxController{
       } else {
         return false;
       }
-    }catch(Exception){
+    }on Exception{
       return true;
     }
   }

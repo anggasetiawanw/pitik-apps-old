@@ -353,7 +353,7 @@ class VisitController extends GetxController {
         isLoading.value = true;
         buttonFillSelesai.controller.disable();
         spinnerMulti.controller.invisibleSpinner();
-        skuCard.controller.InvisibleCard();
+        skuCard.controller.invisibleCard();
         spinnerKota.controller.disable();
         spinnerKecamatan.controller.disable();
         spinnerNamaBisnis.controller.disable();
@@ -403,7 +403,7 @@ class VisitController extends GetxController {
             if(p0.contains("Harga")){
                 skuCard.controller.visibleCard();
             }else {
-                skuCard.controller.InvisibleCard();
+                skuCard.controller.invisibleCard();
             }
         });
     }

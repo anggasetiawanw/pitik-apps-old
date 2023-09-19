@@ -17,15 +17,13 @@ class StockOpnameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-        margin: EdgeInsets.only(top: 16),
+        margin: const EdgeInsets.only(top: 16),
       child: Expandable(
             controller: GetXCreator.putAccordionController(title),
             headerText: title,
-            child: Container(
-                // margin: EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: controller.efSku.value,
-                )),
+            child: Column(
+              children: controller.efSku.value,
+            ),
           ),
     ));
   }

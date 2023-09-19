@@ -1,11 +1,9 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/customer_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 09/05/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 09/05/23
 
 @SetupModel
 class OperationUnitListResponse {

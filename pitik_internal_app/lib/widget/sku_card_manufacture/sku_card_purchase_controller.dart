@@ -39,7 +39,7 @@ class SkuCardManufactureController extends GetxController{
     void expand() => expanded.value = true;
     void collapse() => expanded.value = false;
     void visibleCard() => isShow.value = true;
-    void InvisibleCard() => isShow.value = false;
+    void invisibleCard() => isShow.value = false;
 
     var idx= 0.obs;
     @override
@@ -75,9 +75,6 @@ class SkuCardManufactureController extends GetxController{
                     }                 
                     editFieldJumlahAyam.value[numberList].setInput("");
                     editFieldJumlahKg.value[numberList].setInput("");
-                }
-                else {
-                    print("listCategories.value is Empty");
                 }
             }
         ),

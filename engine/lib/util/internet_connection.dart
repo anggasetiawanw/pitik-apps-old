@@ -21,7 +21,7 @@ class NetworkStatusService extends GetxService {
         // );
     }
 
-    void _getNetworkStatus(InternetConnectionStatus status) {
+    void getNetworkStatus(InternetConnectionStatus status) {
         if (status == InternetConnectionStatus.connected) {
             _validateSession(); //after internet connected it will redirect to home page
         } else {

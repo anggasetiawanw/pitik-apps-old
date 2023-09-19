@@ -2,11 +2,9 @@ import 'package:model/engine_library.dart';
 import 'package:model/internal_app/operation_unit_model.dart';
 import 'package:model/internal_app/place_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 13/04/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 13/04/23
 
 @SetupModel
 class VendorModel {

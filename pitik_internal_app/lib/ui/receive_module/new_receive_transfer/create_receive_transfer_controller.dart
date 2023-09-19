@@ -16,11 +16,9 @@ import 'package:model/internal_app/transfer_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/06/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/06/23
 
 class CreateGrTransferController extends GetxController {
     BuildContext context;
@@ -48,14 +46,6 @@ class CreateGrTransferController extends GetxController {
         transferModel = Get.arguments;
         createdDate = Convert.getDatetime(transferModel.createdDate!);
     }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     void getDetailTransfer(){
         Service.push(
@@ -73,7 +63,7 @@ class CreateGrTransferController extends GetxController {
                         "Pesan",
                         "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                         snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                     isLoading.value = false;
@@ -84,7 +74,7 @@ class CreateGrTransferController extends GetxController {
                         "Pesan",
                         "Terjadi kesalahan internal",
                         snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                     isLoading.value = false;
@@ -114,7 +104,7 @@ class CreateGrTransferController extends GetxController {
                     Get.snackbar(
                         "Alert", (body as ErrorResponse).error!.message!,
                         snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
                 },
@@ -122,7 +112,7 @@ class CreateGrTransferController extends GetxController {
                     isLoading.value = false;
                     Get.snackbar("Alert","Terjadi kesalahan internal",
                         snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
                 },

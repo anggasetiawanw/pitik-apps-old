@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:global_variable/global_variable.dart';
 
 enum Flavor {

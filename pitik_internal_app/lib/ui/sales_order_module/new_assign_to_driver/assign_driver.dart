@@ -95,18 +95,15 @@ class AssignDriverPage extends StatelessWidget {
         child: Expandable(
             controller: GetXCreator.putAccordionController(products.id!),
             headerText: products.name!,
-            child: Container(
-              // margin: EdgeInsets.symmetric(horizontal: ),
-              child: Column(
-                children: [
-                    listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                    listDetail("SKU",products.name ?? "-", false),
-                    if(products.quantity !=0) listDetail("Jumlah Ekor","${ products.quantity ?? "-"} Ekor", false),
-                    if(products.numberOfCuts !=0)listDetail("Potongan","${ products.numberOfCuts ?? "-"} Potongan", false),
-                    listDetail("Kebutuhan","${ products.weight ?? "-"} Kg", false),
-                    if(products.price !=null) listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
-                ],
-              ),
+            child: Column(
+              children: [
+                  listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
+                  listDetail("SKU",products.name ?? "-", false),
+                  if(products.quantity !=0) listDetail("Jumlah Ekor","${ products.quantity ?? "-"} Ekor", false),
+                  if(products.numberOfCuts !=0)listDetail("Potongan","${ products.numberOfCuts ?? "-"} Potongan", false),
+                  listDetail("Kebutuhan","${ products.weight ?? "-"} Kg", false),
+                  if(products.price !=null) listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
+              ],
             )),
 
       );
@@ -280,10 +277,8 @@ class AssignDriverPage extends StatelessWidget {
         body: Stack(
           children: [
             Obx(() => controller.isLoading.isTrue ?
-            Container(
-              child: const Center(
-                child: ProgressLoading(),
-              ),
+            const Center(
+              child: ProgressLoading(),
             )
                 :
             SingleChildScrollView(
@@ -350,7 +345,7 @@ class AssignDriverPage extends StatelessWidget {
                                 const SizedBox(
                                     height: 8,
                                 ),
-                                if(controller.sumChick !=0)...[
+                                if(controller.sumChick.value !=0)...[
                                         Row(
                                         children: [
                                         Expanded(

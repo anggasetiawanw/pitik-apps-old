@@ -12,7 +12,8 @@ class UserGoogle extends BaseEntity {
 
     UserGoogle({this.accessToken, this.email});
 
-    UserGoogle toModelEntity(Map<String, dynamic> map) {
+    @override
+  UserGoogle toModelEntity(Map<String, dynamic> map) {
         return UserGoogle(email: map['email'], accessToken: map['accessToken']);
     }
 

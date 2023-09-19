@@ -10,6 +10,7 @@ import 'listener/custom_dialog_listener.dart';
 String _title = 'Pesan';
 String _message = 'Pesan';
 
+// ignore: constant_identifier_names
 enum Dialogs { YES_OPTION, YES_NO_OPTION, ONLY_ALERT }
 Dialogs _dialogType = Dialogs.YES_OPTION;
 bool _isShowing = false;
@@ -90,6 +91,7 @@ class _MyDialog extends StatefulWidget {
 
     _MyDialog({Key? key, required this.id, required this.dialog, required this.packetList}) : super(key: key);
 
+    // ignore: prefer_typing_uninitialized_variables
     var _dialog;
     update() {
         _dialog.changeState();

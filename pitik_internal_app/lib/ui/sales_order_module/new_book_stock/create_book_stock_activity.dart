@@ -88,10 +88,8 @@ class CreateBookStockPage extends StatelessWidget {
         body: Stack(
           children: [
             Obx(() => controller.isLoading.isTrue ?
-            Container(
-              child: const Center(
-                child: ProgressLoading(),
-              ),
+            const Center(
+              child: ProgressLoading(),
             )
                 :
             SingleChildScrollView(

@@ -9,7 +9,7 @@ import 'package:model/x_app_model.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
 class Constant {
-        static String? mDeviceId;
+    static String? mDeviceId;
     static String? mSerial;
     static String? mAndroidId;
     static String? mPlatformVersion;
@@ -28,7 +28,7 @@ class Constant {
     }
 
     static String get deviceId {
-        return deviceId;
+        return mDeviceId!;
     }
 
     static set serial(String serial) {

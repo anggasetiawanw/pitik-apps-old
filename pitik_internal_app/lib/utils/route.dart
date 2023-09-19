@@ -3,8 +3,8 @@ import 'package:pitik_internal_app/ui/delivery_module/delivery_confirm_so/delive
 import 'package:pitik_internal_app/ui/delivery_module/delivery_confirm_so/delivery_confirm_so_controller.dart';
 import 'package:pitik_internal_app/ui/delivery_module/delivery_confirm_transer/delivery_confirm_transfer_activity.dart';
 import 'package:pitik_internal_app/ui/delivery_module/delivery_confirm_transer/delivery_confirm_transfer_controller.dart';
-import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_SO/delivery_detail_SO_activity.dart';
-import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_SO/delivery_detail_SO_controller.dart';
+import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_so/delivery_detail_so_activity.dart';
+import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_so/delivery_detail_so_controller.dart';
 import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_transfer/delivery_detail_transfer_activity.dart';
 import 'package:pitik_internal_app/ui/delivery_module/delivery_detail_transfer/delivery_detail_transfer_controller.dart';
 import 'package:pitik_internal_app/ui/delivery_module/delivery_home/delivery_home_activity.dart';
@@ -187,14 +187,14 @@ class AppRoutes {
     static final page = [
         //SALES MODULE PAGE
         GetPage(name: RoutePage.splashPage, page: () => const SplashActivity()),
-        GetPage(name: RoutePage.loginPage,page: () => LoginPage(),binding: LoginActivityBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.loginPage,page: () => const LoginPage(),binding: LoginActivityBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.homePageCustomer,page: () => const HomePageCustomer(),binding: HomePageBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.purchasePage,page: () => const PurchasePage(),binding: PurchasePageBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.customerDetailPage,page: () => const CustomerDetail(),binding: CustomerDetailBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.visitDetailPage,page: () => const DetailVisitCustomer(),binding: DetailVisitBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.newDataCustomer,page: () => const NewData(),bindings: [ NewDataBindings(context: Constant.getContext()),],),
-        GetPage(name: RoutePage.visitCustomer,page: () => VisitActivity(),binding: VisitBindings(context: Constant.getContext()),),
-        GetPage(name: RoutePage.editCustomer,page: () => EditData(),binding: EditDataBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.visitCustomer,page: () => const VisitActivity(),binding: VisitBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.editCustomer,page: () => const EditData(),binding: EditDataBindings(context: Constant.getContext()),),
 
         //Purchase Module
         GetPage(name: RoutePage.newDataPurchase,page: () => const NewDataPurchase(),bindings: [ NewDataPurchaseBindings(context: Constant.getContext()),],),
@@ -202,25 +202,25 @@ class AppRoutes {
         GetPage(name: RoutePage.purchaseEditPage,page: () => const EditDataPurchase(),binding: EditDataPurchaseBindings(context: Constant.getContext()),),
 
        //Receive Module
-        GetPage(name: RoutePage.receivePage,page: () => ReceiveActivity(),binding: ReceiveBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.receivePage,page: () => const ReceiveActivity(),binding: ReceiveBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.grOrderDetail,page: () => const DetailGrOrder(),binding: DetailGrOrderBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.grPurchaseDetailPage,page: () => const DetailGrPurchase(),binding: DetailGrPurchaseBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.createGrPurchasePage,page: () => const CreateGrPurchase(),binding: CreateGrPurchaseBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.createGrJagalPurchasePage,page: () => const CreateGrPurchaseJagal(),binding: CreateGrJagalPurchaseBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.grTransferDetailPage,page: () => const DetailGRTransfer(),binding: DetailGRTransferBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.createGrTransferPage,page: () => const CreateGrTransfer(),binding: CreateGrTransferBindings(context: Constant.getContext()),),
-        GetPage(name: RoutePage.createGrOrderPage,page: () => CreateGrOrder(),binding: CreateGrOrderBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.createGrOrderPage,page: () => const CreateGrOrder(),binding: CreateGrOrderBindings(context: Constant.getContext()),),
 
         //Sales Oder Module
         GetPage(name: RoutePage.salesOrderPage,page: () => const SalesOrderPage(),binding: ReceiveBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.salesOrderDetailPage,page: () => const DetailSalesOrder(),binding: DetailSalesOrderBindings(context: Constant.getContext()),),
-        GetPage(name: RoutePage.newDataSalesOrder,page: () => NewDataSalesOrder(),binding: NewDataSalesOrderBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.newDataSalesOrder,page: () => const NewDataSalesOrder(),binding: NewDataSalesOrderBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.newBookStock,page: () => const CreateBookStockPage(),binding: BookStockBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.assignToDriver,page: () => const AssignDriverPage(),binding: AssignDriverBindings(context: Constant.getContext()),),
-        GetPage(name: RoutePage.editDataSalesOrder,page: () => EditDataSalesOrder(),binding: EditDataSalesOrderBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.editDataSalesOrder,page: () => const EditDataSalesOrder(),binding: EditDataSalesOrderBindings(context: Constant.getContext()),),
 
         //Home Page
-        GetPage(name: RoutePage.homePage , page: ()=> DashboardPage(), binding: DashboardBinding()),
+        GetPage(name: RoutePage.homePage , page: ()=> const DashboardPage(), binding: DashboardBinding()),
         GetPage(name: RoutePage.licensePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.privacyPage, page: ()=> const PrivacyScreen()),
         GetPage(name: RoutePage.termPage, page: ()=> const TermScreen()),
@@ -236,8 +236,8 @@ class AppRoutes {
         GetPage(name: RoutePage.deliveryDetailSO, page: ()=> const DeliveryDetailSO(), binding: DeliveryDetailSOBindings(context: Constant.getContext())),
     
         //Stock Module
-        GetPage(name: RoutePage.homeStock, page: ()=>StockHomeActivity(), binding: StockHomeBindings(context: Constant.getContext())),
-        GetPage(name: RoutePage.stockOpname, page: ()=>StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.homeStock, page: ()=>const StockHomeActivity(), binding: StockHomeBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.stockOpname, page: ()=>const StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockDetail, page: ()=>const StockDetailActivity(),binding: StockDetailBindings(context: Constant.getContext())),
 
         //Transfer Module

@@ -133,7 +133,7 @@ class RegisterCoopController extends GetxController {
             modifyType.value = Get.arguments[0];
             if(modifyType == MODIFY_COOP) {
                 coop.value = Get.arguments[1];
-                cardFloor.controller.InvisibleCard();
+                cardFloor.controller.invisibleCard();
                 spCoopStatus.controller.visibleSpinner();
                 efBuildingName.setInput(coop.value.coopName!);
                 efFloorName.controller.invisibleField();
@@ -142,7 +142,7 @@ class RegisterCoopController extends GetxController {
                 GlobalVar.sendRenderTimeMixpanel("Open_form_edit_coop", timeStart, DateTime.now());
             }else if(modifyType == MODIFY_FLOOR){
                 coop.value = Get.arguments[1];
-                cardFloor.controller.InvisibleCard();
+                cardFloor.controller.invisibleCard();
                 spCoopStatus.controller.visibleSpinner();
                 efFloorName.setInput(coop.value.room!.name!);
                 efBuildingName.controller.invisibleField();

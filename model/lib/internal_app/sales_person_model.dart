@@ -1,10 +1,8 @@
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-02-20 09:17:53
- * @modify date 2023-02-20 09:17:53
- * @desc [description]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-02-20 09:17:53
+/// @modify date 2023-02-20 09:17:53
+/// @desc [description]
 
 import 'dart:core';
 

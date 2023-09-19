@@ -10,14 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   engine:
     path: ../engine
   model:
     path: ../model
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
     
   flutter_lints: ^2.0.0
 

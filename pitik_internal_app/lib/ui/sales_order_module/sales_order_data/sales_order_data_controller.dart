@@ -1,8 +1,6 @@
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 04/04/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 04/04/23
 
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -73,7 +71,7 @@ class SalesOrderController extends GetxController{
                     "Pesan",
                     "Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
-                        duration: Duration(seconds: 5),
+                        duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
                 ); 
@@ -94,10 +92,6 @@ class SalesOrderController extends GetxController{
     getListOrders();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
 
 class SalesOrderPageBindings extends Bindings {

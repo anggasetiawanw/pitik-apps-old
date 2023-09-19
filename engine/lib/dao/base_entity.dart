@@ -9,6 +9,7 @@ import 'package:reflectable/reflectable.dart';
  * @create date 14/09/2023
  */
 
+// ignore: constant_identifier_names
 const SetupEntity = BaseEntity();
 
 class BaseEntity extends Reflectable {

@@ -1,12 +1,10 @@
 import 'package:model/engine_library.dart';
 
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-03-20 13:33:25
- * @modify date 2023-03-20 13:33:25
- * @desc [description]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-03-20 13:33:25
+/// @modify date 2023-03-20 13:33:25
+/// @desc [description]
 
 @SetupModel
 class CategoryModel {

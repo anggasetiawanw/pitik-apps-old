@@ -3,13 +3,11 @@ import 'package:model/internal_app/order_categories_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
 
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-02-20 09:25:38
- * @modify date 2023-02-20 09:25:38
- * @desc [description]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-02-20 09:25:38
+/// @modify date 2023-02-20 09:25:38
+/// @desc [description]
 
 @SetupModel
 class VisitCustomer {

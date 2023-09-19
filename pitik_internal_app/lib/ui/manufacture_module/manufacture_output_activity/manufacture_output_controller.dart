@@ -55,7 +55,6 @@ class ManufactureOutputController extends GetxController {
             ..items.refresh();        
             skuCard.controller.setMaplist(listCategoriesSelected.value);
             this.mapList.value = mapList; 
-            print(skuCard.controller.spinnerCategories.value[0].controller.items.value);
         });
     });
 

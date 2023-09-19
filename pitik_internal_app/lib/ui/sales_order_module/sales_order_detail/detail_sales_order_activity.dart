@@ -70,7 +70,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                   ),
                 ),
                 Text(
-                  "${controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-"}",
+                  controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -88,7 +88,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                   ),
                 ),
                 Text(
-                  "${controller.orderDetail.value!.customer!.businessName ?? "-"}",
+                  controller.orderDetail.value!.customer!.businessName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -126,7 +126,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                   ),
                 ),
                 Text(
-                  "${controller.orderDetail.value!.driver!.fullName ?? "-"}",
+                  controller.orderDetail.value!.driver!.fullName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),overflow: TextOverflow.ellipsis,
                 ),
               ],

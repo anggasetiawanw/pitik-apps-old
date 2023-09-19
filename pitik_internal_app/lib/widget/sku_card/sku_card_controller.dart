@@ -41,7 +41,7 @@ class SkuCardController extends GetxController {
     void expand() => expanded.value = true;
     void collapse() => expanded.value = false;
     void visibleCard() => isShow.value = true;
-    void InvisibleCard() => isShow.value = false;
+    void invisibleCard() => isShow.value = false;
 
 
     @override
@@ -73,7 +73,6 @@ class SkuCardController extends GetxController {
                 alertText: "Kategori SKU harus dipilih!",
                 items: const {},
                 onSpinnerSelected: (value) {
-                    print("Index $idx");
                     try {
                         if (listCategories.value.isNotEmpty) {
                             CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == value);
@@ -82,7 +81,6 @@ class SkuCardController extends GetxController {
                             }
                         }
                     } catch (e, st) {
-                        print("$e $st");
                         Get.snackbar("Error", "$e $st");
                     }
                 }
@@ -225,7 +223,9 @@ class SkuCardController extends GetxController {
                             .update(idx, (value) => body.data, ifAbsent: () => body.data);
 
                         Map<String, bool> mapList = {};
-                        body.data.forEach((product) => mapList[product!.name!] = false);
+                        for (var product in body.data) {
+                          mapList[product!.name!] = false;
+                        }
 
                         spinnerSize.value[idx].controller
                             ..textSelected.value = ""

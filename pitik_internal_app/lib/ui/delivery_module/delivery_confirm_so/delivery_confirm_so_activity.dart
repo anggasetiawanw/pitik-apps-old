@@ -142,24 +142,22 @@ class DeliveryConfirmSO extends StatelessWidget {
             controller:
                 GetXCreator.putAccordionController("sku${products.name}"),
             headerText: "${products.name}",
-            child: Container(
-              child: Column(
-                children: [
-                  infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                  infoDetailSku("SKU", "${products.name}"),
-                  products.quantity != 0
-                      ? infoDetailSku(
-                          "Jumlah Ekor", "${products.quantity} Ekor")
-                      : Container(),
-                  products.numberOfCuts != 0
-                      ? infoDetailSku(
-                          "Potongan", "${products.numberOfCuts} Potong")
-                      : Container(),
-                  infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
-                  infoDetailSku("Harga",
-                      "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                ],
-              ),
+            child: Column(
+              children: [
+                infoDetailSku("Kategori SKU", "${products.category!.name}"),
+                infoDetailSku("SKU", "${products.name}"),
+                products.quantity != 0
+                    ? infoDetailSku(
+                        "Jumlah Ekor", "${products.quantity} Ekor")
+                    : Container(),
+                products.numberOfCuts != 0
+                    ? infoDetailSku(
+                        "Potongan", "${products.numberOfCuts} Potong")
+                    : Container(),
+                infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
+                infoDetailSku("Harga",
+                    "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+              ],
             )),
       ) : Container(
         margin: const EdgeInsets.only(top: 16),
@@ -167,24 +165,22 @@ class DeliveryConfirmSO extends StatelessWidget {
             controller:
                 GetXCreator.putAccordionController("sku${products.name}"),
             headerText: "${products.name}",
-            child: Container(
-              child: Column(
-                children: [
-                  infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                  infoDetailSku("SKU", "${products.name}"),
-                  products.quantity != 0
-                      ? infoDetailSku(
-                          "Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor")
-                      : Container(),
-                  products.numberOfCuts != 0
-                      ? infoDetailSku(
-                          "Potongan", "${products.numberOfCuts} Potong")
-                      : Container(),
-                  infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                  infoDetailSku("Harga",
-                      "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                ],
-              ),
+            child: Column(
+              children: [
+                infoDetailSku("Kategori SKU", "${products.category!.name}"),
+                infoDetailSku("SKU", "${products.name}"),
+                products.quantity != 0
+                    ? infoDetailSku(
+                        "Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor")
+                    : Container(),
+                products.numberOfCuts != 0
+                    ? infoDetailSku(
+                        "Potongan", "${products.numberOfCuts} Potong")
+                    : Container(),
+                infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                infoDetailSku("Harga",
+                    "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+              ],
             )),
       );
     }
@@ -252,7 +248,7 @@ class DeliveryConfirmSO extends StatelessWidget {
             const SizedBox(
                 height: 8,
             ),
-            if(controller.sumChick !=0)...[
+            if(controller.sumChick.value !=0)...[
                     Row(
                     children: [
                     Expanded(

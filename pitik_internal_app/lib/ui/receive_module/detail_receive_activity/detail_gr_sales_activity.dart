@@ -86,7 +86,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                   ),
                 ),
                 Text(
-                  "${controller.orderDetail.value!.customer!.businessName ?? "-"}",
+                  controller.orderDetail.value!.customer!.businessName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -104,7 +104,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                   ),
                 ),
                 Text(
-                  "${controller.orderDetail.value!.returnReason != null ? controller.orderDetail.value!.returnReason! :  "-" }",
+                  controller.orderDetail.value!.returnReason != null ? controller.orderDetail.value!.returnReason! :  "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -187,17 +187,14 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
         child: Expandable(
             controller: GetXCreator.putAccordionController(products.id!),
             headerText: products.name!,
-            child: Container(
-              // margin: EdgeInsets.symmetric(horizontal: ),
-              child: Column(
-                children: [
-                  listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                  listDetail("SKU",products.name != null ? products.name! : "-", false),
-                 products.returnQuantity !=null || products.returnQuantity != 0? listDetail("Jumlah Ekor","${products.returnQuantity} Ekor", false) :const SizedBox(),
-                  listDetail("Kebutuhan","${ products.returnWeight ?? "-"} Kg", false),
-                  controller.orderDetail.value!.type == "LB" ? Container(): listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
-                ],
-              ),
+            child: Column(
+              children: [
+                listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
+                listDetail("SKU",products.name != null ? products.name! : "-", false),
+               products.returnQuantity !=null || products.returnQuantity != 0? listDetail("Jumlah Ekor","${products.returnQuantity} Ekor", false) :const SizedBox(),
+                listDetail("Kebutuhan","${ products.returnWeight ?? "-"} Kg", false),
+                controller.orderDetail.value!.type == "LB" ? Container(): listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
+              ],
             )),
 
       );
@@ -254,10 +251,8 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
           child: appBar(),
         ),
         body: Obx(() => controller.isLoading.isTrue ?
-            Container(
-              child: const Center(
-                child: ProgressLoading(),
-              ),
+            const Center(
+              child: ProgressLoading(),
             )
                 : Stack(
           children: [
@@ -331,7 +326,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                         const SizedBox(
                             height: 8,
                         ),
-                        if(controller.sumChick !=0)...[
+                        if(controller.sumChick.value !=0)...[
                                 Row(
                                 children: [
                                 Expanded(

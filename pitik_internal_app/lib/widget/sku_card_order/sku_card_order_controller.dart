@@ -50,7 +50,7 @@ class SkuCardOrderController extends GetxController{
         void expand() => expanded.value = true;
         void collapse() => expanded.value = false;
         void visibleCard() => isShow.value = true;
-        void InvisibleCard() => isShow.value = false;
+        void invisibleCard() => isShow.value = false;
 
         var idx= 0.obs;
 

@@ -6,11 +6,9 @@ import 'package:model/internal_app/product_model.dart';
 import 'branch_model.dart';
 import 'jagal_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 13/04/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 13/04/23
 
 @SetupModel
 class OperationUnitModel {

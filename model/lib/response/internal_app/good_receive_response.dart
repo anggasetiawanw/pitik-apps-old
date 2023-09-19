@@ -1,11 +1,9 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/goods_received_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 07/06/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 07/06/23
 
 @SetupModel
 class GoodReceiveReponse{

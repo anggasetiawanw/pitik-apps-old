@@ -147,7 +147,7 @@ class TransferDriverDetail extends StatelessWidget {
         ),
         body: Stack(
             children: [
-                Obx(() => controller.isLoading.isTrue ? Center(child:ProgressLoading()) :
+                Obx(() => controller.isLoading.isTrue ? const Center(child:ProgressLoading()) :
                 Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
@@ -163,16 +163,16 @@ class TransferDriverDetail extends StatelessWidget {
                                 width: double.infinity,
                                 height: 48,
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: AppColors.headerSku,
-                                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                                 ),
                                 child: Text("${controller.transferModel.products![0]!.name}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),   
                             ),
                             Container(
                                 width: double.infinity,
                                 padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.transparent,
                                 border: Border(
                                   bottom: BorderSide(color: AppColors.outlineColor, width: 1),
@@ -181,7 +181,7 @@ class TransferDriverDetail extends StatelessWidget {
                                   top: BorderSide(color: AppColors.outlineColor, width: 0),
                                 ),
                                 // border: Border.all(color: AppColors.grey, width: 1),
-                                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                               ),
                                 child: Column(
                                     children: [

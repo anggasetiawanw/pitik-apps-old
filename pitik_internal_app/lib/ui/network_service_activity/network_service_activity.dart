@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class NetworkErrorItem extends StatelessWidget {
+  const NetworkErrorItem({super.key});
+
     @override
     Widget build(BuildContext context) {
         return WillPopScope(child:Scaffold(

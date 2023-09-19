@@ -163,11 +163,11 @@ class ManufactureEditFromController extends GetxController {
                         Map<String, bool> mapList = {};
                         Map<String, int> mapListAmount = {};
                         Map<String, double> mapListWeight = {};
-                        (body).data.forEach((units) {
+                        for (var units in (body).data) {
                             mapList[units!.productCategoryName!] = false;
                             mapListAmount[units.productCategoryName!] = units.totalQuantity!;
                             mapListWeight[units.productCategoryName!] = units.totalWeight!;
-                        });
+                        }
                         categorySKUField.controller.generateAmount(mapListAmount);
                         categorySKUField.controller.generateWeight(mapListWeight);
                         categorySKUField.controller.generateItems(mapList);

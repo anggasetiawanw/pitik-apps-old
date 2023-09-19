@@ -35,7 +35,7 @@ class EditDataController extends GetxController {
         alertText: "Nama pemilik harus diisi!",
         textUnit: "",
         maxInput: 100,
-        onTyping: (text, _editField) {},
+        onTyping: (text, editField) {},
     );
 
     final EditField editNamaBisnis = EditField(
@@ -45,7 +45,7 @@ class EditDataController extends GetxController {
         alertText: "Nama bisnis harus diisi!",
         textUnit: "",
         maxInput: 100,
-        onTyping: (text, _editField) {},
+        onTyping: (text, editField) {},
     );
 
     final EditField editNomorTelepon = EditField(
@@ -56,7 +56,7 @@ class EditDataController extends GetxController {
         textUnit: "",
         inputType: TextInputType.phone,
         maxInput: 100,
-        onTyping: (text, _editField) {},
+        onTyping: (text, editField) {},
     );
 
     final EditField editLokasiGoogle = EditField(
@@ -66,7 +66,7 @@ class EditDataController extends GetxController {
         alertText: "Lokasi google harus diisi!",
         textUnit: "",
         maxInput: 100,
-        onTyping: (text, _editField) {},
+        onTyping: (text, editField) {},
     );
 
     late SpinnerField spinnerSupplier;
@@ -118,14 +118,12 @@ class EditDataController extends GetxController {
         alertText: "Kota harus dipilih!",
         items: const {"Rumah Makan": false, "Rumah Tuang": false},
         onSpinnerSelected: (text) {
-            try {
-                if (city.value.isNotEmpty) {
-                    Location? selectLocation = city.value.firstWhere((element) => element!.cityName! == text);
-                    if (selectLocation != null) {
-                        getDistrict(selectLocation);
-                    }
+            if (city.value.isNotEmpty) {
+                Location? selectLocation = city.value.firstWhere((element) => element!.cityName! == text);
+                if (selectLocation != null) {
+                    getDistrict(selectLocation);
                 }
-            } catch (e) {}
+            }
         },
     );
 
@@ -145,7 +143,7 @@ class EditDataController extends GetxController {
         alertText: "",
         textUnit: "",
         maxInput: 100,
-        onTyping: (text, _editField) {},
+        onTyping: (text, editField) {},
     );
 
     late SkuCard skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
@@ -476,7 +474,6 @@ class EditDataController extends GetxController {
             final List<String> getCode = editLokasiGoogle.getInput().split(" ");
             if(getCode[0].contains(",")){
                 getCode[0] = getCode[0].replaceAll(",",'');
-                print(getCode[0]);
             }
 
             bool rets = gpc.isValid(getCode[0]);
@@ -623,7 +620,9 @@ class EditDataController extends GetxController {
         onResponseDone: (code, message, body, id, packet) {
             if (id == 1) {
                 Map<String, bool> mapList = {};
-                (body as LocationListResponse).data.forEach((location) => mapList[location!.provinceName!] = false);
+                for (var location in (body as LocationListResponse).data) {
+                  mapList[location!.provinceName!] = false;
+                }
                 (packet[2] as SpinnerSearch).controller.generateItems(mapList);
                 packet[0].value = false;
                 for (var result in body.data) {
@@ -633,7 +632,9 @@ class EditDataController extends GetxController {
 
             if (id == 2) {
                 Map<String, bool> mapList = {};
-                (body as LocationListResponse).data.forEach((location) => mapList[location!.cityName!] = false);
+                for (var location in (body as LocationListResponse).data) {
+                  mapList[location!.cityName!] = false;
+                }
                 (packet[2] as SpinnerSearch).controller.generateItems(mapList);
                 (packet[2] as SpinnerSearch).controller.enable();
                 packet[0].value = false;
@@ -644,7 +645,9 @@ class EditDataController extends GetxController {
 
             if (id == 3) {
                 Map<String, bool> mapList = {};
-                (body as LocationListResponse).data.forEach((location) => mapList[location!.districtName!] = false);
+                for (var location in (body as LocationListResponse).data) {
+                  mapList[location!.districtName!] = false;
+                }
                 (packet[2] as SpinnerSearch).controller.generateItems(mapList);
 
                 (packet[2] as SpinnerSearch).controller.enable();

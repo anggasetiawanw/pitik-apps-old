@@ -1,13 +1,12 @@
 import 'package:model/engine_library.dart';
+
 import 'category_model.dart';
 
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-02-20 09:20:09
- * @modify date 2023-02-20 09:20:09
- * @desc [AKA SKU]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-02-20 09:20:09
+/// @modify date 2023-02-20 09:20:09
+/// @desc [AKA SKU]
 
 @SetupModel
 class Products {

@@ -29,17 +29,9 @@ class SkuBookSOController extends GetxController {
 
         addCard();
     }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     addCard(){
-        products.forEach((element) {
+        for (var _ in products) {
             index.value.add(idx.value);
             int numberList = idx.value;
             jumlahEkor.value.add(EditField(
@@ -85,7 +77,6 @@ class SkuBookSOController extends GetxController {
             itemCount.value = index.value.length;
             idx.value++;
          }
-        );
 
     }
 
@@ -93,12 +84,12 @@ class SkuBookSOController extends GetxController {
         sumKg.value = 0;
         sumPrice.value =0;
         int indexProduct = 0;
-        index.value.forEach((idx) {
+        for (var idx in index.value) {
             double kg =  jumlahkg.value[idx].getInputNumber() ?? 0;
             double price = products[indexProduct]!.price ?? 0;
             sumKg.value += kg;
             sumPrice.value += price * kg;
-        });
+        }
     }
 }
 class SkuBookSOBindings extends Bindings {

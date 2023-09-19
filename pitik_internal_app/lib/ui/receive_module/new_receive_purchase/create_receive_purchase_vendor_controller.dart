@@ -215,8 +215,7 @@ class CreateGrPurchaseController extends GetxController {
                     decoration: TextDecoration.none),
                 ),
                 const SizedBox(height: 16),
-                Container(
-                child: Row(
+                Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                     Container(
@@ -233,7 +232,6 @@ class CreateGrPurchaseController extends GetxController {
                             onClick: () => {Get.back(), saveGrPurchase()}),
                     ),
                     ],
-                ),
                 ),
             ],
             ),

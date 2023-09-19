@@ -73,40 +73,40 @@ class ListApi {
     static const String getLatestStockOpname ="getLatestStockOpname";
 
     static String pathGetProductById(String productId) {
-        return "v2/sales/product/${productId}";
+        return "v2/sales/product/$productId";
     }
 
     static String pathUpdateCustomerById(String custId) {
-        return "v2/sales/customers/${custId}";
+        return "v2/sales/customers/$custId";
     }
 
 
     static String pathGetDetailCustomerById(String custId) {
-        return "v2/sales/customers/${custId}";
+        return "v2/sales/customers/$custId";
     }
 
     static String pathCreatenewVisit(String custId) {
-        return "v2/sales/customers/${custId}/visits";
+        return "v2/sales/customers/$custId/visits";
     }
 
     static String pathGetVisitById(String custId, String visitId) {
-        return "v2/sales/customers/${custId}/visits/${visitId}";
+        return "v2/sales/customers/$custId/visits/$visitId";
     }
 
     static String pathGetListVisit(String custId) {
-        return "v2/sales/customers/${custId}/visits";
+        return "v2/sales/customers/$custId/visits";
     }
 
     static String pathArchiveCustomer(String custId) {
-        return "v2/sales/customers/${custId}/archive";
+        return "v2/sales/customers/$custId/archive";
     }
 
     static String pathUnarchiveCustomer(String custId) {
-        return "v2/sales/customers/${custId}/unarchive";
+        return "v2/sales/customers/$custId/unarchive";
     }
 
     static String pathCheckinVisit(String custId) {
-        return "v2/sales/customers/${custId}/visits/check-in";
+        return "v2/sales/customers/$custId/visits/check-in";
     }
 
     static String pathCheckinDeliveryTransfer(String custId) {
@@ -118,19 +118,19 @@ class ListApi {
     }
 
     static String pathDetailPurchaseById(String purchaseId){
-        return "v2/sales/purchase-orders/${purchaseId}";
+        return "v2/sales/purchase-orders/$purchaseId";
     }
 
     static String pathCancelPurchase(String purchaseId) {
-        return "v2/sales/purchase-orders/${purchaseId}/cancel";
+        return "v2/sales/purchase-orders/$purchaseId/cancel";
     }
 
     static String pathUpdateManufactureById(String manId) {
-        return "v2/sales/manufactures/${manId}";
+        return "v2/sales/manufactures/$manId";
     }
 
     static String pathGetDetailManufactureById(String manId) {
-        return "v2/sales/manufactures/${manId}";
+        return "v2/sales/manufactures/$manId";
     }
 
     static String pathGetListStockByUnit(String unit) {
@@ -141,35 +141,35 @@ class ListApi {
     }
 
     static String pathUpdateTerminateById(String terminateId) {
-        return "v2/sales/stock-disposals/${terminateId}";
+        return "v2/sales/stock-disposals/$terminateId";
     }
 
     static String pathGetDetailTerminateById(String terminateId) {
-        return "v2/sales/stock-disposals/${terminateId}";
+        return "v2/sales/stock-disposals/$terminateId";
     }
 
     static String pathDetailOrderById(String orderId){
-        return "v2/sales/sales-orders/${orderId}";
+        return "v2/sales/sales-orders/$orderId";
     }
 
     static String pathCancelOrder(String orderId) {
-        return "v2/sales/sales-orders/${orderId}/cancel";
+        return "v2/sales/sales-orders/$orderId/cancel";
     }
 
     static String pathCancelBookedOrder(String orderId) {
-        return "v2/sales/sales-orders/${orderId}/book-stock/cancel";
+        return "v2/sales/sales-orders/$orderId/book-stock/cancel";
     }
 
     static String pathGetTransferDetailById(String transferId) {
-        return "v2/sales/internal-transfers/${transferId}";
+        return "v2/sales/internal-transfers/$transferId";
     }
 
     static String pathUpdateTransferByid(String transferId) {
-        return "v2/sales/internal-transfers/${transferId}";
+        return "v2/sales/internal-transfers/$transferId";
     }
 
     static String pathTransferBookStock(String transferId) {
-        return "v2/sales/internal-transfers/${transferId}/book-stock";
+        return "v2/sales/internal-transfers/$transferId/book-stock";
     }
 
     static String pathTransferCancelBookStock(String transferId) {
@@ -201,15 +201,15 @@ class ListApi {
     }
 
     static String pathUpdateOpnameById(String opnameId) {
-        return "v2/sales/stock-opnames/${opnameId}";
+        return "v2/sales/stock-opnames/$opnameId";
     }
 
     static String pathGetDetailOpanameById(String opnameId) {
-        return "v2/sales/stock-opnames/${opnameId}";
+        return "v2/sales/stock-opnames/$opnameId";
     }
 
     static String pathBookStock(String orderId) {
-        return "v2/sales/sales-orders/${orderId}/book-stock";
+        return "v2/sales/sales-orders/$orderId/book-stock";
     }
 
     static String pathOrderSetDriver(String orderId) {
@@ -221,11 +221,11 @@ class ListApi {
     }
 
     static String pathCancelGr(String goodsReceivedId) {
-        return "v2/sales/goods-received/${goodsReceivedId}/cancel";
+        return "v2/sales/goods-received/$goodsReceivedId/cancel";
     }
 
     static String pathDetailGrByPurchaseById(String goodReceiveId){
-        return "v2/sales/goods-received/${goodReceiveId}";
+        return "v2/sales/goods-received/$goodReceiveId";
     }
 
     static String pathDeliverySOPickup(String orderId) {
@@ -239,6 +239,6 @@ class ListApi {
         return "v2/sales/sales-orders/$orderId/return-product";
     }
     static String pathCancelDeliveryOrder(String orderId) {
-        return "v2/sales/sales-orders/${orderId}/ready-to-deliver/cancel";
+        return "v2/sales/sales-orders/$orderId/ready-to-deliver/cancel";
     }
 }

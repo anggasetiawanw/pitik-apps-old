@@ -13,7 +13,7 @@ void main() async{
     ChuckerFlutter.showOnRelease = true;
     initializeReflectable();
     await initPlatformState();
-    runApp(App());
+    runApp(const App());
 }
 
 Future<void> initPlatformState() async {

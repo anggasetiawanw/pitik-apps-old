@@ -283,12 +283,10 @@ class VisitActivity extends GetView<VisitController> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              Container(
-                child: Text(
-                  "Silahkan pilih nama bisnis yang akan dilakukan kunjungan",
-                  style: AppTextStyle.primaryTextStyle
-                      .copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
-                ),
+              Text(
+                "Silahkan pilih nama bisnis yang akan dilakukan kunjungan",
+                style: AppTextStyle.primaryTextStyle
+                    .copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
               ),
               controller.spinnerProvince,
               controller.spinnerKota,

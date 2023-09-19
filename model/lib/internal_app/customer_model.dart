@@ -5,13 +5,11 @@ import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
 import 'package:model/internal_app/visit_customer_model.dart';
 
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-02-08 10:50:33
- * @modify date 2023-02-08 10:50:33
- * @desc [Model For Customer]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-02-08 10:50:33
+/// @modify date 2023-02-08 10:50:33
+/// @desc [Model For Customer]
 
 @SetupModel
 class Customer {

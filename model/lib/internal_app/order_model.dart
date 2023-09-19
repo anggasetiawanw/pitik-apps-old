@@ -1,17 +1,15 @@
 
-import 'package:model/internal_app/customer_model.dart';
 import 'package:model/engine_library.dart';
+import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:model/profile.dart';
 import 'package:model/internal_app/sales_person_model.dart';
+import 'package:model/profile.dart';
 
 import 'operation_unit_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 11/05/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 11/05/23
 
 @SetupModel
 class Order{

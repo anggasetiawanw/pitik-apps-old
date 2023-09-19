@@ -11,6 +11,7 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/record_model.dart';
@@ -18,7 +19,6 @@ import 'package:model/response/camera_detail_response.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:http/http.dart' as http;
 
 /**
  *@author Robertus Mahardhi Kuncoro
@@ -330,6 +330,7 @@ class HistoricalDataSmartCameraController extends GetxController {
               timeTake: '2023-10-10'
           );
 
+          // ignore: deprecated_member_use
           await Share.shareFiles([path], text: 'Nama Kamera : ${recordCamera.sensor!.sensorCode!} \n Kandang : ${recordCamera.sensor!.room!.building!.name!} \n Lantai : ${recordCamera.sensor!.room!.roomType!.name!} \n Jam Ambil Gambar : ${recordCamera.createdAt} \n Temperature : ${recordCamera.temperature} \n Kelembapan : ${recordCamera.humidity} \n');
       }
   }

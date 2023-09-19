@@ -1,14 +1,13 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/goods_received_model.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'vendor_model.dart';
-import 'operation_unit_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 04/04/23
- */
+import 'operation_unit_model.dart';
+import 'vendor_model.dart';
+
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 04/04/23
 
 @SetupModel
 class Purchase{

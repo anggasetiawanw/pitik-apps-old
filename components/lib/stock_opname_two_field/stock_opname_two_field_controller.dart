@@ -7,36 +7,24 @@ class StockOpnameTwoFieldController extends GetxController {
     String tag;
     StockOpnameTwoFieldController({required this.tag});
     Rx<List<EditFieldTwoRow>> efSku = Rx<List<EditFieldTwoRow>>([]);
-    @override
-    void onInit() {
-        super.onInit();
-    }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     void generateEf(Products product){
 
         product.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
-        product.productItems!.forEach((element) {
+        for (var element in product.productItems!) {
             efSku.value.add(EditFieldTwoRow(controller: GetXCreator.putEditFieldTwoRowController(element!.name!), label: "${element.name!}*", hint: "0", alertText: "Kolom ini harus di isi", textUnit1: product.quantityUOM!,textUnit2: product.weightUOM!, maxInput: 50, onTyping1: (value,control){}, onTyping2: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
             efSku.refresh();
-        });
+        }
     }
     void setDefault(Products products){
         // int idx = 0
 
         products.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
-        products.productItems!.forEach((product) { 
+        for (var product in products.productItems!) { 
             EditFieldTwoRow sku = efSku.value.firstWhere((element) => element.controller.tag == product!.name!);
             sku.setInput1(product!.quantity == null ? "" : product.quantity.toString());
             sku.setInput2(product.weight == null ? "" :product.weight.toString());
-        });
+        }
     }
 }
 class StockOpnameTwoFieldBindings extends Bindings {

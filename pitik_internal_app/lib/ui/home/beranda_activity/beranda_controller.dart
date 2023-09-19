@@ -1,4 +1,6 @@
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:components/custom_dialog.dart';
 import 'package:components/listener/custom_dialog_listener.dart';
 import 'package:engine/request/service.dart';
@@ -105,7 +107,7 @@ class BerandaController extends GetxController {
         if (double.parse('${verCurr[0]}.${verCurr[1]}') <= double.parse('${verSuggestion[0]}.${verSuggestion[1]}')) {
             if (version != "" && version != "0.0.0") {
                 List<String> verPlay = version.split(".");
-                print("$verPlay and $verCurr");
+                // print("$verPlay and $verCurr");
                 if (int.parse(verPlay[0]) > int.parse(verCurr[0])) {
                     mustBeUpdate = true;
                     forceUpdate = true;

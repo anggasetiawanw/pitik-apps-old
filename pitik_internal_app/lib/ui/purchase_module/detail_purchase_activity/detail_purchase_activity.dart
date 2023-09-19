@@ -128,7 +128,7 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
                   ),
                 ),
                 Text(
-                  "${controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? "-"}",
+                  controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -188,17 +188,14 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
         child: Expandable(
             controller: GetXCreator.putAccordionController(products.id!),
             headerText: products.name!,
-            child: Container(
-              // margin: EdgeInsets.symmetric(horizontal: ),
-              child: Column(
-                children: [
-                  listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                  listDetail("SKU", products.name != null ? "${products.name}": "-", false),
-                  if(products.quantity !=0) listDetail("Jumlah Ekor","${ products.quantity ?? "-"} Ekor", false),
-                  listDetail("Kebutuhan","${ products.weight ?? "-"} Kg", false),
-                   if(products.price !=null)listDetail("Harga ", "${products.price == 0 ? "-":"${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} "} /Kg",false),
-                ],
-              ),
+            child: Column(
+              children: [
+                listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
+                listDetail("SKU", products.name != null ? "${products.name}": "-", false),
+                if(products.quantity !=0) listDetail("Jumlah Ekor","${ products.quantity ?? "-"} Ekor", false),
+                listDetail("Kebutuhan","${ products.weight ?? "-"} Kg", false),
+                 if(products.price !=null)listDetail("Harga ", "${products.price == 0 ? "-":"${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} "} /Kg",false),
+              ],
             )),
 
       );
@@ -294,10 +291,8 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
         body: Stack(
           children: [
             Obx(() => controller.isLoading.isTrue ?
-            Container(
-              child: const Center(
-                child: ProgressLoading(),
-              ),
+            const Center(
+              child: ProgressLoading(),
             )
                 :
             SingleChildScrollView(
@@ -358,7 +353,7 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
                             const SizedBox(
                                 height: 8,
                             ),
-                            if(controller.sumChick !=0)...[
+                            if(controller.sumChick.value !=0)...[
                                     Row(
                                     children: [
                                     Expanded(

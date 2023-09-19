@@ -40,7 +40,7 @@ class Convert {
 
         // final oCcy = new NumberFormat("#.##0,00");
         // String converted = oCcy.format(double.parse(currency));
-        return "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(double.parse(currency))}";
+        return NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(double.parse(currency));
     }
 
     /// It takes a currency value, a currency symbol, a grouping separator, and a
@@ -80,8 +80,8 @@ class Convert {
     }
 
     String getRandomString(int length) {
-        Random _rnd = Random();
-        return String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+        Random rnd = Random();
+        return String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(rnd.nextInt(_chars.length))));
     }
 
     static DateTime getDatetime(String value) {

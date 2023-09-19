@@ -28,7 +28,7 @@ class TransferDriverController extends GetxController {
         Get.back();        
     });
 
-    SpinnerSearch assignDriver = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: {}, onSpinnerSelected: (value){});
+    SpinnerSearch assignDriver = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value){});
 
     var isLoading = false.obs;
     var isEdit = false.obs;
@@ -61,8 +61,9 @@ class TransferDriverController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     Map<String, bool> mapList = {};
-                    (body as ListDriverResponse).data.forEach((units) => mapList[units!.fullName!] = false);
-                    print(mapList);
+                    for (var units in (body as ListDriverResponse).data) {
+                      mapList[units!.fullName!] = false;
+                    }
                     assignDriver.controller.generateItems(mapList);
                     for (var result in body.data) {
                         listDriver.value.add(result);

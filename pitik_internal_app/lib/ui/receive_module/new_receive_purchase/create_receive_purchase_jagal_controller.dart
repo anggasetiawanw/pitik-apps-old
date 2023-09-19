@@ -18,11 +18,9 @@ import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
 import 'package:pitik_internal_app/widget/sku_card_gr/sku_card_gr.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 29/05/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 29/05/23
 
 class CreateGrPurchaseJagalController extends GetxController {
   BuildContext context;
@@ -70,10 +68,6 @@ class CreateGrPurchaseJagalController extends GetxController {
 
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   @override
   void onReady() {
@@ -137,7 +131,7 @@ class CreateGrPurchaseJagalController extends GetxController {
       } else {
         return false;
       }
-    }catch(Exception){
+    }on Exception{
       return true;
     }
   }

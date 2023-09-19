@@ -86,7 +86,6 @@ class HomePageCustomerController extends GetxController {
     }
 
     void getSearchCustomer() {
-        try {
             isLoading.value = true;
             Service.pushWithIdAndPacket(
                 apiKey: 'userApi',
@@ -97,7 +96,6 @@ class HomePageCustomerController extends GetxController {
                 body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, searchValue, page.value, limit.value],
                 listener: _getListCustomerListener
             );
-        } catch (e) {}
     }
 
     addItems() async {

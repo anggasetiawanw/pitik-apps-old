@@ -1,11 +1,9 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/order_model.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 19/05/23
- */
+///@author Robertus Mahardhi Kuncoro
+///@email <robert.kuncoro@pitik.id>
+///@create date 19/05/23
 
 @SetupModel
 class OrderResponse {

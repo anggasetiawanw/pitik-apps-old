@@ -3,40 +3,40 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 class AppTextStyle {
-    static TextStyle primaryTextStyle = TextStyle(
+    static TextStyle primaryTextStyle = const TextStyle(
         color: AppColors.primaryOrange,
         fontFamily: 'Montserrat_Medium',
     );
-    static TextStyle lightTextStyle = TextStyle(
+    static TextStyle lightTextStyle = const TextStyle(
         color: AppColors.primaryLight,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle blackTextStyle = TextStyle(
+    static TextStyle blackTextStyle = const TextStyle(
         color: AppColors.black,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle redTextStyle = TextStyle(
+    static TextStyle redTextStyle = const TextStyle(
         color: AppColors.red,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle whiteTextStyle = TextStyle(
+    static TextStyle whiteTextStyle = const TextStyle(
         color: Colors.white,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle greyTextStyle = TextStyle(
+    static TextStyle greyTextStyle = const TextStyle(
         color: AppColors.greyText,
         fontFamily: 'Montserrat_Medium',
     );
-    static TextStyle grayTextStyle = TextStyle(
+    static TextStyle grayTextStyle = const TextStyle(
         color: AppColors.grey,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle subTextStyle = TextStyle(
+    static TextStyle subTextStyle = const TextStyle(
         color: AppColors.subGreyText,
         fontFamily: 'Montserrat_Medium',
     );

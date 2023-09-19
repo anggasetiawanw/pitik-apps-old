@@ -8,33 +8,21 @@ class StockOpnameFieldController extends GetxController {
     String tag;
     StockOpnameFieldController({required this.tag});
     Rx<List<EditField>> efSku = Rx<List<EditField>>([]);
-    @override
-    void onInit() {
-        super.onInit();
-    }
-    @override
-    void onReady() {
-        super.onReady();
-    }
-    @override
-    void onClose() {
-        super.onClose();
-    }
 
     void generateEf(Products product){
         product.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
-        product.productItems!.forEach((element) {
+        for (var element in product.productItems!) {
             efSku.value.add(EditField(controller: GetXCreator.putEditFieldController(element!.name!), label: "${element.name!}*", hint: "0", alertText: "Kolom ini harus di isi", textUnit: product.quantityUOM?? product.weightUOM!, maxInput: 50, onTyping: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
             efSku.refresh();
-        });
+        }
     }
     void setDefault(Products products){
         // int idx = 0
         products.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
-        products.productItems!.forEach((product) { 
+        for (var product in products.productItems!) { 
             EditField sku = efSku.value.firstWhere((element) => element.controller.tag == product!.name!);
             sku.setInput(products.name == AppStrings.LIVE_BIRD || products.name == AppStrings.AYAM_UTUH || products.name == AppStrings.BRANGKAS ? (product!.quantity ==0 ? "": product.quantity.toString()) : (product!.weight == null ? "" :product.weight.toString()));
-        });
+        }
     }
 }
 class StockOpnameFieldBindings extends Bindings {

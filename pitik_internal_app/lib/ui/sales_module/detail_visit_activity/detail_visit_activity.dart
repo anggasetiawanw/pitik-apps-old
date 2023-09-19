@@ -9,13 +9,11 @@ import 'package:pitik_internal_app/ui/sales_module/detail_visit_activity/detail_
 import 'package:pitik_internal_app/widget/common/lead_status.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
-/**
- * @author [Angga Setiawan Wahyudin]
- * @email [angga.setiawan@pitik.id]
- * @create date 2023-02-16 08:43:14
- * @modify date 2023-02-16 08:43:14
- * @desc [description]
- */
+/// @author [Angga Setiawan Wahyudin]
+/// @email [angga.setiawan@pitik.id]
+/// @create date 2023-02-16 08:43:14
+/// @modify date 2023-02-16 08:43:14
+/// @desc [description]
 
 class DetailVisitCustomer extends GetView<DetailVisitController> {
   const DetailVisitCustomer({
@@ -31,11 +29,11 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
       return AppBar(
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
@@ -51,10 +49,10 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
 
     Widget detailKunjungan() {
       return Container(
-        margin: EdgeInsets.only(top: 16, bottom: 6),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        margin: const EdgeInsets.only(top: 16, bottom: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-            color: Color(0xFFFAFAFA),
+            color: const Color(0xFFFAFAFA),
             border: Border.all(
               width: 1,
               color: AppColors.outlineColor,
@@ -105,7 +103,7 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
 
     Widget listDetail(String label, String value, bool isLeadStatus) {
       return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,20 +141,17 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
 
     Widget customExpandalbe(Products products) {
       return Container(
-        margin: EdgeInsets.only(top: 16),
+        margin: const EdgeInsets.only(top: 16),
         child: Expandable(
             controller: GetXCreator.putAccordionController(products.id!),
             headerText: products.name!,
-            child: Container(
-              // margin: EdgeInsets.symmetric(horizontal: ),
-              child: Column(
-                children: [
-                  listDetail("Jenis Kebutuhan", products.category!.name!, false),
-                  listDetail("Ukuran","${ products.value != null ? products.value : "-"} ${products.uom !=null ? products.uom : ""}", false),
-                  listDetail("Kebutuhan Kg/Hari","${products.dailyQuantity} Kg/Hari", false),
-                  listDetail("Harga /Kg ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
-               ],
-              ),
+            child: Column(
+              children: [
+                listDetail("Jenis Kebutuhan", products.category!.name!, false),
+                listDetail("Ukuran","${ products.value ?? "-"} ${products.uom ?? ""}", false),
+                listDetail("Kebutuhan Kg/Hari","${products.dailyQuantity} Kg/Hari", false),
+                listDetail("Harga /Kg ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
+             ],
             )),
       );
     }
@@ -169,14 +164,12 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
         ),
         body: Obx(
           () => controller.isLoading.isTrue
-              ? Container(
-                  child: Center(
-                    child: ProgressLoading()
-                  )
-                )
+              ? const Center(
+                child: ProgressLoading()
+              )
               : SingleChildScrollView(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: [
                         detailKunjungan(),
@@ -192,7 +185,7 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
                                 "Jenis Kendala",
                                 controller.customer.value!.orderIssueCategories !=
                                         null
-                                    ? "${controller.customer.value!.orderIssueCategories!.map((e) => e!.title.toString()).reduce((a, b) =>a.toString() +' , ' +b.toString())}"
+                                    ? controller.customer.value!.orderIssueCategories!.map((e) => e!.title.toString()).reduce((a, b) =>'$a , $b')
                                     : "-",
                                 false)
                             : Container(),
@@ -210,8 +203,8 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
                                 : "-",
                             false),
                         Container(
-                          margin: EdgeInsets.only(top: 24, bottom: 8),
-                          child: Divider(
+                          margin: const EdgeInsets.only(top: 24, bottom: 8),
+                          child: const Divider(
                             thickness: 2,
                             color: AppColors.outlineColor,
                           ),
