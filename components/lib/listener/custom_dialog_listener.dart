@@ -5,11 +5,9 @@
 import 'package:flutter/material.dart';
 
 class CustomDialogListener {
-    void onDialogOk(BuildContext context, int id, List<dynamic> packet) {
-        // print('Ok is touch');
-    }
 
-    void onDialogCancel(BuildContext context, int id, List<dynamic> packet) {
-        // print('Cancel is touch');
-    }
+    Function(BuildContext context, int id, List<dynamic> packet) onDialogOk;
+    Function(BuildContext context, int id, List<dynamic> packet) onDialogCancel;
+
+    CustomDialogListener({required this.onDialogOk, required this.onDialogCancel});
 }

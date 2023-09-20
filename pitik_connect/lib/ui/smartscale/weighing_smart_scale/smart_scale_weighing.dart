@@ -1,3 +1,4 @@
+// ignore_for_file: slash_for_doc_comments, use_key_in_widget_constructors
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
@@ -9,18 +10,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_connect/ui/smartscale/weighing_smart_scale/smart_scale_weighing_controller.dart';
 
-///@author DICKY
-///@email <dicky.maulana@pitik.idd>
-///@create date 11/09/2023
+/**
+ *@author DICKY
+ *@email <dicky.maulana@pitik.idd>
+ *@create date 08/09/2023
+ */
 
-class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
-  const SmartScaleWeighing({super.key});
-
+class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
 
     @override
     Widget build(BuildContext context) {
         final SmartScaleWeighingController controller = Get.put(SmartScaleWeighingController(context: context));
-        final DateTime currentDate = DateTime.now();
 
         return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -29,9 +29,9 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                 preferredSize: const Size.fromHeight(50),
                 child: appBar(),
             ),
-            body: Stack(
-                children: [
-                    Obx(() =>
+            body: Obx(() =>
+                Stack(
+                    children: [
                         controller.isLoading.isTrue ? // IF LOADING IS RUNNING
                         const Center(child: ProgressLoading()) :
                         Padding(
@@ -88,7 +88,7 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                         Text("Waktu Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                                         const SizedBox(height: 4),
                                                         Text(
-                                                            "Mulai Timbang ${Convert.getYear(currentDate)}/${Convert.getMonthNumber(currentDate)}/${Convert.getDay(currentDate)} - ${Convert.getHour(currentDate)}.${Convert.getMinute(currentDate)}",
+                                                            "Mulai Timbang ${Convert.getYear(controller.startWeighingTime)}/${Convert.getMonthNumber(controller.startWeighingTime)}/${Convert.getDay(controller.startWeighingTime)} - ${Convert.getHour(controller.startWeighingTime)}.${Convert.getMinute(controller.startWeighingTime)}",
                                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                         ),
                                                     ],
@@ -124,32 +124,32 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                                         const SizedBox(width: 8),
                                                         Padding(
                                                             padding: const EdgeInsets.only(top: 28),
-                                                            child: controller.isTimeout.isTrue ?
-                                                                Container(
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                                                        border: Border.all(width: 2, color: GlobalVar.grayLightText),
-                                                                    ),
-                                                                    child: GestureDetector(
-                                                                        // ignore: deprecated_member_use
-                                                                        child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16, color: GlobalVar.grayLightText),
-                                                                        onTap: () {},
-                                                                    )
-                                                                ) :
-                                                                Container(
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                                                        border: Border.all(width: 2, color: GlobalVar.primaryOrange),
-                                                                    ),
-                                                                    child: GestureDetector(
-                                                                        child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16),
-                                                                        onTap: () => controller.addWeighing(null),
-                                                                    )
+                                                            child:
+                                                            // controller.isTimeout.isTrue ?
+                                                            // Container(
+                                                            //     width: 32,
+                                                            //     height: 32,
+                                                            //     decoration: BoxDecoration(
+                                                            //         borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                                            //         border: Border.all(width: 2, color: GlobalVar.grayLightText),
+                                                            //     ),
+                                                            //     child: GestureDetector(
+                                                            //         child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16, color: GlobalVar.grayLightText),
+                                                            //         onTap: () {},
+                                                            //     )
+                                                            // ) :
+                                                            Container(
+                                                                width: 32,
+                                                                height: 32,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                                                    border: Border.all(width: 2, color: GlobalVar.primaryOrange),
+                                                                ),
+                                                                child: GestureDetector(
+                                                                    child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16),
+                                                                    onTap: () => controller.addWeighing(null),
                                                                 )
+                                                            )
                                                         )
                                                     ]
                                                 ),
@@ -189,10 +189,14 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                     )
                                 ],
                             )
-                        )
-                    ),
-                    bottomNavBar()
-                ],
+                        ),
+                        if (controller.isLoading.isTrue) ...[
+                            const SizedBox()
+                        ] else ...[
+                            bottomNavBar()
+                        ]
+                    ],
+                )
             ),
         );
     }
@@ -238,12 +242,13 @@ class SmartScaleWeighing extends GetView<SmartScaleWeighingController> {
                                     onClick: () {
                                         GlobalVar.track("Click_button_submit_timbang_ayam");
                                         controller.saveSmartScaleWeighing();
-                                    },
-                                )),
-                        ],
-                    ),
-                ),
-            ],
+                                    }
+                                )
+                            )
+                        ]
+                    )
+                )
+            ]
         )
     );
 }
