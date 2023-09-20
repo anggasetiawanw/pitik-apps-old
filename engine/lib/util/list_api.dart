@@ -78,12 +78,12 @@ class ListApi {
         return "v2/b2b/iot-devices/$deviceType/register";
     }
 
-    static String pathCameraImages(String coopId, String cameraId){
-        return "v2/b2b/iot-devices/smart-camera/$coopId/records/$cameraId";
+    static String pathCameraImages(String coopId, String cameraId, String roomId){
+        return "v2/b2b/iot-devices/smart-camera/$coopId/records/$cameraId?roomId=$roomId";
     }
 
-    static String pathListCamera(String coopId){
-        return "v2/b2b/iot-devices/smart-camera/$coopId/records";
+    static String pathListCamera(String coopId, String roomId){
+        return "v2/b2b/iot-devices/smart-camera/$coopId/records?roomId=$roomId";
     }
 
     static String pathTakeImage(String coopId){

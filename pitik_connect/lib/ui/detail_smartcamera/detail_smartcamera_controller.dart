@@ -86,7 +86,7 @@ class DetailSmartCameraController extends GetxController {
             service: ListApi.getListDataCamera,
             context: context,
             body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathListCamera(coop.coopId!), pageSmartCamera, limit],
+                ListApi.pathListCamera(coop.coopId!, coop.room!.id!), pageSmartCamera, limit],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
                     if ((body as CameraListResponse).data!.isNotEmpty) {
