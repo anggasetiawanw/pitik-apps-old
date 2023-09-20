@@ -215,9 +215,7 @@ class SmartScaleWeighingController extends GetxController {
 
                 totalWeighing.setInput(weighingValue.value);
             },
-            onDisabled: () => AppSettings.openBluetoothSettings(callback: () async {
-
-            }),
+            onDisabled: () => AppSettings.openAppSettings(type: AppSettingsType.bluetooth),
             onTimeout: () {
                 isTimeout.value = true;
                 batteryStatus.value = '-';
