@@ -42,7 +42,9 @@ class PrivacyScreenController extends GetxController {
     Future<void> onInit() async {
         super.onInit();
         isLoading.value = true;
-        showBtnApprove.value = Get.arguments;
+        if(Get.arguments != null){
+            showBtnApprove.value = Get.arguments;
+        }
         isFirstLogin = prefs.then((SharedPreferences prefs) {
             return prefs.getBool('isFirstLogin') ?? true;
         });
