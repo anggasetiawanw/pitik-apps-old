@@ -58,6 +58,8 @@ import 'package:pitik_connect/ui/setup_lamp/lamp_setup_activity.dart';
 import 'package:pitik_connect/ui/setup_lamp/lamp_setup_controller.dart';
 import 'package:pitik_connect/ui/setup_reset/reset_time_activity.dart';
 import 'package:pitik_connect/ui/setup_reset/reset_time_controller.dart';
+import 'package:pitik_connect/ui/smartscale/detail_smart_scale/detail_smart_scale_activity.dart';
+import 'package:pitik_connect/ui/smartscale/detail_smart_scale/detail_smart_scale_controller.dart';
 import 'package:pitik_connect/ui/smartscale/weighing_smart_scale/smart_scale_weighing.dart';
 import 'package:pitik_connect/ui/smartscale/weighing_smart_scale/smart_scale_weighing_controller.dart';
 import 'package:pitik_connect/ui/splash/splash_activity.dart';
@@ -125,7 +127,8 @@ class AppRoutes {
 
         // Smart Scale
         GetPage(name: RoutePage.listSmartScalePage , page: ()=> ListSmartScaleActivity(), binding: ListSmartScaleBinding(context: GlobalVar.getContext())),
-        GetPage(name: RoutePage.weighingSmartScalePage , page: ()=> const SmartScaleWeighing(), binding: SmartScaleWeighingBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.weighingSmartScalePage , page: ()=> SmartScaleWeighingActivity(), binding: SmartScaleWeighingBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.detailSmartScalePage , page: ()=> DetailSmartScaleActivity(), binding: DetailSmartScaleBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -144,10 +147,11 @@ class RoutePage {
     static const String modifySmartMonitorPage = "/modify-smart-monitor";
     static const String detailSmartControllerPage = "/detail-smart-controller";
     static const String detailSmartCameraPage = "/detail-smart-camera";
-    static const String listSmartScalePage = "/detail-smart-scale";
+    static const String listSmartScalePage = "/list-smart-scale";
     static const String takePictureSmartCameraPage = "/take-picture-smart-camera";
     static const String historySmartCameraPage = "/history-smart-camera";
     static const String weighingSmartScalePage = "/weighing-smart_scale";
+    static const String detailSmartScalePage = "/detail-smart-scale";
     static const String growthSetupPage = "/growth-form";
     static const String fanSetupPage = "/fan-setup";
     static const String fanDashboardPage = "/fan-dashboard";

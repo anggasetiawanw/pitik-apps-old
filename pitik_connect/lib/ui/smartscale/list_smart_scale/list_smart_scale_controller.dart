@@ -1,8 +1,10 @@
+// ignore_for_file: slash_for_doc_comments
 
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +14,11 @@ import 'package:model/error/error.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 
-///@author DICKY
-///@email <dicky.maulana@pitik.idd>
-///@create date 08/09/2023
+/**
+ *@author DICKY
+ *@email <dicky.maulana@pitik.idd>
+ *@create date 08/09/2023
+ */
 
 class ListSmartScaleController extends GetxController {
     BuildContext context;
@@ -32,6 +36,8 @@ class ListSmartScaleController extends GetxController {
     late Coop coop;
     late Device device;
 
+    /// The scrollListener function listens for scroll events and triggers a load
+    /// more action when the user reaches the end of the scroll.
     scrollListener() async {
         scrollController.addListener(() {
             if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {

@@ -9,6 +9,7 @@ import 'listener/custom_dialog_listener.dart';
 
 String _title = 'Pesan';
 String _message = 'Pesan';
+bool _barrierDismissible = false;
 
 // ignore: constant_identifier_names
 enum Dialogs { YES_OPTION, YES_NO_OPTION, ONLY_ALERT }
@@ -52,6 +53,11 @@ class CustomDialog {
         return this;
     }
 
+    CustomDialog barrierDismiss(bool barrierDismissible) {
+        _barrierDismissible = barrierDismissible;
+        return this;
+    }
+
     bool isShowing() {
       return _isShowing;
     }
@@ -73,7 +79,7 @@ class CustomDialog {
         debugPrint('CustomDialog shown');
 
         showDialog<dynamic>(
-            barrierDismissible: false,
+            barrierDismissible: _barrierDismissible,
             context: _buildContext!,
             builder: (BuildContext context) {
                 _context = context;
@@ -132,6 +138,7 @@ class _MyDialogState extends State<_MyDialog> {
     Widget build(BuildContext context) {
         if (_dialogType == Dialogs.YES_OPTION) {
             return AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 title: Row(
                   children: [
                     const Icon(Icons.info, color: Colors.blue,),
@@ -152,9 +159,10 @@ class _MyDialogState extends State<_MyDialog> {
                       },
                     )
                 ],
-              );
+            );
         } else if (_dialogType == Dialogs.YES_NO_OPTION) {
             return AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 title:  Row(
                   children: [
                     const Icon(Icons.info, color: Colors.blue,),
@@ -189,6 +197,7 @@ class _MyDialogState extends State<_MyDialog> {
             );
         } else {
             return AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 title: Text(_title),
                 content: Text(_message)
             );
