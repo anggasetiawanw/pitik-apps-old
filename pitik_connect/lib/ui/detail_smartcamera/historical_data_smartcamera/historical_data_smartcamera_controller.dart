@@ -104,7 +104,7 @@ class HistoricalDataSmartCameraController extends GetxController {
             service: ListApi.getRecordImages,
             context: context,
             body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathCameraImages(coop.coopId!, record.sensor!.id!),
+                ListApi.pathCameraImages(coop.coopId!, record.sensor!.id!, coop.room!.id!),
                 pageSmartCamera.value,
                 limit.value],
             listener: ResponseListener(
