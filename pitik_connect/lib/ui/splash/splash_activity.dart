@@ -45,10 +45,10 @@ class _SplashActivityState extends State<SplashActivity> {
         WidgetsBinding.instance.addPostFrameCallback((_)async {
 
             var permissionGPS = await Permission.location.request();
-            var permissionPhoneAccess = await handlePermissionPhoneAccess();
             if(Platform.isIOS){
                 // GpsUtil.on();
             }else {
+                var permissionPhoneAccess = await handlePermissionPhoneAccess();
                 if(permissionGPS.isDenied) {
                     Get.snackbar("Alert", "This Apps Need Location Permission",
                         duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
@@ -102,7 +102,7 @@ class _SplashActivityState extends State<SplashActivity> {
                             return prefs.getBool('isFirstLogin') ?? true;
                         });
                         if(await isFirstLogin){
-                            Get.toNamed(RoutePage.privacyPage);
+                            Get.toNamed(RoutePage.privacyPage, arguments: true);
                         }else{
                             Get.offNamed(RoutePage.homePage);
                         }

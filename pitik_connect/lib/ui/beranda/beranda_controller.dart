@@ -68,7 +68,6 @@ class BerandaController extends GetxController {
     }
 
     IosCarrierData? get iosInfo => _iosInfo;
-    AndroidCarrierData? get androidInfo => _androidInfo;
 
     late ButtonOutline boAddDevice = ButtonOutline(
         controller: GetXCreator.putButtonOutlineController("boAddDevice"),
@@ -135,10 +134,8 @@ class BerandaController extends GetxController {
             }
         } else if (Platform.isIOS) {
             iosInfo = await CarrierInfo.getIosInfo();
-            if (iosInfo != null && iosInfo!.carrierData.isNotEmpty) {
-                phoneCarrier =
-                iosInfo!.carrierData[0].carrierName;
-            }
+            (iosInfo?.carrierData ?? []).map(
+                (it)=> phoneCarrier= it.carrierName);
         }
         initMixpanel();
     }
