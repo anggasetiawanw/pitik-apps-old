@@ -304,7 +304,7 @@ class GlobalVar {
     static int versionSql = 1;
     static BuildContext? _globalContext;
     static List<String>? inquiryScan = [];
-    static List<dynamic> tables = [Auth, Profile, XAppId];
+    static List<dynamic> tables = [Auth, Profile, XAppId, SmartScale];
     static Auth? auth;
     // static UserGoogle? userGoogle;
     static Profile? profileUser;

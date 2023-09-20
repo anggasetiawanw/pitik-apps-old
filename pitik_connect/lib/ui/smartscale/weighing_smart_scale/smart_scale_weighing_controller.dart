@@ -1,3 +1,4 @@
+// ignore_for_file: slash_for_doc_comments, empty_catches
 
 import 'package:app_settings/app_settings.dart';
 import 'package:components/button_fill/button_fill.dart';
@@ -6,6 +7,7 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/bluetooth_le_service.dart';
@@ -15,25 +17,30 @@ import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:model/auth_model.dart';
 import 'package:model/coop_model.dart';
-import 'package:model/error/error.dart';
-import 'package:model/response/smart_scale_response.dart';
+import 'package:model/device_model.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:model/smart_scale/smart_scale_record_model.dart';
 
-///@author DICKY
-///@email <dicky.maulana@pitik.idd>
-///@create date 11/09/2023
+import '../smart_scale_done_summary.dart';
+
+/**
+ *@author DICKY
+ *@email <dicky.maulana@pitik.idd>
+ *@create date 08/09/2023
+ */
 
 class SmartScaleWeighingController extends GetxController {
 
     BuildContext context;
     SmartScaleWeighingController({required this.context});
 
+    final DateTime startWeighingTime = DateTime.now();
     late Coop coop;
 
     var isLoading = false.obs;
-    var id = "".obs;
     var weighingValue = "".obs;
     var batteryStatus = "".obs;
     var isTimeout = true.obs;
@@ -190,13 +197,15 @@ class SmartScaleWeighingController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-            id.value = Get.arguments[2];
+        try {
+            smartScaleData.value = Get.arguments[1];
             isLoading.value = true;
+            getSmartScaleWeighingDetail();
+        } catch (exception) {}
 
         coop = Get.arguments[0];
         outstandingTotalWeighingField.controller.disable();
-        totalWeighing.controller.disable();
-        getSmartScaleWeighingDetail(Get.arguments[1]);
+        // totalWeighing.controller.disable();
 
         bluetoothLeService = BluetoothLeService().timeout(true, 5).start(BluetoothLeConstant.TEXT_RESULT, ['PTK-SCL'], BluetoothLeCallback(
             onLeReceived: (data) {
@@ -206,7 +215,9 @@ class SmartScaleWeighingController extends GetxController {
 
                 totalWeighing.setInput(weighingValue.value);
             },
-            onDisabled: () => AppSettings.openAppSettings(type: AppSettingsType.bluetooth),
+            onDisabled: () => AppSettings.openBluetoothSettings(callback: () async {
+
+            }),
             onTimeout: () {
                 isTimeout.value = true;
                 batteryStatus.value = '-';
@@ -222,55 +233,17 @@ class SmartScaleWeighingController extends GetxController {
         super.onClose();
     }
 
-    /// The function `getSmartScaleWeighingDetail` retrieves smart scale weighing
-    /// details based on a boolean flag indicating whether it is a new request or
-    /// not.
-    ///
-    /// Args:
-    ///   isNew (bool): isNew is a boolean parameter that indicates whether the
-    /// weighing detail is new or not. If isNew is true, it means that the weighing
-    /// detail is new and needs to be fetched. If isNew is false, it means that the
-    /// weighing detail already exists and does not need to be fetched again.
-    void getSmartScaleWeighingDetail(bool isNew) => AuthImpl().get().then((auth) => {
-        if (!isNew) {
-            if (auth != null) {
-                Service.push(
-                    apiKey: "smartScaleApi",
-                    service: ListApi.getSmartScaleDetail,
-                    context: context,
-                    body: [auth.token, auth.id, ListApi.pathSmartScaleForDetailAndUpdate(id.value)],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            smartScaleData.value = SmartScale();
-                            smartScaleData.value = (body as SmartScaleResponse).data;
-
-                            if (smartScaleData.value != null && smartScaleData.value!.records.isNotEmpty) {
-                                for (var element in smartScaleData.value!.records) {
-                                  addWeighing(element);
-                                }
-                            }
-
-                            isLoading.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar(
-                                "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                duration: const Duration(seconds: 5),
-                                backgroundColor: Colors.red,
-                            );
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = false,
-                        onTokenInvalid: GlobalVar.invalidResponse()
-                    )
-                )
-            } else {
-                GlobalVar.invalidResponse()
+    /// The function retrieves smart scale weighing details and adds them to a list,
+    /// then sets the loading state to false.
+    void getSmartScaleWeighingDetail() {
+        if (smartScaleData.value != null && smartScaleData.value!.records.isNotEmpty) {
+            for (var element in smartScaleData.value!.records) {
+                addWeighing(element);
             }
         }
-    });
+
+        isLoading.value = false;
+    }
 
     /// The function `saveSmartScaleWeighing()` saves smart scale weighing data to
     /// the server.
@@ -330,39 +303,43 @@ class SmartScaleWeighingController extends GetxController {
                                                             controller: GetXCreator.putButtonFillController("bfYesSaveSmartScaleWeighing"),
                                                             label: "Ya",
                                                             onClick: () {
+                                                                Navigator.pop(context);
+
                                                                 // before check is edit or not
                                                                 bool isEdit = smartScaleData.value!.id != null;
 
-                                                                // setting body
-                                                                smartScaleData.value!.records = smartScaleRecords.entries.map( (entry) => entry.value).toList();
-                                                                smartScaleData.value!.roomId = coop.room!.id;
-                                                                smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
+                                                                if (isEdit) {
+                                                                    SmartScaleImpl().getById(smartScaleData.value!.id!).then((record) async {
+                                                                        if (record != null) {
+                                                                            record.records = smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                                                                            record.startDate = Convert.getStringIso(startWeighingTime);
+                                                                            record.executionDate = Convert.getStringIso(DateTime.now());
+                                                                            record.updatedDate = Convert.getStringIso(DateTime.now());
 
-                                                                isLoading.value = true;
-                                                                Navigator.pop(context);
-                                                                Service.push(
-                                                                    apiKey: "smartScaleApi",
-                                                                    service: isEdit ? ListApi.updateSmartScale : ListApi.saveSmartScale,
-                                                                    context: context,
-                                                                    body: [auth.token, auth.id, Mapper.asJsonString(smartScaleData.value), isEdit ? ListApi.pathSmartScaleForDetailAndUpdate(id.value) : null],
-                                                                    listener: ResponseListener(
-                                                                        onResponseDone: (code, message, body, id, packet) {
-                                                                            isLoading.value = false;
-                                                                        },
-                                                                        onResponseFail: (code, message, body, id, packet) {
-                                                                            isLoading.value = false;
-                                                                            Get.snackbar(
-                                                                                "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                                                                snackPosition: SnackPosition.TOP,
-                                                                                colorText: Colors.white,
-                                                                                duration: const Duration(seconds: 5),
-                                                                                backgroundColor: Colors.red,
-                                                                            );
-                                                                        },
-                                                                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = false,
-                                                                        onTokenInvalid: GlobalVar.invalidResponse()
-                                                                    )
-                                                                );
+                                                                            _pushSmartScaleData(auth, isEdit, record);
+                                                                        } else {
+                                                                            // setting body
+                                                                            smartScaleData.value!.id = smartScaleData.value!.id;
+                                                                            smartScaleData.value!.records = smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                                                                            smartScaleData.value!.roomId = coop.room!.id;
+                                                                            smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
+                                                                            smartScaleData.value!.updatedDate = Convert.getStringIso(DateTime.now());
+                                                                            smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
+                                                                            smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+
+                                                                            _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    // setting body
+                                                                    smartScaleData.value!.records = smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                                                                    smartScaleData.value!.roomId = coop.room!.id;
+                                                                    smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
+                                                                    smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
+                                                                    smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+
+                                                                    _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
+                                                                }
                                                             }
                                                         )
                                                     ),
@@ -395,6 +372,41 @@ class SmartScaleWeighingController extends GetxController {
                 GlobalVar.invalidResponse();
             }
         });
+    }
+
+    void _saveSmartScaleToDb(SmartScale? data, int flag) {
+        if (data != null) {
+            data.flag = flag;
+            SmartScaleImpl().save(data, keyForCheck: 'id');
+        }
+    }
+
+    void _pushSmartScaleData(Auth auth, bool isEdit, SmartScale? data) {
+        isLoading.value = true;
+        Service.push(
+            apiKey: "smartScaleApi",
+            service: isEdit ? ListApi.updateSmartScale : ListApi.saveSmartScale,
+            context: context,
+            body: [auth.token, auth.id, Mapper.asJsonString(data), isEdit ? ListApi.pathSmartScaleForDetailAndUpdate(smartScaleData.value!.id!) : null],
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) {
+                    _saveSmartScaleToDb(data, 1);
+                    isLoading.value = false;
+                    Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
+                },
+                onResponseFail: (code, message, body, id, packet) {
+                    _saveSmartScaleToDb(data, 0);
+                    isLoading.value = false;
+                    Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    _saveSmartScaleToDb(data, 0);
+                    isLoading.value = false;
+                    Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
+                },
+                onTokenInvalid: GlobalVar.invalidResponse()
+            )
+        );
     }
 }
 

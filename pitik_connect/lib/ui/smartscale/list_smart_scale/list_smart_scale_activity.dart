@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments, use_key_in_widget_constructors
+
 import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
@@ -14,9 +16,11 @@ import 'package:get/get.dart';
 import '../../../route.dart';
 import 'list_smart_scale_controller.dart';
 
-///@author DICKY
-///@email <dicky.maulana@pitik.idd>
-///@create date 08/09/2023
+/**
+ *@author DICKY
+ *@email <dicky.maulana@pitik.idd>
+ *@create date 08/09/2023
+ */
 
 class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
 
@@ -25,8 +29,6 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             dateField.controller.setTextSelected("${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}");
         }
     );
-
-  ListSmartScaleActivity({super.key});
 
     @override
     Widget build(BuildContext context) {
@@ -40,7 +42,8 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             ),
             body: Stack(
                 children: [
-                    Obx(() => controller.isLoading.isTrue ? // IF LOADING IS RUNNING
+                    Obx(() =>
+                        controller.isLoading.isTrue ? // IF LOADING IS RUNNING
                         const Center(child: ProgressLoading()) :
                         RefreshIndicator(
                             child: controller.smartScaleList.isEmpty ? // IF LOADING IS DONE AND DATA EMPTY
@@ -192,13 +195,11 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                     label: "Timbang Ayam",
                                     onClick: () {
                                         GlobalVar.track("Click_button_timbang_ayam");
-                                        Get.toNamed(RoutePage.weighingSmartScalePage, arguments: [controller.coop, true])!.then((value) {
+                                        Get.toNamed(RoutePage.weighingSmartScalePage, arguments: [controller.coop])!.then((value) {
                                             controller.isLoading.value = true;
                                             controller.smartScaleList.clear();
-                                            controller.pageSmartScale.value = 0;
-                                            Timer(const Duration(milliseconds: 500), () {
-                                                controller.getSmartScaleListData();
-                                            });
+                                            controller.pageSmartScale.value = 1;
+                                            Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
                                         });
                                     },
                                 )),
@@ -214,9 +215,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
         child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
             controller: controller.scrollController,
-            itemCount: controller.isLoadMore.isTrue
-                ? controller.smartScaleList.length + 1
-                : controller.smartScaleList.length,
+            itemCount: controller.isLoadMore.isTrue ? controller.smartScaleList.length + 1 : controller.smartScaleList.length,
             itemBuilder: (context, index) {
                 int length = controller.smartScaleList.length;
                 if (index >= length) {
@@ -238,16 +237,14 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                         ItemSmartScale(
                             smartScale: controller.smartScaleList[index],
                             indeksCamera : index,
-                            onTap: () {
+                            onTap: () async {
                                 GlobalVar.track("Click_card_smart_scale_detail");
-                                Get.toNamed(RoutePage.weighingSmartScalePage, arguments: [controller.coop, false, controller.smartScaleList[index]!.id])!.then((value) {
-                                    controller.isLoading.value = true;
-                                    controller.smartScaleList.clear();
-                                    controller.pageSmartScale.value = 0;
-                                    Timer(const Duration(milliseconds: 500), () {
-                                        controller.getSmartScaleListData();
-                                    });
-                                });
+                                await Get.toNamed(RoutePage.detailSmartScalePage, arguments: [controller.coop, controller.smartScaleList[index]!.id]);
+
+                                controller.isLoading.value = true;
+                                controller.smartScaleList.clear();
+                                controller.pageSmartScale.value = 1;
+                                Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
                             },
                         ),
                         index == controller.smartScaleList.length - 1 ? const SizedBox(height: 120) : Container(),

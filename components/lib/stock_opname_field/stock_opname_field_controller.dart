@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:model/internal_app/product_model.dart';
+
 class StockOpnameFieldController extends GetxController {
     String tag;
     StockOpnameFieldController({required this.tag});
