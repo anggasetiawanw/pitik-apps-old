@@ -182,14 +182,12 @@ class LoginController extends GetxController {
                     if(await isFirstLogin){
                         Get.toNamed(RoutePage.privacyPage, arguments: true);
                     }else{
-                        // if(action == "DEFAULT_PASSWORD"){
-                        //     showInformation();
-                        // }
-                        // else {
-                        //     Get.offAllNamed(RoutePage.homePage);
-                        // }
-                        //TODO: buat nanti kalau sudah phase 2 uncomment atas comment bawah
-                        Get.offAllNamed(RoutePage.homePage);
+                        if(action == "DEFAULT_PASSWORD"){
+                            showInformation();
+                        }
+                        else {
+                            Get.offAllNamed(RoutePage.homePage);
+                        }
                     }
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -217,7 +215,7 @@ class LoginController extends GetxController {
             )
         );
 
-    }
+        }
 
         void showInformation(){
         Get.dialog(

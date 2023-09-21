@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'api_mapping/api_mapping.dart';
 import 'app.dart';
-import 'firebase_options.dart';
 import 'flavors.dart';
 import 'main.reflectable.dart';
 
@@ -25,7 +24,7 @@ Future<void> initPlatformState() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DBLite(tables: GlobalVar.tables, version: 2).create;
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
   FirebaseConfig.setupCrashlytics();
   FirebaseConfig.setupRemoteConfig();
 
