@@ -104,7 +104,7 @@ class HomePageCustomer extends StatelessWidget {
               children: [
                   Obx(() =>
                       controller.isLoading.isTrue
-                      ? Container()
+                      ? const SizedBox()
                       : controller.searchCustomer.value.isEmpty && controller.isSearch.isTrue
                           ? Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -170,9 +170,9 @@ class HomePageCustomer extends StatelessWidget {
                                                     },
                                                 ),
                                                 controller.isSearch.isTrue ? index == controller.searchCustomer.value.length - 1 ? const SizedBox(height: 120)
-                                                : Container()
+                                                : const SizedBox()
                                                 : index == controller.listCustomer.value.length - 1 ? const SizedBox(height: 120)
-                                                : Container(),
+                                                : const SizedBox(),
                                             ],
                                         );
                                     },

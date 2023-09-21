@@ -190,7 +190,7 @@ class StockDetailActivity extends StatelessWidget {
                     ),
                   ),
                 ),
-               controller.opnameModel.status == "DRAFT" ?  bottomNavbar() : Container()
+               controller.opnameModel.status == "DRAFT" ?  bottomNavbar() : const SizedBox()
             ],
         ),
     ));

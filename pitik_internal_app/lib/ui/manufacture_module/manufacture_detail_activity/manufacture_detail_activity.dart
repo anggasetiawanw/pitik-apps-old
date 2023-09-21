@@ -133,7 +133,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                                                 _showBottomDialogCancel(
                                                     context, controller);
                                               }))
-                                      : Container(),
+                                      : const SizedBox(),
                                       if(controller.manufactureModel.status == "INPUT_DRAFT")...[
                                         const SizedBox(width: 16,),
                                          Expanded(
@@ -184,7 +184,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                                                     context, controller);
                                           }))
                                       ]
-                                      else Container(),
+                                      else const SizedBox(),
                 ],
               ),
             ),
@@ -388,13 +388,13 @@ class ManufactureDetailActivity extends StatelessWidget {
                       ),
                     ),
                     Column(children : controller.manufactureModel.output!.map((e) => detailSKUOutput(e!)).toList()),
-                  ] else Container(),
+                  ] else const SizedBox(),
                     const SizedBox(height: 100,)
                 ],
               ),
             ),
           ),
-                controller.manufactureModel.status == "CANCELLED"  ? Container() : bottomNavbar() 
+                controller.manufactureModel.status == "CANCELLED"  ? const SizedBox() : bottomNavbar() 
         ],
       ),
     ));

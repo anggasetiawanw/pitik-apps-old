@@ -243,7 +243,7 @@ class DetailGrPurchase extends GetView<DetailGrPurchaseController>{
                             onClick: () {
                               showBottomDialog(context, controller);
                             })):
-                    Container(),
+                    const SizedBox(),
                   ],
                 ),
               ),

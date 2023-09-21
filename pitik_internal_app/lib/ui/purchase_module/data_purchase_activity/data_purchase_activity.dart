@@ -100,7 +100,7 @@ class _PurchasePageState extends State<PurchasePage>{
       body: Stack(
         children: [
           Obx(() =>
-          controller.isLoading.isTrue ? Container()
+          controller.isLoading.isTrue ? const SizedBox()
               : controller.purchaseList.value.isEmpty
               ? Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -147,7 +147,7 @@ class _PurchasePageState extends State<PurchasePage>{
                       },
                     ),
                     index == controller.purchaseList.value.length - 1 ? const SizedBox(height: 120)
-                        : Container(),
+                        : const SizedBox(),
                   ],
                 );
               },

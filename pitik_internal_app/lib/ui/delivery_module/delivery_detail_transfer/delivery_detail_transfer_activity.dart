@@ -68,7 +68,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                 onClick: () {
                                         _showBottomDialogSend(context, controller);
                                 })
-                        : Container(),
+                        : const SizedBox(),
                     ),
                   ],
                 ),
@@ -126,7 +126,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
             const SizedBox(height: 8,),
             infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
             const SizedBox(height: 8,),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : Container(),
+            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : const SizedBox(),
           ],
         ),
       );
@@ -191,12 +191,12 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                 ),
                             ),
                         ]
-                        else Container()
+                        else const SizedBox()
 
                       ],
                   ),
                 ),
-               controller.transferModel.status == "ON_DELIVERY"  || controller.transferModel.status == "READY_TO_DELIVER"  ? bottomNavbar() :Container() 
+               controller.transferModel.status == "ON_DELIVERY"  || controller.transferModel.status == "READY_TO_DELIVER"  ? bottomNavbar() :const SizedBox() 
 
             ],
         ),

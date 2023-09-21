@@ -196,7 +196,7 @@ class CreateGrOrder extends StatelessWidget {
             infoDetailHeader("Tujuan", "${controller.orderDetail.customer!.businessName}"),
             // const SizedBox(height: 8,),
             // controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}")
-            //     : Container(),
+            //     : const SizedBox(),
 
           ],
         ),
@@ -231,7 +231,7 @@ class CreateGrOrder extends StatelessWidget {
                         height: 120,
                       )
                     ]
-                    else Container()
+                    else const SizedBox()
 
                   ],
                 ),

@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
                             ? const SizedBox(
                                 height: 120,
                                 )
-                            : Container()
+                            : const SizedBox()
                         ],
                     ),
                 ),
