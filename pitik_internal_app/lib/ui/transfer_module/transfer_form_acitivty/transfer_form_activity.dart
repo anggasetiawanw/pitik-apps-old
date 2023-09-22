@@ -110,7 +110,7 @@ class TransferFormActivity extends StatelessWidget {
                           ? const SizedBox(
                               height: 120,
                             )
-                          : Container()
+                          : const SizedBox()
                     ],
                   ),
                 ),

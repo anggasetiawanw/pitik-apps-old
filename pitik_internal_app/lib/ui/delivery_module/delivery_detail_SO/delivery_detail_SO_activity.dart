@@ -14,6 +14,8 @@ import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
+import 'package:pitik_internal_app/widget/common/info_detail_header.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -32,7 +34,6 @@ class DeliveryDetailSO extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.pop(context);
             }),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -121,23 +122,7 @@ class DeliveryDetailSO extends StatelessWidget {
     }
 
     Widget infoDetailSku(String title, String name) {
-      return Container(
-        margin: const EdgeInsets.only(top: 14),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-            ),
-            Text(
-              name,
-              style: AppTextStyle.blackTextStyle
-                  .copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-            )
-          ],
-        ),
-      );
+      return InfoDetailHeader(title: title, name: name);
     }
 
     Widget customExpandalbe(Products products) {
@@ -155,11 +140,11 @@ class DeliveryDetailSO extends StatelessWidget {
                 products.quantity != 0
                     ? infoDetailSku(
                         "Jumlah Ekor", "${products.quantity} Ekor")
-                    : Container(),
+                    : const SizedBox(),
                 products.numberOfCuts != 0
                     ? infoDetailSku(
                         "Potongan", "${products.numberOfCuts} Potong")
-                    : Container(),
+                    : const SizedBox(),
                 infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
                 infoDetailSku("Harga",
                     "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
@@ -178,11 +163,11 @@ class DeliveryDetailSO extends StatelessWidget {
                 products.quantity != 0
                     ? infoDetailSku(
                         "Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor")
-                    : Container(),
+                    : const SizedBox(),
                 products.numberOfCuts != 0
                     ? infoDetailSku(
                         "Potongan", "${products.numberOfCuts} Potong")
-                    : Container(),
+                    : const SizedBox(),
                 infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
                 infoDetailSku("Harga",
                     "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
@@ -228,7 +213,7 @@ class DeliveryDetailSO extends StatelessWidget {
                             ? Expanded(
                                 child: controller.confirmButton,
                               )
-                            : Container(),
+                            : const SizedBox(),
                         if(controller.order.status == "ON_DELIVERY")...[
                                 const SizedBox(width: 16,),
                                 Expanded(
@@ -247,7 +232,7 @@ class DeliveryDetailSO extends StatelessWidget {
                               child: controller.confirmButton,
                             )
                         ]
-                            else Container(),
+                            else const SizedBox(),
                   ],
                 ),
               ),
@@ -404,7 +389,9 @@ class DeliveryDetailSO extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: appBar(),
+        child: CustomAppbar(title: "Detail Pengiriman", onBack: (){
+              Navigator.pop(context);
+        }),
       ),
       body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),) : Stack(
             children: [
@@ -429,13 +416,13 @@ class DeliveryDetailSO extends StatelessWidget {
                             .toList(),
                       ),
                       totalPembelian(),
-                      (controller.order.status == "DELIVERED" || controller.order.status == "RECEIVED" ) && controller.order.paymentMethod != null? payment() : Container(),
+                      (controller.order.status == "DELIVERED" || controller.order.status == "RECEIVED" ) && controller.order.paymentMethod != null? payment() : const SizedBox(),
                       const SizedBox(height: 140,)
                     ],
                   ),
                 ),
               ),
-               controller.order.status == "READY_TO_DELIVER"  || controller.order.status == "ON_DELIVERY" || (controller.order.status == "REJECTED" && controller.order.returnStatus =="PARTIAL")? bottomNvabar() :Container()
+               controller.order.status == "READY_TO_DELIVER"  || controller.order.status == "ON_DELIVERY" || (controller.order.status == "REJECTED" && controller.order.returnStatus =="PARTIAL")? bottomNvabar() :const SizedBox()
             ],
           )),
     );

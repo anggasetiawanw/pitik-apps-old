@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
+import 'package:pitik_internal_app/widget/common/info_detail_header.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/transfer_status.dart';
 
@@ -21,7 +23,7 @@ class DeliveryConfirmTransfer extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
-              Navigator.pop(context);
+              
             }),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -54,7 +56,7 @@ class DeliveryConfirmTransfer extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: controller.transferModel.status == "ON_DELIVERY"
                         ? controller.confirmButton
-                    : Container(),
+                    : const SizedBox(),
                 ),
             );
     }
@@ -106,11 +108,11 @@ class DeliveryConfirmTransfer extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16,),
-            infoDetailHeader("Sumber", "${controller.transferModel.sourceOperationUnit!.operationUnitName}"),
+            InfoDetailHeader(title: "Sumber", name:controller.transferModel.sourceOperationUnit!.operationUnitName!),
             const SizedBox(height: 8,),
-            infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
+            InfoDetailHeader(title: "Tujuan", name: controller.transferModel.targetOperationUnit!.operationUnitName!),
             const SizedBox(height: 8,),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : Container(),
+            controller.transferModel.driver != null ?  InfoDetailHeader(title: "Driver", name: controller.transferModel.driver!.fullName!): const SizedBox(),
           ],
         ),
       );
@@ -129,7 +131,9 @@ class DeliveryConfirmTransfer extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60),
-            child: appBar(),
+            child: CustomAppbar(title: "Detail Pengiriman", onBack: (){
+                Navigator.pop(context);
+            }),
         ),
         body:  Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
             children: [
@@ -174,7 +178,7 @@ class DeliveryConfirmTransfer extends StatelessWidget {
                                 ),
                             ),
                         ]
-                        else Container(),
+                        else const SizedBox(),
                         controller.checkinButton,
                         Obx(() => controller.showErrorCheckin.isTrue
                                 ? Container(
@@ -208,7 +212,7 @@ class DeliveryConfirmTransfer extends StatelessWidget {
                                         ],
                                     ),
                                     )
-                                : Container(),),
+                                : const SizedBox(),),
                         const SizedBox(height: 140,),
                       ],
                   ),
@@ -221,7 +225,7 @@ class DeliveryConfirmTransfer extends StatelessWidget {
                     child: const Center(
                         child: ProgressLoading(),
                     ),
-                ) : Container())
+                ) : const SizedBox())
             ],
         ),
     ));

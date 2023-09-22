@@ -89,7 +89,7 @@ class ManufactureHomeActivity extends StatelessWidget {
                                         });
                                     },
                                 ),
-                                index == controller.listManufacture.value.length - 1 ? const SizedBox(height: 120): Container(),
+                                index == controller.listManufacture.value.length - 1 ? const SizedBox(height: 120): const SizedBox(),
                             ],
                         );
                         },

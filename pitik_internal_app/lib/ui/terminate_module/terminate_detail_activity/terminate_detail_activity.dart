@@ -109,7 +109,7 @@ class TerminateDetailActivity extends StatelessWidget {
                                                                             _showBottomDialogCancel(
                                                                                 context, controller);
                                                                         }))
-                                                                : Container(),
+                                                                : const SizedBox(),
                                 if(controller.terminateModel.status == "DRAFT" || controller.terminateModel.status == "CONFIRMED" ||  controller.terminateModel.status == "BOOKED")...[
                                     const SizedBox(width: 16,),
                                     Expanded(
@@ -120,7 +120,7 @@ class TerminateDetailActivity extends StatelessWidget {
                                             onClick: () {
                                                 _showBottomDialogCancel(context, controller);
                                             }))
-                                ]else ...[Container()],
+                                ]else ...[const SizedBox()],
                             ],
                         ),
                     ),
@@ -239,7 +239,7 @@ class TerminateDetailActivity extends StatelessWidget {
                                   children: [
                                       infoDetailSKU("Kategori SKU", "${controller.terminateModel.product!.name}"),
                                       const SizedBox(height: 14,),
-                                      controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU("Jumlah Ekor", "${controller.terminateModel.product!.productItem!.quantity} Ekor") : Container(),
+                                      controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU("Jumlah Ekor", "${controller.terminateModel.product!.productItem!.quantity} Ekor") : const SizedBox(),
                                       const SizedBox(height: 14,),
                                       infoDetailSKU("Total", "${controller.terminateModel.product!.productItem!.weight} Kg"),
                                   ],
@@ -267,7 +267,7 @@ class TerminateDetailActivity extends StatelessWidget {
                     ),
                   ),
                 ),
-                controller.terminateModel.status == "CANCELLED"  ? Container() : bottomNavbar() 
+                controller.terminateModel.status == "CANCELLED"  ? const SizedBox() : bottomNavbar() 
             ],
         ),
     ));

@@ -129,7 +129,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
                     },
                 ),
                 index == controller.listPurchase.value.length - 1 ? const SizedBox(height: 120)
-                    : Container(),
+                    : const SizedBox(),
               ],
             );
           },
@@ -170,7 +170,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
                   transferModel: controller.listTransfer.value[index]!,
                   isGoodReceipts: true,
                 ),
-                index == controller.listTransfer.value.length - 1 ? const SizedBox(height: 120): Container(),
+                index == controller.listTransfer.value.length - 1 ? const SizedBox(height: 120): const SizedBox(),
               ],
             );
           },
@@ -221,7 +221,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
                   },
                 ),
                 index == controller.listReturn.value.length - 1 ? const SizedBox(height: 120)
-                    : Container(),
+                    : const SizedBox(),
               ],
             );
           },

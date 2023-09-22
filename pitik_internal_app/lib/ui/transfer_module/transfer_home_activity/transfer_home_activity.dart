@@ -92,7 +92,7 @@ class TransferHomeActivity extends StatelessWidget {
                                     transferModel: controller.listTransfer.value[index]!,
                                   isGoodReceipts: false,
                                 ),
-                                index == controller.listTransfer.value.length - 1 ? const SizedBox(height: 120): Container(),
+                                index == controller.listTransfer.value.length - 1 ? const SizedBox(height: 120): const SizedBox(),
                             ],
                         );
                         },

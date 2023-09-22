@@ -221,7 +221,7 @@ class ManufactureOutputActivity extends StatelessWidget {
                   ),
                   ...detailSku(),
                   controller.typeOutput,
-                  Obx(() =>controller.showSKUCard.isTrue ? controller.skuCard:Container()),
+                  Obx(() =>controller.showSKUCard.isTrue ? controller.skuCard:const SizedBox()),
                   const SizedBox(height: 100,)
                 ],
               ),

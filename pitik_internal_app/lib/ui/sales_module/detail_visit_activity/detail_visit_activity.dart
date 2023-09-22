@@ -188,7 +188,7 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
                                     ? controller.customer.value!.orderIssueCategories!.map((e) => e!.title.toString()).reduce((a, b) =>'$a , $b')
                                     : "-",
                                 false)
-                            : Container(),
+                            : const SizedBox(),
                         listDetail(
                             "Keterangan",
                             controller.customer.value!.remarks != null
@@ -216,7 +216,7 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
                                     .map((Products? products) =>
                                         customExpandalbe(products!))
                                     .toList())
-                            : Container(),
+                            : const SizedBox(),
                         const SizedBox(
                           height: 20,
                         ),

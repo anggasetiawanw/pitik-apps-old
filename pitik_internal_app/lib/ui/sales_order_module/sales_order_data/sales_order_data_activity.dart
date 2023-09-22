@@ -154,7 +154,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                       },
                     ),
                      index == controller.orderList.value.length - 1 ? const SizedBox(height: 120)
-                        : Container(),
+                        : const SizedBox(),
                   ],
                 );
               },

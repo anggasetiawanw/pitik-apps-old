@@ -156,7 +156,7 @@ class EditDataSalesOrder extends StatelessWidget {
                   controller.spinnerCustomer,
                   controller.spinnerOrderType,
                   Obx(() => controller.produkType.value == "Non-LB" ? controller.skuCard : cardSKULB()),
-                  Obx(() => controller.produkType.value == "Non-LB" ? Container() : controller.skuCardRemark,),
+                  Obx(() => controller.produkType.value == "Non-LB" ? const SizedBox() : controller.skuCardRemark,),
                   Container(
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.only(top: 16),
