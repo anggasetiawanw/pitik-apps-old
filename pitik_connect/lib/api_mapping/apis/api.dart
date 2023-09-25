@@ -24,6 +24,8 @@ import 'package:model/response/home_response.dart';
 import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/profile_response.dart';
 import 'package:model/response/room_detail_response.dart';
+// ignore: unused_import
+import 'package:model/password_model.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
