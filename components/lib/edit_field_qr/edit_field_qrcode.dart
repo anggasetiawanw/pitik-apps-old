@@ -157,13 +157,15 @@ class EditFieldQR extends StatelessWidget {
                                                         {"first": 'First data'},
                                                         {"second": 'Second data'}
                                                     ])!.then((result) {
-                                                        String resultString = result[0]["backValue"];
-                                                        if (textPrefix != "" && !resultString.contains(textPrefix!)) {
-                                                            controller.showAlert();
-                                                        } else {
-                                                            controller.hideAlert();
+                                                        if(result != null){
+                                                            String resultString = result[0]["backValue"];
+                                                            if (textPrefix != "" && !resultString.contains(textPrefix!)) {
+                                                                controller.showAlert();
+                                                            } else {
+                                                                controller.hideAlert();
+                                                            }
+                                                            editFieldController.text = resultString.replaceAll(textPrefix!, "");
                                                         }
-                                                        editFieldController.text = resultString.replaceAll(textPrefix!, "");
                                                     });
                                                   // openCamera();
                                                 },

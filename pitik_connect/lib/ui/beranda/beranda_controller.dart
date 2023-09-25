@@ -57,14 +57,9 @@ class BerandaController extends GetxController {
     Rx<bool> isAscending = true.obs;
 
     IosCarrierData? _iosInfo;
-    AndroidCarrierData? _androidInfo;
 
     set iosInfo(IosCarrierData? iosInfo) {
         _iosInfo = iosInfo;
-    }
-
-    set androidInfo(AndroidCarrierData? carrierInfo) {
-         _androidInfo = carrierInfo;
     }
 
     IosCarrierData? get iosInfo => _iosInfo;
@@ -93,6 +88,8 @@ class BerandaController extends GetxController {
     List<SimCard> _simCard = <SimCard>[];
 
     // Platform messages are asynchronous, so we initialize in an async method.
+    /// The function `initMobileNumberState` initializes the mobile number state by
+    /// retrieving the SIM card information and setting the phone carrier name.
     Future<void> initMobileNumberState() async {
         // Platform messages may fail, so we use a try/catch PlatformException.
         try {
