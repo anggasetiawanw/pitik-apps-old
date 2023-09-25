@@ -64,11 +64,11 @@ class SkuCardGr extends StatelessWidget {
                 children: [
                   infoDetailSKU("Kategori SKU", "${controller.products[index]!.category!.name}"),
                   infoDetailSKU("SKU", "${controller.products[index]!.name}"),
-                  controller.products[index]!.returnQuantity != null ?  controller.products[index]!.returnQuantity !=0 ?infoDetailSKU("Jumlah Ekor", "${controller.products[index]!.returnQuantity} Ekor") : Container() : controller.products[index]!.quantity != null  && controller.products[index]!.quantity !=0  ? infoDetailSKU("Jumlah Ekor", "${controller.products[index]!.quantity} Ekor") : Container(),
-                  controller.products[index]!.numberOfCuts != 0 && controller.products[index]!.numberOfCuts != null  ? infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong") : Container(),
-                  controller.products[index]!.returnWeight != null ?  controller.products[index]!.returnWeight !=0 ?infoDetailSKU("Kebutuhan", "${controller.products[index]!.returnWeight} Kg") : Container() : controller.products[index]!.weight != null  && controller.products[index]!.weight !=0  ? infoDetailSKU("Kebutuhan", "${controller.products[index]!.weight} Kg") : Container(),
+                  controller.products[index]!.returnQuantity != null ?  controller.products[index]!.returnQuantity !=0 ?infoDetailSKU("Jumlah Ekor", "${controller.products[index]!.returnQuantity} Ekor") : const SizedBox() : controller.products[index]!.quantity != null  && controller.products[index]!.quantity !=0  ? infoDetailSKU("Jumlah Ekor", "${controller.products[index]!.quantity} Ekor") : const SizedBox(),
+                  controller.products[index]!.numberOfCuts != 0 && controller.products[index]!.numberOfCuts != null  ? infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong") : const SizedBox(),
+                  controller.products[index]!.returnWeight != null ?  controller.products[index]!.returnWeight !=0 ?infoDetailSKU("Kebutuhan", "${controller.products[index]!.returnWeight} Kg") : const SizedBox() : controller.products[index]!.weight != null  && controller.products[index]!.weight !=0  ? infoDetailSKU("Kebutuhan", "${controller.products[index]!.weight} Kg") : const SizedBox(),
                   infoDetailSKU("Harga", Convert.toCurrency("${controller.products[index]!.price}", "Rp. ", ".")),
-                  controller.products[index]!.category!.name == AppStrings.AYAM_UTUH || controller.products[index]!.category!.name == AppStrings.BRANGKAS || controller.products[index]!.category!.name == AppStrings.LIVE_BIRD ?controller.efSumChickReceived.value[index] : Container(),
+                  controller.products[index]!.category!.name == AppStrings.AYAM_UTUH || controller.products[index]!.category!.name == AppStrings.BRANGKAS || controller.products[index]!.category!.name == AppStrings.LIVE_BIRD ?controller.efSumChickReceived.value[index] : const SizedBox(),
                   controller.efSumWeightReceived.value[index],
                   const SizedBox(height: 14,)
                 ],

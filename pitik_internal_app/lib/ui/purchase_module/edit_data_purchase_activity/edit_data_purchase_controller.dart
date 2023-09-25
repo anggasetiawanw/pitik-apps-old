@@ -467,11 +467,7 @@ class EditDataPurchaseController extends GetxController {
                         sku.controller.editFieldHarga.value[j].getInputNumber()!;
 
                     Timer(const Duration(milliseconds: 500), () {
-                        CategoryModel? selectCategory = listCategories.value.firstWhere(
-                            (element) =>
-                                element!.name! ==
-                                sku.controller.spinnerCategories.value[j].controller
-                                    .textSelected.value);
+                        CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! ==sku.controller.spinnerCategories.value[j].controller.textSelected.value);
                         sku.controller.getLoadSku(selectCategory!, j);
                         if (sku.controller.spinnerCategories.value[j].controller
                                     .textSelected.value ==

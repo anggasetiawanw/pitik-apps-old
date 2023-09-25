@@ -144,15 +144,22 @@ class BerandaBindings extends Bindings {
         Get.lazyPut(() => BerandaController(context: context));
     }
 }
-class DialogUpdateListener implements CustomDialogListener {
-    @override
-    void onDialogCancel(BuildContext context, int id, List packet) {}
-
-    @override
-    void onDialogOk(BuildContext context, int id, List packet) {
-        OpenStore.instance.open(
+class DialogUpdateListener implements CustomDialogListener {    
+      @override
+      set onDialogCancel(Function(BuildContext context, int id, List packet) onDialogCancel) {
+      }
+    
+      @override
+      set onDialogOk(Function(BuildContext context, int id, List packet) onDialogOk) {
+            OpenStore.instance.open(
             appStoreId: '284815942',
             androidAppBundleId: 'id.pitik.mobile.mobile_flutter',
         );
-    }
+      }
+      
+        @override
+        Function(BuildContext context, int id, List packet) get onDialogCancel => throw UnimplementedError();
+      
+        @override
+        Function(BuildContext context, int id, List packet) get onDialogOk => throw UnimplementedError();
 }

@@ -90,7 +90,7 @@ class SkuCardPurchase extends StatelessWidget {
                         onClick: (){
                           _showBottomDialog(context, index, controller);
                         })
-                        : Container(),
+                        : const SizedBox(),
                     const SizedBox(height: 16,),
                   ],
                 ),
@@ -100,7 +100,7 @@ class SkuCardPurchase extends StatelessWidget {
         );
       }).toList(),
     )
-        : Container());
+        : const SizedBox());
   }
 
   _showBottomDialog(BuildContext context, int index, SkuCardPurchaseController controller) {

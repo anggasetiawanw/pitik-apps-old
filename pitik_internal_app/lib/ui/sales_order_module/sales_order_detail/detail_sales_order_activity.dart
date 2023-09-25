@@ -74,7 +74,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
-            ): Container(),
+            ): const SizedBox(),
             const SizedBox(
               height: 8,
             ),
@@ -131,7 +131,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                 ),
               ],
             )
-                : Container(),
+                : const SizedBox(),
           ],
         ),
       );
@@ -193,11 +193,11 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                 products.quantity != 0
                     ? infoDetailSku(
                         "Jumlah Ekor", "${products.quantity} Ekor")
-                    : Container(),
+                    : const SizedBox(),
                 products.numberOfCuts != 0
                     ? infoDetailSku(
                         "Potongan", "${products.numberOfCuts} Potong")
-                    : Container(),
+                    : const SizedBox(),
                 infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
                 if(products.price != null ) infoDetailSku("Harga",
                     "${Convert.toCurrency("${products.price }", "Rp. ", ".")}/Kg"),
@@ -251,7 +251,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                     Expanded(
                       child: controller.editDriver,
                     ):
-                    Container(),
+                    const SizedBox(),
                     const SizedBox(
                       width: 16,
                     ),
@@ -276,7 +276,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                         },
                       ),
                     ) :
-                    Container(),
+                    const SizedBox(),
                   ],
                 ),
               ),
@@ -318,14 +318,14 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
                     listExpandadle(controller.orderDetail.value!.products as List<Products?>),
                     controller.orderDetail.value!.type! == "LB" ? const SizedBox(
                       height: 16,
-                    ): Container(),
+                    ): const SizedBox(),
                     controller.orderDetail.value!.type! == "LB" ? Text(
                       "Detail Catatan",
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                       overflow: TextOverflow.clip,
                     ): const Text("")
                     ,  controller.orderDetail.value!.type! == "LB" ?
-                    listExpandadle(controller.orderDetail.value!.productNotes as List<Products?>) : Container(),
+                    listExpandadle(controller.orderDetail.value!.productNotes as List<Products?>) : const SizedBox(),
                     Container(
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 16),
@@ -481,7 +481,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController>{
             ),
             controller.orderDetail.value!.status == "DELIVERED" ||
                 controller.orderDetail.value!.status == "CANCELLED" ?
-            Container() : bottomNavBar()
+            const SizedBox() : bottomNavBar()
           ],
 
         )));

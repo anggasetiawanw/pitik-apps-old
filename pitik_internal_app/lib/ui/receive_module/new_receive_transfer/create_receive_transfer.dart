@@ -130,7 +130,7 @@ class CreateGrTransfer extends StatelessWidget {
             infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
             // const SizedBox(height: 8,),
             // controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}")
-            //     : Container(),
+            //     : const SizedBox(),
 
           ],
         ),
@@ -201,19 +201,19 @@ class CreateGrTransfer extends StatelessWidget {
                                         infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
                                     ],
                                     const SizedBox(height: 14,),
-                                    controller.transferModel.products![0]!.productItems![0]!.weight != null ?infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg"):Container(),
+                                    controller.transferModel.products![0]!.productItems![0]!.weight != null ?infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg"):const SizedBox(),
                                     controller.efChickReceived,
                                     controller.efWeightReceived,
                                 ],
                             ),
                         ),
                     ] 
-                    else Container(),
+                    else const SizedBox(),
                     MediaQuery.of(context).viewInsets.bottom > 0.0
                           ? const SizedBox(
                               height: 120,
                             )
-                          : Container()
+                          : const SizedBox()
 
                   ],
                 ),

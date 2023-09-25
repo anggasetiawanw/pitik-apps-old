@@ -201,7 +201,7 @@ class AssignDriverPage extends StatelessWidget {
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
-            ): Container(),
+            ): const SizedBox(),
             const SizedBox(
               height: 8,
             ),
@@ -257,7 +257,7 @@ class AssignDriverPage extends StatelessWidget {
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
-            ): Container(),
+            ): const SizedBox(),
             const SizedBox(
               height: 8,
             ),

@@ -67,7 +67,7 @@ class TransferDriverDetail extends StatelessWidget {
                                           _showBottomDialogSend(context,controller);
                                       }),
                                 ),
-                                Container()
+                                const SizedBox()
                             ],
                         ),
                     ),
@@ -124,7 +124,7 @@ class TransferDriverDetail extends StatelessWidget {
             const SizedBox(height: 8,),
             infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
             const SizedBox(height: 8,),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : Container(),
+            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : const SizedBox(),
           ],
         ),
       );
@@ -191,12 +191,12 @@ class TransferDriverDetail extends StatelessWidget {
                                             infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
                                         ],
                                         const SizedBox(height: 14,),
-                                        controller.transferModel.products![0]!.productItems![0]!.weight != null ?infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg"):Container(),
+                                        controller.transferModel.products![0]!.productItems![0]!.weight != null ?infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg"):const SizedBox(),
                                     ],
                                 ),
                             ),
                         ]
-                        else Container(),
+                        else const SizedBox(),
                         controller.assignDriver
                       ],
                   ),

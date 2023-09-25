@@ -141,8 +141,9 @@ class ChangePasswordController extends GetxController {
             return ret = [false, ""];
         }else if(efConfNewPassword.getInput() != efNewPassword
             .getInput()){
-            efConfNewPassword.alertText = "Konfirmasi kata sandi tidak boleh kosong";
+            efConfNewPassword.alertText = "Konfirmasi kata sandi salah";
             efConfNewPassword.controller.showAlert();
+            return ret = [false, ""];
         }
         return ret;
     }

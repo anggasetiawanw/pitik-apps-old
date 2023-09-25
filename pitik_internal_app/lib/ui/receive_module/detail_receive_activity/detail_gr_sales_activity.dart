@@ -193,7 +193,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                 listDetail("SKU",products.name != null ? products.name! : "-", false),
                products.returnQuantity !=null || products.returnQuantity != 0? listDetail("Jumlah Ekor","${products.returnQuantity} Ekor", false) :const SizedBox(),
                 listDetail("Kebutuhan","${ products.returnWeight ?? "-"} Kg", false),
-                controller.orderDetail.value!.type == "LB" ? Container(): listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
+                controller.orderDetail.value!.type == "LB" ? const SizedBox(): listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
               ],
             )),
 
@@ -234,7 +234,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                     (controller.orderDetail.value!.status == "REJECTED" &&controller.orderDetail.value!.returnStatus == "FULL" )|| (controller.orderDetail.value!.grStatus == "REJECTED" && controller.orderDetail.value!.returnStatus == "PARTIAL") ?
                     Expanded(
                       child: controller.createGr,
-                    ): Container(),
+                    ): const SizedBox(),
                   ],
                 ),
               ),
@@ -275,14 +275,14 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                     listExpandadle(controller.orderDetail.value!.products as List<Products?>),
                     controller.orderDetail.value!.type! == "LB" ? const SizedBox(
                       height: 16,
-                    ): Container(),
+                    ): const SizedBox(),
                     controller.orderDetail.value!.type! == "LB" ? Text(
                       "Detail Catatan",
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                       overflow: TextOverflow.clip,
                     ): const Text("")
                     ,  controller.orderDetail.value!.type! == "LB" ?
-                    listExpandadle(controller.orderDetail.value!.productNotes as List<Products?>) : Container(),
+                    listExpandadle(controller.orderDetail.value!.productNotes as List<Products?>) : const SizedBox(),
                     Container(
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.only(top: 16),
@@ -369,7 +369,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
                 ),
               ),
             ),
-            (controller.orderDetail.value!.status == "REJECTED" &&controller.orderDetail.value!.returnStatus == "FULL" )|| (controller.orderDetail.value!.grStatus == "REJECTED" && controller.orderDetail.value!.returnStatus == "PARTIAL") ? bottonNavBar() : Container()
+            (controller.orderDetail.value!.status == "REJECTED" &&controller.orderDetail.value!.returnStatus == "FULL" )|| (controller.orderDetail.value!.grStatus == "REJECTED" && controller.orderDetail.value!.returnStatus == "PARTIAL") ? bottonNavBar() : const SizedBox()
           ],
 
         )));
