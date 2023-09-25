@@ -111,6 +111,7 @@ class DashboardDeviceController extends GetxController {
                                 smartCameradevices.value.add(result);
                             }
                             if (result.deviceType == "SMART_SCALE") {
+                                result.roomId = coopDetail.room!.id;
                                 smartScaledevices.value.add(result);
                             }
                         }

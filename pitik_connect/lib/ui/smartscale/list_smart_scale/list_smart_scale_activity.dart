@@ -97,7 +97,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
             children: [
                 Text("Daftar Timbang", style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                 GestureDetector(
-                    child: SvgPicture.asset("images/filter_orange_icon.svg", width: 24, height: 24),
+                    child: SvgPicture.asset("images/filter_orange_icon.svg", width: 36, height: 36),
                     onTap: () => showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
