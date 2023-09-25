@@ -40,7 +40,7 @@ dependencies:
     path: ../global_variable
 
   intl: ^0.18.0
-  app_settings: ^4.2.0
+  # app_settings: ^5.0.0
   cupertino_icons: ^1.0.2
   device_info: ^2.0.3
   firebase_analytics: ^10.4.3
