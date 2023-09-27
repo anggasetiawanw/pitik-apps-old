@@ -117,8 +117,7 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                                                                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                             ),
                                                         ],
-                                                    ),
-                                                    const SizedBox(height: 16)
+                                                    )
                                                 ]
                                             )
                                         )
