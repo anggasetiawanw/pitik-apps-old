@@ -24,7 +24,7 @@ import 'list_smart_scale_controller.dart';
 
 class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
 
-    final DateTimeField dateFilter = DateTimeField(controller: GetXCreator.putDateTimeFieldController("filterListSmartScale"), label: "Pilih Tanggal", hint: "Pilih Tanggal", alertText: "Tanggal harus pilih..!",
+    final DateTimeField dateFilter = DateTimeField(controller: GetXCreator.putDateTimeFieldController("filterListSmartScale"), label: "Pilih Tanggal", hint: "2023/08/15", alertText: "Tanggal harus pilih..!",
         flag: DateTimeField.DATE_FLAG, onDateTimeSelected: (dateTime, dateField) {
             dateField.controller.setTextSelected("${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}");
         }

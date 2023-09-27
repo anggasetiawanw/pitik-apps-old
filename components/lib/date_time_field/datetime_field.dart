@@ -73,7 +73,7 @@ class DateTimeField extends StatelessWidget {
                                             decoration: BoxDecoration(
                                                 color: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
                                                 borderRadius: BorderRadius.circular(10.0),
-                                                border: Border.all(color: controller.activeField.isTrue && controller.showTooltip.isFalse ? Colors.white : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white, width: 2)
+                                                border: Border.all(color: controller.activeField.isTrue && controller.showTooltip.isFalse ? Colors.transparent : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.transparent, width: 2)
                                             ),
                                             child: Row(
                                                 children: [
@@ -84,7 +84,13 @@ class DateTimeField extends StatelessWidget {
                                                             child: Text(
                                                                 controller.textSelected.value == "" ? hint : controller.textSelected.value,
                                                                 overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(color: controller.activeField.isTrue || controller.textSelected.value == "" ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)
+                                                                style: TextStyle(
+                                                                    color:
+                                                                    controller.activeField.isTrue && controller.textSelected.value != "" ? GlobalVar.black :
+                                                                    controller.activeField.isTrue && controller.textSelected.value == "" ? GlobalVar.grayLightText :
+                                                                    GlobalVar.black,
+                                                                    fontSize: 14
+                                                                )
                                                             ),
                                                         )
                                                     ),
