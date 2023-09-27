@@ -147,7 +147,7 @@ class VisitActivity extends GetView<VisitController> {
             ),
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: Obx(() => controller.isLoading.isTrue
-                ? Container()
+                ? const SizedBox()
                 : controller.customer.value != null
                     ? controller.buttonFillSelesai
                     : controller.buttonFillCariDetailBisnis)),
@@ -223,7 +223,7 @@ class VisitActivity extends GetView<VisitController> {
                                     ],
                                   ),
                                 )
-                              : Container(),
+                              : const SizedBox(),
                           const SizedBox(
                             height: 120,
                           )

@@ -8,6 +8,8 @@ import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
+import 'package:pitik_internal_app/widget/common/info_detail_header.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -20,46 +22,9 @@ class DeliveryConfirmSO extends StatelessWidget {
   Widget build(BuildContext context) {
     final DeliveryConfirmSOController controller =
         Get.put(DeliveryConfirmSOController(
-      context: context,
-    ));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Detail Pengiriman",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
-
-    Widget infoDetailHeader(String title, String name) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
-          ),
-          Text(
-            name,
-            style: AppTextStyle.blackTextStyle
-                .copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
-          )
-        ],
-      );
-    }
+            context: context,
+        )
+    );
 
     Widget detailInformation() {
       return Container(
@@ -99,17 +64,15 @@ class DeliveryConfirmSO extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber",
-                "${controller.order.operationUnit!.operationUnitName}"),
+            InfoDetailHeader(title: "Sumber", name: controller.order.operationUnit!.operationUnitName!),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader(
-                "Tujuan", "${controller.order.customer!.businessName}"),
+            InfoDetailHeader(title: "Tujuan", name: controller.order.customer!.businessName!),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Driver", "${controller.order.driver!.fullName}"),
+            InfoDetailHeader(title: "Driver", name: controller.order.driver!.fullName!),
           ],
         ),
       );
@@ -149,11 +112,11 @@ class DeliveryConfirmSO extends StatelessWidget {
                 products.quantity != 0
                     ? infoDetailSku(
                         "Jumlah Ekor", "${products.quantity} Ekor")
-                    : Container(),
+                    : const SizedBox(),
                 products.numberOfCuts != 0
                     ? infoDetailSku(
                         "Potongan", "${products.numberOfCuts} Potong")
-                    : Container(),
+                    : const SizedBox(),
                 infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
                 infoDetailSku("Harga",
                     "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
@@ -172,11 +135,11 @@ class DeliveryConfirmSO extends StatelessWidget {
                 products.quantity != 0
                     ? infoDetailSku(
                         "Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor")
-                    : Container(),
+                    : const SizedBox(),
                 products.numberOfCuts != 0
                     ? infoDetailSku(
                         "Potongan", "${products.numberOfCuts} Potong")
-                    : Container(),
+                    : const SizedBox(),
                 infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
                 infoDetailSku("Harga",
                     "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
@@ -290,7 +253,9 @@ class DeliveryConfirmSO extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: appBar(),
+        child: CustomAppbar(title: "Detail Pengiriman", onBack: (){
+            Get.back();
+        }),
       ),
       body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),)
         : Stack(
@@ -352,7 +317,7 @@ class DeliveryConfirmSO extends StatelessWidget {
                                   ],
                                 ),
                               )
-                            : Container(),
+                            : const SizedBox(),
                       ),
                       const SizedBox(
                         height: 140,
@@ -371,9 +336,10 @@ class DeliveryConfirmSO extends StatelessWidget {
                         child: ProgressLoading(),
                       ),
                     )
-                  : Container())
+                  : const SizedBox())
             ],
           )),
     );
   }
 }
+

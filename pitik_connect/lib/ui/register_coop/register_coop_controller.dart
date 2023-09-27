@@ -64,25 +64,8 @@ class RegisterCoopController extends GetxController {
         maxInput: 50,
         onTyping: (value, control) {}
     );
-    late SpinnerField spBuildingType = SpinnerField(
-        controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
-        label: "Jenis Kandang",
-        hint: "Pilih Salah Satu",
-        alertText: "Jenis Kandang harus dipilih!",
-        items: const {"Open House": false, "Semi House": false, "Closed House": false},
-        onSpinnerSelected: (value) {
-        }
-    );
-
-    late SpinnerField spCoopStatus = SpinnerField(
-        controller: GetXCreator.putSpinnerFieldController("spCoopStatus"),
-        label: "Status",
-        hint: "Pilih Salah Satu",
-        alertText: "Status harus dipilih !",
-        items: const {"Aktif": false, "Non Aktif": false},
-        onSpinnerSelected: (value) {
-        }
-    );
+    late SpinnerField spBuildingType;
+    late SpinnerField spCoopStatus;
 
     late CardFloor cardFloor ;
     Rx<Coop> coop = Coop().obs ;
@@ -93,6 +76,36 @@ class RegisterCoopController extends GetxController {
     void onInit() {
         super.onInit();
         timeStart = DateTime.now();
+        Map<String, bool> mapList = {
+            "Open House": false,
+            "Semi House": false,
+            "Closed House": false
+        };
+        Map<String, bool> mapListStatus = {
+            "Aktif": false, "Non Aktif": false
+        };
+
+        spBuildingType = SpinnerField(
+            controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
+            label: "Jenis Kandang",
+            hint: "Pilih Salah Satu",
+            alertText: "Jenis Kandang harus dipilih!",
+            items:mapList,
+            onSpinnerSelected: (value) {
+            }
+        );
+        spBuildingType.controller.generateItems(mapList);
+
+        spCoopStatus = SpinnerField(
+            controller: GetXCreator.putSpinnerFieldController("spCoopStatus"),
+            label: "Status",
+            hint: "Pilih Salah Satu",
+            alertText: "Status harus dipilih !",
+            items: mapListStatus,
+            onSpinnerSelected: (value) {
+            }
+        );
+        spCoopStatus.controller.generateItems(mapListStatus);
         spCoopStatus.controller.invisibleSpinner();
         cardFloor = CardFloor(controller: GetXCreator.putCardFloorController("cardFloorController",context));
         boNoRegBuilding = ButtonOutline(
@@ -125,6 +138,14 @@ class RegisterCoopController extends GetxController {
         Get.find<CardFloorController>(tag: "cardFloorController").numberList.listen((p0) {
         });
         cardFloor.controller.visibleCard();
+
+        Map<String, bool> mapList = {
+            "Open House": false,
+            "Semi House": false,
+            "Closed House": false
+        };
+        spBuildingType.controller.generateItems(mapList);
+
         if(Get.arguments != null) {
             modifyType.value = Get.arguments[0];
             if(modifyType.value == MODIFY_COOP) {

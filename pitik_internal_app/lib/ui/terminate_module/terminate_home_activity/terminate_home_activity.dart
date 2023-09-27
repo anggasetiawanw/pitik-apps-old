@@ -87,7 +87,7 @@ class TerminateHomeAcitivity extends StatelessWidget {
                                     },
                                     terminateModel: controller.listTerminate.value[index]!,
                                 ),
-                                index == controller.listTerminate.value.length - 1 ? const SizedBox(height: 120): Container(),
+                                index == controller.listTerminate.value.length - 1 ? const SizedBox(height: 120): const SizedBox(),
                             ],
                         );
                         },

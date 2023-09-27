@@ -302,7 +302,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
             controller.customerDetail.value!.products != null
                 ? listExpandadle(controller.customerDetail.value!.products
                     as List<Products?>)
-                : Container(),
+                : const SizedBox(),
             const SizedBox(
               height: 120,
             ),
@@ -356,7 +356,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
         children: [
           Obx(
             () => controller.isLoadingDetails.isTrue
-                ? Container()
+                ? const SizedBox()
                 : Column(children: [
                     header(),
                     tabBar(),
@@ -450,7 +450,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                                                   ? const SizedBox(
                                                       height: 120,
                                                     )
-                                                  : Container(),
+                                                  : const SizedBox(),
                                             ],
                                           );
                                         },
@@ -504,7 +504,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                       children: [
                         Obx(
                           () => controller.isLoadingDetails.isTrue
-                              ? Container()
+                              ? const SizedBox()
                               : SvgPicture.asset(
                                   controller.customerDetail.value!.isArchived!
                                       ? "images/unarchive_data.svg"
@@ -515,7 +515,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                         ),
                         Obx(
                           () => controller.isLoadingDetails.isTrue
-                              ? Container()
+                              ? const SizedBox()
                               : Text(
                                   controller.customerDetail.value!.isArchived!
                                       ? "Pulihkan Data"
@@ -571,7 +571,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Obx(
                     () => controller.isLoadingDetails.isTrue
-                        ? Container()
+                        ? const SizedBox()
                         : Text(
                             controller.customerDetail.value!.isArchived!
                                 ? "Apakah Kamu yakin untuk memulihkan data ini?"
@@ -585,7 +585,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
                   child: Obx(
                     () => controller.isLoadingDetails.isTrue
-                        ? Container()
+                        ? const SizedBox()
                         : Text(
                             controller.customerDetail.value!.isArchived!
                                 ? "Data yang kamu kembalikan akan dapat digunakan kembali"

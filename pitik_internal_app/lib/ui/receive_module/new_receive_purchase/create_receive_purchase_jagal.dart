@@ -166,7 +166,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController>{
                     const SizedBox(
                       width: 16,
                     ),
-                    Container()
+                    const SizedBox()
                   ],
                 ),
               ),

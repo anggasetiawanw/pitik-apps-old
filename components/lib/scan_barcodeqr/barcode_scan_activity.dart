@@ -82,7 +82,6 @@ class ScanBarcodeActivity extends GetView<ScanBarcodeController> {
                                                           child: FutureBuilder(
                                                               future: controller.qrviewController?.getFlashStatus(),
                                                               builder: (context, snapshot) {
-                                                                  print("FLASH STATUS ${controller.qrviewController?.getFlashStatus()}");
                                                                   if (snapshot.data != null) {
                                                                       return SvgPicture.asset("images/flash_light_icon.svg");
                                                                   } else {

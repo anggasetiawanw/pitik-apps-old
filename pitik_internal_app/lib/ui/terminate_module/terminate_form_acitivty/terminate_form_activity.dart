@@ -114,8 +114,8 @@ class TerminateFormActivity extends StatelessWidget {
                           const SizedBox(height: 100,)
                               ],
                             ) ,
-                          ):Container() : Container()),
-                          MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120,) : Container()
+                          ):const SizedBox() : const SizedBox()),
+                          MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120,) : const SizedBox()
                         ],
                     ),
                   ),
@@ -128,7 +128,7 @@ class TerminateFormActivity extends StatelessWidget {
                     child: const Center(
                         child: ProgressLoading(),
                     ),
-                ) : Container())
+                ) : const SizedBox())
 
             ],
         ),  

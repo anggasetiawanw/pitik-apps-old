@@ -239,7 +239,7 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
                     Expanded(
                       child: controller.editButton,
                     ):
-                    Container(),
+                    const SizedBox(),
                     if( controller.purchaseDetail.value!.status == "DRAFT" )...[
                       const SizedBox(width: 16,),
                       Expanded(
@@ -272,7 +272,7 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
                             },
                           )
                       )
-                    ]else ...[Container()]
+                    ]else ...[const SizedBox()]
                   ],
                 ),
               ),
@@ -396,7 +396,7 @@ class DetailPurchase extends GetView<DetailPurchaseController>{
               ),
             )
             ),
-           Obx(() => controller.isLoading.isTrue ? Container() : controller.purchaseDetail.value!.status == "CANCELLED" ? Container() : bottomNavBar()),
+           Obx(() => controller.isLoading.isTrue ? const SizedBox() : controller.purchaseDetail.value!.status == "CANCELLED" ? const SizedBox() : bottomNavBar()),
           ],
     ));
   }

@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
                                         },
                                     ),
                                     const SizedBox(height: 8),
-                                    Platform.isIOS ? AppleSignInButton(onUserResult: () => controller.loginWithApple()) : Container(),
+                                    Platform.isIOS ? AppleSignInButton(onUserResult: () => controller.loginWithApple()) : const SizedBox(),
                                     Container(
                                         margin: const EdgeInsets.only(top: 55),
                                         child: Column(

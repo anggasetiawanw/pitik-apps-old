@@ -52,7 +52,7 @@ class MediaField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: Column(
                     children: <Widget>[
-                        controller.hideLabel.isFalse ? label.isEmpty? Container() : labelField : Container(),
+                        controller.hideLabel.isFalse ? label.isEmpty? const SizedBox() : labelField : const SizedBox(),
                         Padding(
                             padding: const EdgeInsets.only(bottom: 8, top: 8),
                             child: Column(
@@ -101,7 +101,7 @@ class MediaField extends StatelessWidget {
                                                     )
                                                 ],
                                             )
-                                        ) : Container(),
+                                        ) : const SizedBox(),
                                     )
                                 ],
                             )
