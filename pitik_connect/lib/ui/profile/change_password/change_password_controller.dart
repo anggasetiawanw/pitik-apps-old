@@ -48,7 +48,7 @@ class ChangePasswordController extends GetxController {
    late PasswordField efNewPassword = PasswordField(controller: GetXCreator.putPasswordFieldController("efNewPassword"), label:
     "Kata sandi baru", hint: "Tulis kata sandi baru", alertText: "Kata sandi baru tidak boleh kosong", maxInput: 29, onTyping: (value) {
         RegExp regexLength = RegExp(r'^.{7,}$');
-        RegExp regexPassword = RegExp(r'^(?=.*?[a-z])(?=.*?[0-9])');
+        RegExp regexPassword = RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])');
         if (value.isEmpty){
             efNewPassword.controller.showAlert();
             efNewPassword.controller.hideAlertLength();
