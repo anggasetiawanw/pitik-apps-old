@@ -165,34 +165,43 @@ class ChangePassword extends GetView<ChangePasswordController> {
               preferredSize: const Size.fromHeight(60),
               child: appBar(),
           ),
-          body: Stack(
-              children: [
-                  Obx(() => controller.isLoading.isTrue ? const Center(
-                      child: ProgressLoading(),
-                  ) :
-                  SingleChildScrollView(
-                      child: Container(
-                          padding: const EdgeInsets.only(top: 16),
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  Text("Kata Sandi Baru", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),),
-                                  const SizedBox(height: 8),
-                                  Text("Perubahan kata sandi diperlukan untuk meningkatkan keamanan Akun Anda. Kata sandi baru Anda harus menggunakan kombinasi huruf dan angka yang unik dengan jumlah karakter minimum 6 dan maksimum 20.", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),),
-                                  controller.efOldPassword,
-                                  controller.efNewPassword,
-                                  controller.efConfNewPassword,
-                                  const SizedBox(
-                                      height: 90,
-                                  )
-                              ],),
-                      ),
-                  )
-                ),bottomNavBar()
-                ]
-
-            ),
+          body: WillPopScope(
+            onWillPop: () async {
+            if(controller.isFromLogin){
+                return await Get.offAllNamed(RoutePage.homePage);
+             } else {
+                return Navigator.canPop(context);
+             } 
+            },
+            child: Stack(
+                children: [
+                    Obx(() => controller.isLoading.isTrue ? const Center(
+                        child: ProgressLoading(),
+                    ) :
+                    SingleChildScrollView(
+                        child: Container(
+                            padding: const EdgeInsets.only(top: 16),
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Text("Kata Sandi Baru", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),),
+                                    const SizedBox(height: 8),
+                                    Text("Perubahan kata sandi diperlukan untuk meningkatkan keamanan Akun Anda. Kata sandi baru Anda harus menggunakan kombinasi huruf dan angka yang unik dengan jumlah karakter minimum 6 dan maksimum 20.", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),),
+                                    controller.efOldPassword,
+                                    controller.efNewPassword,
+                                    controller.efConfNewPassword,
+                                    const SizedBox(
+                                        height: 90,
+                                    )
+                                ],),
+                        ),
+                    )
+                  ),bottomNavBar()
+                  ]
+          
+              ),
+          ),
     );
   }
 }
