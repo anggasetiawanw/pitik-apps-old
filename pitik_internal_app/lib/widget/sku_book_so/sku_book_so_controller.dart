@@ -36,7 +36,7 @@ class SkuBookSOController extends GetxController {
             int numberList = idx.value;
             jumlahEkor.value.add(EditField(
                 controller: GetXCreator.putEditFieldController(
-                    "${products[numberList]!.name!}Ekor"),
+                    "${products[numberList]!.name!}Ekor $tag"),
                 label: "Jumlah Ekor*",
                 hint: "0",
                 alertText: "Kolom Ini Harus Di Isi",
@@ -50,7 +50,7 @@ class SkuBookSOController extends GetxController {
             
             jumlahkg.value.add(EditField(
                 controller: GetXCreator.putEditFieldController(
-                    "${products[numberList]!.name!}Kg"),
+                    "${products[numberList]!.name!}Kg $tag"),
                 label: "Kebutuhan*",
                 hint: "0.0",
                 alertText: "Kolom Ini Harus Di Isi",
