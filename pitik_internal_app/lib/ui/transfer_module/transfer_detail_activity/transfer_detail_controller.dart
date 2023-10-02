@@ -99,24 +99,13 @@ class TransferDetailController extends GetxController {
                     isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
-                    var stock = "Insufficient stock!";
-                    if ((body as ErrorResponse).error!.message!.contains(stock)) {                    
-                        Get.snackbar(
-                        "Pesan",
-                        "Gagal melakukan Pesan Stock, periksa kembali stock yang ada",
-                        snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,);
-                    } else {                    
-                        Get.snackbar(
+                    Get.snackbar(
                         "Pesan",
                         "Terjadi Kesalahan, ${(body).error!.message}",
                         snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    }
                     isLoading.value = false;
                 },
                 onResponseError: (exception, stacktrace, id, packet) {

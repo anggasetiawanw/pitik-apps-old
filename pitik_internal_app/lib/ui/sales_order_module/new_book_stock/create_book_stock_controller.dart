@@ -108,7 +108,7 @@ class CreateBookStockController extends GetxController{
         );
         skuBookSO = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("skuBookSO", orderDetail.value!.products!));
         if(orderDetail.value!.type! =="LB"){
-            skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("skuBookSOLB", orderDetail.value!.productNotes!));
+            skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("LBSKUSTOCK", orderDetail.value!.productNotes!));
         } 
     }
 
@@ -273,8 +273,8 @@ class CreateBookStockController extends GetxController{
                 productNote.add(
                     Products(
                         productItemId: orderDetail.value!.products![i]!.id,
-                        quantity: (skuBookSO.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(),
-                        weight: skuBookSO.controller.jumlahkg.value[i].getInputNumber() ?? 0,
+                        quantity: (skuBookSOLB.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(),
+                        weight: skuBookSOLB.controller.jumlahkg.value[i].getInputNumber() ?? 0,
                         price: orderDetail.value!.products![i]!.price
                     )
                 );
@@ -292,24 +292,14 @@ class CreateBookStockController extends GetxController{
                 isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
-                    var stock = "Insufficient stock!";
-                    if ((body as ErrorResponse).error!.message!.contains(stock)) {                    
-                        Get.snackbar(
-                        "Pesan",
-                        "Gagal melakukan Pesan Stock, periksa kembali stock yang ada",
-                        snackPosition: SnackPosition.TOP,
-                            duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,);
-                    } else {                    
-                        Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                            duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,);
-                    }
+                    Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan, ${(body).error!.message}",
+                    snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,);
+                    
                 isLoading.value = false;
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
