@@ -15,19 +15,19 @@ class ScanBarcodeController extends GetxController {
     BuildContext context;
     ScanBarcodeController({required this.context});
     var result = Barcode("",BarcodeFormat.unknown,[]).obs;
-    QRViewController? qrviewController;
+    QRViewController? qrViewController;
     final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
     @override
     void dispose() {
-        qrviewController?.dispose();
+        qrViewController?.dispose();
         super.dispose();
     }
 
     void onQRViewCreated(QRViewController controller) {
-        qrviewController = controller;
+        qrViewController = controller;
         controller.scannedDataStream.listen((scanData) {
-          qrviewController!.pauseCamera();
+          qrViewController!.pauseCamera();
           result.value = scanData;
           Get.back(result: [
               {"backValue": result.value.code}

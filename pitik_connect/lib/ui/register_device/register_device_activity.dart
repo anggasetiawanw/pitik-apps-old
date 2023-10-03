@@ -114,10 +114,10 @@ class RegisterDevice extends GetView<RegisterDeviceController>{
                                     const SizedBox(
                                         height: 18,
                                     ),
-                                    if(controller.deviceType.value == "Smart Monitoring")...[
+                                    if(controller.deviceType.value == RegisterDeviceController.SMART_MONITORING)...[
                                         const Text("Detail Sensor",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                                         controller.cardSensor,
-                                    ] else if(controller.deviceType.value == "Smart Camera")...[
+                                    ] else if(controller.deviceType.value == RegisterDeviceController.SMART_CAMERA)...[
                                         const Text("Detail Camera",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                                         controller.cardCamera,
                                     ],

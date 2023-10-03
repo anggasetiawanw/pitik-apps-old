@@ -41,6 +41,7 @@ class BerandaController extends GetxController {
     Rx<List<String?>> listRole = Rx<List<String?>>([]);
     Rx<List<Map>> module = Rx<List<Map>>([]);
     Rx<List<Coop>> coops = Rx<List<Coop>>([]);
+    List<SimCard> simCard = <SimCard>[];
     String mixpanelValue = "";
 
     //Tracking Variable
@@ -85,19 +86,17 @@ class BerandaController extends GetxController {
     },
     );
 
-    List<SimCard> _simCard = <SimCard>[];
-
     // Platform messages are asynchronous, so we initialize in an async method.
     /// The function `initMobileNumberState` initializes the mobile number state by
     /// retrieving the SIM card information and setting the phone carrier name.
     Future<void> initMobileNumberState() async {
         // Platform messages may fail, so we use a try/catch PlatformException.
         try {
-            _simCard = (await MobileNumber.getSimCards)!;
-            phoneCarrier = _simCard[0].carrierName;
-        } on PlatformException catch (_) {
-        }
-
+            if(simCard.isNotEmpty) {
+                simCard = (await MobileNumber.getSimCards)!;
+                phoneCarrier = simCard[0].carrierName;
+            }
+        } on PlatformException catch (_) {}
     }
 
 
