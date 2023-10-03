@@ -28,3 +28,5 @@ gen-flavor: ## Generate New flavor configuration note : app.dart main_dev.dart m
 
 model-generator: ##Running Model Generator
 	flutter run --flavor dev -t lib/model_generator_main.dart
+lints:
+	flutter analyze --no-fatal-warnings --no-fatal-infos

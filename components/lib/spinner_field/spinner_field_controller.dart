@@ -1,6 +1,7 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /**
@@ -61,6 +62,8 @@ class SpinnerFieldController<T> extends GetxController {
         super.onClose();
         focusNode.dispose();
     }
+
+    
 }
 
 class SpinnerFieldBinding extends Bindings {
