@@ -74,89 +74,14 @@ class SpinnerField extends StatelessWidget {
                                             width: 2
                                         )
                                     ),
-                                    child: DropdownButtonHideUnderline(
-                                        child: DropdownButton2(
-                                            autofocus: true,
-                                            menuItemStyleData: const MenuItemStyleData(),
-                                            dropdownStyleData: DropdownStyleData(
-                                                maxHeight: 260,
-                                                padding: null,
-                                                isOverButton: false,
-                                                offset: const Offset(0, -5),
-                                                scrollbarTheme: ScrollbarThemeData(
-                                                    trackVisibility: MaterialStateProperty.all(true),
-                                                    radius: const Radius.circular(40),
-                                                    thickness: MaterialStateProperty.all(6),
-                                                    thumbVisibility: MaterialStateProperty.all(true),
-                                                    interactive: true,
-                                                )
-                                            ),
-                                            isExpanded : true,
-                                            isDense: true,
-                                            alignment: Alignment.centerLeft,
-                                            focusNode: controller.focusNode,
-                                            buttonStyleData: const ButtonStyleData(padding: null),
-                                            iconStyleData: IconStyleData(
-                                                icon: Align(
-                                                    alignment: Alignment.center,
-                                                    child : Row(
-                                                        children: [
-                                                            controller.isloading.isTrue ?
-                                                            Container(
-                                                                margin: const EdgeInsets.only(right: 16),
-                                                                child: SizedBox(
-                                                                    width: 24,
-                                                                    height: 24,
-                                                                    child: CircularProgressIndicator(color: GlobalVar.primaryOrange,)),
-                                                            ) : Container(),
-                                                            controller.activeField.isTrue
-                                                                ? controller.isShowList.isTrue? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
-                                                                : SvgPicture.asset("images/arrow_disable.svg"),
-                                                            const SizedBox(width: 16,)
-                                                        ]
-                                                    )
-                                                )
-                                            ),
-                                            onMenuStateChange: (isOpen) {
-                                                if (isOpen) {
-                                                    controller.focusNode.focusInDirection(TraversalDirection.down);
-                                                }
-                                                controller.isShowList.value = isOpen;
-                                            },
-                                            items: renderItems(),
-                                            underline: Container(),
-                                            hint: Text(
-                                                controller.textSelected.value == "" ? hint : controller.textSelected.value,
-                                                style: TextStyle(color: controller.textSelected.value == "" ? const Color(0xFF9E9D9D) : GlobalVar.black, fontSize: 14)
-                                            ),
-                                            onChanged: controller.activeField.isTrue ? (String? newValue) {
-                                                controller.items.value.forEach((key, value) {
-                                                    if (key == newValue) {
-                                                        controller.items.value[key] = true;
-                                                        controller.textSelected.value = key;
-
-                                                        int index = 0;
-                                                        controller.items.value.forEach((label, value) {
-                                                            if (key == label) {
-                                                                controller.selectedIndex = index;
-
-                                                                // for selected object
-                                                                if (controller.listObject.isNotEmpty) {
-                                                                    controller.selectedObject = controller.listObject[controller.selectedIndex];
-                                                                }
-                                                            }
-                                                            index++;
-                                                        });
-
-                                                        onSpinnerSelected(key);
-                                                        controller.showTooltip.value = false;
-                                                        controller.isShowList.value = false;
-                                                    } else {
-                                                        controller.items.value[key] = false;
-                                                    }
-                                                });
-                                            } : null,
-                                        )
+                                    child: controller.items.value.isNotEmpty ? 
+                                    createDropdown() :
+                                    GestureDetector(
+                                        onTap: () => Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
+                                                        duration: const Duration(seconds: 5),
+                                                        colorText: Colors.white,
+                                                        backgroundColor: Colors.red,),
+                                        child: createDropdown(),
                                     )
                                 ),
                                 controller.showTooltip.isTrue ?
@@ -180,6 +105,94 @@ class SpinnerField extends StatelessWidget {
                     ]
                 )
             ) : Container()
+        );
+    }
+
+    DropdownButtonHideUnderline createDropdown() {
+        return DropdownButtonHideUnderline(
+            child: DropdownButton2(
+                enableFeedback: true,
+                autofocus: true,
+                menuItemStyleData: const MenuItemStyleData(),
+                dropdownStyleData: DropdownStyleData(
+                    maxHeight: 260,
+                    padding: null,
+                    isOverButton: false,
+                    offset: const Offset(0, -5),
+                    scrollbarTheme: ScrollbarThemeData(
+                        trackVisibility: MaterialStateProperty.all(true),
+                        radius: const Radius.circular(40),
+                        thickness: MaterialStateProperty.all(6),
+                        thumbVisibility: MaterialStateProperty.all(true),
+                        interactive: true,
+                    )
+                ),
+                isExpanded : true,
+                isDense: true,
+                alignment: Alignment.centerLeft,
+                focusNode: controller.focusNode,
+                buttonStyleData: const ButtonStyleData(padding: null),
+                iconStyleData: IconStyleData(
+                    icon: Align(
+                        alignment: Alignment.center,
+                        child : Row(
+                            children: [
+                                controller.isloading.isTrue ?
+                                Container(
+                                    margin: const EdgeInsets.only(right: 16),
+                                    child: SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(color: GlobalVar.primaryOrange,)),
+                                ) : Container(),
+                                controller.activeField.isTrue
+                                    ? controller.isShowList.isTrue? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
+                                    : SvgPicture.asset("images/arrow_disable.svg"),
+                                const SizedBox(width: 16,)
+                            ]
+                        )
+                    )
+                ),
+                onMenuStateChange: (isOpen) {
+                    if (isOpen) {
+                        controller.focusNode.focusInDirection(TraversalDirection.down);
+                    }
+                    controller.isShowList.value = isOpen;
+                },
+                items: controller.items.value.isNotEmpty? renderItems() : <DropdownMenuItem<String>>[],
+                underline: Container(),
+                hint: Text(
+                    controller.textSelected.value == "" ? hint : controller.textSelected.value,
+                    style: TextStyle(color: controller.textSelected.value == "" ? const Color(0xFF9E9D9D) : GlobalVar.black, fontSize: 14)
+                ),
+                onChanged: controller.activeField.isTrue ? (String? newValue) {
+                    controller.items.value.forEach((key, value) {
+                        if (key == newValue) {
+                            controller.items.value[key] = true;
+                            controller.textSelected.value = key;
+
+                            int index = 0;
+                            controller.items.value.forEach((label, value) {
+                                if (key == label) {
+                                    controller.selectedIndex = index;
+
+                                    // for selected object
+                                    if (controller.listObject.isNotEmpty) {
+                                        controller.selectedObject = controller.listObject[controller.selectedIndex];
+                                    }
+                                }
+                                index++;
+                            });
+
+                            onSpinnerSelected(key);
+                            controller.showTooltip.value = false;
+                            controller.isShowList.value = false;
+                        } else {
+                            controller.items.value[key] = false;
+                        }
+                    });
+                } : null,
+            )
         );
     }
 
