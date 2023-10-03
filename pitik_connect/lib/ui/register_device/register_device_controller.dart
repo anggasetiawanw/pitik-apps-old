@@ -172,6 +172,8 @@ class RegisterDeviceController extends GetxController {
         showInformation();
     }
 
+    /// The function `showInformation()` displays a dialog box with information and
+    /// an "OK" button.
     void showInformation(){
         Get.dialog(Center(
             child: Container(

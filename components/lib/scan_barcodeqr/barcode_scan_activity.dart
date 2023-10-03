@@ -62,7 +62,7 @@ class ScanBarcodeActivity extends GetView<ScanBarcodeController> {
                                                     margin: const EdgeInsets.all(8),
                                                     child: ElevatedButton(
                                                         onPressed: () async {
-                                                            await controller.qrviewController?.toggleFlash();
+                                                            await controller.qrViewController?.toggleFlash();
                                                         },
                                                         style: ElevatedButton.styleFrom(
                                                             padding: const EdgeInsets.all(0),
@@ -80,7 +80,7 @@ class ScanBarcodeActivity extends GetView<ScanBarcodeController> {
                                                                 borderRadius: BorderRadius.circular(10)
                                                             ),
                                                           child: FutureBuilder(
-                                                              future: controller.qrviewController?.getFlashStatus(),
+                                                              future: controller.qrViewController?.getFlashStatus(),
                                                               builder: (context, snapshot) {
                                                                   if (snapshot.data != null) {
                                                                       return SvgPicture.asset("images/flash_light_icon.svg");
@@ -97,7 +97,7 @@ class ScanBarcodeActivity extends GetView<ScanBarcodeController> {
                                                     margin: const EdgeInsets.all(8),
                                                     child: ElevatedButton(
                                                         onPressed: () async {
-                                                            await controller.qrviewController?.flipCamera();
+                                                            await controller.qrViewController?.flipCamera();
                                                         },
                                                         style: ElevatedButton.styleFrom(
                                                             padding: const EdgeInsets.all(0),
