@@ -28,26 +28,6 @@ class DeliveryDetailSO extends StatelessWidget {
   Widget build(BuildContext context) {
     final DeliveryDetailSOController controller =
         Get.put(DeliveryDetailSOController(context: context));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-            }),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Detail Pengiriman",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
 
     Widget infoDetailHeader(String title, String name) {
       return Row(

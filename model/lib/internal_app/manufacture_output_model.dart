@@ -2,6 +2,7 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/product_model.dart';
 
+@SetupModel
 class ManufactureOutputModel {
 
     @IsChild()

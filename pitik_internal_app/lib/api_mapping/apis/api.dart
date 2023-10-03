@@ -1,4 +1,6 @@
 
+// ignore_for_file: unused_import
+
 import 'dart:io';
 import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/mediatype/multipart.dart';
@@ -38,7 +40,7 @@ import 'package:model/response/internal_app/transfer_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
 import 'package:model/response/internal_app/visit_customer_response.dart';
 import 'package:model/response/internal_app/visit_list_customer_response.dart';
-
+import 'package:model/internal_app/manufacture_output_model.dart';
 @Rest
 class API {
     // static const String BASE_URL = "https://api.pitik.dev/";

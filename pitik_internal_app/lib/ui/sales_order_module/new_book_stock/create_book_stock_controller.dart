@@ -11,12 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/strings.dart';
 import 'package:model/error/error.dart';
-import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/operation_unit_model.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/order_request.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:model/response/internal_app/customer_list_response.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/order_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
@@ -60,13 +58,13 @@ class CreateBookStockController extends GetxController{
         onSpinnerSelected: (text) {
         if (text.isNotEmpty) {
             bookStockButton.controller.enable();
-            Map<String, bool> mapLisCustomer = {};
-            for (var product in listCustomer.value) {
-              mapLisCustomer[product!.businessName!] = false;
-            }
-            Timer(const Duration(milliseconds: 100), () {
-            spinnerCustomer.controller.generateItems(mapLisCustomer);
-            });
+            // Map<String, bool> mapLisCustomer = {};
+            // for (var product in listCustomer.value) {
+            //   mapLisCustomer[product!.businessName!] = false;
+            // }
+            // Timer(const Duration(milliseconds: 100), () {
+            // spinnerCustomer.controller.generateItems(mapLisCustomer);
+            // });
         }
         },
     );
@@ -89,7 +87,6 @@ class CreateBookStockController extends GetxController{
     late ButtonOutline boNoBook;
 
     Rx<List<OperationUnitModel?>> listSource = Rx<List<OperationUnitModel>>([]);
-    Rx<List<Customer?>> listCustomer = Rx<List<Customer>>([]);
 
     @override
     void onInit() {
@@ -97,10 +94,10 @@ class CreateBookStockController extends GetxController{
         isLoading.value = true;
         orderDetail.value = Get.arguments as Order;
         getListSource();
-        getListCustomer();
         getDetailOrder();
         spinnerCustomer.controller.disable();
         bookStockButton.controller.disable();
+        spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
         boNoBook = ButtonOutline(
         controller: GetXCreator.putButtonOutlineController("noBookStock"),label: "Tidak",onClick: () {
             Get.back();
@@ -116,8 +113,6 @@ class CreateBookStockController extends GetxController{
     @override
     void onReady() {
         super.onReady();
-        getListSource();
-        getListCustomer();
         bfYesBook = ButtonFill(
         controller: GetXCreator.putButtonFillController("yesBookStock"),
             label: "Ya",
@@ -162,16 +157,16 @@ class CreateBookStockController extends GetxController{
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                Map<String, bool> mapList = {};
-                for (var units in (body as ListOperationUnitsResponse).data) {
-                  mapList[units!.operationUnitName!] = false;
-                }
-                Timer(const Duration(milliseconds: 500), () {
-                    spinnerSource.controller.generateItems(mapList);
-                });
-                for (var result in body.data) {
-                    listSource.value.add(result);
-                }
+                    Map<String, bool> mapList = {};
+                    for (var units in (body as ListOperationUnitsResponse).data) {
+                    mapList[units!.operationUnitName!] = false;
+                    }
+                    Timer(const Duration(milliseconds: 500), () {
+                        spinnerSource.controller.generateItems(mapList);
+                    });
+                    for (var result in body.data) {
+                        listSource.value.add(result);
+                    }
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
@@ -195,57 +190,54 @@ class CreateBookStockController extends GetxController{
             )
         );
     }
-    void getListCustomer() {
-        Service.push(
-            apiKey: 'userApi',
-            service: ListApi.getListCustomerWithoutPage,
-            context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {
-                Map<String, bool> mapList = {};
-                for (var customer in (body as ListCustomerResponse).data) {
-                  mapList[customer!.businessName!] = false;
-                }
-                spinnerCustomer.controller.generateItems(mapList);
-                spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
+    // void getListCustomer() {
+    //     Service.push(
+    //         apiKey: 'userApi',
+    //         service: ListApi.getListCustomerWithoutPage,
+    //         context: context,
+    //         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId],
+    //         listener: ResponseListener(
+    //             onResponseDone: (code, message, body, id, packet) {
+    //             Map<String, bool> mapList = {};
+    //             for (var customer in (body as ListCustomerResponse).data) {
+    //               mapList[customer!.businessName!] = false;
+    //             }
+    //             spinnerCustomer.controller.generateItems(mapList);
+    //             spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
 
-                for (var result in body.data) {
-                    listCustomer.value.add(result!);
-                }
+    //             for (var result in body.data) {
+    //                 listCustomer.value.add(result!);
+    //             }
 
-                },
-                onResponseFail: (code, message, body, id, packet) {
-                Get.snackbar(
-                    "Pesan",
-                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                    snackPosition: SnackPosition.TOP,
-                            duration: const Duration(seconds: 5),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,);
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    Get.snackbar("Alert","Terjadi kesalahan internal",
-                    snackPosition: SnackPosition.TOP,
-                            duration: const Duration(seconds: 5),
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white);
-                },
-                onTokenInvalid: () {
-                Constant.invalidResponse();
-                }
-            )
-        );
-    }
+    //             },
+    //             onResponseFail: (code, message, body, id, packet) {
+    //             Get.snackbar(
+    //                 "Pesan",
+    //                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+    //                 snackPosition: SnackPosition.TOP,
+    //                         duration: const Duration(seconds: 5),
+    //                 colorText: Colors.white,
+    //                 backgroundColor: Colors.red,);
+    //             },
+    //             onResponseError: (exception, stacktrace, id, packet) {
+    //                 Get.snackbar("Alert","Terjadi kesalahan internal",
+    //                 snackPosition: SnackPosition.TOP,
+    //                         duration: const Duration(seconds: 5),
+    //                 backgroundColor: Colors.red,
+    //                 colorText: Colors.white);
+    //             },
+    //             onTokenInvalid: () {
+    //             Constant.invalidResponse();
+    //             }
+    //         )
+    //     );
+    // }
 
     void updateBookStock(){
         OperationUnitModel? sourceSelected = listSource.value.firstWhere(
                 (element) => element!.operationUnitName == spinnerSource.controller.textSelected.value
         );
 
-        Customer? customerSelected = listCustomer.value.firstWhere(
-            (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
-        );
         List<Products?> products =[];
 
         for(int i = 0 ; i < skuBookSO.controller.itemCount.value; i++){
@@ -261,7 +253,7 @@ class CreateBookStockController extends GetxController{
         
 
         OrderRequest orderRequest = OrderRequest(
-            customerId: customerSelected!.id!,
+            customerId: orderDetail.value!.customer!.id!,
             operationUnitId: sourceSelected!.id!,
             products: products,
         );
