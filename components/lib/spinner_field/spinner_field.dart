@@ -77,7 +77,7 @@ class SpinnerField extends StatelessWidget {
                                     child: controller.items.value.isNotEmpty ? 
                                     createDropdown() :
                                     GestureDetector(
-                                        onTap: () => Get.snackbar("Informasi", "$label tidak ada",snackPosition: SnackPosition.TOP,
+                                        onTap: () => Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
                                                         duration: const Duration(seconds: 5),
                                                         colorText: Colors.white,
                                                         backgroundColor: Colors.red,),
@@ -155,10 +155,8 @@ class SpinnerField extends StatelessWidget {
                 ),
                 onMenuStateChange: (isOpen) {
                     if (isOpen) {
-                        print("OPEN");
                         controller.focusNode.focusInDirection(TraversalDirection.down);
                     }
-                        print("button pressed");
                     controller.isShowList.value = isOpen;
                 },
                 items: controller.items.value.isNotEmpty? renderItems() : <DropdownMenuItem<String>>[],
@@ -168,7 +166,6 @@ class SpinnerField extends StatelessWidget {
                     style: TextStyle(color: controller.textSelected.value == "" ? const Color(0xFF9E9D9D) : GlobalVar.black, fontSize: 14)
                 ),
                 onChanged: controller.activeField.isTrue ? (String? newValue) {
-                    print("Chagen");
                     controller.items.value.forEach((key, value) {
                         if (key == newValue) {
                             controller.items.value[key] = true;
@@ -200,7 +197,6 @@ class SpinnerField extends StatelessWidget {
     }
 
     List<DropdownMenuItem<String>> renderItems() {
-        print("empiy");
         List<DropdownMenuItem<String>> result = [];
 
         controller.items.value.forEach((key, value) {
