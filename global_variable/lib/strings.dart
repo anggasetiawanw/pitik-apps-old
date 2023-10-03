@@ -15,6 +15,7 @@ class AppStrings {
     static const String AYAM_UTUH ="Ayam Utuh";
     static const String LIVE_BIRD = "Live Bird";
     static const String BRANGKAS = "Brangkas";
+    static const String KEPALA = "Kepala";
     static const String KARKAS = "Karkas";
     static const String HATI_AMPELA ="Hati Ampela";
     static const String CEKER = "Ceker";

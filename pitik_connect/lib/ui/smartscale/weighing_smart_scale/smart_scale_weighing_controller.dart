@@ -1,4 +1,4 @@
-// ignore_for_file: slash_for_doc_comments, empty_catches
+// ignore_for_file: slash_for_doc_comments, empty_catches, unused_import
 
 import 'package:app_settings/app_settings.dart';
 import 'package:components/button_fill/button_fill.dart';

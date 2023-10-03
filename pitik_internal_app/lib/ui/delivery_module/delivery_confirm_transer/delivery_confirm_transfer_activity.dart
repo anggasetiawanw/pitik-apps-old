@@ -17,27 +17,6 @@ class DeliveryConfirmTransfer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DeliveryConfirmTransferController controller = Get.put(DeliveryConfirmTransferController(context: context));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              
-            }),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Detail Pengiriman",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
     Widget bottomNavbar() {
         return Align(
             alignment: Alignment.bottomCenter,
@@ -59,16 +38,6 @@ class DeliveryConfirmTransfer extends StatelessWidget {
                     : const SizedBox(),
                 ),
             );
-    }
-
-    Widget infoDetailHeader(String title, String name){
-        return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-                Text(title, style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),),
-                Text(name, style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),)
-            ],
-        );
     }
 
     Widget detailInformation() {

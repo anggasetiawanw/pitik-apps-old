@@ -154,9 +154,9 @@ class DetailGrPurchaseController extends GetxController {
     sumChick.value =0;
     sumPriceMax.value =0;
     sumPriceMin.value =0;
-    if(purchaseDetail.value!.status == "RECEIVED" ) {
+    if(purchaseDetail.value!.status == "RECEIVED" || purchaseDetail.value!.status == "CONFIRMED" ) {
         for(var product in goodReceiptDetail.value!.products!) {
-            if (product!.productItem!.name! == AppStrings.HATI_AMPELA ||product.productItem!.name! == AppStrings.CEKER ||product.productItem!.name!.contains(AppStrings.KARKAS) ){
+            if (product!.productItem!.name! == AppStrings.HATI_AMPELA ||product.productItem!.name! == AppStrings.CEKER ||product.productItem!.name!.contains(AppStrings.KARKAS) || product.productItem!.name! == AppStrings.KEPALA){
                     sumNeededMin.value += product.weight!;
                     sumNeededMax.value += product.weight!;
                     sumPriceMin.value += product.weight! * product.price!;
