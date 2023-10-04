@@ -76,6 +76,7 @@ class EditFieldQR extends StatelessWidget {
                     children: <Widget>[
                         controller.hideLabel.isFalse ? labelField : Container(),
                         Padding(
+                            key: controller.formKey,
                             padding: const EdgeInsets.only(bottom: 8, top: 8),
                             child: Column(
                                 children: <Widget>[
