@@ -86,7 +86,7 @@ class Convert {
     ///   The method is returning a double value.
     static double? toDouble(String s) {
         if (s.contains(",")) {
-            s = s.replaceAll(".", ".");
+            s = s.replaceAll(",", ".");
         }
         return double.tryParse(s);
     }

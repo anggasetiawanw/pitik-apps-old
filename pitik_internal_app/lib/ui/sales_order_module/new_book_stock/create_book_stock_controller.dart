@@ -93,7 +93,7 @@ class CreateBookStockController extends GetxController{
         super.onInit();
         isLoading.value = true;
         orderDetail.value = Get.arguments as Order;
-        // getListSource();
+        getListSource();
         getDetailOrder();
         spinnerCustomer.controller.disable();
         bookStockButton.controller.disable();
