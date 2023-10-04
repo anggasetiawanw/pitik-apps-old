@@ -71,7 +71,6 @@ class EditFieldQR extends StatelessWidget {
         return Obx(
                 () => controller.showField.isTrue
                 ? Padding(
-                key: controller.formKey,
                 padding: const EdgeInsets.only(top: 16),
                 child: Column(
                     children: <Widget>[
@@ -104,7 +103,9 @@ class EditFieldQR extends StatelessWidget {
                                                             )
                                                         ],
                                                         onChanged: (text) {
-                                                            controller.hideAlert();
+                                                            if(controller.showTooltip.isTrue){
+                                                                controller.hideAlert();
+                                                            }
                                                             onTyping(text, this);
 
                                                         },
@@ -219,7 +220,7 @@ class EditFieldQR extends StatelessWidget {
                                                 ],
                                             )
                                         )
-                                        : Container(),
+                                        : const SizedBox(),
                                     )
                                 ],
                             )
