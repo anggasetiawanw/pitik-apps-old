@@ -167,7 +167,7 @@ class NewDataSalesOrderController extends GetxController{
       hint: "Tulis Jumlah",
       alertText: "Kolom Ini Harus Di Isi",
       textUnit: "/Kg",
-       textPrefix: "Rp",
+       textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {

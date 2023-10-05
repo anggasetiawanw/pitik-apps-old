@@ -485,7 +485,7 @@ class NewDataController extends GetxController {
             Products? selectProduct;
             selectProduct = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
             selectProduct?.category = selectCategory;
-            selectProduct?.dailyQuantity = int.parse(skuCard.controller.editFieldJenis.value[whichItem].getInput());
+            selectProduct?.dailyQuantity = skuCard.controller.editFieldJenis.value[whichItem].getInputNumber()!.toInt();
             selectProduct?.price = skuCard.controller.editFieldHarga.value[whichItem].getInputNumber();
             listProductPayload.add(selectProduct);
         }

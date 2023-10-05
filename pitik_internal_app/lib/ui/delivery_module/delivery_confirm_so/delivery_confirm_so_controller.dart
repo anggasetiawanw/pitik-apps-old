@@ -41,7 +41,7 @@ class DeliveryConfirmSOController extends GetxController {
     });
 
     SpinnerField paymentMethod = SpinnerField(controller: GetXCreator.putSpinnerFieldController("paymentDelivery"), label: "Metode Pembayaran*", hint: "Pilih Salah Satu", alertText: "Harus dipilih salah satu!", items: const {"Tunai" : false, "Transfer" : false}, onSpinnerSelected: (value){});
-    EditField nominalMoney = EditField(controller: GetXCreator.putEditFieldController("nominalDelivery"), label: "Nominal Uang*", hint: "Tulis Jumlah", alertText: "Nominal Uang harus diisi!", textUnit: "", maxInput: 20,textPrefix: "Rp",inputType: TextInputType.number, onTyping: (value,control){if(control.getInput().length < 4){
+    EditField nominalMoney = EditField(controller: GetXCreator.putEditFieldController("nominalDelivery"), label: "Nominal Uang*", hint: "Tulis Jumlah", alertText: "Nominal Uang harus diisi!", textUnit: "", maxInput: 20,textPrefix: AppStrings.PREFIX_CURRENCY_IDR,inputType: TextInputType.number, onTyping: (value,control){if(control.getInput().length < 4){
             control.controller.setAlertText("Harga Tidak Valid!");
             control.controller.showAlert();
           }});
@@ -71,8 +71,8 @@ class DeliveryConfirmSOController extends GetxController {
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
-            const timeLimit = Duration(seconds: 5);
-            await FlLocation.getLocation(timeLimit: timeLimit).then((position) {
+            const timeLimit = Duration(seconds: 10);
+            await FlLocation.getLocation(timeLimit: timeLimit,accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
                     "Pesan",
@@ -120,16 +120,19 @@ class DeliveryConfirmSOController extends GetxController {
                             onTokenInvalid: Constant.invalidResponse())
                     );
                 }
-                }).onError((error, stackTrace) {
+                }).onError((errors, stackTrace) {
                     Get.snackbar(
                         "Pesan",
-                        "Terjadi Kesalahan, ${error.toString()}",
+                        "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi",
                         snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;
+                    error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
+                    GpsComponent.failedCheckin(error.value);
+                    isLoadCheckin.value = false;
                     isSuccessCheckin.value = false;
+                    showErrorCheckin.value = true;
                 });
             } else  {
                 isLoadCheckin.value = false;
