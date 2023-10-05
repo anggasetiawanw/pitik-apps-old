@@ -1,0 +1,31 @@
+{
+  "code": "integer",
+  "data->SmartScaleModel": {
+    "id": "string",
+    "totalCount": "integer",
+    "averageWeight": "double",
+    "room->Room": {
+      "id": "97020673-35e7-4108-8a59-71439f4504e8",
+      "roomCode": "35CC08E5",
+      "roomType": {
+        "id": "61958ae0-913c-433b-9cd8-7435b52905c0",
+        "name": "Lantai 1"
+      }
+    },
+    "records": [
+      {
+        "id": "45e6f517-2479-4cc4-9d53-33d7f2cc272d",
+        "count": 2,
+        "weight": 4
+      },
+      {
+        "id": "45e6f517-2479-4cc4-9d53-33d7f2cc272d",
+        "count": 8,
+        "weight": 16
+      }
+    ],
+    "executionDate": "2022-02-07T19:40:21+0000",
+    "createdDate": "2022-02-07T19:40:21+0000",
+    "updatedDate": "2022-02-07T19:40:21+0000"
+  }
+}

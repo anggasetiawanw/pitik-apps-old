@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "814245197671",
+    "project_id": "pitik-cms-production",
+    "storage_bucket": "pitik-cms-production.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814245197671:android:c54886b6f9b60cd447e1c2",
+        "android_client_info": {
+          "package_name": "com.eannovate.pitikmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-w5QmgAylmich7k-VYdJfdIGnHW5BwWc"
+        },
+        {
+          "current_key": "AIzaSyCNdpQ32k4xo6VZKUGnx91UgunWZM9XhDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814245197671:android:f9c3d968e9a04f4f47e1c2",
+        "android_client_info": {
+          "package_name": "id.pitik.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814245197671-65bcusuhcqhsprjkt1uk6oov6p9tj25f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.pitik.mobile",
+            "certificate_hash": "0e1479ca6f3c72377bd854dbfff0cb7107c571a6"
+          }
+        },
+        {
+          "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-w5QmgAylmich7k-VYdJfdIGnHW5BwWc"
+        },
+        {
+          "current_key": "AIzaSyCNdpQ32k4xo6VZKUGnx91UgunWZM9XhDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814245197671:android:ed44a80ad09f0f3b47e1c2",
+        "android_client_info": {
+          "package_name": "id.pitik.mobile.ppl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-w5QmgAylmich7k-VYdJfdIGnHW5BwWc"
+        },
+        {
+          "current_key": "AIzaSyCNdpQ32k4xo6VZKUGnx91UgunWZM9XhDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814245197671-4fi2u9brsruijh03b5aajob0155sb3h9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
