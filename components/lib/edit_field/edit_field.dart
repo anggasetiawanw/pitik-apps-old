@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 
 import '../global_var.dart';
 import '../library/engine_library.dart';
@@ -47,7 +48,7 @@ class EditField extends StatelessWidget {
     }
 
     void setInput(String text) {
-        if(textPrefix== "Rp"){
+        if(textPrefix== AppStrings.PREFIX_CURRENCY_IDR){
             var split = text.split(".");
             editFieldController.text = _formatter.format(split[0]);
         } else {
@@ -61,8 +62,8 @@ class EditField extends StatelessWidget {
     }
 
     double? getInputNumber() {
-        if(textPrefix == "Rp"){
-            return Convert.toDouble(editFieldController.text.replaceAll("Rp", "").replaceAll(".", ""));
+        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR){
+            return Convert.toDouble(editFieldController.text.replaceAll(AppStrings.PREFIX_CURRENCY_IDR, "").replaceAll(".", ""));
         }
         return Convert.toDouble(editFieldController.text);
     }
@@ -100,7 +101,7 @@ class EditField extends StatelessWidget {
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? textPrefix == "Rp" ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
+                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);
