@@ -105,6 +105,7 @@ class SkuCardController extends GetxController {
             hint: "Ketik di sini",
             alertText: "Kolom Ini Harus Di Isi",
             textUnit: "/Kg",
+            textPrefix: "Rp",
             inputType: TextInputType.number,
             maxInput: 20,
             onTyping: (value, control) {
