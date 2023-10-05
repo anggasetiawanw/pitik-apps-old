@@ -25,3 +25,15 @@ apk-prod: ## Build aab file with production configuration
 
 gen-flavor: ## Generate New flavor configuration note : app.dart main_dev.dart main_prod.dart and flavor.dart reversal with ctrl+z or command+z
 	flutter pub run flutter_flavorizr
+
+sb-build-dev: ## Build Shorebird Dev
+	shorebird release android --flavor dev
+
+sb-build-prod: ## Build Shorebird Production
+	shorebird release android --flavor prod
+
+sb-patch-dev: ## Push Patch Shorebird Dev
+	shorebird patch android --flavor dev
+
+sb-patch-prod: ## Push Patch Shorebird Production
+	shorebird patch android --flavor prod
