@@ -6,6 +6,7 @@ import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/product_model.dart';
@@ -105,6 +106,7 @@ class SkuCardController extends GetxController {
             hint: "Ketik di sini",
             alertText: "Kolom Ini Harus Di Isi",
             textUnit: "/Kg",
+            textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
             inputType: TextInputType.number,
             maxInput: 20,
             onTyping: (value, control) {

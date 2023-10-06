@@ -27,25 +27,6 @@ class _SplashActivityState extends State<SplashActivity> {
     @override
     void initState()  {
         WidgetsBinding.instance.addPostFrameCallback((_)async {
-            // var permissionGPS = await Permission.location.request();
-            // if(Platform.isIOS){
-            //     // GpsUtil.on();
-            // }else {
-            //     if(permissionGPS.isDenied) {
-            //         Get.snackbar("Alert", "This Apps Need Location Permission for Checkin",
-            //                 duration: Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: AppColors.red);
-            //     }
-            //     else if (await Permission.locationWhenInUse.isDenied) {
-            //         Get.snackbar("Info", "Enable Location Please", snackPosition: SnackPosition.BOTTOM,
-            //                 duration: Duration(seconds: 5), colorText: Colors.white, backgroundColor: AppColors.red);
-                    
-            //     }
-            //     else {
-            //         // GpsUtil.mock(true);
-            //     }
-            // }
-            // await handleLocationPermission();
-
             Timer(
                 const Duration(seconds: 3),
                 () async {

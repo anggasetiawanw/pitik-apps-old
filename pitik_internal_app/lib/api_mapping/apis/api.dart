@@ -2,6 +2,7 @@
 // ignore_for_file: unused_import
 
 import 'dart:io';
+
 import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/mediatype/multipart.dart';
 import 'package:engine/request/annotation/property/header.dart';
@@ -13,6 +14,7 @@ import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/annotation/request/put.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
+import 'package:model/internal_app/manufacture_output_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/checkin_response.dart';
 import 'package:model/response/internal_app/good_receive_response.dart';
@@ -40,7 +42,6 @@ import 'package:model/response/internal_app/transfer_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
 import 'package:model/response/internal_app/visit_customer_response.dart';
 import 'package:model/response/internal_app/visit_list_customer_response.dart';
-import 'package:model/internal_app/manufacture_output_model.dart';
 @Rest
 class API {
     // static const String BASE_URL = "https://api.pitik.dev/";
@@ -363,7 +364,7 @@ class API {
     ///   limit (int): The "limit" parameter is used to specify the maximum number
     /// of results that should be returned in a single page of the sales order list.
     @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
-    void getListOrders(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusDraft, @Query("status") String statusConfirmed, @Query("status") String statusBooked, @Query("status") String statusReadyDeliver, @Query("status") String statusDelivered, @Query("status") String statusCancel,@Query("status") String statusRejected) {}
+    void getListOrders(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusDraft, @Query("status") String statusConfirmed, @Query("status") String statusBooked, @Query("status") String statusReadyDeliver, @Query("status") String statusDelivered, @Query("status") String statusCancel,@Query("status") String statusRejected,@Query("status") String statusOnDelivery) {}
 
     /// This is a Dart function that makes a GET request to retrieve a list of
     /// customer responses and error responses related to sales operations.

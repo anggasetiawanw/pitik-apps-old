@@ -323,12 +323,12 @@ class SkuCardRemarkController extends GetxController{
                     ..textSelected.value = body.data[0]!.name!
                     ..disable();
                 }
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -337,7 +337,7 @@ class SkuCardRemarkController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
@@ -381,12 +381,12 @@ class SkuCardRemarkController extends GetxController{
                     ..textSelected.value = body.data[0]!.name!
                     ..disable();
                 }
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -395,7 +395,7 @@ class SkuCardRemarkController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),

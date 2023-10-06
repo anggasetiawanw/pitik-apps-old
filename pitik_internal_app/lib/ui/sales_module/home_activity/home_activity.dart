@@ -25,6 +25,7 @@ class HomePageCustomer extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
+        Timer? debounce;
         final HomePageCustomerController controller = Get.put(HomePageCustomerController(context: context));
         // controller.checkVersion(context);
 
@@ -88,14 +89,20 @@ class HomePageCustomer extends StatelessWidget {
             child: SearchField(
               onChanged: (text) {
                 if (text.length > 1) {
-                  controller.page.value = 1;
-                  controller.isSearch.value = true;
-                  controller.searchValue.value = text;
-                  controller.getSearchCustomer();
+                    if (debounce?.isActive ?? false) debounce?.cancel();
+                    debounce = Timer(const Duration(milliseconds: 1000), () {
+                        // do something with query
+                        controller.page.value = 1;
+                        controller.isSearch.value = true;
+                        controller.searchValue.value = text;
+                        controller.getSearchCustomer();
+                    });
+                 
                 } else if (text.length <= 1) {
-                  controller.isLoading.value = false;
-                  controller.isSearch.value = false;
-                  controller.searchValue.value = "";
+                    if (debounce?.isActive ?? false) debounce?.cancel();
+                    controller.isLoading.value = false;
+                    controller.isSearch.value = false;
+                    controller.searchValue.value = "";
                 }
               },
             ),

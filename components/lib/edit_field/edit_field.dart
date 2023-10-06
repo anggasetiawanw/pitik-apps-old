@@ -1,9 +1,11 @@
 // ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments, depend_on_referenced_packages
 
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 
 import '../global_var.dart';
 import '../library/engine_library.dart';
@@ -36,13 +38,24 @@ class EditField extends StatelessWidget {
 
     late String data;
     final editFieldController = TextEditingController();
-
+    final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+        enableNegative: false,
+        locale: 'id',
+        decimalDigits: 0,
+        symbol: '',
+    );
     EditFieldController getController() {
         return Get.find(tag: controller.tag);
     }
 
     void setInput(String text) {
-        editFieldController.text = text;
+        if(textPrefix== AppStrings.PREFIX_CURRENCY_IDR){
+            var split = text.split(".");
+            editFieldController.text = _formatter.format(split[0]);
+        } else {
+            editFieldController.text = text;
+        }
+        
     }
 
     String getInput() {
@@ -50,6 +63,9 @@ class EditField extends StatelessWidget {
     }
 
     double? getInputNumber() {
+        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR){
+            return Convert.toDouble(editFieldController.text.replaceAll(AppStrings.PREFIX_CURRENCY_IDR, "").replaceAll(".", ""));
+        }
         return Convert.toDouble(editFieldController.text);
     }
     @override
@@ -86,7 +102,7 @@ class EditField extends StatelessWidget {
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :  [],
+                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);

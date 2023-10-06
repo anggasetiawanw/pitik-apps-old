@@ -137,26 +137,33 @@ class AssignDriverController extends GetxController{
     }
 
   void getListDriver(){
+     spinnerDriver.controller
+     ..disable()
+     ..showLoading();
     Service.push(
         service: ListApi.getListDriver,
         context: context,
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, "driver",1,50],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
-              for (var units in (body as ListDriverResponse).data) {
-                mapList[units!.fullName!] = false;
-              }
-              Timer(const Duration(milliseconds: 100), () {
-                spinnerDriver.controller.generateItems(mapList);
-              });
-              for (var result in body.data) {
-                listDriver.value.add(result);
-              }
-            if (orderDetail.value!.driver != null ) {
-                spinnerDriver.controller.setTextSelected(orderDetail.value!.driver!.fullName!);
-            }
-            isLoading.value = false;
+                Map<String, bool> mapList = {};
+                for (var units in (body as ListDriverResponse).data) {
+                    mapList[units!.fullName!] = false;
+                }
+                Timer(const Duration(milliseconds: 100), () {
+                    spinnerDriver.controller.generateItems(mapList);
+                });
+                for (var result in body.data) {
+                    listDriver.value.add(result);
+                }
+                if (orderDetail.value!.driver != null ) {
+                    spinnerDriver.controller.setTextSelected(orderDetail.value!.driver!.fullName!);
+                }
+                isLoading.value = false;
+                
+                spinnerDriver.controller
+                ..enable()
+                ..hideLoading();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
