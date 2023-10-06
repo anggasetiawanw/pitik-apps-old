@@ -602,7 +602,7 @@ class EditDataSalesOrderController extends GetxController{
 
       listProductLbPayload.add(Products(
         productItemId: produkSkuSelected!.id,
-        quantity: int.parse(editFieldJumlahAyam.getInput()),
+        quantity: editFieldJumlahAyam.getInputNumber()!.toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
         weight: editFieldKebutuhan.getInputNumber(),
@@ -618,8 +618,8 @@ class EditDataSalesOrderController extends GetxController{
         }
         listRemarkPayload.add(Products(
           productItemId: productSelected != null ? productSelected.id : orderDetail.productNotes![whichItem]!.id,
-          quantity: productSelected!.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? int.parse(skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInput()) : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? int.parse(skuCardRemark.controller.editFieldPotongan.value[whichItem].getInput()) : null,
+          quantity: productSelected!.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? skuCardRemark.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt() : null,
           weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));
       }
@@ -634,8 +634,8 @@ class EditDataSalesOrderController extends GetxController{
         }
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? int.parse(skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput()) : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? int.parse(skuCard.controller.editFieldPotongan.value[whichItem].getInput()):0,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ?skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ?skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));

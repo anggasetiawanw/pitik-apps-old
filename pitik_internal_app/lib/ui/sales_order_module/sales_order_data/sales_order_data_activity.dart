@@ -75,7 +75,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                     Get.toNamed(RoutePage.newDataSalesOrder)!.then((value) {
                         controller.isLoading.value = true;
                         controller.orderList.value.clear();
-                        controller.page.value = 0;
+                        controller.page.value = 1;
                       Timer(const Duration(milliseconds: 100), () {
                         controller.getListOrders();
                       });
@@ -146,7 +146,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                         Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
                           controller.isLoading.value = true;
                           controller.orderList.value.clear();
-                        controller.page.value = 0;
+                        controller.page.value = 1;
                           Timer(const Duration(milliseconds: 500), () {
                             controller.getListOrders();
                           });

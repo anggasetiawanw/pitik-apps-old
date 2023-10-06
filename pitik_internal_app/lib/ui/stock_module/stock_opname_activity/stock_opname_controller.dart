@@ -289,7 +289,11 @@ class StockOpnameController extends GetxController {
                     if(item.getInput().isEmpty){
                         item.controller.showAlert();
                             if(item.controller.formKey.currentContext != null ) {
-                                Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                                if(stock.controller.exp.controller.expanded.value == false){
+                                    stock.controller.exp.controller.expand();
+                                } else {
+                                    Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                                }
                             }
                         ret = false;
                         break;
@@ -300,13 +304,33 @@ class StockOpnameController extends GetxController {
                 for(var item in stock.controller.efSku.value){
                     if(item.getInput1().isEmpty){
                         item.controller.showAlert();
-                        Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                        if(stock.controller.exp.controller.expanded.value == false){
+                            Get.snackbar(
+                                "Pesan",
+                                "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}",
+                            duration: const Duration(seconds: 5),
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                            backgroundColor: Colors.red,);
+                        } else {
+                            Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                        }
                         ret = false;
                         break;
                     }
                     if(item.getInput2().isEmpty){
                         item.controller.showAlert();
-                        Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                        if(stock.controller.exp.controller.expanded.value == false){
+                            Get.snackbar(
+                                "Pesan",
+                                "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}}",
+                            duration: const Duration(seconds: 5),
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                            backgroundColor: Colors.red,);
+                        }else {
+                            Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+                        }
                         ret = false;
                         break;
                     }

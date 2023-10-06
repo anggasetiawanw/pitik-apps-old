@@ -148,7 +148,7 @@ class DetailSalesOrderController extends GetxController {
     Service.push(
         service: ListApi.cancelOrder,
         context: context,
-        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, orderDetail.value!.status! == "BOOKED"? ListApi.pathCancelBookedOrder(orderId) : orderDetail.value!.status! == "BOOKREADY_TO_DELIVERED"?ListApi.pathCancelDeliveryOrder(orderId)   : ListApi.pathCancelOrder(orderId) ,""],
+        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, orderDetail.value!.status! == "BOOKED"? ListApi.pathCancelBookedOrder(orderId) : orderDetail.value!.status! == "READY_TO_DELIVER"?ListApi.pathCancelDeliveryOrder(orderId)   : ListApi.pathCancelOrder(orderId) ,""],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               isLoading.value = false;

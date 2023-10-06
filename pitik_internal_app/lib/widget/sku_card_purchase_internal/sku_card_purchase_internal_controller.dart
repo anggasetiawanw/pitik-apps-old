@@ -350,12 +350,12 @@ class SkuCardPurchaseInternalController extends GetxController{
                     ..disable();
                 }
 
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -364,7 +364,7 @@ class SkuCardPurchaseInternalController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -409,12 +409,12 @@ class SkuCardPurchaseInternalController extends GetxController{
                     ..disable();
                 }
 
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -423,7 +423,7 @@ class SkuCardPurchaseInternalController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,

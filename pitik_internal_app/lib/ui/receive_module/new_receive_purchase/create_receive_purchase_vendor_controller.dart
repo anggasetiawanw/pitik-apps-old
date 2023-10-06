@@ -316,9 +316,9 @@ class CreateGrPurchaseController extends GetxController {
                     .getInput()
                     .isEmpty
                 ? null
-                : int.parse(skuCardInternal
+                : skuCardInternal
                     .controller.editFieldJumlahAyam.value[whichItem]
-                    .getInput()),
+                    .getInputNumber()!.toInt(),
             price: skuCardInternal.controller.editFieldHarga.value[whichItem]
                     .getInputNumber() ??
                 0,
@@ -342,9 +342,9 @@ class CreateGrPurchaseController extends GetxController {
                     .getInput()
                     .isEmpty
                 ? null
-                : int.parse(skuCard
+                : skuCard
                     .controller.editFieldJumlahAyam.value[whichItem]
-                    .getInput()),
+                    .getInputNumber()!.toInt(),
             price: skuCard.controller.editFieldHarga.value[whichItem]
                 .getInputNumber(),
             weight: skuCard.controller.editFieldKebutuhan.value[whichItem]

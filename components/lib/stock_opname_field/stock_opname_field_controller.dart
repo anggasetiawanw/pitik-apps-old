@@ -1,4 +1,5 @@
 import 'package:components/edit_field/edit_field.dart';
+import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,14 @@ class StockOpnameFieldController extends GetxController {
     String tag;
     StockOpnameFieldController({required this.tag});
     Rx<List<EditField>> efSku = Rx<List<EditField>>([]);
+    var title = "".obs;
+    late Expandable exp = Expandable(
+            controller: GetXCreator.putAccordionController(title.value),
+            headerText: title.value,
+            child: Column(
+              children: efSku.value,
+            ),
+          );
 
     void generateEf(Products product){
         product.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
