@@ -13,6 +13,7 @@ import 'package:model/error/error.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:model/response/camera_list_response.dart';
 import 'package:model/response/cooler_response.dart';
+import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/detail_controller_response.dart';
 import 'package:model/response/device_detail_response.dart';
 import 'package:model/response/fan_list_response.dart';
@@ -20,6 +21,7 @@ import 'package:model/response/growth_day_response.dart';
 import 'package:model/response/historical_data_response.dart';
 import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/profile_response.dart';
+import 'package:model/response/monitoring_performance_response.dart';
 // ignore: unused_import
 import 'package:model/password_model.dart';
 
@@ -29,6 +31,52 @@ import 'package:model/password_model.dart';
 
 @Rest
 class API {
+
+    /// The function `getCoopActive` is a GET request that retrieves a list of
+    /// active coops, with the required headers `Authorization` and `X-ID`.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains a token or credentials to authenticate the request. It is
+    /// used to verify the identity of the user making the request and determine if
+    /// they have the necessary permissions to access the requested resource.
+    ///   xId (String): The xId parameter is a unique identifier that is used to
+    /// identify a specific user or entity in the system. It is typically used for
+    /// authentication or authorization purposes.
+    @GET(value: 'v2/coops/active?ignoreCache=true', as: CoopListResponse, error: ErrorResponse)
+    void getCoopActive(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+
+    /// The function `getCoopIdle` is a GET request that retrieves a list of idle
+    /// coops, with the authorization and X-ID headers provided.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header field
+    /// that is used to send the authorization token or credentials required to
+    /// access the API endpoint. It is typically used for authentication purposes
+    /// and ensures that only authorized users can make requests to the API.
+    ///   xId (String): The "X-ID" header is a custom header that is used to
+    /// identify the user or client making the request. It can be any unique
+    /// identifier that you want to associate with the request.
+    @GET(value: 'v2/coops/idle?ignoreCache=true', as: CoopListResponse, error: ErrorResponse)
+    void getCoopIdle(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+
+    /// The function `getPerformanceMonitoring` is a GET request that retrieves
+    /// performance monitoring data with authorization, X-ID, and a path parameter.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity and
+    /// permissions of the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that you want to retrieve or interact with. It is typically used in
+    /// combination with the base URL of the API to form the complete URL for the
+    /// request.
+    @GET(value: GET.PATH_PARAMETER, as: MonitoringPerformanceResponse, error: ErrorResponse)
+    void getPerformanceMonitoring(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 
     /// The function "getDetailSmartMonitoring" is a GET request that retrieves
     /// device details for smart monitoring, with authorization, X-ID, X-APP-ID

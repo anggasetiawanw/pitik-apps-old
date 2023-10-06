@@ -146,6 +146,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   assets:
+    - images/
     - shorebird.yaml
   uses-material-design: true
 
