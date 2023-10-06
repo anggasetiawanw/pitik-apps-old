@@ -45,8 +45,7 @@ class UserApi {
     ///   params (String): The "params" parameter is a string that contains
     /// additional parameters for the API request. It is used to pass any extra
     /// information or filters that are required for the "profile" API endpoint.
-    @GET(value: "v2/b2b/member-info", as: ProfileResponse, error: ErrorResponse)
-    void profile(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId) {}
-
+    @GET(value: "v2/fms-users/me", as: ProfileResponse, error: ErrorResponse)
+    void profile(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
 
 }

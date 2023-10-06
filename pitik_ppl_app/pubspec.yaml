@@ -38,6 +38,8 @@ dependencies:
     path: ../dao_impl
   components:
     path: ../components
+  common_page:
+    path: ../common_page
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -92,6 +94,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/pitik_launcher.png"
+
 flavorizr:
   app:
     android:
@@ -104,13 +111,13 @@ flavorizr:
 
       android:
         applicationId: "id.pitik.mobile.ppl"
-        icon: "images/launcher_pitik_connect.png"
+        icon: "images/pitik_launcher.png"
         firebase:
           config: "android/app/src/prod/google-services.json"
 
       ios:
         bundleId: "id.pitik.mobile.ppl"
-        icon: "images/launcher_pitik_connect.png"
+        icon: "images/pitik_launcher.png"
         # firebase:
         #   config: ".firebase/apple/GoogleService-Info.plist"
 
@@ -120,14 +127,14 @@ flavorizr:
 
       android:
         applicationId: "id.pitik.mobile.ppl.staging"
-        icon: "images/launcher_pitik_connect.png"
+        icon: "images/pitik_launcher.png"
         firebase:
           config: "android/app/src/dev/google-services.json"
       #        firebase:
       #          config: "android/app/src/dev/google-services.json"
       ios:
         bundleId: "id.pitik.mobile.ppl.staging"
-        icon: "images/launcher_pitik_connect.png"
+        icon: "images/pitik_launcher.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

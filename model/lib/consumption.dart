@@ -8,19 +8,19 @@ import 'engine_library.dart';
 @SetupModel
 class Consumption {
 
-    int? remaining;
+    double? remaining;
     String? estimation;
     String? stockoutDate;
-    int? consumption;
+    double? consumption;
 
     Consumption({this.remaining, this.estimation, this.stockoutDate, this.consumption});
 
     static Consumption toResponseModel(Map<String, dynamic> map) {
         return Consumption(
-            remaining: map['remaining'],
+            remaining: map['consumption'] != null ? map['remaining'].toDouble() : map['consumption'],
             estimation: map['estimation'],
             stockoutDate: map['stockoutDate'],
-            consumption: map['consumption'],
+            consumption: map['consumption'] != null ? map['consumption'].toDouble() : map['consumption'],
         );
     }
 }

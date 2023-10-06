@@ -14,8 +14,11 @@ class ButtonFillController extends GetxController {
     ButtonFillController({required this.tag});
 
     var activeField = true.obs;
+    var label = "".obs;
+
     void enable() => activeField.value = true;
     void disable() => activeField.value = false;
+    void changeLabel(String text) => label.value = text;
 }
 
 class ButtonFillBinding extends Bindings {

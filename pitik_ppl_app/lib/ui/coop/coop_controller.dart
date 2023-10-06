@@ -1,9 +1,13 @@
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
-import 'package:components/library/engine_library.dart';
+import 'package:dao_impl/auth_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -69,31 +73,34 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         isLoading.value = true;
         _clearCoopList();
 
-        Service.push(
-            service: isCoopActive ? 'getCoopActive' : 'getCoopIdle',
-            context: context,
-            body: [
-                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzMDE4MzM5LTZiMzItNGEwNi1hY2Q1LWYyYjI0ZTNjNzMwOSIsInJvbGVJZCI6ImRmNzcwOThkLWFkZWEtNDA3Yy1hOWUwLTBjOTY2NjkxZmMwOCIsImlhdCI6MTY5NjUxNjE4NSwiZXhwIjoxNjk2NjAyNTg1LCJhdWQiOiJodHRwczovL2FwaS5waXRpay5kZXYvdjIiLCJpc3MiOiJwaXRpayJ9.DUx_k1pv9uPlUKbS9mZNf-9mF6F1r9Uo_lrzAK59-YI',
-                '03018339-6b32-4a06-acd5-f2b24e3c7309'
-            ],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {
-                    _clearCoopList();
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    service: isCoopActive ? 'getCoopActive' : 'getCoopIdle',
+                    context: context,
+                    body: ['Bearer ${auth.token}', auth.id],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            _clearCoopList();
 
-                    coopList.addAll((body as CoopListResponse).data);
-                    coopFilteredList.addAll(coopList);
+                            coopList.addAll((body as CoopListResponse).data);
+                            coopFilteredList.addAll(coopList);
 
-                    isLoading.value = false;
-                },
-                onResponseFail: (code, message, body, id, packet) {
-                    isLoading.value = false;
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    isLoading.value = false;
-                },
-                onTokenInvalid: () => GlobalVar.invalidResponse()
-            )
-        );
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            isLoading.value = false;
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            isLoading.value = false;
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
+        });
     }
 
     void actionCoop(Coop coop) {

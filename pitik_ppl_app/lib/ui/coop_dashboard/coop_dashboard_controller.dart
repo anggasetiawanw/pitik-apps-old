@@ -1,5 +1,7 @@
+import 'package:common_page/profile/profile_activity.dart';
 import 'package:components/global_var.dart';
-import 'package:components/library/dao_impl_library.dart';
+import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/profile_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
@@ -13,6 +15,7 @@ import 'package:model/monitoring.dart';
 import 'package:model/population.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/monitoring_performance_response.dart';
+import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -61,29 +64,31 @@ class CoopDashboardController extends GetxController {
 
     void getMonitoringPerformance(Coop coop) {
         isLoading.value = true;
-        Service.push(
-            service: 'getPerformanceMonitoring',
-            context: context,
-            body: [
-                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAzMDE4MzM5LTZiMzItNGEwNi1hY2Q1LWYyYjI0ZTNjNzMwOSIsInJvbGVJZCI6ImRmNzcwOThkLWFkZWEtNDA3Yy1hOWUwLTBjOTY2NjkxZmMwOCIsImlhdCI6MTY5NjUxNjE4NSwiZXhwIjoxNjk2NjAyNTg1LCJhdWQiOiJodHRwczovL2FwaS5waXRpay5kZXYvdjIiLCJpc3MiOiJwaXRpayJ9.DUx_k1pv9uPlUKbS9mZNf-9mF6F1r9Uo_lrzAK59-YI',
-                '03018339-6b32-4a06-acd5-f2b24e3c7309',
-                'v2/farming-cycles/${coop.farmingCycleId}/performance'
-            ],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {
-                    monitoring.value = (body as MonitoringPerformanceResponse).data!;
-                    isLoading.value = false;
-                },
-                onResponseFail: (code, message, body, id, packet) {
-                    isLoading.value = false;
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    isLoading.value = false;
-                    print('$exception -> $stacktrace');
-                },
-                onTokenInvalid: () => GlobalVar.invalidResponse()
-            )
-        );
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    service: 'getPerformanceMonitoring',
+                    context: context,
+                    body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/performance'],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            monitoring.value = (body as MonitoringPerformanceResponse).data!;
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            isLoading.value = false;
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            isLoading.value = false;
+                            print('$exception -> $stacktrace');
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
+        });
     }
 
     void getMonitorData(Coop coop) {
@@ -490,7 +495,7 @@ class CoopDashboardController extends GetxController {
     Widget generateHistoryWidget() {
         return RefreshIndicator(
             onRefresh: () => Future.delayed(
-                const Duration(milliseconds: 200), () => getHistoryData(coop)
+                const Duration(milliseconds: 200), () => getMonitorData(coop)
             ),
             child: ListView(
                 shrinkWrap: true,
@@ -518,17 +523,13 @@ class CoopDashboardController extends GetxController {
     }
 
     Widget generateProfileWidget() {
-        return RefreshIndicator(
-            onRefresh: () => Future.delayed(
-                const Duration(milliseconds: 200), () => getProfile()
-            ),
-            child: ListView(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-
-                ],
-            ),
+        return ProfileActivity(
+            changePassRoute: RoutePage.changePasswordPage,
+            privacyRoute: RoutePage.privacyPage,
+            termRoute: RoutePage.termPage,
+            aboutUsRoute: RoutePage.aboutPage,
+            helpRoute: RoutePage.helpPage,
+            licenseRoute: RoutePage.licencePage
         );
     }
 }
