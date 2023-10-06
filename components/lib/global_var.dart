@@ -317,13 +317,18 @@ class GlobalVar {
 
     static Color primaryOrange = Convert.hexToColor("#F47B20");
     static Color primaryLight = Convert.hexToColor("#FFF9ED");
+    static Color primaryLight2 = Convert.hexToColor("#FEEFD2");
+    static Color primaryLight3 = Convert.hexToColor("#FEF6D2");
     static Color black = Convert.hexToColor("#2C2B2B");
     static Color red = Convert.hexToColor("#DD1E25");
+    static Color redBackground = Convert.hexToColor("#FDDFD1");
     static Color grayLightText = Convert.hexToColor("#9E9D9D");
     static Color grayBackground = Convert.hexToColor("#FAFAFA");
     static Color grayText = Convert.hexToColor("#5A5A5A");
     static Color gray = Convert.hexToColor("#CACACA");
     static Color green = Convert.hexToColor("#14CB82");
+    static Color greenBackground = Convert.hexToColor("#CEFCD8");
+    static Color yellow = Convert.hexToColor("#F4B420");
     static Color subTitleColor = const Color(0xFF9E9D9D);
     static Color globalBG = const Color(0xFFF4F4F4);
     static Color iconHomeBg = const Color(0xFFFFF6ED);
@@ -333,6 +338,19 @@ class GlobalVar {
     static Color blueDark = const Color(0xFF198BDB);
     static Mixpanel? mixpanel;
     static const MethodChannel _channel = MethodChannel('flutter.moum.sim_info');
+
+    static final String SUBMISSION_STATUS = "Perlu Pengajuan";
+    static final String SUBMITTED_DOC_IN = "DOC in Diajukan";
+    static final String SUBMITTED_OVK = "OVK Diajukan";
+    static final String APPROVED_OVK = "OVK Disetujui";
+    static final String APPROVED_DOC_IN = "DOC in Disetujui";
+    static final String SUBMITTED_STATUS = "Diajukan";
+    static final String NEED_APPROVED = "Perlu Persetujuan";
+    static final String APPROVED = "Disetujui";
+    static final String OVK_REJECTED = "OVK Ditolak";
+    static final String PROSESSING = "Diproses";
+    static final String REJECTED = "Ditolak";
+    static final String NEW = "Baru";
 
     static Future<String> getPhoneCarrier() async {
         String carrierName3 = await _channel.invokeMethod('mobileCountryCode');
@@ -366,6 +384,11 @@ class GlobalVar {
     static TextStyle whiteTextStyle = const TextStyle(
         color: Colors.white,
         fontFamily: 'Montserrat_Medium',
+    );
+
+    static TextStyle boldTextStyle = const TextStyle(
+        color: Colors.white,
+        fontFamily: 'Montserrat_Bold',
     );
 
     static TextStyle greyTextStyle = TextStyle(

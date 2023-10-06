@@ -44,7 +44,18 @@ class Convert {
 
         // final oCcy = new NumberFormat("#.##0,00");
         // String converted = oCcy.format(double.parse(currency));
-        return NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(double.parse(currency));
+        return NumberFormat.currency(locale: 'id', symbol: symbol, decimalDigits: 2).format(double.parse(currency));
+    }
+
+    static String toCurrencyWithoutDecimal(String currency, String symbol, String? grouping) {
+        // var controller = MoneyMaskedTextController(thousandSeparator: grouping);
+        // controller.updateValue(double.parse(currency));
+
+        // return '$symbol ${controller.text.substring(0, controller.text.length - 3)}';
+
+        // final oCcy = new NumberFormat("#.##0,00");
+        // String converted = oCcy.format(double.parse(currency));
+        return NumberFormat.currency(locale: 'id', symbol: symbol, decimalDigits: 0).format(double.parse(currency));
     }
 
     /// It takes a currency value, a currency symbol, a grouping separator, and a

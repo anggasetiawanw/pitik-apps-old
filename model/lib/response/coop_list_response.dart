@@ -15,9 +15,9 @@ class CoopListResponse {
     int code;
 
     @IsChildren()
-    List<Coop?>? data;
+    List<Coop?> data;
 
-    CoopListResponse({required this.code, required this.data});
+    CoopListResponse({required this.code, this.data = const []});
 
     static CoopListResponse toResponseModel(Map<String, dynamic> map) {
         return CoopListResponse(

@@ -4,6 +4,7 @@ import 'package:engine/util/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/route.dart';
+import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
 
 class App extends StatelessWidget {
     const App({super.key});
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
             theme: ThemeData(fontFamily: 'Montserrat_Medium'),
             navigatorObservers: [ChuckerFlutter.navigatorObserver],
             initialRoute: AppRoutes.initial,
-            // initialBinding: BerandaBindings(context: context),
+            initialBinding: CoopBindings(context: context),
             getPages: AppRoutes.page,
         );
     }
