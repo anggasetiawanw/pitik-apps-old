@@ -9,7 +9,7 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_variable/convert.dart';
+import 'package:global_variable/global_variable.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/manufacture_model.dart';
@@ -116,6 +116,13 @@ class ManufactureOutputController extends GetxController {
                 skuCard.controller.spinnerSku.value[idx].controller.setTextSelected(product[i]!.productItems![j]!.name!);
                 skuCard.controller.editFieldJumlahAyam.value[idx].setInput(product[i]!.productItems![j]!.quantity!.toString());
                 skuCard.controller.editFieldJumlahKg.value[idx].setInput(product[i]!.productItems![j]!.weight!.toString());
+                if(product[i]!.name! == AppStrings.AYAM_UTUH ||product[i]!.name! == AppStrings.BRANGKAS ||product[i]!.name! == AppStrings.LIVE_BIRD ){
+                    skuCard.controller.editFieldJumlahAyam.value[idx].controller.enable();
+                    skuCard.controller.getLoadSku(product[i]!.id!, idx);
+                }else if(product[i]!.name! == AppStrings.KARKAS){
+                    skuCard.controller.getLoadSku(product[i]!.id!, idx);
+                }
+                skuCard.controller.editFieldJumlahKg.value[idx].controller.enable();
                 listSku.add(product[i]!.productItems![j]);
                 idx++;
             }
@@ -128,9 +135,7 @@ class ManufactureOutputController extends GetxController {
             }
             for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
                 skuCard.controller.listSku.value[i] = listSku;
-                skuCard.controller.spinnerCategories.value[i].controller
-                ..generateItems(listKategori)
-                ..items.refresh();        
+                skuCard.controller.spinnerCategories.value[i].controller.generateItems(listKategori);      
                 skuCard.controller.setMaplist(listCategoriesSelected.value);
                 mapList.value = listKategori; 
             }
@@ -283,7 +288,7 @@ class ManufactureOutputController extends GetxController {
             Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
             output.add(Products(
                 productItemId: productSelected!.id,
-                quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : int.parse(skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput()),
+                quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
                 weight: skuCard.controller.editFieldJumlahKg.value[whichItem].getInputNumber(),
             ));
         }

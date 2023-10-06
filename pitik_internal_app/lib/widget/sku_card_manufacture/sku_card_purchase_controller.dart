@@ -250,12 +250,12 @@ class SkuCardManufactureController extends GetxController{
                     ..disable();
                 }
 
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -264,7 +264,7 @@ class SkuCardManufactureController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -276,13 +276,13 @@ class SkuCardManufactureController extends GetxController{
         );
     }
 
-        void getLoadSku(CategoryModel categories, int idx) {
+        void getLoadSku(String  id, int idx) {
         isLoadApi.value = true;
         spinnerSku.value[idx].controller.showLoading();
         Service.push(
             service: ListApi.getProductById,
             context: context,
-            body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, categories.id],
+            body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, id],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                 if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
@@ -309,12 +309,12 @@ class SkuCardManufactureController extends GetxController{
                     ..disable();
                 }
 
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 isLoadApi.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,
@@ -323,7 +323,7 @@ class SkuCardManufactureController extends GetxController{
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 isLoadApi.value = false;
-                    spinnerSku.value[idx].controller.hideloading();
+                    spinnerSku.value[idx].controller.hideLoading();
                 Get.snackbar("Alert","Terjadi kesalahan internal",
                     snackPosition: SnackPosition.TOP,
                     backgroundColor: Colors.red,

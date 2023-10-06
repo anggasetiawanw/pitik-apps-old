@@ -189,8 +189,6 @@ class ManufactureEditFromController extends GetxController {
                                 skuField.controller.generateAmount(mapListAmount);
                                 skuField.controller.generateWeight(mapListWeight);
                                 skuField.controller.generateItems(mapList);
-                                
-                                
                             }
                         }
                         else {
@@ -278,9 +276,9 @@ class ManufactureEditFromController extends GetxController {
             manufactureModel.operationUnit!.id = selectSource!.id;
         } 
     
-        if(manufactureModel.input!.name != categorySKUField.controller.textSelected.value){
+        if(manufactureModel.input!.productItems![0]!.name != skuField.controller.textSelected.value){
             StockModel? selectStock = categorySelect!.productItems!.firstWhere((element) => element!.name == skuField.controller.textSelected.value,);
-            manufactureModel.input!.productItems![0]!.id = selectStock!.id;
+            manufactureModel.input!.productItems![0]!.id = selectStock!.productItemId!;
         }
 
         if(manufactureModel.input!.productItems![0]!.quantity != amountField.getInputNumber()!.toInt()) {

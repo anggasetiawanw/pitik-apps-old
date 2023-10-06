@@ -126,7 +126,7 @@ class CreateGrTransferController extends GetxController {
         List<Products?> listProductPayload = [];
         listProductPayload.add(Products(
             productItemId: transferModel.products![0]!.productItems![0]!.id,
-            quantity:  transferModel.products![0]!.name == AppStrings.AYAM_UTUH ||  transferModel.products![0]!.name== AppStrings.BRANGKAS ||  transferModel.products![0]!.name == AppStrings.LIVE_BIRD ? int.parse(efChickReceived.getInput()) : null,
+            quantity:  transferModel.products![0]!.name == AppStrings.AYAM_UTUH ||  transferModel.products![0]!.name== AppStrings.BRANGKAS ||  transferModel.products![0]!.name == AppStrings.LIVE_BIRD ? efChickReceived.getInputNumber()!.toInt() : null,
             weight: efWeightReceived.getInputNumber(),
         ));
         return PurchaseRequest(

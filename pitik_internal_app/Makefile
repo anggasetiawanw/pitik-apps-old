@@ -30,3 +30,15 @@ model-generator: ##Running Model Generator
 	flutter run --flavor dev -t lib/model_generator_main.dart
 lints:
 	flutter analyze --no-fatal-warnings --no-fatal-infos
+
+sb-build-dev: ## Build Shorebird Dev
+	shorebird release android --flavor dev -t lib/main_dev.dart
+
+sb-build-prod: ## Build Shorebird Production
+	shorebird release android --flavor prod	-t lib/main_prod.dart	
+	
+sb-patch-dev: ## Push Patch Shorebird Dev
+	shorebird patch android --flavor dev -t lib/main_dev.dart
+
+sb-patch-prod: ## Push Patch Shorebird Production
+	shorebird patch android --flavor prod -t lib/main_prod.dart	
