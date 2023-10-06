@@ -39,7 +39,7 @@ class SpinnerSearchController<T> extends GetxController {
     void showAlert() => showTooltip.value = true;
     void hideAlert() => showTooltip.value = false;
     void showLoading() => isloading.value = true;
-    void hideloading() => isloading.value = false;
+    void hideLoading() => isloading.value = false;
     void enable() => activeField.value = true;
     void disable() => activeField.value = false;
     void expand() => isShowList.value = true;

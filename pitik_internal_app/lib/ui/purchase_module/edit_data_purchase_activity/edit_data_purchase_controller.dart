@@ -285,6 +285,8 @@ class EditDataPurchaseController extends GetxController {
     }
 
     void getListDestinationPurchase() {
+        spinnerDestination.controller.disable();
+        spinnerDestination.controller.showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
@@ -298,16 +300,18 @@ class EditDataPurchaseController extends GetxController {
             ],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                Map<String, bool> mapList = {};
-                for (var customer in (body as ListOperationUnitsResponse).data) {
-                  mapList[customer!.operationUnitName!] = false;
-                }
-                spinnerDestination.controller.generateItems(mapList);
-                spinnerDestination.controller.enable();
+                    Map<String, bool> mapList = {};
+                    for (var customer in (body as ListOperationUnitsResponse).data) {
+                    mapList[customer!.operationUnitName!] = false;
+                    }
+                    spinnerDestination.controller.generateItems(mapList);
+                    spinnerDestination.controller.enable();
 
-                for (var result in body.data) {
-                    listDestinationPurchase.value.add(result!);
-                }
+                    for (var result in body.data) {
+                        listDestinationPurchase.value.add(result!);
+                    }
+                    spinnerDestination.controller.hideLoading();
+
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
@@ -564,9 +568,9 @@ class EditDataPurchaseController extends GetxController {
                     .getInput()
                     .isEmpty
                 ? null
-                : int.parse(skuCardInternal
+                : skuCardInternal
                     .controller.editFieldJumlahAyam.value[whichItem]
-                    .getInput()),
+                    .getInputNumber()!.toInt(),
             price: skuCardInternal.controller.editFieldHarga.value[whichItem]
                     .getInputNumber() ??
                 0,
@@ -590,9 +594,9 @@ class EditDataPurchaseController extends GetxController {
                     .getInput()
                     .isEmpty
                 ? null
-                : int.parse(skuCard
+                : skuCard
                     .controller.editFieldJumlahAyam.value[whichItem]
-                    .getInput()),
+                    .getInputNumber()!.toInt(),
             price: skuCard.controller.editFieldHarga.value[whichItem]
                 .getInputNumber(),
             weight: skuCard.controller.editFieldKebutuhan.value[whichItem]

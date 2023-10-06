@@ -180,7 +180,7 @@ class CreateGrPurchaseJagalController extends GetxController {
     for (int i = 0; i < purchaseDetail.value!.products!.length; i++) {
       listProductPayload.add(Products(
         productItemId: purchaseDetail.value!.products![i]!.id!,
-        quantity: skuCard.controller.efSumChickReceived.value[i].getInput().isEmpty ? 0 : int.parse(skuCard.controller.efSumChickReceived.value[i].getInput()),
+        quantity: skuCard.controller.efSumChickReceived.value[i].getInput().isEmpty ? 0 : skuCard.controller.efSumChickReceived.value[i].getInputNumber()!.toInt(),
         weight: skuCard.controller.efSumWeightReceived.value[i].getInputNumber(),
         price: purchaseDetail.value!.products![i]!.price,
       ));

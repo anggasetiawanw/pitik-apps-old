@@ -570,7 +570,7 @@ class EditDataController extends GetxController {
                 }
 
                 selectProduct?.category = selectCategory;
-                selectProduct?.dailyQuantity = int.parse(skuCard.controller.editFieldJenis.value[whichItem].getInput());
+                selectProduct?.dailyQuantity =skuCard.controller.editFieldJenis.value[whichItem].getInputNumber()!.toInt();
                 selectProduct?.price = skuCard.controller.editFieldHarga.value[whichItem].getInputNumber();
                 listProductPayload.add(selectProduct);
             }

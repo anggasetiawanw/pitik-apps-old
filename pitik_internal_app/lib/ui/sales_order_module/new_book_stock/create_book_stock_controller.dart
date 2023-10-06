@@ -151,6 +151,10 @@ class CreateBookStockController extends GetxController{
     }
 
     void getListSource() {
+        spinnerSource.controller
+        ..disable()
+        ..setTextSelected("Loading...")
+        ..showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
@@ -167,6 +171,10 @@ class CreateBookStockController extends GetxController{
                     for (var result in body.data) {
                         listSource.value.add(result);
                     }
+                    spinnerSource.controller
+                    ..enable()
+                    ..setTextSelected("")
+                    ..hideLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
@@ -176,6 +184,9 @@ class CreateBookStockController extends GetxController{
                             duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                    spinnerSource.controller
+                    ..setTextSelected("")
+                    ..hideLoading();
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
@@ -185,53 +196,14 @@ class CreateBookStockController extends GetxController{
                             duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                    spinnerSource.controller
+                    ..setTextSelected("")
+                    ..hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
             )
         );
     }
-    // void getListCustomer() {
-    //     Service.push(
-    //         apiKey: 'userApi',
-    //         service: ListApi.getListCustomerWithoutPage,
-    //         context: context,
-    //         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId],
-    //         listener: ResponseListener(
-    //             onResponseDone: (code, message, body, id, packet) {
-    //             Map<String, bool> mapList = {};
-    //             for (var customer in (body as ListCustomerResponse).data) {
-    //               mapList[customer!.businessName!] = false;
-    //             }
-    //             spinnerCustomer.controller.generateItems(mapList);
-    //             spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
-
-    //             for (var result in body.data) {
-    //                 listCustomer.value.add(result!);
-    //             }
-
-    //             },
-    //             onResponseFail: (code, message, body, id, packet) {
-    //             Get.snackbar(
-    //                 "Pesan",
-    //                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-    //                 snackPosition: SnackPosition.TOP,
-    //                         duration: const Duration(seconds: 5),
-    //                 colorText: Colors.white,
-    //                 backgroundColor: Colors.red,);
-    //             },
-    //             onResponseError: (exception, stacktrace, id, packet) {
-    //                 Get.snackbar("Alert","Terjadi kesalahan internal",
-    //                 snackPosition: SnackPosition.TOP,
-    //                         duration: const Duration(seconds: 5),
-    //                 backgroundColor: Colors.red,
-    //                 colorText: Colors.white);
-    //             },
-    //             onTokenInvalid: () {
-    //             Constant.invalidResponse();
-    //             }
-    //         )
-    //     );
-    // }
 
     void updateBookStock(){
         OperationUnitModel? sourceSelected = listSource.value.firstWhere(
@@ -282,6 +254,7 @@ class CreateBookStockController extends GetxController{
                 onResponseDone: (code, message, body, id, packet) {
                 Get.back();
                 isLoading.value = false;
+                Get.back();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

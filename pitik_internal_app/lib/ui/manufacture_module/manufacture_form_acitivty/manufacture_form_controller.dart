@@ -93,6 +93,8 @@ class ManufactureFromController extends GetxController {
     }
 
     void getListSourceUnit() {
+        sourceField.controller.disable();
+        sourceField.controller.showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
@@ -108,7 +110,8 @@ class ManufactureFromController extends GetxController {
                     for (var result in body.data) {
                         listOperationUnits.value.add(result);
                     }
-
+                    sourceField.controller.enable();
+                    sourceField.controller.hideLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -118,6 +121,7 @@ class ManufactureFromController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
+                    sourceField.controller.hideLoading();
                     },
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
@@ -127,6 +131,7 @@ class ManufactureFromController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
+                    sourceField.controller.hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
                 )

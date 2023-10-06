@@ -63,6 +63,12 @@ class TerminateFormController extends GetxController {
                     skuField.controller.setTextSelected("");
                     skuField.controller.enable();
                 }
+                else if( value == AppStrings.KARKAS){
+                    skuField.controller.setTextSelected("");
+                    skuField.controller.enable();
+                    amountField.setInput("");
+                    amountField.controller.disable();
+                }
                 else {
                     amountField.setInput("");
                     amountField.controller.disable();
@@ -160,6 +166,9 @@ class TerminateFormController extends GetxController {
     }
 
     void getListSourceUnit() {
+        sourceField.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
@@ -173,7 +182,12 @@ class TerminateFormController extends GetxController {
                     for (var result in body.data) {
                         listOperationUnits.value.add(result);
                     }
-                    Timer(const Duration(milliseconds: 500), () {sourceField.controller.generateItems(mapList);});
+                    Timer(const Duration(milliseconds: 500), () {
+                        sourceField.controller
+                        ..enable()
+                        ..hideLoading()
+                        ..generateItems(mapList);
+                    });
                     if(isEdit.isTrue){
                         sourceSelect = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == terminateModel!.operationUnit!.operationUnitName!);
                         if(sourceSelect != null){
@@ -216,6 +230,9 @@ class TerminateFormController extends GetxController {
     }
 
     void getCategorySKU() {
+        categorySKUField.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getCategories,
             context: context,
@@ -229,8 +246,10 @@ class TerminateFormController extends GetxController {
                     for (var product in body.data) {
                       mapList[product!.name!] = false;
                     }
-                    categorySKUField.controller.generateItems(mapList);
-                    categorySKUField.controller.enable();
+                    categorySKUField.controller
+                    ..generateItems(mapList)
+                    ..hideLoading()
+                    ..enable();
                     isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -241,7 +260,9 @@ class TerminateFormController extends GetxController {
                         colorText: Colors.white,
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;
+                    isLoading.value = false;                    
+                    categorySKUField.controller
+                    .hideLoading();
                     },
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
@@ -251,7 +272,9 @@ class TerminateFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;
+                    isLoading.value = false;                    
+                    categorySKUField.controller
+                    .hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()));
     }

@@ -263,6 +263,9 @@ class NewDataSalesOrderController extends GetxController{
   }
 
   void getListCustomer() {
+    spinnerCustomer.controller.disable();
+    spinnerCustomer.controller.setTextSelected("Loading...");
+    spinnerCustomer.controller.showLoading();
     Service.push(
         apiKey: 'userApi',
         service: ListApi.getListCustomerWithoutPage,
@@ -282,6 +285,8 @@ class NewDataSalesOrderController extends GetxController{
               for (var result in body.data) {
                 listCustomer.value.add(result!);
               }
+                spinnerCustomer.controller.hideLoading();
+                spinnerCustomer.controller.setTextSelected("");
 
             },
             onResponseFail: (code, message, body, id, packet) {
@@ -291,6 +296,8 @@ class NewDataSalesOrderController extends GetxController{
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,);
+                spinnerCustomer.controller.hideLoading();
+                spinnerCustomer.controller.setTextSelected("");
             },
             onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar("Alert","Terjadi kesalahan internal",
@@ -298,6 +305,8 @@ class NewDataSalesOrderController extends GetxController{
                         duration: const Duration(seconds: 5),
                   backgroundColor: Colors.red,
                   colorText: Colors.white);
+                spinnerCustomer.controller.hideLoading();
+                spinnerCustomer.controller.setTextSelected("");
             },
             onTokenInvalid: () {
               Constant.invalidResponse();
@@ -308,6 +317,9 @@ class NewDataSalesOrderController extends GetxController{
 
 
   void getCategorySku() {
+    skuCard.controller.spinnerCategories.value[0].controller.disable();
+    skuCard.controller.spinnerCategories.value[0].controller.showLoading();
+    skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("Loading...");
     Service.push(
       service: ListApi.getCategories,
       context: context,
@@ -329,6 +341,9 @@ class NewDataSalesOrderController extends GetxController{
             //Generate Card SKU
             mapList.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
             Timer(const Duration(milliseconds: 100), () {
+                skuCard.controller.spinnerCategories.value[0].controller.enable();
+                skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("");   
+                skuCard.controller.spinnerCategories.value[0].controller.hideLoading();
               skuCard
                   .controller
                   .spinnerCategories
@@ -505,7 +520,7 @@ class NewDataSalesOrderController extends GetxController{
 
       listProductLbPayload.add(Products(
         productItemId: produkSkuSelected!.id,
-        quantity: int.parse(editFieldJumlahAyam.getInput()),
+        quantity: (editFieldJumlahAyam.getInputNumber()?? 0).toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
         weight: editFieldKebutuhan.getInputNumber(),
@@ -517,8 +532,8 @@ class NewDataSalesOrderController extends GetxController{
         Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listRemarkPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? int.parse(skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInput()) : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? int.parse(skuCardRemark.controller.editFieldPotongan.value[whichItem].getInput()) : null,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? skuCardRemark.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt() : null,
           weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));
       }
@@ -529,8 +544,8 @@ class NewDataSalesOrderController extends GetxController{
         Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? int.parse(skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput()) : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? int.parse(skuCard.controller.editFieldPotongan.value[whichItem].getInput()):0,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));

@@ -1,12 +1,35 @@
 import 'package:components/edit_field_two_row/edit_field_two_row.dart';
+import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/colors.dart';
 import 'package:model/internal_app/product_model.dart';
 class StockOpnameTwoFieldController extends GetxController {
     String tag;
     StockOpnameTwoFieldController({required this.tag});
     Rx<List<EditFieldTwoRow>> efSku = Rx<List<EditFieldTwoRow>>([]);
+
+    var title = "".obs;
+
+    Widget buildWidget(EditFieldTwoRow edit){
+        return Column(
+            children: [
+                edit,
+                const SizedBox(height: 12,),
+                const Divider(height: 1,color: AppColors.outlineColor,),
+                const SizedBox(height: 8,),
+            ],
+        );
+    }
+
+    late Expandable exp = Expandable(
+            controller: GetXCreator.putAccordionController(title.value),
+            headerText: title.value,
+            child: Column(
+              children: efSku.value.map((element) { return buildWidget(element);}).toList(),
+            ),
+          );
 
     void generateEf(Products product){
 

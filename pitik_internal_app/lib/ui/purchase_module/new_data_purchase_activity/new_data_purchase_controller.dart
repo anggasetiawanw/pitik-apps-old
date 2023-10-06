@@ -177,27 +177,32 @@ class NewDataPurchaseController extends GetxController{
     }
 
     void getListSourceVendor() {
+        spinnerSource.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getListVendors,
             context: context,
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                spinnerSource.controller.refresh();
-                spinnerSource.controller.setTextSelected("");
-                Map<String, bool> mapList = {};
-                for (var vendor in (body as VendorListResponse).data) {
-                  mapList[vendor!.vendorName!] = false;
-                }
-                Timer(const Duration(milliseconds: 500), () {
-                    spinnerSource.controller.generateItems(mapList);
-                });
-                // spinnerSource.controller.enable();
+                    Map<String, bool> mapList = {};
+                    for (var vendor in (body as VendorListResponse).data) {
+                    mapList[vendor!.vendorName!] = false;
+                    }
+                    Timer(const Duration(milliseconds: 500), () {
+                        spinnerSource.controller.generateItems(mapList);
+                    });
+                    // spinnerSource.controller.enable();
 
-                for (var result in body.data) {
-                    listSourceVendor.value.add(result);
-                }
-
+                    for (var result in body.data) {
+                        listSourceVendor.value.add(result);
+                    }
+                    spinnerSource.controller
+                    ..setTextSelected("")
+                    ..hideLoading()
+                    ..enable()
+                    ..refresh();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
@@ -207,22 +212,32 @@ class NewDataPurchaseController extends GetxController{
                             duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                    spinnerSource.controller.hideLoading();
             },
                 onResponseError: (exception, stacktrace, id, packet) {
+                Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan Internal",
+                    snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,);
+                    spinnerSource.controller.hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
                 )
         );
     }
     void getListJagalExternal() {
+        spinnerSource.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getListJagalExternal,
             context: context,
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, "JAGAL","EXTERNAL"],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                spinnerSource.controller.refresh();
-                spinnerSource.controller.setTextSelected("");
                 Map<String, bool> mapList = {};
                 for (var customer in (body as ListOperationUnitsResponse).data) {
                   mapList[customer!.operationUnitName!] = false;
@@ -234,6 +249,10 @@ class NewDataPurchaseController extends GetxController{
                 for (var result in body.data) {
                     listSourceJagal.value.add(result!);
                 }
+                    spinnerSource.controller.setTextSelected("");
+                    spinnerSource.controller.hideLoading();
+                    spinnerSource.controller.enable();
+                    spinnerSource.controller.refresh();
 
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -245,7 +264,15 @@ class NewDataPurchaseController extends GetxController{
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
             },
-                onResponseError: (exception, stacktrace, id, packet) {
+                onResponseError: (exception, stacktrace, id, packet) { 
+                    Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan Internal",
+                    snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,);
+                    spinnerSource.controller.hideLoading();
                 },
                 onTokenInvalid: () {
                 Constant.invalidResponse();
@@ -254,22 +281,26 @@ class NewDataPurchaseController extends GetxController{
         );
     }
     void getListDestinationPurchase() {
+        spinnerDestination.controller.disable();
+        spinnerDestination.controller.showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!,AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                Map<String, bool> mapList = {};
-                for (var customer in (body as ListOperationUnitsResponse).data) {
-                  mapList[customer!.operationUnitName!] = false;
-                }
-                spinnerDestination.controller.generateItems(mapList);
-                // spinnerDestination.controller.enable();
+                    Map<String, bool> mapList = {};
+                    for (var customer in (body as ListOperationUnitsResponse).data) {
+                    mapList[customer!.operationUnitName!] = false;
+                    }
+                    spinnerDestination.controller.generateItems(mapList);
 
-                for (var result in body.data) {
-                    listDestinationPurchase.value.add(result!);
-                }
+                    for (var result in body.data) {
+                        listDestinationPurchase.value.add(result!);
+                    }
+                    spinnerDestination.controller.hideLoading();
+                    spinnerDestination.controller.enable();
+                    spinnerDestination.controller.refresh();
 
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -280,8 +311,17 @@ class NewDataPurchaseController extends GetxController{
                             duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                    spinnerDestination.controller.hideLoading();
             },
                 onResponseError: (exception, stacktrace, id, packet) {
+                    Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan Internal",
+                    snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,);
+                    spinnerDestination.controller.hideLoading();
                 },
                 onTokenInvalid: () {
                 Constant.invalidResponse();
@@ -444,7 +484,7 @@ class NewDataPurchaseController extends GetxController{
                 Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
                 listProductPayload.add(Products(
                     productItemId: productSelected!.id,
-                    quantity: skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : int.parse(skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput()),
+                    quantity: skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
                     price: skuCardInternal.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
                     weight: skuCardInternal.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
                 ));
@@ -457,7 +497,7 @@ class NewDataPurchaseController extends GetxController{
             Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
             listProductPayload.add(Products(
                 productItemId: productSelected!.id,
-                quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : int.parse(skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput()),
+                quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
                 price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
                 weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
             ));

@@ -65,6 +65,12 @@ class TransferFormController extends GetxController {
                     skuField.controller.setTextSelected("");
                     skuField.controller.enable();
                 }
+                else if( value == AppStrings.KARKAS){
+                    skuField.controller.setTextSelected("");
+                    skuField.controller.enable();
+                    amountField.setInput("");
+                    amountField.controller.disable();
+                }
                 else {
                     amountField.setInput("");
                     amountField.controller.disable();
@@ -112,7 +118,6 @@ class TransferFormController extends GetxController {
     void onReady() {
         super.onReady();
         if(isEdit.value){
-            // getCategorySKU();
             sourceField.controller.textSelected.value = transferModel!.sourceOperationUnit!.operationUnitName!;
             destinationField.controller.textSelected.value = transferModel!.targetOperationUnit!.operationUnitName!;
             destinationField.controller.enable();
@@ -121,13 +126,19 @@ class TransferFormController extends GetxController {
                 amountField.controller.enable();
                 amountField.setInput(transferModel!.products![0]!.productItems![0]!.quantity!.toString());
             }
-            skuField.controller.textSelected.value = transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name! : "";
+             Map<String, bool> mapList ={};
+            for (var element in transferModel!.sourceOperationUnit!.purchasableProducts!) {
+              mapList[element!.name!] = false;
+            }
             totalField.controller.enable();
             totalField.setInput(transferModel!.products![0]!.productItems![0]!.weight!.toString());
         }
     }
 
     void getListOperationUnit() {
+        sourceField.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getListOperationUnits,
             context: context,
@@ -142,23 +153,40 @@ class TransferFormController extends GetxController {
                         listSourceOperationUnits.value.add(result);
                     }
                     Timer(const Duration(milliseconds: 500), () {
-                    sourceField.controller.generateItems(mapListSource);
-                    sourceField.controller.items.refresh(); });
+                        sourceField.controller
+                        ..enable()
+                        ..hideLoading()
+                        ..generateItems(mapListSource);
+                    });
 
                     if(isEdit.isTrue){
+                        
                         sourceSelect = listSourceOperationUnits.value.firstWhere((element) => element!.operationUnitName == transferModel!.sourceOperationUnit!.operationUnitName!);
                         if(sourceSelect != null){
+                            skuField.controller.showLoading();
                             Map<String, bool> mapList ={};
                             for (var element in sourceSelect!.purchasableProducts!) {
                               mapList[element!.name!] = false;
                             }
-                            Timer(const Duration(milliseconds: 500), () {
+                            Timer(const Duration(milliseconds: 1000), () {
                                 categorySKUField.controller.generateItems(mapList);
                                 categorySKUField.controller.items.refresh();
+                                categorySKUField.controller.enable();
+                            });
+                            Products? products = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name! == transferModel!.products![0]!.name);
+                            Timer(const Duration(milliseconds: 500), () { 
+                                Map<String, bool> mapList2 ={};
+                                for (var element in products!.productItems!) { mapList2[element!.name!] = false;}
+                                skuField.controller.generateItems(mapList2);
+                                skuField.controller.textSelected.value = transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name! : "";
+                                skuField.controller.hideLoading();
+                                skuField.controller.enable();
                             });
                         }
                     }
                     isLoading.value = false;
+                    sourceField.controller
+                    .showLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -179,6 +207,8 @@ class TransferFormController extends GetxController {
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                      isLoading.value = false;
+                        sourceField.controller
+                        .showLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
                 )
@@ -186,6 +216,9 @@ class TransferFormController extends GetxController {
     }
 
     void getListDestinationOperationUnit() {
+        destinationField.controller
+        ..disable()
+        ..showLoading();
         Service.push(
             service: ListApi.getListDestionTransfer,
             context: context,
@@ -198,10 +231,13 @@ class TransferFormController extends GetxController {
 
                     for (var result in body.data) {
                         listDestinationOperationUnits.value.add(result);
-                    }
+                    }                    
+                    destinationField.controller
+                    ..enable()
+                    ..hideLoading();
                     destinationField.controller.generateItems(mapListDestination);
-                    destinationField.controller.items.refresh();
                     isLoading.value = false;
+
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -211,7 +247,10 @@ class TransferFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;
+                    isLoading.value = false;                    
+                    destinationField.controller
+                    ..enable()
+                    ..hideLoading();
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
@@ -221,7 +260,10 @@ class TransferFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;
+                    isLoading.value = false;                    
+                    destinationField.controller
+                    ..enable()
+                    ..hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
             )

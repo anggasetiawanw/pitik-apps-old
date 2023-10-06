@@ -122,7 +122,7 @@ class CreateGrOrderController extends GetxController{
     for (int i = 0; i < orderDetail.products!.length; i++) {
       listProductPayload.add(Products(
         productItemId: orderDetail.products![i]!.productItemId!,
-        quantity: skuCardGr.controller.efSumChickReceived.value[i].getInput().isEmpty ? 0 : int.parse(skuCardGr.controller.efSumChickReceived.value[i].getInput()),
+        quantity: skuCardGr.controller.efSumChickReceived.value[i].getInput().isEmpty ? 0 : skuCardGr.controller.efSumChickReceived.value[i].getInputNumber()!.toInt(),
         weight: skuCardGr.controller.efSumWeightReceived.value[i].getInputNumber(),
         price: orderDetail.products![i]!.price,
       ));
