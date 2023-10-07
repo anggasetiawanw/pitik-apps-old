@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:model/device_model.dart';
 
 import '../global_var.dart';
-import '../library/model_library.dart';
 import '../progress_loading/progress_loading.dart';
 import 'expandable_device_controller.dart';
 

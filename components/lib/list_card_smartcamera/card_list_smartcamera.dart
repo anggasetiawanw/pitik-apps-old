@@ -3,9 +3,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:model/device_model.dart';
 
 import '../global_var.dart';
-import '../library/model_library.dart';
 
 /**
  * @author DICKY

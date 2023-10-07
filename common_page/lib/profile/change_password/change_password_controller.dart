@@ -31,55 +31,66 @@ class ChangePasswordController extends GetxController {
     late String homePageRoute;
     late ButtonFill bfYesRegBuilding;
     late ButtonOutline boNoRegBuilding;
+
     late PasswordField efOldPassword = PasswordField(
-        controller: GetXCreator.putPasswordFieldController(
-            "efOldPassword"),
+        controller: GetXCreator.putPasswordFieldController("efOldPassword"),
         label: "Kata sandi saat ini",
         hint: "Tulis kata sandi saat ini",
         alertText: "Kata sandi saat ini tidak boleh kosong",
-        maxInput: 20, onTyping: (value ) { 
+        maxInput: 20,
+        onTyping: (value ) {
             if (value.isEmpty){
                 efOldPassword.controller.showAlert();
             }
         }
     );
-   late PasswordField efNewPassword = PasswordField(controller: GetXCreator.putPasswordFieldController("efNewPassword"), label:
-    "Kata sandi baru", hint: "Tulis kata sandi baru", alertText: "Kata sandi baru tidak boleh kosong", maxInput: 29, onTyping: (value) {
-        RegExp regexLength = RegExp(r'^.{7,}$');
-        RegExp regexPassword = RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])');
-        if (value.isEmpty){
-            efNewPassword.controller.showAlert();
-            efNewPassword.controller.hideAlertLength();
-            efNewPassword.controller.hideAlertPassword();
-        } else {
-            efNewPassword.controller.hideAlert();
-            efNewPassword.controller.showAlertLength();
-            efNewPassword.controller.showAlertPassword();
-            if (regexLength.hasMatch(value)){
-                efNewPassword.controller.beGoodLength();
+
+    late PasswordField efNewPassword = PasswordField(
+        controller: GetXCreator.putPasswordFieldController("efNewPassword"),
+        label: "Kata sandi baru",
+        hint: "Tulis kata sandi baru",
+        alertText: "Kata sandi baru tidak boleh kosong",
+        maxInput: 29,
+        onTyping: (value) {
+            RegExp regexLength = RegExp(r'^.{7,}$');
+            RegExp regexPassword = RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])');
+
+            if (value.isEmpty) {
+                efNewPassword.controller.showAlert();
+                efNewPassword.controller.hideAlertLength();
+                efNewPassword.controller.hideAlertPassword();
             } else {
-                efNewPassword.controller.beBadLength();
-            }
-            if (regexPassword.hasMatch(value)){
-                efNewPassword.controller.beGoodPassword();
-            } else {
-                efNewPassword.controller.beBadPassword();
+                efNewPassword.controller.hideAlert();
+                efNewPassword.controller.showAlertLength();
+                efNewPassword.controller.showAlertPassword();
+
+                if (regexLength.hasMatch(value)){
+                    efNewPassword.controller.beGoodLength();
+                } else {
+                    efNewPassword.controller.beBadLength();
+                }
+
+                if (regexPassword.hasMatch(value)){
+                    efNewPassword.controller.beGoodPassword();
+                } else {
+                    efNewPassword.controller.beBadPassword();
+                }
             }
         }
-    },);
+    );
+
     late PasswordField efConfNewPassword = PasswordField(
-        controller: GetXCreator.putPasswordFieldController(
-            "efConfNewPassword"),
+        controller: GetXCreator.putPasswordFieldController("efConfNewPassword"),
         label: "Konfirmasi kata sandi baru",
         hint: "Konfirmasi kata sandi",
         alertText: "Konfirmasi kata sandi tidak boleh kosong",
-        maxInput: 20, onTyping: (value ) { 
+        maxInput: 20,
+        onTyping: (value ) {
             if (value.isEmpty){
                 efConfNewPassword.controller.showAlert();
             }
          },
     );
-
 
     @override
     void onInit() {
@@ -90,21 +101,15 @@ class ChangePasswordController extends GetxController {
          boNoRegBuilding = ButtonOutline(
             controller: GetXCreator.putButtonOutlineController("boNoRegBuilding"),
             label: "Tidak",
-            onClick: () {
-                Get.back();
-            },
+            onClick: () => Get.back(),
         );
+
         bfYesRegBuilding = ButtonFill(
             controller: GetXCreator.putButtonFillController("bfYesRegBuilding"),
             label: "Ya",
-            onClick: () {
-                changePassword();
-            },
+            onClick: () => changePassword()
         );
-
     }
-
-
 
     /// The function `validation()` checks if three password fields are empty and
     /// returns a list indicating if the validation was successful and an error
@@ -113,38 +118,34 @@ class ChangePasswordController extends GetxController {
     /// Returns:
     ///   The function `validation()` returns a list containing two elements: a
     /// boolean value and an empty string.
-    List validation() {
-        List ret = [true, ""];
+    bool validation() {
+        bool isPass = true;
 
-        if (efOldPassword
-            .getInput()
-            .isEmpty) {
-            efOldPassword.controller.showAlert();
-            Scrollable.ensureVisible(
-                efOldPassword.controller.formKey.currentContext!);
-            return ret = [false, ""];
-        }else if (efNewPassword
-            .getInput()
-            .isEmpty) {
-            efNewPassword.controller.showAlert();
-            Scrollable.ensureVisible(
-                efNewPassword.controller.formKey.currentContext!);
-            return ret = [false, ""];
-        }else if (efConfNewPassword
-            .getInput()
-            .isEmpty) {
-                efConfNewPassword.alertText = "Password Harus Di Isi";
+        if (efConfNewPassword.getInput().isEmpty) {
+            efConfNewPassword.alertText = "Password Harus Di Isi";
             efConfNewPassword.controller.showAlert();
-            Scrollable.ensureVisible(
-                efConfNewPassword.controller.formKey.currentContext!);
-            return ret = [false, ""];
-        }else if(efConfNewPassword.getInput() != efNewPassword
-            .getInput()){
+            Scrollable.ensureVisible(efConfNewPassword.controller.formKey.currentContext!);
+            isPass = false;
+        } else if (efConfNewPassword.getInput() != efNewPassword.getInput()) {
             efConfNewPassword.alertText = "Konfirmasi kata sandi salah";
             efConfNewPassword.controller.showAlert();
-            return ret = [false, ""];
+            Scrollable.ensureVisible(efConfNewPassword.controller.formKey.currentContext!);
+            isPass = false;
         }
-        return ret;
+
+        if (efNewPassword.getInput().isEmpty) {
+            efNewPassword.controller.showAlert();
+            Scrollable.ensureVisible(efNewPassword.controller.formKey.currentContext!);
+            isPass = false;
+        }
+
+        if (efOldPassword.getInput().isEmpty) {
+            efOldPassword.controller.showAlert();
+            Scrollable.ensureVisible(efOldPassword.controller.formKey.currentContext!);
+            isPass = false;
+        }
+
+        return isPass;
     }
 
     /// The function generates a payload containing an old password, a new password,
@@ -161,51 +162,45 @@ class ChangePasswordController extends GetxController {
     /// handling different response scenarios.
     void changePassword() {
         Get.back();
-        List ret = validation();
-        if (ret[0]) {
-            isLoading.value = true;
-            try {
-                Password payload = generatePayload();
-                Service.push(
-                    service: ListApi.changePassword,
-                    context: context,
-                    body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId,
-                        ListApi.pathChangePassword(),
-                        Mapper.asJsonString(payload)],
-                    listener:ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            if(isFromLogin){
-                                Get.offAllNamed(homePageRoute);
-                            } else {
-                                Get.back();
-                            } 
-                            isLoading.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
-                                duration: const Duration(seconds: 5),
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
-                                duration: const Duration(seconds: 5),
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white);
-                        },
-                        onTokenInvalid: GlobalVar.invalidResponse()
-                    ),
-                );
-            } catch (e,st) {
-                Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
-                    snackPosition: SnackPosition.BOTTOM,
-                    duration: const Duration(seconds: 5),
-                    backgroundColor: const Color(0xFFFF0000),
-                    colorText: Colors.white);
-            }
-
+        isLoading.value = true;
+        try {
+            Password payload = generatePayload();
+            Service.push(
+                service: ListApi.changePassword,
+                context: context,
+                body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathChangePassword(), Mapper.asJsonString(payload)],
+                listener:ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) {
+                        if(isFromLogin){
+                            Get.offAllNamed(homePageRoute);
+                        } else {
+                            Get.back();
+                        }
+                        isLoading.value = false;
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
+                        isLoading.value = false;
+                        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white);
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
+                        isLoading.value = false;
+                        Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white);
+                    },
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                ),
+            );
+        } catch (e, st) {
+            Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 5),
+                backgroundColor: const Color(0xFFFF0000),
+                colorText: Colors.white);
         }
     }
 

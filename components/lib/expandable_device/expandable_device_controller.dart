@@ -1,14 +1,19 @@
 
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/device_model.dart';
+import 'package:model/error/error.dart';
+import 'package:model/graph_line.dart';
+import 'package:model/response/historical_data_response.dart';
 
 import '../get_x_creator.dart';
 import '../global_var.dart';
 import '../graph_view/graph_view.dart';
-import '../library/engine_library.dart';
-import '../library/model_library.dart';
 
 /**
  * @author DICKY
@@ -91,7 +96,7 @@ class ExpandableDeviceController extends GetxController {
                     );
                 },
                 onResponseError: (exception, stacktrace, id, packet) =>isLoading.value = false,
-                onTokenInvalid: GlobalVar.invalidResponse()
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
     }

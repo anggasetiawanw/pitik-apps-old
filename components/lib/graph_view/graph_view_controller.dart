@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../library/model_library.dart';
+import 'package:model/graph_line.dart';
 
 /**
  * @author DICKY

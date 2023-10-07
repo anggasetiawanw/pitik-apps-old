@@ -8,6 +8,8 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
+import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
@@ -38,6 +40,7 @@ class AppRoutes {
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.monitorPage, page: ()=> const DetailSmartMonitor(), binding: DetailSmartMonitorBindings(context: GlobalVar.getContext())),
     ];
 }
 
@@ -54,4 +57,5 @@ class RoutePage {
     static const String helpPage = "/help";
     static const String licencePage = "/licence";
     static const String changePasswordPage = "/changePassword";
+    static const String monitorPage = "/monitor";
 }

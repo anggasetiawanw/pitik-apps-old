@@ -1,13 +1,17 @@
-// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters, constant_identifier_names
 
+import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
-
-import 'library/dao_impl_library.dart';
-import 'library/engine_library.dart';
-import 'library/model_library.dart';
+import 'package:model/auth_model.dart';
+import 'package:model/farm_model.dart';
+import 'package:model/profile.dart';
+import 'package:model/smart_scale/smart_scale_model.dart';
+import 'package:model/x_app_model.dart';
 
 /**
  * @author DICKY
@@ -339,18 +343,18 @@ class GlobalVar {
     static Mixpanel? mixpanel;
     static const MethodChannel _channel = MethodChannel('flutter.moum.sim_info');
 
-    static final String SUBMISSION_STATUS = "Perlu Pengajuan";
-    static final String SUBMITTED_DOC_IN = "DOC in Diajukan";
-    static final String SUBMITTED_OVK = "OVK Diajukan";
-    static final String APPROVED_OVK = "OVK Disetujui";
-    static final String APPROVED_DOC_IN = "DOC in Disetujui";
-    static final String SUBMITTED_STATUS = "Diajukan";
-    static final String NEED_APPROVED = "Perlu Persetujuan";
-    static final String APPROVED = "Disetujui";
-    static final String OVK_REJECTED = "OVK Ditolak";
-    static final String PROSESSING = "Diproses";
-    static final String REJECTED = "Ditolak";
-    static final String NEW = "Baru";
+    static const String SUBMISSION_STATUS = "Perlu Pengajuan";
+    static const String SUBMITTED_DOC_IN = "DOC in Diajukan";
+    static const String SUBMITTED_OVK = "OVK Diajukan";
+    static const String APPROVED_OVK = "OVK Disetujui";
+    static const String APPROVED_DOC_IN = "DOC in Disetujui";
+    static const String SUBMITTED_STATUS = "Diajukan";
+    static const String NEED_APPROVED = "Perlu Persetujuan";
+    static const String APPROVED = "Disetujui";
+    static const String OVK_REJECTED = "OVK Ditolak";
+    static const String PROSESSING = "Diproses";
+    static const String REJECTED = "Ditolak";
+    static const String NEW = "Baru";
 
     static Future<String> getPhoneCarrier() async {
         String carrierName3 = await _channel.invokeMethod('mobileCountryCode');
@@ -460,13 +464,10 @@ class GlobalVar {
         return _globalContext!;
     }
 
-    static VoidCallback invalidResponse() {
-        return () {
-            AuthImpl().delete(null, []);
-            // UserGoogleImpl().delete(null, []);
-            ProfileImpl().delete(null, []);
-            Get.offAllNamed('/login');
-        };
+    static void invalidResponse() {
+        AuthImpl().delete(null, []);
+        ProfileImpl().delete(null, []);
+        Get.offAllNamed('/login');
     }
 
     static void track(String eventName) {
