@@ -1,6 +1,6 @@
 // ignore_for_file: slash_for_doc_comments
 
-import '../engine_library.dart';
+import 'engine_library.dart';
 import 'sensor_model.dart';
 
 /**

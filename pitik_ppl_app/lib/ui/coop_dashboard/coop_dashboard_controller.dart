@@ -1,4 +1,5 @@
 import 'package:common_page/profile/profile_activity.dart';
+import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
@@ -512,18 +513,13 @@ class CoopDashboardController extends GetxController {
             onRefresh: () => Future.delayed(
                 const Duration(milliseconds: 200), () => getMonitorData(coop)
             ),
-            child: ListView(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-
-                ],
-            ),
+            child: const DetailSmartMonitor(),
         );
     }
 
     Widget generateProfileWidget() {
         return ProfileActivity(
+            homeRoute: RoutePage.coopDashboard,
             changePassRoute: RoutePage.changePasswordPage,
             privacyRoute: RoutePage.privacyPage,
             termRoute: RoutePage.termPage,

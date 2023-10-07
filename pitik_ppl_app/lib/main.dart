@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import 'api_mapping/api_mapping.dart';
 import 'main.reflectable.dart';
+import 'package:model/password_model.dart';
 
 Future<void> main() async {
     ChuckerFlutter.showOnRelease = true;

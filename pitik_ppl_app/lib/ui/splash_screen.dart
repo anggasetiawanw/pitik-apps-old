@@ -37,7 +37,6 @@ class SplashScreenState extends State<SplashScreenActivity> {
     @override
     void initState() {
         WidgetsBinding.instance.addPostFrameCallback((_)async {
-
             var permissionGPS = await Permission.location.request();
             if (Platform.isIOS) {
                 // GpsUtil.on();
@@ -59,12 +58,11 @@ class SplashScreenState extends State<SplashScreenActivity> {
             }
 
             Timer(
-                const Duration(seconds: 2),
-                    () async {
+                const Duration(seconds: 2), () async {
                     Auth? auth = await AuthImpl().get();
                     Profile? userProfile = await ProfileImpl().get();
 
-                    if (auth == null ||userProfile == null ) {
+                    if (auth == null || userProfile == null ) {
                         isFirstRun = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstRun') ?? true);
                         if (await isFirstRun) {
                             Get.offNamed(RoutePage.boardingPage);

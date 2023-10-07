@@ -1,8 +1,7 @@
 // ignore_for_file: slash_for_doc_comments
 
-import 'package:model/sensor_data_model.dart';
-
 import '../engine_library.dart';
+import 'sensor_data_model.dart';
 
 /**
  * @author DICKY

@@ -113,7 +113,7 @@ class LoginController extends GetxController {
                     GlobalVar.auth = auth;
                     GlobalVar.profileUser = (body as ProfileResponse).data;
 
-                    ProfileImpl().save((body).data);
+                    ProfileImpl().save(body.data);
                     AuthImpl().save(auth);
 
                     Future<bool> isFirstLogin = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
@@ -122,11 +122,11 @@ class LoginController extends GetxController {
                     if (await isFirstLogin) {
                         Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList]);
                     } else {
-                        if (action == "DEFAULT_PASSWORD") {
-                            // showInformation();
-                        } else {
+                        // if (action == "DEFAULT_PASSWORD") {
+                        //     // showInformation();
+                        // } else {
                             Get.offAllNamed(RoutePage.coopList);
-                        }
+                        // }
                     }
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -149,7 +149,7 @@ class LoginController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                onTokenInvalid: GlobalVar.invalidResponse()
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
 

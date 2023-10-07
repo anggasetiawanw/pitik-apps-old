@@ -113,7 +113,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                 top: 58,
                                 left: 16,
                                 right: 16,
-                                child: Text('Halo TES', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                child: controller.profileTab.isTrue ? const SizedBox() : Text('Halo ${GlobalVar.profileUser!.fullName}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
                             ),
                             Positioned.fill(
                                 top: 90,

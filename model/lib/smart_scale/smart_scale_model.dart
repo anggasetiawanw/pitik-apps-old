@@ -1,9 +1,8 @@
 // ignore_for_file: slash_for_doc_comments
 
-import 'package:model/smart_scale/smart_scale_record_model.dart';
-
 import '../engine_library.dart';
 import '../room_model.dart';
+import 'smart_scale_record_model.dart';
 
 /**
  * @author DICKY
