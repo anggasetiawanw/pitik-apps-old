@@ -63,8 +63,10 @@ class _ProfileActivityState extends State<ProfileActivity> {
 
     @override
     Widget build(BuildContext context) {
-
         Widget nameInfo() {
+            String? name = GlobalVar.profileUser!.name == null || GlobalVar.profileUser!.name!.isEmpty ? GlobalVar.profileUser!.fullName :  GlobalVar.profileUser!.name;
+            String? role = GlobalVar.profileUser!.role == null || GlobalVar.profileUser!.role!.isEmpty ? GlobalVar.profileUser!.userType : GlobalVar.profileUser!.role;
+
             return Container(
                 margin: const EdgeInsets.only(top: 14, left: 32),
                 child: Row(
@@ -75,9 +77,9 @@ class _ProfileActivityState extends State<ProfileActivity> {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                Text("${GlobalVar.profileUser!.name ?? GlobalVar.profileUser!.fullName}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 16), overflow: TextOverflow.clip),
+                                Text(name ?? '-', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 16), overflow: TextOverflow.clip),
                                 const SizedBox(height: 4),
-                                Text("${GlobalVar.profileUser!.role ?? GlobalVar.profileUser!.roles![0]!.name}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                                Text(role ?? '-', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                             ],
                         )
                     ],

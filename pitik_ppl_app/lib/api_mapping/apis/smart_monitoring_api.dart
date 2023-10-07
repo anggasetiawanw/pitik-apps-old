@@ -32,8 +32,8 @@ class SmartMonitoringApi {
     ///   path (String): The "path" parameter is a placeholder for the specific path
     /// or endpoint that you want to access in your API. It is typically used to
     /// specify a resource or a specific action that you want to perform.
-    @GET(value: GET.PATH_PARAMETER, as: LatestConditionResponse, error: ErrorResponse)
-    void getLatestCondition(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+    @GET(value: 'v2/sensor/latest-condition', as: LatestConditionResponse, error: ErrorResponse)
+    void getLatestCondition(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("roomId") String roomId) {}
 
     /// The function `getHistoricalData` is a GET request that retrieves historical
     /// data based on the provided parameters.

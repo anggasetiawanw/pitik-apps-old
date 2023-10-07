@@ -17,4 +17,3 @@ export 'package:engine/util/mapper/annotation/to_snake_case_key.dart';
 export 'package:engine/dao/base_entity.dart';
 export 'package:engine/dao/annotation/table.dart';
 export 'package:engine/dao/annotation/attribute.dart';
-export 'package:engine/offlinecapability/offline.dart';

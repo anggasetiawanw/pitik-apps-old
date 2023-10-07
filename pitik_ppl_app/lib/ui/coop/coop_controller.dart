@@ -30,11 +30,12 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     RxList<Coop?> coopList = <Coop?>[].obs;
     RxList<Coop?> coopFilteredList = <Coop?>[].obs;
 
-    late EditField searchCoopField ;
+    late EditField searchCoopField;
 
     @override
     void onInit() {
         super.onInit();
+
         tabController = TabController(vsync: this, length: 2);
         tabController.addListener(() {
             if (tabController.index == 0) {

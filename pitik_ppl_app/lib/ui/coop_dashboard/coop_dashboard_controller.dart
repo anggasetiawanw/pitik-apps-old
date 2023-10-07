@@ -1,5 +1,6 @@
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
+import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
@@ -28,12 +29,24 @@ class CoopDashboardController extends GetxController {
 
     late Coop coop;
     late Profile? profile;
+    late DetailSmartMonitor detailSmartMonitor;
 
     var isLoading = false.obs;
     var homeTab = true.obs;
     var historyTab = false.obs;
     var monitorTab = false.obs;
     var profileTab = false.obs;
+
+    var showDocInAlert = false.obs;
+    var showDailyReportAlert = false.obs;
+    var showHarvestAlert = false.obs;
+    var showDailyTaskAlert = false.obs;
+    var showFarmClosingAlert = false.obs;
+    var showOrderAlert = true.obs;
+    var showTransferAlert = true.obs;
+    var showSmartScaleAlert = false.obs;
+    var showSmartControllerAlert = false.obs;
+    var showSmartCameraAlert = false.obs;
 
     Rx<Monitoring> monitoring = (Monitoring(
         day: -1,
@@ -61,6 +74,23 @@ class CoopDashboardController extends GetxController {
 
         getMonitoringPerformance(coop);
         profile = await ProfileImpl().get();
+
+        Get.put(DetailSmartMonitorController(context: Get.context!));
+        detailSmartMonitor = DetailSmartMonitor(
+            coop: coop,
+            widgetLoading: Padding(
+                padding: const EdgeInsets.only(top: 80),
+                child: Column(
+                    children: [
+                        Image.asset("images/card_lazy.gif", width: MediaQuery.of(Get.context!).size.width - 32),
+                        const SizedBox(height: 24),
+                        Image.asset("images/card_lazy.gif", width: MediaQuery.of(Get.context!).size.width - 32),
+                        const SizedBox(height: 24),
+                        Image.asset("images/card_lazy.gif", width: MediaQuery.of(Get.context!).size.width - 32),
+                    ],
+                ),
+            ),
+        );
     }
 
     void getMonitoringPerformance(Coop coop) {
@@ -81,7 +111,6 @@ class CoopDashboardController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
-                            print('$exception -> $stacktrace');
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
@@ -90,10 +119,6 @@ class CoopDashboardController extends GetxController {
                 GlobalVar.invalidResponse()
             }
         });
-    }
-
-    void getMonitorData(Coop coop) {
-
     }
 
     void getHistoryData(Coop coop) {
@@ -125,14 +150,184 @@ class CoopDashboardController extends GetxController {
         historyTab.value = false;
         monitorTab.value = true;
         profileTab.value = false;
+
+        detailSmartMonitor.getController().getLatestDataSmartMonitor();
     }
+
     void toProfile() {
         homeTab.value = false;
         historyTab.value = false;
         monitorTab.value = false;
         profileTab.value = true;
     }
+
+    void showMenuBottomSheet() {
+        showModalBottomSheet(
+            useSafeArea: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                )
+            ),
+            isScrollControlled: true,
+            context: Get.context!,
+            builder: (context) => Container(
+                color: Colors.transparent,
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Wrap(
+                            children: [
+                                Center(
+                                    child: Container(
+                                        width: 60,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                            color: GlobalVar.outlineColor
+                                        )
+                                    )
+                                ),
+                                const SizedBox(height: 16),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Text("Peternakan", style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                ),
+                                const SizedBox(height: 16),
+                                Padding(    // ROW 1 PETERNAKAN
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () {  // DOC-In
+                                                // TO DOC-IN
+                                            }),
+                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () {  // DAILY REPORT
+                                                // TO Daily Report
+                                            }),
+                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () {  // HARVEST
+                                                // TO Harvest
+                                            }),
+                                        ],
+                                    ),
+                                ),
+                                Padding(    // ROW 2 PETERNAKAN
+                                    padding: const EdgeInsets.only(left: 16, right: 16),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
+                                                // TO DAILY TASK
+                                            }),
+                                            _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () {  // FARM CLOSING
+                                                // TO FARM CLOSING
+                                            }),
+                                            const SizedBox(width: 60)
+                                        ],
+                                    ),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 20, top: 32),
+                                    child: Text("Procurement", style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                ),
+                                const SizedBox(height: 16),
+                                Padding(    // ROW 1 PROCUREMENT
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () {  // ORDER
+                                                // TO ORDER
+                                            }),
+                                            _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () {  // TRANSFER
+                                                // TO TRANSFER
+                                            }),
+                                            const SizedBox(width: 60)
+                                        ],
+                                    ),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(left: 20, top: 16),
+                                    child: Text("IoT", style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                ),
+                                const SizedBox(height: 16),
+                                Padding(    // ROW 1 IoT
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () {  // SMART SCALE
+                                                // TO SMART SCALE
+                                            }),
+                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () {  // SMART CONTROLLER
+                                                // TO SMART CONTROLLER
+                                            }),
+                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () {  // SMART CAMERA
+                                                // TO SMART CAMERA
+                                            }),
+                                        ],
+                                    ),
+                                ),
+                            ]
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    Widget _createMenu(String title, String imagePath, bool status, Function function) {
+        return GestureDetector(
+            onTap: () => function,
+            child: Column(
+                children: [
+                    SizedBox(
+                        width: 60,
+                        height: 50,
+                        child: Stack(
+                            children: [
+                                Positioned(
+                                    right: 10,
+                                    top: 10,
+                                    child: Container(
+                                        width: 40,
+                                        height: 40,
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                            color: GlobalVar.primaryLight2
+                                        ),
+                                        child: SvgPicture.asset(imagePath),
+                                    )
+                                ),
+                                !status ? const SizedBox() :
+                                Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    child: Image.asset('images/alert_red_icon.png')
+                                )
+                            ]
+                        )
+                    ),
+                    const SizedBox(height: 2),
+                    Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.center)
+                ],
+            ),
+        );
+    }
     
+    /// The function `generateHomeWidget()` returns a widget that displays various
+    /// information related to a coop's monitoring performance and population
+    /// details.
+    ///
+    /// Returns:
+    ///   a widget of type `RefreshIndicator` wrapped in a `ListView`.
     Widget generateHomeWidget() {
         DateTime startDate = Convert.getDatetime(coop.startDate!);
         DateTime stockOutDate = Convert.getDatetime(monitoring.value.feed!.stockoutDate!);
@@ -496,27 +691,26 @@ class CoopDashboardController extends GetxController {
     Widget generateHistoryWidget() {
         return RefreshIndicator(
             onRefresh: () => Future.delayed(
-                const Duration(milliseconds: 200), () => getMonitorData(coop)
+                const Duration(milliseconds: 200), () => getHistoryData(coop)
             ),
             child: ListView(
                 shrinkWrap: true,
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
 
-                ],
-            ),
+                ]
+            )
         );
     }
 
-    Widget generateMonitorWidget() {
-        return RefreshIndicator(
-            onRefresh: () => Future.delayed(
-                const Duration(milliseconds: 200), () => getMonitorData(coop)
-            ),
-            child: const DetailSmartMonitor(),
-        );
-    }
+    /// The function generates a widget for a smart monitor.
+    Widget generateMonitorWidget() => detailSmartMonitor;
 
+    /// The function generates a profile widget with various routes for different
+    /// pages.
+    ///
+    /// Returns:
+    ///   a ProfileActivity widget.
     Widget generateProfileWidget() {
         return ProfileActivity(
             homeRoute: RoutePage.coopDashboard,

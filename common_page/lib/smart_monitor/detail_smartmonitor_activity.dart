@@ -1,4 +1,4 @@
-import 'dart:async';
+// ignore_for_file: must_be_immutable
 
 import 'package:components/expandable_device/expandable_device.dart';
 import 'package:components/get_x_creator.dart';
@@ -7,6 +7,8 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:model/coop_model.dart';
+import 'package:model/device_model.dart';
 import 'package:model/sensor_data_model.dart';
 
 import 'detail_smartmonitor_controller.dart';
@@ -16,12 +18,22 @@ import 'detail_smartmonitor_controller.dart';
 ///@create date 06/10/2023
 
 class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
-    const DetailSmartMonitor({super.key});
+    Widget? widgetLoading;
+    Coop coop;
+    Device? device;
+
+    DetailSmartMonitor({super.key, required this.coop, this.device, this.widgetLoading});
+
+    DetailSmartMonitorController getController() {
+        return controller;
+    }
 
     @override
     Widget build(BuildContext context) {
         final DetailSmartMonitorController controller = Get.put(DetailSmartMonitorController(
             context: context,
+            coop: coop,
+            device: device
         ));
 
         showButtonDialog(BuildContext context, DetailSmartMonitorController controller) {
@@ -127,7 +139,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                 centerTitle: true,
                 title: Obx(() =>
                     controller.deviceUpdatedName.value == "" ?
-                    Text("${controller.device.deviceName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)) :
+                    Text("${controller.device!.deviceName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)) :
                     Text("${controller.deviceUpdatedName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium))
                 ),
                 actions: [
@@ -185,7 +197,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                 headerText == "Lampu" ? "Siklus Sekarang" :
                 headerText == "Amonia" ? "Mics-amonia" :"",
 
-                device: controller.device,
+                device: controller.device!,
                 sensorType: headerText == "temperature" ? "temperature" :
                 headerText == "Heat Stress" ? "heatStressIndex" :
                 headerText == "Kecepatan Angin" ? "wind" :
@@ -195,49 +207,59 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
             );
         }
 
-        return Scaffold(
-            backgroundColor: Colors.white,
-            appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(50),
-                child: appBar(),
-            ),
-            body: Stack(
-                children: [
-                    Obx(() =>
-                        controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-                        controller.deviceSummary == null ? Center(
-                            child: Container(
-                                width: double.infinity,
-                                height: MediaQuery. of(context). size. height,
-                                margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
-                                child: Column(
-                                    children: [
-                                        SvgPicture.asset("images/empty_icon.svg"),
-                                        const SizedBox(
-                                            height: 17,),
-                                        Text("Data Smart Monitor Belum Ada",
-                                            textAlign: TextAlign.center, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),)
-                                    ],
-                                ),
+        return Obx(() =>
+            Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: PreferredSize(
+                    preferredSize: const Size.fromHeight(50),
+                    child: controller.device != null ? appBar() : const SizedBox(),
+                ),
+                body: RefreshIndicator(
+                    onRefresh: () => Future.delayed(
+                        const Duration(milliseconds: 200), () => controller.getLatestDataSmartMonitor()
+                    ),
+                    child: Stack(
+                        children: [
+                            controller.isLoading.isTrue ? (widgetLoading == null ? const Center(child: ProgressLoading()) : widgetLoading!) :
+                            controller.deviceSummary == null ? ListView(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height / 2) - 115),
+                                        child: Column(
+                                            children: [
+                                                SvgPicture.asset("images/empty_icon.svg", width: 96, height: 86),
+                                                const SizedBox(height: 17),
+                                                Text("Data Smart Monitor Belum Ada", textAlign: TextAlign.center, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                    )
+                                ]
+                            ) :
+                            ListView(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                                controller.deviceSummary!.temperature != null ? customExpandable("temperature","images/temperature_icon.svg", controller.deviceSummary!.temperature!) : Container(),
+                                                controller.deviceSummary!.relativeHumidity != null ? customExpandable("Kelembaban", "images/humidity_icon.svg" ,controller.deviceSummary!.relativeHumidity!) : Container(),
+                                                controller.deviceSummary!.ammonia != null ? customExpandable("Amonia", "images/amonia_icon.svg" ,controller.deviceSummary!.ammonia!) : Container(),
+                                                controller.deviceSummary!.heatStressIndex != null ? customExpandable("Heat Stress", "images/heater_icon.svg" ,controller.deviceSummary!.heatStressIndex!) : Container(),
+                                                controller.deviceSummary!.wind != null ? customExpandable("Kecepatan Angin", "images/wind_icon.svg" ,controller.deviceSummary!.wind!) : Container(),
+                                                controller.deviceSummary!.lights != null ? customExpandable("Lampu", "images/lamp_icon.svg" ,controller.deviceSummary!.lights!) : Container(),
+                                            ],
+                                        )
+                                    )
+                                ],
                             )
-                        ):
-                        SingleChildScrollView(
-                          child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      controller.deviceSummary!.temperature != null ? customExpandable("temperature","images/temperature_icon.svg", controller.deviceSummary!.temperature!) : Container(),
-                                      controller.deviceSummary!.relativeHumidity != null ? customExpandable("Kelembaban", "images/humidity_icon.svg" ,controller.deviceSummary!.relativeHumidity!) : Container(),
-                                      controller.deviceSummary!.ammonia != null ? customExpandable("Amonia", "images/amonia_icon.svg" ,controller.deviceSummary!.ammonia!) : Container(),
-                                      controller.deviceSummary!.heatStressIndex != null ? customExpandable("Heat Stress", "images/heater_icon.svg" ,controller.deviceSummary!.heatStressIndex!) : Container(),
-                                      controller.deviceSummary!.wind != null ? customExpandable("Kecepatan Angin", "images/wind_icon.svg" ,controller.deviceSummary!.wind!) : Container(),
-                                      controller.deviceSummary!.lights != null ? customExpandable("Lampu", "images/lamp_icon.svg" ,controller.deviceSummary!.lights!) : Container(),
-                                  ],
-                              ),),
-                        )
+                        ]
                     )
-                ]
+                )
             )
         );
     }

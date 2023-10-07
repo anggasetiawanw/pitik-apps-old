@@ -18,7 +18,10 @@ import 'package:model/response/latest_condition_response.dart';
 
 class DetailSmartMonitorController extends GetxController {
     BuildContext context;
-    DetailSmartMonitorController({required this.context});
+    Coop? coop;
+    Device? device;
+    DetailSmartMonitorController({required this.context, this.coop, this.device});
+
 
     ScrollController scrollController = ScrollController();
     Rx<List<GraphLine>> historicalList = Rx<List<GraphLine>>([]);
@@ -28,8 +31,6 @@ class DetailSmartMonitorController extends GetxController {
     var pageSmartMonitor = 1.obs;
     var limit = 10.obs;
 
-    late Coop coop;
-    late Device device;
     DeviceSummary? deviceSummary;
 
     ScrollController scrollMonitorController = ScrollController();
@@ -48,8 +49,14 @@ class DetailSmartMonitorController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments[0];
-        device = Get.arguments[1];
+        if (Get.arguments != null) {
+            coop = Get.arguments[0];
+
+            if (Get.arguments.length > 1) {
+                device = Get.arguments[1];
+            }
+        }
+
         isLoading.value = true;
         getLatestDataSmartMonitor();
     }
@@ -57,10 +64,30 @@ class DetailSmartMonitorController extends GetxController {
     /// The function `getLatestDataSmartMonitor` retrieves the latest data from a
     /// smart monitor device and updates the device summary.
     void getLatestDataSmartMonitor() {
+        isLoading.value = true;
+        List request = [];
+
+        if (device == null) {
+            request = [
+                GlobalVar.auth!.token,
+                GlobalVar.auth!.id,
+                coop!.farmingCycleId,
+                null
+            ];
+        } else {
+            request = [
+                GlobalVar.auth!.token,
+                GlobalVar.auth!.id,
+                GlobalVar.xAppId,
+                ListApi.pathLatestCondition(device!.deviceId!)
+            ];
+        }
+
         Service.push(
+            apiKey: 'smartMonitoringApi',
             service: ListApi.getLatestCondition,
             context: context,
-            body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathLatestCondition(device.deviceId!)],
+            body: request,
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     if (!(body as LatestConditionResponse).data!.isNullObject()) {
@@ -89,7 +116,6 @@ class DetailSmartMonitorController extends GetxController {
 
 class DetailSmartMonitorBindings extends Bindings {
     BuildContext context;
-
     DetailSmartMonitorBindings({required this.context});
 
     @override
