@@ -23,7 +23,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                 floatingActionButton: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => controller.showMenuBottomSheet(),
                         child: Container(
                             height: 65,
                             width: 65,

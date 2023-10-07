@@ -95,7 +95,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  android: true
+  android: "launcher_icon"
   ios: true
   image_path: "images/pitik_launcher.png"
 

@@ -3,6 +3,7 @@
 import '../engine_library.dart';
 import '../room_model.dart';
 import 'smart_scale_record_model.dart';
+import 'package:engine/offlinecapability/offline.dart';
 
 /**
  * @author DICKY
