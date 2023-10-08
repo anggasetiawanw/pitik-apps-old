@@ -59,7 +59,10 @@ class SplashScreenState extends State<SplashScreenActivity> {
             }
 
             // Check New Update
-            UpdaterCodeMagic().checkForUpdate(isAvailable: (isAvailable) => print('NEW UPDATE -> $isAvailable'));
+            UpdaterCodeMagic().checkForUpdate(
+                isAvailable: (isAvailable) => print('NEW UPDATE -> $isAvailable'),
+                isReadyToRestart: (isReadyToRestart) => print('RESTART APP -> $isReadyToRestart'),
+            );
 
             Timer(
                 const Duration(seconds: 2), () async {
