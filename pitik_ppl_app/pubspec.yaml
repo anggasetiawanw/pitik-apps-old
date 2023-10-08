@@ -88,6 +88,7 @@ dependencies:
   image_picker: ^1.0.2
   file_picker: ^5.3.0
   autocomplete_textfield: ^2.0.1
+  shorebird_code_push: ^1.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

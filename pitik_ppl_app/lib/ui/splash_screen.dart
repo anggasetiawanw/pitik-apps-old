@@ -5,6 +5,7 @@ import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
 import 'package:engine/util/access_phone_permission.dart';
+import 'package:engine/util/updater_code_magic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,7 @@ class SplashScreenState extends State<SplashScreenActivity> {
 
     @override
     void initState() {
-        WidgetsBinding.instance.addPostFrameCallback((_)async {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
             var permissionGPS = await Permission.location.request();
             if (Platform.isIOS) {
                 // GpsUtil.on();
@@ -56,6 +57,9 @@ class SplashScreenState extends State<SplashScreenActivity> {
                     // GpsUtil.mock(true);
                 }
             }
+
+            // Check New Update
+            UpdaterCodeMagic().checkForUpdate(isAvailable: (isAvailable) => print('NEW UPDATE -> $isAvailable'));
 
             Timer(
                 const Duration(seconds: 2), () async {
