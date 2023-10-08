@@ -78,6 +78,7 @@ import 'package:pitik_internal_app/ui/sales_order_module/sales_order_data/sales_
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/detail_sales_order_activity.dart';
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/detail_sales_order_controller.dart';
 import 'package:pitik_internal_app/ui/splash_activity/splash_activity.dart';
+import 'package:pitik_internal_app/ui/splash_activity/splash_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_activity.dart';
@@ -186,7 +187,7 @@ class AppRoutes {
 
     static final page = [
         //SALES MODULE PAGE
-        GetPage(name: RoutePage.splashPage, page: () => const SplashActivity()),
+        GetPage(name: RoutePage.splashPage, page: () => const SplashActivity(), binding: SplashBindings()),
         GetPage(name: RoutePage.loginPage,page: () => const LoginPage(),binding: LoginActivityBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.homePageCustomer,page: () => const HomePageCustomer(),binding: HomePageBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.purchasePage,page: () => const PurchasePage(),binding: PurchasePageBindings(context: Constant.getContext()),),
