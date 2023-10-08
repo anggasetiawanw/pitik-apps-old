@@ -209,7 +209,7 @@ class DetailGRTransfer extends StatelessWidget {
                               ),
                                 child: Column(
                                     children: [
-                                        infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
+                                        infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
                                         if(controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[                                        
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
@@ -250,8 +250,8 @@ class DetailGRTransfer extends StatelessWidget {
                               ),
                                 child: Column(
                                     children: [
-                                        infoDetailSKU("Kategori SKU", "${controller.goodReceiptDetail.value!.products == null ? controller.transferModel.products![0]!.category != null ? controller.transferModel.products![0]!.category!.name : "-": controller.goodReceiptDetail.value!.products![0]!.productCategory!.name }"),
-                                        if(controller.transferModel.products![0]!.quantity != null || (controller.goodReceiptDetail.value!.products != null &&controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[                                        
+                                        infoDetailSKU("Kategori SKU", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.productItem!.category!.name : "null" }"),
+                                        if((controller.goodReceiptDetail.value!.products != null && controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[                                        
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.quantity : controller.transferModel.products![0]!.quantity } Ekor"),
                                         ],
