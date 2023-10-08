@@ -20,6 +20,7 @@ class HistoryController extends GetxController with GetSingleTickerProviderState
 
     HistoryController({required this.context, this.coop});
 
+    final ScrollController scrollController = ScrollController();
     late TabController tabController;
     late PerformanceActivity performanceActivity;
     late SapronakActivity sapronakActivity;

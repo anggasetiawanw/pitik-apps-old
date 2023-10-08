@@ -21,10 +21,6 @@ class HarvestActivity extends GetView<HarvestController> {
             coop: coop
         ));
 
-        return Column(
-            children: [
-
-            ],
-        );
+        return Obx(() => controller.tableLayout.value);
     }
 }

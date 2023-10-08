@@ -19,7 +19,12 @@ class PerformanceController extends GetxController {
         hideLabel: true,
         hint: "",
         alertText: "",
-        items: [],
+        items: const {
+            "BW": true,
+            "IP": false,
+            "FCR": false,
+            "Mortalitas": false
+        },
         onSpinnerSelected: (text) {
 
         }
