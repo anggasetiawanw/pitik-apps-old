@@ -50,7 +50,7 @@ class SplashController extends GetxController {
 
     void runSplash(){
             Timer(
-                const Duration(seconds: 3),
+                const Duration(seconds: 1),
                 () async {
                         Auth? auth = await AuthImpl().get();
                         UserGoogle? userGoogle = await UserGoogleImpl().get();

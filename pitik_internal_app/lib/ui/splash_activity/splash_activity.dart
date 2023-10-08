@@ -23,7 +23,15 @@ class SplashActivity extends StatelessWidget {
                                 child: SvgPicture.asset("images/white_logo.svg"),
                             ),
                             const SizedBox(height: 24,),
-                            const Text("Aplikasi sedang diupdate...", style: TextStyle(color: Colors.white, fontSize: 16),),
+                            const Text("Aplikasi sedang diupdate, jangan tutup aplikasi.", style: TextStyle(color: Colors.white, fontSize: 16),),
+                            const SizedBox(height: 24,),
+                            const SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                            )
                         ]
                     ,)
                     : SizedBox(
