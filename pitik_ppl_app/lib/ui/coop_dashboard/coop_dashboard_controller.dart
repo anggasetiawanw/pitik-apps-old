@@ -1,3 +1,5 @@
+import 'package:common_page/history/history_activity.dart';
+import 'package:common_page/history/history_controller.dart';
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
@@ -30,6 +32,7 @@ class CoopDashboardController extends GetxController {
     late Coop coop;
     late Profile? profile;
     late DetailSmartMonitor detailSmartMonitor;
+    late HistoryActivity historyActivity;
 
     var isLoading = false.obs;
     var homeTab = true.obs;
@@ -75,7 +78,10 @@ class CoopDashboardController extends GetxController {
         getMonitoringPerformance(coop);
         profile = await ProfileImpl().get();
 
+        Get.put(HistoryController(context: Get.context!, coop: coop));
         Get.put(DetailSmartMonitorController(context: Get.context!));
+
+        historyActivity = HistoryActivity(coop: coop);
         detailSmartMonitor = DetailSmartMonitor(
             coop: coop,
             widgetLoading: Padding(
@@ -143,6 +149,8 @@ class CoopDashboardController extends GetxController {
         historyTab.value = true;
         monitorTab.value = false;
         profileTab.value = false;
+
+        historyActivity.controller.refreshData();
     }
 
     void toMonitor() {
@@ -151,7 +159,7 @@ class CoopDashboardController extends GetxController {
         monitorTab.value = true;
         profileTab.value = false;
 
-        detailSmartMonitor.getController().getLatestDataSmartMonitor();
+        detailSmartMonitor.controller.getLatestDataSmartMonitor();
     }
 
     void toProfile() {
@@ -688,20 +696,7 @@ class CoopDashboardController extends GetxController {
         );
     }
 
-    Widget generateHistoryWidget() {
-        return RefreshIndicator(
-            onRefresh: () => Future.delayed(
-                const Duration(milliseconds: 200), () => getHistoryData(coop)
-            ),
-            child: ListView(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-
-                ]
-            )
-        );
-    }
+    Widget generateHistoryWidget() => historyActivity;
 
     /// The function generates a widget for a smart monitor.
     Widget generateMonitorWidget() => detailSmartMonitor;
