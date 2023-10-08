@@ -67,13 +67,14 @@ class HistoryActivity extends GetView<HistoryController> {
                                     )
                                 ),
                                 RawScrollbar(
-                                    thumbVisibility: true,
                                     thumbColor: GlobalVar.primaryOrange,
                                     radius: const Radius.circular(8),
-                                    child: ListView(
-                                        children: [
-                                            historyController.harvestActivity
-                                        ],
+                                    controller: controller.scrollController,
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: 1,
+                                        controller: controller.scrollController,
+                                        itemBuilder: (context, index) => historyController.harvestActivity
                                     )
                                 )
                             ]
