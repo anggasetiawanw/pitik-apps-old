@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_page/library/component_library.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,33 +16,39 @@ class HarvestController extends GetxController {
     Coop? coop;
     HarvestController({required this.context, this.coop});
 
+    var isLoading = false.obs;
     Rx<TableField> tableLayout = (TableField(controller: GetXCreator.putTableFieldController("harvestTable"))).obs;
-    void generateData() {
-        List<List<String>> data = [
-            ["Tanggal Realisasi", "No DO", "Bakul", "No Timbang", "Total Ayam", "Total Tonase", "Rata-rata"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-            ["1", "2", "3", "4", "5", "6", "7"],
-        ];
 
-        tableLayout.value.controller.generateData(data: ArrayUtil().transpose<String>(data), useSticky: true, heightData: 45);
+    void generateData() {
+        isLoading.value = true;
+        Timer(const Duration(seconds: 5), () {
+            List<List<String>> data = [
+                ["Tanggal Realisasi", "No DO", "Bakul", "No Timbang", "Total Ayam", "Total Tonase", "Rata-rata"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+                ["1", "2", "3", "4", "5", "6", "7"],
+            ];
+
+            tableLayout.value.controller.generateData(data: ArrayUtil().transpose<String>(data), useSticky: true, heightData: 45);
+            isLoading.value = false;
+        });
     }
 }
 

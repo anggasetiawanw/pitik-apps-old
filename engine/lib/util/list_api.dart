@@ -17,13 +17,19 @@ class ListApi {
     static const String getCoops = "getCoops";
     static const String getDetailCoop = "getDetailCoop";
     static const String registerDevice = "registerDevice";
+    
+    // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
     static const String modifyDevice = "modifyDevice";
     static const String getLatestCondition = "getLatestCondition";
     static const String getHistoricalData = "getHistoricalData";
+    
+    // api SMART CAMERA
     static const String getRecordImages = "getRecordImages";
     static const String getListDataCamera = "getListDataCamera";
     static const String takePictureSmartCamera = "takePictureSmartCamera";
+    
+    // api SMART CONTROLLER
     static const String getDetailSmartController = "getDetailSmartController";
     static const String getDataGrowthDay = "getDataGrowthDay";
     static const String setController = "setController";
@@ -35,7 +41,9 @@ class ListApi {
     static const String getSmartScaleDetail = "getSmartScaleDetail";
     static const String saveSmartScale = "saveSmartScale";
     static const String updateSmartScale = "updateSmartScale";
-
+    
+    // api PRODUCT REPORT
+    static const String getSapronak = "getSapronak";
     static const String getProductById = "getProductById";
 
     static String pathChangePassword(){
@@ -110,7 +118,11 @@ class ListApi {
         return "v2/b2b/weighing/$weighingId";
     }
 
-     static String pathGetProductById(String productId) {
+    static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
+    }
+    
+    static String pathGetSapronakByType(String farmingCycleId, String type) {
+        return 'v2/farming-cycles/$farmingCycleId/purchase-orders/$type';
     }
 }

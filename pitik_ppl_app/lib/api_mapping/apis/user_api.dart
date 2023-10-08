@@ -12,10 +12,9 @@ import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
 
-///@author Robertus Mahardhi Kuncoro
-///@email <robert.kuncoro@pitik.id>
-///@create date 31/07/23
-
+///@author DICKY
+///@email <dicky.maulana@pitik.idd>
+///@create date 11/09/2023
 
 @Rest
 class UserApi {

@@ -36,16 +36,25 @@ class SpinnerField extends StatelessWidget {
         Future.delayed(Duration.zero, () {
             if (onInit) {
                 controller.generateItems(items);
+                items.forEach((key, value) {
+                    if (value) {
+                        controller.setTextSelected(key);
+                    }
+                });
+
                 onInit = false;
             }
         });
 
-        final labelField = SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-                label,
-                textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+        final labelField = Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                    label,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                ),
             ),
         );
 
@@ -57,7 +66,6 @@ class SpinnerField extends StatelessWidget {
                 child: Column(
                     children: <Widget>[
                         controller.hideLabel.isFalse ? labelField : Container(),
-                        const SizedBox(height: 8),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[

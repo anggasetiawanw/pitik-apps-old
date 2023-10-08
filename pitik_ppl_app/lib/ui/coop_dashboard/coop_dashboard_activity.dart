@@ -50,7 +50,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                 child: Container(
                                     height: 150,
                                     decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(36), bottomRight: Radius.circular(36)),
+                                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
                                         color: GlobalVar.primaryLight
                                     ),
                                 )
@@ -117,8 +117,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                             ),
                             Positioned.fill(
                                 top: 90,
-                                left: 16,
-                                right: 16,
+                                left: controller.historyTab.isFalse ? 16 : 0,
+                                right: controller.historyTab.isFalse ? 16 : 0,
                                 child: controller.isLoading.isTrue ? Image.asset(
                                     "images/card_height_450_lazy.gif",
                                     height: 400,

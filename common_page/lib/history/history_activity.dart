@@ -24,63 +24,110 @@ class HistoryActivity extends GetView<HistoryController> {
 
         return Scaffold(
             backgroundColor: Colors.transparent,
-            body: Column(
-                children: [
-                    Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: TabBar(
-                            controller: historyController.tabController,
-                            indicatorColor: GlobalVar.primaryOrange,
-                            labelColor: GlobalVar.primaryOrange,
-                            unselectedLabelColor: GlobalVar.gray,
-                            labelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
-                            unselectedLabelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
-                            tabs: const [
-                                Tab(text: "Performa"),
-                                Tab(text: "Sapronak"),
-                                Tab(text: "Panen")
-                            ]
+            body: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                    children: [
+                        Padding(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            child: Stack(
+                                fit: StackFit.passthrough,
+                                alignment: Alignment.bottomCenter,
+                                children: <Widget>[
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(color: GlobalVar.outlineColor, width: 2.0),
+                                            ),
+                                        ),
+                                    ),
+                                    TabBar(
+                                        controller: historyController.tabController,
+                                        indicatorColor: GlobalVar.primaryOrange,
+                                        labelColor: GlobalVar.primaryOrange,
+                                        unselectedLabelColor: GlobalVar.gray,
+                                        labelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
+                                        unselectedLabelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
+                                        tabs: const [
+                                            Tab(text: "Performa"),
+                                            Tab(text: "Sapronak"),
+                                            Tab(text: "Panen")
+                                        ]
+                                    )
+                                ]
+                            ),
                         ),
-                    ),
-                    Expanded(
-                        child: TabBarView(
-                            controller: historyController.tabController,
-                            children: [
-                                RawScrollbar(
-                                    thumbVisibility: true,
-                                    thumbColor: GlobalVar.primaryOrange,
-                                    radius: const Radius.circular(8),
-                                    child: ListView(
-                                        children: [
-                                            historyController.performanceActivity
-                                        ],
-                                    )
-                                ),
-                                RawScrollbar(
-                                    thumbVisibility: true,
-                                    thumbColor: GlobalVar.primaryOrange,
-                                    radius: const Radius.circular(8),
-                                    child: ListView(
-                                        children: [
-                                            historyController.sapronakActivity
-                                        ],
-                                    )
-                                ),
-                                RawScrollbar(
-                                    thumbColor: GlobalVar.primaryOrange,
-                                    radius: const Radius.circular(8),
-                                    controller: controller.scrollController,
-                                    child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: 1,
-                                        controller: controller.scrollController,
-                                        itemBuilder: (context, index) => historyController.harvestActivity
-                                    )
+                        Obx(() =>
+                            Expanded(
+                                child: TabBarView(
+                                    controller: historyController.tabController,
+                                    children: [
+                                        RawScrollbar(
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            controller: controller.scrollController,
+                                            child: RefreshIndicator(
+                                                onRefresh: () => Future.delayed(
+                                                    const Duration(milliseconds: 200), () => historyController.performanceActivity.controller.generateData(coop)
+                                                ),
+                                                child: historyController.performanceActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
+                                                ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics: const AlwaysScrollableScrollPhysics(),
+                                                    itemCount: 1,
+                                                    controller: controller.scrollController,
+                                                    itemBuilder: (context, index) => historyController.performanceActivity
+                                                )
+                                            )
+                                        ),
+                                        RawScrollbar(
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            controller: controller.scrollController,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                                child: RefreshIndicator(
+                                                    onRefresh: () => Future.delayed(
+                                                        const Duration(milliseconds: 200), () => historyController.sapronakActivity.controller.generateData(coop)
+                                                    ),
+                                                    child: historyController.sapronakActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        physics: const AlwaysScrollableScrollPhysics(),
+                                                        itemCount: 1,
+                                                        controller: controller.scrollController,
+                                                        itemBuilder: (context, index) => historyController.sapronakActivity
+                                                    )
+                                                ),
+                                            )
+                                        ),
+                                        RawScrollbar(
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            controller: controller.scrollController,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 16, left: 16),
+                                                child: RefreshIndicator(
+                                                    onRefresh: () => Future.delayed(
+                                                        const Duration(milliseconds: 200), () => historyController.harvestActivity.controller.generateData()
+                                                    ),
+                                                    child: historyController.harvestActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
+                                                    ListView.builder(
+                                                        shrinkWrap: true,
+                                                        physics: const AlwaysScrollableScrollPhysics(),
+                                                        itemCount: 1,
+                                                        controller: controller.scrollController,
+                                                        itemBuilder: (context, index) => historyController.harvestActivity
+                                                    )
+                                                ),
+                                            )
+                                        )
+                                    ]
                                 )
-                            ]
+                            )
                         )
-                    )
-                ],
+                    ],
+                ),
             )
         );
     }

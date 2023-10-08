@@ -19,12 +19,6 @@ class TableField extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        return Obx(() =>
-            Padding(
-                key: controller.formKey,
-                padding: const EdgeInsets.only(top: 16),
-                child: controller.layout.value
-            )
-        );
+        return Obx(() => controller.layout.value);
     }
 }

@@ -34,16 +34,16 @@ class HistoryController extends GetxController with GetSingleTickerProviderState
         Get.put(SapronakController(context: Get.context!));
         Get.put(HarvestController(context: Get.context!));
 
-        performanceActivity = PerformanceActivity(coop: coop!);
-        sapronakActivity = SapronakActivity(coop: coop!);
+        performanceActivity = const PerformanceActivity();
+        sapronakActivity = const SapronakActivity();
         harvestActivity = HarvestActivity(coop: coop!);
 
         tabController = TabController(vsync: this, length: 3);
         tabController.addListener(() {
             if (tabController.index == 0) {
-                performanceActivity.controller.generateData();
+                performanceActivity.controller.generateData(coop!);
             } else if (tabController.index == 1) {
-                sapronakActivity.controller.generateData();
+                sapronakActivity.controller.generateData(coop!);
             } else {
                 harvestActivity.controller.generateData();
             }
@@ -52,9 +52,9 @@ class HistoryController extends GetxController with GetSingleTickerProviderState
 
     void refreshData() {
         if (tabController.index == 0) {
-            performanceActivity.controller.generateData();
+            performanceActivity.controller.generateData(coop!);
         } else if (tabController.index == 1) {
-            sapronakActivity.controller.generateData();
+            sapronakActivity.controller.generateData(coop!);
         } else {
             harvestActivity.controller.generateData();
         }
