@@ -45,6 +45,14 @@ class ListApi {
     // api PRODUCT REPORT
     static const String getSapronak = "getSapronak";
     static const String getProductById = "getProductById";
+    
+    // api FARMING PERFORMANCE
+    static const String getPerformanceMonitoring = "getPerformanceMonitoring";
+    static const String getMonitoringByVariable = "getMonitoringByVariable";
+    static const String getAllDataMonitoring = "getAllDataMonitoring";
+    static const String getDateMonitoring = "getDateMonitoring";
+    static const String getDetailMonitoring = "getDetailMonitoring";
+    static const String getListHarvestRealization = "getListHarvestRealization";
 
     static String pathChangePassword(){
         return "v2/auth/reset-password";

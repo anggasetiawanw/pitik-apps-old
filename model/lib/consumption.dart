@@ -17,7 +17,7 @@ class Consumption {
 
     static Consumption toResponseModel(Map<String, dynamic> map) {
         return Consumption(
-            remaining: map['consumption'] != null ? map['remaining'].toDouble() : map['consumption'],
+            remaining: map['remaining'] != null ? map['remaining'].toDouble() : map['remaining'],
             estimation: map['estimation'],
             stockoutDate: map['stockoutDate'],
             consumption: map['consumption'] != null ? map['consumption'].toDouble() : map['consumption'],

@@ -323,6 +323,7 @@ class GlobalVar {
     static Color primaryLight = Convert.hexToColor("#FFF9ED");
     static Color primaryLight2 = Convert.hexToColor("#FEEFD2");
     static Color primaryLight3 = Convert.hexToColor("#FEF6D2");
+    static Color primaryLight4 = Convert.hexToColor("#FBBF78");
     static Color black = Convert.hexToColor("#2C2B2B");
     static Color red = Convert.hexToColor("#DD1E25");
     static Color redBackground = Convert.hexToColor("#FDDFD1");

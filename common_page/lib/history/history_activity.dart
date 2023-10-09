@@ -65,7 +65,7 @@ class HistoryActivity extends GetView<HistoryController> {
                                         RawScrollbar(
                                             thumbColor: GlobalVar.primaryOrange,
                                             radius: const Radius.circular(8),
-                                            controller: controller.scrollController,
+                                            controller: controller.performanceScrollController,
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
                                                     const Duration(milliseconds: 200), () => historyController.performanceActivity.controller.generateData(coop)
@@ -75,7 +75,7 @@ class HistoryActivity extends GetView<HistoryController> {
                                                     shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: 1,
-                                                    controller: controller.scrollController,
+                                                    controller: controller.performanceScrollController,
                                                     itemBuilder: (context, index) => historyController.performanceActivity
                                                 )
                                             )
@@ -83,7 +83,7 @@ class HistoryActivity extends GetView<HistoryController> {
                                         RawScrollbar(
                                             thumbColor: GlobalVar.primaryOrange,
                                             radius: const Radius.circular(8),
-                                            controller: controller.scrollController,
+                                            controller: controller.sapronakScrollController,
                                             child: Padding(
                                                 padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                                 child: RefreshIndicator(
@@ -95,7 +95,7 @@ class HistoryActivity extends GetView<HistoryController> {
                                                         shrinkWrap: true,
                                                         physics: const AlwaysScrollableScrollPhysics(),
                                                         itemCount: 1,
-                                                        controller: controller.scrollController,
+                                                        controller: controller.sapronakScrollController,
                                                         itemBuilder: (context, index) => historyController.sapronakActivity
                                                     )
                                                 ),
@@ -104,19 +104,19 @@ class HistoryActivity extends GetView<HistoryController> {
                                         RawScrollbar(
                                             thumbColor: GlobalVar.primaryOrange,
                                             radius: const Radius.circular(8),
-                                            controller: controller.scrollController,
+                                            controller: controller.harvestScrollController,
                                             child: Padding(
                                                 padding: const EdgeInsets.only(top: 16, left: 16),
                                                 child: RefreshIndicator(
                                                     onRefresh: () => Future.delayed(
-                                                        const Duration(milliseconds: 200), () => historyController.harvestActivity.controller.generateData()
+                                                        const Duration(milliseconds: 200), () => historyController.harvestActivity.controller.generateData(coop)
                                                     ),
                                                     child: historyController.harvestActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
                                                     ListView.builder(
                                                         shrinkWrap: true,
                                                         physics: const AlwaysScrollableScrollPhysics(),
                                                         itemCount: 1,
-                                                        controller: controller.scrollController,
+                                                        controller: controller.harvestScrollController,
                                                         itemBuilder: (context, index) => historyController.harvestActivity
                                                     )
                                                 ),

@@ -82,12 +82,12 @@ class SapronakActivity extends GetView<SapronakController> {
                             children: List.generate(controller.ovkData.length + 1, (index) {
                                 if (index == 0) {
                                     return Padding(
-                                        padding: const EdgeInsets.only(top: 8),
+                                        padding: const EdgeInsets.only(top: 16),
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text('Tanggal', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: Colors.black)),
-                                                Text('Produk', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                                Text('Produk', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: Colors.black), textAlign: TextAlign.left),
                                                 Text('QTY', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: Colors.black)),
                                             ],
                                         ),
@@ -102,21 +102,21 @@ class SapronakActivity extends GetView<SapronakController> {
                                                     flex: 3,
                                                     child: Padding(
                                                         padding: const EdgeInsets.only(bottom: 4),
-                                                        child: Text(controller.feedData[index - 1]!.date!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black))
+                                                        child: Text(controller.ovkData[index - 1]!.date!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black))
                                                     )
                                                 ),
                                                 Flexible(
                                                     flex: 5,
                                                     child: Padding(
                                                         padding: const EdgeInsets.only(bottom: 4),
-                                                        child: Text(controller.feedData[index - 1]!.productName ?? '', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                                        child: Text(controller.ovkData[index - 1]!.productName ?? '', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
                                                     )
                                                 ),
                                                 Flexible(
                                                     flex: 2,
                                                     child: Padding(
                                                         padding: const EdgeInsets.only(bottom: 4),
-                                                        child: Text(controller.feedData[index - 1]!.quantity == null ? '-' : controller.feedData[index - 1]!.quantity!.toStringAsFixed(0), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                                        child: Text(controller.ovkData[index - 1]!.quantity == null ? '-' : controller.ovkData[index - 1]!.quantity!.toStringAsFixed(0), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
                                                     )
                                                 )
                                             ],
@@ -126,6 +126,7 @@ class SapronakActivity extends GetView<SapronakController> {
                             }),
                         )
                     ),
+                    const SizedBox(height: 100)
                 ],
             )
         );

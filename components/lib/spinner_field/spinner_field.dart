@@ -33,8 +33,9 @@ class SpinnerField extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        Future.delayed(Duration.zero, () {
+        Future.delayed(const Duration(milliseconds: 200), () {
             if (onInit) {
+                controller.hideLabel.value = hideLabel;
                 controller.generateItems(items);
                 items.forEach((key, value) {
                     if (value) {
@@ -62,10 +63,10 @@ class SpinnerField extends StatelessWidget {
             controller.showSpinner.isTrue ?
             Padding(
                 key: controller.formKey,
-                padding: const EdgeInsets.only(top: 16),
+                padding: EdgeInsets.only(top: controller.hideLabel.isFalse ? 16 : 0),
                 child: Column(
                     children: <Widget>[
-                        controller.hideLabel.isFalse ? labelField : Container(),
+                        controller.hideLabel.isFalse ? labelField : const SizedBox(),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[

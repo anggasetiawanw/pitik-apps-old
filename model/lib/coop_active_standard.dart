@@ -17,8 +17,8 @@ class CoopActiveStandard {
     static CoopActiveStandard toResponseModel(Map<String, dynamic> map) {
         return CoopActiveStandard(
             day: map['day'],
-            actual: map['actual'].toDouble(),
-            standard: map['standard'].toDouble()
+            actual: map['actual'] != null ? map['actual'].toDouble() : map['actual'],
+            standard: map['standard'] != null ? map['standard'].toDouble() : map['standard']
         );
     }
 }

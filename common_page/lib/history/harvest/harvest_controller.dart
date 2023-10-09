@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:common_page/library/component_library.dart';
+import 'package:common_page/library/dao_impl_library.dart';
+import 'package:common_page/library/engine_library.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:components/table_field/table_field.dart';
 import 'package:engine/util/array_util.dart';
+import 'package:model/response/realization_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -13,41 +17,51 @@ import 'package:engine/util/array_util.dart';
 
 class HarvestController extends GetxController {
     BuildContext context;
-    Coop? coop;
-    HarvestController({required this.context, this.coop});
+    HarvestController({required this.context});
 
     var isLoading = false.obs;
     Rx<TableField> tableLayout = (TableField(controller: GetXCreator.putTableFieldController("harvestTable"))).obs;
 
-    void generateData() {
+    void generateData(Coop coop) {
         isLoading.value = true;
-        Timer(const Duration(seconds: 5), () {
-            List<List<String>> data = [
-                ["Tanggal Realisasi", "No DO", "Bakul", "No Timbang", "Total Ayam", "Total Tonase", "Rata-rata"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-                ["1", "2", "3", "4", "5", "6", "7"],
-            ];
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    apiKey: 'farmMonitoringApi',
+                    service: ListApi.getListHarvestRealization,
+                    context: Get.context!,
+                    body: ['Bearer ${auth.token}', auth.id, coop.farmingCycleId],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            List<List<String>> data = [["Tanggal Realisasi", "No DO", "Bakul", "No Timbang", "Total Ayam", "Total Tonase", "Rata-rata"]];
+                            for (var realization in (body as RealizationResponse).data) {
+                                if (realization != null) {
+                                    data.add([
+                                        realization.harvestDate ?? '-',
+                                        realization.deliveryOrder ?? '-',
+                                        realization.bakulName ?? '-',
+                                        realization.records.isEmpty || realization.records[0]!.weighingNumber == null ? '-' : realization.records[0]!.weighingNumber!,
+                                        realization.quantity != null ? realization.quantity.toString() : '-',
+                                        realization.tonnage != null ? realization.tonnage!.toStringAsFixed(2) : '-',
+                                        realization.averageChickenWeighed != null ? realization.averageChickenWeighed!.toStringAsFixed(2) : '-'
+                                    ]);
+                                }
+                            }
 
-            tableLayout.value.controller.generateData(data: ArrayUtil().transpose<String>(data), useSticky: true, heightData: 45);
-            isLoading.value = false;
+                            tableLayout.value.controller.generateData(data: ArrayUtil().transpose<String>(data), useSticky: true, heightData: 45, widthData: 110);
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) => isLoading.value = false,
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            print('$exception -> $stacktrace');
+                            isLoading.value = false;
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
     }
 }
