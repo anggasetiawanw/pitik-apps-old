@@ -70,7 +70,10 @@ class HistoryActivity extends GetView<HistoryController> {
                                                 onRefresh: () => Future.delayed(
                                                     const Duration(milliseconds: 200), () => historyController.performanceActivity.controller.generateData(coop)
                                                 ),
-                                                child: historyController.performanceActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
+                                                child: historyController.performanceActivity.controller.isLoading.isTrue ? Padding(
+                                                    padding: const EdgeInsets.only(left: 16, top: 16),
+                                                    child: Image.asset('images/card_height_450_lazy.gif'),
+                                                ) :
                                                 ListView.builder(
                                                     shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),

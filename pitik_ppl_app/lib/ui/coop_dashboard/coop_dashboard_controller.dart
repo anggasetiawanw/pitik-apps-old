@@ -328,12 +328,12 @@ class CoopDashboardController extends GetxController {
     /// Returns:
     ///   a widget of type `RefreshIndicator` wrapped in a `ListView`.
     Widget generateHomeWidget() {
-        DateTime startDate = Convert.getDatetime(coop.startDate!);
-        DateTime stockOutDate = Convert.getDatetime(monitoring.value.feed!.stockoutDate!);
+        DateTime? startDate = coop.startDate == null ? null : Convert.getDatetime(coop.startDate!);
+        DateTime? stockOutDate = monitoring.value.feed == null || monitoring.value.feed!.stockoutDate == null ? null : Convert.getDatetime(monitoring.value.feed!.stockoutDate!);
         num populationOutstanding = (monitoring.value.population!.total == null ? 0 : monitoring.value.population!.total!) -
                                     (monitoring.value.population!.harvested == null ? 0 : monitoring.value.population!.harvested!) -
                                     (monitoring.value.population!.mortality == null ? 0 : monitoring.value.population!.mortality!);
-        String feedOutstanding = (monitoring.value.feed!.remaining == null ? '0' : monitoring.value.feed!.remaining!.toStringAsFixed(1));
+        String feedOutstanding = (monitoring.value.feed == null || monitoring.value.feed!.remaining == null ? '0' : monitoring.value.feed!.remaining!.toStringAsFixed(1));
 
         return RefreshIndicator(
             onRefresh: () => Future.delayed(
@@ -370,7 +370,7 @@ class CoopDashboardController extends GetxController {
                                     children: [
                                         Padding(
                                             padding: const EdgeInsets.only(top: 12),
-                                            child: Text('DOC-In ${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                            child: Text('DOC-In ${startDate == null ? '-' : '${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
                                         ),
                                         SvgPicture.asset(
                                             coop.day! > 0 && coop.day! <= 3 ?
@@ -674,7 +674,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                             Text('Perkiraan Habis', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                            Text('${Convert.getDay(stockOutDate)}/${Convert.getMonthNumber(stockOutDate)}/${Convert.getYear(stockOutDate)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            Text(stockOutDate == null ? '-' : '${Convert.getDay(stockOutDate)}/${Convert.getMonthNumber(stockOutDate)}/${Convert.getYear(stockOutDate)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                         ],
                                     ),
                                 )

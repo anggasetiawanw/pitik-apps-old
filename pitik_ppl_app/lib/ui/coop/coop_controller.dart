@@ -281,6 +281,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                         Text('BW/Standar', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                     ],
                                                 ),
+                                                coop.bw == null ? const SizedBox() :
                                                 Row(
                                                     children: [
                                                         Text(coop.bw!.actual!.toStringAsFixed(1), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: coop.bw!.actual! > coop.bw!.standard! ? GlobalVar.green : GlobalVar.red)),
@@ -311,6 +312,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                         Text('IP/Standar', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                     ],
                                                 ),
+                                                coop.ip == null ? const SizedBox() :
                                                 Row(
                                                     children: [
                                                         Text(coop.ip!.actual!.toStringAsFixed(1), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: coop.ip!.actual! > coop.ip!.standard! ? GlobalVar.green : GlobalVar.red)),
