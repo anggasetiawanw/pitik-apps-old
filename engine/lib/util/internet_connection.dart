@@ -3,8 +3,6 @@
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../ui/network_service/network_service_activity.dart';
-
 /**
  * @author DICKY
  * @email <dicky.maulana@pitik.id>
@@ -13,21 +11,21 @@ import '../ui/network_service/network_service_activity.dart';
 
 class NetworkStatusService extends GetxService {
     bool isInitial = true;
-    NetworkStatusService({bool showDialog = true, Function()? route}) {
+    NetworkStatusService({bool showDialog = true, Function()? route, Function()? notificationDisconnected}) {
         InternetConnectionChecker().onStatusChange.listen(
             (status) async {
                 if (showDialog) {
-                    _getNetworkStatus(status, route);
+                    _getNetworkStatus(status, route, notificationDisconnected);
                 }
             },
         );
     }
 
-    void _getNetworkStatus(InternetConnectionStatus status, Function()? route) {
+    void _getNetworkStatus(InternetConnectionStatus status, Function()? route, Function()? notificationDisconnected) {
         if (status == InternetConnectionStatus.connected) {
             _validateSession(route); //after internet connected it will redirect to home page
         } else {
-            Get.dialog(NetworkErrorItem(), useSafeArea: false); // If internet loss then it will show the NetworkErrorItem widget
+            notificationDisconnected ?? ();
         }
     }
 
@@ -42,7 +40,11 @@ class NetworkStatusService extends GetxService {
 }
 
 class StreamInternetConnection {
-    static void init({bool showDialog = true, Function()? route}) async {
-        Get.put<NetworkStatusService>(NetworkStatusService(showDialog: showDialog, route: route), permanent: true);
+    static void init({bool showDialog = true, Function()? route, Function()? notificationDisconnected}) async {
+        Get.put<NetworkStatusService>(NetworkStatusService(
+            showDialog: showDialog,
+            route: route,
+            notificationDisconnected: notificationDisconnected
+        ), permanent: true);
     }
 }
