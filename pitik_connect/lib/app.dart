@@ -13,7 +13,7 @@ class App extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        StreamInternetConnection.init();
+        StreamInternetConnection.init(showDialog: false);
         GlobalVar.setContext(context);
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,

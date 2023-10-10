@@ -57,11 +57,11 @@ class F {
   static String get tokenMixpanel {
     switch (appFlavor) {
       case Flavor.PROD:
-        return 'a2d18b06e65530177065d53a2d6e9ebb';
+        return '6193f0deb30c1cde5326ee6cb3a402eb';
       case Flavor.DEV:
-        return '5adcb071601ebc56ae75ce6238d67595';
+        return '5c4078b77ef73b0bc10c277cba6512eb';
       default:
-        return '5adcb071601ebc56ae75ce6238d67595';
+        return '5c4078b77ef73b0bc10c277cba6512eb';
     }
   }
 }
