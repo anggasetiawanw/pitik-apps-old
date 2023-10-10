@@ -41,7 +41,7 @@ class BerandaController extends GetxController {
     @override
     void onReady() {
         super.onReady();
-        // checkVersion(Get.context!);
+        checkVersion(Get.context!);
         getRole();
     }
 
