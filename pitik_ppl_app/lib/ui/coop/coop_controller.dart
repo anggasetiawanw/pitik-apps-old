@@ -1,10 +1,13 @@
 
+import 'dart:io';
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
@@ -14,6 +17,8 @@ import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:pitik_ppl_app/route.dart';
+
+import '../../flavors.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -35,6 +40,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     @override
     void onInit() {
         super.onInit();
+        _initMixpanel();
 
         tabController = TabController(vsync: this, length: 2);
         tabController.addListener(() {
@@ -63,6 +69,32 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         );
 
         generateCoopList(true);
+    }
+
+    void _initMixpanel() async {
+        String? deviceTracking = "";
+        String? osVersion = "";
+
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        if (Platform.isAndroid) {
+            AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+            deviceTracking = androidInfo.model;
+            osVersion = Platform.operatingSystemVersion;
+        } else {
+            IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            deviceTracking = iosInfo.model;
+            osVersion = Platform.operatingSystem;
+        }
+
+        GlobalVar.initMixpanel(F.tokenMixpanel, {
+            "Phone_Number": GlobalVar.profileUser!.phoneNumber,
+            "Username": GlobalVar.profileUser!.phoneNumber,
+            // "Location": "$latitude,$longitude",
+            "Device": deviceTracking,
+            "Phone_Carrier": 'NO SIMCARD',
+            "OS": osVersion,
+
+        });
     }
 
     void _clearCoopList() {

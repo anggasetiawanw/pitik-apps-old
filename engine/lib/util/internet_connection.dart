@@ -13,44 +13,36 @@ import '../ui/network_service/network_service_activity.dart';
 
 class NetworkStatusService extends GetxService {
     bool isInitial = true;
-    NetworkStatusService() {
-        // InternetConnectionChecker().onStatusChange.listen(
-        //         (status) async {
-        //         _getNetworkStatus(status);
-        //     },
-        // );
+    NetworkStatusService({bool showDialog = true, Function()? route}) {
+        InternetConnectionChecker().onStatusChange.listen(
+            (status) async {
+                if (showDialog) {
+                    _getNetworkStatus(status, route);
+                }
+            },
+        );
     }
 
-    void getNetworkStatus(InternetConnectionStatus status) {
+    void _getNetworkStatus(InternetConnectionStatus status, Function()? route) {
         if (status == InternetConnectionStatus.connected) {
-            _validateSession(); //after internet connected it will redirect to home page
+            _validateSession(route); //after internet connected it will redirect to home page
         } else {
             Get.dialog(NetworkErrorItem(), useSafeArea: false); // If internet loss then it will show the NetworkErrorItem widget
         }
     }
 
-    void _validateSession() async {
+    void _validateSession(Function()? route) async {
         if(isInitial) {
             isInitial = false;
             Get.offNamedUntil('/', (_)=> false);
         } else {
-            // Auth? auth = await AuthImpl().get();
-            // UserGoogle? userGoogle = await UserGoogleImpl().get();
-            // Profile? userProfile = await ProfileImpl().get();
-            // if (auth == null || userGoogle == null ||userProfile == null ) {
-            //     Get.offNamedUntil(RoutePage.loginPage, (_)=> false);
-            // } else {
-            //     GlobalVar.auth = auth;
-            //     GlobalVar.userGoogle = userGoogle;
-            //     GlobalVar.profileUser = userProfile;
-            //     Get.back();
-            // }
+            route ?? ();
         }
     }
 }
 
 class StreamInternetConnection {
-    static void init() async {
-        Get.put<NetworkStatusService>(NetworkStatusService(), permanent: true);
+    static void init({bool showDialog = true, Function()? route}) async {
+        Get.put<NetworkStatusService>(NetworkStatusService(showDialog: showDialog, route: route), permanent: true);
     }
 }

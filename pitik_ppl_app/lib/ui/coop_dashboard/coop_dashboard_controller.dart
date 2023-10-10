@@ -126,14 +126,6 @@ class CoopDashboardController extends GetxController {
         });
     }
 
-    void getHistoryData(Coop coop) {
-
-    }
-
-    void getProfile() {
-
-    }
-
     void toHome(BuildContext context) {
         homeTab.value = true;
         historyTab.value = false;

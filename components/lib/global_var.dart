@@ -465,18 +465,59 @@ class GlobalVar {
         return _globalContext!;
     }
 
+    /// The function `invalidResponse()` deletes user authentication and profile
+    /// data and navigates to the login page.
     static void invalidResponse() {
         AuthImpl().delete(null, []);
         ProfileImpl().delete(null, []);
         Get.offAllNamed('/login');
     }
 
+    /// The function initializes Mixpanel with a token and sets base properties, and
+    /// if a user profile exists, it identifies the user and sets their name and
+    /// email.
+    ///
+    /// Args:
+    ///   token (String): The "token" parameter is a string that represents the
+    /// Mixpanel project token. This token is used to identify and connect your
+    /// application to a specific Mixpanel project.
+    ///   baseProperties (Map<String, dynamic>): The `baseProperties` parameter is a
+    /// map that contains key-value pairs representing the base properties that you
+    /// want to set for your Mixpanel instance. These properties will be sent with
+    /// every event that you track using Mixpanel.
+    static void initMixpanel(String token, Map<String, dynamic> baseProperties) async {
+        GlobalVar.mixpanel = await Mixpanel.init(token, trackAutomaticEvents: true);
+        GlobalVar.mixpanel!.registerSuperProperties(baseProperties);
+
+        if (GlobalVar.profileUser != null) {
+            GlobalVar.mixpanel!.identify(GlobalVar.profileUser!.phoneNumber!);
+            GlobalVar.mixpanel!.getPeople().set("\$name", GlobalVar.profileUser!.phoneNumber!);
+            GlobalVar.mixpanel!.getPeople().set("\$email", GlobalVar.profileUser!.email!);
+        }
+    }
+
+    /// The function `track` tracks an event using Mixpanel if it is not null.
+    ///
+    /// Args:
+    ///   eventName (String): The eventName parameter is a string that represents
+    /// the name of the event that you want to track.
     static void track(String eventName) {
         if (mixpanel != null) {
             mixpanel!.track(eventName);
         }
     }
 
+    /// The function `trackWithMap` tracks an event with Mixpanel using a provided
+    /// event name and a map of properties.
+    ///
+    /// Args:
+    ///   eventName (String): The eventName parameter is a String that represents
+    /// the name of the event you want to track. It is used to identify the event in
+    /// your analytics system.
+    ///   map (Map<String, dynamic>): The `map` parameter is a `Map` object that
+    /// contains key-value pairs. The keys represent property names, and the values
+    /// represent the corresponding property values. These properties are additional
+    /// data that you want to include when tracking the event with Mixpanel.
     static void trackWithMap(String eventName, Map<String, dynamic> map) {
         if (mixpanel != null) {
             mixpanel!.track(eventName, properties: map);
