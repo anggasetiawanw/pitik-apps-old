@@ -1,10 +1,10 @@
 // ignore_for_file: slash_for_doc_comments
 
+import 'package:engine/util/convert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:model/smart_scale/smart_scale_model.dart';
 
 import '../global_var.dart';
-import '../library/engine_library.dart';
-import '../library/model_library.dart';
 
 /**
  * @author DICKY

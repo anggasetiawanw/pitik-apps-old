@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/graph_line.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import '../library/model_library.dart';
 import 'graph_view_controller.dart';
 
 /**

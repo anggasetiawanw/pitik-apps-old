@@ -1,8 +1,10 @@
 // ignore_for_file: slash_for_doc_comments
 
-import 'package:model/room_model.dart';
-
 import '../engine_library.dart';
+import 'approve_coop.dart';
+import 'branch.dart';
+import 'coop_active_standard.dart';
+import 'room_model.dart';
 
 /**
  * @author DICKY
@@ -11,16 +13,45 @@ import '../engine_library.dart';
  */
 
 @SetupModel
-class Coop{
+class Coop {
 
     String? id;
     String? name;
-    String? status;
+    dynamic status;
     String? coopId;
     String? coopName;
     String? coopType;
     String? coopStatus;
     String? farmId;
+    String? chickInRequestId;
+    String? farmingCycleId;
+    String? farmName;
+    String? coopDistrict;
+    String? coopCity;
+    int? period;
+    bool? isNew;
+    String? startDate;
+    String? closedDate;
+    bool? hasChickInRequest;
+    int? day;
+    String? statusText;
+    bool? isActionNeeded;
+    bool? isOwnFarm;
+
+    @IsChild()
+    CoopActiveStandard? bw;
+
+    @IsChild()
+    CoopActiveStandard? ip;
+
+    @IsChild()
+    ApproveCoop? chickInRequest;
+
+    @IsChild()
+    ApproveCoop? purchaseRequestOvk;
+
+    @IsChild()
+    Branch? branch;
 
     @IsChild()
     Room? room;
@@ -28,7 +59,9 @@ class Coop{
     @IsChildren()
     List<Room?>? rooms;
 
-    Coop({this.id, this.name, this.coopName, this.coopType, this.farmId, this.status, this.coopStatus, this.room, this.rooms, this.coopId});
+    Coop({this.id, this.name, this.coopName, this.coopType, this.farmId, this.status, this.coopStatus, this.room, this.rooms, this.coopId, this.chickInRequestId, this.farmName, this.coopDistrict, this.coopCity,
+          this.farmingCycleId, this.period, this.isNew, this.startDate, this.closedDate, this.hasChickInRequest, this.day, this.statusText, this.isActionNeeded, this.isOwnFarm, this.bw, this.ip, this.chickInRequest,
+          this.purchaseRequestOvk, this.branch});
 
     static Coop toResponseModel(Map<String, dynamic> map) {
         return Coop(
@@ -42,6 +75,25 @@ class Coop{
             coopId: map['coopId'],
             room: Mapper.child<Room>(map['room']),
             rooms: Mapper.children<Room>(map['rooms']),
+            chickInRequestId: map['chickInRequestId'],
+            farmingCycleId: map['farmingCycleId'],
+            farmName: map['farmName'],
+            coopDistrict: map['coopDistrict'],
+            coopCity: map['coopCity'],
+            period: map['period'],
+            isNew: map['isNew'],
+            startDate: map['startDate'],
+            closedDate: map['closedDate'],
+            hasChickInRequest: map['hasChickInRequest'],
+            day: map['day'],
+            statusText: map['statusText'],
+            isActionNeeded: map['isActionNeeded'],
+            isOwnFarm: map['isOwnFarm'],
+            bw: Mapper.child<CoopActiveStandard>(map['bw']),
+            ip: Mapper.child<CoopActiveStandard>(map['ip']),
+            chickInRequest: Mapper.child<ApproveCoop>(map['chickInRequest']),
+            purchaseRequestOvk: Mapper.child<ApproveCoop>(map['purchaseRequestOvk']),
+            branch: Mapper.child<Branch>(map['branch'])
         );
     }
 }

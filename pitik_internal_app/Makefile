@@ -42,3 +42,9 @@ sb-patch-dev: ## Push Patch Shorebird Dev
 
 sb-patch-prod: ## Push Patch Shorebird Production
 	shorebird patch android --flavor prod -t lib/main_prod.dart	
+
+build-dev-ios: ## Build aab file with debug configuration
+	flutter build ipa --flavor dev -t lib/main_dev.dart
+
+build-prod-ios: ## Build aab file with production configuration
+	flutter build ipa --flavor prod -t lib/main_prod.dart

@@ -1,13 +1,17 @@
-// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters
+// ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters, constant_identifier_names
 
+import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
-
-import 'library/dao_impl_library.dart';
-import 'library/engine_library.dart';
-import 'library/model_library.dart';
+import 'package:model/auth_model.dart';
+import 'package:model/farm_model.dart';
+import 'package:model/profile.dart';
+import 'package:model/smart_scale/smart_scale_model.dart';
+import 'package:model/x_app_model.dart';
 
 /**
  * @author DICKY
@@ -317,13 +321,19 @@ class GlobalVar {
 
     static Color primaryOrange = Convert.hexToColor("#F47B20");
     static Color primaryLight = Convert.hexToColor("#FFF9ED");
+    static Color primaryLight2 = Convert.hexToColor("#FEEFD2");
+    static Color primaryLight3 = Convert.hexToColor("#FEF6D2");
+    static Color primaryLight4 = Convert.hexToColor("#FBBF78");
     static Color black = Convert.hexToColor("#2C2B2B");
     static Color red = Convert.hexToColor("#DD1E25");
+    static Color redBackground = Convert.hexToColor("#FDDFD1");
     static Color grayLightText = Convert.hexToColor("#9E9D9D");
     static Color grayBackground = Convert.hexToColor("#FAFAFA");
     static Color grayText = Convert.hexToColor("#5A5A5A");
     static Color gray = Convert.hexToColor("#CACACA");
     static Color green = Convert.hexToColor("#14CB82");
+    static Color greenBackground = Convert.hexToColor("#CEFCD8");
+    static Color yellow = Convert.hexToColor("#F4B420");
     static Color subTitleColor = const Color(0xFF9E9D9D);
     static Color globalBG = const Color(0xFFF4F4F4);
     static Color iconHomeBg = const Color(0xFFFFF6ED);
@@ -333,6 +343,19 @@ class GlobalVar {
     static Color blueDark = const Color(0xFF198BDB);
     static Mixpanel? mixpanel;
     static const MethodChannel _channel = MethodChannel('flutter.moum.sim_info');
+
+    static const String SUBMISSION_STATUS = "Perlu Pengajuan";
+    static const String SUBMITTED_DOC_IN = "DOC in Diajukan";
+    static const String SUBMITTED_OVK = "OVK Diajukan";
+    static const String APPROVED_OVK = "OVK Disetujui";
+    static const String APPROVED_DOC_IN = "DOC in Disetujui";
+    static const String SUBMITTED_STATUS = "Diajukan";
+    static const String NEED_APPROVED = "Perlu Persetujuan";
+    static const String APPROVED = "Disetujui";
+    static const String OVK_REJECTED = "OVK Ditolak";
+    static const String PROSESSING = "Diproses";
+    static const String REJECTED = "Ditolak";
+    static const String NEW = "Baru";
 
     static Future<String> getPhoneCarrier() async {
         String carrierName3 = await _channel.invokeMethod('mobileCountryCode');
@@ -366,6 +389,11 @@ class GlobalVar {
     static TextStyle whiteTextStyle = const TextStyle(
         color: Colors.white,
         fontFamily: 'Montserrat_Medium',
+    );
+
+    static TextStyle boldTextStyle = const TextStyle(
+        color: Colors.white,
+        fontFamily: 'Montserrat_Bold',
     );
 
     static TextStyle greyTextStyle = TextStyle(
@@ -437,21 +465,59 @@ class GlobalVar {
         return _globalContext!;
     }
 
-    static VoidCallback invalidResponse() {
-        return () {
-            AuthImpl().delete(null, []);
-            // UserGoogleImpl().delete(null, []);
-            ProfileImpl().delete(null, []);
-            Get.offAllNamed('/login');
-        };
+    /// The function `invalidResponse()` deletes user authentication and profile
+    /// data and navigates to the login page.
+    static void invalidResponse() {
+        AuthImpl().delete(null, []);
+        ProfileImpl().delete(null, []);
+        Get.offAllNamed('/login');
     }
 
+    /// The function initializes Mixpanel with a token and sets base properties, and
+    /// if a user profile exists, it identifies the user and sets their name and
+    /// email.
+    ///
+    /// Args:
+    ///   token (String): The "token" parameter is a string that represents the
+    /// Mixpanel project token. This token is used to identify and connect your
+    /// application to a specific Mixpanel project.
+    ///   baseProperties (Map<String, dynamic>): The `baseProperties` parameter is a
+    /// map that contains key-value pairs representing the base properties that you
+    /// want to set for your Mixpanel instance. These properties will be sent with
+    /// every event that you track using Mixpanel.
+    static void initMixpanel(String token, Map<String, dynamic> baseProperties) async {
+        GlobalVar.mixpanel = await Mixpanel.init(token, trackAutomaticEvents: true);
+        GlobalVar.mixpanel!.registerSuperProperties(baseProperties);
+
+        if (GlobalVar.profileUser != null) {
+            GlobalVar.mixpanel!.identify(GlobalVar.profileUser!.phoneNumber!);
+            GlobalVar.mixpanel!.getPeople().set("\$name", GlobalVar.profileUser!.phoneNumber!);
+            GlobalVar.mixpanel!.getPeople().set("\$email", GlobalVar.profileUser!.email!);
+        }
+    }
+
+    /// The function `track` tracks an event using Mixpanel if it is not null.
+    ///
+    /// Args:
+    ///   eventName (String): The eventName parameter is a string that represents
+    /// the name of the event that you want to track.
     static void track(String eventName) {
         if (mixpanel != null) {
             mixpanel!.track(eventName);
         }
     }
 
+    /// The function `trackWithMap` tracks an event with Mixpanel using a provided
+    /// event name and a map of properties.
+    ///
+    /// Args:
+    ///   eventName (String): The eventName parameter is a String that represents
+    /// the name of the event you want to track. It is used to identify the event in
+    /// your analytics system.
+    ///   map (Map<String, dynamic>): The `map` parameter is a `Map` object that
+    /// contains key-value pairs. The keys represent property names, and the values
+    /// represent the corresponding property values. These properties are additional
+    /// data that you want to include when tracking the event with Mixpanel.
     static void trackWithMap(String eventName, Map<String, dynamic> map) {
         if (mixpanel != null) {
             mixpanel!.track(eventName, properties: map);

@@ -33,19 +33,29 @@ class SpinnerField extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        Future.delayed(Duration.zero, () {
+        Future.delayed(const Duration(milliseconds: 200), () {
             if (onInit) {
+                controller.hideLabel.value = hideLabel;
                 controller.generateItems(items);
+                items.forEach((key, value) {
+                    if (value) {
+                        controller.setTextSelected(key);
+                    }
+                });
+
                 onInit = false;
             }
         });
 
-        final labelField = SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-                label,
-                textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+        final labelField = Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                    label,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                ),
             ),
         );
 
@@ -53,11 +63,10 @@ class SpinnerField extends StatelessWidget {
             controller.showSpinner.isTrue ?
             Padding(
                 key: controller.formKey,
-                padding: const EdgeInsets.only(top: 16),
+                padding: EdgeInsets.only(top: controller.hideLabel.isFalse ? 16 : 0),
                 child: Column(
                     children: <Widget>[
-                        controller.hideLabel.isFalse ? labelField : Container(),
-                        const SizedBox(height: 8),
+                        controller.hideLabel.isFalse ? labelField : const SizedBox(),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[

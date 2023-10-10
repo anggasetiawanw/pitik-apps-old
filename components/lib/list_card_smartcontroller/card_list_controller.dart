@@ -3,9 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:model/device_model.dart';
+import 'package:model/sensor_data_model.dart';
 
 import '../global_var.dart';
-import '../library/model_library.dart';
 
 /**
  * @author DICKY
