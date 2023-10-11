@@ -150,7 +150,7 @@ class CoopDashboardController extends GetxController {
         monitorTab.value = true;
         profileTab.value = false;
 
-        detailSmartMonitor.controller.getLatestDataSmartMonitor();
+        detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
     }
 
     void toProfile() {
@@ -240,9 +240,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () {  // ORDER
-                                                // TO ORDER
-                                            }),
+                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
                                             _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () {  // TRANSFER
                                                 // TO TRANSFER
                                             }),
@@ -281,9 +279,12 @@ class CoopDashboardController extends GetxController {
         );
     }
 
-    Widget _createMenu(String title, String imagePath, bool status, Function function) {
+    Widget _createMenu(String title, String imagePath, bool status, Function() function) {
         return GestureDetector(
-            onTap: () => function,
+            onTap: () {
+                Navigator.pop(Get.context!);
+                function();
+            },
             child: Column(
                 children: [
                     SizedBox(
@@ -340,7 +341,6 @@ class CoopDashboardController extends GetxController {
                 const Duration(milliseconds: 200), () => getMonitoringPerformance(coop)
             ),
             child: ListView(
-                shrinkWrap: true,
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
                     Container(

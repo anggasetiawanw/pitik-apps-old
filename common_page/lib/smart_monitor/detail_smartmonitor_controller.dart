@@ -1,16 +1,21 @@
 
+import 'package:common_page/library/component_library.dart';
+import 'package:common_page/library/dao_impl_library.dart';
 import 'package:components/global_var.dart';
+import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/building_model.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/device_model.dart';
 import 'package:model/device_summary_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/graph_line.dart';
 import 'package:model/response/latest_condition_response.dart';
+import 'package:model/response/building_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -22,9 +27,11 @@ class DetailSmartMonitorController extends GetxController {
     Device? device;
     DetailSmartMonitorController({required this.context, this.coop, this.device});
 
+    // late SpinnerField spBuilding;
 
     ScrollController scrollController = ScrollController();
     Rx<List<GraphLine>> historicalList = Rx<List<GraphLine>>([]);
+    Rx<SpinnerField> spBuilding = (SpinnerField(controller: GetXCreator.putSpinnerFieldController<Building>("buildingSpField"), label: "", hideLabel: true, hint: "", alertText: "", items: const {}, onSpinnerSelected: (text) {})).obs;
     var deviceUpdatedName = "".obs;
 
     var isLoadMore = false.obs;
@@ -58,12 +65,65 @@ class DetailSmartMonitorController extends GetxController {
         }
 
         isLoading.value = true;
-        getLatestDataSmartMonitor();
+        getInitialLatestDataSmartMonitor();
+    }
+
+    void getInitialLatestDataSmartMonitor() {
+        isLoading.value = true;
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    apiKey: 'smartMonitoringApi',
+                    service: ListApi.getListBuilding,
+                    context: context,
+                    body: ['Bearer ${auth.token}', auth.id, 'v2/buildings/coops/${coop!.id}'],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            Map<String, bool> data = {};
+                            int index = 0;
+                            for (var building in (body as BuildingResponse).data) {
+                                if (building != null && building.buildingName != null && building.roomTypeName != null) {
+                                    if (index == 0) {
+                                        data.putIfAbsent('${building.buildingName} (${building.roomTypeName})', () => true);
+                                    } else {
+                                        data.putIfAbsent('${building.buildingName} (${building.roomTypeName})', () => false);
+                                    }
+                                }
+
+                                index++;
+                            }
+
+                            spBuilding.value = SpinnerField(controller: GetXCreator.putSpinnerFieldController<Building>("buildingSpField"), label: "", hideLabel: true, hint: "", alertText: "", items: data,
+                                onSpinnerSelected: (text) => _getLatestDataSmartMonitor(spBuilding.value.getController().selectedObject == null || (spBuilding.value.getController().selectedObject as Building).roomId == null ? '' : (spBuilding.value.getController().selectedObject as Building).roomId!)
+                            );
+
+                            spBuilding.value.getController().setupObjects(body.data);
+                            spBuilding.value.getController().rejuvenateObjects();
+                            _getLatestDataSmartMonitor(spBuilding.value.getController().selectedObject == null || (spBuilding.value.getController().selectedObject as Building).roomId == null ? '' : (spBuilding.value.getController().selectedObject as Building).roomId!);
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            isLoading.value = false;
+                            Get.snackbar(
+                                "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                duration: const Duration(seconds: 5),
+                                backgroundColor: Colors.red,
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = false,
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
+        });
     }
 
     /// The function `getLatestDataSmartMonitor` retrieves the latest data from a
     /// smart monitor device and updates the device summary.
-    void getLatestDataSmartMonitor() {
+    void _getLatestDataSmartMonitor(String roomId) {
         isLoading.value = true;
         List request = [];
 
@@ -72,7 +132,7 @@ class DetailSmartMonitorController extends GetxController {
                 GlobalVar.auth!.token,
                 GlobalVar.auth!.id,
                 coop!.farmingCycleId,
-                null
+                roomId
             ];
         } else {
             request = [

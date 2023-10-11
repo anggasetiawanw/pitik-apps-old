@@ -18,6 +18,7 @@ import 'edit_field/edit_field_controller.dart';
 import 'edit_field_qr/edit_field_qrcode_controller.dart';
 import 'expandable/expandable_controller.dart';
 import 'expandable_device/expandable_device_controller.dart';
+import 'expandable_monitor_real_time/expandable_monitor_real_time_controller.dart';
 import 'graph_view/graph_view_controller.dart';
 import 'item_decrease_temp/item_decrease_temperature_controller.dart';
 import 'item_historical_smartcamera/item_historical_smartcamera_controller.dart';
@@ -80,6 +81,10 @@ class GetXCreator {
 
     static ExpandableDeviceController putAccordionDeviceController(String tag, BuildContext context) {
         return Get.put(ExpandableDeviceController(tag: tag, context: context), tag: tag);
+    }
+
+    static ExpandableMonitorRealTimeController putAccordionMonitorRealTimeController(String tag, BuildContext context) {
+        return Get.put(ExpandableMonitorRealTimeController(tag: tag, context: context), tag: tag);
     }
 
     static ExpandableController putAccordionController(String tag) {

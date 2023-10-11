@@ -23,6 +23,9 @@ class ListApi {
     static const String modifyDevice = "modifyDevice";
     static const String getLatestCondition = "getLatestCondition";
     static const String getHistoricalData = "getHistoricalData";
+    static const String getListBuilding = "getListBuilding";
+    static const String getRealTimeHistorical = "realTime";
+    static const String getRealTimeHistoricalForSmartController = "realTimeSmartController";
     
     // api SMART CAMERA
     static const String getRecordImages = "getRecordImages";

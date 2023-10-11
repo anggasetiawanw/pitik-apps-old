@@ -75,7 +75,6 @@ class HistoryActivity extends GetView<HistoryController> {
                                                     child: Image.asset('images/card_height_450_lazy.gif'),
                                                 ) :
                                                 ListView.builder(
-                                                    shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: 1,
                                                     controller: controller.performanceScrollController,
@@ -95,7 +94,6 @@ class HistoryActivity extends GetView<HistoryController> {
                                                     ),
                                                     child: historyController.sapronakActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
                                                     ListView.builder(
-                                                        shrinkWrap: true,
                                                         physics: const AlwaysScrollableScrollPhysics(),
                                                         itemCount: 1,
                                                         controller: controller.sapronakScrollController,
@@ -116,7 +114,6 @@ class HistoryActivity extends GetView<HistoryController> {
                                                     ),
                                                     child: historyController.harvestActivity.controller.isLoading.isTrue ? Image.asset('images/card_height_450_lazy.gif') :
                                                     ListView.builder(
-                                                        shrinkWrap: true,
                                                         physics: const AlwaysScrollableScrollPhysics(),
                                                         itemCount: 1,
                                                         controller: controller.harvestScrollController,

@@ -128,10 +128,15 @@ class GraphView extends StatelessWidget {
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 12);
+                                fontSize: 12
+                            );
 
-                            double round = double.parse(args.text).roundToDouble();
-                            return ChartAxisLabel(controller.data[round.toInt()].label!, textStyle);
+                            try {
+                                double round = double.parse(args.text).roundToDouble();
+                                return ChartAxisLabel(controller.data[round.toInt()].label!, textStyle);
+                            } catch (exception) {
+                                return ChartAxisLabel('', textStyle);
+                            }
                         },
                         majorGridLines: const MajorGridLines(width: 0),
                         majorTickLines: const MajorTickLines(width: 0),

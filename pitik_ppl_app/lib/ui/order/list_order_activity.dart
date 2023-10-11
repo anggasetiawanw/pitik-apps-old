@@ -2,6 +2,7 @@
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
 
@@ -66,6 +67,28 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                     ]
                                 ),
                             ),
+                            const SizedBox(height: 8),
+                            Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Daftar Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                        GestureDetector(
+                                            onTap: () => controller.showMenuBottomSheet(),
+                                            child: Container(
+                                                padding: const EdgeInsets.all(12),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                                                    color: GlobalVar.primaryLight
+                                                ),
+                                                child: SvgPicture.asset('images/filter_icon.svg'),
+                                            ),
+                                        )
+                                    ],
+                                ),
+                            ),
+                            const SizedBox(height: 8),
                             controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
                             Expanded(
                                 child: TabBarView(
@@ -79,7 +102,6 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                                     const Duration(milliseconds: 200), () => controller.getListRequested()
                                                 ),
                                                 child: ListView.builder(
-                                                    shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.orderList.length,
                                                     itemBuilder: (context, index) => controller.createOrderCard(
@@ -97,7 +119,6 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                                     const Duration(milliseconds: 200), () => controller.getListProcessed()
                                                 ),
                                                 child: ListView.builder(
-                                                    shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.orderList.length,
                                                     itemBuilder: (context, index) => controller.createOrderCard(
@@ -115,7 +136,6 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                                     const Duration(milliseconds: 200), () => controller.getListReceived()
                                                 ),
                                                 child: ListView.builder(
-                                                    shrinkWrap: true,
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.orderList.length,
                                                     itemBuilder: (context, index) => controller.createOrderCard(

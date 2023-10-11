@@ -88,13 +88,16 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         isLoading.value = true;
         AuthImpl().get().then((auth) {
             if (auth != null) {
-                List<dynamic> body = ['Bearer ${auth.token}', auth.id, (fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest), type, fromDate, untilDate, status];
+                List<dynamic> body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate, status];
+                if (tabController.index == 0) {
+                    body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate];
+                }
 
                 Service.push(
                     apiKey: 'productReportApi',
                     service: route,
                     context: Get.context!,
-                    body: ,
+                    body: body,
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             orderList.value = (body as ProcurementListResponse).data;
@@ -166,45 +169,48 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 }
             }
 
-            return GestureDetector(
-                onTap: () {},
-                child: Container(
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        border: Border.fromBorderSide(BorderSide(width: 1.4, color: GlobalVar.grayBackground)),
-                        color: Colors.white
+            return Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
+                child: GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                            border: Border.fromBorderSide(BorderSide(width: 2, color: GlobalVar.grayBackground)),
+                            color: Colors.white
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                        _getStatusOrderWidget(tabPosition: typePosition, statusText: procurement.statusText == null ? '-' : procurement.statusText!)
+                                    ],
+                                ),
+                                Text(procurement.deliveryDate == null ? '-' : procurement.deliveryDate!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                const SizedBox(height: 8),
+                                typePosition != 0 ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Kode Pesanan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        Text(procurement.erpCode == null ? '-' : procurement.erpCode!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                    ],
+                                ) : const SizedBox(),
+                                const SizedBox(height: 8),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Merek Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        const SizedBox(width: 16),
+                                        Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right,)
+                                    ],
+                                )
+                            ]
+                        )
                     ),
-                    child: Column(
-                        children: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
-                                    _getStatusOrderWidget(tabPosition: typePosition, statusText: procurement.statusText == null ? '-' : procurement.statusText!)
-                                ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(procurement.deliveryDate == null ? '-' : procurement.deliveryDate!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
-                            const SizedBox(height: 8),
-                            typePosition != 0 ? Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text('Kode Pesanan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                    Text(procurement.erpCode == null ? '-' : procurement.erpCode!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                ],
-                            ) : const SizedBox(),
-                            const SizedBox(height: 8),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text('Merek Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                    const SizedBox(width: 16),
-                                    Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right,)
-                                ],
-                            )
-                        ]
-                    )
                 ),
             );
         } else {
@@ -260,7 +266,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                 fromDateField,
                                 untilDateField,
                                 typeField,
-                                const SizedBox(height: 32),
+                                const SizedBox(height: 50),
                                 ButtonFill(controller: GetXCreator.putButtonFillController("btnFilterOrderList"), label: "Kondirmasi Filter", onClick: () {
                                     bool isPass = true;
 
@@ -278,28 +284,29 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     }
 
                                     if (isPass) {
+                                        Navigator.pop(Get.context!);
                                         if (tabController.index == 0) {
                                             getListRequested(
-                                                type: typeField.getController().textSelected.value,
+                                                type: typeField.getController().textSelected.value.toLowerCase(),
                                                 fromDate: fromDateField.getLastTimeSelectedText(),
                                                 untilDate: untilDateField.getLastTimeSelectedText()
                                             );
                                         } else if (tabController.index == 1) {
                                             getListProcessed(
-                                                type: typeField.getController().textSelected.value,
+                                                type: typeField.getController().textSelected.value.toLowerCase(),
                                                 fromDate: fromDateField.getLastTimeSelectedText(),
                                                 untilDate: untilDateField.getLastTimeSelectedText()
                                             );
                                         } else {
                                             getListReceived(
-                                                type: typeField.getController().textSelected.value,
+                                                type: typeField.getController().textSelected.value.toLowerCase(),
                                                 fromDate: fromDateField.getLastTimeSelectedText(),
                                                 untilDate: untilDateField.getLastTimeSelectedText()
                                             );
                                         }
                                     }
                                 }),
-                                const SizedBox(height: 16),
+                                const SizedBox(height: 32),
                             ]
                         )
                     )

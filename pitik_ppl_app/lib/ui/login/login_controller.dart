@@ -113,8 +113,8 @@ class LoginController extends GetxController {
                     GlobalVar.auth = auth;
                     GlobalVar.profileUser = (body as ProfileResponse).data;
 
-                    ProfileImpl().save(body.data);
-                    AuthImpl().save(auth);
+                    await ProfileImpl().save(body.data);
+                    await AuthImpl().save(auth);
 
                     Future<bool> isFirstLogin = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
                     Navigator.pop(Get.context!);
@@ -140,6 +140,7 @@ class LoginController extends GetxController {
                     );
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
+                    print('$exception -> $stacktrace');
                     Navigator.pop(Get.context!);
                     Get.snackbar(
                         "Pesan",

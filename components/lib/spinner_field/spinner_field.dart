@@ -40,6 +40,19 @@ class SpinnerField extends StatelessWidget {
                 items.forEach((key, value) {
                     if (value) {
                         controller.setTextSelected(key);
+
+                        int index = 0;
+                        items.forEach((label, value) {
+                            if (key == label) {
+                                controller.selectedIndex = index;
+
+                                // for selected object
+                                if (controller.listObject.isNotEmpty) {
+                                    controller.selectedObject = controller.listObject[controller.selectedIndex];
+                                }
+                            }
+                            index++;
+                        });
                     }
                 });
 
