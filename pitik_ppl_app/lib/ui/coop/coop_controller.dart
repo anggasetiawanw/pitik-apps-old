@@ -139,16 +139,16 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     void actionCoop(Coop coop) {
         if (tabController.index == 0) {
             if (coop.isNew != null && coop.isNew!) {
-                _showCoopAdditionalButtonSheet(coop);
+                _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: false);
             } else {
                 Get.toNamed(RoutePage.coopDashboard, arguments: [coop]);
             }
         } else {
-            _showCoopAdditionalButtonSheet(coop);
+            _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: true);
         }
     }
 
-    void _showCoopAdditionalButtonSheet(Coop coop) {
+    void _showCoopAdditionalButtonSheet({required Coop coop, required bool isRestCoop}) {
         showModalBottomSheet(
             isScrollControlled: true,
             context: Get.context!,
@@ -194,9 +194,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                     label: "Order",
                                     isHaveIcon: true,
                                     imageAsset: 'images/document_icon.svg',
-                                    onClick: () {
-                                        // TO ORDER PAGE
-                                    }
+                                    onClick: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, isRestCoop])
                                 )
                             ),
                             ButtonOutline(

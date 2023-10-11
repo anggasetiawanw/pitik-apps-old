@@ -333,6 +333,8 @@ class GlobalVar {
     static Color gray = Convert.hexToColor("#CACACA");
     static Color green = Convert.hexToColor("#14CB82");
     static Color greenBackground = Convert.hexToColor("#CEFCD8");
+    static Color blue = Convert.hexToColor("#198BDB");
+    static Color blueBackground = Convert.hexToColor("#D0F5FD");
     static Color yellow = Convert.hexToColor("#F4B420");
     static Color subTitleColor = const Color(0xFF9E9D9D);
     static Color globalBG = const Color(0xFFF4F4F4);

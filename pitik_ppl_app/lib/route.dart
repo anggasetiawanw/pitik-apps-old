@@ -17,6 +17,12 @@ import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
+import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
+import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
+import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart';
+import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen.dart';
 
 ///@author DICKY
@@ -38,6 +44,9 @@ class AppRoutes {
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.orderRequestPage, page: () => const OrderRequestActivity(), binding: OrderRequestBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.orderDetailPage, page: () => const OrderDetailActivity(), binding: OrderDetailBinding(context: GlobalVar.getContext()))
     ];
 }
 
@@ -54,4 +63,7 @@ class RoutePage {
     static const String helpPage = "/help";
     static const String licencePage = "/licence";
     static const String changePasswordPage = "/changePassword";
+    static const String listOrderPage = "/listOrder";
+    static const String orderRequestPage = "/orderRequest";
+    static const String orderDetailPage = "/orderDetail";
 }

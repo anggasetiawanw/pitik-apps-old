@@ -45,6 +45,10 @@ class ListApi {
     // api PRODUCT REPORT
     static const String getSapronak = "getSapronak";
     static const String getProductById = "getProductById";
+    static const String getListPurchaseRequest = "getListPurchaseRequest";
+    static const String getListPurchaseRequestForCoopRest = "getListPurchaseRequestForCoopRest";
+    static const String getListPurchaseOrder = "getListPurchaseOrder";
+    static const String getListPurchaseOrderForCoopRest = "getListPurchaseOrderForCoopRest";
     
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
