@@ -11,6 +11,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -204,6 +205,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 imageAsset: 'images/calendar_check_icon.svg',
                                 onClick: () {
                                     // TO ORDER PAGE
+                                    print(Mapper.asJsonString(coop));
                                 }
                             ),
                             const SizedBox(height: 24)
