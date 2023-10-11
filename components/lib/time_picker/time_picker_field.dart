@@ -156,8 +156,8 @@ class TimePickerField extends StatelessWidget {
         } else if (flag == TIME_HOURS_AND_MINUTES) {
             Picker(
                 adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-                    const NumberPickerColumn(begin: 0, end: 24, suffix: Text(' Hour')),
-                    const NumberPickerColumn(begin: 0, end: 59, suffix: Text(' Minute')),
+                    const NumberPickerColumn(begin: 0, end: 24, suffix: Text(' Jam')),
+                    const NumberPickerColumn(begin: 0, end: 59, suffix: Text(' Menit')),
                 ]),
                 hideHeader: true,
                 height: 90,
@@ -178,7 +178,8 @@ class TimePickerField extends StatelessWidget {
         } else {
             Picker(
                 adapter: NumberPickerAdapter(data: <NumberPickerColumn>[
-                    const NumberPickerColumn(begin: 0, end: 24, suffix: Text('')),
+                    const NumberPickerColumn(begin: 0, end: 59, suffix: Text(' Menit')),
+                    const NumberPickerColumn(begin: 0, end: 59, suffix: Text(' Detik')),
                 ]),
                 hideHeader: true,
                 height: 90,
@@ -188,9 +189,12 @@ class TimePickerField extends StatelessWidget {
                 selectedTextStyle: TextStyle(color: GlobalVar.primaryOrange),
                 cancelTextStyle: TextStyle(color: GlobalVar.primaryOrange),
                 onConfirm: (Picker picker, List<int> value) {
-                    String hours = "${picker.getSelectedValues()[0]}";
-                    hours = hours.length < 2 ?"0${picker.getSelectedValues()[0]}": hours;
-                    timePicked = hours;
+
+                    String minutes = "${picker.getSelectedValues()[0]}";
+                    String seconds = "${picker.getSelectedValues()[1]}";
+                    minutes = minutes.length < 2 ?"0${picker.getSelectedValues()[0]}": minutes;
+                    seconds = seconds.length < 2 ?"0${picker.getSelectedValues()[1]}": seconds;
+                    timePicked = "$minutes:$seconds";
                     onTimeSelected(timePicked);
                 },
             ).showDialog(context);

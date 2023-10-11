@@ -264,6 +264,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  currency_text_input_formatter:
+    dependency: transitive
+    description:
+      name: currency_text_input_formatter
+      sha256: "5d8db755ccde76817f6f5fb33e65304d7b1db442e1ccff079fe235584c6b7d5a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.10"
   dao_impl:
     dependency: "direct main"
     description:
@@ -1248,6 +1256,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  shorebird_code_push:
+    dependency: transitive
+    description:
+      name: shorebird_code_push
+      sha256: f32803df32b3b5cc810fb52b9ca1b30c7690bd78378fc289cb8170eff0d327c3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   sky_engine:
     dependency: transitive
     description: flutter

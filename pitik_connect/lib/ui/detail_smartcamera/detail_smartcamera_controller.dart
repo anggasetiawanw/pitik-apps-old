@@ -112,7 +112,7 @@ class DetailSmartCameraController extends GetxController {
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
 
-                }, onTokenInvalid: GlobalVar.invalidResponse())
+                }, onTokenInvalid: () => GlobalVar.invalidResponse())
         );
     }
 
@@ -159,7 +159,7 @@ class DetailSmartCameraController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             }

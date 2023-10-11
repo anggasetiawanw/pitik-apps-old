@@ -132,7 +132,7 @@ class DetailSmartScaleController extends GetxController {
                         );
                     },
                     onResponseError: (exception, stacktrace, id, packet) => isLoading.value = false,
-                    onTokenInvalid: GlobalVar.invalidResponse()
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
                 )
             )
         } else {

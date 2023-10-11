@@ -121,7 +121,7 @@ class LoginController extends GetxController {
                                 backgroundColor: Colors.red,
                             );
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
                 );
         }
@@ -211,7 +211,7 @@ class LoginController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                onTokenInvalid: GlobalVar.invalidResponse()
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
 

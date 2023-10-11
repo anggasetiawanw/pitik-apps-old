@@ -215,7 +215,7 @@ class RegisterCoopController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {
@@ -272,7 +272,7 @@ class RegisterCoopController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {

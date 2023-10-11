@@ -70,19 +70,19 @@ class FanSetup extends GetView<FanSetupController>{
                                     Expanded(
                                         child: Obx(() => controller.isEdit.isTrue ?
                                         ButtonFill(
-                                            controller: GetXCreator.putButtonFillController("bfSaveGrowthDay"),
+                                            controller: GetXCreator.putButtonFillController("bfSaveFanSetup"),
                                             label: "Simpan",
                                             onClick: () {
                                                 showBottomDialog(context, controller);
                                             },
                                         ):
                                         ButtonFill(
-                                            controller: GetXCreator.putButtonFillController("bfEditGrowthDay"),
+                                            controller: GetXCreator.putButtonFillController("bfEditFanSetup"),
                                             label: "Edit",
                                             onClick: () {
                                                 controller.isEdit.value = true;
                                                 controller.isLoading.value = true;
-                                                controller.loadPage();
+                                                controller.getDetailFan();
                                             },
                                         )
                                         ) ,

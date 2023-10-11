@@ -34,6 +34,7 @@ class ListApi {
     static const String getDataGrowthDay = "getDataGrowthDay";
     static const String setController = "setController";
     static const String getFanData = "getFanData";
+    static const String getFanDetail = "getFanDetail";
     static const String getCoolerData = "getCoolerData";
 
     // api SMART SCALE
@@ -116,6 +117,10 @@ class ListApi {
 
     static String pathDeviceData(String device, String coopCodeId, String deviceId){
         return "v2/b2b/iot-devices/smart-controller/coop/$device?coopId=$coopCodeId&deviceId=$deviceId";
+    }
+
+    static String pathDetailFanData(String device, String coopCodeId, String deviceId, String id){
+        return "v2/b2b/iot-devices/smart-controller/coop/$device/detail?coopId=$coopCodeId&deviceId=$deviceId&id=$id";
     }
 
     static String pathSetController(String device, String coopCodeId){

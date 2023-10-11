@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
@@ -27,6 +29,7 @@ class HeaterSetupController extends GetxController {
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
 
     var isLoading = false.obs;
+    var isEdit = false.obs;
     late Device device;
     late ControllerData controllerData;
     late ButtonFill bfYesSetHeater;
@@ -49,6 +52,9 @@ class HeaterSetupController extends GetxController {
         super.onInit();
         device = Get.arguments[0];
         controllerData = Get.arguments[1];
+        if(controllerData != null){
+            loadPage();
+        }
         boNoSetHeater = ButtonOutline(
             controller: GetXCreator.putButtonOutlineController("boNoSetHeater"),
             label: "Tidak",
@@ -102,7 +108,7 @@ class HeaterSetupController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {
@@ -115,6 +121,18 @@ class HeaterSetupController extends GetxController {
 
         }
     }
+
+    void loadPage(){
+        if(isEdit.isTrue){
+            efDiffTempHeater.setInput("${controllerData.temperature}");
+            efDiffTempHeater.controller.enable();
+        }else{
+            efDiffTempHeater.setInput("${controllerData.temperature}");
+            efDiffTempHeater.controller.disable();
+        }
+        isLoading.value = false;
+    }
+
 
     /// The `validationEdit` function checks if the `efDiffTempHeater` input is
     /// empty and returns a list indicating whether the validation passed or failed.

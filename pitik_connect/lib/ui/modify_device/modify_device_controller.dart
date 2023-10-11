@@ -340,7 +340,7 @@ class ModifyDeviceController extends GetxController {
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
-                }, onTokenInvalid: GlobalVar.invalidResponse())
+                }, onTokenInvalid: () => GlobalVar.invalidResponse())
         );
     }
 
@@ -385,7 +385,7 @@ class ModifyDeviceController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {

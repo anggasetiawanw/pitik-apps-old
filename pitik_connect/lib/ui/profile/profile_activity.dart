@@ -187,7 +187,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                           listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
                           listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
                           listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
-                          listComponent(GlobalVar.invalidResponse(), "images/logout_icon.svg", "Logout"),
+                          listComponent(() => GlobalVar.invalidResponse(), "images/logout_icon.svg", "Logout"),
                           const SizedBox(height: 16,),
                           Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),),
                           const SizedBox(height: 40,)

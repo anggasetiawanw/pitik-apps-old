@@ -235,7 +235,7 @@ class BerandaController extends GetxController {
                 );
                 isLoading.value = false;
 
-            },  onTokenInvalid: GlobalVar.invalidResponse()));
+            },  onTokenInvalid: () => GlobalVar.invalidResponse()));
     }
 
     /// The function takes a list of Coop objects, filters them based on their room

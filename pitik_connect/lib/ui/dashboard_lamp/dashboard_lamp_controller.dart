@@ -92,7 +92,7 @@ class DashboardLampController extends GetxController {
                     backgroundColor: Colors.red,
                 );
 
-            },  onTokenInvalid: GlobalVar.invalidResponse()));
+            },  onTokenInvalid: () => GlobalVar.invalidResponse()));
     }
 
 

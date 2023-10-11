@@ -402,7 +402,7 @@ class SmartScaleWeighingController extends GetxController {
                     isLoading.value = false;
                     Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
                 },
-                onTokenInvalid: GlobalVar.invalidResponse()
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
     }

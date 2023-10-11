@@ -114,7 +114,7 @@ class ListSmartScaleController extends GetxController {
                         isLoadMore.value = false;
                         isLoading.value = false;
                     },
-                    onTokenInvalid: GlobalVar.invalidResponse()
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
                 )
             );
         } else {
