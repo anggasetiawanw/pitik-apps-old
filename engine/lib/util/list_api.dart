@@ -53,6 +53,7 @@ class ListApi {
     static const String getListPurchaseRequestForCoopRest = "getListPurchaseRequestForCoopRest";
     static const String getListPurchaseOrder = "getListPurchaseOrder";
     static const String getListPurchaseOrderForCoopRest = "getListPurchaseOrderForCoopRest";
+    static const String getReceiveProcurement = "getReceiveProcurement";
     
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";

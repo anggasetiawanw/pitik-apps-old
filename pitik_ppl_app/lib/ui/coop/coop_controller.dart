@@ -11,7 +11,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
-import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -110,6 +109,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         AuthImpl().get().then((auth) => {
             if (auth != null) {
                 Service.push(
+                    apiKey: "api",
                     service: isCoopActive ? 'getCoopActive' : 'getCoopIdle',
                     context: context,
                     body: ['Bearer ${auth.token}', auth.id],
@@ -171,8 +171,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 child: Container(
                                     width: 60,
                                     height: 4,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(4)),
                                         color: GlobalVar.outlineColor
                                     )
                                 )
@@ -205,7 +205,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 imageAsset: 'images/calendar_check_icon.svg',
                                 onClick: () {
                                     // TO ORDER PAGE
-                                    print(Mapper.asJsonString(coop));
+                                    Get.toNamed(RoutePage.docInPage, arguments: coop);
                                 }
                             ),
                             const SizedBox(height: 24)
@@ -225,8 +225,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
             child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: GlobalVar.primaryLight
                     ),
                     child: Padding(
@@ -237,14 +237,14 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text(coop.coopName!, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                        Expanded(child: Text(coop.coopName!, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black),overflow: TextOverflow.clip,)),
                                         coop.isNew! ? const SizedBox() : Text("Hari ${coop.day}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                     ],
                                 ),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text('${coop.coopDistrict!}, ${coop.coopCity!}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        Expanded(child: Text('${coop.coopDistrict!}, ${coop.coopCity!}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), overflow: TextOverflow.clip,)),
                                         Text(
                                             "DOC-In ${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}",
                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)
@@ -253,8 +253,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 ),
                                 const SizedBox(height: 8),
                                 coop.isNew! ? Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(10)),
                                         color: GlobalVar.greenBackground
                                     ),
                                     child: Padding(
@@ -264,8 +264,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 ) : const SizedBox(),
                                 coop.isNew! ? const SizedBox() :
                                 Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(8)),
                                         border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.grayBackground)),
                                         color: Colors.white
                                     ),
@@ -295,8 +295,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 SizedBox(height: coop.isNew! ? 0 : 8),
                                 coop.isNew! ? const SizedBox() :
                                 Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(8)),
                                         border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.grayBackground)),
                                         color: Colors.white
                                     ),
@@ -344,8 +344,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
             child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: GlobalVar.primaryLight
                     ),
                     child: Padding(

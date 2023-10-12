@@ -150,4 +150,22 @@ class ProductReportApi {
     @GET(value: "v2/purchase-orders", as: ProcurementListResponse, error: ErrorResponse)
     void getListPurchaseOrderForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("coopId") String coopId, @Query("isBeforeDoc") bool isBeforeDoc,
                                          @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status) {}
+
+    /// A GET request to the endpoint v2/purchase-orders with the following headers:
+    /// Authorization: String
+    /// X-ID: String
+    /// The query parameters are:
+    /// farmingCycleId: String
+    /// type: String
+    /// The response is of type ProcurementRequestResponse and the error response is of type
+    /// ErrorResponse.
+    ///
+    /// @param authorization The authorization token
+    /// @param xId This is the unique identifier for the user.
+    /// @param farmingCycleId The ID of the farming cycle.
+    /// @param type The type of procurement request.
+    @GET(value: "v2/purchase-orders", as : ProcurementListResponse, error : ErrorResponse)
+    void getReceiveProcurement(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isBeforeDoc") bool isBeforeDoc, @Query("type") String type,
+                               @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status){}
+
 }

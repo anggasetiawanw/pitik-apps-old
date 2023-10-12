@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:path/path.dart';
 
 import '../global_var.dart';
@@ -47,7 +47,7 @@ class MediaField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -79,7 +79,7 @@ class MediaField extends StatelessWidget {
                                                             type == ALL ? Icons.perm_media :
                                                             type == PHOTO ? Icons.photo_camera :
                                                             type == VIDEO ? Icons.videocam :
-                                                            Icons.document_scanner
+                                                            Icons.document_scanner, color: GlobalVar.primaryOrange,
                                                         ),
                                                     ),
                                                     Expanded(
@@ -105,7 +105,7 @@ class MediaField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ],
                                             )

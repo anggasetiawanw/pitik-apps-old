@@ -30,11 +30,12 @@ class EditField extends StatelessWidget {
     double width;
     TextInputType inputType;
     TextInputAction action;
+    double height;
     Function(String, EditField) onTyping;
     CrossAxisAlignment crossAxisAlignment;
 
     EditField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.textUnit, required this.maxInput, this.inputType = TextInputType.text,
-               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix});
+               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix, this.height = 50});
 
     late String data;
     final editFieldController = TextEditingController();
@@ -75,7 +76,7 @@ class EditField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -94,8 +95,10 @@ class EditField extends StatelessWidget {
                                     children: <Widget>[
                                         SizedBox(
                                             width: width,
-                                            height: 50,
+                                            height: height,
                                             child: TextFormField(
+                                                expands: inputType == TextInputType.multiline ? true : false,
+                                                maxLines: inputType == TextInputType.multiline ? null : 1,
                                                 // focusNode: controller.focusNode,
                                                 controller: editFieldController,
                                                 enabled: controller.activeField.isTrue,
@@ -108,6 +111,7 @@ class EditField extends StatelessWidget {
                                                     onTyping(text, this);
                                                 },
                                                 decoration: InputDecoration(
+                                                    
                                                     contentPadding: const EdgeInsets.only(left: 8),
                                                     counterText: "",
                                                     hintText: hint,
@@ -136,11 +140,11 @@ class EditField extends StatelessWidget {
                                                     ),
                                                     disabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: BorderSide(color: GlobalVar.gray),
+                                                        borderSide: const BorderSide(color: GlobalVar.gray),
                                                     ),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: BorderSide(color: GlobalVar.primaryLight)
+                                                        borderSide: const BorderSide(color: GlobalVar.primaryLight)
                                                     ),
                                                     filled: true,
                                                 ),
@@ -160,7 +164,7 @@ class EditField extends StatelessWidget {
                                                         Expanded(
                                                           child: Text(
                                                               controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                              style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                              style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                               overflow: TextOverflow.clip,
                                                           ),
                                                         )
