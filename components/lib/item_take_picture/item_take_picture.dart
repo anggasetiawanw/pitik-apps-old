@@ -1,8 +1,11 @@
 
 // ignore_for_file: slash_for_doc_comments
 
+import 'dart:async';
+
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:model/record_model.dart';
 
 import '../global_var.dart';
@@ -25,42 +28,51 @@ class ItemTakePictureCamera extends StatelessWidget{
     @override
     Widget build(BuildContext context) {
         final DateTime takePictureDate = Convert.getDatetime(recordCamera!.createdAt!);
+        controller.loadUrlImage(recordCamera!.link!);
         return Column(
             children: [
                 const SizedBox(height: 16),
                 Stack(
                     children: [
-                        ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(8),
-                                topLeft: Radius.circular(8)
-                            ),
-                            child: Container(
-                                color: GlobalVar.gray,
-                                child:
-                                Image.network(
-                                    recordCamera!.link!,
-                                    fit: BoxFit.fill,
-                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null) return child;
-                                        return Center(
-                                            child: CircularProgressIndicator(
-                                                color: GlobalVar.primaryOrange,
-                                                value: loadingProgress.expectedTotalBytes != null
-                                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                                    : null,
-                                            )
-                                        );
-                                    },
-                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                        return const SizedBox(
-                                            width: double.infinity,
-                                            height: 210
-                                        );
-                                    }
-                                )
-                            )
+                        // if(controller.isImageLoaded.isFalse)...[
+                    Obx(() =>
+                    ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(8),
+                            topLeft: Radius.circular(8)
                         ),
+                        child: Container(
+                            color: GlobalVar.gray,
+                            child: controller.fadeImage.value,
+                            // Image.network(
+                            //     recordCamera!.link!,
+                            //     fit: BoxFit.fill,
+                            //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            //         controller.isImageLoaded.value = true;
+                            //         if (loadingProgress == null) return child;
+                            //         return Center(
+                            //             child: CircularProgressIndicator(
+                            //                 color: GlobalVar.primaryOrange,
+                            //                 value: loadingProgress.expectedTotalBytes != null
+                            //                     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                            //                     : null,
+                            //             )
+                            //         );
+                            //     },
+                            //     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                            //         controller.isImageLoaded.value = false;
+                            //         // print("HUHUHUU ${recordCamera!.link!}");
+                            //         return const SizedBox(
+                            //         width: double.infinity,
+                            //         height: 210
+                            //     );
+                            //     },
+                            // )
+                        )
+                    )
+                    )
+                        // ]
+                        ,
                         GestureDetector(
                             onTap: () {
                                 if (controller.isShow.value) {

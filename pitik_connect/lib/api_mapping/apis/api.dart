@@ -24,6 +24,7 @@ import 'package:model/response/home_response.dart';
 import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/profile_response.dart';
 import 'package:model/response/room_detail_response.dart';
+import 'package:model/response/fan_detail_response.dart';
 // ignore: unused_import
 import 'package:model/password_model.dart';
 
@@ -448,6 +449,27 @@ class API {
     /// request.
     @GET(value: GET.PATH_PARAMETER, as: FanListResponse, error: ErrorResponse)
     void getFanData(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+
+    /// The function "getFanDetail" is a GET request that retrieves fan details
+    /// using the provided headers and path parameter.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send
+    /// authentication credentials to the server. It typically contains a token or
+    /// other form of authentication that allows the server to verify the identity
+    /// of the client making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used to track or identify
+    /// a specific request or user.
+    ///   xAppId (String): The xAppId parameter is a header parameter that
+    /// represents the ID of the application making the request. It is typically
+    /// used for authentication and identification purposes.
+    ///   path (String): The "path" parameter is a placeholder for the specific path
+    /// or identifier of the fan detail that you want to retrieve. It is typically
+    /// used in the URL of the API endpoint to specify the resource you want to
+    /// access.
+    @GET(value: GET.PATH_PARAMETER, as: FanDetailResponse, error: ErrorResponse)
+    void getFanDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
 
     /// The getCoolerData function is a GET request that retrieves cooler data using
     /// the provided headers and path parameter.

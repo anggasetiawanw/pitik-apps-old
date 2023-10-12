@@ -60,7 +60,7 @@ class SmartScaleWeighingController extends GetxController {
     );
 
     final EditField outstandingTotalWeighingField = EditField(controller: GetXCreator.putEditFieldController("outstandingTotalWeighingFieldSmartScale"), label: "Sisa Belum Ditimbang", hint: "", alertText: "",
-        textUnit: "kg", inputType: TextInputType.number, maxInput: 10,
+        textUnit: "Ekor", inputType: TextInputType.number, maxInput: 10,
         onTyping: (text, editField) {
 
         }
@@ -393,16 +393,30 @@ class SmartScaleWeighingController extends GetxController {
                     Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
                 },
                 onResponseFail: (code, message, body, id, packet) {
+                    Get.snackbar(
+                        "Pesan", "Koneksi terputus. Data akan terupdate jika koneksi kembali.",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: Colors.red,
+                    );
                     _saveSmartScaleToDb(data, 0);
                     isLoading.value = false;
                     Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     _saveSmartScaleToDb(data, 0);
+                    Get.snackbar(
+                        "Pesan", "Koneksi terputus. Data akan terupdate jika koneksi kembali.",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: Colors.red,
+                    );
                     isLoading.value = false;
                     Get.off(SmartScaleDoneSummary(data: data!, coop: coop, startWeighingTime: startWeighingTime));
                 },
-                onTokenInvalid: GlobalVar.invalidResponse()
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
     }

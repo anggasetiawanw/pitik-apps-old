@@ -68,13 +68,25 @@ class HeaterSetup extends GetView<HeaterSetupController>{
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                     Expanded(
-                                        child: ButtonFill(
-                                            controller: GetXCreator.putButtonFillController("saveDevice"),
+                                        child: Obx(() => controller.isEdit.isTrue ?
+                                        ButtonFill(
+                                            controller: GetXCreator.putButtonFillController("bfSaveHeaterSetup"),
                                             label: "Simpan",
                                             onClick: () {
                                                 showBottomDialog(context, controller);
                                             },
-                                        )),
+                                        ):
+                                        ButtonFill(
+                                            controller: GetXCreator.putButtonFillController("bfEditHeaterSetup"),
+                                            label: "Edit",
+                                            onClick: () {
+                                                controller.isEdit.value = true;
+                                                controller.isLoading.value = true;
+                                                controller.loadPage();
+                                            },
+                                        )
+                                        ) ,
+                                    ),
                                 ],
                             ),
                         ),

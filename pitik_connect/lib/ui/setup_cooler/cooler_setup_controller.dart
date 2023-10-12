@@ -130,7 +130,7 @@ class CoolerSetupController extends GetxController {
                     backgroundColor: Colors.red,
                 );
 
-            },  onTokenInvalid: GlobalVar.invalidResponse()));
+            },  onTokenInvalid: () => GlobalVar.invalidResponse()));
     }
     
     /// The function loads data into various input fields and controllers based on
@@ -191,7 +191,7 @@ class CoolerSetupController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {

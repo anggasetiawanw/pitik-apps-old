@@ -124,7 +124,7 @@ class GrowthSetupController extends GetxController {
             },
         );
         itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController("itemDecreaseTemperature",context));
-        // getDetailGrowthDay();
+        getDetailGrowthDay();
     }
 
     @override
@@ -137,7 +137,7 @@ class GrowthSetupController extends GetxController {
     void onReady() {
         super.onReady();
         WidgetsBinding.instance.addPostFrameCallback((_){
-            getDetailGrowthDay();
+            // getDetailGrowthDay();
         });
         itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController("itemDecreaseTemperature",context));
     }
@@ -149,6 +149,7 @@ class GrowthSetupController extends GetxController {
     ///   growthDay (GrowthDay): The `growthDay` parameter is an object of type
     /// `GrowthDay`.
     void loadData(GrowthDay growthDay){
+        print("${growthDay.requestTemperature}");
         list.value.clear();
         itemDecreaseTemperture.controller.removeAll();
         if(growthDay.temperatureReduction!.isNotEmpty) {
@@ -212,8 +213,9 @@ class GrowthSetupController extends GetxController {
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
+                    print("HAHAHAHA ${exception}");
 
-                }, onTokenInvalid: GlobalVar.invalidResponse())
+                }, onTokenInvalid: () => GlobalVar.invalidResponse())
         );
     }
 
@@ -251,7 +253,7 @@ class GrowthSetupController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {

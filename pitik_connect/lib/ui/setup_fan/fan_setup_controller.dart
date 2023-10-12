@@ -16,6 +16,8 @@ import 'package:model/controller_data_model.dart';
 import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/response/fan_detail_response.dart';
+import 'package:model/response/fan_list_response.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -56,7 +58,7 @@ class FanSetupController extends GetxController {
             "tmPickerDurationOn"),
         label: "Durasi Nyala",
         hint: "00:00:00",
-        flag: TimePickerField.TIME_HOURS_AND_MINUTES,
+        flag: TimePickerField.TIME_MINUTES_AND_SECONDS,
         alertText: "Durasi Nyala harus di isi",
         onTimeSelected: (String time) {
         tmPickerDurationOn.controller.setTextSelected(time);},
@@ -66,7 +68,7 @@ class FanSetupController extends GetxController {
             "tmPickerFanOffDurartion"),
         label: "Durasi Mati",
         hint: "00:00:00",
-        flag: TimePickerField.TIME_HOURS_AND_MINUTES,
+        flag: TimePickerField.TIME_MINUTES_AND_SECONDS,
         alertText: "Durasi Mati harus di isi",
         onTimeSelected: (String time) {tmPickerFanOffDurartion.controller.setTextSelected(time); },
     );
@@ -90,32 +92,32 @@ class FanSetupController extends GetxController {
         deviceSetting = Get.arguments[0];
         device = Get.arguments[1];
         controllerData = Get.arguments[2];
-        if(Get.arguments != null){
-            if(isEdit.isTrue){
-                efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
-                if(deviceSetting.status == true) {
-                    sbIntermittern.controller.setOn();
-                }else{
-                    sbIntermittern.controller.setOn();
-                }
-                sbIntermittern.controller.enable();
-                efDiffTemp.controller.enable();
-                tmPickerDurationOn.controller.enable();
-                tmPickerFanOffDurartion.controller.enable();
-            }else{
-                efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
-                if(deviceSetting.status == true) {
-                    sbIntermittern.controller.setOn();
-                }else{
-                    sbIntermittern.controller.setOn();
-                }
-                sbIntermittern.controller.disable();
-                efDiffTemp.controller.disable();
-                tmPickerDurationOn.controller.disable();
-                tmPickerFanOffDurartion.controller.disable();
-            }
-
-        }
+        // if(Get.arguments != null){
+        //     if(isEdit.isTrue){
+        //         efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
+        //         if(deviceSetting.status == true) {
+        //             sbIntermittern.controller.setOn();
+        //         }else{
+        //             sbIntermittern.controller.setOn();
+        //         }
+        //         sbIntermittern.controller.enable();
+        //         efDiffTemp.controller.enable();
+        //         tmPickerDurationOn.controller.enable();
+        //         tmPickerFanOffDurartion.controller.enable();
+        //     }else{
+        //         efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
+        //         if(deviceSetting.status == true) {
+        //             sbIntermittern.controller.setOn();
+        //         }else{
+        //             sbIntermittern.controller.setOn();
+        //         }
+        //         sbIntermittern.controller.disable();
+        //         efDiffTemp.controller.disable();
+        //         tmPickerDurationOn.controller.disable();
+        //         tmPickerFanOffDurartion.controller.disable();
+        //     }
+        //
+        // }
         // isLoading.value = true;
         boNoSettingFan = ButtonOutline(
             controller: GetXCreator.putButtonOutlineController("boNoSettingFan"),
@@ -149,7 +151,41 @@ class FanSetupController extends GetxController {
             onClick: () {
             },
         );
+        getDetailFan();
     }
+
+    void getDetailFan(){
+        Service.push(
+            service: ListApi.getFanDetail,
+            context: context,
+            body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!,
+                ListApi.pathDetailFanData("fan",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!, deviceSetting!.id!)],
+            listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
+                if ((body as FanDetailResponse).data != null){
+                    loadPage((body).data);
+                }
+            }, onResponseFail: (code, message, body, id, packet){
+                isLoading.value = false;
+                Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+            }, onResponseError: (exception, stacktrace, id, packet){
+                Get.snackbar(
+                    "Pesan",
+                    "Terjadi kesalahan internal",
+                    snackPosition: SnackPosition.TOP,
+                    duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+
+            },  onTokenInvalid: () => GlobalVar.invalidResponse()));
+    }
+
 
     /// The function `settingFan()` is responsible for setting up a fan device and
     /// making an API call to update the device settings.
@@ -185,7 +221,7 @@ class FanSetupController extends GetxController {
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                         },
-                        onTokenInvalid: GlobalVar.invalidResponse()
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
                     ),
                 );
             } catch (e,st) {
@@ -244,24 +280,29 @@ class FanSetupController extends GetxController {
 
     /// The function `loadPage()` sets the input values and enables or disables
     /// controllers based on the `isEdit` flag and the `deviceSetting` status.
-    void loadPage(){
+    void loadPage(DeviceSetting? fanData){
         if(isEdit.isTrue){
-            efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
-            if(deviceSetting.status == true) {
+            efDiffTemp.setInput("${fanData!.temperatureTarget}");
+            tmPickerDurationOn.controller.setTextSelected("${fanData!.onlineDuration}");
+            tmPickerFanOffDurartion.controller.setTextSelected("${fanData!.offlineDuration}");
+            if(fanData!.intermitten == true) {
                 sbIntermittern.controller.setOn();
             }else{
-                sbIntermittern.controller.setOn();
+                sbIntermittern.controller.setOff();
             }
             sbIntermittern.controller.enable();
             efDiffTemp.controller.enable();
             tmPickerDurationOn.controller.enable();
             tmPickerFanOffDurartion.controller.enable();
         }else{
-            efDiffTemp.setInput("${deviceSetting.temperatureTarget}");
-            if(deviceSetting.status == true) {
+            efDiffTemp.setInput("${fanData!.temperatureTarget}");
+            tmPickerDurationOn.controller.setTextSelected("${fanData!.onlineDuration}");
+            tmPickerFanOffDurartion.controller.setTextSelected("${fanData!.offlineDuration}");
+
+            if(fanData!.intermitten == true) {
                 sbIntermittern.controller.setOn();
             }else{
-                sbIntermittern.controller.setOn();
+                sbIntermittern.controller.setOff();
             }
             sbIntermittern.controller.disable();
             efDiffTemp.controller.disable();
