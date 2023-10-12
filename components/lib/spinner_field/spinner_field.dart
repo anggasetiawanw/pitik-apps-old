@@ -20,10 +20,12 @@ class SpinnerField extends StatelessWidget {
     String alertText;
     bool hideLabel = false;
     bool isDetail;
+    Color backgroundField;
     Map<String, bool> items;
     Function(String) onSpinnerSelected;
 
-    SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected, this.isDetail = false});
+    SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected,
+                  this.isDetail = false, this.backgroundField = const Color(0x00fff9ed)});
 
     SpinnerFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -87,7 +89,7 @@ class SpinnerField extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                        color: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
+                                        color: controller.activeField.isTrue ? backgroundField : GlobalVar.gray,
                                         borderRadius: BorderRadius.circular(10.0),
                                         border: Border.all(
                                             color: controller.activeField.isTrue && controller.showTooltip.isFalse && controller.isShowList.isTrue

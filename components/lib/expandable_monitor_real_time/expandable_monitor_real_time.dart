@@ -127,9 +127,18 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         const SizedBox(height: 8),
-                        Text(
-                            "Riwayat $headerText Kandang",
-                            style: GlobalVar.primaryTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Text(
+                                    "Riwayat $headerText Kandang",
+                                    style: GlobalVar.primaryTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)
+                                ),
+                                sensorType == "temperature" || sensorType == "relativeHumidity" ? GestureDetector(
+                                    onTap: () => controller.showSensorMappingBottomSheet(),
+                                    child: SvgPicture.asset('images/information_blue_icon.svg'),
+                                ) : const SizedBox()
+                            ],
                         ),
                         const SizedBox(height: 16),
                         Row(
@@ -156,6 +165,38 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                     ],
                                 )
                             ]
+                        ),
+                        const SizedBox(height: 16),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: GridView(
+                                controller: ScrollController(keepScrollOffset: false),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    mainAxisExtent: 28,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: List.generate(controller.sensorPositionList.length, (index) {
+                                    return Row(
+                                        children: [
+                                            Container(
+                                                width: 2,
+                                                height: 2,
+                                                decoration: BoxDecoration(
+                                                    color: GlobalVar.black,
+                                                    shape: BoxShape.circle
+                                                ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            Text(
+                                                controller.sensorPositionList[index] == null || controller.sensorPositionList[index]!.position == null ? '-' : controller.sensorPositionList[index]!.position!,
+                                                style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                            )
+                                        ],
+                                    );
+                                }),
+                            ),
                         ),
                         controller.isLoading.isTrue ?
                         const Center(

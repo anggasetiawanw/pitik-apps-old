@@ -8,6 +8,7 @@ import 'package:model/error/error.dart';
 import 'package:model/response/historical_data_response.dart';
 import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/building_response.dart';
+import 'package:model/response/sensor_position_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -105,4 +106,22 @@ class SmartMonitoringApi {
     /// server.
     @GET(value: GET.PATH_PARAMETER, as: BuildingResponse, error: ErrorResponse)
     void getListBuilding(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `sensorPosition` is a GET request that retrieves sensor
+    /// positions based on the provided authorization, X-ID, roomId, and sensorType.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is used to pass the
+    /// authentication token or credentials required to access the API. It is
+    /// typically included in the request header to authenticate the user making the
+    /// request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   roomId (String): The roomId parameter is used to specify the ID of the
+    /// room where the sensor is located.
+    ///   sensorType (String): The "sensorType" parameter is used to specify the
+    /// type of sensor for which you want to retrieve the position.
+    @GET(value: 'v2/sensor', as: SensorPositionResponse, error: ErrorResponse)
+    void sensorPosition(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("roomId") String roomId, @Query("sensorType") String sensorType) {}
 }

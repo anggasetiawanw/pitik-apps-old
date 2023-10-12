@@ -93,7 +93,7 @@ class DetailSmartMonitorController extends GetxController {
                                 index++;
                             }
 
-                            spBuilding.value = SpinnerField(controller: GetXCreator.putSpinnerFieldController<Building>("buildingSpField"), label: "", hideLabel: true, hint: "", alertText: "", items: data,
+                            spBuilding.value = SpinnerField(controller: GetXCreator.putSpinnerFieldController<Building>("buildingSpField"), label: "", hideLabel: true, hint: "", alertText: "", items: data, backgroundField: Colors.white,
                                 onSpinnerSelected: (text) => _getLatestDataSmartMonitor(spBuilding.value.getController().selectedObject == null || (spBuilding.value.getController().selectedObject as Building).roomId == null ? '' : (spBuilding.value.getController().selectedObject as Building).roomId!)
                             );
 

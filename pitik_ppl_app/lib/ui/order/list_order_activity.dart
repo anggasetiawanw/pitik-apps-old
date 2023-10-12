@@ -4,6 +4,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
 
 ///@author DICKY
@@ -16,40 +17,49 @@ class ListOrderActivity extends GetView<ListOrderController> {
     @override
     Widget build(BuildContext context) {
         return SafeArea(
-            child: Scaffold(
-                backgroundColor: Colors.white,
-                appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(120),
-                    child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                            color: GlobalVar.primaryOrange
-                        ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        GestureDetector(
-                                            onTap: () => Get.back(),
-                                            child: const Icon(Icons.arrow_back, color: Colors.white),
-                                        ),
-                                        Text('Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                        const SizedBox()
-                                    ],
-                                ),
-                                const SizedBox(height: 16),
-                                Text(controller.coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
-                                const SizedBox(height: 6),
-                                Text('DOC-In ${controller.coop.startDate ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
-                            ],
+            child: Obx(() =>
+                Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: PreferredSize(
+                        preferredSize: const Size.fromHeight(120),
+                        child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                                color: GlobalVar.primaryOrange
+                            ),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            GestureDetector(
+                                                onTap: () => Get.back(),
+                                                child: const Icon(Icons.arrow_back, color: Colors.white),
+                                            ),
+                                            Text('Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                            const SizedBox()
+                                        ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(controller.coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
+                                    const SizedBox(height: 6),
+                                    Text('DOC-In ${controller.coop.startDate ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
+                                ],
+                            ),
                         ),
                     ),
-                ),
-                body: Obx( () =>
-                    Column(
+                    floatingActionButton: controller.tabController.index == 0 ? Padding(
+                        padding: const EdgeInsets.only(bottom: 32),
+                        child: FloatingActionButton(
+                            elevation: 12,
+                            onPressed: () => Get.toNamed(RoutePage.orderRequestPage, arguments: [controller.coop]),
+                            backgroundColor: GlobalVar.primaryOrange,
+                            child: const Icon(Icons.add, color: Colors.white),
+                        ),
+                    ) : const SizedBox(),
+                    body: Column(
                         children: [
                             Padding(
                                 padding: const EdgeInsets.only(left: 16, right: 16),
@@ -149,8 +159,8 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                 )
                             )
                         ],
-                    )
-                ),
+                    ),
+                )
             )
         );
     }

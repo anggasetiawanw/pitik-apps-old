@@ -53,7 +53,6 @@ dependencies:
   dio: ^5.3.2
   share_plus: ^7.1.0
   device_info_plus: ^9.0.3
-  carrier_info: ^2.0.8
   shared_preferences: ^2.2.0
   permission_handler: ^11.0.0
   internet_connection_checker: ^1.0.0+1
