@@ -109,7 +109,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         AuthImpl().get().then((auth) => {
             if (auth != null) {
                 Service.push(
-                    apiKey: "api",
+                    apiKey: "coopApi",
                     service: isCoopActive ? 'getCoopActive' : 'getCoopIdle',
                     context: context,
                     body: ['Bearer ${auth.token}', auth.id],
@@ -205,6 +205,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 imageAsset: 'images/calendar_check_icon.svg',
                                 onClick: () {
                                     // TO ORDER PAGE
+                                    Get.back();
                                     Get.toNamed(RoutePage.docInPage, arguments: coop);
                                 }
                             ),

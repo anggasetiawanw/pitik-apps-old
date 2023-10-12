@@ -1,11 +1,15 @@
 
+import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/property/header.dart';
+import 'package:engine/request/annotation/property/parameter.dart';
 import 'package:engine/request/annotation/property/path.dart';
 import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
+import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/procurement_list_response.dart';
+import 'package:model/response/request_chickin_response.dart';
 import 'package:model/response/sapronak_response.dart';
 
 ///@author DICKY
@@ -167,5 +171,25 @@ class ProductReportApi {
     @GET(value: "v2/purchase-orders", as : ProcurementListResponse, error : ErrorResponse)
     void getReceiveProcurement(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isBeforeDoc") bool isBeforeDoc, @Query("type") String type,
                                @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status){}
+
+    /// A GET request with a path parameter. The response is of type RequestChickinResponse and the
+    /// error response is of type ErrorResponse.
+    ///
+    /// @param authorization Authorization header
+    /// @param xId The unique ID of the request.
+    /// @param path The path of the request.
+    @GET(value : GET.PATH_PARAMETER, as : RequestChickinResponse, error : ErrorResponse)
+    void getRequestDoc(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
+
+    /// A PATCH request with a path parameter. The response is in JSON format.
+    ///
+    /// @param authorization The authorization header
+    /// @param xId The unique identifier for the request.
+    /// @param path The path of the request.
+    /// @param data The data to be sent to the server.
+    @PATCH(value : PATCH.PATH_PARAMETER, error : ErrorResponse)
+    @JSON(isPlaint: true)
+    void updateRequestChickin(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data){}
+
 
 }
