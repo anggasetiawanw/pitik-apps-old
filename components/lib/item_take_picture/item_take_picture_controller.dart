@@ -78,27 +78,96 @@ class ItemTakePictureCameraController extends GetxController {
     fit: BoxFit.fill,
     ).obs;
 
-    void loadUrlImage(String url){
-        Scheduler scheduler = Scheduler();
-        scheduler.maxRetry(4).listener(SchedulerListener(
-            onTick: (packet){
-                fadeImage.value = FadeInImage.assetNetwork(
-                    width: double.infinity,
-                    height: 210,
-                    image: url,
-                    placeholder: 'images/bc_image.png',
-                    imageErrorBuilder:
-                        (context, error, stackTrace) {
-                        return Image.asset('images/bc_image.png', fit: BoxFit.cover);
-                    },
-                    fit: BoxFit.fill,
-                );
-                return true;
+    Future<bool> isValidUrl(Uri imageUrl) async{
+        var response = await http.get(imageUrl);
+        if(response.statusCode != 200){
+            return false;
+        }
+        return true;
+    }
 
-            },
-            onTickDone: (packet) {fadeImage.refresh();},
-            onTickFail: (packet) {}
-        )).run(const Duration(seconds: 20));
+    void reloadCheckUrl(String url){
+        Timer(const Duration(milliseconds: 7000), () async {
+            final uri = Uri.parse(url);
+            if(await isValidUrl(uri)){
+                image.value = Image.network(
+                            url,
+                            fit: BoxFit.fill,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                        color: GlobalVar.primaryOrange,
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                            : null,
+                                    )
+                                );
+                            },
+                            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                return const SizedBox(
+                                    width: double.infinity,
+                                    height: 210
+                                );
+                            },
+                        );
+            }else{
+                reloadCheckUrl(url);
+            }
+        });
+    }
+
+    void loadUrlImage(String url){
+        reloadCheckUrl(url);
+        // Scheduler scheduler = Scheduler();
+        // scheduler.maxRetry(4).listener(SchedulerListener(
+        //     onTick: (packet) {
+        //         // fadeImage.value = FadeInImage.assetNetwork(
+        //         //     width: double.infinity,
+        //         //     height: 210,
+        //         //     image: url,
+        //         //     placeholder: 'images/bc_image.png',
+        //         //     imageErrorBuilder:
+        //         //         (context, error, stackTrace) {
+        //         //         return Image.asset('images/bc_image.png', fit: BoxFit.cover);
+        //         //     },
+        //         //     fit: BoxFit.fill,
+        //         // );
+        //         // fadeImage.refresh();
+        //         // return true;
+        //
+        //         final uri = Uri.parse(url);
+        //         isValidUrl(uri);
+        //
+        //         // image.value = Image.network(
+        //         //     url,
+        //         //     fit: BoxFit.fill,
+        //         //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+        //         //         if (loadingProgress == null) return child;
+        //         //         return Center(
+        //         //             child: CircularProgressIndicator(
+        //         //                 color: GlobalVar.primaryOrange,
+        //         //                 value: loadingProgress.expectedTotalBytes != null
+        //         //                     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+        //         //                     : null,
+        //         //             )
+        //         //         );
+        //         //     },
+        //         //     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+        //         //         return const SizedBox(
+        //         //             width: double.infinity,
+        //         //             height: 210
+        //         //         );
+        //         //     },
+        //         // );
+        //         image.refresh();
+        //         return true;
+        //     },
+        //     onTickDone: (packet) {
+        //         print("object TICKKKDONE $url");
+        //         image.refresh();},
+        //     onTickFail: (packet) {}
+        // )).run(const Duration(seconds: 10));
     }
 
 
