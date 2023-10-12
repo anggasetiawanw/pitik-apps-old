@@ -29,6 +29,8 @@ class ItemTakePictureCamera extends StatelessWidget{
     Widget build(BuildContext context) {
         final DateTime takePictureDate = Convert.getDatetime(recordCamera!.createdAt!);
         controller.loadUrlImage(recordCamera!.link!);
+        // final uri = Uri.parse(recordCamera!.link!);
+        // controller.isValidUrl(uri);
         return Column(
             children: [
                 const SizedBox(height: 16),
@@ -43,7 +45,7 @@ class ItemTakePictureCamera extends StatelessWidget{
                         ),
                         child: Container(
                             color: GlobalVar.gray,
-                            child: controller.fadeImage.value,
+                            child: controller.image.value,
                             // Image.network(
                             //     recordCamera!.link!,
                             //     fit: BoxFit.fill,

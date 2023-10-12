@@ -2,8 +2,6 @@
 
 import 'dart:async';
 import 'dart:io';
-
-import 'package:carrier_info/carrier_info.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
@@ -56,14 +54,6 @@ class BerandaController extends GetxController {
     final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
     late Future<bool> isAscendingPref;
     Rx<bool> isAscending = true.obs;
-
-    IosCarrierData? _iosInfo;
-
-    set iosInfo(IosCarrierData? iosInfo) {
-        _iosInfo = iosInfo;
-    }
-
-    IosCarrierData? get iosInfo => _iosInfo;
 
     late ButtonOutline boAddDevice = ButtonOutline(
         controller: GetXCreator.putButtonOutlineController("boAddDevice"),
@@ -124,14 +114,12 @@ class BerandaController extends GetxController {
     Future<void> initValueMixpanel() async {
         // Platform messages may fail, so we use a try/catch PlatformException.
         if (Platform.isAndroid) {
-            final hasPermission = await handlePermissionPhoneAccess();
-            if (hasPermission) {
+            // final hasPermission = await handlePermissionPhoneAccess();
+            // if (hasPermission) {
                 initMobileNumberState();
-            }
+            // }
         } else if (Platform.isIOS) {
-            iosInfo = await CarrierInfo.getIosInfo();
-            (iosInfo?.carrierData ?? []).map(
-                (it)=> phoneCarrier= it.carrierName);
+            phoneCarrier = "No Simcard";
         }
         initMixpanel();
     }
