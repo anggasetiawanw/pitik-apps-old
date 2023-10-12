@@ -26,6 +26,7 @@ class ListApi {
     static const String getListBuilding = "getListBuilding";
     static const String getRealTimeHistorical = "realTime";
     static const String getRealTimeHistoricalForSmartController = "realTimeSmartController";
+    static const String getSensorPosition = "sensorPosition";
     
     // api SMART CAMERA
     static const String getRecordImages = "getRecordImages";

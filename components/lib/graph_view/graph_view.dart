@@ -49,9 +49,15 @@ class GraphView extends StatelessWidget {
                         ),
                         activationMode: ActivationMode.singleTap,
                         builder: (context, trackballDetails) {
-                            trackballDetails.groupingModeInfo!.points[0].pointColorMapper = controller.lineMaxColor.value;
-                            trackballDetails.groupingModeInfo!.points[1].pointColorMapper = controller.lineMinColor.value;
-                            trackballDetails.groupingModeInfo!.points[2].pointColorMapper = controller.lineCurrentColor.value;
+                            if (trackballDetails.groupingModeInfo!.points.isNotEmpty) {
+                                trackballDetails.groupingModeInfo!.points[0].pointColorMapper = controller.lineMaxColor.value;
+                            }
+                            if (trackballDetails.groupingModeInfo!.points.length > 1) {
+                                trackballDetails.groupingModeInfo!.points[1].pointColorMapper = controller.lineMinColor.value;
+                            }
+                            if (trackballDetails.groupingModeInfo!.points.length > 2) {
+                                trackballDetails.groupingModeInfo!.points[2].pointColorMapper = controller.lineCurrentColor.value;
+                            }
 
                             return Wrap(
                                 children: [
