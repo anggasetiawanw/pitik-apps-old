@@ -102,13 +102,13 @@ class ListSmartScaleController extends GetxController {
                     onResponseFail: (code, message, body, id, packet) {
                         isLoadMore.value = false;
                         isLoading.value = false;
-                        Get.snackbar(
-                            "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            duration: const Duration(seconds: 5),
-                            backgroundColor: Colors.red,
-                        );
+                        // Get.snackbar(
+                        //     "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        //     snackPosition: SnackPosition.TOP,
+                        //     colorText: Colors.white,
+                        //     duration: const Duration(seconds: 5),
+                        //     backgroundColor: Colors.red,
+                        // );
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
                         isLoadMore.value = false;

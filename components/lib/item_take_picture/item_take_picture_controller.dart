@@ -2,10 +2,16 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'dart:async';
+import 'dart:typed_data';
 
+import 'package:components/global_var.dart';
+import 'package:engine/util/interface/schedule_listener.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:engine/util/scheduler.dart';
 
 import '../edit_field/edit_field.dart';
 
@@ -38,42 +44,76 @@ class ItemTakePictureCameraController extends GetxController {
     void visibleCard() => isShow.value = true;
     void invisibleCard() => isShow.value = false;
 
-    void reloadTime(){
-        // reloadUrl.value = true;
-        print("TIMER HIHI ${reloadUrl.value}");
-        if(tryCount.value < 5) {
-          Timer(const Duration(milliseconds: 10000), () {
-              reloadUrl.value = true;
-              print("TIMER HOHO ${reloadUrl.value}");
-              print("TIMER HUUUA ${tryCount}");
-              tryCount.value += 1;
-              reloadTime();
-        });
-        }
+    Rx<Widget> image = Image.network(
+        "",
+        fit: BoxFit.fill,
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+                child: CircularProgressIndicator(
+                    color: GlobalVar.primaryOrange,
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                        : null,
+                )
+            );
+            },
+        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return const SizedBox(
+                width: double.infinity,
+                height: 210
+            );
+            },
+    ).obs;
+
+    Rx<FadeInImage> fadeImage = FadeInImage(
+        width: double.infinity,
+        height: 210,
+        image: AssetImage('images/bc_image.png'),
+        placeholder: AssetImage('images/bc_image.png'),
+        imageErrorBuilder:
+            (context, error, stackTrace) {
+            return Image.asset('images/bc_image.png', fit: BoxFit.cover);
+    },
+    fit: BoxFit.fill,
+    ).obs;
+
+    void loadUrlImage(String url){
+        Scheduler scheduler = Scheduler();
+        scheduler.maxRetry(4).listener(SchedulerListener(
+            onTick: (packet){
+                fadeImage.value = FadeInImage.assetNetwork(
+                    width: double.infinity,
+                    height: 210,
+                    image: url,
+                    placeholder: 'images/bc_image.png',
+                    imageErrorBuilder:
+                        (context, error, stackTrace) {
+                        return Image.asset('images/bc_image.png', fit: BoxFit.cover);
+                    },
+                    fit: BoxFit.fill,
+                );
+                return true;
+
+            },
+            onTickDone: (packet) {fadeImage.refresh();},
+            onTickFail: (packet) {}
+        )).run(const Duration(seconds: 20));
     }
 
-    // Future<bool> isValidUrl(Uri imageUrl) async{
-    //     var response = await http.get(imageUrl);
-    //     if(response.statusCode != 200){
-    //         Get.snackbar(
-    //             "Pesan", "Gambar belum tersedia!",
-    //             snackPosition: SnackPosition.BOTTOM,
-    //             colorText: Colors.white,
-    //             duration: const Duration(seconds: 5),
-    //             backgroundColor: Colors.red,
-    //         );
-    //         return false;
-    //     }
-    //     return true;
-    // }
 
+    @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
     @override
     void onReady() {
     // TODO: implement onReady
     super.onReady();
-    if(tryCount <=0 ){
-        reloadTime();
-    }
+    // if(tryCount <=0 ){
+    //     reloadTime();
+    // }
   }
 }
 
