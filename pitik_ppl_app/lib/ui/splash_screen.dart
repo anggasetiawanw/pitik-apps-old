@@ -42,7 +42,7 @@ class SplashScreenState extends State<SplashScreenActivity> {
             if (Platform.isIOS) {
                 // GpsUtil.on();
             } else {
-                var permissionPhoneAccess = await handlePermissionPhoneAccess();
+                // var permissionPhoneAccess = await handlePermissionPhoneAccess();
                 if (permissionGPS.isDenied) {
                     Get.snackbar("Alert", "This Apps Need Location Permission",
                         duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
@@ -50,10 +50,10 @@ class SplashScreenState extends State<SplashScreenActivity> {
                     Get.snackbar("Info", "Enable Location, Please!", snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
 
-                } else if(!permissionPhoneAccess) {
+                } /*else if(!permissionPhoneAccess) {
                     Get.snackbar("Alert", "Enable Phone Access, Please!", snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
-                } else {
+                }*/ else {
                     // GpsUtil.mock(true);
                 }
             }
