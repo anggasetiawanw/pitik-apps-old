@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:components/library/engine_library.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -12,10 +13,11 @@ class AppBarFormForCoop extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
+        DateTime? startDate = coop.startDate == null ? null : Convert.getDatetime(coop.startDate!);
         return Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
                 color: GlobalVar.primaryOrange
             ),
             child: Column(
@@ -35,7 +37,7 @@ class AppBarFormForCoop extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
                     const SizedBox(height: 6),
-                    Text('DOC-In ${coop.startDate ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
+                    Text('DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
                 ],
             ),
         );

@@ -16,10 +16,11 @@ class DocInActivity extends StatelessWidget {
 
     Widget header(){
         return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: GlobalVar.primaryLight2
+                color: GlobalVar.grayBackground,
+                border: const Border.fromBorderSide(BorderSide(width: 1.4, color: GlobalVar.outlineColor))
             ),
             child: Column(
                 children: [
@@ -51,7 +52,7 @@ class DocInActivity extends StatelessWidget {
         );
     }
 
-        Widget bottomNavbar() {
+    Widget bottomNavbar() {
         return Align(
             alignment: Alignment.bottomCenter,
                 child: Container(
@@ -69,10 +70,11 @@ class DocInActivity extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: controller.btSave
                 ),
-            );
+        );
     }
 
-    return Obx(() =>Scaffold(
+    return Obx(() => Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
             preferredSize:const Size.fromHeight(40), 
             child: CustomAppbar(

@@ -186,8 +186,8 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                     },
                     child: Container(
                         padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             border: Border.fromBorderSide(BorderSide(width: 2, color: GlobalVar.grayBackground)),
                             color: Colors.white
                         ),
@@ -267,8 +267,8 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     child: Container(
                                         width: 60,
                                         height: 4,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
                                             color: GlobalVar.outlineColor
                                         )
                                     )

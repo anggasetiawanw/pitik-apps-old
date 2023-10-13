@@ -22,7 +22,7 @@ class ListOrderActivity extends GetView<ListOrderController> {
                 Scaffold(
                     backgroundColor: Colors.white,
                     appBar: PreferredSize(
-                        preferredSize: const Size.fromHeight(120),
+                        preferredSize: const Size.fromHeight(110),
                         child: AppBarFormForCoop(
                             title: 'Order',
                             coop: controller.coop,

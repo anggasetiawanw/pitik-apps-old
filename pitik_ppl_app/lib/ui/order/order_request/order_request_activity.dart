@@ -22,40 +22,51 @@ class OrderRequestActivity extends GetView<OrderRequestController> {
             child: Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(120),
+                    preferredSize: const Size.fromHeight(110),
                     child: AppBarFormForCoop(
                         title: 'Order',
                         coop: controller.coop,
                     ),
                 ),
-                body: Obx(() =>
-                    Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ListView(
-                            children: [
-                                MultipleFormField<Product>(
-                                    controller: GetXCreator.putMultipleFormFieldController("orderMultipleFeed"),
-                                    childAdded: Row(
+                body: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                            return MultipleFormField<Product>(
+                                controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleFeed"),
+                                childAdded: () => Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
+                                        const SizedBox(width: 16),
+                                        Text(controller.getFeedQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
+                                    ],
+                                ),
+                                increaseWhenDuplicate: (product) {
+                                    return Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                            Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
                                             const SizedBox(width: 16),
-                                            Text(controller.getFeedQuantity(), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            Text(controller.getFeedQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
                                         ],
-                                    ),
-                                    labelButtonAdd: 'Tambah Pakan',
-                                    selectedObject: controller.feedSuggestField.getController().selectedObject.value ?? Product(),
-                                    keyData: controller.getFeedProductName(),
-                                    child: Column(
-                                        children: [
-                                            controller.feedCategory,
-                                            controller.feedSuggestField,
-                                            controller.feedQuantityField
-                                        ]
-                                    )
+                                    );
+                                },
+                                labelButtonAdd: 'Tambah Pakan',
+                                initInstance: Product(),
+                                selectedObject: () => controller.getSelectedObject(),
+                                selectedObjectWhenIncreased: (product) => controller.getSelectedObjectWhenIncreased(product),
+                                keyData: () => controller.getFeedProductName(),
+                                child: Column(
+                                    children: [
+                                        controller.feedCategory,
+                                        controller.feedSuggestField,
+                                        controller.feedQuantityField
+                                    ]
                                 )
-                            ]
-                        ),
+                            );
+                        },
                     )
                 )
             )

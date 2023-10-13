@@ -58,7 +58,7 @@ class LoginController extends GetxController {
                 content: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                        CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
                         const SizedBox(width: 16),
                         Text('Mohon Tunggu...', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange)),
                     ],),
@@ -140,7 +140,6 @@ class LoginController extends GetxController {
                     );
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
-                    print('$exception -> $stacktrace');
                     Navigator.pop(Get.context!);
                     Get.snackbar(
                         "Pesan",

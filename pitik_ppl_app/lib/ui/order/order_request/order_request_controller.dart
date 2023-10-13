@@ -9,6 +9,7 @@ import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -23,7 +24,7 @@ class OrderRequestController extends GetxController {
     BuildContext context;
     OrderRequestController({required this.context});
 
-    final GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
+    final GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey<AutoCompleteTextFieldState<String>>();
     late Coop coop;
     late SuggestField feedSuggestField;
     late SpinnerField feedCategory;
@@ -87,10 +88,9 @@ class OrderRequestController extends GetxController {
                                     data.add('${product == null || product.subcategoryName == null ? '' : product.subcategoryName} - ${product == null || product.productName == null ? '' : product.productName}');
                                 }
                                 feedSuggestField.getController().generateItems(data);
-                                print('length -> ${feedSuggestField.getController().listObject.length}');
                             },
                             onResponseFail: (code, message, body, id, packet) {},
-                            onResponseError: (exception, stacktrace, id, packet) {print('$exception -> $stacktrace');},
+                            onResponseError: (exception, stacktrace, id, packet) {},
                             onTokenInvalid: () => GlobalVar.invalidResponse()
                         )
                     )
@@ -101,16 +101,42 @@ class OrderRequestController extends GetxController {
         }
     }
 
-    String getFeedProductName() {
-        if (feedSuggestField.getController().selectedObject.value == null) {
-            return '';
+    Product getSelectedObject() {
+        if (feedSuggestField.getController().getSelectedObject() != null) {
+            Product product = feedSuggestField.getController().getSelectedObject();
+            product.quantity = feedQuantityField.getInputNumber() ?? 0;
+
+            return product;
         } else {
-            return '${(feedSuggestField.getController().selectedObject.value as Product).subcategoryName ?? ''} - ${(feedSuggestField.getController().selectedObject.value as Product).productName ?? ''}';
+            return Product();
         }
     }
 
-    String getFeedQuantity() {
-        return '${feedQuantityField.getInputNumber() ?? ''} ${feedQuantityField.getTextUnit()}';
+    Product getSelectedObjectWhenIncreased(Product oldProduct) {
+        if (feedSuggestField.getController().getSelectedObject() != null) {
+            Product product = feedSuggestField.getController().getSelectedObject();
+            product.quantity = (oldProduct.quantity ?? 0) + (feedQuantityField.getInputNumber() ?? 0);
+
+            return product;
+        } else {
+            return Product();
+        }
+    }
+
+    String getFeedProductName() {
+        if (feedSuggestField.getController().selectedObject == null) {
+            return '';
+        } else {
+            return '${(feedSuggestField.getController().selectedObject as Product).subcategoryName ?? ''} - ${(feedSuggestField.getController().selectedObject as Product).productName ?? ''}';
+        }
+    }
+
+    String getFeedQuantity(Product? product) {
+        if (product != null) {
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${feedQuantityField.getTextUnit()}';
+        } else {
+            return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getTextUnit()}';
+        }
     }
 }
 
