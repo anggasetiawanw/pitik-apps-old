@@ -49,13 +49,17 @@ class EditField extends StatelessWidget {
     }
 
     void setInput(String text) {
-        if(textPrefix== AppStrings.PREFIX_CURRENCY_IDR){
+        if (textPrefix == AppStrings.PREFIX_CURRENCY_IDR) {
             var split = text.split(".");
             editFieldController.text = _formatter.format(split[0]);
         } else {
             editFieldController.text = text;
         }
         
+    }
+
+    String getTextUnit() {
+        return textUnit;
     }
 
     String getInput() {

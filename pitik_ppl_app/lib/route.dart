@@ -66,4 +66,5 @@ class RoutePage {
     static const String listOrderPage = "/listOrder";
     static const String orderRequestPage = "/orderRequest";
     static const String orderDetailPage = "/orderDetail";
+    static const String confirmationReceivedPage = "/confirmationReceived";
 }

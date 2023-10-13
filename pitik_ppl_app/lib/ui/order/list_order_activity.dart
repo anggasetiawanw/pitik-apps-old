@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
+import 'package:components/app_bar_form_for_coop.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -22,32 +23,9 @@ class ListOrderActivity extends GetView<ListOrderController> {
                     backgroundColor: Colors.white,
                     appBar: PreferredSize(
                         preferredSize: const Size.fromHeight(120),
-                        child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                                color: GlobalVar.primaryOrange
-                            ),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            GestureDetector(
-                                                onTap: () => Get.back(),
-                                                child: const Icon(Icons.arrow_back, color: Colors.white),
-                                            ),
-                                            Text('Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                            const SizedBox()
-                                        ],
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(controller.coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
-                                    const SizedBox(height: 6),
-                                    Text('DOC-In ${controller.coop.startDate ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
-                                ],
-                            ),
+                        child: AppBarFormForCoop(
+                            title: 'Order',
+                            coop: controller.coop,
                         ),
                     ),
                     floatingActionButton: controller.tabController.index == 0 ? Padding(
