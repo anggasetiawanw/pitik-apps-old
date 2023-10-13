@@ -1,14 +1,20 @@
 
 
+import 'dart:io';
+
 import 'package:engine/request/annotation/mediatype/json.dart';
+import 'package:engine/request/annotation/mediatype/multipart.dart';
 import 'package:engine/request/annotation/property/header.dart';
 import 'package:engine/request/annotation/property/parameter.dart';
 import 'package:engine/request/annotation/property/path.dart';
+import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/patch.dart';
+import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/coop_list_response.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/profile_response.dart';
 // ignore: unused_import
 import 'package:model/password_model.dart';
@@ -70,5 +76,10 @@ class API {
     @JSON(isPlaint: true)
     @PATCH(value: PATCH.PATH_PARAMETER, as: ProfileResponse, error: ErrorResponse)
     void changePassword(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+
+
+    @POST(value :"v2/upload", as: MediaUploadResponse, error: ErrorResponse)
+    @Multipart()
+    void uploadImage(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("folder") String folder, @Parameter("file") File file){}
 
 }

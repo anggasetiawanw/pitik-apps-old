@@ -1,6 +1,7 @@
 
 
 import 'package:engine/request/api_mapping_list.dart';
+import 'package:pitik_ppl_app/api_mapping/apis/coop_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/farm_monitoring_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/product_report_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_monitoring_api.dart';
@@ -20,7 +21,8 @@ class ApiMapping extends ApiMappingList {
         "userApi": UserApi,
         "smartMonitoringApi": SmartMonitoringApi,
         "productReportApi": ProductReportApi,
-        "farmMonitoringApi": FarmMonitoringApi
+        "farmMonitoringApi": FarmMonitoringApi,
+        "coopApi": CoopApi,
     };
 
     @override

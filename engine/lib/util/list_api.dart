@@ -17,7 +17,8 @@ class ListApi {
     static const String getCoops = "getCoops";
     static const String getDetailCoop = "getDetailCoop";
     static const String registerDevice = "registerDevice";
-    
+    static const String uploadImage = "uploadImage";
+
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
     static const String modifyDevice = "modifyDevice";
@@ -54,8 +55,10 @@ class ListApi {
     static const String getListPurchaseRequestForCoopRest = "getListPurchaseRequestForCoopRest";
     static const String getListPurchaseOrder = "getListPurchaseOrder";
     static const String getListPurchaseOrderForCoopRest = "getListPurchaseOrderForCoopRest";
+    static const String getReceiveProcurement = "getReceiveProcurement";
+    static const String getRequestDoc = "getRequestDoc";
     static const String getProducts = "getProducts";
-    
+
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
     static const String getMonitoringByVariable = "getMonitoringByVariable";
@@ -63,6 +66,7 @@ class ListApi {
     static const String getDateMonitoring = "getDateMonitoring";
     static const String getDetailMonitoring = "getDetailMonitoring";
     static const String getListHarvestRealization = "getListHarvestRealization";
+    static const String updateRequestChickin = "updateRequestChickin";
 
     static String pathChangePassword(){
         return "v2/auth/reset-password";
@@ -147,4 +151,10 @@ class ListApi {
     static String pathGetSapronakByType(String farmingCycleId, String type) {
         return 'v2/farming-cycles/$farmingCycleId/purchase-orders/$type';
     }
+
+    static String pathGetRequestDocByFarmingId(String farmingCycleId) {
+        return 'v2/farming-cycles/$farmingCycleId/doc-in';
+    }
+
+
 }

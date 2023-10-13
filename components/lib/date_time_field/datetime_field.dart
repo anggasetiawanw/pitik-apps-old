@@ -50,7 +50,7 @@ class DateTimeField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -96,7 +96,7 @@ class DateTimeField extends StatelessWidget {
                                                     ),
                                                     Expanded(
                                                         flex: 1,
-                                                        child: controller.activeField.isTrue ?  SvgPicture.asset("images/time_on_icon.svg") : SvgPicture.asset("images/time_on_icon_disable.svg")
+                                                        child: controller.activeField.isTrue ? flag == DATE_FLAG ? SvgPicture.asset("images/calendar-line.svg") : SvgPicture.asset("images/time_on_icon.svg") : SvgPicture.asset("images/time_on_icon_disable.svg")
                                                     ),
                                                 ],
                                             ),
@@ -115,7 +115,7 @@ class DateTimeField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ],
                                             )

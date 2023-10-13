@@ -2,7 +2,6 @@
 
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
-import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -319,30 +318,30 @@ class GlobalVar {
     static Farm? farm;
     static bool isEmptyCoop = true;
 
-    static Color primaryOrange = Convert.hexToColor("#F47B20");
-    static Color primaryLight = Convert.hexToColor("#FFF9ED");
-    static Color primaryLight2 = Convert.hexToColor("#FEEFD2");
-    static Color primaryLight3 = Convert.hexToColor("#FEF6D2");
-    static Color primaryLight4 = Convert.hexToColor("#FBBF78");
-    static Color black = Convert.hexToColor("#2C2B2B");
-    static Color red = Convert.hexToColor("#DD1E25");
-    static Color redBackground = Convert.hexToColor("#FDDFD1");
-    static Color grayLightText = Convert.hexToColor("#9E9D9D");
-    static Color grayBackground = Convert.hexToColor("#FAFAFA");
-    static Color grayText = Convert.hexToColor("#5A5A5A");
-    static Color gray = Convert.hexToColor("#CACACA");
-    static Color green = Convert.hexToColor("#14CB82");
-    static Color greenBackground = Convert.hexToColor("#CEFCD8");
-    static Color blue = Convert.hexToColor("#198BDB");
-    static Color blueBackground = Convert.hexToColor("#D0F5FD");
-    static Color yellow = Convert.hexToColor("#F4B420");
-    static Color subTitleColor = const Color(0xFF9E9D9D);
-    static Color globalBG = const Color(0xFFF4F4F4);
-    static Color iconHomeBg = const Color(0xFFFFF6ED);
-    static Color headerSku = const Color(0xFFFDDAA5);
-    static Color outlineColor = const Color(0xFFF0F0F0);
-    static Color blueLights = const Color(0xFFD0F5FD);
-    static Color blueDark = const Color(0xFF198BDB);
+    static const Color primaryOrange = Color(0xFFF47B20);
+    static const Color primaryLight = Color(0xFFFFF9ED);
+    static const Color primaryLight2 = Color(0xFFFEEFD2);
+    static const Color primaryLight3 = Color(0xFFFEF6D2);
+    static const Color primaryLight4 = Color(0xFFFBBF78);
+    static const Color black = Color(0xFF2C2B2B);
+    static const Color red = Color(0xFFDD1E25);
+    static const Color redBackground = Color(0xFFFDDFD1);
+    static const Color grayLightText = Color(0xFF9E9D9D);
+    static const Color grayBackground = Color(0xFFFAFAFA);
+    static const Color grayText = Color(0xFF5A5A5A);
+    static const Color gray = Color(0xFFCACACA);
+    static const Color green = Color(0xFF14CB82);
+    static const Color greenBackground = Color(0xFFCEFCD8);
+    static const Color blue = Color(0xFF198BDB);
+    static const Color blueBackground = Color(0xFFD0F5FD);
+    static const Color yellow = Color(0xFFF4B420);
+    static const Color subTitleColor = Color(0xFF9E9D9D);
+    static const Color globalBG = Color(0xFFF4F4F4);
+    static const Color iconHomeBg = Color(0xFFFFF6ED);
+    static const Color headerSku = Color(0xFFFDDAA5);
+    static const Color outlineColor = Color(0xFFF0F0F0);
+    static const Color blueLights = Color(0xFFD0F5FD);
+    static const Color blueDark = Color(0xFF198BDB);
     static Mixpanel? mixpanel;
     static const MethodChannel _channel = MethodChannel('flutter.moum.sim_info');
 
@@ -369,21 +368,21 @@ class GlobalVar {
         return "";
     }
 
-    static TextStyle primaryTextStyle = TextStyle(
+    static TextStyle primaryTextStyle = const TextStyle(
         color: primaryOrange,
         fontFamily: 'Montserrat_Medium',
     );
-    static TextStyle lightTextStyle = TextStyle(
+    static TextStyle lightTextStyle = const TextStyle(
         color: primaryLight,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle blackTextStyle = TextStyle(
+    static TextStyle blackTextStyle = const TextStyle(
         color: black,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle redTextStyle = TextStyle(
+    static TextStyle redTextStyle = const TextStyle(
         color: red,
         fontFamily: 'Montserrat_Medium',
     );
@@ -398,25 +397,25 @@ class GlobalVar {
         fontFamily: 'Montserrat_Bold',
     );
 
-    static TextStyle greyTextStyle = TextStyle(
+    static TextStyle greyTextStyle = const TextStyle(
         color: grayText,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle greyLightTextStyle = TextStyle(
+    static TextStyle greyLightTextStyle = const TextStyle(
         color: gray,
         fontFamily: 'Montserrat_Medium',
     );
-    static TextStyle blueTextStyle = TextStyle(
+    static TextStyle blueTextStyle = const TextStyle(
         color: blueDark,
         fontFamily: 'Montserrat_Medium',
     );
-    static TextStyle greenTextStyle = TextStyle(
+    static TextStyle greenTextStyle = const TextStyle(
         color: green,
         fontFamily: 'Montserrat_Medium',
     );
 
-    static TextStyle subTextStyle = TextStyle(
+    static TextStyle subTextStyle = const TextStyle(
         color: subTitleColor,
         fontFamily: 'Montserrat_Medium',
     );

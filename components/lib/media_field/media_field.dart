@@ -4,9 +4,10 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:path/path.dart';
 
 import '../global_var.dart';
@@ -29,12 +30,13 @@ class MediaField extends StatelessWidget {
     String label;
     String hint;
     String alertText;
+    bool multi;
     bool hideLabel = false;
     int type;
     bool showGalleryOptions;
     Function(File?) onMediaResult;
 
-    MediaField({super.key, required this.controller, required this.onMediaResult, required this.label, required this.hint, required this.alertText, this.hideLabel = false, this.type = ALL, this.showGalleryOptions = true});
+    MediaField({super.key, required this.controller, required this.onMediaResult, required this.label, required this.hint, required this.alertText, this.hideLabel = false, this.type = ALL, this.showGalleryOptions = true, this.multi =false,});
 
     MediaFieldController getController() {
         return Get.find<MediaFieldController>(tag: controller.tag);
@@ -47,12 +49,13 @@ class MediaField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
         return Obx(() =>
             Padding(
+                key: controller.formKey,
                 padding: const EdgeInsets.only(top: 16),
                 child: Column(
                     children: <Widget>[
@@ -79,12 +82,12 @@ class MediaField extends StatelessWidget {
                                                             type == ALL ? Icons.perm_media :
                                                             type == PHOTO ? Icons.photo_camera :
                                                             type == VIDEO ? Icons.videocam :
-                                                            Icons.document_scanner
+                                                            Icons.document_scanner, color: GlobalVar.primaryOrange,
                                                         ),
                                                     ),
                                                     Expanded(
                                                         child: Text(
-                                                            controller.fileName.value == "" ? label : controller.fileName.value,
+                                                            multi ? label : controller.fileName.value == "" ? label : controller.fileName.value,
                                                             overflow: TextOverflow.ellipsis,
                                                             style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
                                                         )
@@ -105,11 +108,29 @@ class MediaField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ],
                                             )
-                                        ) : Container(),
+                                        ) : const SizedBox(),
+                                    ),
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: controller.showInformasi.isTrue ? Container(
+                                            padding: const EdgeInsets.only(top: 4),
+                                            child: Row(
+                                                children: [
+                                                    Padding(
+                                                        padding: const EdgeInsets.only(right: 8),
+                                                        child: SvgPicture.asset("images/information_blue_icon.svg")
+                                                    ),
+                                                    Text(
+                                                        controller.informasiText.value,
+                                                        style: const TextStyle(color: GlobalVar.blue, fontSize: 12),
+                                                    )
+                                                ],
+                                            )
+                                        ) : const SizedBox(),
                                     )
                                 ],
                             )
