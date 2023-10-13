@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../global_var.dart';
@@ -16,9 +17,11 @@ class ButtonFill extends StatelessWidget {
     ButtonFillController controller;
     String label;
     double width;
-    final Function() onClick;
+    bool isHaveIcon;
+    Widget imageAsset;
+    Function() onClick;
 
-    ButtonFill({super.key, this.width = double.infinity, required this.controller, required this.label, required this.onClick});
+    ButtonFill({super.key, this.width = double.infinity, required this.controller, required this.label, this.isHaveIcon = false, this.imageAsset = const SizedBox(), required this.onClick});
 
     ButtonFillController getController() {
         return Get.find(tag: controller.tag);
@@ -46,7 +49,18 @@ class ButtonFill extends StatelessWidget {
                             foregroundColor: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
                         ),
-                        child: Center(
+                        child: isHaveIcon ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Text(
+                                    label,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                                ),
+                                const SizedBox(width: 11),
+                                imageAsset
+                            ]
+                        ) : Center(
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 16, bottom: 16),
                                 child: Obx(() => Text(

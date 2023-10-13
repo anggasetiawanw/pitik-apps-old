@@ -14,7 +14,7 @@ class SuggestFieldController<T> extends GetxController {
     SuggestFieldController({required this.tag});
 
     RxList<T?> listObject = <T?>[].obs;
-    Rx<T?> selectedObject = null.obs;
+    T? selectedObject;
     var showTooltip = false.obs;
     var activeField = true.obs;
     var hideLabel = false.obs;
@@ -29,7 +29,7 @@ class SuggestFieldController<T> extends GetxController {
     void setupObjects(List<T?> data) => listObject.value = data;
     void generateItems(List<String> data) => suggestList.value = data;
     void addItems(String data) => suggestList.add(data);
-    T? getSelectedObject() => selectedObject.value;
+    T? getSelectedObject() => selectedObject;
 }
 
 class SuggestFieldBinding extends Bindings {

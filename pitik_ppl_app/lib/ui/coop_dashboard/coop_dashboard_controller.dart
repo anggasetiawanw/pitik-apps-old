@@ -1,12 +1,15 @@
 import 'package:common_page/history/history_activity.dart';
 import 'package:common_page/history/history_controller.dart';
-import 'package:common_page/library/engine_library.dart';
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
+import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -201,9 +204,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () {  // DOC-In
-                                                // TO DOC-IN
-                                            }),
+                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () {  // DAILY REPORT
                                                 // TO Daily Report
                                             }),

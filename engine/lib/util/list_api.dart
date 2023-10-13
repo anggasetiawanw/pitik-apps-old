@@ -63,6 +63,8 @@ class ListApi {
     static const String getDetailRequest = "getDetailRequest";
     static const String getRequestChickinDetail = "getRequestChickinDetail";
     
+    static const String getProducts = "getProducts";
+
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
     static const String getMonitoringByVariable = "getMonitoringByVariable";

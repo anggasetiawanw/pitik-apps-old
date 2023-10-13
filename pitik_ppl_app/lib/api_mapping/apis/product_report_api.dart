@@ -13,6 +13,7 @@ import 'package:model/response/procurement_detail_response.dart';
 import 'package:model/response/procurement_list_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:model/response/sapronak_response.dart';
+import 'package:model/response/products_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -156,6 +157,10 @@ class ProductReportApi {
     @GET(value: "v2/purchase-orders", as: ProcurementListResponse, error: ErrorResponse)
     void getListPurchaseOrderForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("coopId") String coopId, @Query("isBeforeDoc") bool isBeforeDoc,
                                          @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status) {}
+
+    @GET(value: "v2/products/search", as: ProductsResponse, error: ErrorResponse)
+    void getProducts(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("productName") String productName, @Query("categoryName") String categoryName, @Query("subcategoryName") String subcategoryName,
+                     @Query("\$page") int page, @Query("\$limit") int limit) {}
 
     /// A GET request to the endpoint v2/purchase-orders with the following headers:
     /// Authorization: String

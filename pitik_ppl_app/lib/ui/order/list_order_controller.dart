@@ -1,18 +1,23 @@
 
 // ignore_for_file: constant_identifier_names
 
-import 'package:common_page/library/component_library.dart';
-import 'package:common_page/library/dao_impl_library.dart';
-import 'package:common_page/library/engine_library.dart';
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/date_time_field/datetime_field.dart';
+import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
+import 'package:dao_impl/auth_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
+import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/response/procurement_list_response.dart';
+import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -172,11 +177,17 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                        if (typePosition == 0) {
+                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop]);
+                        } else {
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop]);
+                        }
+                    },
                     child: Container(
                         padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             border: Border.fromBorderSide(BorderSide(width: 2, color: GlobalVar.grayBackground)),
                             color: Colors.white
                         ),
@@ -256,8 +267,8 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     child: Container(
                                         width: 60,
                                         height: 4,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
                                             color: GlobalVar.outlineColor
                                         )
                                     )

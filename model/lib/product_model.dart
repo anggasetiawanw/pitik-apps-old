@@ -43,7 +43,7 @@ class Product {
 
     static Product toResponseModel(Map<String, dynamic> map) {
         return Product(
-            id: map['id'],
+            id: map['id'] != null ? map['id'].toString() : map['id'],
             feedStockSummaryId: map['feedStockSummaryId'],
             ovkStockSummaryId: map['ovkStockSummaryId'],
             categoryCode: map['categoryCode'],
@@ -52,7 +52,7 @@ class Product {
             subcategoryCode: map['subcategoryCode'],
             productName: map['productName'],
             productCode: map['productCode'],
-            quantity: map['quantity'] is int ? map['quantity'].toDouble() : map['quantity'],
+            quantity: map['quantity'] != null && map['quantity'] is int ? map['quantity'].toDouble() : map['quantity'],
             purchaseUom: map['purchaseUom'],
             uom: map['uom'],
             statusText: map['statusText'],
@@ -65,7 +65,7 @@ class Product {
             notes: map['notes'],
             logisticOption: map['logisticOption'],
             farmingCycleId: map['farmingCycleId'],
-            remainingQuantity: map['remainingQuantity'] is int ? map['remainingQuantity'].toDouble() : map['remainingQuantity'],
+            remainingQuantity: map['remainingQuantity'] != null && map['remainingQuantity'] is int ? map['remainingQuantity'].toDouble() : map['remainingQuantity'],
             isReturned: map['isReturned'],
             photos: Mapper.children<MediaUploadModel>(map['photos'])
         );

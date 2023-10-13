@@ -43,7 +43,7 @@ class SuggestField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -72,7 +72,7 @@ class SuggestField extends StatelessWidget {
                                                 if (controller.listObject.isNotEmpty) {
                                                     for (int i = 0; i < controller.suggestList.length; i++) {
                                                         if (text == controller.suggestList[i]) {
-                                                            controller.selectedObject.value = controller.listObject[i];
+                                                            controller.selectedObject = controller.listObject[i];
                                                             break;
                                                         }
                                                     }
@@ -92,7 +92,7 @@ class SuggestField extends StatelessWidget {
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: BorderSide(color:GlobalVar.primaryLight)
+                                                    borderSide: const BorderSide(color:GlobalVar.primaryLight)
                                                 ),
                                                 filled: true,
                                             )
@@ -111,7 +111,7 @@ class SuggestField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12)
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12)
                                                     )
                                                 ]
                                             )
