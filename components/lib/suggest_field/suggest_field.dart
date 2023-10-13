@@ -23,10 +23,13 @@ class SuggestField extends StatelessWidget {
     String hint;
     String alertText;
     bool hideLabel = false;
+    Widget? childPrefix;
     List<String> suggestList;
     Function(String) onTyping;
+    Function(String) onSubmitted;
 
-    SuggestField({required this.key, required this.controller, this.id = 1, required this.label, required this.hint, required this.alertText, required this.suggestList, required this.onTyping});
+    SuggestField({required this.key, required this.controller, this.id = 1, required this.label, required this.hint, required this.alertText, this.childPrefix, required this.suggestList,
+                  required this.onTyping, required this.onSubmitted});
 
     SuggestFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -66,8 +69,6 @@ class SuggestField extends StatelessWidget {
                                             suggestions: controller.suggestList,
                                             textChanged: (text) => onTyping(text),
                                             textSubmitted: (text) {
-                                                onTyping(text);
-
                                                 // for selected object
                                                 if (controller.listObject.isNotEmpty) {
                                                     for (int i = 0; i < controller.suggestList.length; i++) {
@@ -77,6 +78,9 @@ class SuggestField extends StatelessWidget {
                                                         }
                                                     }
                                                 }
+
+                                                onTyping(text);
+                                                onSubmitted(text);
                                             },
                                             clearOnSubmit: false,
                                             decoration: InputDecoration(
@@ -84,6 +88,7 @@ class SuggestField extends StatelessWidget {
                                                 counterText: "",
                                                 hintText: hint,
                                                 fillColor: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
+                                                prefixIcon: childPrefix,
                                                 focusedBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                     borderSide: BorderSide(

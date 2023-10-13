@@ -69,7 +69,7 @@ class SpinnerField extends StatelessWidget {
                 child: Text(
                     label,
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                    style: const TextStyle(color: GlobalVar.black, fontSize: 14),
                 ),
             ),
         );
@@ -119,7 +119,7 @@ class SpinnerField extends StatelessWidget {
                                             ),
                                             Text(
                                                 controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                             )
                                         ]
                                     )
@@ -164,7 +164,7 @@ class SpinnerField extends StatelessWidget {
                                 controller.isloading.isTrue ?
                                 Container(
                                     margin: const EdgeInsets.only(right: 16),
-                                    child: SizedBox(
+                                    child: const SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: CircularProgressIndicator(color: GlobalVar.primaryOrange,)),
@@ -251,7 +251,7 @@ class SpinnerField extends StatelessWidget {
                                         ],
                                     ),
                                 ),
-                            ) : Expanded(child: Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
+                            ) : Expanded(child: Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
                         ]
                     )
                 )

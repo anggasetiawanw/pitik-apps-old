@@ -156,9 +156,40 @@ class ProductReportApi {
     void getListPurchaseOrderForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("coopId") String coopId, @Query("isBeforeDoc") bool isBeforeDoc,
                                          @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status) {}
 
+    /// The function `getProducts` is a GET request that retrieves a list of
+    /// products based on various query parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// contains the authorization token required for authentication. It is used to
+    /// verify the identity of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   productName (String): The "productName" parameter is used to specify the
+    /// name of the product you want to search for.
+    ///   categoryName (String): The `categoryName` parameter is used to specify the
+    /// name of the category for which you want to search products. It is a query
+    /// parameter that can be passed in the URL when making a GET request to the
+    /// "v2/products/search" endpoint.
+    ///   subcategoryName (String): The "subcategoryName" parameter is used to
+    /// specify the name of the subcategory for which you want to search products.
+    /// It is a query parameter that can be passed in the URL when making a GET
+    /// request to the "v2/products/search" endpoint.
+    ///   page (int): The "page" parameter is used to specify the page number of the
+    /// results you want to retrieve. It is typically used for pagination purposes,
+    /// where the API returns a large number of results and you want to retrieve
+    /// them in chunks or pages. By specifying the page number, you can retrieve
+    /// different sets of
+    ///   limit (int): The "limit" parameter is used to specify the maximum number
+    /// of products to be returned in a single page of the search results.
     @GET(value: "v2/products/search", as: ProductsResponse, error: ErrorResponse)
     void getProducts(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("productName") String productName, @Query("categoryName") String categoryName, @Query("subcategoryName") String subcategoryName,
                      @Query("\$page") int page, @Query("\$limit") int limit) {}
+
+    @GET(value: "v2/branch-sapronak-stocks", as: ProductsResponse, error: ErrorResponse)
+    void searchOvkUnit(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("productName") String productName, @Query("branchId") String branchId, @Query("type") String type,
+                       @Query("\$page") int page, @Query("\$limit") int limit) {}
 
     /// A GET request to the endpoint v2/purchase-orders with the following headers:
     /// Authorization: String

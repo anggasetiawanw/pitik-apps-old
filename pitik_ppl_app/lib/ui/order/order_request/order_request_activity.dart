@@ -1,13 +1,10 @@
 
 
+import 'package:common_page/library/component_library.dart';
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/get_x_creator.dart';
-import 'package:components/multiple_form_field/multiple_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:model/product_model.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
-import 'package:components/global_var.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -28,45 +25,39 @@ class OrderRequestActivity extends GetView<OrderRequestController> {
                         coop: controller.coop,
                     ),
                 ),
+                bottomNavigationBar: Container(
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]
+                    ),
+                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitOrder"), label: "Simpan", onClick: () {
+
+                    }),
+                ),
                 body: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                            return MultipleFormField<Product>(
-                                controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleFeed"),
-                                childAdded: () => Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                    child: Obx(() =>
+                        ListView(
+                            children: [
+                                controller.orderDateField,
+                                controller.orderTypeField,
+                                controller.isFeed.isTrue ?
+                                Column(
                                     children: [
-                                        Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                                        const SizedBox(width: 16),
-                                        Text(controller.getFeedQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        controller.orderMultipleLogisticField,
+                                        const SizedBox(height: 16),
+                                        controller.feedMultipleFormField
                                     ],
-                                ),
-                                increaseWhenDuplicate: (product) {
-                                    return Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                                            const SizedBox(width: 16),
-                                            Text(controller.getFeedQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ],
-                                    );
-                                },
-                                labelButtonAdd: 'Tambah Pakan',
-                                initInstance: Product(),
-                                selectedObject: () => controller.getSelectedObject(),
-                                selectedObjectWhenIncreased: (product) => controller.getSelectedObjectWhenIncreased(product),
-                                keyData: () => controller.getFeedProductName(),
-                                child: Column(
+                                ):
+                                Column(
                                     children: [
-                                        controller.feedCategory,
-                                        controller.feedSuggestField,
-                                        controller.feedQuantityField
-                                    ]
+                                        const SizedBox(height: 16),
+                                        controller.ovkMultipleFormField
+                                    ],
                                 )
-                            );
-                        },
+                            ],
+                        )
                     )
                 )
             )

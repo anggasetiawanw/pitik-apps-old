@@ -20,6 +20,7 @@ class EditFieldController extends GetxController {
     var showTooltip = false.obs;
     var hideLabel = false.obs;
     var alertText = "".obs;
+    var textUnit = "".obs;
     var formKey = GlobalKey<FormState>();
 
     void showAlert() => showTooltip.value = true;
@@ -30,7 +31,7 @@ class EditFieldController extends GetxController {
     void visibleLabel() => hideLabel.value = false;
     void visibleField() => showField.value = true;
     void invisibleField() => showField.value = false;
-
+    void changeTextUnit(String text) => textUnit.value = text;
     void setAlertText(String text) => alertText.value = text;
 
     @override
