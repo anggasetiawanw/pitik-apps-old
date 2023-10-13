@@ -183,8 +183,8 @@ class CoopDashboardController extends GetxController {
                                     child: Container(
                                         width: 60,
                                         height: 4,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
                                             color: GlobalVar.outlineColor
                                         )
                                     )
@@ -299,8 +299,8 @@ class CoopDashboardController extends GetxController {
                                         width: 40,
                                         height: 40,
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(8)),
                                             color: GlobalVar.primaryLight2
                                         ),
                                         child: SvgPicture.asset(imagePath),
@@ -346,8 +346,8 @@ class CoopDashboardController extends GetxController {
                     Container(
                         padding: const EdgeInsets.all(16),
                         height: 155,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: GlobalVar.primaryOrange
                         ),
                         child: Column(
@@ -397,8 +397,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 16),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -426,8 +426,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -461,8 +461,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -496,8 +496,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -531,8 +531,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -566,8 +566,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 16),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -627,8 +627,8 @@ class CoopDashboardController extends GetxController {
                                     ),
                                 ),
                                 const SizedBox(height: 4),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 8),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 8),
                                     child: Divider(
                                         height: 1,
                                         color: GlobalVar.black,

@@ -30,7 +30,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                         child: Container(
                             height: 65,
                             width: 65,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: GlobalVar.primaryOrange,
                                 shape: BoxShape.circle
                             ),
@@ -113,8 +113,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                     right: 0,
                                     child: Container(
                                         height: 150,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
                                             color: GlobalVar.primaryLight
                                         ),
                                     )
@@ -133,8 +133,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                     onTap: () => Get.back(),
                                                     child: Container(
                                                         padding: const EdgeInsets.all(8),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(8)),
                                                             color: GlobalVar.redBackground
                                                         ),
                                                         child: Row(
@@ -157,8 +157,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                                 child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)
                                                             ),
                                                             Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                decoration: const BoxDecoration(
+                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
                                                                     color: GlobalVar.red
                                                                 ),
                                                                 child: Padding(

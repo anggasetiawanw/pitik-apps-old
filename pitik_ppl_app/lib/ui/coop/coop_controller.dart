@@ -206,7 +206,11 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 onClick: () {
                                     // TO ORDER PAGE
                                     Get.back();
-                                    Get.toNamed(RoutePage.docInPage, arguments: coop);
+                                    if(isRestCoop){
+                                        Get.toNamed(RoutePage.reqDocInPage, arguments: coop)!.then((value) => generateCoopList(false));
+                                    } else {
+                                        Get.toNamed(RoutePage.docInPage, arguments: coop)!.then((value) => generateCoopList(true));
+                                    }
                                 }
                             ),
                             const SizedBox(height: 24)

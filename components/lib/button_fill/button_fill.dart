@@ -23,11 +23,15 @@ class ButtonFill extends StatelessWidget {
     ButtonFillController getController() {
         return Get.find(tag: controller.tag);
     }
+    bool onInit = true;
+
 
     @override
     Widget build(BuildContext context) {
-        controller.label.value = label;
-
+        if (onInit) {
+            onInit = false;
+            controller.changeLabel(label);
+        }
         return Obx(() =>
             Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -45,10 +49,11 @@ class ButtonFill extends StatelessWidget {
                         child: Center(
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 16, bottom: 16),
-                                child: Text(
+                                child: Obx(() => Text(
                                     controller.label.value,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(color: Colors.white, fontSize: 14),
+                                    )
                                 )
                             )
                         )

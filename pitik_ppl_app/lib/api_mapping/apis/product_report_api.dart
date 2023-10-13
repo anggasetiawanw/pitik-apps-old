@@ -6,8 +6,10 @@ import 'package:engine/request/annotation/property/path.dart';
 import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/patch.dart';
+import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
+import 'package:model/response/procurement_detail_response.dart';
 import 'package:model/response/procurement_list_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:model/response/sapronak_response.dart';
@@ -191,5 +193,39 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void updateRequestChickin(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data){}
 
+    /// A PATCH request that returns an error response.
+    ///
+    /// @param authorization The authorization header
+    /// @param xId The ID of the user who is making the request.
+    /// @param path The path to the resource.
+    /// @param data The data to be sent to the server.
+    @PATCH(value : PATCH.PATH_PARAMETER, error : ErrorResponse)
+    @JSON(isPlaint: true)
+    void approveRequestChickin(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data){}
 
+        /// A POST request to the endpoint "v2/chick-in-requests" with the header "Authorization" and "X-ID"
+        /// and the parameter "data".
+        ///
+        /// @param authorization The authorization token
+        /// @param xId The ID of the user who is making the request.
+        /// @param data The data parameter is a JSON object that contains the following fields:
+    @POST(value : "v2/chick-in-requests", error : ErrorResponse)
+    @JSON(isPlaint: true)
+    void saveRequestChickin(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data){}
+
+    /// A GET request to the path /purchase-requests/{purchaseRequestId}/details.
+    ///
+    /// @param authorization Authorization header
+    /// @param xId The ID of the user who is making the request.
+    /// @param purchaseRequestId The ID of the purchase request that you want to get the details of.
+    @GET(value : GET.PATH_PARAMETER, as : ProcurementDetailResponse, error : ErrorResponse)
+    void getDetailRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String purchaseRequestId){}
+
+    /// A GET request that returns a RequestChickinResponse object.
+    ///
+    /// @param authorization Authorization header
+    /// @param xId The unique ID of the request.
+    /// @param path The path of the request.
+    @GET(value : GET.PATH_PARAMETER, as : RequestChickinResponse, error : ErrorResponse)
+    void getRequestChickinDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
 }

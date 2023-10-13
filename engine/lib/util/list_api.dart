@@ -18,6 +18,7 @@ class ListApi {
     static const String getDetailCoop = "getDetailCoop";
     static const String registerDevice = "registerDevice";
     static const String uploadImage = "uploadImage";
+    static const String getApproval = "getApproval";
     
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
@@ -57,6 +58,10 @@ class ListApi {
     static const String getListPurchaseOrderForCoopRest = "getListPurchaseOrderForCoopRest";
     static const String getReceiveProcurement = "getReceiveProcurement";
     static const String getRequestDoc = "getRequestDoc";
+    static const String approveRequestChickin = "approveRequestChickin";
+    static const String saveRequestChickin = "saveRequestChickin";
+    static const String getDetailRequest = "getDetailRequest";
+    static const String getRequestChickinDetail = "getRequestChickinDetail";
     
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
@@ -154,6 +159,16 @@ class ListApi {
     static String pathGetRequestDocByFarmingId(String farmingCycleId) {
         return 'v2/farming-cycles/$farmingCycleId/doc-in';
     }
+    static String pathGetRequestDetail(String requestId) {
+        return ' "v2/purchase-requests/"$requestId';
+    }
 
+    static String pathGetRequestChickinDetail(String requestId){
+        return "v2/chick-in-requests/$requestId";
+    }
+
+    static String pathApproveRequestChickinDetail(String requestId){
+        return "v2/chick-in-requests/$requestId/approve";
+    }
     
 }
