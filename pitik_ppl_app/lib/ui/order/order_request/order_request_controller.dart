@@ -1,5 +1,4 @@
 
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
@@ -27,10 +26,6 @@ class OrderRequestController extends GetxController {
     BuildContext context;
     OrderRequestController({required this.context});
 
-    final GlobalKey<AutoCompleteTextFieldState<String>> keyFeed = GlobalKey<AutoCompleteTextFieldState<String>>();
-    final GlobalKey<AutoCompleteTextFieldState<String>> keyOvk = GlobalKey<AutoCompleteTextFieldState<String>>();
-    final GlobalKey<AutoCompleteTextFieldState<String>> keyOvkUnit = GlobalKey<AutoCompleteTextFieldState<String>>();
-
     late Coop coop;
     late DateTimeField orderDateField;
     late SpinnerField orderTypeField;
@@ -48,13 +43,17 @@ class OrderRequestController extends GetxController {
     late EditField ovkQuantityField;
     late EditField ovkUnitQuantityField;
     late MultipleFormField<Product> ovkMultipleFormField;
+    late MultipleFormField<Product> ovkVendorMultipleFormField;
     late MultipleFormField<Product> ovkUnitMultipleFormField;
 
     var isFeed = true.obs;
+    var isVendor = true.obs;
+    var isLoading = false.obs;
 
     @override
     void onInit() {
         super.onInit();
+        isLoading.value = true;
         coop = Get.arguments[0];
 
         orderDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("orderDateField"), label: "Tanggal Order", hint: "20/02/2022", alertText: "Tanggal Order harus diisi..!", flag: DateTimeField.DATE_FLAG,
@@ -66,25 +65,19 @@ class OrderRequestController extends GetxController {
             onSpinnerSelected: (text) => isFeed.value = orderTypeField.getController().selectedIndex != -1 && orderTypeField.getController().selectedIndex == 0
         );
 
-        orderMultipleLogisticField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderMultipleLogisticField"), label: "Apakah Pengiriman Digabung?", hint: "Pilih salah satu", alertText: "", backgroundField: GlobalVar.primaryLight,
+        orderMultipleLogisticField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderMultipleLogisticField"), label: "Apakah Pengiriman Digabung?", hint: "Pilih salah satu", alertText: "Harus dipilih..!", backgroundField: GlobalVar.primaryLight,
             items: const {"Ya": false, "Tidak": false},
             onSpinnerSelected: (text) {}
         );
 
         // SETUP FEED WIDGET
-        feedCategory = SpinnerField(
-            controller: GetXCreator.putSpinnerFieldController("orderFeedCategory"),
-            label: "Kategori Pakan",
-            hint: "Pilih Merek Pakan",
-            backgroundField: GlobalVar.primaryLight,
-            alertText: "Kategori Pakan harus dipilih..!",
+        feedCategory = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderFeedCategory"), label: "Kategori Pakan", hint: "Pilih Merek Pakan", backgroundField: GlobalVar.primaryLight, alertText: "Kategori Pakan harus dipilih..!",
             items: const {"PRESTARTER": false, "STARTER": false, "FINISHER": false},
             onSpinnerSelected: (text) {}
         );
 
         feedSuggestField = (
             SuggestField(
-                key: keyFeed,
                 controller: GetXCreator.putSuggestFieldController<Product>("orderFeedSuggest"),
                 childPrefix: Padding(
                     padding: const EdgeInsets.all(10),
@@ -99,42 +92,37 @@ class OrderRequestController extends GetxController {
             )
         );
 
-        feedQuantityField = EditField(
-            controller: GetXCreator.putEditFieldController("orderFeedQuantity"),
-            label: "Total",
-            hint: "Ketik di sini",
-            alertText: "Total belum diisi..!",
-            textUnit: "",
-            maxInput: 20,
-            inputType: TextInputType.number,
+        feedQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderFeedQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
             onTyping: (text, field) {}
         );
 
         feedMultipleFormField = MultipleFormField<Product>(
             controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleFeed"),
-            childAdded: () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                    Flexible(child: Text(getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                    const SizedBox(width: 16),
-                    Text(getFeedQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                ],
-            ),
-            increaseWhenDuplicate: (product) {
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Flexible(child: Text(getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                        const SizedBox(width: 16),
-                        Text(getFeedQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                    ],
-                );
-            },
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             labelButtonAdd: 'Tambah Pakan',
             initInstance: Product(),
+            childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product)),
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (feedCategory.getController().selectedIndex == -1) {
+                    feedCategory.getController().showAlert();
+                    isPass = false;
+                }
+                if (feedSuggestField.getController().selectedObject == null) {
+                    feedSuggestField.getController().showAlert();
+                    isPass = false;
+                }
+                if (feedQuantityField.getInputNumber() == null) {
+                    feedQuantityField.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
             child: Column(
                 children: [
                     feedCategory,
@@ -147,7 +135,6 @@ class OrderRequestController extends GetxController {
         // SETUP OVK WIDGET
         ovkSuggestField = (
             SuggestField(
-                key: keyOvk,
                 controller: GetXCreator.putSuggestFieldController<Product>("orderOvkSuggest"),
                 childPrefix: Padding(
                     padding: const EdgeInsets.all(10),
@@ -162,42 +149,33 @@ class OrderRequestController extends GetxController {
             )
         );
 
-        ovkQuantityField = EditField(
-            controller: GetXCreator.putEditFieldController("orderOvkQuantity"),
-            label: "Total",
-            hint: "Ketik di sini",
-            alertText: "Total belum diisi..!",
-            textUnit: "",
-            maxInput: 20,
-            inputType: TextInputType.number,
+        ovkQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderOvkQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
             onTyping: (text, field) {}
         );
 
         ovkMultipleFormField = MultipleFormField<Product>(
             controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleOvk"),
-            childAdded: () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                    Flexible(child: Text(getOvkProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                    const SizedBox(width: 16),
-                    Text(getOvkQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                ],
-            ),
-            increaseWhenDuplicate: (product) {
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Flexible(child: Text(getOvkProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                        const SizedBox(width: 16),
-                        Text(getOvkQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                    ],
-                );
-            },
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             labelButtonAdd: 'Tambah OVK',
             initInstance: Product(),
+            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product)),
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (ovkSuggestField.getController().selectedObject == null) {
+                    ovkSuggestField.getController().showAlert();
+                    isPass = false;
+                }
+                if (ovkQuantityField.getInputNumber() == null) {
+                    ovkQuantityField.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
             child: Column(
                 children: [
                     ovkSuggestField,
@@ -206,10 +184,9 @@ class OrderRequestController extends GetxController {
             )
         );
 
-        // SETUP OVK UNIT WIDGET
+        // SETUP OVK OWN FARM WIDGET
         ovkUnitSuggestField = (
             SuggestField(
-                key: keyOvkUnit,
                 controller: GetXCreator.putSuggestFieldController<Product>("orderOvkUnitSuggest"),
                 childPrefix: Padding(
                     padding: const EdgeInsets.all(10),
@@ -219,53 +196,96 @@ class OrderRequestController extends GetxController {
                 hint: "Cari merek OVK",
                 alertText: "Jenis OVK masih kosong..!",
                 suggestList: const [],
-                onTyping: (text) => getFeedBrand(keyword: text),
+                onTyping: (text) => getOvkUnitBrand(keyword: text),
                 onSubmitted: (text) => ovkUnitQuantityField.getController().changeTextUnit(_getLatestOvkUnitTextUnit()),
             )
         );
 
-        ovkUnitQuantityField = EditField(
-            controller: GetXCreator.putEditFieldController("orderOvkUnitQuantity"),
-            label: "Total",
-            hint: "Ketik di sini",
-            alertText: "Total belum diisi..!",
-            textUnit: "",
-            maxInput: 20,
-            inputType: TextInputType.number,
+        ovkUnitQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderOvkUnitQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
             onTyping: (text, field) {}
+        );
+
+        ovkVendorMultipleFormField = MultipleFormField<Product>(
+            controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleOvkVendor"),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                border: Border.fromBorderSide(BorderSide(color: GlobalVar.grayBackground, width: 3))
+            ),
+            labelButtonAdd: 'Tambah OVK',
+            initInstance: Product(),
+            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product)),
+            selectedObject: () => getOvkSelectedObject(),
+            selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
+            keyData: () => getOvkProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (ovkSuggestField.getController().selectedObject == null) {
+                    ovkSuggestField.getController().showAlert();
+                    isPass = false;
+                }
+                if (ovkQuantityField.getInputNumber() == null) {
+                    ovkQuantityField.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
+            child: Column(
+                children: [
+                    ovkSuggestField,
+                    ovkQuantityField
+                ]
+            )
         );
 
         ovkUnitMultipleFormField = MultipleFormField<Product>(
             controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleOvkUnit"),
-            childAdded: () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                    Flexible(child: Text(getOvkUnitProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                    const SizedBox(width: 16),
-                    Text(getOvkUnitQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                ],
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                border: Border.fromBorderSide(BorderSide(color: GlobalVar.grayBackground, width: 3))
             ),
-            increaseWhenDuplicate: (product) {
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Flexible(child: Text(getOvkUnitProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                        const SizedBox(width: 16),
-                        Text(getOvkUnitQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                    ],
-                );
-            },
             labelButtonAdd: 'Tambah OVK',
             initInstance: Product(),
+            childAdded: () => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(product)),
             selectedObject: () => getOvkUnitSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkUnitSelectedObjectWhenIncreased(product),
             keyData: () => getOvkUnitProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (ovkUnitSuggestField.getController().selectedObject == null) {
+                    ovkUnitSuggestField.getController().showAlert();
+                    isPass = false;
+                }
+                if (ovkUnitQuantityField.getInputNumber() == null) {
+                    ovkUnitQuantityField.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
             child: Column(
                 children: [
                     ovkUnitSuggestField,
                     ovkUnitQuantityField
                 ]
             )
+        );
+
+        isLoading.value = false;
+    }
+
+    Row _createChildAdded(String productName, String quantity) {
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+                Flexible(child: Text(productName, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
+                const SizedBox(width: 16),
+                Text(quantity, style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
+            ],
         );
     }
 
@@ -308,6 +328,68 @@ class OrderRequestController extends GetxController {
             } else {
                 return '';
             }
+        }
+    }
+
+    bool _validation() {
+        bool isPass = true;
+        if (orderDateField.getController().textSelected.isEmpty) {
+            orderDateField.getController().showAlert();
+            isPass  = false;
+        }
+
+        if (isFeed.isTrue) {
+            if (orderMultipleLogisticField.getController().selectedIndex == -1) {
+                orderMultipleLogisticField.getController().showAlert();
+                isPass  = false;
+            }
+            if (feedMultipleFormField.getController().listObjectAdded.isEmpty) {
+                Get.snackbar(
+                    "Pesan",
+                    "Merek Pakan masih kosong, silahkan isi terlebih dahulu..!",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+                isPass  = false;
+            }
+        } else if (coop.isOwnFarm != null && coop.isOwnFarm!) {
+            if (ovkVendorMultipleFormField.getController().listObjectAdded.isEmpty && ovkUnitMultipleFormField.getController().listObjectAdded.isEmpty) {
+                Get.snackbar(
+                    "Pesan",
+                    "Merek OVK Vendor ataupun Unit masih kosong, silahkan isi terlebih dahulu..!",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+                isPass  = false;
+            }
+        } else {
+            if (ovkMultipleFormField.getController().listObjectAdded.isEmpty) {
+                Get.snackbar(
+                    "Pesan",
+                    "Merek OVK masih kosong, silahkan isi terlebih dahulu..!",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+                isPass  = false;
+            }
+        }
+
+        return isPass;
+    }
+
+    void sendOrder() {
+        if (_validation()) {
+            isLoading.value = true;
+            AuthImpl().get().then((auth) => {
+                if (auth != null) {
+
+                } else {
+                    GlobalVar.invalidResponse()
+                }
+            });
         }
     }
 

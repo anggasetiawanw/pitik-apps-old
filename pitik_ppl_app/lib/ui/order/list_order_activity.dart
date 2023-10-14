@@ -66,8 +66,8 @@ class ListOrderActivity extends GetView<ListOrderController> {
                                             onTap: () => controller.showMenuBottomSheet(),
                                             child: Container(
                                                 padding: const EdgeInsets.all(12),
-                                                decoration: BoxDecoration(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(6)),
                                                     color: GlobalVar.primaryLight
                                                 ),
                                                 child: SvgPicture.asset('images/filter_icon.svg'),

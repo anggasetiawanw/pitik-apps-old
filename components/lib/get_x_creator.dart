@@ -143,11 +143,11 @@ class GetXCreator {
     }
 
     static TableFieldController putTableFieldController(String tag) {
-        return Get.put(TableFieldController(tag: tag));
+        return Get.put(TableFieldController(tag: tag), tag: tag);
     }
 
     static MultipleFormFieldController putMultipleFormFieldController<T>(String tag) {
-        return Get.put(MultipleFormFieldController<T>(tag: tag));
+        return Get.put(MultipleFormFieldController<T>(tag: tag), tag: tag);
     }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {

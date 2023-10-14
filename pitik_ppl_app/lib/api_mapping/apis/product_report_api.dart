@@ -187,6 +187,31 @@ class ProductReportApi {
     void getProducts(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("productName") String productName, @Query("categoryName") String categoryName, @Query("subcategoryName") String subcategoryName,
                      @Query("\$page") int page, @Query("\$limit") int limit) {}
 
+    /// The function `searchOvkUnit` is a GET request that searches for products in
+    /// a specific branch based on various parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token for authentication
+    /// purposes. It is typically used to verify the identity and permissions of the
+    /// user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the ID of the user making the request. It is typically used for
+    /// authentication or identification purposes.
+    ///   productName (String): productName is a query parameter used to search for
+    /// products by their name. It is a string value that represents the name of the
+    /// product.
+    ///   branchId (String): The `branchId` parameter is used to specify the ID of
+    /// the branch for which you want to search for stocks.
+    ///   type (String): The "type" parameter is used to specify the type of product
+    /// you want to search for. It can be used to filter the search results based on
+    /// the product type, such as "electronics", "clothing", "groceries", etc.
+    ///   page (int): The "page" parameter is used to specify the page number of the
+    /// results you want to retrieve. It is typically used in combination with the
+    /// "limit" parameter to implement pagination.
+    ///   limit (int): The "limit" parameter is used to specify the maximum number
+    /// of results to be returned per page. It determines the number of items that
+    /// will be displayed in the response.
     @GET(value: "v2/branch-sapronak-stocks", as: ProductsResponse, error: ErrorResponse)
     void searchOvkUnit(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("productName") String productName, @Query("branchId") String branchId, @Query("type") String type,
                        @Query("\$page") int page, @Query("\$limit") int limit) {}
