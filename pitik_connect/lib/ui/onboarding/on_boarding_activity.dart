@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../route.dart';
-import '../profile/change_password/change_password_controller.dart';
 import 'on_boarding_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
@@ -13,7 +12,7 @@ import 'on_boarding_controller.dart';
 ///@create date 25/08/23
 
 
-class OnBoarding extends GetView<ChangePasswordController> {
+class OnBoarding extends GetView<OnBoardingController> {
     const OnBoarding({super.key});
 
     @override

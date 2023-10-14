@@ -17,10 +17,10 @@ import 'package:model/password_model.dart';
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 06/10/2023
 
-class ChangePasswordController extends GetxController {
+class ChangePassController extends GetxController {
     BuildContext context;
 
-    ChangePasswordController({required this.context});
+    ChangePassController({required this.context});
 
     ScrollController scrollController = ScrollController();
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
@@ -213,7 +213,7 @@ class ChangePasswordBindings extends Bindings {
 
     @override
     void dependencies() {
-        Get.lazyPut(() => ChangePasswordController(context: context));
+        Get.lazyPut(() => ChangePassController(context: context));
     }
 }
 

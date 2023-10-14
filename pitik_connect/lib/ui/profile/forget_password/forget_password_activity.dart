@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../route.dart';
-import '../change_password/change_password_controller.dart';
 import 'forget_password_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
@@ -15,7 +14,7 @@ import 'forget_password_controller.dart';
 ///@create date 02/08/23
 
 
-class ForgetPassword extends GetView<ChangePasswordController> {
+class ForgetPassword extends GetView<ForgetPasswordController> {
   const ForgetPassword({super.key});
 
   @override

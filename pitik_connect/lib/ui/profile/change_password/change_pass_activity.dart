@@ -6,9 +6,9 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pitik_connect/ui/profile/change_password/change_password_controller.dart';
 
 import '../../../route.dart';
-import 'change_password_controller.dart';
 
 
 ///@author Robertus Mahardhi Kuncoro
