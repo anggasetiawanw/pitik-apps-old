@@ -1,13 +1,12 @@
 
 
+import 'package:common_page/library/component_library.dart';
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/get_x_creator.dart';
-import 'package:components/multiple_form_field/multiple_form_field.dart';
+import 'package:components/global_var.dart';
+import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:model/product_model.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
-import 'package:components/global_var.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -19,54 +18,101 @@ class OrderRequestActivity extends GetView<OrderRequestController> {
     @override
     Widget build(BuildContext context) {
         return SafeArea(
-            child: Scaffold(
-                backgroundColor: Colors.white,
-                appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(110),
-                    child: AppBarFormForCoop(
-                        title: 'Order',
-                        coop: controller.coop,
+            child: Obx(() =>
+                Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: PreferredSize(
+                        preferredSize: const Size.fromHeight(110),
+                        child: AppBarFormForCoop(
+                            title: 'Order',
+                            coop: controller.coop,
+                        ),
                     ),
-                ),
-                body: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                            return MultipleFormField<Product>(
-                                controller: GetXCreator.putMultipleFormFieldController<Product>("orderMultipleFeed"),
-                                childAdded: () => Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : Container(
+                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]
+                        ),
+                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitOrder"), label: "Simpan", onClick: () => controller.sendOrder()),
+                    ),
+                    body: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                        child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : ListView(
+                            children: [
+                                controller.orderDateField,
+                                controller.orderTypeField,
+                                controller.isFeed.isTrue ?
+                                Column(
                                     children: [
-                                        Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                                        const SizedBox(width: 16),
-                                        Text(controller.getFeedQuantity(null), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        controller.orderMultipleLogisticField,
+                                        const SizedBox(height: 16),
+                                        controller.feedMultipleFormField
                                     ],
-                                ),
-                                increaseWhenDuplicate: (product) {
-                                    return Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Flexible(child: Text(controller.getFeedProductName(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))),
-                                            const SizedBox(width: 16),
-                                            Text(controller.getFeedQuantity(product), style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ],
-                                    );
-                                },
-                                labelButtonAdd: 'Tambah Pakan',
-                                initInstance: Product(),
-                                selectedObject: () => controller.getSelectedObject(),
-                                selectedObjectWhenIncreased: (product) => controller.getSelectedObjectWhenIncreased(product),
-                                keyData: () => controller.getFeedProductName(),
-                                child: Column(
+                                ): controller.coop.isOwnFarm != null && controller.coop.isOwnFarm! ?
+                                Column(
                                     children: [
-                                        controller.feedCategory,
-                                        controller.feedSuggestField,
-                                        controller.feedQuantityField
-                                    ]
+                                        const SizedBox(height: 32),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                GestureDetector(
+                                                    onTap: () => controller.isVendor.value = true,
+                                                    child: Container(
+                                                        width: (MediaQuery.of(context).size.width / 2) - 16,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(10)),
+                                                            color: controller.isVendor.isTrue ? GlobalVar.primaryLight2 : GlobalVar.primaryLight
+                                                        ),
+                                                        child: Column(
+                                                            children: [
+                                                                Container(
+                                                                    padding: const EdgeInsets.only(top: 12, bottom: 12),
+                                                                    child: Text(
+                                                                        'Vendor',
+                                                                        style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: controller.isVendor.isTrue ? GlobalVar.primaryOrange : GlobalVar.grayLightText)
+                                                                    )
+                                                                ),
+                                                                Container(height: 3, color: controller.isVendor.isTrue ? GlobalVar.primaryOrange : Colors.transparent)
+                                                            ],
+                                                        ),
+                                                    ),
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () => controller.isVendor.value = false,
+                                                    child: Container(
+                                                        width: (MediaQuery.of(context).size.width / 2) - 16,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: const BorderRadius.only(topRight: Radius.circular(10)),
+                                                            color: controller.isVendor.isFalse ? GlobalVar.primaryLight2 : GlobalVar.primaryLight
+                                                        ),
+                                                        child: Column(
+                                                            children: [
+                                                                Container(
+                                                                    padding: const EdgeInsets.only(top: 12, bottom: 12),
+                                                                    child: Text(
+                                                                        'Unit',
+                                                                        style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: controller.isVendor.isFalse ? GlobalVar.primaryOrange : GlobalVar.grayLightText)
+                                                                    )
+                                                                ),
+                                                                Container(height: 3, color: controller.isVendor.isFalse ? GlobalVar.primaryOrange : Colors.transparent)
+                                                            ],
+                                                        ),
+                                                    ),
+                                                )
+                                            ],
+                                        ),
+                                        controller.isVendor.isTrue ? controller.ovkVendorMultipleFormField : controller.ovkUnitMultipleFormField
+                                    ],
+                                ) :
+                                Column(
+                                    children: [
+                                        const SizedBox(height: 16),
+                                        controller.ovkMultipleFormField
+                                    ],
                                 )
-                            );
-                        },
+                            ],
+                        )
                     )
                 )
             )

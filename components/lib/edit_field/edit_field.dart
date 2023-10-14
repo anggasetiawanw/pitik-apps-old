@@ -39,6 +39,8 @@ class EditField extends StatelessWidget {
                this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix, this.height = 50, this.isNumberFormatter = false});
 
     late String data;
+    bool onInit = true;
+
     final editFieldController = TextEditingController();
     final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
         enableNegative: false,
@@ -62,10 +64,6 @@ class EditField extends StatelessWidget {
         
     }
 
-    String getTextUnit() {
-        return textUnit;
-    }
-
     String getInput() {
         return editFieldController.text;
     }
@@ -78,6 +76,13 @@ class EditField extends StatelessWidget {
     }
     @override
     Widget build(BuildContext context) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+            if (onInit) {
+                controller.textUnit.value = textUnit;
+                onInit = false;
+            }
+        });
+
         final labelField = SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
@@ -118,7 +123,6 @@ class EditField extends StatelessWidget {
                                                     onTyping(text, this);
                                                 },
                                                 decoration: InputDecoration(
-                                                    
                                                     contentPadding: const EdgeInsets.only(left: 8),
                                                     counterText: "",
                                                     hintText: hint,
@@ -133,7 +137,7 @@ class EditField extends StatelessWidget {
                                                     suffixIcon: Padding(
                                                         padding: const EdgeInsets.all(16),
                                                         child: Text(
-                                                            textUnit,
+                                                            controller.textUnit.value,
                                                             style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
                                                         ),
                                                     ),

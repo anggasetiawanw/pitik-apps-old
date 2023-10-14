@@ -212,11 +212,12 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                 ) : const SizedBox(),
                                 const SizedBox(height: 8),
                                 Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                         Text('Merek Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                         const SizedBox(width: 16),
-                                        Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right,)
+                                        Expanded(child: Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right))
                                     ],
                                 )
                             ]
