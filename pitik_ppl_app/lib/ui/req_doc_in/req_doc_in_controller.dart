@@ -305,44 +305,44 @@ class RequestDocInController extends GetxController {
         efPopulasi.controller.disable();
    }
 
-//    void getDetailOvkRequest(){
-//         AuthImpl().get().then((auth) => {
-//             if (auth != null){
-//                 Service.push(
-//                     apiKey: ApiMapping.productReportApi,
-//                     service: ListApi.getDetailRequest,
-//                     context: context,
-//                     body: [
-//                         'Bearer ${auth.token}',
-//                         auth.id,
-//                         ListApi.pathGetRequestDetail(coop.chickInRequestId!)
-//                     ],
-//                     listener: ResponseListener(
-//                         onResponseDone: (code, message, body, id, packet) {
-//                             isLoading.value = false;
-//                         },
-//                         onResponseFail: (code, message, body, id, packet) {
-//                             Get.snackbar(
-//                                 "Pesan",
-//                                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-//                                 snackPosition: SnackPosition.TOP,
-//                                 colorText: Colors.white,
-//                                 backgroundColor: Colors.red,);
-//                         },
-//                         onResponseError: (exception, stacktrace, id, packet) {
-//                             Get.snackbar(
-//                                 "Pesan",
-//                                 "Terjadi Kesalahan Internal",
-//                                 snackPosition: SnackPosition.TOP,
-//                                 colorText: Colors.white,
-//                                 backgroundColor: Colors.red,);
-//                         },
-//                             onTokenInvalid: () => GlobalVar.invalidResponse()))
-//                     }
-//             else
-//                 {GlobalVar.invalidResponse()}
-//         });
-//    }
+   void getDetailOvkRequest(){
+        AuthImpl().get().then((auth) => {
+            if (auth != null){
+                Service.push(
+                    apiKey: ApiMapping.productReportApi,
+                    service: ListApi.getDetailRequest,
+                    context: context,
+                    body: [
+                        'Bearer ${auth.token}',
+                        auth.id,
+                        ListApi.pathGetRequestDetail(coop.chickInRequestId!)
+                    ],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                            onTokenInvalid: () => GlobalVar.invalidResponse()))
+                    }
+            else
+                {GlobalVar.invalidResponse()}
+        });
+   }
 
    void getDetailDocRequest(){
     AuthImpl().get().then((auth) => {
