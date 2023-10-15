@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/product_model.dart';
+import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
 
 ///@author DICKY
@@ -30,6 +31,7 @@ class OrderRequestController extends GetxController {
     late DateTimeField orderDateField;
     late SpinnerField orderTypeField;
     late SpinnerField orderMultipleLogisticField;
+    late SuggestField orderCoopTargetLogisticField;
 
     // for FEED
     late SuggestField feedSuggestField;
@@ -65,9 +67,25 @@ class OrderRequestController extends GetxController {
             onSpinnerSelected: (text) => isFeed.value = orderTypeField.getController().selectedIndex != -1 && orderTypeField.getController().selectedIndex == 0
         );
 
-        orderMultipleLogisticField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderMultipleLogisticField"), label: "Apakah Pengiriman Digabung?", hint: "Pilih salah satu", alertText: "Harus dipilih..!", backgroundField: GlobalVar.primaryLight,
+        orderMultipleLogisticField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderMultipleLogisticField"), label: "Digabung?", hint: "Pilih salah satu", alertText: "Harus dipilih..!", backgroundField: GlobalVar.primaryLight,
             items: const {"Ya": false, "Tidak": false},
             onSpinnerSelected: (text) {}
+        );
+
+        orderCoopTargetLogisticField = (
+            SuggestField(
+                controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
+                childPrefix: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset('images/search_icon.svg'),
+                ),
+                label: "Nama Kandang",
+                hint: "Cari Kandang",
+                alertText: "Oops Nama kandang tidak ditemukan..!",
+                suggestList: const [],
+                onTyping: (text) {},
+                onSubmitted: (text) {},
+            )
         );
 
         // SETUP FEED WIDGET
@@ -276,6 +294,7 @@ class OrderRequestController extends GetxController {
         );
 
         isLoading.value = false;
+        _getCoopTarget();
     }
 
     Row _createChildAdded(String productName, String quantity) {
@@ -343,6 +362,9 @@ class OrderRequestController extends GetxController {
                 orderMultipleLogisticField.getController().showAlert();
                 isPass  = false;
             }
+            if (orderMultipleLogisticField.getController().selectedIndex == 0 && orderCoopTargetLogisticField.getController().selectedObject == null) {
+                orderCoopTargetLogisticField.getController().showAlert();
+            }
             if (feedMultipleFormField.getController().listObjectAdded.isEmpty) {
                 Get.snackbar(
                     "Pesan",
@@ -391,6 +413,36 @@ class OrderRequestController extends GetxController {
                 }
             });
         }
+    }
+
+    void _getCoopTarget() {
+        isLoading.value = true;
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    apiKey: 'coopApi',
+                    service: 'getCoopTarget',
+                    context: Get.context!,
+                    body: ['Bearer ${auth.token}', auth.id, "v2/purchase-requests/target-coops/${coop.id}", ""],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            orderCoopTargetLogisticField.getController().setupObjects((body as CoopListResponse).data);
+                            List<String> data = [];
+                            for (var coop in body.data) {
+                                data.add('${coop == null || coop.coopName == null ? '' : coop.coopName}');
+                            }
+                            orderCoopTargetLogisticField.getController().generateItems(data);
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) => isLoading.value = true,
+                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = true,
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
+        });
     }
 
     void getFeedBrand({String? keyword}) {

@@ -1,4 +1,6 @@
 import 'package:engine/request/annotation/property/header.dart';
+import 'package:engine/request/annotation/property/path.dart';
+import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
@@ -33,4 +35,7 @@ class CoopApi {
     /// identifier that you want to associate with the request.
     @GET(value: 'v2/coops/idle?ignoreCache=true', as: CoopListResponse, error: ErrorResponse)
     void getCoopIdle(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+
+    @GET(value: GET.PATH_PARAMETER, as: CoopListResponse, error: ErrorResponse)
+    void getCoopTarget(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Query("coopName") String coopName) {}
 }
