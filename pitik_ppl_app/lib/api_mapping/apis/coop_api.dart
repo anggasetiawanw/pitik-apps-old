@@ -5,7 +5,7 @@ import 'package:model/error/error.dart';
 import 'package:model/response/coop_list_response.dart';
 
 @Rest
-class CoopApi{
+class CoopApi {
     /// The function `getCoopActive` is a GET request that retrieves a list of
     /// active coops, with the required headers `Authorization` and `X-ID`.
     ///

@@ -2,8 +2,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:common_page/history/performance/performance_controller.dart';
-import 'package:common_page/library/engine_library.dart';
 import 'package:components/global_var.dart';
+import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -44,8 +44,8 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(8)),
                                             color: GlobalVar.primaryLight2
                                         ),
                                         child: Row(
@@ -71,7 +71,7 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                         Container(
                                             width: 8,
                                             height: 8,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color: GlobalVar.primaryOrange,
                                                 shape: BoxShape.circle
                                             ),
@@ -82,7 +82,7 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                         Container(
                                             width: 8,
                                             height: 8,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color: GlobalVar.headerSku,
                                                 shape: BoxShape.circle
                                             ),
@@ -267,7 +267,7 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                                                 Container(
                                                                     width: 2,
                                                                     height: 2,
-                                                                    decoration: BoxDecoration(
+                                                                    decoration: const BoxDecoration(
                                                                         color: GlobalVar.black,
                                                                         shape: BoxShape.circle
                                                                     ),
@@ -312,7 +312,7 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                 Container(
                                     width: 2,
                                     height: 2,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: GlobalVar.black,
                                         shape: BoxShape.circle
                                     ),

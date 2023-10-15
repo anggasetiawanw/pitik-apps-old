@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:global_variable/global_variable.dart';
-
+import 'package:global_variable/colors.dart';
 import 'listener/custom_dialog_listener.dart';
 
 /*

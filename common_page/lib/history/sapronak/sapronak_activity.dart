@@ -1,8 +1,8 @@
 
 // ignore_for_file: must_be_immutable
 
-import 'package:common_page/library/component_library.dart';
 import 'package:components/expandable/expandable.dart';
+import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
