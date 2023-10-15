@@ -45,7 +45,7 @@ class OrderRequestActivity extends GetView<OrderRequestController> {
                                 Column(
                                     children: [
                                         controller.orderMultipleLogisticField,
-                                        controller.orderMultipleLogisticField.getController().selectedIndex == 0 ? controller.orderCoopTargetLogisticField : const SizedBox(),
+                                        controller.isMerge.isTrue ? controller.orderCoopTargetLogisticField : const SizedBox(),
                                         const SizedBox(height: 16),
                                         controller.feedMultipleFormField
                                     ],

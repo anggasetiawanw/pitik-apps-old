@@ -50,6 +50,7 @@ class OrderRequestController extends GetxController {
 
     var isFeed = true.obs;
     var isVendor = true.obs;
+    var isMerge = false.obs;
     var isLoading = false.obs;
 
     @override
@@ -69,7 +70,7 @@ class OrderRequestController extends GetxController {
 
         orderMultipleLogisticField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderMultipleLogisticField"), label: "Digabung?", hint: "Pilih salah satu", alertText: "Harus dipilih..!", backgroundField: GlobalVar.primaryLight,
             items: const {"Ya": false, "Tidak": false},
-            onSpinnerSelected: (text) {}
+            onSpinnerSelected: (text) => isMerge.value = orderMultipleLogisticField.getController().selectedIndex != -1 && orderMultipleLogisticField.getController().selectedIndex == 0
         );
 
         orderCoopTargetLogisticField = (
@@ -426,16 +427,31 @@ class OrderRequestController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, "v2/purchase-requests/target-coops/${coop.id}", ""],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            orderCoopTargetLogisticField.getController().setupObjects((body as CoopListResponse).data);
                             List<String> data = [];
                             for (var coop in body.data) {
                                 data.add('${coop == null || coop.coopName == null ? '' : coop.coopName}');
                             }
-                            orderCoopTargetLogisticField.getController().generateItems(data);
+
+                            orderCoopTargetLogisticField = (
+                                SuggestField(
+                                    controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
+                                    childPrefix: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: SvgPicture.asset('images/search_icon.svg'),
+                                    ),
+                                    label: "Nama Kandang",
+                                    hint: "Cari Kandang",
+                                    alertText: "Oops Nama kandang tidak ditemukan..!",
+                                    suggestList: data,
+                                    onTyping: (text) {},
+                                    onSubmitted: (text) {},
+                                )
+                            );
+                            orderCoopTargetLogisticField.getController().setupObjects((body as CoopListResponse).data);
                             isLoading.value = false;
                         },
-                        onResponseFail: (code, message, body, id, packet) => isLoading.value = true,
-                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = true,
+                        onResponseFail: (code, message, body, id, packet) => isLoading.value = false,
+                        onResponseError: (exception, stacktrace, id, packet) => isLoading.value = false,
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
                 )
