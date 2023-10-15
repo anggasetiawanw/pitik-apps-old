@@ -25,6 +25,8 @@ import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
+import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
+import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen.dart';
 
 ///@author DICKY
@@ -49,7 +51,9 @@ class AppRoutes {
         GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.orderRequestPage, page: () => const OrderRequestActivity(), binding: OrderRequestBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.orderDetailPage, page: () => const OrderDetailActivity(), binding: OrderDetailBinding(context: GlobalVar.getContext())),
-        GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext()))
+
+        GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext()))
     ];
 }
 
@@ -71,4 +75,5 @@ class RoutePage {
     static const String orderDetailPage = "/orderDetail";
     static const String confirmationReceivedPage = "/confirmationReceived";
     static const String docInPage = "/docIn";
+    static const String reqDocInPage = "/req-docIn";
 }

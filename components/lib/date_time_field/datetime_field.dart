@@ -96,7 +96,7 @@ class DateTimeField extends StatelessWidget {
                                                     ),
                                                     Expanded(
                                                         flex: 1,
-                                                        child: controller.activeField.isTrue ? flag == DATE_FLAG ? SvgPicture.asset("images/calendar-line.svg") : SvgPicture.asset("images/time_on_icon.svg") : SvgPicture.asset("images/time_on_icon_disable.svg")
+                                                        child: controller.activeField.isTrue ? flag == DATE_FLAG ? SvgPicture.asset("images/calendar-line.svg") : SvgPicture.asset("images/time_on_icon.svg") : flag == DATE_FLAG ? SvgPicture.asset("images/calendar-line-off.svg"):SvgPicture.asset("images/time_on_icon_disable.svg")
                                                     ),
                                                 ],
                                             ),

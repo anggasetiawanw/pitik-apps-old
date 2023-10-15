@@ -1,6 +1,7 @@
 
 // ignore_for_file: must_be_immutable
 
+import 'package:common_page/profile/change_password/change_password_controller.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/progress_loading/progress_loading.dart';
@@ -8,18 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'change_password_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 06/10/2023
 
-class ChangePassword extends GetView<ChangePasswordController> {
+class ChangePassword extends GetView<ChangePassController> {
     const ChangePassword({super.key});
 
     @override
     Widget build(BuildContext context) {
-        final ChangePasswordController controller = Get.put(ChangePasswordController(context: context));
+        final ChangePassController controller = Get.put(ChangePassController(context: context));
 
         Widget appBar() {
             return AppBar(
@@ -47,7 +47,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
             );
         }
 
-        showBottomDialog(BuildContext context, ChangePasswordController controller) {
+        showBottomDialog(BuildContext context, ChangePassController controller) {
             return showModalBottomSheet(
                 isScrollControlled: true,
                 useRootNavigator: true,

@@ -31,11 +31,12 @@ class EditField extends StatelessWidget {
     TextInputType inputType;
     TextInputAction action;
     double height;
+    bool isNumberFormatter;
     Function(String, EditField) onTyping;
     CrossAxisAlignment crossAxisAlignment;
 
     EditField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.textUnit, required this.maxInput, this.inputType = TextInputType.text,
-               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix, this.height = 50});
+               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix, this.height = 50, this.isNumberFormatter = false});
 
     late String data;
     bool onInit = true;
@@ -55,6 +56,8 @@ class EditField extends StatelessWidget {
         if (textPrefix == AppStrings.PREFIX_CURRENCY_IDR) {
             var split = text.split(".");
             editFieldController.text = _formatter.format(split[0]);
+        }else if(isNumberFormatter){
+            editFieldController.text = _formatter.format(text);
         } else {
             editFieldController.text = text;
         }
@@ -66,7 +69,7 @@ class EditField extends StatelessWidget {
     }
 
     double? getInputNumber() {
-        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR){
+        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter){
             return Convert.toDouble(editFieldController.text.replaceAll(AppStrings.PREFIX_CURRENCY_IDR, "").replaceAll(".", ""));
         }
         return Convert.toDouble(editFieldController.text);
@@ -114,7 +117,7 @@ class EditField extends StatelessWidget {
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
+                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);

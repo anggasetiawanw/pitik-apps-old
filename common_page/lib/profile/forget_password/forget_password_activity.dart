@@ -8,14 +8,13 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../change_password/change_password_controller.dart';
 import 'forget_password_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 06/10/2023
 
-class ForgetPassword extends GetView<ChangePasswordController> {
+class ForgetPassword extends GetView<ForgetPasswordController> {
     String helpRoute;
     ForgetPassword({super.key, required this.helpRoute});
 

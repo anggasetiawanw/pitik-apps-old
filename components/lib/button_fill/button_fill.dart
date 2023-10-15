@@ -1,7 +1,6 @@
 // ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../global_var.dart';
@@ -26,11 +25,15 @@ class ButtonFill extends StatelessWidget {
     ButtonFillController getController() {
         return Get.find(tag: controller.tag);
     }
+    bool onInit = true;
+
 
     @override
     Widget build(BuildContext context) {
-        controller.label.value = label;
-
+        if (onInit) {
+            onInit = false;
+            controller.changeLabel(label);
+        }
         return Obx(() =>
             Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -59,10 +62,11 @@ class ButtonFill extends StatelessWidget {
                         ) : Center(
                             child: Padding(
                                 padding: const EdgeInsets.only(top: 16, bottom: 16),
-                                child: Text(
+                                child: Obx(() => Text(
                                     controller.label.value,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(color: Colors.white, fontSize: 14),
+                                    )
                                 )
                             )
                         )
