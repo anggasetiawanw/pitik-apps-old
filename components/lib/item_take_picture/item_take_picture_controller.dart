@@ -2,16 +2,13 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:components/global_var.dart';
-import 'package:engine/util/interface/schedule_listener.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:engine/util/scheduler.dart';
 
 import '../edit_field/edit_field.dart';
 
@@ -59,9 +56,14 @@ class ItemTakePictureCameraController extends GetxController {
             );
             },
         errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-            return const SizedBox(
+            return SizedBox(
                 width: double.infinity,
-                height: 210
+                height: 210,
+                child:  Center(
+                    child: CircularProgressIndicator(
+                        color: GlobalVar.primaryOrange,
+                    )
+                ),
             );
             },
     ).obs;
@@ -87,7 +89,7 @@ class ItemTakePictureCameraController extends GetxController {
     }
 
     void reloadCheckUrl(String url){
-        Timer(const Duration(milliseconds: 7000), () async {
+        Timer(const Duration(milliseconds: 5000), () async {
             final uri = Uri.parse(url);
             if(await isValidUrl(uri)){
                 image.value = Image.network(
@@ -105,14 +107,62 @@ class ItemTakePictureCameraController extends GetxController {
                                 );
                             },
                             errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                return const SizedBox(
+                                return SizedBox(
                                     width: double.infinity,
-                                    height: 210
+                                    height: 210,
+                                    child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                            Center(
+                                                child: CircularProgressIndicator(
+                                                    color: GlobalVar.primaryOrange,
+                                                )
+                                            ),
+                                        ],
+                                ),
                                 );
                             },
                         );
             }else{
-                reloadCheckUrl(url);
+                tryCount++;
+                if(tryCount <= 10){
+                    reloadCheckUrl(url);
+                }else{
+                    image.value = Image.network(
+                        url,
+                        fit: BoxFit.fill,
+                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                                child: CircularProgressIndicator(
+                                    color: GlobalVar.primaryOrange,
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                        : null,
+                                )
+                            );
+                        },
+                        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                            return SizedBox(
+                                width: double.infinity,
+                                height: 210,
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                        SvgPicture.asset("images/wifi_off_icon.svg"),
+                                        Text(
+                                            "Koneksi terputus gagal mengambil gambar",
+                                            style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.medium)
+                                        ),
+                                    ],
+                                ),
+                            );
+                        },
+                    );
+
+                }
             }
         });
     }

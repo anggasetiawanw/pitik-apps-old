@@ -101,7 +101,7 @@ class DashboardLamp extends StatelessWidget {
                                                                         .copyWith(fontWeight: GlobalVar.medium, fontSize: 17, overflow: TextOverflow.ellipsis),
                                                                 ),
                                                                 const SizedBox(width: 32,),
-                                                                DeviceStatus(status: controller.lamps.value[index].status!, activeString: '', inactiveString: '',),
+                                                                DeviceStatus(status: controller.lamps.value[index].status!, activeString: "Aktif", inactiveString: "Non-Aktif",),
                                                             ],
                                                         ),
                                                         const SizedBox(height: 4,),

@@ -149,7 +149,6 @@ class GrowthSetupController extends GetxController {
     ///   growthDay (GrowthDay): The `growthDay` parameter is an object of type
     /// `GrowthDay`.
     void loadData(GrowthDay growthDay){
-        print("${growthDay.requestTemperature}");
         list.value.clear();
         itemDecreaseTemperture.controller.removeAll();
         if(growthDay.temperatureReduction!.isNotEmpty) {
@@ -300,7 +299,7 @@ class GrowthSetupController extends GetxController {
                 temperatureReductions.add(TemperatureReduction(
                     day: (itemDecreaseTemperture.controller.efDayTotal.value[whichItem].getInputNumber())!.toInt(),
                     reduction: itemDecreaseTemperture.controller.efDecreaseTemp.value[whichItem].getInputNumber(),
-                    group: "Group $whichItem"
+                    group: "${whichItem+1}"
                 ));
         }
         return GrowthDay(deviceId: controllerData.deviceId, requestTemperature : efTargetTemp.getInputNumber(), growthDay: (efAge.getInputNumber())!.toInt(), temperature: efTempDayFirst.getInputNumber(), temperatureReduction: temperatureReductions);
