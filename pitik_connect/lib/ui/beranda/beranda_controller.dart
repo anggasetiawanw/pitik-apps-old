@@ -113,14 +113,14 @@ class BerandaController extends GetxController {
     /// devices.
     Future<void> initValueMixpanel() async {
         // Platform messages may fail, so we use a try/catch PlatformException.
-        if (Platform.isAndroid) {
-            // final hasPermission = await handlePermissionPhoneAccess();
-            // if (hasPermission) {
-                initMobileNumberState();
-            // }
-        } else if (Platform.isIOS) {
-            phoneCarrier = "No Simcard";
-        }
+        // if (Platform.isAndroid) {
+        //     // final hasPermission = await handlePermissionPhoneAccess();
+        //     // if (hasPermission) {
+        //         initMobileNumberState();
+        //     // }
+        // } else if (Platform.isIOS) {
+        //     phoneCarrier = "No Simcard";
+        // }
         initMixpanel();
     }
 

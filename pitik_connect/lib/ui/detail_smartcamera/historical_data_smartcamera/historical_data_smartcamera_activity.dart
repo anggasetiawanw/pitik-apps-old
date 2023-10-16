@@ -71,7 +71,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                 title: Column(
                                     children: [
                                         ItemHistoricalSmartCamera(
-                                            controller: GetXCreator.putHistoricalSmartCameraController("ItemHistoricalSmartCamera",context),
+                                            controller: GetXCreator.putHistoricalSmartCameraController("ItemHistoricalSmartCamera$index}",context),
                                             recordCamera: controller.recordImages.value[index],
                                             index: index,
                                             onOptionTap: () {
