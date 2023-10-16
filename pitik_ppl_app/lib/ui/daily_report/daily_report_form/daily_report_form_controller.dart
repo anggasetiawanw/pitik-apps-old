@@ -1,3 +1,4 @@
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
@@ -67,6 +68,23 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         inputType: TextInputType.number,
         onTyping: (value, edit) {});
     
+    SpinnerField sfJenisOvk = SpinnerField(
+        controller: GetXCreator.putSpinnerFieldController("sfJenisOvk"), 
+        label: "Jenis OVK", hint: "Pilih Salah Satu", 
+        alertText: "Jenis OVK Harus Dipilih", items: const {}, 
+        onSpinnerSelected: (value){});
+
+    EditField efTotalOvk = EditField(
+        controller: GetXCreator.putEditFieldController("efTotalOvk"),
+        label: "Total",
+        hint: "Ketik disini",
+        alertText: "Total harus di isi ",
+        textUnit: "gr",
+        maxInput: 20,
+        inputType: TextInputType.number,
+        onTyping: (value, edit) {});
+        
+    
     late MultipleFormField mffKonsumsiPakan = MultipleFormField(
         controller: GetXCreator.putMultipleFormFieldController("mffKonsumsiPakan"), 
         decoration: const BoxDecoration(
@@ -104,10 +122,14 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         keyData: (){},
         child: Column(
             children: [
-                sfMerkPakan,
-                efTotalPakan
+                sfJenisOvk,
+                efTotalOvk
             ],
         ));
+
+    ButtonFill bfSimpan = ButtonFill(controller: GetXCreator.putButtonFillController("btSimpan"), label: "Simpan", onClick: (){
+        
+    });
 
     
     // @override

@@ -24,16 +24,37 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
         );
     }
 
+    Widget bottomNavbar() {
+        return Align(
+            alignment: Alignment.bottomCenter,
+                child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(20, 158, 157, 157),
+                              blurRadius: 5,
+                              offset: Offset(0.75, 0.0))
+                        ],
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    ),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    child: controller.bfSimpan
+                ),
+        );
+    }
+
+
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(40), 
-            child: CustomAppbar(title: "Laporan Harian",isFlat: true, 
-            onBack: (){
-                Get.back();
-            },),
-        ),
-        body: Column(
-            children: [
+            preferredSize: const Size.fromHeight(120), 
+            child: Column(
+              children: [
+                CustomAppbar(title: "Laporan Harian",isFlat: true, 
+                onBack: (){
+                    Get.back();
+                },),
                 Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16, top: 8),
@@ -51,83 +72,113 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
                             ],
                     ),
                 ),
-                SingleChildScrollView(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                            children: [
-                                Container(
-                                    margin: const EdgeInsets.only(top: 16),
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                        color: GlobalVar.grayBackground,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                                    ),
-                                    child: Column(
-                                        children: [
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                            Text("Laporan Harian", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold),),
-                                                            const SizedBox(height: 4,),
-                                                            Text("2023-09-11",style: GlobalVar.blackTextStyle.copyWith(fontSize: 12), )
-                                                        ],
-                                                    ),
-                                                    const StatusDailyReport(status: "Segera Isi")
-                                                ],
-                                            ),
-                                            const SizedBox(height: 16,),
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text("Daftar Stock", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                                    SvgPicture.asset("images/information_blue_icon.svg")
-                                                ],
-                                            ),
-                                            const SizedBox(height: 16,),
-                                            tileInfoHeader("Pre-Starter", "15 karung"),
-                                            const SizedBox(height: 8,),
-                                            tileInfoHeader("Starter", "15 karung"),
-                                            const SizedBox(height: 8,),
-                                            tileInfoHeader("Finisher", "15 karung"),
-                                            const SizedBox(height: 8,),
-                                            tileInfoHeader("OVK", "100 Buah"),
-                                        ],
-                                    ),
+              ],
+            ),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                        children: [
+                            Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                    color: GlobalVar.grayBackground,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: GlobalVar.outlineColor, width: 1),
                                 ),
-                                controller.efBobot,
-                                Row(
+                                child: Column(
                                     children: [
-                                        Expanded(child: controller.efKematian),
-                                        const SizedBox(width: 4,),
-                                        Expanded(child: controller.efCulling)
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                        Text("Laporan Harian", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold),),
+                                                        const SizedBox(height: 4,),
+                                                        Text("2023-09-11",style: GlobalVar.blackTextStyle.copyWith(fontSize: 12), )
+                                                    ],
+                                                ),
+                                                const StatusDailyReport(status: "Segera Isi")
+                                            ],
+                                        ),
+                                        const SizedBox(height: 16,),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Daftar Stock", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                                SvgPicture.asset("images/information_blue_icon.svg")
+                                            ],
+                                        ),
+                                        const SizedBox(height: 16,),
+                                        tileInfoHeader("Pre-Starter", "15 karung"),
+                                        const SizedBox(height: 8,),
+                                        tileInfoHeader("Starter", "15 karung"),
+                                        const SizedBox(height: 8,),
+                                        tileInfoHeader("Finisher", "15 karung"),
+                                        const SizedBox(height: 8,),
+                                        tileInfoHeader("OVK", "100 Buah"),
                                     ],
                                 ),
-                                controller.mfPhoto,
-                                // TabBar(
-                                //     controller: controller.tabController,
-                                //     tabs: const [
-                                //     Tab(text : "Konsumsi Pakan"),
-                                //     Tab(text : "Konsumsi OVK"),
-                                // ]),
-                                // Expanded(
-                                //   child: TabBarView(
-                                //       controller: controller.tabController,
-                                //       children: [
-                                //       controller.mffKonsumsiPakan,
-                                //       controller.mffKonsumsiOVK,
-                                //   ]),
-                                // )
-                                  
-                            ],
-                    ),
-                  ),
-                )
-            ],
+                            ),
+                            controller.efBobot,
+                            Row(
+                                children: [
+                                    Expanded(child: controller.efKematian),
+                                    const SizedBox(width: 4,),
+                                    Expanded(child: controller.efCulling)
+                                ],
+                            ),
+                            controller.mfPhoto,
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: GlobalVar.primaryLight,
+                                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                                  border: Border.all(color: GlobalVar.outlineColor, width: 1),
+                              ),
+                              child: TabBar(
+                                    //   indicator: BoxDecoration(
+                                    //       borderRadius:controller.tabController.index == 0 ? const BorderRadius.only(topLeft: Radius.circular(8)) : const BorderRadius.only(topRight: Radius.circular(8)),
+                                    //       color: GlobalVar.primaryLight2,
+                                    //   ),
+                                      controller: controller.tabController,
+                                      labelColor: GlobalVar.primaryOrange,
+                                      unselectedLabelColor: GlobalVar.grayText,
+                                      indicatorColor: GlobalVar.primaryOrange,
+                                      indicatorSize: TabBarIndicatorSize.tab,
+                                      indicatorWeight: 2,
+                                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 16),
+                                      tabs: const [
+                                      Tab(text : "Konsumsi Pakan"),
+                                      Tab(text : "Konsumsi OVK"),
+                              ]),
+                            ),
+                            Container(
+                                decoration: BoxDecoration(
+                                    color: GlobalVar.grayBackground,
+                                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                                    border: Border.all(color: GlobalVar.outlineColor, width: 1),
+                                ),
+                                height: MediaQuery.of(context).size.height * 0.7,
+                              child: TabBarView(
+                                  controller: controller.tabController,
+                                  children: [
+                                  controller.mffKonsumsiPakan,
+                                  controller.mffKonsumsiOVK,
+                              ]),
+                            ),
+                            const SizedBox(height:  120 ,)
+                              
+                        ],
+                ),
+              ),
+            ),
+            bottomNavbar()
+          ],
         ),
     );
   }
