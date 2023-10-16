@@ -32,7 +32,7 @@ class ListOrderActivity extends GetView<ListOrderController> {
                         padding: const EdgeInsets.only(bottom: 32),
                         child: FloatingActionButton(
                             elevation: 12,
-                            onPressed: () => Get.toNamed(RoutePage.orderRequestPage, arguments: [controller.coop]),
+                            onPressed: () => Get.toNamed(RoutePage.orderRequestPage, arguments: [controller.coop, false]),
                             backgroundColor: GlobalVar.primaryOrange,
                             child: const Icon(Icons.add, color: Colors.white),
                         ),

@@ -12915,7 +12915,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
               30,
               31,
               32,
-              33
+              33,
+              34,
+              35,
+              36
             ],
             const <int>[
               3,
@@ -12936,7 +12939,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
               29,
               30,
               31,
-              32
+              32,
+              33,
+              34,
+              35
             ],
             const <int>[],
             -1,
@@ -12954,8 +12960,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             4,
             const prefix8.BaseApi(),
-            const <int>[34, 35, 36, 37, 38, 39],
-            const <int>[3, 4, 5, 6, 7, 34, 35, 36, 37, 38],
+            const <int>[37, 38, 39, 40, 41, 42],
+            const <int>[3, 4, 5, 6, 7, 37, 38, 39, 40, 41],
             const <int>[],
             -1,
             {},
@@ -12972,8 +12978,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             5,
             const prefix8.BaseApi(),
-            const <int>[40, 41, 42, 43],
-            const <int>[3, 4, 5, 6, 7, 40, 41, 42],
+            const <int>[43, 44, 45, 46],
+            const <int>[3, 4, 5, 6, 7, 43, 44, 45],
             const <int>[],
             -1,
             {},
@@ -12990,8 +12996,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             6,
             const prefix8.BaseApi(),
-            const <int>[44, 45, 46, 47],
-            const <int>[3, 4, 5, 6, 7, 44, 45, 46],
+            const <int>[47, 48, 49, 50],
+            const <int>[3, 4, 5, 6, 7, 47, 48, 49],
             const <int>[],
             -1,
             {},
@@ -13391,6 +13397,53 @@ final _data = <r.Reflectable, r.ReflectorData>{
                   as: prefix31.RequestChickinResponse,
                   error: prefix22.ErrorResponse)
             ]),
+        r.MethodMirrorImpl(
+            r'purchaseRequest',
+            1310722,
+            3,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[104, 105, 106],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix78.POST(
+                  value: "v2/purchase-requests", error: prefix22.ErrorResponse),
+              const prefix77.JSON(isPlaint: true)
+            ]),
+        r.MethodMirrorImpl(
+            r'purchaseRequestForCoopRest',
+            1310722,
+            3,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[107, 108, 109],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix78.POST(
+                  value: "v2/purchase-requests/sapronak-doc-in",
+                  error: prefix22.ErrorResponse),
+              const prefix77.JSON(isPlaint: true)
+            ]),
+        r.MethodMirrorImpl(
+            r'purchaseRequestUpdate',
+            1310722,
+            3,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[110, 111, 112, 113],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix76.PATCH(
+                  value: prefix76.PATCH.PATH_PARAMETER,
+                  error: prefix22.ErrorResponse),
+              const prefix77.JSON(isPlaint: true)
+            ]),
         r.MethodMirrorImpl(r'', 64, 3, -1, -1, -1, null, const <int>[],
             const prefix8.BaseApi(), const []),
         r.MethodMirrorImpl(
@@ -13401,7 +13454,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[104, 105, 106, 107],
+            const <int>[114, 115, 116, 117],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13417,7 +13470,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[108, 109, 110, 111, 112, 113, 114, 115],
+            const <int>[118, 119, 120, 121, 122, 123, 124, 125],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13433,7 +13486,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[116, 117, 118, 119, 120, 121, 122],
+            const <int>[126, 127, 128, 129, 130, 131, 132],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13449,7 +13502,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[123, 124, 125],
+            const <int>[133, 134, 135],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13465,7 +13518,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[126, 127, 128, 129],
+            const <int>[136, 137, 138, 139],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13483,7 +13536,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[130, 131, 132, 133, 134],
+            const <int>[140, 141, 142, 143, 144],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix77.JSON(isPlaint: true),
@@ -13500,7 +13553,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[135, 136, 137, 138],
+            const <int>[145, 146, 147, 148],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix78.POST(
@@ -13517,7 +13570,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[139, 140, 141],
+            const <int>[149, 150, 151],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13535,7 +13588,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[142, 143],
+            const <int>[152, 153],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix77.JSON(),
@@ -13552,7 +13605,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[144, 145],
+            const <int>[154, 155],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix75.GET(
@@ -13568,7 +13621,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[146, 147, 148, 149, 150],
+            const <int>[156, 157, 158, 159, 160],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix77.JSON(isPlaint: true),
@@ -14802,6 +14855,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
+            33,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            33,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("X-ID")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'data',
+            134348806,
+            33,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix83.Parameter("data")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
             34,
             const prefix8.BaseApi(),
             -1,
@@ -14824,7 +14913,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'farmingCycleId',
+            r'data',
             134348806,
             34,
             const prefix8.BaseApi(),
@@ -14832,19 +14921,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix82.Query("farmingCycleId")],
-            null,
-            null),
-        r.ParameterMirrorImpl(
-            r'roomId',
-            134348806,
-            34,
-            const prefix8.BaseApi(),
-            -1,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix82.Query("roomId")],
+            const <Object>[const prefix83.Parameter("data")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -14872,9 +14949,105 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             null),
         r.ParameterMirrorImpl(
-            r'sensorType',
+            r'path',
             134348806,
             35,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix81.Path()],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'data',
+            134348806,
+            35,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix83.Parameter("data")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            37,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            37,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("X-ID")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'farmingCycleId',
+            134348806,
+            37,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix82.Query("farmingCycleId")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'roomId',
+            134348806,
+            37,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix82.Query("roomId")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            38,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            38,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix80.Header("X-ID")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'sensorType',
+            134348806,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14886,7 +15059,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'farmingCycleId',
             134348806,
-            35,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14898,7 +15071,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'days',
             134348806,
-            35,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14910,7 +15083,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'farmId',
             134348806,
-            35,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14922,7 +15095,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'coopId',
             134348806,
-            35,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14934,7 +15107,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'roomId',
             134348806,
-            35,
+            38,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14946,7 +15119,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14958,7 +15131,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14970,7 +15143,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'type',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14982,7 +15155,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'deviceId',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -14994,7 +15167,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'day',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15006,7 +15179,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'coopId',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15018,7 +15191,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'order',
             134348806,
-            36,
+            39,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15030,7 +15203,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            37,
+            40,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15042,7 +15215,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            37,
+            40,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15054,7 +15227,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'path',
             134348806,
-            37,
+            40,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15066,7 +15239,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            38,
+            41,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15078,7 +15251,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            38,
+            41,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15090,7 +15263,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'roomId',
             134348806,
-            38,
+            41,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15102,7 +15275,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'sensorType',
             134348806,
-            38,
+            41,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15114,7 +15287,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            40,
+            43,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15126,7 +15299,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xid',
             134348806,
-            40,
+            43,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15138,7 +15311,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xAppId',
             134348806,
-            40,
+            43,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15150,7 +15323,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'path',
             134348806,
-            40,
+            43,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15162,7 +15335,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'params',
             134348806,
-            40,
+            43,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15174,7 +15347,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            41,
+            44,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15186,7 +15359,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            41,
+            44,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15198,7 +15371,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'folder',
             134348806,
-            41,
+            44,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15210,7 +15383,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'file',
             134348806,
-            41,
+            44,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15222,7 +15395,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            42,
+            45,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15234,7 +15407,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            42,
+            45,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15246,7 +15419,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'name',
             134348806,
-            42,
+            45,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15258,7 +15431,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'username',
             134348806,
-            44,
+            47,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15270,7 +15443,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'password',
             134348806,
-            44,
+            47,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15282,7 +15455,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            45,
+            48,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15294,7 +15467,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            45,
+            48,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15306,7 +15479,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            46,
+            49,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15318,7 +15491,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xid',
             134348806,
-            46,
+            49,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15330,7 +15503,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xAppId',
             134348806,
-            46,
+            49,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15342,7 +15515,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'path',
             134348806,
-            46,
+            49,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15354,7 +15527,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'params',
             134348806,
-            46,
+            49,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -15419,6 +15592,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'getDetailRequest': (dynamic instance) => instance.getDetailRequest,
         r'getRequestChickinDetail': (dynamic instance) =>
             instance.getRequestChickinDetail,
+        r'purchaseRequest': (dynamic instance) => instance.purchaseRequest,
+        r'purchaseRequestForCoopRest': (dynamic instance) =>
+            instance.purchaseRequestForCoopRest,
+        r'purchaseRequestUpdate': (dynamic instance) =>
+            instance.purchaseRequestUpdate,
         r'getLatestCondition': (dynamic instance) =>
             instance.getLatestCondition,
         r'realTime': (dynamic instance) => instance.realTime,

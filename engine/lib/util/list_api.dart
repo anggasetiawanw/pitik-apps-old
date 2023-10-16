@@ -62,9 +62,11 @@ class ListApi {
     static const String saveRequestChickin = "saveRequestChickin";
     static const String getDetailRequest = "getDetailRequest";
     static const String getRequestChickinDetail = "getRequestChickinDetail";
-    
     static const String getProducts = "getProducts";
     static const String searchOvkUnit = "searchOvkUnit";
+    static const String saveOrderRequest = "purchaseRequest";
+    static const String saveOrderRequestForCoopRest = "purchaseRequestForCoopRest";
+    static const String updateOrderRequest = "purchaseRequestUpdate";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";

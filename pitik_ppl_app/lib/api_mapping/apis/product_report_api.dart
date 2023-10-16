@@ -289,4 +289,17 @@ class ProductReportApi {
     /// @param path The path of the request.
     @GET(value : GET.PATH_PARAMETER, as : RequestChickinResponse, error : ErrorResponse)
     void getRequestChickinDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
+
+    @POST(value: "v2/purchase-requests", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void purchaseRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    @POST(value: "v2/purchase-requests/sapronak-doc-in", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void purchaseRequestForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void purchaseRequestUpdate(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
 }

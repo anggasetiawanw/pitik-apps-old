@@ -42,16 +42,21 @@ class AppRoutes {
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+
+        // Profile Page
         GetPage(name: RoutePage.privacyPage, page: ()=> const PrivacyScreen(), binding: PrivacyScreenBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.termPage, page: ()=> const TermScreen()),
         GetPage(name: RoutePage.aboutPage, page: ()=> const AboutUsScreen()),
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+
+        // Order Page
         GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.orderRequestPage, page: () => const OrderRequestActivity(), binding: OrderRequestBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.orderDetailPage, page: () => const OrderDetailActivity(), binding: OrderDetailBinding(context: GlobalVar.getContext())),
 
+        // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext()))
     ];

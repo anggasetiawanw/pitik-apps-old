@@ -1,4 +1,6 @@
 
+import 'package:components/button_fill/button_fill.dart';
+import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
@@ -28,6 +30,8 @@ class OrderRequestController extends GetxController {
     OrderRequestController({required this.context});
 
     late Coop coop;
+    late bool isEdit = false;
+
     late DateTimeField orderDateField;
     late SpinnerField orderTypeField;
     late SpinnerField orderMultipleLogisticField;
@@ -58,6 +62,7 @@ class OrderRequestController extends GetxController {
         super.onInit();
         isLoading.value = true;
         coop = Get.arguments[0];
+        isEdit = Get.arguments[1];
 
         orderDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("orderDateField"), label: "Tanggal Order", hint: "20/02/2022", alertText: "Tanggal Order harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getDay(dateTime)}/${Convert.getMonthNumber(dateTime)}/${Convert.getYear(dateTime)}')
@@ -120,8 +125,8 @@ class OrderRequestController extends GetxController {
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             labelButtonAdd: 'Tambah Pakan',
             initInstance: Product(),
-            childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(null)),
-            increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product)),
+            childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product: product)),
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
@@ -177,8 +182,8 @@ class OrderRequestController extends GetxController {
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             labelButtonAdd: 'Tambah OVK',
             initInstance: Product(),
-            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(null)),
-            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product)),
+            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
@@ -233,8 +238,8 @@ class OrderRequestController extends GetxController {
             ),
             labelButtonAdd: 'Tambah OVK',
             initInstance: Product(),
-            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(null)),
-            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product)),
+            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
@@ -268,8 +273,8 @@ class OrderRequestController extends GetxController {
             ),
             labelButtonAdd: 'Tambah OVK',
             initInstance: Product(),
-            childAdded: () => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(null)),
-            increaseWhenDuplicate: (product) => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(product)),
+            childAdded: () => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkUnitProductName(), getOvkUnitQuantity(product: product)),
             selectedObject: () => getOvkUnitSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkUnitSelectedObjectWhenIncreased(product),
             keyData: () => getOvkUnitProductName(),
@@ -405,15 +410,201 @@ class OrderRequestController extends GetxController {
 
     void sendOrder() {
         if (_validation()) {
-            isLoading.value = true;
-            AuthImpl().get().then((auth) => {
-                if (auth != null) {
-
-                } else {
-                    GlobalVar.invalidResponse()
-                }
-            });
+            _showFeedSummary(isFeed: isFeed.value);
         }
+    }
+
+    void _showFeedSummary({bool isFeed = true}) {
+        showModalBottomSheet(
+            useSafeArea: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                )
+            ),
+            isScrollControlled: true,
+            context: Get.context!,
+            builder: (context) => Container(
+                color: Colors.transparent,
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Center(
+                                    child: Container(
+                                        width: 60,
+                                        height: 4,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                                            color: GlobalVar.outlineColor
+                                        )
+                                    )
+                                ),
+                                const SizedBox(height: 16),
+                                Text('Order ${isFeed ? 'Pakan' : 'OVK'}', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                const SizedBox(height: 8),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Tanggal Order', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Text(orderDateField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                    ],
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Jenis Permintaan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Text(isFeed ? 'Pakan' : 'OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                    ],
+                                ),
+                                if (isFeed) ...[
+                                    const SizedBox(height: 16),
+                                    Text('Total Pakan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                    Padding(
+                                        padding: const EdgeInsets.only(left: 12),
+                                        child: Column(
+                                            children: feedMultipleFormField.getController().listAdded.entries.map((entry) {
+                                                return Padding(
+                                                    padding: const EdgeInsets.only(top: 8),
+                                                    child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                            Text(
+                                                                getFeedProductName(product: feedMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                            ),
+                                                            Text(
+                                                                getFeedQuantity(product: feedMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                            )
+                                                        ]
+                                                    )
+                                                );
+                                            }).toList()
+                                        ),
+                                    )
+                                ] else ...[
+                                    if (coop.isOwnFarm != null && coop.isOwnFarm!) ...[
+                                        if (ovkVendorMultipleFormField.getController().listObjectAdded.isNotEmpty) ...[
+                                            const SizedBox(height: 16),
+                                            Text('Total OVK Vendor', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Padding(
+                                                padding: const EdgeInsets.only(left: 12),
+                                                child: Column(
+                                                    children: ovkVendorMultipleFormField.getController().listAdded.entries.map((entry) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(top: 8),
+                                                            child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                    Text(
+                                                                        getOvkProductName(product: ovkVendorMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    ),
+                                                                    Text(
+                                                                        getOvkQuantity(product: ovkVendorMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
+                                                                ]
+                                                            )
+                                                        );
+                                                    }).toList()
+                                                ),
+                                            )
+                                        ],
+                                        if (ovkUnitMultipleFormField.getController().listObjectAdded.isNotEmpty) ...[
+                                            const SizedBox(height: 16),
+                                            Text('Total OVK Unit', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Padding(
+                                                padding: const EdgeInsets.only(left: 12),
+                                                child: Column(
+                                                    children: ovkUnitMultipleFormField.getController().listAdded.entries.map((entry) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(top: 8),
+                                                            child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                    Text(
+                                                                        getOvkProductName(product: ovkUnitMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    ),
+                                                                    Text(
+                                                                        getOvkQuantity(product: ovkUnitMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
+                                                                ]
+                                                            )
+                                                        );
+                                                    }).toList()
+                                                ),
+                                            )
+                                        ]
+                                    ] else ...[
+                                        const SizedBox(height: 16),
+                                        Text('Total OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Padding(
+                                            padding: const EdgeInsets.only(left: 12),
+                                            child: Column(
+                                                children: ovkMultipleFormField.getController().listAdded.entries.map((entry) {
+                                                    return Padding(
+                                                        padding: const EdgeInsets.only(top: 8),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text(
+                                                                    getOvkProductName(product: ovkMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                ),
+                                                                Text(
+                                                                    getOvkQuantity(product: ovkMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                )
+                                                            ]
+                                                        )
+                                                    );
+                                                }).toList()
+                                            ),
+                                        )
+                                    ]
+                                ],
+                                const SizedBox(height: 50),
+                                SizedBox(
+                                    width: MediaQuery.of(Get.context!).size.width - 32,
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Expanded(
+                                                child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeOrderRequest"), label: "Yakin", onClick: () {
+                                                    Navigator.pop(Get.context!);
+                                                    isLoading.value = true;
+                                                    AuthImpl().get().then((auth) => {
+                                                        if (auth != null) {
+
+                                                        } else {
+                                                            GlobalVar.invalidResponse()
+                                                        }
+                                                    });
+                                                }),
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Expanded(
+                                                child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreeOrderRequest"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                                            )
+                                        ],
+                                    ),
+                                ),
+                                const SizedBox(height: 32),
+                            ]
+                        )
+                    )
+                )
+            )
+        );
     }
 
     void _getCoopTarget() {
@@ -611,31 +802,43 @@ class OrderRequestController extends GetxController {
         }
     }
 
-    String getFeedProductName() {
-        if (feedSuggestField.getController().selectedObject == null) {
-            return '';
+    String getFeedProductName({Product? product}) {
+        if (product != null) {
+            return '${product.subcategoryName ?? ''} - ${product.productName ?? ''}';
         } else {
-            return '${(feedSuggestField.getController().selectedObject as Product).subcategoryName ?? ''} - ${(feedSuggestField.getController().selectedObject as Product).productName ?? ''}';
+            if (feedSuggestField.getController().selectedObject == null) {
+                return '';
+            } else {
+                return '${(feedSuggestField.getController().selectedObject as Product).subcategoryName ?? ''} - ${(feedSuggestField.getController().selectedObject as Product).productName ?? ''}';
+            }
         }
     }
 
-    String getOvkProductName() {
-        if (ovkSuggestField.getController().selectedObject == null) {
-            return '';
+    String getOvkProductName({Product? product}) {
+        if (product != null) {
+            return product.productName ?? '';
         } else {
-            return (ovkSuggestField.getController().selectedObject as Product).productName ?? '';
+            if (ovkSuggestField.getController().selectedObject == null) {
+                return '';
+            } else {
+                return (ovkSuggestField.getController().selectedObject as Product).productName ?? '';
+            }
         }
     }
 
-    String getOvkUnitProductName() {
-        if (ovkUnitSuggestField.getController().selectedObject == null) {
-            return '';
+    String getOvkUnitProductName({Product? product}) {
+        if (product != null) {
+            return product.productName ?? '';
         } else {
-            return (ovkUnitSuggestField.getController().selectedObject as Product).productName ?? '';
+            if (ovkUnitSuggestField.getController().selectedObject == null) {
+                return '';
+            } else {
+                return (ovkUnitSuggestField.getController().selectedObject as Product).productName ?? '';
+            }
         }
     }
 
-    String getFeedQuantity(Product? product) {
+    String getFeedQuantity({Product? product}) {
         if (product != null) {
             return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         } else {
@@ -643,7 +846,7 @@ class OrderRequestController extends GetxController {
         }
     }
 
-    String getOvkQuantity(Product? product) {
+    String getOvkQuantity({Product? product}) {
         if (product != null) {
             return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         } else {
@@ -651,7 +854,7 @@ class OrderRequestController extends GetxController {
         }
     }
 
-    String getOvkUnitQuantity(Product? product) {
+    String getOvkUnitQuantity({Product? product}) {
         if (product != null) {
             return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${ovkUnitQuantityField.getController().textUnit.value}';
         } else {
