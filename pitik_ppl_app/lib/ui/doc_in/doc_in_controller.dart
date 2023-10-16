@@ -156,7 +156,7 @@ class DocInController extends GetxController {
         label: "Upload Surat Jalan",
         hint: "",
         alertText: "Harus menyertakan media foto",
-        showGalleryOptions: false,
+        showGalleryOptions: true,
         type: 2,
         multi: true,
         onMediaResult: (file){
@@ -171,7 +171,7 @@ class DocInController extends GetxController {
         label: "Upload Form DOC In",
         hint: "",
         alertText: "Harus menyertakan media foto",
-        showGalleryOptions: false,
+        showGalleryOptions: true,
         type: 2,
         multi: true,
         onMediaResult: (file) {
@@ -185,7 +185,7 @@ class DocInController extends GetxController {
         label: "Upload Dokumen Lainnya",
         hint: "",
         alertText: "",
-        showGalleryOptions: false,
+        showGalleryOptions: true,
         type: 2,
         multi: true,
         onMediaResult: (file) {
