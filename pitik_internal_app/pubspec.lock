@@ -479,7 +479,7 @@ packages:
     source: hosted
     version: "3.6.5"
   firebase_messaging:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_messaging
       sha256: "6c1a2a047d6f165b7c5f947467ac5138731a2af82c7af1c12d691dbb834f6b73"
@@ -596,7 +596,7 @@ packages:
     source: hosted
     version: "2.0.3"
   flutter_local_notifications:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_local_notifications
       sha256: "3002092e5b8ce2f86c3361422e52e6db6776c23ee21e0b2f71b892bf4259ef04"
@@ -649,7 +649,7 @@ packages:
     source: hosted
     version: "2.0.16"
   flutter_reactive_ble:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_reactive_ble
       sha256: "7a0d245412dc8e1b72ce2adc423808583b42ce824b1be74001ff22c8bb5ada48"

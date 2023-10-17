@@ -49,6 +49,10 @@
     <false/>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Upload images for screen background</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Need BLE permission</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Need BLE permission</string>
     <key>NSCameraUsageDescription</key>
     <string>Upload image from camera for screen background</string>
     <key>NSMicrophoneUsageDescription</key>
