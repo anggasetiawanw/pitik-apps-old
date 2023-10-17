@@ -372,7 +372,7 @@ class Transporter {
                 ).timeout(
                     const Duration(seconds: 30),
                     onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Koneksi terputus. Data akan terupdate jika koneksi kembali.\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -432,7 +432,7 @@ class Transporter {
                 ).timeout(
                     const Duration(seconds: 30),
                     onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Koneksi terputus. Data akan terupdate jika koneksi kembali.\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -492,7 +492,7 @@ class Transporter {
                 ).timeout(
                     const Duration(seconds: 30),
                     onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
-                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
+                ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Koneksi terputus. Data akan terupdate jika koneksi kembali.\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
             }
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
@@ -526,7 +526,7 @@ class Transporter {
             ).timeout(
                 const Duration(seconds: 30),
                 onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
-            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
+            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Koneksi terputus. Data akan terupdate jika koneksi kembali.\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
             logging.log(
@@ -559,7 +559,7 @@ class Transporter {
             ).timeout(
                 const Duration(seconds: 30),
                 onTimeout: () => http.Response("{\"code\": 408, \"error\": {\"message\": \"Request Timeout\", \"stack\": \"\"}}", 408, reasonPhrase: 'Request Timeout'),
-            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Internal Server Error (${error.toString()})\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
+            ).catchError((error) => http.Response("{\"code\": 500, \"error\": {\"message\": \"Koneksi terputus. Data akan terupdate jika koneksi kembali.\", \"stack\": \"\"}}", 500, reasonPhrase: 'Internal Server Error (${error.toString()})'));
 
             TransporterResponse transporterResponse = TransporterResponse(body: response.body, statusCode: response.statusCode, reasonPhrase: response.reasonPhrase);
             logging.log(
