@@ -5,11 +5,11 @@ import 'package:engine/util/firebase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
+import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/main.reflectable.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 
 import 'app.dart';
-import 'flavors.dart';
 
 void main() async{
     F.appFlavor = Flavor.PROD;

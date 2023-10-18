@@ -52,6 +52,7 @@ class BerandaController extends GetxController {
                 for (var result in (body as ProfileResponse).data!.modules!.downstreamApp){
                     listRole.value.add(result);
                 }
+                Constant.profileUser = body.data!;
                 assignModule();
                 
             },
