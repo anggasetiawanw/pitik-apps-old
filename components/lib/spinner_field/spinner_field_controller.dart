@@ -47,6 +47,26 @@ class SpinnerFieldController<T> extends GetxController {
     void visibleLabel() => hideLabel.value = false;
     void setTextSelected(String text) => textSelected.value = text;
     void setupObjects(List<T?> data) => listObject.value = data;
+    void rejuvenateObjects() {
+        items.value.forEach((key, value) {
+            if (value) {
+                setTextSelected(key);
+
+                int index = 0;
+                items.value.forEach((label, value) {
+                    if (key == label) {
+                        selectedIndex = index;
+
+                        // for selected object
+                        if (listObject.isNotEmpty) {
+                            selectedObject = listObject[selectedIndex];
+                        }
+                    }
+                    index++;
+                });
+            }
+        });
+    }
     void generateItems(Map<String, bool> data) {
         items.value.clear();
         items.value.addAll(data);

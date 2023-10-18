@@ -58,7 +58,7 @@ class LoginController extends GetxController {
                 content: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                        CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
                         const SizedBox(width: 16),
                         Text('Mohon Tunggu...', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange)),
                     ],),
@@ -113,8 +113,8 @@ class LoginController extends GetxController {
                     GlobalVar.auth = auth;
                     GlobalVar.profileUser = (body as ProfileResponse).data;
 
-                    ProfileImpl().save(body.data);
-                    AuthImpl().save(auth);
+                    await ProfileImpl().save(body.data);
+                    await AuthImpl().save(auth);
 
                     Future<bool> isFirstLogin = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
                     Navigator.pop(Get.context!);

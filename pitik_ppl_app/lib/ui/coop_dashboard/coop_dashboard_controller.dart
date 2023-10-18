@@ -1,12 +1,15 @@
 import 'package:common_page/history/history_activity.dart';
 import 'package:common_page/history/history_controller.dart';
-import 'package:common_page/library/engine_library.dart';
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
+import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -150,7 +153,7 @@ class CoopDashboardController extends GetxController {
         monitorTab.value = true;
         profileTab.value = false;
 
-        detailSmartMonitor.controller.getLatestDataSmartMonitor();
+        detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
     }
 
     void toProfile() {
@@ -183,8 +186,8 @@ class CoopDashboardController extends GetxController {
                                     child: Container(
                                         width: 60,
                                         height: 4,
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
                                             color: GlobalVar.outlineColor
                                         )
                                     )
@@ -201,9 +204,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () {  // DOC-In
-                                                // TO DOC-IN
-                                            }),
+                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () {  // DAILY REPORT
                                                 // TO Daily Report
                                             }),
@@ -240,9 +241,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () {  // ORDER
-                                                // TO ORDER
-                                            }),
+                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
                                             _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () {  // TRANSFER
                                                 // TO TRANSFER
                                             }),
@@ -281,9 +280,12 @@ class CoopDashboardController extends GetxController {
         );
     }
 
-    Widget _createMenu(String title, String imagePath, bool status, Function function) {
+    Widget _createMenu(String title, String imagePath, bool status, Function() function) {
         return GestureDetector(
-            onTap: () => function,
+            onTap: () {
+                Navigator.pop(Get.context!);
+                function();
+            },
             child: Column(
                 children: [
                     SizedBox(
@@ -298,8 +300,8 @@ class CoopDashboardController extends GetxController {
                                         width: 40,
                                         height: 40,
                                         padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(8)),
                                             color: GlobalVar.primaryLight2
                                         ),
                                         child: SvgPicture.asset(imagePath),
@@ -328,26 +330,25 @@ class CoopDashboardController extends GetxController {
     /// Returns:
     ///   a widget of type `RefreshIndicator` wrapped in a `ListView`.
     Widget generateHomeWidget() {
-        DateTime startDate = Convert.getDatetime(coop.startDate!);
-        DateTime stockOutDate = Convert.getDatetime(monitoring.value.feed!.stockoutDate!);
+        DateTime? startDate = coop.startDate == null ? null : Convert.getDatetime(coop.startDate!);
+        DateTime? stockOutDate = monitoring.value.feed == null || monitoring.value.feed!.stockoutDate == null ? null : Convert.getDatetime(monitoring.value.feed!.stockoutDate!);
         num populationOutstanding = (monitoring.value.population!.total == null ? 0 : monitoring.value.population!.total!) -
                                     (monitoring.value.population!.harvested == null ? 0 : monitoring.value.population!.harvested!) -
                                     (monitoring.value.population!.mortality == null ? 0 : monitoring.value.population!.mortality!);
-        String feedOutstanding = (monitoring.value.feed!.remaining == null ? '0' : monitoring.value.feed!.remaining!.toStringAsFixed(1));
+        String feedOutstanding = (monitoring.value.feed == null || monitoring.value.feed!.remaining == null ? '0' : monitoring.value.feed!.remaining!.toStringAsFixed(1));
 
         return RefreshIndicator(
             onRefresh: () => Future.delayed(
                 const Duration(milliseconds: 200), () => getMonitoringPerformance(coop)
             ),
             child: ListView(
-                shrinkWrap: true,
                 physics: const AlwaysScrollableScrollPhysics(),
                 children: [
                     Container(
                         padding: const EdgeInsets.all(16),
                         height: 155,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: GlobalVar.primaryOrange
                         ),
                         child: Column(
@@ -370,7 +371,7 @@ class CoopDashboardController extends GetxController {
                                     children: [
                                         Padding(
                                             padding: const EdgeInsets.only(top: 12),
-                                            child: Text('DOC-In ${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                            child: Text('DOC-In ${startDate == null ? '-' : '${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
                                         ),
                                         SvgPicture.asset(
                                             coop.day! > 0 && coop.day! <= 3 ?
@@ -397,8 +398,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 16),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -426,8 +427,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -461,8 +462,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -496,8 +497,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -531,8 +532,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 8),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -566,8 +567,8 @@ class CoopDashboardController extends GetxController {
                     const SizedBox(height: 16),
                     Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
                             border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
                             color: Colors.white
                         ),
@@ -627,8 +628,8 @@ class CoopDashboardController extends GetxController {
                                     ),
                                 ),
                                 const SizedBox(height: 4),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 8),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 8),
                                     child: Divider(
                                         height: 1,
                                         color: GlobalVar.black,
@@ -674,7 +675,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                             Text('Perkiraan Habis', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                            Text('${Convert.getDay(stockOutDate)}/${Convert.getMonthNumber(stockOutDate)}/${Convert.getYear(stockOutDate)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            Text(stockOutDate == null ? '-' : '${Convert.getDay(stockOutDate)}/${Convert.getMonthNumber(stockOutDate)}/${Convert.getYear(stockOutDate)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                         ],
                                     ),
                                 )

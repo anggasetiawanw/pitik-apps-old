@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:global_variable/global_variable.dart';
-
+import 'package:global_variable/colors.dart';
 import 'listener/custom_dialog_listener.dart';
 
 /*
@@ -9,6 +8,8 @@ import 'listener/custom_dialog_listener.dart';
 
 String _title = 'Pesan';
 String _message = 'Pesan';
+String _titleButtonOk = 'Ok';
+String _titleButtonNo = 'Batal';
 bool _barrierDismissible = false;
 
 // ignore: constant_identifier_names
@@ -50,6 +51,16 @@ class CustomDialog {
 
     CustomDialog message(String message) {
         _message = message;
+        return this;
+    }
+
+    CustomDialog titleButtonOk(String text) {
+        _titleButtonOk = text;
+        return this;
+    }
+
+    CustomDialog titleButtonNo(String text) {
+        _titleButtonNo = text;
         return this;
     }
 
@@ -180,7 +191,7 @@ class _MyDialogState extends State<_MyDialog> {
                             dialog.hide();
                             _listener!.onDialogOk(context, id, packetList);
                         },
-                        child: const Text("Ok"),
+                        child: Text(_titleButtonOk),
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -191,7 +202,7 @@ class _MyDialogState extends State<_MyDialog> {
                             dialog.hide();
                             _listener!.onDialogCancel(context, id, packetList);
                         },
-                        child: const Text("Batal", style:TextStyle(color: Color(0xFFF47B20))),
+                        child: Text(_titleButtonNo, style:TextStyle(color: Color(0xFFF47B20))),
                     )
                 ],
             );

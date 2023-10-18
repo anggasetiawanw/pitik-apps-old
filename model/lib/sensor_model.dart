@@ -10,7 +10,7 @@ import 'room_model.dart';
  */
 
 @SetupModel
-class Sensor{
+class Sensor {
 
     String? id;
     String? name;
@@ -22,17 +22,19 @@ class Sensor{
     String? sensorType;
     double? temperature;
     double? humidity;
+    int? status;
+    String? roomId;
 
     @IsChild()
     Room? room;
 
-    Sensor({this.id, this.name, this.position, this.deviceName, this.totalDevice, this.temperature, this.humidity, this.sensorMac, this.sensorType, this.sensorCode, this.room});
+    Sensor({this.id, this.name, this.position, this.deviceName, this.totalDevice, this.temperature, this.humidity, this.sensorMac, this.sensorType, this.sensorCode, this.status, this.roomId, this.room});
 
     static Sensor toResponseModel(Map<String, dynamic> map) {
-        if(map['temperature'] is int) {
+        if (map['temperature'] is int) {
             map['temperature'] = map['temperature'].toDouble();
         }
-        if(map['humidity'] is int) {
+        if (map['humidity'] is int) {
             map['humidity'] = map['humidity'].toDouble();
         }
 
@@ -47,6 +49,8 @@ class Sensor{
             sensorType: map['sensorType'],
             humidity: map['humidity'],
             sensorCode: map['sensorCode'],
+            status: map['status'],
+            roomId: map['roomId'],
             room: Mapper.child<Room>(map['room']),
         );
     }

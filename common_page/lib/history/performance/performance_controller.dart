@@ -1,9 +1,14 @@
 
-import 'package:common_page/library/dao_impl_library.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
-import 'package:components/library/engine_library.dart';
 import 'package:components/spinner_field/spinner_field.dart';
+import 'package:components/table_field/table_field.dart';
+import 'package:dao_impl/auth_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/array_util.dart';
+import 'package:engine/util/convert.dart';
+import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -23,8 +28,9 @@ class PerformanceController extends GetxController {
     PerformanceController({required this.context});
 
     late SpinnerField performSpField;
+
     RxList<CoopActiveStandard?> barData = <CoopActiveStandard?> [].obs;
-    RxList<List<String>> tableData = <List<String>>[[]].obs;
+    Rx<TableField> tableLayout = (TableField(controller: GetXCreator.putTableFieldController("performanceTable"))).obs;
     Rx<SizedBox> datePerformanceField = (const SizedBox()).obs;
     Rx<CoopPerformance?> detailPerformance = (CoopPerformance()).obs;
 
@@ -128,9 +134,9 @@ class PerformanceController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop!.farmingCycleId}/daily-monitorings'],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            tableData.value = [["Hari", "Bobot", "Pakan", "Kematian", "Culling", "OVK", "FCR", "IP"]];
+                            List<List<String>> data = [["Hari", "Bobot", "Pakan", "Kematian", "Culling", "OVK", "FCR", "IP"]];
                             for (var coopPerformance in (body as DateMonitoringResponse).data) {
-                                tableData.add([
+                                data.add([
                                     coopPerformance!.day!.toString(),
                                     coopPerformance.bw!.actual == null ? '0' : coopPerformance.bw!.actual!.roundToDouble().toStringAsFixed(2),
                                     coopPerformance.feedIntake!.actual == null ? '0' : coopPerformance.feedIntake!.actual!.roundToDouble().toStringAsFixed(2),
@@ -142,6 +148,7 @@ class PerformanceController extends GetxController {
                                 ]);
                             }
 
+                            tableLayout.value.controller.generateData(data: ArrayUtil().transpose<String>(data), useSticky: true, heightData: 45, widthData: 110);
                             _checkIsStillLoadingOrNot();
                         },
                         onResponseFail: (code, message, body, id, packet)  => _checkIsStillLoadingOrNot(),
@@ -237,14 +244,13 @@ class PerformanceController extends GetxController {
                                 child: spinner
                             );
 
-                            _getDetailMonitoringByTicketId(ticketId: dates[value]!.taskTicketId!, isRequestBundling: true);
+                            if (dates[value] != null) {
+                                _getDetailMonitoringByTicketId(ticketId: dates[value]!.taskTicketId!, isRequestBundling: true);
+                            }
                             _checkIsStillLoadingOrNot();
                         },
                         onResponseFail: (code, message, body, id, packet)  => _checkIsStillLoadingOrNot(),
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            print('$exception -> $stacktrace');
-                            _checkIsStillLoadingOrNot();
-                        },
+                        onResponseError: (exception, stacktrace, id, packet) => _checkIsStillLoadingOrNot(),
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
                 )

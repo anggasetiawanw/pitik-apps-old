@@ -1,6 +1,7 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:components/edit_field_two_row/edit_field_two_row_controller.dart';
+import 'package:components/multiple_form_field/multiple_form_field_controller.dart';
 import 'package:components/stock_opname_field/stock_opname_field_controller.dart';
 import 'package:components/stock_opname_two_field/stock_opname_two_field_controller.dart';
 import 'package:components/switch_button/switch_button_controller.dart';
@@ -18,6 +19,7 @@ import 'edit_field/edit_field_controller.dart';
 import 'edit_field_qr/edit_field_qrcode_controller.dart';
 import 'expandable/expandable_controller.dart';
 import 'expandable_device/expandable_device_controller.dart';
+import 'expandable_monitor_real_time/expandable_monitor_real_time_controller.dart';
 import 'graph_view/graph_view_controller.dart';
 import 'item_decrease_temp/item_decrease_temperature_controller.dart';
 import 'item_historical_smartcamera/item_historical_smartcamera_controller.dart';
@@ -82,6 +84,10 @@ class GetXCreator {
         return Get.put(ExpandableDeviceController(tag: tag, context: context), tag: tag);
     }
 
+    static ExpandableMonitorRealTimeController putAccordionMonitorRealTimeController(String tag, BuildContext context) {
+        return Get.put(ExpandableMonitorRealTimeController(tag: tag, context: context), tag: tag);
+    }
+
     static ExpandableController putAccordionController(String tag) {
         return Get.put(ExpandableController(tag: tag), tag: tag);
     }
@@ -137,7 +143,11 @@ class GetXCreator {
     }
 
     static TableFieldController putTableFieldController(String tag) {
-        return Get.put(TableFieldController(tag: tag));
+        return Get.put(TableFieldController(tag: tag), tag: tag);
+    }
+
+    static MultipleFormFieldController putMultipleFormFieldController<T>(String tag) {
+        return Get.put(MultipleFormFieldController<T>(tag: tag), tag: tag);
     }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {

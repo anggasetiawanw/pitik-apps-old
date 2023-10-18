@@ -20,10 +20,12 @@ class SpinnerField extends StatelessWidget {
     String alertText;
     bool hideLabel = false;
     bool isDetail;
+    Color backgroundField;
     Map<String, bool> items;
     Function(String) onSpinnerSelected;
 
-    SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected, this.isDetail = false});
+    SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected,
+                  this.isDetail = false, this.backgroundField =  GlobalVar.primaryLight});
 
     SpinnerFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -40,6 +42,19 @@ class SpinnerField extends StatelessWidget {
                 items.forEach((key, value) {
                     if (value) {
                         controller.setTextSelected(key);
+
+                        int index = 0;
+                        items.forEach((label, value) {
+                            if (key == label) {
+                                controller.selectedIndex = index;
+
+                                // for selected object
+                                if (controller.listObject.isNotEmpty) {
+                                    controller.selectedObject = controller.listObject[controller.selectedIndex];
+                                }
+                            }
+                            index++;
+                        });
                     }
                 });
 
@@ -54,7 +69,7 @@ class SpinnerField extends StatelessWidget {
                 child: Text(
                     label,
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                    style: const TextStyle(color: GlobalVar.black, fontSize: 14),
                 ),
             ),
         );
@@ -74,7 +89,7 @@ class SpinnerField extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                        color: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
+                                        color: controller.activeField.isTrue ? backgroundField : GlobalVar.gray,
                                         borderRadius: BorderRadius.circular(10.0),
                                         border: Border.all(
                                             color: controller.activeField.isTrue && controller.showTooltip.isFalse && controller.isShowList.isTrue
@@ -104,7 +119,7 @@ class SpinnerField extends StatelessWidget {
                                             ),
                                             Text(
                                                 controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                             )
                                         ]
                                     )
@@ -149,7 +164,7 @@ class SpinnerField extends StatelessWidget {
                                 controller.isloading.isTrue ?
                                 Container(
                                     margin: const EdgeInsets.only(right: 16),
-                                    child: SizedBox(
+                                    child: const SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: CircularProgressIndicator(color: GlobalVar.primaryOrange,)),
@@ -224,7 +239,7 @@ class SpinnerField extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             const SizedBox(height: 8),
-                                            Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14)),
+                                            Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14)),
                                             Row(
                                                 children: [
                                                     Text("Jumlah (Ekor) ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 10),),
@@ -236,7 +251,7 @@ class SpinnerField extends StatelessWidget {
                                         ],
                                     ),
                                 ),
-                            ) : Expanded(child: Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
+                            ) : Expanded(child: Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
                         ]
                     )
                 )

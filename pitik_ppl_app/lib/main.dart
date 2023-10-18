@@ -7,16 +7,17 @@ import 'package:engine/util/firebase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'api_mapping/api_mapping.dart';
-import 'main.reflectable.dart';
+import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import 'package:pitik_ppl_app/flavors.dart';
+import 'package:pitik_ppl_app/main.reflectable.dart';
 import 'package:model/password_model.dart';
 
-Future<void> main() async {
-    ChuckerFlutter.showOnRelease = true;
 
+void main() async {
+    F.appFlavor = Flavor.PROD;
+    ChuckerFlutter.showOnRelease = false;
     initializeReflectable();
-    initPlatformState();
+    await initPlatformState();
     Service.setApiMapping(ApiMapping());
     runApp(const PitikApplication());
 }
@@ -43,4 +44,6 @@ Future<void> initPlatformState() async {
     await Firebase.initializeApp();
     FirebaseConfig.setupCrashlytics();
     FirebaseConfig.setupRemoteConfig();
+
+    // await FirebaseConfig.setupCloudMessaging();
 }

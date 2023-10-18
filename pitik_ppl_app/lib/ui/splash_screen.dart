@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
-import 'package:engine/util/access_phone_permission.dart';
 import 'package:engine/util/updater_code_magic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

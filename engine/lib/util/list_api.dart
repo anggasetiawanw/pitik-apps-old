@@ -17,12 +17,18 @@ class ListApi {
     static const String getCoops = "getCoops";
     static const String getDetailCoop = "getDetailCoop";
     static const String registerDevice = "registerDevice";
+    static const String uploadImage = "uploadImage";
+    static const String getApproval = "getApproval";
     
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
     static const String modifyDevice = "modifyDevice";
     static const String getLatestCondition = "getLatestCondition";
     static const String getHistoricalData = "getHistoricalData";
+    static const String getListBuilding = "getListBuilding";
+    static const String getRealTimeHistorical = "realTime";
+    static const String getRealTimeHistoricalForSmartController = "realTimeSmartController";
+    static const String getSensorPosition = "sensorPosition";
     
     // api SMART CAMERA
     static const String getRecordImages = "getRecordImages";
@@ -46,7 +52,22 @@ class ListApi {
     // api PRODUCT REPORT
     static const String getSapronak = "getSapronak";
     static const String getProductById = "getProductById";
-    
+    static const String getListPurchaseRequest = "getListPurchaseRequest";
+    static const String getListPurchaseRequestForCoopRest = "getListPurchaseRequestForCoopRest";
+    static const String getListPurchaseOrder = "getListPurchaseOrder";
+    static const String getListPurchaseOrderForCoopRest = "getListPurchaseOrderForCoopRest";
+    static const String getReceiveProcurement = "getReceiveProcurement";
+    static const String getRequestDoc = "getRequestDoc";
+    static const String approveRequestChickin = "approveRequestChickin";
+    static const String saveRequestChickin = "saveRequestChickin";
+    static const String getDetailRequest = "getDetailRequest";
+    static const String getRequestChickinDetail = "getRequestChickinDetail";
+    static const String getProducts = "getProducts";
+    static const String searchOvkUnit = "searchOvkUnit";
+    static const String saveOrderRequest = "purchaseRequest";
+    static const String saveOrderRequestForCoopRest = "purchaseRequestForCoopRest";
+    static const String updateOrderRequest = "purchaseRequestUpdate";
+
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
     static const String getMonitoringByVariable = "getMonitoringByVariable";
@@ -54,6 +75,7 @@ class ListApi {
     static const String getDateMonitoring = "getDateMonitoring";
     static const String getDetailMonitoring = "getDetailMonitoring";
     static const String getListHarvestRealization = "getListHarvestRealization";
+    static const String updateRequestChickin = "updateRequestChickin";
 
     static String pathChangePassword(){
         return "v2/auth/reset-password";
@@ -138,4 +160,20 @@ class ListApi {
     static String pathGetSapronakByType(String farmingCycleId, String type) {
         return 'v2/farming-cycles/$farmingCycleId/purchase-orders/$type';
     }
+
+    static String pathGetRequestDocByFarmingId(String farmingCycleId) {
+        return 'v2/farming-cycles/$farmingCycleId/doc-in';
+    }
+    static String pathGetRequestDetail(String requestId) {
+        return ' "v2/purchase-requests/"$requestId';
+    }
+
+    static String pathGetRequestChickinDetail(String requestId){
+        return "v2/chick-in-requests/$requestId";
+    }
+
+    static String pathApproveRequestChickinDetail(String requestId){
+        return "v2/chick-in-requests/$requestId/approve";
+    }
+    
 }

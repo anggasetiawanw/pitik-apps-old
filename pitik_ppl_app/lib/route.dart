@@ -15,8 +15,18 @@ import 'package:pitik_ppl_app/ui/coop/coop_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
+import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
+import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
+import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
+import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart';
+import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
+import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
+import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen.dart';
 
 ///@author DICKY
@@ -32,12 +42,23 @@ class AppRoutes {
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+
+        // Profile Page
         GetPage(name: RoutePage.privacyPage, page: ()=> const PrivacyScreen(), binding: PrivacyScreenBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.termPage, page: ()=> const TermScreen()),
         GetPage(name: RoutePage.aboutPage, page: ()=> const AboutUsScreen()),
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+
+        // Order Page
+        GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.orderRequestPage, page: () => const OrderRequestActivity(), binding: OrderRequestBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.orderDetailPage, page: () => const OrderDetailActivity(), binding: OrderDetailBinding(context: GlobalVar.getContext())),
+
+        // DOC-In Page
+        GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext()))
     ];
 }
 
@@ -54,4 +75,10 @@ class RoutePage {
     static const String helpPage = "/help";
     static const String licencePage = "/licence";
     static const String changePasswordPage = "/changePassword";
+    static const String listOrderPage = "/listOrder";
+    static const String orderRequestPage = "/orderRequest";
+    static const String orderDetailPage = "/orderDetail";
+    static const String confirmationReceivedPage = "/confirmationReceived";
+    static const String docInPage = "/docIn";
+    static const String reqDocInPage = "/req-docIn";
 }

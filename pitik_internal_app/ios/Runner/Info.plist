@@ -22,10 +22,47 @@
     <string>$(FLUTTER_BUILD_NAME)</string>
     <key>CFBundleSignature</key>
     <string>????</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.98893830821-9s1nf0vnt908bikdpr2i2onnt3p7773b</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.232419135326-5ih52lkd0o1e24mmahaa4h8mkgv4e71n</string>
+        </array>
+      </dict>
+    </array>
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Need BLE permission</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Need BLE permission</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Upload image from camera for screen background</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This string is required to gain permission to access location services on iOS 11+ and should describe how your app uses location services. Set this string in the Info.plist</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This string is required to gain permission to access location services on iOS 8+ when the app in the background and should describe how your app uses location services. Set this string in the Info.plist</string>
+    <key>NSLocationUsageDescription</key>
+    <string>This string is optional but recommended on iOS 6 &amp; 7 and should describe how your app uses location services. Set this string in the Info.plist</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This string is required to gain permission to access location services on iOS 8+ and should describe how your app uses location services. Set this string in the Info.plist</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Post videos to profile</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Upload images for screen background</string>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
     <key>UILaunchStoryboardName</key>
@@ -47,30 +84,5 @@
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Upload images for screen background</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Upload image from camera for screen background</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Post videos to profile</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>This string is required to gain permission to access location services on iOS 8+ when the app in the background and should describe how your app uses location services. Set this string in the Info.plist</string>
-    <key>NSLocationUsageDescription</key>
-    <string>This string is optional but recommended on iOS 6 &amp; 7 and should describe how your app uses location services. Set this string in the Info.plist</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>This string is required to gain permission to access location services on iOS 8+ and should describe how your app uses location services. Set this string in the Info.plist</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>This string is required to gain permission to access location services on iOS 11+ and should describe how your app uses location services. Set this string in the Info.plist</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.googleusercontent.apps.98893830821-9s1nf0vnt908bikdpr2i2onnt3p7773b</string>
-        </array>
-      </dict>
-    </array>
   </dict>
 </plist>

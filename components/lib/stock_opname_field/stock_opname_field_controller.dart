@@ -3,7 +3,7 @@ import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_variable/global_variable.dart';
+import 'package:global_variable/strings.dart';
 import 'package:model/internal_app/product_model.dart';
 
 class StockOpnameFieldController extends GetxController {

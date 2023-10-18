@@ -1,6 +1,7 @@
 
 
 import 'package:engine/request/api_mapping_list.dart';
+import 'package:pitik_ppl_app/api_mapping/apis/coop_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/farm_monitoring_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/product_report_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_monitoring_api.dart';
@@ -14,13 +15,20 @@ import 'apis/user_api.dart';
 ///@create date 11/09/2023
 
 class ApiMapping extends ApiMappingList {
+    static const api = "api";
+    static const userApi = "userApi";
+    static const smartMonitoringApi = "smartMonitoringApi";
+    static const productReportApi = "productReportApi";
+    static const farmMonitoringApi = "farmMonitoringApi";
+    static const coopApi = "coopApi";
 
     Map<String, Type> apiMapping = {
         "api": API,
         "userApi": UserApi,
         "smartMonitoringApi": SmartMonitoringApi,
         "productReportApi": ProductReportApi,
-        "farmMonitoringApi": FarmMonitoringApi
+        "farmMonitoringApi": FarmMonitoringApi,
+        "coopApi": CoopApi,
     };
 
     @override

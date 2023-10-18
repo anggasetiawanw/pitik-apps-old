@@ -49,9 +49,15 @@ class GraphView extends StatelessWidget {
                         ),
                         activationMode: ActivationMode.singleTap,
                         builder: (context, trackballDetails) {
-                            trackballDetails.groupingModeInfo!.points[0].pointColorMapper = controller.lineMaxColor.value;
-                            trackballDetails.groupingModeInfo!.points[1].pointColorMapper = controller.lineMinColor.value;
-                            trackballDetails.groupingModeInfo!.points[2].pointColorMapper = controller.lineCurrentColor.value;
+                            if (trackballDetails.groupingModeInfo!.points.isNotEmpty) {
+                                trackballDetails.groupingModeInfo!.points[0].pointColorMapper = controller.lineMaxColor.value;
+                            }
+                            if (trackballDetails.groupingModeInfo!.points.length > 1) {
+                                trackballDetails.groupingModeInfo!.points[1].pointColorMapper = controller.lineMinColor.value;
+                            }
+                            if (trackballDetails.groupingModeInfo!.points.length > 2) {
+                                trackballDetails.groupingModeInfo!.points[2].pointColorMapper = controller.lineCurrentColor.value;
+                            }
 
                             return Wrap(
                                 children: [
@@ -128,10 +134,15 @@ class GraphView extends StatelessWidget {
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.normal,
-                                fontSize: 12);
+                                fontSize: 12
+                            );
 
-                            double round = double.parse(args.text).roundToDouble();
-                            return ChartAxisLabel(controller.data[round.toInt()].label!, textStyle);
+                            try {
+                                double round = double.parse(args.text).roundToDouble();
+                                return ChartAxisLabel(controller.data[round.toInt()].label!, textStyle);
+                            } catch (exception) {
+                                return ChartAxisLabel('', textStyle);
+                            }
                         },
                         majorGridLines: const MajorGridLines(width: 0),
                         majorTickLines: const MajorTickLines(width: 0),

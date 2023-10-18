@@ -30,13 +30,17 @@ class EditField extends StatelessWidget {
     double width;
     TextInputType inputType;
     TextInputAction action;
+    double height;
+    bool isNumberFormatter;
     Function(String, EditField) onTyping;
     CrossAxisAlignment crossAxisAlignment;
 
     EditField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, required this.textUnit, required this.maxInput, this.inputType = TextInputType.text,
-               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix});
+               this.action = TextInputAction.done, this.hideLabel = false, this.crossAxisAlignment = CrossAxisAlignment.start, required this.onTyping, this.width = double.infinity, this.textPrefix, this.childPrefix, this.height = 50, this.isNumberFormatter = false});
 
     late String data;
+    bool onInit = true;
+
     final editFieldController = TextEditingController();
     final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
         enableNegative: false,
@@ -49,9 +53,11 @@ class EditField extends StatelessWidget {
     }
 
     void setInput(String text) {
-        if(textPrefix== AppStrings.PREFIX_CURRENCY_IDR){
+        if (textPrefix == AppStrings.PREFIX_CURRENCY_IDR) {
             var split = text.split(".");
             editFieldController.text = _formatter.format(split[0]);
+        }else if(isNumberFormatter){
+            editFieldController.text = _formatter.format(text);
         } else {
             editFieldController.text = text;
         }
@@ -63,19 +69,26 @@ class EditField extends StatelessWidget {
     }
 
     double? getInputNumber() {
-        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR){
+        if(textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter){
             return Convert.toDouble(editFieldController.text.replaceAll(AppStrings.PREFIX_CURRENCY_IDR, "").replaceAll(".", ""));
         }
         return Convert.toDouble(editFieldController.text);
     }
     @override
     Widget build(BuildContext context) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+            if (onInit) {
+                controller.textUnit.value = textUnit;
+                onInit = false;
+            }
+        });
+
         final labelField = SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -94,15 +107,17 @@ class EditField extends StatelessWidget {
                                     children: <Widget>[
                                         SizedBox(
                                             width: width,
-                                            height: 50,
+                                            height: height,
                                             child: TextFormField(
+                                                expands: inputType == TextInputType.multiline ? true : false,
+                                                maxLines: inputType == TextInputType.multiline ? null : 1,
                                                 // focusNode: controller.focusNode,
                                                 controller: editFieldController,
                                                 enabled: controller.activeField.isTrue,
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
+                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);
@@ -122,7 +137,7 @@ class EditField extends StatelessWidget {
                                                     suffixIcon: Padding(
                                                         padding: const EdgeInsets.all(16),
                                                         child: Text(
-                                                            textUnit,
+                                                            controller.textUnit.value,
                                                             style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
                                                         ),
                                                     ),
@@ -136,11 +151,11 @@ class EditField extends StatelessWidget {
                                                     ),
                                                     disabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: BorderSide(color: GlobalVar.gray),
+                                                        borderSide: const BorderSide(color: GlobalVar.gray),
                                                     ),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: BorderSide(color: GlobalVar.primaryLight)
+                                                        borderSide: const BorderSide(color: GlobalVar.primaryLight)
                                                     ),
                                                     filled: true,
                                                 ),
@@ -160,7 +175,7 @@ class EditField extends StatelessWidget {
                                                         Expanded(
                                                           child: Text(
                                                               controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                              style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                              style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                               overflow: TextOverflow.clip,
                                                           ),
                                                         )

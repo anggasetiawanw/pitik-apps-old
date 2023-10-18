@@ -5,6 +5,12 @@ SHELL := /bin/bash
 gen: ## Generate files Reflect
 	flutter clean && flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
 
+gen2: ## Generate files Reflect
+	flutter clean && flutter pub get && flutter pub run build_runner build
+
+gen-packages: ## Generate files Reflect with Packages
+	flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs
+
 run-dev: ##Running Debug with dev configuration
 	flutter run --flavor dev -t lib/main_dev.dart
 

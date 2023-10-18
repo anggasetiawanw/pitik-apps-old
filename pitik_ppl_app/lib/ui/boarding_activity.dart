@@ -74,14 +74,14 @@ class BoardingState extends State<BoardingActivity> {
                                         Row(
                                             children: [
                                                 state == 0 ? Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
                                                         color: GlobalVar.primaryOrange
                                                     ),
                                                     height: 8,
                                                     width: 18,
                                                 ) : Container(
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                         color: GlobalVar.gray,
                                                         shape: BoxShape.circle
                                                     ),
@@ -90,14 +90,14 @@ class BoardingState extends State<BoardingActivity> {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 state == 1 ? Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
                                                         color: GlobalVar.primaryOrange
                                                     ),
                                                     height: 8,
                                                     width: 18,
                                                 ) : Container(
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                         color: GlobalVar.gray,
                                                         shape: BoxShape.circle
                                                     ),
@@ -106,14 +106,14 @@ class BoardingState extends State<BoardingActivity> {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 state == 2 ? Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
                                                         color: GlobalVar.primaryOrange
                                                     ),
                                                     height: 8,
                                                     width: 18,
                                                 ) : Container(
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                         color: GlobalVar.gray,
                                                         shape: BoxShape.circle
                                                     ),

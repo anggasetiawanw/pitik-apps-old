@@ -2,6 +2,7 @@
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../global_var.dart';
@@ -16,17 +17,20 @@ import 'suggest_field_controller.dart';
 class SuggestField extends StatelessWidget {
 
     SuggestFieldController controller;
-    GlobalKey<AutoCompleteTextFieldState<String>> key;
+    GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
     int id;
     String label;
     String hint;
     String alertText;
     bool hideLabel = false;
+    Widget? childPrefix;
     List<String> suggestList;
     Function(String) onTyping;
+    Function(String) onSubmitted;
 
-    SuggestField({required this.key, required this.controller, this.id = 1, required this.label, required this.hint, required this.alertText, required this.suggestList, required this.onTyping});
+    SuggestField({required this.controller, this.id = 1, required this.label, required this.hint, required this.alertText, this.childPrefix, required this.suggestList,
+                  required this.onTyping, required this.onSubmitted});
 
     SuggestFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -43,7 +47,7 @@ class SuggestField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -60,42 +64,60 @@ class SuggestField extends StatelessWidget {
                                     SizedBox(
                                         width: MediaQuery.of(context).size.width,
                                         height: 50,
-                                        child: SimpleAutoCompleteTextField(
-                                            key: key,
-                                            controller: suggestFieldController,
-                                            suggestions: controller.suggestList,
-                                            textChanged: (text) => onTyping(text),
-                                            textSubmitted: (text) {
-                                                onTyping(text);
+                                        child: Autocomplete<String>(
+                                            optionsBuilder: (TextEditingValue textEditingValue) async {
+                                                controller.hideAlert();
+                                                List<String> result = [];
+                                                for (var value in controller.suggestList) {
+                                                    if (value.contains(textEditingValue.text)) {
+                                                        result.add(value);
+                                                    }
+                                                }
 
+                                                controller.selectedObject = null;
+                                                onTyping(textEditingValue.text);
+                                                return result;
+                                            },
+                                            onSelected: (text) {
                                                 // for selected object
                                                 if (controller.listObject.isNotEmpty) {
                                                     for (int i = 0; i < controller.suggestList.length; i++) {
                                                         if (text == controller.suggestList[i]) {
-                                                            controller.selectedObject.value = controller.listObject[i];
+                                                            controller.selectedObject = controller.listObject[i];
                                                             break;
                                                         }
                                                     }
                                                 }
+
+                                                onTyping(text);
+                                                onSubmitted(text);
                                             },
-                                            clearOnSubmit: false,
-                                            decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.only(left: 8),
-                                                counterText: "",
-                                                hintText: hint,
-                                                fillColor: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
-                                                focusedBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: BorderSide(
-                                                        color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white, width: 2.0,
+                                            fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                                                return TextFormField(
+                                                    controller: textEditingController,
+                                                    focusNode: focusNode,
+                                                    onFieldSubmitted: (str) => onFieldSubmitted(),
+                                                    decoration: InputDecoration(
+                                                        contentPadding: const EdgeInsets.only(left: 8),
+                                                        counterText: "",
+                                                        hintText: hint,
+                                                        hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9E9D9D)),
+                                                        fillColor: controller.activeField.isTrue ? GlobalVar.primaryLight : GlobalVar.gray,
+                                                        prefixIcon: childPrefix,
+                                                        focusedBorder: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(10.0),
+                                                            borderSide: BorderSide(
+                                                                color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white, width: 2.0,
+                                                            )
+                                                        ),
+                                                        enabledBorder: OutlineInputBorder(
+                                                            borderRadius: BorderRadius.circular(10.0),
+                                                            borderSide: const BorderSide(color:GlobalVar.primaryLight)
+                                                        ),
+                                                        filled: true,
                                                     )
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: BorderSide(color:GlobalVar.primaryLight)
-                                                ),
-                                                filled: true,
-                                            )
+                                                );
+                                            },
                                         )
                                     ),
                                     Align(
@@ -107,11 +129,11 @@ class SuggestField extends StatelessWidget {
                                                 children: [
                                                     Padding(
                                                         padding: const EdgeInsets.only(right: 8),
-                                                        child: Image.asset('images/error_icon.png')
+                                                        child: SvgPicture.asset("images/error_icon.svg")
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12)
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12)
                                                     )
                                                 ]
                                             )
