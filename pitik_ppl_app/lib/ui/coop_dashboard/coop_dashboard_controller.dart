@@ -206,6 +206,7 @@ class CoopDashboardController extends GetxController {
                                         children: [
                                             _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () {  // DAILY REPORT
+                                                Get.toNamed(RoutePage.dailyReport, arguments: coop); 
                                                 // TO Daily Report
                                             }),
                                             _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () {  // HARVEST
