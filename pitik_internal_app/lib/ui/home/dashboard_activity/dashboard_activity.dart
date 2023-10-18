@@ -16,14 +16,12 @@ class DashboardPage extends StatelessWidget {
     return GetBuilder<DashboardController>(
       builder: (controller) {
         return Scaffold(
-          body: SafeArea(
-            child: IndexedStack(
-              index: controller.tabIndex,
-              children: const [
-                BerandaActivity(),
-                ProfileActivity()
-              ],
-            ),
+          body: IndexedStack(
+            index: controller.tabIndex,
+            children: const [
+              BerandaActivity(),
+              ProfileActivity()
+            ],
           ),
           bottomNavigationBar: Container(
             width: double.infinity,
