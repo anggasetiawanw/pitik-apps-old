@@ -301,6 +301,7 @@ class NewDataSalesOrder extends StatelessWidget {
 
                   const SizedBox(height: 100)
                 ],),
+                
               ),
             ),
             buttonFormPurchase(),
