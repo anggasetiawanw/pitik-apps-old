@@ -9,7 +9,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/internal_app/profile_response.dart';
@@ -118,30 +117,36 @@ class LoginActivityController extends GetxController {
 
     void loginWithApple() async {
         try {
-            final credential = await SignInWithApple.getAppleIDCredential(
+            final _ = await SignInWithApple.getAppleIDCredential(
                 scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
             );
 
-            final signInWithAppleEndpoint = Uri(
-                scheme: 'https',
-                host: 'flutter-sign-in-with-apple-example.glitch.me',
-                path: '/sign_in_with_apple',
-                queryParameters: <String, String>{
-                    'code': credential.authorizationCode,
-                    if (credential.givenName != null) 'firstName': credential.givenName!,
-                    if (credential.familyName != null) 'lastName': credential.familyName!,
-                    'useBundleId': 'true',
-                    if (credential.state != null) 'state': credential.state!,
-                },
-            );
+            // final signInWithAppleEndpoint = Uri(
+            //     scheme: 'https',
+            //     host: 'flutter-sign-in-with-apple-example.glitch.me',
+            //     path: '/sign_in_with_apple',
+            //     queryParameters: <String, String>{
+            //         'code': credential.authorizationCode,
+            //         if (credential.givenName != null) 'firstName': credential.givenName!,
+            //         if (credential.familyName != null) 'lastName': credential.familyName!,
+            //         'useBundleId': 'true',
+            //         if (credential.state != null) 'state': credential.state!,
+            //     },
+            // );
 
-            final _ = await http.Client().post(
-                signInWithAppleEndpoint,
+            // final _ = await http.Client().post(
+            //     signInWithAppleEndpoint,
+            // );
+            Get.snackbar(
+                "Pesan",
+                "Terjadi Kesalahan Internal",
+                        duration: const Duration(seconds: 5),
+                snackPosition: SnackPosition.TOP,
             );
         } catch (e) {
             Get.snackbar(
                 "Pesan",
-                "Apple ID Button Masih Belum Ready",
+                "Terjadi Kesalahan Internal",
                         duration: const Duration(seconds: 5),
                 snackPosition: SnackPosition.TOP,
             );

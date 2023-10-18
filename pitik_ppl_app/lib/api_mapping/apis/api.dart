@@ -13,6 +13,7 @@ import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
+// ignore: unused_import
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/profile_response.dart';

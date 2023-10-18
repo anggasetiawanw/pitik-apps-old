@@ -163,7 +163,8 @@ class _ProfileActivityState extends State<ProfileActivity> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          header(),
+        //   header(),
+            Image.asset("images/header_ios.png"),
           nameInfo(),
           Container(
             margin: const EdgeInsets.only(top: 32,left: 39, right: 39),

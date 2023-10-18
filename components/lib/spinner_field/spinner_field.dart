@@ -25,7 +25,7 @@ class SpinnerField extends StatelessWidget {
     Function(String) onSpinnerSelected;
 
     SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected,
-                  this.isDetail = false, this.backgroundField = const Color(0x00fff9ed)});
+                  this.isDetail = false, this.backgroundField =  GlobalVar.primaryLight});
 
     SpinnerFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -239,7 +239,7 @@ class SpinnerField extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             const SizedBox(height: 8),
-                                            Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14)),
+                                            Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14)),
                                             Row(
                                                 children: [
                                                     Text("Jumlah (Ekor) ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 10),),

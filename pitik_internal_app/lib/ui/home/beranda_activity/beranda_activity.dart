@@ -216,11 +216,14 @@ class BerandaActivity extends StatelessWidget {
     }
 
     return Scaffold(
+        
       backgroundColor: Colors.white,
       body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),)
       :Column(
             children: [
-              header(),
+            //   header(),
+            Image.asset("images/header_ios.png"),
+            // SvgPicture.asset("images/header_ios.svg"),
               const SizedBox(
                 height: 16,
               ),

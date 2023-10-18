@@ -5,19 +5,23 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
+import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 import 'package:google_plus_code/google_plus_code.dart' as gpc;
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
+import 'package:model/internal_app/sales_person_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/location_list_response.dart';
+import 'package:model/response/internal_app/salesperson_list_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
@@ -70,8 +74,8 @@ class EditDataController extends GetxController {
     );
 
     late SpinnerField spinnerSupplier;
-    late SpinnerField spinnerPicSales = SpinnerField(
-        controller: GetXCreator.putSpinnerFieldController("spinnerPicSales"),
+    late SpinnerSearch spinnerPicSales = SpinnerSearch(
+        controller: GetXCreator.putSpinnerSearchController("spinnerPicSales"),
         label: "PIC Sales*",
         hint: "Pilih PIC Sales",
         alertText: "Sales harus dipilih!",
@@ -158,6 +162,7 @@ class EditDataController extends GetxController {
     late Customer customer;
 
     Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
+    Rx<List<SalesPerson?>> listSalesperson = Rx<List<SalesPerson>>([]);
     Rx<List<Location?>> province = Rx<List<Location>>([]);
     Rx<List<Location?>> city = Rx<List<Location>>([]);
     Rx<List<Location?>> district = Rx<List<Location>>([]);
@@ -167,6 +172,7 @@ class EditDataController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        spinnerPicSales.controller.disable();
         spinnerSupplier = SpinnerField(
             controller: GetXCreator.putSpinnerFieldController("supplierBaru"),
             label: "Supplier*",
@@ -206,7 +212,12 @@ class EditDataController extends GetxController {
         getProvince();
         getProduct();
         loadData(customer);
- 
+        for(var role in Constant.profileUser!.roles!){
+            print("role ${role!.name}");
+            if(role.name == AppStrings.sales_lead){
+                getSalesList();
+            }
+        }
     }
 
 
@@ -599,12 +610,16 @@ class EditDataController extends GetxController {
             );
         }
 
+        SalesPerson? salesSelect = listSalesperson.value.firstWhere((element) =>
+            element!.email == spinnerPicSales.controller.textSelected.value,
+        );
+
         return Customer(
             businessName: editNamaBisnis.getInput(),
             businessType: spinnerTipeBisnis.controller.textSelected.value,
             ownerName: editNamaPemilik.getInput(),
             phoneNumber: editNomorTelepon.getInput(),
-            salespersonId: customer.salespersonId!,
+            salespersonId: salesSelect != null ? salesSelect.id : customer.salesperson!.id,
             plusCode: editLokasiGoogle.getInput(),
             provinceId: provinceSelect != null ? provinceSelect.id! : customer.province!.id,
             cityId: citySelect != null ? citySelect.id! : customer.city!.id,
@@ -675,6 +690,61 @@ class EditDataController extends GetxController {
         },
         onTokenInvalid: Constant.invalidResponse()
     );
+
+    void getSalesList(){
+        AuthImpl().get().then((auth) => {
+            if (auth != null){
+                spinnerPicSales.controller.showLoading(),
+                Service.push(
+                    apiKey: "api",
+                    service: ListApi.getSalesList,
+                    context: context,
+                    body: [
+                        'Bearer ${auth.token}',
+                        auth.id,
+                        Constant.xAppId!,
+                        "sales",
+                        1,
+                        0
+                    ],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            for (var result in (body as SalespersonListResponse).data) {
+                                listSalesperson.value.add(result);
+                            }
+
+                            Map<String, bool> mapList = {};
+                            for (var product in body.data) {
+                            mapList[product!.email!] = false;
+                            }
+                            spinnerPicSales.controller.generateItems(mapList);
+                            spinnerPicSales.controller.enable();
+                            spinnerPicSales.controller.hideLoading();
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                            spinnerPicSales.controller.hideLoading();
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                            spinnerPicSales.controller.hideLoading();
+                        },
+                            onTokenInvalid: () => Constant.invalidResponse()))
+                    }
+            else
+                {Constant.invalidResponse()}
+        });
+    }
 }
 
 class EditDataBindings extends Bindings {

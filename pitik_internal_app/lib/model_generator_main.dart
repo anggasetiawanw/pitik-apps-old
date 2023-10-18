@@ -1,7 +1,7 @@
 import 'package:engine/model_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:pitik_internal_app/flavors.dart';
 
-import 'flavors.dart';
 import 'main.reflectable.dart';
 
 /*
