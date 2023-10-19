@@ -72,6 +72,8 @@ class ListApi {
     static const String getListDestionTransfer = "getListDestionTransfer";
     static const String getLatestStockOpname ="getLatestStockOpname";
 
+    static const String login ="login";
+
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
     }
