@@ -180,6 +180,17 @@ class NewDataSalesOrderController extends GetxController{
       }
   );
 
+    EditField efRemartk = EditField(
+    controller: GetXCreator.putEditFieldController("efRemartk"),
+    label: "Catatan",
+    hint: "Ketik disini",
+    alertText: "",
+    textUnit: "",
+    maxInput: 500,
+    inputType: TextInputType.multiline,
+    height: 160,
+    onTyping: (value, editField) {});
+
   @override
   void onInit() {
     super.onInit();
