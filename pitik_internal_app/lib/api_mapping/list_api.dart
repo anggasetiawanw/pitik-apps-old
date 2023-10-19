@@ -74,6 +74,8 @@ class ListApi {
     static const String getBranch ="getBranch";
     static const String login ="login";
 
+    static const String login ="login";
+
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
     }

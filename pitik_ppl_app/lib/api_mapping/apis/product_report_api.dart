@@ -290,14 +290,61 @@ class ProductReportApi {
     @GET(value : GET.PATH_PARAMETER, as : RequestChickinResponse, error : ErrorResponse)
     void getRequestChickinDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
 
+    /// The function `purchaseRequest` sends a POST request to the
+    /// "v2/purchase-requests" endpoint with the provided authorization, X-ID, and
+    /// data parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity and
+    /// permissions of the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// purchase request data. It could contain information such as the items being
+    /// purchased, quantities, prices, and any other relevant details for the
+    /// purchase request.
     @POST(value: "v2/purchase-requests", error: ErrorResponse)
     @JSON(isPlaint: true)
     void purchaseRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
+    /// The function `purchaseRequestForCoopRest` is a POST request that sends a
+    /// purchase request to a specific endpoint with authorization and data
+    /// parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains an authentication token or credentials to authorize the
+    /// request. It is used to authenticate the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID value. It is used to identify a specific request or transaction.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// purchase request data. It is typically in JSON format and contains
+    /// information such as the items to be purchased, quantities, prices, and any
+    /// other relevant details.
     @POST(value: "v2/purchase-requests/sapronak-doc-in", error: ErrorResponse)
     @JSON(isPlaint: true)
     void purchaseRequestForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
+    /// The function `purchaseRequestUpdate` is a PATCH request that updates a
+    /// purchase request with the provided authorization, X-ID, path, and data.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token for the request. It
+    /// is typically used to authenticate the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents the
+    /// X-ID header value.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be updated in the PATCH request. It is typically a
+    /// string value that represents the unique identifier or location of the
+    /// resource within the API.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// payload or data that you want to send in the request body. It can contain
+    /// any information that you need to include in the request, such as purchase
+    /// details or any other relevant data.
     @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void purchaseRequestUpdate(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
