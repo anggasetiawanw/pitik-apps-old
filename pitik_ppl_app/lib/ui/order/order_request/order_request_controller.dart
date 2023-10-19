@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
+import 'package:model/error/error.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
@@ -31,6 +32,7 @@ class OrderRequestController extends GetxController {
 
     late Coop coop;
     late bool isEdit = false;
+    late bool fromCoopRest;
 
     late DateTimeField orderDateField;
     late SpinnerField orderTypeField;
@@ -63,6 +65,7 @@ class OrderRequestController extends GetxController {
         isLoading.value = true;
         coop = Get.arguments[0];
         isEdit = Get.arguments[1];
+        fromCoopRest = Get.arguments[2];
 
         orderDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("orderDateField"), label: "Tanggal Order", hint: "20/02/2022", alertText: "Tanggal Order harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getDay(dateTime)}/${Convert.getMonthNumber(dateTime)}/${Convert.getYear(dateTime)}')
@@ -584,7 +587,15 @@ class OrderRequestController extends GetxController {
                                                     isLoading.value = true;
                                                     AuthImpl().get().then((auth) => {
                                                         if (auth != null) {
+                                                            if (isEdit) {
+                                                                _pushPurchaseRequestToServer(ListApi.updateOrderRequest, ['Bearer ${auth.token}', auth.id, {
 
+                                                                }])
+                                                            } else {
+                                                                _pushPurchaseRequestToServer(fromCoopRest ? ListApi.saveOrderRequestForCoopRest : ListApi.saveOrderRequest, ['Bearer ${auth.token}', auth.id, {
+
+                                                                }])
+                                                            }
                                                         } else {
                                                             GlobalVar.invalidResponse()
                                                         }
@@ -603,6 +614,42 @@ class OrderRequestController extends GetxController {
                         )
                     )
                 )
+            )
+        );
+    }
+
+    void _pushPurchaseRequestToServer(String route, List<dynamic> body) {
+        Service.push(
+            apiKey: 'productReportApi',
+            service: route,
+            context: Get.context!,
+            body: body,
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) {
+
+                    isLoading.value = false;
+                },
+                onResponseFail: (code, message, body, id, packet) {
+                    isLoading.value = false;
+                    Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    isLoading.value = false;
+                    Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan, $exception",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
     }
