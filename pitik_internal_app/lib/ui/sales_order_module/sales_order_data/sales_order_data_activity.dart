@@ -4,8 +4,6 @@
 
 import 'dart:async';
 
-import 'package:components/button_fill/button_fill.dart';
-import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
@@ -64,27 +62,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
             borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           ),
           padding: const EdgeInsets.only(left: 16, bottom: 16,right: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ButtonFill(
-                  controller: GetXCreator.putButtonFillController("newDataOrder"),
-                  label: "Buat Penjualan",
-                  onClick: () {
-                    Get.toNamed(RoutePage.newDataSalesOrder)!.then((value) {
-                        controller.isLoading.value = true;
-                        controller.orderList.value.clear();
-                        controller.page.value = 1;
-                      Timer(const Duration(milliseconds: 100), () {
-                        controller.getListOrders();
-                      });
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
+          child: controller.btPenjualan,
         ),
       );
     }
@@ -120,44 +98,54 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
             ),
           ) : Container(
             padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            child: ListView.builder(
-              controller: controller.scrollController,
-              itemCount: controller.isLoadMore.isTrue
-                  ? controller.orderList.value.length + 1
-                  : controller.orderList.value.length,
-              itemBuilder: (context, index) {
-                int length = controller.orderList.value.length;
-                if (index >= length) {
-                  return const Column(
-                    children: [
-                      Center(
-                          child:ProgressLoading()
-                      ),
-                      SizedBox(height: 120),
-                    ],
-                  );
-                }
-                return Column(
-                  children: [
-                    CardListOrder(
-                        isSoPage: true,
-                      order:controller.orderList.value[index]!,
-                      onTap: () {
-                        Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
-                          controller.isLoading.value = true;
-                          controller.orderList.value.clear();
-                        controller.page.value = 1;
-                          Timer(const Duration(milliseconds: 500), () {
-                            controller.getListOrders();
-                          });
-                        });
-                      },
+            child: RawScrollbar(
+                    controller: controller.scrollController,
+                    thumbColor: AppColors.primaryOrange,
+                    radius: const Radius.circular(8),
+                    child: RefreshIndicator(
+                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.getListOrder()),
+                        color: AppColors.primaryOrange,
+                        child: ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            controller: controller.scrollController,
+                            itemCount: controller.isLoadMore.isTrue
+                                ? controller.orderList.value.length + 1
+                                : controller.orderList.value.length,
+                            itemBuilder: (context, index) {
+                                int length = controller.orderList.value.length;
+                                if (index >= length) {
+                                return const Column(
+                                    children: [
+                                    Center(
+                                        child:ProgressLoading()
+                                    ),
+                                    SizedBox(height: 120),
+                                    ],
+                                );
+                            }
+                            return Column(
+                                children: [
+                                    CardListOrder(
+                                        isSoPage: true,
+                                    order:controller.orderList.value[index]!,
+                                    onTap: () {
+                                        Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
+                                        controller.isLoading.value = true;
+                                        controller.orderList.value.clear();
+                                        controller.page.value = 1;
+                                        Timer(const Duration(milliseconds: 500), () {
+                                            controller.getListOrders();
+                                        });
+                                        });
+                                    },
+                                    ),
+                                    index == controller.orderList.value.length - 1 ? const SizedBox(height: 120)
+                                        : const SizedBox(),
+                                ],
+                            );
+                        },
                     ),
-                     index == controller.orderList.value.length - 1 ? const SizedBox(height: 120)
-                        : const SizedBox(),
-                  ],
-                );
-              },
+                )
             ),
           ),
           bottomNavbar(),
@@ -166,3 +154,4 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
     ));
   }
 }
+

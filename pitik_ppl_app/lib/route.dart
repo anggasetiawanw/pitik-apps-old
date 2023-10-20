@@ -15,6 +15,12 @@ import 'package:pitik_ppl_app/ui/coop/coop_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
@@ -58,7 +64,10 @@ class AppRoutes {
 
         // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
-        GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext()))
+        GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.dailyReport, page: ()=> const DailyReportHomeActivity(), binding: DailyReportHomeBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.dailyReportForm, page: ()=> const DailyReportFormActivity(), binding: DailyReportFormBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.dailyReportDetail, page: ()=> const DailyReportDetailActivity(), binding: DailyReportDetailBindings(context: GlobalVar.getContext())),
     ];
 }
 
@@ -81,4 +90,7 @@ class RoutePage {
     static const String confirmationReceivedPage = "/confirmationReceived";
     static const String docInPage = "/docIn";
     static const String reqDocInPage = "/req-docIn";
+    static const String dailyReport = "/daily-Report";
+    static const String dailyReportForm = "/daily-Report-Form";
+    static const String dailyReportDetail = "/daily-Report-Detail";
 }

@@ -36,6 +36,7 @@ class NewDataSalesOrderController extends GetxController{
   NewDataSalesOrderController({required this.context});
 
   var isLoading = false.obs;
+  var isInbound = false.obs;
 
   late ButtonFill iyaOrderButton;
   late ButtonOutline tidakOrderButton;
@@ -60,7 +61,7 @@ class NewDataSalesOrderController extends GetxController{
 
   late SpinnerSearch spinnerCustomer  = SpinnerSearch(
     controller: GetXCreator.putSpinnerSearchController("customer"),
-    label: "Customer*",
+    label: isInbound.isTrue? "Customer(Optional)": "Customer*",
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
     items: const {
@@ -179,9 +180,21 @@ class NewDataSalesOrderController extends GetxController{
       }
   );
 
+    EditField efRemartk = EditField(
+    controller: GetXCreator.putEditFieldController("efRemartk"),
+    label: "Catatan",
+    hint: "Ketik disini",
+    alertText: "",
+    textUnit: "",
+    maxInput: 500,
+    inputType: TextInputType.multiline,
+    height: 160,
+    onTyping: (value, editField) {});
+
   @override
   void onInit() {
     super.onInit();
+    isInbound.value = Get.arguments;
     isLoading.value =true;
     spinnerOrderType.controller.setTextSelected("Non-LB");
     skuCard = SkuCardOrder(

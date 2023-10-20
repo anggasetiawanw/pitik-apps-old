@@ -42,6 +42,7 @@ import 'package:model/response/internal_app/transfer_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
 import 'package:model/response/internal_app/visit_customer_response.dart';
 import 'package:model/response/internal_app/visit_list_customer_response.dart';
+import 'package:model/response/ branch_response.dart';
 @Rest
 class API {
     // static const String BASE_URL = "https://api.pitik.dev/";
@@ -773,4 +774,6 @@ class API {
     @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
     void deliveryConfirmSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path,@Parameter("params") String params){}
 
+    @GET(value: "v2/branches", as: ListBranchResponse, error: ErrorResponse)
+    void getBranch(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId,){}
 }
