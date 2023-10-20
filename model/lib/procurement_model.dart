@@ -60,14 +60,14 @@ class Procurement {
     @IsChildren()
     List<MediaUploadModel?> photos;
 
-    @IsChildren()
-    List<Procurement?> internalOvkTransferRequest;
+    @IsChild()
+    Procurement? internalOvkTransferRequest;
 
     Procurement({this.id, this.poCode, this.purchaseRequestErpCode, this.type, this.deliveryDate, this.status, this.statusText, this.farmingCycleId, this.requestSchedule, this.erpCode, this.arrivalDate,
                  this.description, this.isFulfilled, this.notes, this.coopTargetName, this.coopSourceName, this.branchSourceName, this.branchTargetName, this.coopId, this.coopSourceId, this.coopTargetId,
                  this.branchSourceId, this.branchTargetId, this.subcategoryCode, this.subcategoryName, this.productName, this.quantity, this.datePlanned, this.internalOvkTransferRequestId, this.logisticOption,
                  this.route, this.mergedLogistic, this.mergedCoopId, this.mergedLogisticCoopName, this.mergedLogisticFarmingCycleDays, this.isTransferRequest, this.details = const [],
-                 this.goodsReceipts = const [], this.photos = const [], this.internalOvkTransferRequest = const []});
+                 this.goodsReceipts = const [], this.photos = const [], this.internalOvkTransferRequest});
 
     static Procurement toResponseModel(Map<String, dynamic> map) {
         return Procurement(
@@ -110,7 +110,7 @@ class Procurement {
             details: Mapper.children<Product>(map['details']),
             goodsReceipts: Mapper.children<GoodReceipt>(map['goodsReceipts']),
             photos: Mapper.children<MediaUploadModel>(map['photos']),
-            internalOvkTransferRequest: Mapper.children<Procurement>(map['internalOvkTransferRequest'])
+            internalOvkTransferRequest: Mapper.child<Procurement>(map['internalOvkTransferRequest'])
         );
     }
 }

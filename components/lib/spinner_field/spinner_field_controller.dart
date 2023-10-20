@@ -77,23 +77,24 @@ class SpinnerFieldController<T> extends GetxController {
     void addItems(String value, bool isActive) => items.value.putIfAbsent(value, () => isActive);
     T? getSelectedObject() => selectedObject;
     void setSelected(String textSelected) {
-        items.value.forEach((key, value) {
-            if (key == textSelected) {
-                setTextSelected(key);
+        Future.delayed(const Duration(milliseconds: 500), () {
+            int index = 0;
+            items.value.forEach((key, value) {
+                if (key == textSelected) {
+                    setTextSelected(key);
+                    selectedIndex = index;
+                    items.value[key] = true;
 
-                int index = 0;
-                items.value.forEach((label, value) {
-                    if (key == label) {
-                        selectedIndex = index;
-
-                        // for selected object
-                        if (listObject.isNotEmpty) {
-                            selectedObject = listObject[selectedIndex];
-                        }
+                    // for selected object
+                    if (listObject.isNotEmpty) {
+                        selectedObject = listObject[selectedIndex];
                     }
-                    index++;
-                });
-            }
+                } else {
+                    items.value[key] = false;
+                }
+
+                index++;
+            });
         });
     }
 
@@ -103,7 +104,7 @@ class SpinnerFieldController<T> extends GetxController {
         focusNode.dispose();
     }
 
-    
+
 }
 
 class SpinnerFieldBinding extends Bindings {

@@ -67,6 +67,9 @@ class ListApi {
     static const String saveOrderRequest = "purchaseRequest";
     static const String saveOrderRequestForCoopRest = "purchaseRequestForCoopRest";
     static const String updateOrderRequest = "purchaseRequestUpdate";
+    static const String cancelOrder = "cancelOrder";
+    static const String rejectOrder = "rejectOrder";
+    static const String approveOrder = "approvalOrder";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
@@ -165,7 +168,7 @@ class ListApi {
         return 'v2/farming-cycles/$farmingCycleId/doc-in';
     }
     static String pathGetRequestDetail(String requestId) {
-        return ' "v2/purchase-requests/"$requestId';
+        return 'v2/purchase-requests/$requestId';
     }
 
     static String pathGetRequestChickinDetail(String requestId){

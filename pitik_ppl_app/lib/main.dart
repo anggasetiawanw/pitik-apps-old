@@ -14,9 +14,6 @@ import 'package:pitik_ppl_app/main.reflectable.dart';
 // ignore: unused_import
 import 'package:model/password_model.dart';
 
-// ignore: unused_import
-import 'package:model/procurement_request_model.dart';
-
 
 void main() async {
     F.appFlavor = Flavor.PROD;

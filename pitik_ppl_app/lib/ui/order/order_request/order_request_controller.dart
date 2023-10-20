@@ -23,7 +23,6 @@ import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
-import 'package:model/procurement_request_model.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -318,14 +317,16 @@ class OrderRequestController extends GetxController {
         orderDateField.getController().setTextSelected('${Convert.getDay(dateTime)}/${Convert.getMonthNumber(dateTime)}/${Convert.getYear(dateTime)}');
 
         // fill order type
-        orderTypeField.getController().setTextSelected(procurement.type == 'pakan' ? 'Pakan' : 'OVK');
+        orderTypeField.getController().setSelected(procurement.type == 'pakan' ? 'Pakan' : 'OVK');
         orderTypeField.getController().disable();
+        isFeed.value = procurement.type == 'pakan';
 
         // fill list order product
         if (isFeed.value) {
             // fill merged logistic
-            orderMultipleLogisticField.getController().setTextSelected(procurement.mergedLogistic != null && procurement.mergedLogistic! ? "Ya" : "Tidak");
+            orderMultipleLogisticField.getController().setSelected(procurement.mergedLogistic != null && procurement.mergedLogistic! ? "Ya" : "Tidak");
             orderCoopTargetLogisticField.getController().setSelectedObject(procurement.mergedLogisticCoopName == null ? "" : procurement.mergedLogisticCoopName!);
+            isMerge.value = procurement.mergedLogistic != null && procurement.mergedLogistic!;
 
             // fill list product
             for (var product in procurement.details) {
@@ -347,12 +348,14 @@ class OrderRequestController extends GetxController {
                 }
 
                 // fill list product UNIT
-                for (var product in procurement.details) {
-                    ovkMultipleFormField.getController().addData(
-                        child: _createChildAdded(getOvkUnitProductName(product: product), getOvkUnitQuantity(product: product)),
-                        object: product,
-                        key: getOvkUnitProductName(product: product)
-                    );
+                if (procurement.internalOvkTransferRequest != null) {
+                    for (var product in procurement.internalOvkTransferRequest!.details) {
+                        ovkUnitMultipleFormField.getController().addData(
+                            child: _createChildAdded(getOvkUnitProductName(product: product), getOvkUnitQuantity(product: product)),
+                            object: product,
+                            key: getOvkUnitProductName(product: product)
+                        );
+                    }
                 }
             } else {
                 // fill list product
@@ -434,6 +437,7 @@ class OrderRequestController extends GetxController {
             }
             if (orderMultipleLogisticField.getController().selectedIndex == 0 && orderCoopTargetLogisticField.getController().selectedObject == null) {
                 orderCoopTargetLogisticField.getController().showAlert();
+                isPass  = false;
             }
             if (feedMultipleFormField.getController().listObjectAdded.isEmpty) {
                 Get.snackbar(
@@ -649,7 +653,7 @@ class OrderRequestController extends GetxController {
                                                     AuthImpl().get().then((auth) {
                                                         if (auth != null) {
                                                             String requestedDate = '${Convert.getYear(orderDateField.getLastTimeSelected())}-${Convert.getMonthNumber(orderDateField.getLastTimeSelected())}-${Convert.getDay(orderDateField.getLastTimeSelected())}';
-                                                            ProcurementRequest requestBody = ProcurementRequest(
+                                                            Procurement requestBody = Procurement(
                                                                 type: isFeed ? "pakan" : "ovk",
                                                                 coopId: coop.id,
                                                                 farmingCycleId: coop.farmingCycleId,
