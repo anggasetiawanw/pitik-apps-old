@@ -179,9 +179,9 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 child: GestureDetector(
                     onTap: () {
                         if (typePosition == 0) {
-                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop]);
+                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement]);
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop]);
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement]);
                         }
                     },
                     child: Container(

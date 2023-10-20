@@ -76,6 +76,26 @@ class SpinnerFieldController<T> extends GetxController {
     void generateWeight(Map<String, double> data) => weightItems.value = data;
     void addItems(String value, bool isActive) => items.value.putIfAbsent(value, () => isActive);
     T? getSelectedObject() => selectedObject;
+    void setSelected(String textSelected) {
+        items.value.forEach((key, value) {
+            if (key == textSelected) {
+                setTextSelected(key);
+
+                int index = 0;
+                items.value.forEach((label, value) {
+                    if (key == label) {
+                        selectedIndex = index;
+
+                        // for selected object
+                        if (listObject.isNotEmpty) {
+                            selectedObject = listObject[selectedIndex];
+                        }
+                    }
+                    index++;
+                });
+            }
+        });
+    }
 
     @override
     void onClose() {
