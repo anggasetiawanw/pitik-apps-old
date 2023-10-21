@@ -55,11 +55,10 @@ class RequestDocInController extends GetxController {
         label: "Tanggal*",
         hint: "dd/MM/yyyy",
         alertText: "Oops tanggal DOC-In belum dipilih",
-        onDateTimeSelected: (dateTime, dateField) {
-        dateField.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(dateTime));
-        },
+        onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(dateTime)),
         flag: 1,
     );
+
     EditField efPopulasi = EditField(
         controller: GetXCreator.putEditFieldController("efPopulasi"),
         label: "Total Populasi",
@@ -76,19 +75,19 @@ class RequestDocInController extends GetxController {
         label: "Simpan",
         onClick: () {
             switch (btNext.controller.label.value) {
-              case "Simpan":
-                if(isValid()){
-                    _showBottomDialog();
-                }
-                break;              
+                case "Simpan":
+                    if(isValid()){
+                        _showBottomDialog();
+                    }
+                    break;
                 case "Tutup":
                     Get.back();
-                break;              
+                    break;
                 case "Setujui":
                     _showBottomDialog();
-                break;
-              default:
-                break;
+                    break;
+                default:
+                    break;
             }
         });
 
@@ -101,125 +100,117 @@ class RequestDocInController extends GetxController {
             boEdit.controller.disable();
         });
 
-    late ButtonFill btYakin = ButtonFill(controller: GetXCreator.putButtonFillController("byYakin"), label: "Yakin", onClick: (){
+    late ButtonFill btYakin = ButtonFill(controller: GetXCreator.putButtonFillController("byYakin"), label: "Yakin", onClick: () {
         Get.back();
         processRequest();
     });
 
-    ButtonOutline btTidakYakin = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btTidakYakin"), label: "Tidak Yakin", onClick: (){
-        Get.back();
-    });
+    ButtonOutline btTidakYakin = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btTidakYakin"), label: "Tidak Yakin", onClick: () => Get.back());
 
     @override
     void onInit() {
         super.onInit();
         coop = Get.arguments as Coop;
     }
+
     @override
-      void onReady(){
+    void onReady(){
         super.onReady();
         isLoading.value = true;
         getApprovalByRole();
     }
 
-   void getApprovalByRole(){
+    void getApprovalByRole() {
         AuthImpl().get().then((auth) => {
-            if (auth != null){
+            if (auth != null) {
                 Service.push(
                     apiKey: ApiMapping.api,
                     service: ListApi.getApproval,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        "chick-in-request-approve"
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, "chick-in-request-approve"],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             allowApprove.value = (body as AprovalDocInResponse).data!.isAllowed ?? false;
-                             getPermissionCreateByRole();
+                            getPermissionCreateByRole();
                         },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
+                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
-   }
-   void getPermissionCreateByRole(){
+    }
+
+    void getPermissionCreateByRole() {
         AuthImpl().get().then((auth) => {
-            if (auth != null){
+            if (auth != null) {
                 Service.push(
                     apiKey: ApiMapping.api,
                     service: ListApi.getApproval,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        "chick-in-request-create"
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, "chick-in-request-create"],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             allowSubmit.value = (body as AprovalDocInResponse).data!.isAllowed ?? false;
-                            if(!body.data!.isAllowed!){
+                            if (!body.data!.isAllowed!) {
                                 boEdit.controller.disable();
-                            } 
+                            }
+
                             coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
-                            if ((coop.statusText??"").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText??"").toLowerCase() == PROSESSING.toLowerCase()) {
+                            if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
                                 if (allowApprove.isTrue) {
                                     btNext.controller.changeLabel("Setujui");
                                 } else {
                                     btNext.controller.changeLabel("Tutup");
                                 }
-                            } else if (!(GlobalVar.profileUser!.role == "ppl") && (coop.statusText??"").toLowerCase() == NEED_APPROVED.toLowerCase()) {
+                            } else if (!(GlobalVar.profileUser!.role == "ppl") && (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase()) {
                                 btNext.controller.changeLabel("Setujui");
-                            }
-                            else {
+                            } else {
                                 btNext.controller.changeLabel("Tutup");
-                                print("btNext.controller.label.value ->> ${btNext.controller.label.value}");
                             }
                             setFieldByStatus();
                         },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
+                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
-   }
-   void setFieldByStatus(){
+    }
+
+    void setFieldByStatus() {
         coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
-        if ((coop.statusText??"").toLowerCase()== SUBMISSION_STATUS.toLowerCase()) {
+        if ((coop.statusText ?? "").toLowerCase()== SUBMISSION_STATUS.toLowerCase()) {
             // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
@@ -227,23 +218,23 @@ class RequestDocInController extends GetxController {
             btNext.controller.changeLabel("Simpan");
             boEdit.controller.disable();
             isLoading.value =false;
-        } else if ((coop.statusText??"").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase()) {
             getDetailDocRequest();
             disableField();
             // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
-        } else if ((coop.statusText??"").toLowerCase()== PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== PROSESSING.toLowerCase()) {
             getDetailDocRequest();
             disableField();
             // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
             boEdit.controller.disable();
-        } else if((coop.statusText??"").toLowerCase()== APPROVED.toLowerCase()) {
+        } else if((coop.statusText ?? "").toLowerCase()== APPROVED.toLowerCase()) {
             getDetailDocRequest();
             boEdit.controller.disable();
-        } else if((coop.statusText??"").toLowerCase()== NEED_APPROVED.toLowerCase()) {
+        } else if((coop.statusText ?? "").toLowerCase()== NEED_APPROVED.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
@@ -253,7 +244,7 @@ class RequestDocInController extends GetxController {
             // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
-        } else if ((coop.statusText??"").toLowerCase()== SUBMITTED_OVK.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
@@ -263,14 +254,14 @@ class RequestDocInController extends GetxController {
             // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
-        } else if ((coop.statusText??"").toLowerCase()== OVK_REJECTED.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== OVK_REJECTED.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             }else{
                 enableField();
                 isLoading.value =false;
             }
-        } else if ((coop.statusText??"").toLowerCase()== APPROVED_OVK.toLowerCase()){
+        } else if ((coop.statusText ?? "").toLowerCase()== APPROVED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
@@ -280,220 +271,202 @@ class RequestDocInController extends GetxController {
             // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
             //     getDetailOvkRequest();
             // }
-        } else if ((coop.statusText??"").toLowerCase()== REJECTED.toLowerCase()) {
-            // llRejectInformation.setVisibility(View.VISIBLE);
+        } else if ((coop.statusText ?? "").toLowerCase()== REJECTED.toLowerCase()) {
             isLoading.value =false;
         }
-   }
+    }
 
-   void enableField(){
+    void enableField() {
         allowApprove.value = false;
 
-        if ((coop.statusText??"").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText??"").toLowerCase() == APPROVED_OVK.toLowerCase() || (coop.statusText??"").toLowerCase() == SUBMITTED_OVK.toLowerCase() || (coop.statusText??"").toLowerCase() == OVK_REJECTED.toLowerCase()) {
+        if ((coop.statusText ?? "").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == APPROVED_OVK.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_OVK.toLowerCase() || (coop.statusText ?? "").toLowerCase() == OVK_REJECTED.toLowerCase()) {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
-        } else if ((coop.statusText??"").toLowerCase() == SUBMITTED_DOC_IN || (coop.statusText??"").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText??"").toLowerCase() == PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN || (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
         }
-   }
+    }
 
-   void disableField(){
+    void disableField(){
         dtTanggal.controller.disable();
         efPopulasi.controller.disable();
-   }
+    }
 
-   void getDetailOvkRequest(){
+    void getDetailOvkRequest(){
         AuthImpl().get().then((auth) => {
-            if (auth != null){
+            if (auth != null) {
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.getDetailRequest,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        ListApi.pathGetRequestDetail(coop.chickInRequestId!)
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDetail(coop.chickInRequestId!)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             isLoading.value = false;
                         },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
-        });
-   }
-
-   void getDetailDocRequest(){
-    AuthImpl().get().then((auth) => {
-        if (auth != null){
-            Service.push(
-                apiKey: ApiMapping.productReportApi,
-                service: ListApi.getRequestChickinDetail,
-                context: context,
-                body: [
-                    'Bearer ${auth.token}',
-                    auth.id,
-                    ListApi.pathGetRequestChickinDetail(coop.chickInRequestId!)
-                ],
-                listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) {
-                        requestChickin.value = (body as RequestChickinResponse).data;
-                        requestId.value =(body).data!.id!;
-
-                        try {
-                            DateFormat formatDate = DateFormat("dd/MM/yyyy");
-                            DateTime newStartDate =DateFormat("yyyy-MM-dd HH:mm:ss").parse(requestChickin.value!.chickInDate ?? "");
-                            String startDate = formatDate.format(newStartDate);
-                            dtTanggal.controller.setTextSelected(startDate);
-                        } catch (_) {}
-
-                        efPopulasi.setInput(requestChickin.value!.initialPopulation.toString());
-
-                        if (!((coop.statusText??"").toLowerCase() == SUBMISSION_STATUS.toLowerCase()) && !((coop.statusText??"").toLowerCase() == SUBMITTED_OVK.toLowerCase())) {
-                            disableField();
-                        }
-                        isLoading.value  = false;
-                    },
-                    onResponseFail: (code, message, body, id, packet) {
-                        Get.snackbar(
+                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
                             "Pesan",
                             "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                    },
-                    onResponseError: (exception, stacktrace, id, packet) {
-                        Get.snackbar(
+                            backgroundColor: Colors.red
+                        ),
+                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
                             "Pesan",
                             "Terjadi Kesalahan Internal",
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                    },
-                        onTokenInvalid: () => GlobalVar.invalidResponse()))
-                }
-        else
-            {GlobalVar.invalidResponse()}
-    });
-   }
-
-   bool isValid(){
-    if(dtTanggal.controller.textSelected.value.isEmpty){
-        dtTanggal.controller.showAlert();
-        Scrollable.ensureVisible(dtTanggal.controller.formKey.currentContext!);
-        return false;
-    }
-
-    if(efPopulasi.getInput().isEmpty){
-        efPopulasi.controller.showAlert();
-        Scrollable.ensureVisible(efPopulasi.controller.formKey.currentContext!);
-        return false;
-    }
-    return true;
-   }
-
-   _showBottomDialog() {
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        context: Get.context!,
-        builder: (context) {
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  width: 60,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: GlobalVar.outlineColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                  child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
-                    style: GlobalVar.primaryTextStyle
-                        .copyWith(fontSize: 14, fontWeight: GlobalVar.bold),
-                  ),
-                ),
-                Container(
-                    margin: const EdgeInsets.only(top: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                            Text("Request DOC-In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.bold),),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text("Tanggal", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                    Text(DateFormat("dd/MM/yyyy").format(dtTanggal.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                ],
-                            ),
-                            const SizedBox(height: 8,),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                    Text("${efPopulasi.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                ],
-                            ),
-                        ],
-                    ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: btYakin),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: btTidakYakin
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: GlobalVar.bottomSheetMargin,)
-              ],
-            ),
-          );
+                            backgroundColor: Colors.red
+                        ),
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
     }
 
-    void processRequest(){
+    void getDetailDocRequest() {
+        AuthImpl().get().then((auth) => {
+            if (auth != null) {
+                Service.push(
+                    apiKey: ApiMapping.productReportApi,
+                    service: ListApi.getRequestChickinDetail,
+                    context: context,
+                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestChickinDetail(coop.chickInRequestId!)],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            requestChickin.value = (body as RequestChickinResponse).data;
+                            requestId.value =(body).data!.id!;
+
+                            try {
+                                DateFormat formatDate = DateFormat("dd/MM/yyyy");
+                                DateTime newStartDate =DateFormat("yyyy-MM-dd HH:mm:ss").parse(requestChickin.value!.chickInDate ?? "");
+                                String startDate = formatDate.format(newStartDate);
+                                dtTanggal.controller.setTextSelected(startDate);
+                            } catch (_) {}
+
+                            efPopulasi.setInput(requestChickin.value!.initialPopulation.toString());
+
+                            if (!((coop.statusText??"").toLowerCase() == SUBMISSION_STATUS.toLowerCase()) && !((coop.statusText??"").toLowerCase() == SUBMITTED_OVK.toLowerCase())) {
+                                disableField();
+                            }
+                            isLoading.value  = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        ),
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
+        });
+    }
+
+    bool isValid(){
+        if (dtTanggal.controller.textSelected.value.isEmpty) {
+            dtTanggal.controller.showAlert();
+            Scrollable.ensureVisible(dtTanggal.controller.formKey.currentContext!);
+            return false;
+        }
+
+        if (efPopulasi.getInput().isEmpty) {
+            efPopulasi.controller.showAlert();
+            Scrollable.ensureVisible(efPopulasi.controller.formKey.currentContext!);
+            return false;
+        }
+
+        return true;
+    }
+
+    _showBottomDialog() {
+        return showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            context: Get.context!,
+            builder: (context) {
+                return Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                    ),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                width: 60,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                    color: GlobalVar.outlineColor,
+                                    borderRadius: BorderRadius.circular(2)
+                                ),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                                child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text("Request DOC-In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.bold)),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Tanggal", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                                Text(DateFormat("dd/MM/yyyy").format(dtTanggal.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8,),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efPopulasi.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ],
+                                        ),
+                                    ],
+                                ),
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Expanded(child: btYakin),
+                                        const SizedBox(width: 16),
+                                        Expanded(child: btTidakYakin)
+                                    ]
+                                )
+                            ),
+                            const SizedBox(height: GlobalVar.bottomSheetMargin)
+                        ]
+                    )
+                );
+            }
+        );
+    }
+
+    void processRequest() {
         isLoading.value = true;
         RequestChickin requestChickinBody = RequestChickin();
         requestChickinBody.chickInDate = DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
@@ -511,9 +484,9 @@ class RequestDocInController extends GetxController {
         doc.purchaseUom = "";
         requestChickinBody.doc = doc;
         
-        if ((coop.statusText??"").toLowerCase()== SUBMISSION_STATUS.toLowerCase() || (coop.statusText??"").toLowerCase()== REJECTED.toLowerCase()) {
+        if ((coop.statusText ?? "").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == REJECTED.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
-        } else if ((coop.statusText??"").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText??"").toLowerCase()== PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             if (allowApprove.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
@@ -522,7 +495,7 @@ class RequestDocInController extends GetxController {
             } else {
                 updateRequestChickin(requestChickinBody);
             }
-        } else if ((coop.statusText??"").toLowerCase()== NEED_APPROVED.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty && isEdit.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
@@ -533,27 +506,23 @@ class RequestDocInController extends GetxController {
             } else {
                 saveRequestChickin(requestChickinBody);
             }
-        } else if ((coop.statusText??"").toLowerCase()== OVK_REJECTED.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== OVK_REJECTED.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
-        } else if ((coop.statusText??"").toLowerCase()== APPROVED_OVK.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== APPROVED_OVK.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
-        } else if ((coop.statusText??"").toLowerCase()== SUBMITTED_OVK.toLowerCase()){
+        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_OVK.toLowerCase()){
             saveRequestChickin(requestChickinBody);
         }
     }
 
-    void saveRequestChickin(RequestChickin requestChickin){
+    void saveRequestChickin(RequestChickin requestChickin) {
         AuthImpl().get().then((auth) => {
             if (auth != null){
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.saveRequestChickin,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        Mapper.asJsonString(requestChickin)
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, Mapper.asJsonString(requestChickin)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             Get.back();
@@ -565,8 +534,9 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar(
@@ -574,29 +544,27 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan Internal",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
     }
 
-    void updateRequestChickin(RequestChickin requestChickin){
+    void updateRequestChickin(RequestChickin requestChickin) {
         AuthImpl().get().then((auth) => {
             if (auth != null){
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.updateRequestChickin,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        ListApi.pathGetRequestChickinDetail(coop.chickInRequestId!),
-                        Mapper.asJsonString(requestChickin)
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestChickinDetail(coop.chickInRequestId!), Mapper.asJsonString(requestChickin)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             Get.back();
@@ -608,8 +576,9 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar(
@@ -617,29 +586,27 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan Internal",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
     }
 
-    void approveRequestChickin(RequestChickin requestChickin){
+    void approveRequestChickin(RequestChickin requestChickin) {
         AuthImpl().get().then((auth) => {
             if (auth != null){
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.approveRequestChickin,
                     context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        ListApi.pathApproveRequestChickinDetail(requestChickin.id!),
-                        Mapper.asJsonString(requestChickin)
-                    ],
+                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathApproveRequestChickinDetail(requestChickin.id!), Mapper.asJsonString(requestChickin)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             Get.back();
@@ -651,8 +618,9 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar(
@@ -660,22 +628,26 @@ class RequestDocInController extends GetxController {
                                 "Terjadi Kesalahan Internal",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            isLoading.value =false;
+                                backgroundColor: Colors.red
+                            );
+                            isLoading.value = false;
                         },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                )
+            } else {
+                GlobalVar.invalidResponse()
+            }
         });
     }
 }
 
 class RequestDocInBindings extends Bindings {
-  BuildContext context;
-  RequestDocInBindings({required this.context});
-  @override
-  void dependencies() {
-    Get.lazyPut(() => RequestDocInController(context: context));
-  }
+    BuildContext context;
+    RequestDocInBindings({required this.context});
+
+    @override
+    void dependencies() {
+        Get.lazyPut(() => RequestDocInController(context: context));
+    }
 }

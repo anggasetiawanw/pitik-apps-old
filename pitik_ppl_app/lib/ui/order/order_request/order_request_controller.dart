@@ -23,6 +23,9 @@ import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
+import 'package:pitik_ppl_app/route.dart';
+
+import '../../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -735,8 +738,14 @@ class OrderRequestController extends GetxController {
             body: body,
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-
                     isLoading.value = false;
+                    Get.off(TransactionSuccessActivity(
+                        keyPage: "orderSaved",
+                        message: "Kamu telah berhasil melakukan pengajuan permintaan sapronak",
+                        showButtonHome: false,
+                        onTapClose: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, fromCoopRest]),
+                        onTapHome: () {}
+                    ));
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;

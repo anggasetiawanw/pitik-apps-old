@@ -140,6 +140,7 @@ class OrderDetailActivity extends GetView<OrderDetailController> {
                                         controller.generateProductCards(productList: controller.procurement.value.internalOvkTransferRequest!.details)
                                     ],
                                 ) : const SizedBox(),
+                                controller.isCancel.isTrue ? controller.rejectReasonAreaField : const SizedBox()
                             ]
                         )
                     )

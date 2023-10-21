@@ -7,6 +7,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
+import 'package:components/edit_area_field/edit_area_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -15,6 +16,7 @@ import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/approval_doc_response.dart';
 import 'package:model/response/procurement_detail_response.dart';
+import 'package:pitik_ppl_app/ui/transaction_success_activity.dart';
 
 import '../../../route.dart';
 
@@ -28,6 +30,7 @@ class OrderDetailController extends GetxController {
 
     late Coop coop;
     late bool fromCoopRest;
+    late EditAreaField rejectReasonAreaField;
 
     Rx<Widget> containerButtonEditAndCancel = (const SizedBox(width: 0, height: 0)).obs;
     Rx<Procurement> procurement = (Procurement()).obs;
@@ -42,6 +45,9 @@ class OrderDetailController extends GetxController {
         fromCoopRest = Get.arguments[1];
         procurement.value = Get.arguments[2];
 
+        rejectReasonAreaField = EditAreaField(controller: GetXCreator.putEditAreaFieldController("orderRejectReason"), label: "Alasan", hint: "Tulis Alasan disini...", alertText: "Alasan belum diisi..!", maxInput: 250,
+            onTyping: (text, field) {}
+        );
         _getDetailRequest();
     }
 
@@ -201,10 +207,17 @@ class OrderDetailController extends GetxController {
                     apiKey: 'productReportApi',
                     service: ListApi.approveOrder,
                     context: context,
-                    body: ['Bearer ${auth.token}', auth.id, 'v2/purchase-requests/${procurement.value.id}/approve', ''],
+                    body: ['Bearer ${auth.token}', auth.id, 'v2/purchase-requests/${procurement.value.id}/approve', '{}'],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             isLoading.value = false;
+                            Get.off(TransactionSuccessActivity(
+                                keyPage: "orderApprove${procurement.value.id}",
+                                message: "Kamu telah menyetujui permintaan sapronak",
+                                showButtonHome: false,
+                                onTapClose: () => Get.back(),
+                                onTapHome: () {}
+                            ));
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar("Pesan", '${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
@@ -224,39 +237,55 @@ class OrderDetailController extends GetxController {
     }
 
     void _rejectOrder({bool isCancel = false}) {
-        isLoading.value = true;
-        AuthImpl().get().then((auth) {
-            if (auth != null) {
-                String endpoint = isCancel ? 'v2/purchase-requests/${procurement.value.id}/cancel' : 'v2/purchase-requests/${procurement.value.id}/reject';
-                Service.push(
-                    apiKey: 'productReportApi',
-                    service: isCancel ? ListApi.cancelOrder : ListApi.rejectOrder,
-                    context: context,
-                    body: ['Bearer ${auth.token}', auth.id, endpoint, json.encode({
-                        "remarks": ""
-                    })],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar("Pesan", '${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
-                            isLoading.value = false;
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar("Pesan", exception, snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
-                            isLoading.value = false;
-                        },
-                        onTokenInvalid: () => GlobalVar.invalidResponse()
-                    )
-                );
-            } else {
-                GlobalVar.invalidResponse();
-            }
-        });
+        if (rejectReasonAreaField.getInput().isNotEmpty) {
+            isLoading.value = true;
+            AuthImpl().get().then((auth) {
+                if (auth != null) {
+                    String endpoint = isCancel ? 'v2/purchase-requests/${procurement.value.id}/cancel' : 'v2/purchase-requests/${procurement.value.id}/reject';
+                    Service.push(
+                        apiKey: 'productReportApi',
+                        service: isCancel ? ListApi.cancelOrder : ListApi.rejectOrder,
+                        context: context,
+                        body: ['Bearer ${auth.token}', auth.id, endpoint, json.encode({
+                            "remarks": rejectReasonAreaField.getInput()
+                        })],
+                        listener: ResponseListener(
+                            onResponseDone: (code, message, body, id, packet) {
+                                isLoading.value = false;
+                                Get.off(TransactionSuccessActivity(
+                                    keyPage: "order${isCancel ? 'Cancel' : 'Reject'}${procurement.value.id}",
+                                    message: isCancel ? "Kamu telah membatalkan permintaan sapronak" : "Kamu telah menolak permintaan sapronak",
+                                    showButtonHome: false,
+                                    icon: Image.asset(
+                                        "images/information_orange_icon.gif",
+                                        height: 200,
+                                        width: 200,
+                                    ),
+                                    onTapClose: () => Get.back(),
+                                    onTapHome: () {}
+                                ));
+                            },
+                            onResponseFail: (code, message, body, id, packet) {
+                                Get.snackbar("Pesan", '${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+                                isLoading.value = false;
+                            },
+                            onResponseError: (exception, stacktrace, id, packet) {
+                                Get.snackbar("Pesan", exception, snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+                                isLoading.value = false;
+                            },
+                            onTokenInvalid: () => GlobalVar.invalidResponse()
+                        )
+                    );
+                } else {
+                    GlobalVar.invalidResponse();
+                }
+            });
+        } else {
+            rejectReasonAreaField.getController().showAlert();
+        }
     }
 
-    void _generateButtonBottom() => ProfileImpl().get().then((value) => {
+    void _generateButtonBottom({bool isCanceled = false}) => ProfileImpl().get().then((value) => {
         if (isCancel.isTrue) {
             containerButtonEditAndCancel.value = SizedBox(
                 child: Container(
@@ -271,7 +300,7 @@ class OrderDetailController extends GetxController {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Expanded(
-                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnOrderSendCancel"), label: "Simpan", onClick: () => _rejectOrder(isCancel: true)),
+                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnOrderSendCancel"), label: "Simpan", onClick: () => _rejectOrder(isCancel: isCanceled)),
                                 ),
                             ]
                         )
@@ -299,7 +328,7 @@ class OrderDetailController extends GetxController {
                                 const SizedBox(width: 16),
                                 Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnOrderCancel"), label: "Batal", onClick: () {
                                     isCancel.value = true;
-                                    _generateButtonBottom();
+                                    _generateButtonBottom(isCanceled: true);
                                 }))
                             ]
                         )
@@ -323,7 +352,10 @@ class OrderDetailController extends GetxController {
                                     child: ButtonFill(controller: GetXCreator.putButtonFillController("btnOrderApprove"), label: "Setujui", onClick: () => _approveOrder()),
                                 ),
                                 const SizedBox(width: 16),
-                                Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnOrderReject"), label: "Tolak", onClick: () => _rejectOrder()))
+                                Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnOrderReject"), label: "Tolak", onClick: () {
+                                    isCancel.value = true;
+                                    _generateButtonBottom();
+                                }))
                             ]
                         )
                     )

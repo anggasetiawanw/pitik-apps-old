@@ -146,6 +146,16 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         );
     }
 
+    void refreshOrderList() {
+        if (tabController.index == 0) {
+            getListRequested();
+        } else if (tabController.index == 1) {
+            getListProcessed();
+        } else {
+            getListReceived();
+        }
+    }
+
     Widget createOrderCard({required int typePosition, Procurement? procurement}) {
         if (procurement != null) {
             bool isReceivedApproved = typePosition == 2;
@@ -167,9 +177,9 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 child: GestureDetector(
                     onTap: () {
                         if (typePosition == 0) {
-                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement]);
+                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement]);
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         }
                     },
                     child: Container(
