@@ -5,10 +5,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_data/sales_order_data_controller.dart';
 import 'package:pitik_internal_app/utils/route.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
 import 'package:pitik_internal_app/widget/common/list_card_order.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
@@ -25,26 +27,6 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
   @override
   Widget build(BuildContext context) {
     final SalesOrderController controller = Get.put(SalesOrderController(context: context));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Penjualan",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
 
     Widget bottomNavbar() {
       return Align(
@@ -72,8 +54,71 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: appBar()),
+          preferredSize: const Size.fromHeight(110),
+          child: Column(
+            children: [
+                CustomAppbar(title: "Penjualan",onBack: ()=>Navigator.of(context).pop(), isFlat: true,),
+                Container(
+                    color: AppColors.primaryOrange,
+                    padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  child: Row(
+                  children: [
+                      GestureDetector(
+                        onTap: ()=> controller.showFilter(),
+                        child: Container(
+                            height: 32,
+                            width: 32,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: AppColors.primaryLight
+                            ),
+                            child: SvgPicture.asset("images/filter_line.svg"),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: SizedBox(
+                            height: 40,
+                            child: TextField(
+                                onChanged: (text)=> controller.searchOrder(text),
+                                cursorColor: AppColors.primaryOrange,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xFFFFF9ED),
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    hintText: "Cari Data by Customer",
+                                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                                    prefixIcon: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: SvgPicture.asset("images/search_icon.svg"),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                ),
+                            ),
+                        ),
+                      ),
+                
+                  ],),
+                )
+            ],
+          )),
       body: Obx(() =>
           controller.isLoading.isTrue ? Center(
               child: SizedBox(

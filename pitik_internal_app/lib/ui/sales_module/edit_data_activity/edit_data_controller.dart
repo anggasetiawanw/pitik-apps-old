@@ -229,8 +229,7 @@ class EditDataController extends GetxController {
         getBranch();
         loadData(customer);
         for(var role in Constant.profileUser!.roles!){
-            print("role ${role!.name}");
-            if(role.name == AppStrings.sales_lead){
+            if(role!.name == AppStrings.sales_lead){
                 getSalesList();
                 isSalesLead.value = true;
             }

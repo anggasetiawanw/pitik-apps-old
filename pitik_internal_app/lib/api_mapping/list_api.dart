@@ -73,6 +73,8 @@ class ListApi {
     static const String getLatestStockOpname ="getLatestStockOpname";
     static const String getBranch ="getBranch";
     static const String login ="login";
+    static const String editUser ="editUser";
+    static const String getListOrdersFilter ="getListOrdersFilter";
 
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
@@ -242,5 +244,9 @@ class ListApi {
     }
     static String pathCancelDeliveryOrder(String orderId) {
         return "v2/sales/sales-orders/$orderId/ready-to-deliver/cancel";
+    }
+
+    static String pathEditUser(String userId) {
+        return "/v2/fms-users/$userId/branch";
     }
 }
