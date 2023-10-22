@@ -557,8 +557,8 @@ class NewDataSalesOrderController extends GetxController{
         Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));

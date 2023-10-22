@@ -49,12 +49,47 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
       );
     }
 
+    Widget filterList(){
+        List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+        return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: listFilter.length,
+            itemBuilder: (context, index) {
+                if (listFilter[index].value.isEmpty) {
+                    return const SizedBox();
+                }
+                return Container(
+                    height: 32,
+                    margin: const EdgeInsets.only(right: 8,top:8, bottom: 8),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: AppColors.bgAbu
+                    ),
+                    child: Row(
+                        children: [
+                            Text(
+                                listFilter[index].value,
+                                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                            ),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                                onTap: ()=> controller.removeOneFilter(listFilter[index].key)  ,
+                                child: const Icon(Icons.close, size: 16, color: AppColors.primaryOrange),
+                            )
+                        ],
+                    ),
+                );
+            }
+        );
+    }
 
 
-    return Scaffold(
+
+    return Obx(()=>Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(110),
+          preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? 160: 110),
           child: Column(
             children: [
                 CustomAppbar(title: "Penjualan",onBack: ()=>Navigator.of(context).pop(), isFlat: true,),
@@ -64,7 +99,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                   child: Row(
                   children: [
                       GestureDetector(
-                        onTap: ()=> controller.showFilter(),
+                        onTap: ()=> controller.openFilter(),
                         child: Container(
                             height: 32,
                             width: 32,
@@ -81,6 +116,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                         child: SizedBox(
                             height: 40,
                             child: TextField(
+                                controller: controller.searchController,
                                 onChanged: (text)=> controller.searchOrder(text),
                                 cursorColor: AppColors.primaryOrange,
                                 decoration: InputDecoration(
@@ -114,9 +150,9 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                             ),
                         ),
                       ),
-                
                   ],),
-                )
+                ),
+                Obx(() => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? Expanded(child: filterList()):const SizedBox(),)
             ],
           )),
       body: Obx(() =>
@@ -131,7 +167,9 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
             )
               : Stack(
         children: [
-          controller.orderList.value.isEmpty
+        controller.isLoadData.isTrue ? const Center(
+                      child: ProgressLoading()
+                  ): controller.orderList.value.isEmpty
               ? Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: Center(
@@ -148,7 +186,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                     thumbColor: AppColors.primaryOrange,
                     radius: const Radius.circular(8),
                     child: RefreshIndicator(
-                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.getListOrder()),
+                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
                         color: AppColors.primaryOrange,
                         child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
@@ -196,7 +234,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
           bottomNavbar(),
         ],
       ),
-    ));
+    )));
   }
 }
 
