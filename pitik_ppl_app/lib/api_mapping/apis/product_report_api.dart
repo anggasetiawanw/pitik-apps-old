@@ -349,4 +349,61 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void purchaseRequestUpdate(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
+    /// The function `cancelOrder` is used to send a PATCH request to cancel an
+    /// order with the provided authorization, X-ID, path, and data.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the protected
+    /// resource. It is typically used to authenticate the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header value.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be modified or updated. It is typically used in
+    /// combination with the HTTP PATCH method to partially update an existing
+    /// resource.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// associated with the request. It is typically used to pass additional
+    /// information or payload to the server.
+    @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void cancelOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
+    /// The function `rejectOrder` is used to send a PATCH request with path
+    /// parameters and headers, and it expects a JSON response.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token for the request. It
+    /// is typically used to authenticate the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header value.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be updated or modified. It is typically used in PATCH
+    /// requests to identify the specific resource that needs to be modified.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// to be used for the PATCH request.
+    @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void rejectOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
+    /// The function `approvalOrder` is a PATCH request that requires authorization
+    /// and an ID header, and it takes a path parameter and an empty body.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token for the request. It
+    /// is typically used to authenticate the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID value. It is typically used for identification or authentication
+    /// purposes.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be updated or modified. It is typically used in PATCH
+    /// requests to identify the specific resource that needs to be updated.
+    ///   emptyBody (String): The `emptyBody` parameter is a string that represents
+    /// the body of the request. It is used to send an empty body in the request.
+    @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void approvalOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("emptyBody") String emptyBody) {}
+
 }

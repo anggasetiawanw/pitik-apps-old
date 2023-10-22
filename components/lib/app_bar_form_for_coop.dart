@@ -9,7 +9,8 @@ import 'global_var.dart';
 class AppBarFormForCoop extends StatelessWidget {
     String title;
     Coop coop;
-    AppBarFormForCoop({super.key, required this.title, required this.coop});
+    bool hideCoopDetail;
+    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false});
 
     @override
     Widget build(BuildContext context) {
@@ -34,10 +35,18 @@ class AppBarFormForCoop extends StatelessWidget {
                             const SizedBox()
                         ],
                     ),
-                    const SizedBox(height: 16),
-                    Text(coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
-                    const SizedBox(height: 6),
-                    Text('DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white))
+                    hideCoopDetail ? const SizedBox() : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                            const SizedBox(height: 16),
+                            Text(coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
+                            const SizedBox(height: 6),
+                            Text(
+                                'DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
+                                style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)
+                            )
+                        ],
+                    )
                 ],
             ),
         );

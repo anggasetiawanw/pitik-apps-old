@@ -1,6 +1,5 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, must_be_immutable, use_key_in_widget_constructors, annotate_overrides, overridden_fields
 
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ import 'suggest_field_controller.dart';
 class SuggestField extends StatelessWidget {
 
     SuggestFieldController controller;
-    GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
     int id;
     String label;
@@ -93,8 +91,9 @@ class SuggestField extends StatelessWidget {
                                                 onSubmitted(text);
                                             },
                                             fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                                                controller.textEditingController.value = textEditingController;
                                                 return TextFormField(
-                                                    controller: textEditingController,
+                                                    controller: controller.textEditingController.value,
                                                     focusNode: focusNode,
                                                     onFieldSubmitted: (str) => onFieldSubmitted(),
                                                     decoration: InputDecoration(

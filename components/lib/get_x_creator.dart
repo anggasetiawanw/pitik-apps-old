@@ -15,6 +15,7 @@ import 'card_camera/card_camera_controller.dart';
 import 'card_floor/card_floor_controller.dart';
 import 'card_sensor/card_sensor_controller.dart';
 import 'date_time_field/datetime_field_controller.dart';
+import 'edit_area_field/edit_area_field_controller.dart';
 import 'edit_field/edit_field_controller.dart';
 import 'edit_field_qr/edit_field_qrcode_controller.dart';
 import 'expandable/expandable_controller.dart';
@@ -42,6 +43,10 @@ class GetXCreator {
 
     static EditFieldController putEditFieldController(String tag) {
         return Get.put(EditFieldController(tag: tag), tag: tag);
+    }
+
+    static EditAreaFieldController putEditAreaFieldController(String tag) {
+        return Get.put(EditAreaFieldController(tag: tag), tag: tag);
     }
 
     static PasswordFieldController putPasswordFieldController(String tag) {

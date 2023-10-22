@@ -1,5 +1,6 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /**
@@ -12,6 +13,8 @@ class SuggestFieldController<T> extends GetxController {
 
     String tag;
     SuggestFieldController({required this.tag});
+
+    Rx<TextEditingController> textEditingController = (TextEditingController()).obs;
 
     RxList<T?> listObject = <T?>[].obs;
     T? selectedObject;
@@ -27,9 +30,28 @@ class SuggestFieldController<T> extends GetxController {
     void visibleLabel() => hideLabel.value = false;
     void invisibleLabel() => hideLabel.value = true;
     void setupObjects(List<T?> data) => listObject.value = data;
-    void generateItems(List<String> data) => suggestList.value = data;
+    void generateItems(List<String> data) {
+        suggestList.clear();
+        suggestList.addAll(data);
+        suggestList.refresh();
+    }
     void addItems(String data) => suggestList.add(data);
     T? getSelectedObject() => selectedObject;
+    void setSelectedObject(String textSelected) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+            int index = 0;
+            for (var element in suggestList) {
+                if (element == textSelected && listObject.isNotEmpty) {
+                    textEditingController.value.text = element;
+                    if (listObject.isNotEmpty) {
+                        selectedObject = listObject[index];
+                    }
+                }
+
+                index++;
+            }
+        });
+    }
 }
 
 class SuggestFieldBinding extends Bindings {
