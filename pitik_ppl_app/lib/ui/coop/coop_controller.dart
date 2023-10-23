@@ -102,6 +102,14 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         coopFilteredList.clear();
     }
 
+    void _refreshCoopList() {
+        if (tabController.index == 0) {
+            generateCoopList(true);
+        } else {
+            generateCoopList(false);
+        }
+    }
+
     void generateCoopList(bool isCoopActive) {
         isLoading.value = true;
         _clearCoopList();
@@ -142,7 +150,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
             if (coop.isNew != null && coop.isNew!) {
                 _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: false);
             } else {
-                Get.toNamed(RoutePage.coopDashboard, arguments: [coop]);
+                Get.toNamed(RoutePage.coopDashboard, arguments: [coop])!.then((value) => _refreshCoopList());
             }
         } else {
             _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: true);
@@ -195,7 +203,10 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                     label: "Order",
                                     isHaveIcon: true,
                                     imageAsset: 'images/document_icon.svg',
-                                    onClick: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, isRestCoop])
+                                    onClick: () {
+                                        Get.back();
+                                        Get.toNamed(RoutePage.listOrderPage, arguments: [coop, isRestCoop])!.then((value) => _refreshCoopList());
+                                    }
                                 )
                             ),
                             ButtonOutline(
@@ -204,12 +215,11 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 isHaveIcon: true,
                                 imageAsset: 'images/calendar_check_icon.svg',
                                 onClick: () {
-                                    // TO ORDER PAGE
                                     Get.back();
                                     if(isRestCoop){
-                                        Get.toNamed(RoutePage.reqDocInPage, arguments: coop)!.then((value) => generateCoopList(false));
+                                        Get.toNamed(RoutePage.reqDocInPage, arguments: coop)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
                                     } else {
-                                        Get.toNamed(RoutePage.docInPage, arguments: coop)!.then((value) => generateCoopList(true));
+                                        Get.toNamed(RoutePage.docInPage, arguments: coop)!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
                                     }
                                 }
                             ),

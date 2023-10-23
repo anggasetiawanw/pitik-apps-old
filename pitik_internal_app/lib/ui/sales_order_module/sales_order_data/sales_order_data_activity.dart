@@ -5,10 +5,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_data/sales_order_data_controller.dart';
 import 'package:pitik_internal_app/utils/route.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
 import 'package:pitik_internal_app/widget/common/list_card_order.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
@@ -25,26 +27,6 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
   @override
   Widget build(BuildContext context) {
     final SalesOrderController controller = Get.put(SalesOrderController(context: context));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Penjualan",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
 
     Widget bottomNavbar() {
       return Align(
@@ -67,13 +49,112 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
       );
     }
 
+    Widget filterList(){
+        List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+        return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: listFilter.length,
+            itemBuilder: (context, index) {
+                if (listFilter[index].value.isEmpty) {
+                    return const SizedBox();
+                }
+                return Container(
+                    height: 32,
+                    margin: const EdgeInsets.only(right: 8,top:8, bottom: 8),
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: AppColors.bgAbu
+                    ),
+                    child: Row(
+                        children: [
+                            Text(
+                                listFilter[index].value,
+                                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                            ),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                                onTap: ()=> controller.removeOneFilter(listFilter[index].key)  ,
+                                child: const Icon(Icons.close, size: 16, color: AppColors.primaryOrange),
+                            )
+                        ],
+                    ),
+                );
+            }
+        );
+    }
 
 
-    return Scaffold(
+
+    return Obx(()=>Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: appBar()),
+          preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? 160: 110),
+          child: Column(
+            children: [
+                CustomAppbar(title: "Penjualan",onBack: ()=>Navigator.of(context).pop(), isFlat: true,),
+                Container(
+                    color: AppColors.primaryOrange,
+                    padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  child: Row(
+                  children: [
+                      GestureDetector(
+                        onTap: ()=> controller.openFilter(),
+                        child: Container(
+                            height: 32,
+                            width: 32,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: AppColors.primaryLight
+                            ),
+                            child: SvgPicture.asset("images/filter_line.svg"),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: SizedBox(
+                            height: 40,
+                            child: TextField(
+                                controller: controller.searchController,
+                                onChanged: (text)=> controller.searchOrder(text),
+                                cursorColor: AppColors.primaryOrange,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xFFFFF9ED),
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    hintText: "Cari Data by Customer",
+                                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                                    prefixIcon: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: SvgPicture.asset("images/search_icon.svg"),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
+                                    ),
+                                ),
+                            ),
+                        ),
+                      ),
+                  ],),
+                ),
+                Obx(() => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? Expanded(child: filterList()):const SizedBox(),)
+            ],
+          )),
       body: Obx(() =>
           controller.isLoading.isTrue ? Center(
               child: SizedBox(
@@ -86,7 +167,9 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
             )
               : Stack(
         children: [
-          controller.orderList.value.isEmpty
+        controller.isLoadData.isTrue ? const Center(
+                      child: ProgressLoading()
+                  ): controller.orderList.value.isEmpty
               ? Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: Center(
@@ -103,7 +186,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                     thumbColor: AppColors.primaryOrange,
                     radius: const Radius.circular(8),
                     child: RefreshIndicator(
-                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.getListOrder()),
+                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
                         color: AppColors.primaryOrange,
                         child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
@@ -151,7 +234,7 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
           bottomNavbar(),
         ],
       ),
-    ));
+    )));
   }
 }
 

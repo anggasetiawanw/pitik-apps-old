@@ -12,5 +12,6 @@ class AppColors {
     static const Color iconHomeBg = Color(0xFFFFF6ED);
     static const Color headerSku = Color(0xFFFDDAA5);
     static const Color outlineColor = Color(0xFFF0F0F0);
+    static const Color bgAbu = Color(0xFFFAFAFA);
 }
 

@@ -27,18 +27,6 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
     BuildContext context;
     ListOrderController({required this.context});
 
-    static const String DIKIRIM = "Dikirim";
-    static const String SEBAGIAN = "Sebagian";
-    static const String LENGKAP = "Lengkap";
-    static const String PENGAJUAN = "Pengajuan";
-    static const String DISETUJUI = "Disetujui";
-    static const String DITERIMA = "Diterima";
-    static const String DIPROSES = "Diproses";
-    static const String DITOLAK = "Ditolak";
-    static const String SUBMITTED = "Diajukan";
-    static const String ABORT = "Dibatalkan";
-    static const String NEED_APPROVAL = "Perlu Persetujuan";
-
     late TabController tabController;
     late Coop coop;
     late bool fromCoopRest;
@@ -126,21 +114,21 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
     }
     
     Widget _getStatusOrderWidget({required int tabPosition, required String statusText}) {
-        Color background = statusText == PENGAJUAN || statusText == SEBAGIAN || statusText == NEED_APPROVAL || statusText == SUBMITTED ? GlobalVar.primaryLight2 :
-                           statusText == DIPROSES ? GlobalVar.primaryLight3 :
-                           statusText == DITOLAK || statusText == ABORT ? GlobalVar.redBackground :
-                           statusText == LENGKAP || statusText == DITERIMA ? GlobalVar.greenBackground:
-                           statusText == DIKIRIM || statusText == DISETUJUI ? GlobalVar.blueBackground :
+        Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SEBAGIAN || statusText == GlobalVar.NEED_APPROVAL || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryLight2 :
+                           statusText == GlobalVar.DIPROSES ? GlobalVar.primaryLight3 :
+                           statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.redBackground :
+                           statusText == GlobalVar.LENGKAP || statusText == GlobalVar.DITERIMA ? GlobalVar.greenBackground:
+                           statusText == GlobalVar.DIKIRIM || statusText == GlobalVar.DISETUJUI ? GlobalVar.blueBackground :
                            Colors.white;
 
-        Color textColor = statusText == PENGAJUAN || statusText == SEBAGIAN || statusText == NEED_APPROVAL || statusText == SUBMITTED ? GlobalVar.primaryOrange :
-                          statusText == DIPROSES ? GlobalVar.yellow :
-                          statusText == DITOLAK || statusText == ABORT ? GlobalVar.red :
-                          statusText == LENGKAP || statusText == DITERIMA ? GlobalVar.green:
-                          statusText == DIKIRIM || statusText == DISETUJUI ? GlobalVar.blue :
+        Color textColor = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SEBAGIAN || statusText == GlobalVar.NEED_APPROVAL || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryOrange :
+                          statusText == GlobalVar.DIPROSES ? GlobalVar.yellow :
+                          statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.red :
+                          statusText == GlobalVar.LENGKAP || statusText == GlobalVar.DITERIMA ? GlobalVar.green:
+                          statusText == GlobalVar.DIKIRIM || statusText == GlobalVar.DISETUJUI ? GlobalVar.blue :
                           Colors.white;
 
-        if (statusText == DISETUJUI && tabPosition == 0) {
+        if (statusText == GlobalVar.DISETUJUI && tabPosition == 0) {
             background = GlobalVar.greenBackground;
             textColor = GlobalVar.green;
         }
@@ -156,6 +144,16 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: textColor)
             ),
         );
+    }
+
+    void refreshOrderList() {
+        if (tabController.index == 0) {
+            getListRequested();
+        } else if (tabController.index == 1) {
+            getListProcessed();
+        } else {
+            getListReceived();
+        }
     }
 
     Widget createOrderCard({required int typePosition, Procurement? procurement}) {
@@ -179,16 +177,16 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 child: GestureDetector(
                     onTap: () {
                         if (typePosition == 0) {
-                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop]);
+                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop]);
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         }
                     },
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            border: Border.fromBorderSide(BorderSide(width: 2, color: GlobalVar.grayBackground)),
+                            border: Border.fromBorderSide(BorderSide(width: 2, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Column(
@@ -247,6 +245,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         );
 
         showModalBottomSheet(
+            backgroundColor: Colors.white,
             useSafeArea: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -262,7 +261,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                     padding: const EdgeInsets.all(20),
                     child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        child: Wrap(
+                        child: Column(
                             children: [
                                 Center(
                                     child: Container(
@@ -279,7 +278,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                 untilDateField,
                                 typeField,
                                 const SizedBox(height: 50),
-                                ButtonFill(controller: GetXCreator.putButtonFillController("btnFilterOrderList"), label: "Kondirmasi Filter", onClick: () {
+                                ButtonFill(controller: GetXCreator.putButtonFillController("btnFilterOrderList"), label: "Konfirmasi Filter", onClick: () {
                                     bool isPass = true;
 
                                     if (fromDateField.getController().textSelected.isEmpty) {

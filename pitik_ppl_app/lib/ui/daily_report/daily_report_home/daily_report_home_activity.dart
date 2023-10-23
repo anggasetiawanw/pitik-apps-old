@@ -8,14 +8,10 @@ import 'package:pitik_ppl_app/widget/common/custom_appbar.dart';
 import 'package:pitik_ppl_app/widget/common/status_daily.dart';
 
 class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
-  const DailyReportHomeActivity
-({super.key});
+  const DailyReportHomeActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    
-
     Widget listCard(){
         return GestureDetector(
             onTap: (){
@@ -62,6 +58,7 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
     }
 
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(preferredSize: const Size.fromHeight(40), child: CustomAppbar(title: "Laporan Harian",isFlat: true, onBack: (){
             Get.back();
             },)

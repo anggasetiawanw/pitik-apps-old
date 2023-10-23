@@ -35,32 +35,30 @@ class SpinnerField extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        Future.delayed(const Duration(milliseconds: 200), () {
-            if (onInit) {
-                controller.hideLabel.value = hideLabel;
-                controller.generateItems(items);
-                items.forEach((key, value) {
-                    if (value) {
-                        controller.setTextSelected(key);
+        if (onInit) {
+            controller.hideLabel.value = hideLabel;
+            controller.generateItems(items);
+            items.forEach((key, value) {
+                if (value) {
+                    controller.setTextSelected(key);
 
-                        int index = 0;
-                        items.forEach((label, value) {
-                            if (key == label) {
-                                controller.selectedIndex = index;
+                    int index = 0;
+                    items.forEach((label, value) {
+                        if (key == label) {
+                            controller.selectedIndex = index;
 
-                                // for selected object
-                                if (controller.listObject.isNotEmpty) {
-                                    controller.selectedObject = controller.listObject[controller.selectedIndex];
-                                }
+                            // for selected object
+                            if (controller.listObject.isNotEmpty) {
+                                controller.selectedObject = controller.listObject[controller.selectedIndex];
                             }
-                            index++;
-                        });
-                    }
-                });
+                        }
+                        index++;
+                    });
+                }
+            });
 
-                onInit = false;
-            }
-        });
+            onInit = false;
+        }
 
         final labelField = Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -104,8 +102,8 @@ class SpinnerField extends StatelessWidget {
                                         onTap: () => Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
                                                         duration: const Duration(seconds: 5),
                                                         colorText: Colors.white,
-                                                        backgroundColor: Colors.red,),
-                                        child: createDropdown(),
+                                                        backgroundColor: Colors.red),
+                                        child: createDropdown()
                                     )
                                 ),
                                 controller.showTooltip.isTrue ?
@@ -119,7 +117,7 @@ class SpinnerField extends StatelessWidget {
                                             ),
                                             Text(
                                                 controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12)
                                             )
                                         ]
                                     )
@@ -167,12 +165,12 @@ class SpinnerField extends StatelessWidget {
                                     child: const SizedBox(
                                         width: 24,
                                         height: 24,
-                                        child: CircularProgressIndicator(color: GlobalVar.primaryOrange,)),
+                                        child: CircularProgressIndicator(color: GlobalVar.primaryOrange)),
                                 ) : Container(),
                                 controller.activeField.isTrue
                                     ? controller.isShowList.isTrue? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
                                     : SvgPicture.asset("images/arrow_disable.svg"),
-                                const SizedBox(width: 16,)
+                                const SizedBox(width: 16)
                             ]
                         )
                     )

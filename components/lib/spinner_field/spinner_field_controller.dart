@@ -76,6 +76,27 @@ class SpinnerFieldController<T> extends GetxController {
     void generateWeight(Map<String, double> data) => weightItems.value = data;
     void addItems(String value, bool isActive) => items.value.putIfAbsent(value, () => isActive);
     T? getSelectedObject() => selectedObject;
+    void setSelected(String textSelected) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+            int index = 0;
+            items.value.forEach((key, value) {
+                if (key == textSelected) {
+                    setTextSelected(key);
+                    selectedIndex = index;
+                    items.value[key] = true;
+
+                    // for selected object
+                    if (listObject.isNotEmpty) {
+                        selectedObject = listObject[selectedIndex];
+                    }
+                } else {
+                    items.value[key] = false;
+                }
+
+                index++;
+            });
+        });
+    }
 
     @override
     void onClose() {
@@ -83,7 +104,7 @@ class SpinnerFieldController<T> extends GetxController {
         focusNode.dispose();
     }
 
-    
+
 }
 
 class SpinnerFieldBinding extends Bindings {

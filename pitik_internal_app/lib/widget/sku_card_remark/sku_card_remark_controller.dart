@@ -233,7 +233,7 @@ class SkuCardRemarkController extends GetxController{
             return [isValid, error];
         }
 
-        if(spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS){
+        if(spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.LIVE_BIRD){
             if (editFieldJumlahAyam.value[whichItem].getInput().isEmpty) {
                 editFieldJumlahAyam.value[whichItem].controller.showAlert();
                 Scrollable.ensureVisible(editFieldJumlahAyam.value[whichItem].controller.formKey.currentContext!);

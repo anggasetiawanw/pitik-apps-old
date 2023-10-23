@@ -13,14 +13,19 @@ import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
+import 'package:pitik_ppl_app/route.dart';
+
+import '../../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -33,6 +38,8 @@ class OrderRequestController extends GetxController {
     late Coop coop;
     late bool isEdit = false;
     late bool fromCoopRest;
+    late Procurement procurement;
+    late bool isOwnFarm = false;
 
     late DateTimeField orderDateField;
     late SpinnerField orderTypeField;
@@ -66,6 +73,7 @@ class OrderRequestController extends GetxController {
         coop = Get.arguments[0];
         isEdit = Get.arguments[1];
         fromCoopRest = Get.arguments[2];
+        isOwnFarm = coop.isOwnFarm != null && coop.isOwnFarm!;
 
         orderDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("orderDateField"), label: "Tanggal Order", hint: "20/02/2022", alertText: "Tanggal Order harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getDay(dateTime)}/${Convert.getMonthNumber(dateTime)}/${Convert.getYear(dateTime)}')
@@ -306,6 +314,65 @@ class OrderRequestController extends GetxController {
         _getCoopTarget();
     }
 
+    void _initializeFillForm() {
+        // fill delivery date
+        DateTime dateTime = Convert.getDatetime(procurement.deliveryDate!);
+        orderDateField.getController().setTextSelected('${Convert.getDay(dateTime)}/${Convert.getMonthNumber(dateTime)}/${Convert.getYear(dateTime)}');
+
+        // fill order type
+        orderTypeField.getController().setSelected(procurement.type == 'pakan' ? 'Pakan' : 'OVK');
+        orderTypeField.getController().disable();
+        isFeed.value = procurement.type == 'pakan';
+
+        // fill list order product
+        if (isFeed.value) {
+            // fill merged logistic
+            orderMultipleLogisticField.getController().setSelected(procurement.mergedLogistic != null && procurement.mergedLogistic! ? "Ya" : "Tidak");
+            orderCoopTargetLogisticField.getController().setSelectedObject(procurement.mergedLogisticCoopName == null ? "" : procurement.mergedLogisticCoopName!);
+            isMerge.value = procurement.mergedLogistic != null && procurement.mergedLogistic!;
+
+            // fill list product
+            for (var product in procurement.details) {
+                feedMultipleFormField.getController().addData(
+                    child: _createChildAdded(getFeedProductName(product: product), getFeedQuantity(product: product)),
+                    object: product,
+                    key: getFeedProductName(product: product)
+                );
+            }
+        } else {
+            if (isOwnFarm) {
+                // fill list product VENDOR
+                for (var product in procurement.details) {
+                    ovkVendorMultipleFormField.getController().addData(
+                        child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product)),
+                        object: product,
+                        key: getOvkProductName(product: product)
+                    );
+                }
+
+                // fill list product UNIT
+                if (procurement.internalOvkTransferRequest != null) {
+                    for (var product in procurement.internalOvkTransferRequest!.details) {
+                        ovkUnitMultipleFormField.getController().addData(
+                            child: _createChildAdded(getOvkUnitProductName(product: product), getOvkUnitQuantity(product: product)),
+                            object: product,
+                            key: getOvkUnitProductName(product: product)
+                        );
+                    }
+                }
+            } else {
+                // fill list product
+                for (var product in procurement.details) {
+                    ovkMultipleFormField.getController().addData(
+                        child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product)),
+                        object: product,
+                        key: getOvkProductName(product: product)
+                    );
+                }
+            }
+        }
+    }
+
     Row _createChildAdded(String productName, String quantity) {
         return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -373,6 +440,7 @@ class OrderRequestController extends GetxController {
             }
             if (orderMultipleLogisticField.getController().selectedIndex == 0 && orderCoopTargetLogisticField.getController().selectedObject == null) {
                 orderCoopTargetLogisticField.getController().showAlert();
+                isPass  = false;
             }
             if (feedMultipleFormField.getController().listObjectAdded.isEmpty) {
                 Get.snackbar(
@@ -384,7 +452,7 @@ class OrderRequestController extends GetxController {
                 );
                 isPass  = false;
             }
-        } else if (coop.isOwnFarm != null && coop.isOwnFarm!) {
+        } else if (isOwnFarm) {
             if (ovkVendorMultipleFormField.getController().listObjectAdded.isEmpty && ovkUnitMultipleFormField.getController().listObjectAdded.isEmpty) {
                 Get.snackbar(
                     "Pesan",
@@ -492,7 +560,7 @@ class OrderRequestController extends GetxController {
                                         ),
                                     )
                                 ] else ...[
-                                    if (coop.isOwnFarm != null && coop.isOwnFarm!) ...[
+                                    if (isOwnFarm) ...[
                                         if (ovkVendorMultipleFormField.getController().listObjectAdded.isNotEmpty) ...[
                                             const SizedBox(height: 16),
                                             Text('Total OVK Vendor', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
@@ -585,19 +653,63 @@ class OrderRequestController extends GetxController {
                                                 child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeOrderRequest"), label: "Yakin", onClick: () {
                                                     Navigator.pop(Get.context!);
                                                     isLoading.value = true;
-                                                    AuthImpl().get().then((auth) => {
+                                                    AuthImpl().get().then((auth) {
                                                         if (auth != null) {
-                                                            if (isEdit) {
-                                                                _pushPurchaseRequestToServer(ListApi.updateOrderRequest, ['Bearer ${auth.token}', auth.id, {
+                                                            String requestedDate = '${Convert.getYear(orderDateField.getLastTimeSelected())}-${Convert.getMonthNumber(orderDateField.getLastTimeSelected())}-${Convert.getDay(orderDateField.getLastTimeSelected())}';
+                                                            Procurement requestBody = Procurement(
+                                                                type: isFeed ? "pakan" : "ovk",
+                                                                coopId: coop.id,
+                                                                farmingCycleId: coop.farmingCycleId,
+                                                                requestSchedule: requestedDate
+                                                            );
 
-                                                                }])
+                                                            if (isFeed) {
+                                                                requestBody.mergedLogistic = orderMultipleLogisticField.getController().textSelected.value == "Ya";
+                                                                requestBody.mergedCoopId = orderMultipleLogisticField.getController().textSelected.value == "Ya" ? (orderCoopTargetLogisticField.getController().selectedObject as Coop).id : null;
+                                                            }
+
+                                                            if (isOwnFarm) {
+                                                                if (ovkUnitMultipleFormField.getController().listObjectAdded.isNotEmpty) {
+                                                                    Procurement internalRequest = Procurement(
+                                                                        coopSourceId: "",
+                                                                        coopTargetId: coop.id,
+                                                                        branchSourceId: "",
+                                                                        branchTargetId: "",
+                                                                        subcategoryCode: "",
+                                                                        subcategoryName: "",
+                                                                        productName: "productName",
+                                                                        quantity: 1.0,
+                                                                        notes: "",
+                                                                        logisticOption: "DisediakanProcurement",
+                                                                        type: isFeed ? "pakan" : "ovk",
+                                                                        details: ovkUnitMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
+                                                                        farmingCycleId: coop.farmingCycleId,
+                                                                        datePlanned: requestedDate,
+                                                                        photos: const []
+                                                                    );
+
+                                                                    requestBody.internalOvkTransferRequest = internalRequest;
+                                                                }
+
+                                                                requestBody.details = isFeed ? feedMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>() :
+                                                                                      ovkVendorMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>();
                                                             } else {
-                                                                _pushPurchaseRequestToServer(fromCoopRest ? ListApi.saveOrderRequestForCoopRest : ListApi.saveOrderRequest, ['Bearer ${auth.token}', auth.id, {
+                                                                requestBody.details = isFeed ? feedMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>() :
+                                                                                      ovkMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>();
+                                                            }
 
-                                                                }])
+                                                            if (isEdit) {
+                                                                _pushPurchaseRequestToServer(ListApi.updateOrderRequest, [
+                                                                    'Bearer ${auth.token}',
+                                                                    auth.id,
+                                                                    '${fromCoopRest ? "v2/purchase-requests/sapronak-doc-in/" : "v2/purchase-requests/"}${procurement.id}',
+                                                                    Mapper.asJsonString(requestBody)
+                                                                ]);
+                                                            } else {
+                                                                _pushPurchaseRequestToServer(fromCoopRest ? ListApi.saveOrderRequestForCoopRest : ListApi.saveOrderRequest, ['Bearer ${auth.token}', auth.id, Mapper.asJsonString(requestBody)]);
                                                             }
                                                         } else {
-                                                            GlobalVar.invalidResponse()
+                                                            GlobalVar.invalidResponse();
                                                         }
                                                     });
                                                 }),
@@ -626,8 +738,14 @@ class OrderRequestController extends GetxController {
             body: body,
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-
                     isLoading.value = false;
+                    Get.off(TransactionSuccessActivity(
+                        keyPage: "orderSaved",
+                        message: "Kamu telah berhasil melakukan pengajuan permintaan sapronak",
+                        showButtonHome: false,
+                        onTapClose: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, fromCoopRest]),
+                        onTapHome: () {}
+                    ));
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;
@@ -686,6 +804,11 @@ class OrderRequestController extends GetxController {
                                 )
                             );
                             orderCoopTargetLogisticField.getController().setupObjects((body as CoopListResponse).data);
+
+                            if (Get.arguments.length > 3) {
+                                procurement = Get.arguments[3];
+                                _initializeFillForm();
+                            }
                             isLoading.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) => isLoading.value = false,
@@ -887,7 +1010,7 @@ class OrderRequestController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -895,7 +1018,7 @@ class OrderRequestController extends GetxController {
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
         } else {
             return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         }
@@ -903,7 +1026,7 @@ class OrderRequestController extends GetxController {
 
     String getOvkUnitQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${ovkUnitQuantityField.getController().textUnit.value}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
         } else {
             return '${ovkUnitQuantityField.getInputNumber() == null ? '' : ovkUnitQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkUnitQuantityField.getController().textUnit.value}';
         }

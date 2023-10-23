@@ -366,6 +366,39 @@ class API {
     /// of results that should be returned in a single page of the sales order list.
     @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
     void getListOrders(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusDraft, @Query("status") String statusConfirmed, @Query("status") String statusBooked, @Query("status") String statusReadyDeliver, @Query("status") String statusDelivered, @Query("status") String statusCancel,@Query("status") String statusRejected,@Query("status") String statusOnDelivery) {}
+    
+    /// This is a Dart function that sends a GET request to retrieve a list of sales
+    /// orders with authorization, X-ID, page, and limit parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The authorization header is used to authenticate
+    /// the user making the API request. It typically contains a token or other
+    /// credentials that are used to verify the user's identity and permissions.
+    ///   xId (String): "xId" is a custom header parameter that is used to identify
+    /// a specific user or client making the API request. It is usually used for
+    /// tracking and auditing purposes.
+    ///   page (int): The "page" parameter is used to specify the page number of the
+    /// results to be returned. This is typically used in conjunction with the
+    /// "limit" parameter to paginate through a large set of results.
+    ///   limit (int): The "limit" parameter is used to specify the maximum number
+    /// of results that should be returned in a single page of the sales order list.
+    @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
+    void getListOrdersFilter(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, 
+    @Query("customerId") String customerId,
+    @Query("salesPersonId") String salesPersonId,
+    @Query("driverId") String driverId,
+    @Query("status") String status,
+    @Query("code") String code,
+    @Query("sameBranch") bool sameBranch,
+    @Query("withinProductionTeam") bool withinProductionTeam,
+    @Query("customerCityId") int customerCityId,
+    @Query("customerProvinceId") int customerProvinceId,
+    @Query("customerName") String customerName,
+    @Query("date") String date,
+    @Query("minQuantityRange") int minQuantityRange,
+    @Query("maxRangeQuantity") int maxRangeQuantity,
+    @Query("createdBy") String createdBy,
+    ) {}
 
     /// This is a Dart function that makes a GET request to retrieve a list of
     /// customer responses and error responses related to sales operations.
@@ -776,4 +809,9 @@ class API {
 
     @GET(value: "v2/branches", as: ListBranchResponse, error: ErrorResponse)
     void getBranch(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId,){}
+
+    @JSON(isPlaint: true)
+    @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
+    void editUser(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+
 }
