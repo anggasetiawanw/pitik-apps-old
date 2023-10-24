@@ -751,6 +751,7 @@ class SalesOrderController extends GetxController {
   }
 
   void pullRefresh() {
+    orderList.value.clear();
     if (isSearch.isTrue) {
       page.value = 1;
       isLoadData.value = true;
