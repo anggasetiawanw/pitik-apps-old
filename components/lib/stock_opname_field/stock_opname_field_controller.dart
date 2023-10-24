@@ -22,7 +22,7 @@ class StockOpnameFieldController extends GetxController {
     void generateEf(Products product){
         product.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
         for (var element in product.productItems!) {
-            efSku.value.add(EditField(controller: GetXCreator.putEditFieldController(element!.name!), label: "${element.name!}*", hint: "0", alertText: "Kolom ini harus di isi", textUnit: product.quantityUOM?? product.weightUOM!, maxInput: 50, onTyping: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
+            efSku.value.add(EditField(controller: GetXCreator.putEditFieldController(element!.name!), label: element.name!, hint: "0", alertText: "Kolom ini harus di isi", textUnit: product.quantityUOM?? product.weightUOM!, maxInput: 50, onTyping: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
             efSku.refresh();
         }
     }

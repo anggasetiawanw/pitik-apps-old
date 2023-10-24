@@ -1,5 +1,7 @@
 // ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors
 
+import 'dart:io';
+
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +68,11 @@ class EditFieldTwoRow extends StatelessWidget {
     }
     @override
     Widget build(BuildContext context) {
+        if(Platform.isIOS){
+            if(inputType == TextInputType.number){
+                inputType = const TextInputType.numberWithOptions(decimal: true);
+            }
+        }
         final labelField = SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
