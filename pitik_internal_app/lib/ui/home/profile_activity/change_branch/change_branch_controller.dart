@@ -113,6 +113,7 @@ class ChangeBranchController extends GetxController {
             if (auth != null){
                 isLoading.value = true,
                 Service.push(
+                    apiKey: ApiMapping.userApi,
                     service: ListApi.editUser,
                     context: context,
                     body: [
