@@ -108,11 +108,12 @@ class ChangeBranchController extends GetxController {
     void changeBranch(){
         Branch? branchSelected = listBranch.value.firstWhere((element) => element!.name == spBranch.controller.textSelected.value);
         Customer customer = Customer();
-        customer.branchId = branchSelected!.id;
+        customer.branchId = branchSelected?.id;
         AuthImpl().get().then((auth) => {
             if (auth != null){
                 isLoading.value = true,
                 Service.push(
+                    apiKey: ApiMapping.userApi,
                     service: ListApi.editUser,
                     context: context,
                     body: [

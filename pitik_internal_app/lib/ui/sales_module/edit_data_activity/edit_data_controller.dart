@@ -793,7 +793,7 @@ class EditDataController extends GetxController {
                         'Bearer ${auth.token}',
                         auth.id,
                         Constant.xAppId!,
-                        "sales",
+                        "sales,sales lead",
                         1,
                         0
                     ],
