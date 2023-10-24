@@ -300,7 +300,7 @@ class SalesOrderController extends GetxController {
       body.add(null); // customerName
       body.add(date); // date
       body.add(efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null); // minQuantityRange
-      body.add(efMax.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null); // maxRangeQuantity
+      body.add(efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null); // maxRangeQuantity
       body.add(salesSelect?.id); // createdBy
     }
     Service.push(
