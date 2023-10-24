@@ -74,7 +74,7 @@ class SalesOrderController extends GetxController {
   SpinnerSearch spCreatedBy = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCreatedBy"), label: "Dibuat Oleh", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
   late SpinnerSearch spProvince = SpinnerSearch(
       controller: GetXCreator.putSpinnerSearchController("spProvince"),
-      label: "Province",
+      label: "Provinsi Customer",
       hint: "Pilih Salah Satu",
       alertText: "",
       items: const {},
@@ -88,7 +88,7 @@ class SalesOrderController extends GetxController {
           }
         }
       });
-  SpinnerSearch spCity = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCity"), label: "Kota", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerSearch spCity = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCity"), label: "Kota Customer", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
   late EditField efMin = EditField(controller: GetXCreator.putEditFieldController("efMin"), label: "Rentang Min", hint: "Ketik Disini", alertText: "Min Max harus diiisi",inputType: TextInputType.number, textUnit: "Ekor", maxInput: 20, onTyping: (value, editField) {
     efMax.controller.hideAlert();
   });
@@ -300,7 +300,7 @@ class SalesOrderController extends GetxController {
       body.add(null); // customerName
       body.add(date); // date
       body.add(efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null); // minQuantityRange
-      body.add(efMax.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null); // maxRangeQuantity
+      body.add(efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null); // maxRangeQuantity
       body.add(salesSelect?.id); // createdBy
     }
     Service.push(
@@ -751,6 +751,7 @@ class SalesOrderController extends GetxController {
   }
 
   void pullRefresh() {
+    orderList.value.clear();
     if (isSearch.isTrue) {
       page.value = 1;
       isLoadData.value = true;
