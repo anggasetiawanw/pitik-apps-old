@@ -291,8 +291,8 @@ class SalesOrderController extends GetxController {
         body.add(null); // code
         body.add(null); // sameBranch
         body.add(null); // withinProductionTeam
-        body.add(provinceSelect?.id); // customerCityId
-        body.add(citySelect?.id); // customerProvinceId
+        body.add(citySelect?.id); // customerCityId
+        body.add(provinceSelect?.id); // customerProvinceId
         body.add(null); // customerName
         body.add(date); // date
         body.add(efMin.getInputNumber() != null ? efMin.getInputNumber()!.toInt(): null ); // minQuantityRange
