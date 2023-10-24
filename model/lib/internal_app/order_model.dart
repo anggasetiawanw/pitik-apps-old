@@ -1,4 +1,3 @@
-
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/product_model.dart';
@@ -12,7 +11,7 @@ import 'operation_unit_model.dart';
 ///@create date 11/05/23
 
 @SetupModel
-class Order{
+class Order {
   String? id;
   String? customerId;
   String? status;
@@ -33,7 +32,7 @@ class Order{
   double? longitude;
   String? returnReason;
   String? grStatus;
-
+  String? category;
 
   @IsChild()
   Customer? customer;
@@ -51,17 +50,17 @@ class Order{
   Profile? driver;
   @IsChildren()
   List<Products?>? productNotes;
+  @IsChild()
+  SalesPerson? userCreator;
 
-
-  Order({this.id, this.customerId, this.status, this.operationUnitId, this.operationUnit, this.salespersonId, this.createdDate, this.customer, this.products, this.salesperson, this.modifiedDate,
-    this.userModifier, this.code, this.returnStatus, this.driver, this.type, this.productNotes, this.totalWeight, this.totalQuantity, this.totalPrice, this.paymentMethod, this.paymentAmount, this.latitude, this.longitude, this.returnedProducts, this.reason, this.returnReason, this.grStatus});
+  Order({this.id, this.customerId, this.status, this.operationUnitId, this.operationUnit, this.salespersonId, this.createdDate, this.customer, this.products, this.salesperson, this.modifiedDate, this.userModifier, this.code, this.returnStatus, this.driver, this.type, this.productNotes, this.totalWeight, this.totalQuantity, this.totalPrice, this.paymentMethod, this.paymentAmount, this.latitude, this.longitude, this.returnedProducts, this.reason, this.returnReason, this.grStatus, this.category, this.userCreator});
 
   static Order toResponseModel(Map<String, dynamic> map) {
-    if(map['totalWeight'] is int){
-        map['totalWeight'] = map['totalWeight'].toDouble();
+    if (map['totalWeight'] is int) {
+      map['totalWeight'] = map['totalWeight'].toDouble();
     }
-    if(map['totalPrice'] is int){
-        map['totalPrice'] = map['totalPrice'].toDouble();
+    if (map['totalPrice'] is int) {
+      map['totalPrice'] = map['totalPrice'].toDouble();
     }
     return Order(
       id: map['id'],
@@ -85,13 +84,15 @@ class Order{
       totalQuantity: map['totalQuantity'],
       totalPrice: map['totalPrice'],
       paymentMethod: map['paymentMethod'],
-      paymentAmount:map['paymentAmount'],
-      latitude:map['latitude'],
+      paymentAmount: map['paymentAmount'],
+      latitude: map['latitude'],
       longitude: map['longitude'],
       returnedProducts: Mapper.children<Products>(map['returnedProducts']),
       reason: map['reason'],
       returnReason: map['returnReason'],
-      grStatus: map['grStatus']
+      grStatus: map['grStatus'],
+      category: map['category'],
+      userCreator: Mapper.child<SalesPerson>(map['userCreator']),
     );
   }
 }
