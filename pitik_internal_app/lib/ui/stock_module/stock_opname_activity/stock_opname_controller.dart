@@ -283,60 +283,59 @@ class StockOpnameController extends GetxController {
             Scrollable.ensureVisible(sourceStock.controller.formKey.currentContext!);
             return false;
         }  
-        if(status !="DRAFT"){
-            for(var stock in listStockField.value){
-                for(var item in stock.controller.efSku.value){
-                    if(item.getInput().isEmpty){
-                        item.controller.showAlert();
-                            if(item.controller.formKey.currentContext != null ) {
-                                if(stock.controller.exp.controller.expanded.value == false){
-                                    stock.controller.exp.controller.expand();
-                                } else {
-                                    Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-                                }
-                            }
-                        ret = false;
-                        break;
-                    }
-                }
-            }
-            for(var stock in listStockTwoField.value){
-                for(var item in stock.controller.efSku.value){
-                    if(item.getInput1().isEmpty){
-                        item.controller.showAlert();
-                        if(stock.controller.exp.controller.expanded.value == false){
-                            Get.snackbar(
-                                "Pesan",
-                                "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}",
-                            duration: const Duration(seconds: 5),
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                        } else {
-                            Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-                        }
-                        ret = false;
-                        break;
-                    }
-                    if(item.getInput2().isEmpty){
-                        item.controller.showAlert();
-                        if(stock.controller.exp.controller.expanded.value == false){
-                            Get.snackbar(
-                                "Pesan",
-                                "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}}",
-                            duration: const Duration(seconds: 5),
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                        }else {
-                            Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-                        }
-                        ret = false;
-                        break;
-                    }
-                }
-            }
-        }
+        
+        // for(var stock in listStockField.value){
+        //     for(var item in stock.controller.efSku.value){
+        //         if(item.getInput().isEmpty){
+        //             item.controller.showAlert();
+        //                 if(item.controller.formKey.currentContext != null ) {
+        //                     if(stock.controller.exp.controller.expanded.value == false){
+        //                         stock.controller.exp.controller.expand();
+        //                     } else {
+        //                         Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+        //                     }
+        //                 }
+        //             ret = false;
+        //             break;
+        //         }
+        //     }
+        // }
+        // for(var stock in listStockTwoField.value){
+        //     for(var item in stock.controller.efSku.value){
+        //         if(item.getInput1().isEmpty){
+        //             item.controller.showAlert();
+        //             if(stock.controller.exp.controller.expanded.value == false){
+        //                 Get.snackbar(
+        //                     "Pesan",
+        //                     "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}",
+        //                 duration: const Duration(seconds: 5),
+        //                     snackPosition: SnackPosition.TOP,
+        //                     colorText: Colors.white,
+        //                 backgroundColor: Colors.red,);
+        //             } else {
+        //                 Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+        //             }
+        //             ret = false;
+        //             break;
+        //         }
+        //         if(item.getInput2().isEmpty){
+        //             item.controller.showAlert();
+        //             if(stock.controller.exp.controller.expanded.value == false){
+        //                 Get.snackbar(
+        //                     "Pesan",
+        //                     "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}}",
+        //                 duration: const Duration(seconds: 5),
+        //                     snackPosition: SnackPosition.TOP,
+        //                     colorText: Colors.white,
+        //                 backgroundColor: Colors.red,);
+        //             }else {
+        //                 Scrollable.ensureVisible(item.controller.formKey.currentContext!);
+        //             }
+        //             ret = false;
+        //             break;
+        //         }
+        //     }
+        // }
         return ret;
     }
 
@@ -350,7 +349,7 @@ class StockOpnameController extends GetxController {
                 products.add(Products(
                     productItemId: productItem!.id,
                     quantity: 0,
-                    weight: stock.title == AppStrings.LIVE_BIRD ||  stock.title == AppStrings.AYAM_UTUH ||  stock.title == AppStrings.BRANGKAS ? null : item.getInputNumber()
+                    weight: stock.title == AppStrings.LIVE_BIRD ||  stock.title == AppStrings.AYAM_UTUH ||  stock.title == AppStrings.BRANGKAS ? null : item.getInputNumber() ?? 0
                 ));
             }
         }
@@ -361,8 +360,8 @@ class StockOpnameController extends GetxController {
                 Products? productItem = purchaseProduct!.productItems!.firstWhere((element) => element!.name == item.controller.tag);
                 products.add(Products(
                     productItemId: productItem!.id,
-                    quantity: (item.getInputNumber1())?.toInt(),
-                    weight: item.getInputNumber2()
+                    quantity: (item.getInputNumber1()??0).toInt(),
+                    weight: item.getInputNumber2()??0
                 ));
             }
         }

@@ -2249,7 +2249,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("userType")],
+            const <Object>[const prefix96.Query("userTypes")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2993,7 +2993,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("salesPersonId")],
+            const <Object>[const prefix96.Query("salespersonId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3125,7 +3125,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("maxRangeQuantity")],
+            const <Object>[const prefix96.Query("maxQuantityRange")],
             null,
             null),
         r.ParameterMirrorImpl(

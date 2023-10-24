@@ -3,6 +3,7 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/profile_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -15,6 +16,7 @@ import 'package:model/branch.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/customer_model.dart';
 import 'package:model/response/%20branch_response.dart';
+import 'package:model/response/internal_app/profile_response.dart';
 import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
@@ -58,7 +60,7 @@ class ChangeBranchController extends GetxController {
             if (auth != null){
                 spBranch.controller.showLoading(),
                 Service.push(
-                    apiKey: ApiMapping.userApi,
+                    apiKey: ApiMapping.api,
                     service: ListApi.getBranch,
                     context: context,
                     body: [
@@ -108,23 +110,55 @@ class ChangeBranchController extends GetxController {
     void changeBranch(){
         Branch? branchSelected = listBranch.value.firstWhere((element) => element!.name == spBranch.controller.textSelected.value);
         Customer customer = Customer();
-        customer.branchId = branchSelected!.id;
+        customer.branchId = branchSelected?.id;
         AuthImpl().get().then((auth) => {
             if (auth != null){
                 isLoading.value = true,
                 Service.push(
+                    apiKey: ApiMapping.userApi,
                     service: ListApi.editUser,
                     context: context,
                     body: [
                         'Bearer ${auth.token}',
                         auth.id,
                         Constant.xAppId,
-                        ListApi.pathEditUser(auth.id!),
+                        ListApi.pathEditUser(Constant.profileUser!.id!),
                         Mapper.asJsonString(customer)
                     ],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            Get.back();
+                            Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: ['Bearer ${auth.token}', auth.id, Constant.xAppId], 
+                                listener: ResponseListener(
+                                    onResponseDone: (code, message, body, id, packet) {
+                                        ProfileImpl().save((body as ProfileResponse).data);
+                                        Constant.profileUser = body.data;
+                                        Get.back();
+                                        isLoading.value = false;
+                                    },
+                                    onResponseFail: (code, message, body, id, packet) {
+                                        Get.snackbar(
+                                            "Pesan",
+                                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                            snackPosition: SnackPosition.TOP,
+                                            colorText: Colors.white,
+                                            duration: const Duration(seconds: 5),
+                                            backgroundColor: Colors.red,
+                                        );
+                                        isLoading.value = false;
+                                    },
+                                    onResponseError: (exception, stacktrace, id, packet) {
+                                        Get.snackbar(
+                                            "Pesan",
+                                            "Terjadi kesalahan internal",
+                                            snackPosition: SnackPosition.TOP,
+                                    duration: const Duration(seconds: 5),
+                                            colorText: Colors.white,
+                                            backgroundColor: Colors.red,
+                                        );
+                                        isLoading.value = false;
+                                    },
+                                    onTokenInvalid: () {}
+                                ));
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar(

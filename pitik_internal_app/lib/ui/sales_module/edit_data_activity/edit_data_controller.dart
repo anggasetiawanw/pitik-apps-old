@@ -303,8 +303,8 @@ class EditDataController extends GetxController {
         if(custArg.branch!=null){
             spBranch.controller.setTextSelected(custArg.branch!.name!);
         } else {
-            spBranch.controller.setTextSelected("Branch tidak ditemukan");
-            spBranch.controller.disable();
+            spBranch.controller.setTextSelected("");
+            // spBranch.controller.disable();
         }
 
         if (custArg.supplier!.isNotEmpty) {
@@ -697,9 +697,11 @@ class EditDataController extends GetxController {
             );
         }
 
-        SalesPerson? salesSelect = listSalesperson.value.firstWhere((element) =>
-            element!.email == spinnerPicSales.controller.textSelected.value,
-        );
+        
+        SalesPerson? salesSelect;
+        if(isSalesLead.isTrue){
+            salesSelect = listSalesperson.value.firstWhere((element) =>element!.email == spinnerPicSales.controller.textSelected.value,);
+        }
 
         return Customer(
             businessName: editNamaBisnis.getInput(),
@@ -791,7 +793,7 @@ class EditDataController extends GetxController {
                         'Bearer ${auth.token}',
                         auth.id,
                         Constant.xAppId!,
-                        "sales",
+                        "sales,sales lead",
                         1,
                         0
                     ],
