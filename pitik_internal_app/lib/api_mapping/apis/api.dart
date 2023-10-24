@@ -809,9 +809,4 @@ class API {
 
     @GET(value: "v2/branches", as: ListBranchResponse, error: ErrorResponse)
     void getBranch(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId,){}
-
-    @JSON(isPlaint: true)
-    @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-    void editUser(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
-
 }

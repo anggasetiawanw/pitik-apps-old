@@ -75,6 +75,7 @@ class ListApi {
     static const String login ="login";
     static const String editUser ="editUser";
     static const String getListOrdersFilter ="getListOrdersFilter";
+    static const String loginWithApple = "loginWithApple";
 
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
@@ -233,7 +234,7 @@ class ListApi {
     }
 
     static String pathDeliverySOPickup(String orderId) {
-        return "v2//sales/sales-orders/$orderId/pick-up";
+        return "v2/sales/sales-orders/$orderId/pick-up";
     }
 
     static String pathDeliveryConfirmSO(String orderId) {
@@ -247,6 +248,6 @@ class ListApi {
     }
 
     static String pathEditUser(String userId) {
-        return "/v2/fms-users/$userId/branch";
+        return "v2/fms-users/$userId/branch";
     }
 }
