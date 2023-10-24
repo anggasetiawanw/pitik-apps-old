@@ -15,6 +15,7 @@ import 'package:model/branch.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/customer_model.dart';
 import 'package:model/response/%20branch_response.dart';
+import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 
@@ -57,7 +58,7 @@ class ChangeBranchController extends GetxController {
             if (auth != null){
                 spBranch.controller.showLoading(),
                 Service.push(
-                    apiKey: "api",
+                    apiKey: ApiMapping.userApi,
                     service: ListApi.getBranch,
                     context: context,
                     body: [
