@@ -58,7 +58,7 @@ class ChangeBranchController extends GetxController {
             if (auth != null){
                 spBranch.controller.showLoading(),
                 Service.push(
-                    apiKey: ApiMapping.userApi,
+                    apiKey: ApiMapping.api,
                     service: ListApi.getBranch,
                     context: context,
                     body: [

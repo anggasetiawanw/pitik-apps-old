@@ -285,7 +285,7 @@ class SalesOrderController extends GetxController {
         String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
 
         body.add(null); // customerId
-        body.add(salesSelect?.id); // salesPersonId
+        body.add(null); // salesPersonId
         body.add(null); // driverId
         body.add(status); // status
         body.add(null); // code
@@ -297,7 +297,7 @@ class SalesOrderController extends GetxController {
         body.add(date); // date
         body.add(efMin.getInputNumber() != null ? efMin.getInputNumber()!.toInt(): null ); // minQuantityRange
         body.add(efMax.getInputNumber() != null ? efMin.getInputNumber()!.toInt(): null ); // maxRangeQuantity
-        body.add(null); // createdBy
+        body.add(salesSelect?.id); // createdBy
         }
         Service.push(
             service: ListApi.getListOrdersFilter,
@@ -559,7 +559,7 @@ class SalesOrderController extends GetxController {
                     apiKey: "api",
                     service: ListApi.getSalesList,
                     context: context,
-                    body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, "sales", 1, 0],
+                    body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, "sales,sales lead", 1, 0],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             for (var result in (body as SalespersonListResponse).data) {

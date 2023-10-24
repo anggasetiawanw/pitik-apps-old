@@ -187,7 +187,7 @@ class API {
     /// of results to be returned in a single page of the response. It is used for
     /// pagination purposes.
     @GET(value: "v2/fms-users", as: SalespersonListResponse, error: ErrorResponse)
-    void getSalesList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("userType") String userType, @Query("\$page") int page, @Query("\$limit") int limit) {}
+    void getSalesList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("userTypes") String userType, @Query("\$page") int page, @Query("\$limit") int limit) {}
 
     /// This is a Dart function that sends a GET request to retrieve a list of
     /// purchase orders with authorization and pagination parameters.
@@ -385,7 +385,7 @@ class API {
     @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
     void getListOrdersFilter(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, 
     @Query("customerId") String customerId,
-    @Query("salesPersonId") String salesPersonId,
+    @Query("salespersonId") String salesPersonId,
     @Query("driverId") String driverId,
     @Query("status") String status,
     @Query("code") String code,
@@ -396,7 +396,7 @@ class API {
     @Query("customerName") String customerName,
     @Query("date") String date,
     @Query("minQuantityRange") int minQuantityRange,
-    @Query("maxRangeQuantity") int maxRangeQuantity,
+    @Query("maxQuantityRange") int maxRangeQuantity,
     @Query("createdBy") String createdBy,
     ) {}
 
