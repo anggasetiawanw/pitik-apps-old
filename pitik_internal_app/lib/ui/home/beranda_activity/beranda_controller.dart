@@ -53,6 +53,10 @@ class BerandaController extends GetxController {
                     Constant.isChangeBranch.value = true;
                     Constant.isChangeBranch.refresh();
                 }
+                if(role.name == "developer"){
+                    Constant.isDeveloper.value = true;
+                    Constant.isDeveloper.refresh();
+                }
             }
         }
     }
