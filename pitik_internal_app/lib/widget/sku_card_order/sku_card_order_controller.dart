@@ -112,7 +112,7 @@ class SkuCardOrderController extends GetxController{
                     onSpinnerSelected: (value) {
                         if (listCategories.value.isNotEmpty) {
                             if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
-                                spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS ||  value == AppStrings.KARKAS) {
+                                spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS ||  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
                                 editFieldJumlahAyam.value[numberList].controller.enable();
                             }
                             editFieldJumlahAyam.value[numberList].setInput("");
@@ -190,6 +190,7 @@ class SkuCardOrderController extends GetxController{
                 textUnit: "/Kg",
                 textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
                 inputType: TextInputType.number,
+                isNumberFormatter : true,
                 maxInput: 20,
                 onTyping: (value, control) {
                 if(control.getInput().length < 4){

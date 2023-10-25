@@ -27,11 +27,12 @@ import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order.dart';
 import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card_remark/sku_card_remark.dart';
 import 'package:pitik_internal_app/widget/sku_card_remark/sku_card_remark_controller.dart';
+
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
 ///@create date 15/05/23
 
-class NewDataSalesOrderController extends GetxController{
+class NewDataSalesOrderController extends GetxController {
   BuildContext context;
   NewDataSalesOrderController({required this.context});
 
@@ -58,27 +59,24 @@ class NewDataSalesOrderController extends GetxController{
   Rx<Map<String, bool>> mapListRemark = Rx<Map<String, bool>>({});
   Rx<Map<int, List<Products?>>> listSku = Rx<Map<int, List<Products?>>>({});
 
-
-  late SpinnerSearch spinnerCustomer  = SpinnerSearch(
+  late SpinnerSearch spinnerCustomer = SpinnerSearch(
     controller: GetXCreator.putSpinnerSearchController("customer"),
-    label: isInbound.isTrue? "Customer(Optional)": "Customer*",
+    label: isInbound.isTrue ? "Customer(Optional)" : "Customer*",
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
-    items: const {
-    },
+    items: const {},
     onSpinnerSelected: (text) {
       if (text.isNotEmpty) {
         // editNamaSupplier.controller.visibleField();
       }
     },
   );
-  late SpinnerField spinnerOrderType  = SpinnerField(
+  late SpinnerField spinnerOrderType = SpinnerField(
     controller: GetXCreator.putSpinnerFieldController("orderType"),
     label: "Jenis Penjualan*",
     hint: "Pilih salah satu",
     alertText: "Jenis Penjualan harus dipilih!",
-    items: const {"Non-LB" : true, "LB" :false
-    },
+    items: const {"Non-LB": true, "LB": false},
     onSpinnerSelected: (text) {
       if (text.isNotEmpty) {
         produkType.value = text;
@@ -88,20 +86,15 @@ class NewDataSalesOrderController extends GetxController{
             mapListRemark[product!.name!] = false;
           }
           Timer(const Duration(milliseconds: 100), () {
-            skuCardRemark
-                .controller
-                .spinnerCategories
-                .value[0]
-                .controller
-                .generateItems(mapListRemark);
+            skuCardRemark.controller.spinnerCategories.value[0].controller.generateItems(mapListRemark);
 
-          for(var result in listCategories.value) {
-            if (result!.name == AppStrings.LIVE_BIRD) {
-              spinnerCategories.controller.setTextSelected(result.name!);
-              spinnerCategories.controller.disable();
-              getSku(result.id!);
+            for (var result in listCategories.value) {
+              if (result!.name == AppStrings.LIVE_BIRD) {
+                spinnerCategories.controller.setTextSelected(result.name!);
+                spinnerCategories.controller.disable();
+                getSku(result.id!);
+              }
             }
-          }
           });
         }
       }
@@ -118,8 +111,7 @@ class NewDataSalesOrderController extends GetxController{
     alertText: "Jenis Kebutuhan harus dipilih!",
     items: const {},
     onSpinnerSelected: (text) {
-      if (text.isNotEmpty) {
-      }
+      if (text.isNotEmpty) {}
     },
   );
   late SpinnerField spinnerSku = SpinnerField(
@@ -130,8 +122,7 @@ class NewDataSalesOrderController extends GetxController{
       items: const {},
       onSpinnerSelected: (value) {
         editFieldJumlahAyam.controller.enable();
-      }
-  );
+      });
 
   late EditField editFieldJumlahAyam = EditField(
       controller: GetXCreator.putEditFieldController("editFieldJumlahAyamLB"),
@@ -145,8 +136,7 @@ class NewDataSalesOrderController extends GetxController{
         editFieldKebutuhan.controller.enable();
         editFieldHarga.controller.enable();
         refreshtotalPurchase();
-      }
-  );
+      });
 
   late EditField editFieldKebutuhan = EditField(
       controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
@@ -158,50 +148,38 @@ class NewDataSalesOrderController extends GetxController{
       maxInput: 20,
       onTyping: (value, control) {
         refreshtotalPurchase();
-      }
-  );
+      });
 
   late EditField editFieldHarga = EditField(
-      controller: GetXCreator.putEditFieldController(
-          "edithargaLb"),
+      controller: GetXCreator.putEditFieldController("edithargaLb"),
       label: "Harga*",
       hint: "Tulis Jumlah",
       alertText: "Kolom Ini Harus Di Isi",
       textUnit: "/Kg",
-       textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
+      textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {
-        if(control.getInput().length < 4){
+        if (control.getInput().length < 4) {
           control.controller.setAlertText("Harga Tidak Valid!");
           control.controller.showAlert();
         }
         refreshtotalPurchase();
-      }
-  );
+      });
 
-    EditField efRemartk = EditField(
-    controller: GetXCreator.putEditFieldController("efRemartk"),
-    label: "Catatan",
-    hint: "Ketik disini",
-    alertText: "",
-    textUnit: "",
-    maxInput: 500,
-    inputType: TextInputType.multiline,
-    height: 160,
-    onTyping: (value, editField) {});
+  EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   @override
   void onInit() {
     super.onInit();
     isInbound.value = Get.arguments;
-    isLoading.value =true;
+    isLoading.value = true;
     spinnerOrderType.controller.setTextSelected("Non-LB");
     skuCard = SkuCardOrder(
-      controller: InternalControllerCreator.putSkuCardOrderController("skuOrder",context ),
+      controller: InternalControllerCreator.putSkuCardOrderController("skuOrder", context),
     );
-    skuCardRemark= SkuCardRemark(
-      controller: InternalControllerCreator.putSkuCardRemarkController("skuRemark",context ),
+    skuCardRemark = SkuCardRemark(
+      controller: InternalControllerCreator.putSkuCardRemarkController("skuRemark", context),
     );
 
     tidakOrderButton = ButtonOutline(
@@ -240,39 +218,46 @@ class NewDataSalesOrderController extends GetxController{
     super.onReady();
   }
 
-
   void generateListProduct(int idx) {
     Timer(const Duration(milliseconds: 500), () {
       idx = idx - 1;
-      skuCard.controller.spinnerCategories.value[idx].controller
-          .generateItems(mapListSku.value);
-      skuCard.controller.editFieldHarga.value[idx].controller.addListener(() {
-      });
-
+      skuCard.controller.spinnerCategories.value[idx].controller.generateItems(mapListSku.value);
+      skuCard.controller.editFieldHarga.value[idx].controller.addListener(() {});
     });
-
   }
+
   void generateListRemark(int idx) {
     Timer(const Duration(milliseconds: 500), () {
       idx = idx - 1;
-      skuCardRemark.controller.spinnerCategories.value[idx].controller
-          .generateItems(mapListRemark.value);
+      skuCardRemark.controller.spinnerCategories.value[idx].controller.generateItems(mapListRemark.value);
       // skuCardRemark.controller.editFieldHarga.value[idx].controller.addListener(() {
       // });
-
     });
-
   }
 
-    refreshtotalPurchase(){
-        Products? selectProduct = listProduct.value.firstWhere((element) => element!.name! == spinnerSku.controller.textSelected.value);
-        double minValue = selectProduct!.minValue! * (editFieldJumlahAyam.getInputNumber()??0);
-        double maxValue = selectProduct.maxValue! * (editFieldJumlahAyam.getInputNumber()??0);
-        sumNeededMin.value = minValue;
-        sumNeededMax.value = maxValue;
-        sumChick.value = editFieldJumlahAyam.getInputNumber()!.toInt();
-        sumPriceMin.value = (editFieldHarga.getInputNumber()??0) * minValue;
-        sumPriceMax.value = (editFieldHarga.getInputNumber()??0) * maxValue;  
+  void refreshtotalPurchase() {
+    // Mendapatkan produk yang dipilih dari listProduct
+    Products? selectProduct = listProduct.value.firstWhere(
+      (element) => element!.name! == spinnerSku.controller.textSelected.value,
+      orElse: () => null, // Menggunakan orElse untuk mengatasi jika elemen tidak ditemukan
+    );
+
+    // Jika produk ditemukan, lakukan perhitungan
+    if (selectProduct != null) {
+      double jumlahAyam = editFieldJumlahAyam.getInputNumber() ?? 0;
+      double harga = editFieldHarga.getInputNumber() ?? 0;
+
+      // Hitung nilai minimum dan maksimum berdasarkan produk dan jumlah ayam
+      double minValue = selectProduct.minValue! * jumlahAyam;
+      double maxValue = selectProduct.maxValue! * jumlahAyam;
+
+      // Update variabel-sum yang sesuai
+      sumNeededMin.value = minValue;
+      sumNeededMax.value = maxValue;
+      sumChick.value = jumlahAyam.toInt();
+      sumPriceMin.value = harga * minValue;
+      sumPriceMax.value = harga * maxValue;
+    }
   }
 
   void getListCustomer() {
@@ -284,50 +269,39 @@ class NewDataSalesOrderController extends GetxController{
         service: ListApi.getListCustomerWithoutPage,
         context: context,
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
-              for (var customer in (body as ListCustomerResponse).data) {
-                mapList[customer!.businessName!] = false;
-              }
-              Timer(const Duration(milliseconds: 500), () {
-                spinnerCustomer.controller.generateItems(mapList);
-              });
-              spinnerCustomer.controller.enable();
+        listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
+          Map<String, bool> mapList = {};
+          for (var customer in (body as ListCustomerResponse).data) {
+            mapList[customer!.businessName!] = false;
+          }
+          Timer(const Duration(milliseconds: 500), () {
+            spinnerCustomer.controller.generateItems(mapList);
+          });
+          spinnerCustomer.controller.enable();
 
-              for (var result in body.data) {
-                listCustomer.value.add(result!);
-              }
-                spinnerCustomer.controller.hideLoading();
-                spinnerCustomer.controller.setTextSelected("");
-
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.white,
-                backgroundColor: Colors.red,);
-                spinnerCustomer.controller.hideLoading();
-                spinnerCustomer.controller.setTextSelected("");
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-                Get.snackbar("Alert","Terjadi kesalahan internal",
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
-                spinnerCustomer.controller.hideLoading();
-                spinnerCustomer.controller.setTextSelected("");
-            },
-            onTokenInvalid: () {
-              Constant.invalidResponse();
-            }
-        )
-    );
+          for (var result in body.data) {
+            listCustomer.value.add(result!);
+          }
+          spinnerCustomer.controller.hideLoading();
+          spinnerCustomer.controller.setTextSelected("");
+        }, onResponseFail: (code, message, body, id, packet) {
+          Get.snackbar(
+            "Pesan",
+            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            snackPosition: SnackPosition.TOP,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+          );
+          spinnerCustomer.controller.hideLoading();
+          spinnerCustomer.controller.setTextSelected("");
+        }, onResponseError: (exception, stacktrace, id, packet) {
+          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          spinnerCustomer.controller.hideLoading();
+          spinnerCustomer.controller.setTextSelected("");
+        }, onTokenInvalid: () {
+          Constant.invalidResponse();
+        }));
   }
-
 
   void getCategorySku() {
     skuCard.controller.spinnerCategories.value[0].controller.disable();
@@ -354,41 +328,29 @@ class NewDataSalesOrderController extends GetxController{
             //Generate Card SKU
             mapList.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
             Timer(const Duration(milliseconds: 100), () {
-                skuCard.controller.spinnerCategories.value[0].controller.enable();
-                skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("");   
-                skuCard.controller.spinnerCategories.value[0].controller.hideLoading();
-              skuCard
-                  .controller
-                  .spinnerCategories
-                  .value[0]
-                  .controller
-                  .generateItems(mapList);
+              skuCard.controller.spinnerCategories.value[0].controller.enable();
+              skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("");
+              skuCard.controller.spinnerCategories.value[0].controller.hideLoading();
+              skuCard.controller.spinnerCategories.value[0].controller.generateItems(mapList);
 
               skuCard.controller.setMaplist(listCategories.value);
               mapListSku.value = mapList;
 
-
               //Generate Card Remark
-              skuCardRemark
-                  .controller
-                  .spinnerCategories
-                  .value[0]
-                  .controller
-                  .generateItems(mapListRemark);
+              skuCardRemark.controller.spinnerCategories.value[0].controller.generateItems(mapListRemark);
 
               skuCardRemark.controller.setMaplist(listCategoriesRemark.value);
               this.mapListRemark.value = mapListRemark;
 
               spinnerCategories.controller.generateItems(mapListRemark);
-
             });
 
-            for(var result in listCategories.value){
-             if(result!.name == AppStrings.LIVE_BIRD){
-               spinnerCategories.controller.setTextSelected(result.name!);
-               spinnerCategories.controller.disable();
-               getSku(result.id!);
-             }
+            for (var result in listCategories.value) {
+              if (result!.name == AppStrings.LIVE_BIRD) {
+                spinnerCategories.controller.setTextSelected(result.name!);
+                spinnerCategories.controller.disable();
+                getSku(result.id!);
+              }
             }
             isLoading.value = false;
           },
@@ -397,16 +359,14 @@ class NewDataSalesOrderController extends GetxController{
               "Pesan",
               "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
               snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
+              duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             isLoading.value = false;
           },
-          onResponseError: (exception, stacktrace, id, packet) {
-          },
-          onTokenInvalid:Constant.invalidResponse()
-      ),
+          onResponseError: (exception, stacktrace, id, packet) {},
+          onTokenInvalid: Constant.invalidResponse()),
     );
   }
 
@@ -419,7 +379,6 @@ class NewDataSalesOrderController extends GetxController{
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
-
                 Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
@@ -435,7 +394,6 @@ class NewDataSalesOrderController extends GetxController{
                   //   ..generateItems(mapList)
                   //   ..enable();
                 });
-
               } else {
                 spinnerSku.controller
                   ..textSelected.value = body.data[0]!.name!
@@ -445,27 +403,15 @@ class NewDataSalesOrderController extends GetxController{
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
+              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               isLoading.value = false;
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar("Alert","Terjadi kesalahan internal",
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
+              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               isLoading.value = false;
             },
-            onTokenInvalid: () {}
-        )
-    );
+            onTokenInvalid: () {}));
   }
-
-
 
   void saveOrder() {
     List ret = produkType.value == "LB" ? validationLb() : validationNonLb();
@@ -476,109 +422,149 @@ class NewDataSalesOrderController extends GetxController{
         service: ListApi.createSalesOrder,
         context: context,
         body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, Mapper.asJsonString(purchasePayload)],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-               isLoading.value = false;
-               Get.back();
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              isLoading.value = false;
-            var stock = "Invalid sales order's weight Product's note weight is greater than the input!";
-                if ((body as ErrorResponse).error!.message!.contains(stock)) {                    
-                    Get.snackbar(
-                    "Pesan",
-                    "Gagal membuat Penjualan, total catatan lebih besar dari input SKU LB",
-                    snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,);
-                } else {                    
-                    Get.snackbar(
-                    "Pesan",
-                    "Terjadi Kesalahan, ${(body).error!.message}",
-                    snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,);
-                }
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              isLoading.value = false;
-              Get.snackbar("Alert","Terjadi kesalahan internal",
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
-            },
-            onTokenInvalid: () {
-              Constant.invalidResponse();
-            }
-        ),
+        listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
+          isLoading.value = false;
+          Get.back();
+        }, onResponseFail: (code, message, body, id, packet) {
+          isLoading.value = false;
+          var stock = "Invalid sales order's weight Product's note weight is greater than the input!";
+          if ((body as ErrorResponse).error!.message!.contains(stock)) {
+            Get.snackbar(
+              "Pesan",
+              "Gagal membuat Penjualan, total catatan lebih besar dari input SKU LB",
+              snackPosition: SnackPosition.TOP,
+              duration: const Duration(seconds: 5),
+              colorText: Colors.white,
+              backgroundColor: Colors.red,
+            );
+          } else {
+            Get.snackbar(
+              "Pesan",
+              "Terjadi Kesalahan, ${(body).error!.message}",
+              snackPosition: SnackPosition.TOP,
+              duration: const Duration(seconds: 5),
+              colorText: Colors.white,
+              backgroundColor: Colors.red,
+            );
+          }
+        }, onResponseError: (exception, stacktrace, id, packet) {
+          isLoading.value = false;
+          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        }, onTokenInvalid: () {
+          Constant.invalidResponse();
+        }),
       );
-    } 
+    }
   }
 
   OrderRequest generatePayload() {
+    List<Products?> productList = [];
+    List<Products?> lbProductList = [];
+    List<Products?> remarkProductList = [];
 
-    List<Products?> listProductPayload = [];
-    List<Products?> listProductLbPayload = [];
-    List<Products?> listRemarkPayload = [];
+    if (produkType.value == "LB") {
+      lbProductList = _generateLbProductList();
+      remarkProductList = _generateRemarkProductList();
+    } else {
+      productList = _generateProductList();
+    }
 
-    if(produkType.value == "LB") {
+    Customer? customerSelected = listCustomer.value.firstWhere(
+      (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
+    );
 
-      // CategoryModel? categoryLbSelected = listCategoriesRemark.value.firstWhere((element) =>
-      // element!.name == spinnerCategories.controller.textSelected.value,);
-      Products? produkSkuSelected = listProduct.value.firstWhere((element) =>
-      element!.name == spinnerSku.controller.textSelected.value,);
+    return OrderRequest(
+      customerId: customerSelected?.id ?? "", // Ganti dengan nilai default jika tidak ada customer terpilih
+      products: produkType.value == "LB" ? lbProductList : productList,
+      productNotes: produkType.value == "LB" ? remarkProductList : null,
+      type: produkType.value == "LB" ? "LB" : "NON_LB",
+      status: status.value,
+      category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
+    );
+  }
 
-      listProductLbPayload.add(Products(
-        productItemId: produkSkuSelected!.id,
-        quantity: (editFieldJumlahAyam.getInputNumber()?? 0).toInt(),
-        numberOfCuts: 0,
-        price: editFieldHarga.getInputNumber(),
-        weight: editFieldKebutuhan.getInputNumber(),
-      ));
+  List<Products?> _generateProductList() {
+    List<Products?> productList = [];
 
-      for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
-        int whichItem = skuCardRemark.controller.index.value[i];
-        var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value);
-        listRemarkPayload.add(Products(
-          productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()??0).toInt() : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCardRemark.controller.editFieldPotongan.value[whichItem].getInputNumber()??0).toInt() : null,
-          weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber()??0,
-        ));
-      }
-    }else{
-      for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
-        int whichItem = skuCard.controller.index.value[i];
-        var listProductTemp = skuCard.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
-        listProductPayload.add(Products(
-          productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? (skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()??0).toInt() : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? (skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()??0).toInt():0,
-          price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber()??0,
-          weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber()??0,
+    for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
+      int whichItem = skuCard.controller.index.value[i];
+      var listProductTemp = skuCard.controller.listSku.value.values.toList();
+      Products? productSelected = listProductTemp[whichItem].firstWhere(
+        (element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value,
+        orElse: () => null,
+      );
+
+      if (productSelected != null) {
+        productList.add(Products(
+          productItemId: productSelected.id,
+          quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
+          price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
+          weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
       }
     }
 
-
-    Customer? customerSelected = listCustomer.value.firstWhere(
-          (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
-    );
-
-    return OrderRequest(
-      customerId: customerSelected!.id!,
-      products: produkType.value== "LB" ? listProductLbPayload : listProductPayload,
-      productNotes: produkType.value== "LB" ? listRemarkPayload : null ,
-      type: produkType.value== "LB" ? "LB" : "NON_LB",
-      status: status.value,
-    );
+    return productList;
   }
 
+  List<Products?> _generateLbProductList() {
+    List<Products?> lbProductList = [];
+    Products? produkSkuSelected = listProduct.value.firstWhere(
+      (element) => element!.name == spinnerSku.controller.textSelected.value,
+      orElse: () => null,
+    );
+
+    if (produkSkuSelected != null) {
+      lbProductList.add(Products(
+        productItemId: produkSkuSelected.id,
+        quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
+        numberOfCuts: 0,
+        price: editFieldHarga.getInputNumber(),
+        weight: editFieldKebutuhan.getInputNumber(),
+      ));
+    }
+
+    return lbProductList;
+  }
+
+  List<Products?> _generateRemarkProductList() {
+    List<Products?> remarkProductList = [];
+
+    for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+      int whichItem = skuCardRemark.controller.index.value[i];
+      var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
+      Products? productSelected = listProductTemp[whichItem].firstWhere(
+        (element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value,
+        orElse: () => null,
+      );
+
+      if (productSelected != null) {
+        remarkProductList.add(Products(
+          productItemId: productSelected.id,
+          quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+          weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
+        ));
+      }
+    }
+
+    return remarkProductList;
+  }
+
+  int? _getQuantity(CategoryModel? category, EditField ef) {
+    if (category != null && (category.name == AppStrings.AYAM_UTUH || category.name == AppStrings.BRANGKAS || category.name == AppStrings.LIVE_BIRD || category.name == AppStrings.KARKAS)) {
+      return (ef.getInputNumber() ?? 0).toInt(); // Ganti dengan logic sesuai kebutuhan
+    }
+    return null;
+  }
+
+  int? _getNumberOfCuts(CategoryModel? category, EditField ef) {
+    if (category != null && (category.name == AppStrings.AYAM_UTUH || category.name == AppStrings.BRANGKAS || category.name == AppStrings.LIVE_BIRD || category.name == AppStrings.KARKAS)) {
+      return (ef.getInputNumber() ?? 0).toInt(); // Ganti dengan logic sesuai kebutuhan
+    }
+    return null;
+  }
 
   List validationNonLb() {
     List ret = [true, ""];
@@ -598,23 +584,23 @@ class NewDataSalesOrderController extends GetxController{
       spinnerCustomer.controller.showAlert();
       Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
       return ret = [false, ""];
-    }else if (spinnerCategories.controller.textSelected.value.isEmpty) {
+    } else if (spinnerCategories.controller.textSelected.value.isEmpty) {
       spinnerCategories.controller.showAlert();
       Scrollable.ensureVisible(spinnerCategories.controller.formKey.currentContext!);
       return ret = [false, ""];
-    }else if (spinnerSku.controller.textSelected.value.isEmpty) {
+    } else if (spinnerSku.controller.textSelected.value.isEmpty) {
       spinnerSku.controller.showAlert();
       Scrollable.ensureVisible(spinnerSku.controller.formKey.currentContext!);
       return ret = [false, ""];
-    }else if (editFieldJumlahAyam.getInput().isEmpty) {
+    } else if (editFieldJumlahAyam.getInput().isEmpty) {
       editFieldJumlahAyam.controller.showAlert();
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
-    }else if (editFieldKebutuhan.getInput().isEmpty) {
+    } else if (editFieldKebutuhan.getInput().isEmpty) {
       editFieldKebutuhan.controller.showAlert();
       Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
       return ret = [false, ""];
-    }else if (editFieldHarga.getInput().isEmpty) {
+    } else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       Scrollable.ensureVisible(editFieldHarga.controller.formKey.currentContext!);
       return ret = [false, ""];
@@ -623,8 +609,6 @@ class NewDataSalesOrderController extends GetxController{
     ret = skuCardRemark.controller.validation();
     return ret;
   }
-
-
 }
 
 class NewDataSalesOrderBindings extends Bindings {
@@ -634,5 +618,4 @@ class NewDataSalesOrderBindings extends Bindings {
   void dependencies() {
     Get.lazyPut(() => NewDataSalesOrderController(context: context));
   }
-
 }
