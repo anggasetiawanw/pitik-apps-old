@@ -498,7 +498,7 @@ class NewDataSalesOrderController extends GetxController {
         productList.add(Products(
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
-          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldPotongan.value[whichItem]),
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
@@ -543,7 +543,7 @@ class NewDataSalesOrderController extends GetxController {
         remarkProductList.add(Products(
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
-          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
           weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
       }
