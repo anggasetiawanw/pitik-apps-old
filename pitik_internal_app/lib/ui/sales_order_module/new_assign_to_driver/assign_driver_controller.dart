@@ -190,7 +190,7 @@ class AssignDriverController extends GetxController{
 
   void assignToDriver(){
     Profile? driverSelected = listDriver.value.firstWhere(
-          (element) => element!.fullName == spinnerDriver.controller.textSelected.value,
+          (element) => element!.fullName == spinnerDriver.controller.textSelected.value, orElse: () => null
     );
 
     OrderRequest orderRequest = OrderRequest(
