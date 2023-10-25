@@ -57,8 +57,8 @@ class SalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("btPenjualan"),
       label: "Buat Penjualan",
       onClick: () {
-        backFromForm(false);
-        // _showBottomDialog();
+        // backFromForm(false);
+        _showBottomDialog();
       });
 
   DateTimeField dtTanggalPenjualan = DateTimeField(
