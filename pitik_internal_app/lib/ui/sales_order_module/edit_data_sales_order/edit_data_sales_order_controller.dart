@@ -236,8 +236,8 @@ class EditDataSalesOrderController extends GetxController{
   
   refreshtotalPurchase(){
         Products? selectProduct = listProduct.value.firstWhere((element) => element!.name! == spinnerSku.controller.textSelected.value);
-        double minValue = selectProduct!.minValue! * editFieldJumlahAyam.getInputNumber()!;
-        double maxValue = selectProduct.maxValue! * editFieldJumlahAyam.getInputNumber()!;
+        double minValue = selectProduct!.minValue! * (editFieldJumlahAyam.getInputNumber()??0);
+        double maxValue = selectProduct.maxValue! * (editFieldJumlahAyam.getInputNumber()??0);
         sumNeededMin.value = minValue;
         sumNeededMax.value = maxValue;
         sumChick.value = (editFieldJumlahAyam.getInputNumber()??0).toInt();
