@@ -850,7 +850,7 @@ class VisitController extends GetxController {
                 Products? selectProduct;
                 if (skuCard.controller.listProduct.value.isNotEmpty) {
                     for(int j =0 ; j < listProductTemp.length; j++){
-                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value,orElse: ()=> null );
+                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value, );
                     }
                     selectProduct ??= customer.value!.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 } else {
