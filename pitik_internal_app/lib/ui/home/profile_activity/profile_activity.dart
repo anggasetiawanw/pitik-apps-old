@@ -173,6 +173,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 thickness: 1.6,
             ),
           ),
+            Obx(() => Constant.isDeveloper.isTrue ? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
             Obx(() => Constant.isChangeBranch.isTrue ? listComponent(() => Get.toNamed(RoutePage.changeBranch), "images/branch_icon.svg", "Ganti Branch") : const SizedBox()),
             listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
             listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
