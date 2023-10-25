@@ -60,6 +60,7 @@ class NewData extends StatelessWidget {
                             controller.editNamaPemilik,
                             controller.editNomorTelepon,
                             controller.editSalesPIC,
+                            controller.spBranch,
                             controller.editLokasiGoogle,
                             controller.spinnerProvince,
                             controller.spinnerKota,

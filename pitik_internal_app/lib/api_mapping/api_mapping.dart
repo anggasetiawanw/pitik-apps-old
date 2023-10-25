@@ -9,11 +9,14 @@ import 'package:pitik_internal_app/flavors.dart';
 
 class ApiMapping extends ApiMappingList {
 
+    static const String api = "api";
+    static const String userApi = "userApi";
+    static const String deliveryApi = "deliveryApi";
 
     Map<String, Type> apiMapping = {
         "api": API,
         "userApi": UserApi,
-        "transferApi":DeliveryApi
+        "deliveryApi":DeliveryApi
     };
 
     @override

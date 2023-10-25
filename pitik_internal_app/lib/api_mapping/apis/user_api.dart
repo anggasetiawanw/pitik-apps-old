@@ -170,4 +170,35 @@ class UserApi {
     @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
     void unarchiveCustomer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
 
+
+    /// `loginWithgoogle` is a `POST` request to `v2/auth/google/login` that returns an `AuthResponse` or an
+    /// `Error`
+    ///
+    /// Args:
+    ///   credentials (String): The credentials object that you get from the google sign in.
+    @JSON()
+    @POST(value: "v2/auth/apple/login", as: AuthResponse, error: ErrorResponse)
+    void loginWithApple(@Parameter("credentials") String credentials) {}
+
+    /// The function "editUser" is a PUT request that edits a user with the given authorization, xid,
+    /// xAppId, path, and params.
+    /// 
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that typically contains a
+    /// token or credentials to authenticate the user making the request. It is used to verify the
+    /// identity and permissions of the user.
+    ///   xid (String): The "xid" parameter is a header parameter that represents the X-ID value. It is
+    /// typically used for identification or authentication purposes in an API request.
+    ///   xAppId (String): The `xAppId` parameter is a header parameter that represents the X-APP-ID
+    /// header in the HTTP request. It is used to identify the application making the request.
+    ///   path (String): The "path" parameter is a string that represents the path of the resource you
+    /// want to edit. It is typically used in RESTful APIs to specify the specific resource that needs
+    /// to be updated.
+    ///   params (String): The "params" parameter is a string that represents additional parameters for
+    /// the request. It can be used to pass any additional information or data that is required for the
+    /// "editUser" operation.
+    @JSON(isPlaint: true)
+    @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
+    void editUser(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+
 }

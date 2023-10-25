@@ -45,7 +45,7 @@ class CustomerDetailController extends GetxController {
         RoutePage.fromDetailCustomer,
         customerDetail.value,
       ],
-    ),
+    )!.then((value) => getData()),
   );
 
   late ButtonOutline editButton = ButtonOutline(
@@ -54,7 +54,7 @@ class CustomerDetailController extends GetxController {
       onClick: () =>
           Get.toNamed(RoutePage.editCustomer, arguments: customerDetail.value)!
               .then((value) {
-            Timer(const Duration(milliseconds: 500), () {
+            Timer(const Duration(milliseconds: 100), () {
               getData();
             });
           }));
@@ -78,7 +78,7 @@ class CustomerDetailController extends GetxController {
   void onReady() {
     super.onReady();
     getData();
-    getTime();
+    getTime(false);
     iyaArchiveButton = ButtonFill(
         controller: GetXCreator.putButtonFillController("IyaArchive"),
         label: "Ya",
@@ -227,11 +227,19 @@ class CustomerDetailController extends GetxController {
     Get.back();
   }
 
-  void getTime() {
-    if (customer.value!.latestVisit != null) {
-      dateCustomer.value =
-          Convert.getDatetime(customer.value!.latestVisit!.createdDate!);
+  void getTime(bool isRefresh) {
+    if(isRefresh){ 
+        if (customerDetail.value!.latestVisit != null) {
+            dateCustomer.value =
+                Convert.getDatetime(customerDetail.value!.latestVisit!.createdDate!);
+        }
+    } else {
+        if (customer.value!.latestVisit != null) {
+            dateCustomer.value =
+                Convert.getDatetime(customer.value!.latestVisit!.createdDate!);
+        }
     }
+   
   }
 
   void getData() {
@@ -253,6 +261,7 @@ class CustomerDetailController extends GetxController {
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 customerDetail.value = (body as CustomerResponse).data;
+                getTime(true);
                 isLoadingDetails.value = false;
               },
               onResponseFail: (code, message, body, id, packet) {

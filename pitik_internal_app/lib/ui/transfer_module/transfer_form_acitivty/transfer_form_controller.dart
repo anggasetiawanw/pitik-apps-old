@@ -94,8 +94,6 @@ class TransferFormController extends GetxController {
     Rx<List<OperationUnitModel?>> listDestinationOperationUnits = Rx<List<OperationUnitModel?>>([]);
     var isLoading = false.obs;
     var isEdit = false.obs;
-    Map<String, bool> mapListSource ={};
-    Map<String, bool> mapListDestination ={};
 
     TransferModel? transferModel;
     @override
@@ -117,6 +115,7 @@ class TransferFormController extends GetxController {
     @override
     void onReady() {
         super.onReady();
+
         if(isEdit.value){
             sourceField.controller.textSelected.value = transferModel!.sourceOperationUnit!.operationUnitName!;
             destinationField.controller.textSelected.value = transferModel!.targetOperationUnit!.operationUnitName!;
@@ -145,8 +144,10 @@ class TransferFormController extends GetxController {
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!,AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
+                    
+                    Map<String, bool> mapList3 ={};
                     for (var units in (body as ListOperationUnitsResponse).data) {
-                      mapListSource[units!.operationUnitName!] = false;
+                      mapList3[units!.operationUnitName!] = false;
                     }
 
                     for (var result in body.data) {
@@ -156,11 +157,10 @@ class TransferFormController extends GetxController {
                         sourceField.controller
                         ..enable()
                         ..hideLoading()
-                        ..generateItems(mapListSource);
+                        ..generateItems(mapList3);
                     });
 
                     if(isEdit.isTrue){
-                        
                         sourceSelect = listSourceOperationUnits.value.firstWhere((element) => element!.operationUnitName == transferModel!.sourceOperationUnit!.operationUnitName!);
                         if(sourceSelect != null){
                             skuField.controller.showLoading();
@@ -172,6 +172,7 @@ class TransferFormController extends GetxController {
                                 categorySKUField.controller.generateItems(mapList);
                                 categorySKUField.controller.items.refresh();
                                 categorySKUField.controller.enable();
+                                refresh();
                             });
                             Products? products = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name! == transferModel!.products![0]!.name);
                             Timer(const Duration(milliseconds: 500), () { 
@@ -181,10 +182,10 @@ class TransferFormController extends GetxController {
                                 skuField.controller.textSelected.value = transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name! : "";
                                 skuField.controller.hideLoading();
                                 skuField.controller.enable();
+                                refresh();
                             });
                         }
                     }
-                    isLoading.value = false;
                     sourceField.controller
                     .showLoading();
                 },
@@ -225,19 +226,22 @@ class TransferFormController extends GetxController {
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                    for (var units in (body as ListOperationUnitsResponse).data) {
-                      mapListDestination[units!.operationUnitName!] = false;
-                    }
 
+                     Map<String, bool> mapList ={};
+                    for (var units in (body as ListOperationUnitsResponse).data) {
+                      mapList[units!.operationUnitName!] = false;
+                    }
                     for (var result in body.data) {
                         listDestinationOperationUnits.value.add(result);
-                    }                    
-                    destinationField.controller
-                    ..enable()
-                    ..hideLoading();
-                    destinationField.controller.generateItems(mapListDestination);
+                    } 
+                    Timer(const Duration(milliseconds: 500), () {
+                        destinationField.controller
+                        ..enable()
+                        ..hideLoading()
+                        ..generateItems(mapList);
+                    });
                     isLoading.value = false;
-
+                    refresh();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

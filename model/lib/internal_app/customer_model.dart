@@ -1,4 +1,5 @@
 
+import 'package:model/branch.dart';
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
@@ -30,6 +31,7 @@ class Customer {
     double? latitude;
     String? name;
     String? operationUnitName;
+    String? branchId;
 
     @IsChild()
     Location? city;
@@ -49,9 +51,12 @@ class Customer {
     @IsChildren()
     List<Products?>? products;
 
+    @IsChild()
+    Branch? branch;
+
     Customer({this.id, this.businessName, this.businessType, this.phoneNumber, this.salespersonId, this.plusCode, this.provinceId, this.cityId, this.city,
               this.districtId, this.district, this.supplier, this.supplierDetail, this.salesperson, this.latestVisit, this.isArchived, this.latitude, this.longitude,
-              this.province, this.ownerName, this.products, this.name, this.operationUnitName});
+              this.province, this.ownerName, this.products, this.name, this.operationUnitName, this.branchId, this.branch});
 
     static Customer toResponseModel(Map<String, dynamic> map) {
         return Customer(
@@ -78,6 +83,8 @@ class Customer {
             products: Mapper.children<Products>(map['products']),
             name: map["name"],
             operationUnitName: map["operationUnitName"],
+            branchId: map["branchId"],
+            branch: Mapper.child<Branch>(map["branch"])
         );
     }
 }

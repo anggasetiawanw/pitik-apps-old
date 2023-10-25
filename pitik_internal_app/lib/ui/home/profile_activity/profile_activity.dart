@@ -147,7 +147,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                     margin: const EdgeInsets.only( left: 30, top: 24, right: 30),
                     child: Row(
                         children: [
-                            SvgPicture.asset(imagePath),
+                            SvgPicture.asset(imagePath, width: 24, height: 24,color: AppColors.primaryOrange,),
                             const SizedBox(width: 18,),
                             Text(title, style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),),
                            if(title != "Logout")...[
@@ -173,14 +173,15 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 thickness: 1.6,
             ),
           ),
-        listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
-        listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
-        listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
-        listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
-        listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
-        listComponent(Constant.invalidResponse(), "images/logout_icon.svg", "Logout"),
-          Expanded(child: Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style:AppTextStyle.grayTextStyle,),),),
-          const SizedBox(height: 80,)
+            Obx(() => Constant.isChangeBranch.isTrue ? listComponent(() => Get.toNamed(RoutePage.changeBranch), "images/branch_icon.svg", "Ganti Branch") : const SizedBox()),
+            listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
+            listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
+            listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
+            listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
+            listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
+            listComponent(Constant.invalidResponse(), "images/logout_icon.svg", "Logout"),
+            Expanded(child: Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style:AppTextStyle.grayTextStyle,),),),
+            const SizedBox(height: 80,)
         ],
       ),
     );

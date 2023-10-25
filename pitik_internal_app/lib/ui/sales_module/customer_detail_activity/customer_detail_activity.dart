@@ -256,6 +256,12 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                     : "-",
                 false),
             listDetail(
+                "Branch",
+                controller.customerDetail.value!.branch != null
+                    ? "${controller.customerDetail.value!.branch!.name}"
+                    : "-",
+                false),
+            listDetail(
                 "Lokasi Google Plus Code",
                 controller.customerDetail.value!.plusCode != null
                     ? "${controller.customerDetail.value!.plusCode}"

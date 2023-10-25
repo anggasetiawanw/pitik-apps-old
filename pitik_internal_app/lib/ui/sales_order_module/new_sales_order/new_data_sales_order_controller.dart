@@ -36,6 +36,7 @@ class NewDataSalesOrderController extends GetxController{
   NewDataSalesOrderController({required this.context});
 
   var isLoading = false.obs;
+  var isInbound = false.obs;
 
   late ButtonFill iyaOrderButton;
   late ButtonOutline tidakOrderButton;
@@ -60,7 +61,7 @@ class NewDataSalesOrderController extends GetxController{
 
   late SpinnerSearch spinnerCustomer  = SpinnerSearch(
     controller: GetXCreator.putSpinnerSearchController("customer"),
-    label: "Customer*",
+    label: isInbound.isTrue? "Customer(Optional)": "Customer*",
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
     items: const {
@@ -179,9 +180,21 @@ class NewDataSalesOrderController extends GetxController{
       }
   );
 
+    EditField efRemartk = EditField(
+    controller: GetXCreator.putEditFieldController("efRemartk"),
+    label: "Catatan",
+    hint: "Ketik disini",
+    alertText: "",
+    textUnit: "",
+    maxInput: 500,
+    inputType: TextInputType.multiline,
+    height: 160,
+    onTyping: (value, editField) {});
+
   @override
   void onInit() {
     super.onInit();
+    isInbound.value = Get.arguments;
     isLoading.value =true;
     spinnerOrderType.controller.setTextSelected("Non-LB");
     skuCard = SkuCardOrder(
@@ -544,8 +557,8 @@ class NewDataSalesOrderController extends GetxController{
         Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ? skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD? skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));
