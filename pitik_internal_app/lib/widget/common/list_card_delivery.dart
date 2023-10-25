@@ -69,7 +69,7 @@ class CardListDelivery extends StatelessWidget {
                   style: AppTextStyle.greyTextStyle,
                 ),
                 Text(
-                  isPenjualan ? "${order!.operationUnit!.operationUnitName}" :  "${transferModel!.sourceOperationUnit!.operationUnitName}",
+                  isPenjualan ? "${order!.operationUnit?.operationUnitName}" :  "${transferModel!.sourceOperationUnit!.operationUnitName}",
                   style: AppTextStyle.blackTextStyle
                       .copyWith(fontWeight: AppTextStyle.medium),
                 )
