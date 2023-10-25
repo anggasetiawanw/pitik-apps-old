@@ -213,11 +213,15 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
                                     order:controller.orderList.value[index]!,
                                     onTap: () {
                                         Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
-                                        controller.isLoading.value = true;
+                                        controller.isLoadData.value = true;
                                         controller.orderList.value.clear();
                                         controller.page.value = 1;
                                         Timer(const Duration(milliseconds: 500), () {
-                                            controller.getListOrders();
+                                            if(controller.isFilter.isTrue ){
+                                                controller.getSearchOrder();
+                                            } else {
+                                                controller.getListOrder();
+                                            }
                                         });
                                         });
                                     },

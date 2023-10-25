@@ -1,5 +1,7 @@
 // ignore_for_file: no_logic_in_create_state;, no_logic_in_create_state, must_be_immutable, use_key_in_widget_constructors, slash_for_doc_comments, depend_on_referenced_packages
 
+import 'dart:io';
+
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +78,11 @@ class EditField extends StatelessWidget {
     }
     @override
     Widget build(BuildContext context) {
+        if(Platform.isIOS){
+            if(inputType == TextInputType.number){
+                inputType = const TextInputType.numberWithOptions(decimal: true);
+            }
+        }
         Future.delayed(const Duration(milliseconds: 200), () {
             if (onInit) {
                 controller.textUnit.value = textUnit;
@@ -161,29 +168,26 @@ class EditField extends StatelessWidget {
                                                 ),
                                             ),
                                         ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: controller.showTooltip.isTrue
-                                                ? Container(
-                                                padding: const EdgeInsets.only(top: 4),
-                                                child: Row(
-                                                    children: [
-                                                        Padding(
-                                                            padding: const EdgeInsets.only(right: 8),
-                                                            child: SvgPicture.asset("images/error_icon.svg")
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                              controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                              style: const TextStyle(color: GlobalVar.red, fontSize: 12),
-                                                              overflow: TextOverflow.clip,
-                                                          ),
-                                                        )
-                                                    ],
-                                                )
+                                        controller.showTooltip.isTrue
+                                            ? Container(
+                                            padding: const EdgeInsets.only(top: 4),
+                                            child: Row(
+                                                children: [
+                                                    Padding(
+                                                        padding: const EdgeInsets.only(right: 8),
+                                                        child: SvgPicture.asset("images/error_icon.svg")
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                          controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
+                                                          style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                          overflow: TextOverflow.clip,
+                                                      ),
+                                                    )
+                                                ],
                                             )
-                                            : Container(),
                                         )
+                                        : Container()
                                     ],
                                 )
                             )

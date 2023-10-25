@@ -1,6 +1,8 @@
 
 import 'dart:async';
+
 import 'package:components/button_fill/button_fill.dart';
+import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
@@ -25,10 +27,6 @@ final _shorebirdCodePush = ShorebirdCodePush();
 class SplashController extends GetxController {
     var isUpdated = false.obs;
     @override
-    void onInit() async {
-        super.onInit();
-    }
-    @override
     void onReady() async {
         super.onReady();
         await UpdaterCodeMagic().checkForUpdate(
@@ -42,10 +40,6 @@ class SplashController extends GetxController {
                 isReadyToRestart: (isReadyToRestart) => Timer(const Duration(seconds: 1), () {showInformation();}),
         );
         
-    }
-    @override
-    void onClose() {
-        super.onClose();
     }
 
     void runSplash(){
@@ -113,10 +107,15 @@ class SplashController extends GetxController {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                                Container(
-                                    height: 32,
+                                SizedBox(
                                     width: 100,
-                                    color: Colors.transparent,
+                                    child: ButtonOutline(
+                                        controller:
+                                        GetXCreator.putButtonOutlineController("ButtonOutlineDialog"),
+                                        label: "Tutup",
+                                        onClick: () => Get.back()
+                                        
+                                    ),
                                 ),
                                 SizedBox(
                                     width: 100,
@@ -124,9 +123,7 @@ class SplashController extends GetxController {
                                         controller:
                                         GetXCreator.putButtonFillController("Dialog"),
                                         label: "Restart",
-                                        onClick: () => {
-                                            Restart.restartApp()
-                                        }
+                                        onClick: () => Restart.restartApp()
                                     ),
                                 ),
                             ],
