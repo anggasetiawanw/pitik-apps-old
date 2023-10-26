@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         Constant.setContext(context);
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(fontFamily: 'Montserrat_Medium', visualDensity: VisualDensity.adaptivePlatformDensity),
+            theme: ThemeData(fontFamily: 'Montserrat_Medium'),
             navigatorObservers: [ChuckerFlutter.navigatorObserver],
             initialRoute: AppRoutes.initial,
             initialBinding: BerandaBindings(context: context),

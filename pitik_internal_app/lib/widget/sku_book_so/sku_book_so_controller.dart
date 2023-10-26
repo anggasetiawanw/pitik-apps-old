@@ -63,7 +63,7 @@ class SkuBookSOController extends GetxController {
                 })
             );
 
-            if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD ||products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS || products[numberList]!.category!.name! == AppStrings.KARKAS)) {        
+            if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD ||products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS)) {        
                 jumlahEkor.value[numberList].controller.invisibleField();
                 jumlahkg.value[numberList].setInput(products[numberList]!.weight!.toString());
                 mapSumKg[numberList] = products[numberList]!.weight;

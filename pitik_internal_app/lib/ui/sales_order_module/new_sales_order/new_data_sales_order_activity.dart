@@ -140,7 +140,6 @@ class NewDataSalesOrder extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            controller.isInbound.isTrue ? controller.spSumber : const SizedBox(),
                             controller.spinnerCustomer,
                             controller.spinnerOrderType,
                             Obx(() => controller.produkType.value == "Non-LB" ? controller.skuCard : cardSKULB()),
@@ -301,7 +300,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                           ],
                                         ),
                                 )),
-                            controller.efRemartk,
+                            // controller.efRemartk,
                             const SizedBox(height: 100)
                           ],
                         ),

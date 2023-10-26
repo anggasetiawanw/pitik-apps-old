@@ -57,8 +57,8 @@ class SalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("btPenjualan"),
       label: "Buat Penjualan",
       onClick: () {
-        // backFromForm(false);
-        _showBottomDialog();
+        backFromForm(false);
+        // _showBottomDialog();
       });
 
   DateTimeField dtTanggalPenjualan = DateTimeField(
@@ -150,7 +150,7 @@ class SalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOrders,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY","ALLOCATED"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY"],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as SalesOrderListResponse).data.isNotEmpty) {
