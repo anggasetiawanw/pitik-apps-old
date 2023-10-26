@@ -124,7 +124,7 @@ class EditField extends StatelessWidget {
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
+                                                inputFormatters:  textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter] : inputType == TextInputType.number? [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);

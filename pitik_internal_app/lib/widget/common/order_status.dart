@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -21,59 +22,62 @@ class OrderStatus extends StatelessWidget{
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
           color: orderStatus == null ? AppColors.grey :
-          orderStatus == "READY_TO_DELIVER" ? const Color(0xFFFEF6D2) :
-          orderStatus == "DRAFT" ? const Color(0xFFFEEFD2) :
-          orderStatus == "CONFIRMED" ? const Color(0xFFD0F5FD) :
-          orderStatus == "CANCELLED" ? const Color(0xFFFDDFD1) :
-          orderStatus == "BOOKED" ? const Color(0xFFFAEDCF) :
-          orderStatus == "PICKED_UP" ? const Color(0xFFD0F5FD) :
-          orderStatus == "REJECTED" && returnStatus == "FULL"? const Color(0xFFFDDFD1) :
-          orderStatus == "RETURNED" ? const Color(0xFFD0F5FD) :
-          orderStatus == "RECEIVED" ? const Color(0xFFCEFCD8) :
-          orderStatus == "ON_DELIVERY" ? const Color(0xFFEAECF5) :
-          orderStatus == "DELIVERED" && soPage! ? const Color(0xFFCEFCD8) :
-          orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "REJECTED" ? const Color(0xFFFEF6D2) :
-          orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "REJECTED" ? const Color(0xFFFEF6D2) :
-          orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? const Color(0xFFCEFCD8) :
-          orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.readyToDeliver ? const Color(0xFFFEF6D2) :
+          orderStatus == EnumSO.draft ? const Color(0xFFFEEFD2) :
+          orderStatus == EnumSO.confirmed ? const Color(0xFFD0F5FD) :
+          orderStatus == EnumSO.allocated ? const Color(0xFFEAECF5) :
+          orderStatus == EnumSO.cancelled ? const Color(0xFFFDDFD1) :
+          orderStatus == EnumSO.booked ? const Color(0xFFFAEDCF) :
+          orderStatus == EnumSO.pickedUp ? const Color(0xFFD0F5FD) :
+          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedFull? const Color(0xFFFDDFD1) :
+          orderStatus == EnumSO.returned ? const Color(0xFFD0F5FD) :
+          orderStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.onDelivery ? const Color(0xFFEAECF5) :
+          orderStatus == EnumSO.delivered && soPage! ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const Color(0xFFFEF6D2) :
+          orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const Color(0xFFFEF6D2) :
+          orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
           const Color(0xffffffff),
           borderRadius: BorderRadius.circular(6)
       ),
       child: Center(
           child: Text(
             orderStatus == null ? "Draft" :
-            orderStatus == "READY_TO_DELIVER" ? "Siap Kirim" :
-            orderStatus == "CONFIRMED" ? "Terkonfirmasi" :
-            orderStatus == "BOOKED" ? "Dipesan" :
-            orderStatus == "CANCELLED" ? "Dibatalkan" :
-            orderStatus == "DRAFT" ? "Draft" :
-            orderStatus == "PICKED_UP" ? "Dikirim" :
-            orderStatus == "RETURNED" ? "Dikembalikan" :
-            orderStatus== "ON_DELIVERY" ? "Perjalanan" :
-            orderStatus == "DELIVERED" && soPage!? "Terkirim" :
-            orderStatus == "REJECTED" && returnStatus == "FULL" ? "Ditolak" :
-            orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "REJECTED" ? "Terima Sebagian" :
-            orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? "Diterima" :
-            orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "REJECTED" ? "Terima Sebagian" :
-            orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? "Diterima" :
-            "Draft",
+            orderStatus == EnumSO.readyToDeliver? "Siap Kirim" :
+            orderStatus == EnumSO.delivered ? "Terkonfirmasi" :
+            orderStatus== EnumSO.allocated ? "Teralokasi" :
+            orderStatus == EnumSO.booked ? "Dipesan" :
+            orderStatus == EnumSO.cancelled ? "Dibatalkan" :
+            orderStatus == EnumSO.draft ? "Draft" :
+            orderStatus == EnumSO.pickedUp ? "Dikirim" :
+            orderStatus == EnumSO.returned ? "Dikembalikan" :
+            orderStatus== EnumSO.onDelivery ? "Perjalanan" :
+            orderStatus == EnumSO.delivered && soPage!? "Terkirim" :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull? "Ditolak" :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terima Sebagian" :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? "Diterima" :
+            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terima Sebagian" :
+            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? "Diterima" :
+           "Draft",
 
             style: orderStatus == null ? AppTextStyle.blackTextStyle :
-            orderStatus == "READY_TO_DELIVER" ? const TextStyle(color: Color(0xFFF4B420)) :
-            orderStatus == "DRAFT" ? AppTextStyle.primaryTextStyle :
-            orderStatus == "CONFIRMED" ? const TextStyle(color: Color(0xFF198BDB)) :
-            orderStatus == "CANCELLED" ? const TextStyle(color: Color(0xFFDD1E25)) :
-            orderStatus == "BOOKED" ? const TextStyle(color: Color(0xFFAB6116)) :
-            orderStatus == "PICKED_UP" ? const TextStyle(color: Color(0xFF198BDB)) :
-            orderStatus == "REJECTED" && returnStatus == "FULL" ? const TextStyle(color: Color(0xFFDD1E25)) :
-            orderStatus == "RETURNED" ? const TextStyle(color: Color(0xFF198BDB)) :
-            orderStatus == "RECEIVED" ? const TextStyle(color: Color(0xFF14CB82)) :
-            orderStatus== "ON_DELIVERY" ? const TextStyle(color: Color(0xFF6938EF)) :
-            orderStatus == "DELIVERED" && soPage! ? const TextStyle(color: Color(0xFF14CB82)) :
-            orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "REJECTED"  ? const TextStyle(color: Color(0xFFF4B420)) :
-            orderStatus == "REJECTED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? const TextStyle(color: Color(0xFF14CB82))  :
-            orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "REJECTED"  ? const TextStyle(color: Color(0xFFF4B420)) :
-            orderStatus == "DELIVERED" && returnStatus == "PARTIAL" && grStatus == "RECEIVED" ? const TextStyle(color: Color(0xFF14CB82))  :
+            orderStatus == EnumSO.readyToDeliver? const TextStyle(color: Color(0xFFF4B420)) :
+            orderStatus == EnumSO.draft ? AppTextStyle.primaryTextStyle :
+            orderStatus == EnumSO.delivered ? const TextStyle(color: Color(0xFF198BDB)) :
+            orderStatus == EnumSO.cancelled ? const TextStyle(color: Color(0xFFDD1E25)) :
+            orderStatus== EnumSO.allocated ? const TextStyle(color: Color(0xFF6938EF)) :
+            orderStatus == EnumSO.booked ? const TextStyle(color: Color(0xFFAB6116)) :
+            orderStatus == EnumSO.pickedUp ? const TextStyle(color: Color(0xFF198BDB)) :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull? const TextStyle(color: Color(0xFFDD1E25)) :
+            orderStatus == EnumSO.returned ? const TextStyle(color: Color(0xFF198BDB)) :
+            orderStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82)) :
+            orderStatus== EnumSO.onDelivery ? const TextStyle(color: Color(0xFF6938EF)) :
+            orderStatus == EnumSO.delivered && soPage! ? const TextStyle(color: Color(0xFF14CB82)) :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const TextStyle(color: Color(0xFFF4B420)) :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82))  :
+            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const TextStyle(color: Color(0xFFF4B420)) :
+            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82))  :
 
             const TextStyle(color: Color(0xFF14CB82)),
           )
