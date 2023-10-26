@@ -236,8 +236,8 @@ class EditDataSalesOrderController extends GetxController{
   
   refreshtotalPurchase(){
         Products? selectProduct = listProduct.value.firstWhere((element) => element!.name! == spinnerSku.controller.textSelected.value);
-        double minValue = selectProduct!.minValue! * editFieldJumlahAyam.getInputNumber()!;
-        double maxValue = selectProduct.maxValue! * editFieldJumlahAyam.getInputNumber()!;
+        double minValue = selectProduct!.minValue! * (editFieldJumlahAyam.getInputNumber()??0);
+        double maxValue = selectProduct.maxValue! * (editFieldJumlahAyam.getInputNumber()??0);
         sumNeededMin.value = minValue;
         sumNeededMax.value = maxValue;
         sumChick.value = (editFieldJumlahAyam.getInputNumber()??0).toInt();
@@ -281,7 +281,7 @@ class EditDataSalesOrderController extends GetxController{
             Timer(const Duration(milliseconds: 500), () {
                 CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value);
                 skuCardRemark.controller.getLoadSku(selectCategory!, j);
-                if (skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH ||skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS) {
+                if (skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH ||skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD) {
                         skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
                         skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
                         skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.enable();
@@ -341,7 +341,7 @@ class EditDataSalesOrderController extends GetxController{
             Timer(const Duration(milliseconds: 500), () {
                 CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerCategories.value[j].controller.textSelected.value);
                 skuCard.controller.getLoadSku(selectCategory!, j);
-                if (skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH ||skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS) {
+                if (skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH ||skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS ||skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD) {
                         skuCard.controller.editFieldJumlahAyam.value[j].controller.enable();
                         skuCard.controller.editFieldPotongan.value[j].controller.enable();
                   }
@@ -634,8 +634,8 @@ class EditDataSalesOrderController extends GetxController{
         }
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
-          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ?skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
-          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS ?skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ?skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ?skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber()!.toInt():0,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber(),
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber(),
         ));

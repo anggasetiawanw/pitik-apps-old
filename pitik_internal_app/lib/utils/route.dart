@@ -14,6 +14,9 @@ import 'package:pitik_internal_app/ui/delivery_module/delivery_return_so/deliver
 import 'package:pitik_internal_app/ui/home/dashboard_activity/dashboard_activity.dart';
 import 'package:pitik_internal_app/ui/home/dashboard_activity/dashboard_controller.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/about_us_screen.dart';
+import 'package:pitik_internal_app/ui/home/profile_activity/change_branch/change_branch.dart';
+import 'package:pitik_internal_app/ui/home/profile_activity/change_branch/change_branch_controller.dart';
+import 'package:pitik_internal_app/ui/home/profile_activity/developer/developer_activity.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/help_screen.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/license_screen.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/privacy_screen.dart';
@@ -110,6 +113,8 @@ class RoutePage {
     static const String termPage ="/term";
     static const String aboutUsPage ="/about-us";
     static const String helpPage ="/help";
+    static const String changeBranch ="/changeBranch";
+    static const String developer ="/developer";
 
     //Sales Module
     static const String homePageCustomer = "/homeCustomer";
@@ -196,6 +201,7 @@ class AppRoutes {
         GetPage(name: RoutePage.newDataCustomer,page: () => const NewData(),bindings: [ NewDataBindings(context: Constant.getContext()),],),
         GetPage(name: RoutePage.visitCustomer,page: () => const VisitActivity(),binding: VisitBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.editCustomer,page: () => const EditData(),binding: EditDataBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.developer,page: () => const DeveloperActivity()),
 
         //Purchase Module
         GetPage(name: RoutePage.newDataPurchase,page: () => const NewDataPurchase(),bindings: [ NewDataPurchaseBindings(context: Constant.getContext()),],),
@@ -227,6 +233,7 @@ class AppRoutes {
         GetPage(name: RoutePage.termPage, page: ()=> const TermScreen()),
         GetPage(name: RoutePage.aboutUsPage, page: ()=> const AboutUsScreen()),
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
+        GetPage(name: RoutePage.changeBranch, page: ()=> const ChangeBranchActivity(), binding: ChangeBranchBindings(context: Constant.getContext())),
 
         //Delivery Module Internal
         GetPage(name: RoutePage.homePageDelivery, page: ()=> DeliveryHomeActivity(), binding: DeliveryHomeBindings(context: Constant.getContext())),

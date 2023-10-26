@@ -44,7 +44,22 @@ class BerandaController extends GetxController {
         checkVersion(Get.context!);
         getRole();
     }
-
+    void checkRoleBranch(){
+        String role = FirebaseRemoteConfig.instance.getString("role_change");
+        List<String> roles = role.split(",");
+        for(var role in Constant.profileUser!.roles!){
+            for(var roleBranch in roles){
+                if(role!.name == roleBranch){
+                    Constant.isChangeBranch.value = true;
+                    Constant.isChangeBranch.refresh();
+                }
+                if(role.name == "developer"){
+                    Constant.isDeveloper.value = true;
+                    Constant.isDeveloper.refresh();
+                }
+            }
+        }
+    }
     void getRole(){
         Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: [Constant.auth!.token,Constant.auth!.id, Constant.xAppId!], 
         listener: ResponseListener(
@@ -90,6 +105,7 @@ class BerandaController extends GetxController {
             }
          }
         module.refresh();
+        checkRoleBranch();
         isLoading.value = false;
     }
 

@@ -203,9 +203,9 @@ class SkuCardPurchaseInternalController extends GetxController{
                 spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS) {
                     List<Products?> listSkuSelect = listSku.value[idx]!;
                         if(listSkuSelect.isNotEmpty){
-                            Products? selectProduct = listSkuSelect.firstWhere((element) => element!.name! == spinnerSku.value[idx].controller.textSelected.value);
-                            double minValue = selectProduct!.minValue! * (mapSumChick[idx] ?? 0);
-                            double maxValue = selectProduct.maxValue! * (mapSumChick[idx] ?? 0);
+                            Products? selectProduct = listSkuSelect.firstWhere((element) => element?.name == spinnerSku.value[idx].controller.textSelected.value,);
+                            double minValue = (selectProduct?.minValue ?? 0) * (mapSumChick[idx] ?? 0);
+                            double maxValue = (selectProduct?.maxValue ?? 0) * (mapSumChick[idx] ?? 0);
                             sumNeededMin.value += minValue;
                             sumNeededMax.value += maxValue;
                             sumChick.value += (mapSumChick[idx] ?? 0).toInt();

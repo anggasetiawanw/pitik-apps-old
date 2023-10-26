@@ -13,12 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/strings.dart';
 import 'package:google_plus_code/google_plus_code.dart' as gpc;
+import 'package:model/branch.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
+import 'package:model/response/%20branch_response.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/location_list_response.dart';
 import 'package:model/response/internal_app/salesperson_list_response.dart';
@@ -149,6 +151,17 @@ class EditDataController extends GetxController {
         maxInput: 100,
         onTyping: (text, editField) {},
     );
+    
+    SpinnerSearch spBranch = SpinnerSearch(
+        controller: GetXCreator.putSpinnerSearchController("spBranch"),
+        label: "Branch*",
+        hint: "Pilih Branch",
+        alertText: "Branch harus dipilih!",
+        items: const {},
+        onSpinnerSelected: (text) {
+            
+        },
+    );
 
     late SkuCard skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
 
@@ -158,6 +171,7 @@ class EditDataController extends GetxController {
     int limit = 10;
     var isLoading = false.obs;
     var isLoadApi = false.obs;
+    var isSalesLead = false.obs;
 
     late Customer customer;
 
@@ -168,6 +182,7 @@ class EditDataController extends GetxController {
     Rx<List<Location?>> district = Rx<List<Location>>([]);
   //   late SkuCardController skuListener;
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
+    Rx<List<Branch?>> listBranch = Rx<List<Branch?>>([]);
 
     @override
     void onInit() {
@@ -211,13 +226,65 @@ class EditDataController extends GetxController {
         isLoading.value = true;
         getProvince();
         getProduct();
+        getBranch();
         loadData(customer);
         for(var role in Constant.profileUser!.roles!){
-            print("role ${role!.name}");
-            if(role.name == AppStrings.sales_lead){
+            if(role!.name == AppStrings.sales_lead){
                 getSalesList();
+                isSalesLead.value = true;
             }
         }
+    }
+    
+    void getBranch(){
+        AuthImpl().get().then((auth) => {
+            if (auth != null){
+                spBranch.controller.showLoading(),
+                Service.push(
+                    apiKey: "api",
+                    service: ListApi.getBranch,
+                    context: context,
+                    body: [
+                        'Bearer ${auth.token}',
+                        auth.id,
+                        Constant.xAppId,
+                    ],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            for (var result in (body as ListBranchResponse).data) {
+                                listBranch.value.add(result);
+                            }
+
+                            Map<String, bool> mapList = {};
+                            for (var branch in body.data) {
+                                mapList[branch!.name!] = false;
+                            }
+                            spBranch.controller.generateItems(mapList);
+                            spBranch.controller.hideLoading();
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                            spBranch.controller.hideLoading();
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                            spBranch.controller.hideLoading();
+                        },
+                            onTokenInvalid: () => Constant.invalidResponse()))
+                    }
+            else
+                {Constant.invalidResponse()}
+        });
     }
 
 
@@ -233,6 +300,12 @@ class EditDataController extends GetxController {
         spinnerKota.controller.disable();
         spinnerKecamatan.controller.setTextSelected(custArg.district!.name!);
         spinnerKecamatan.controller.disable();
+        if(custArg.branch!=null){
+            spBranch.controller.setTextSelected(custArg.branch!.name!);
+        } else {
+            spBranch.controller.setTextSelected("");
+            // spBranch.controller.disable();
+        }
 
         if (custArg.supplier!.isNotEmpty) {
             spinnerSupplier.controller.setTextSelected(custArg.supplier!);
@@ -502,6 +575,18 @@ class EditDataController extends GetxController {
                 return ret = [false, ""];
             }
         }
+        if(spBranch.controller.textSelected.isEmpty){
+            spBranch.controller.showAlert();
+            Scrollable.ensureVisible(spBranch.controller.formKey.currentContext!);
+            return ret = [false, ""];
+        }
+        if(isSalesLead.isTrue){
+            if(spinnerPicSales.controller.textSelected.isEmpty){
+                spinnerPicSales.controller.showAlert();
+                Scrollable.ensureVisible(spinnerPicSales.controller.formKey.currentContext!);
+                return ret = [false, ""];
+            }
+        }
 
         if (spinnerProvince.controller.textSelected.value.isEmpty) {
             spinnerProvince.controller.showAlert();
@@ -573,7 +658,7 @@ class EditDataController extends GetxController {
                 Products? selectProduct;
                 if(skuCard.controller.listProduct.value.isNotEmpty){
                     for(int j =0 ; j < listProductTemp.length; j++){
-                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value,orElse: ()=> null );
+                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value);
                     }
                     selectProduct ??= customer.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 } else {
@@ -587,6 +672,8 @@ class EditDataController extends GetxController {
             }
 
         Location? provinceSelect;
+        Branch? branchSelected = listBranch.value.firstWhere((element) => element!.name == spBranch.controller.textSelected.value);
+
 
         if (customer.province!.name != spinnerProvince.controller.textSelected.value) {
             provinceSelect = province.value.firstWhere((element) =>
@@ -610,9 +697,11 @@ class EditDataController extends GetxController {
             );
         }
 
-        SalesPerson? salesSelect = listSalesperson.value.firstWhere((element) =>
-            element!.email == spinnerPicSales.controller.textSelected.value,
-        );
+        
+        SalesPerson? salesSelect;
+        if(isSalesLead.isTrue){
+            salesSelect = listSalesperson.value.firstWhere((element) =>element!.email == spinnerPicSales.controller.textSelected.value,);
+        }
 
         return Customer(
             businessName: editNamaBisnis.getInput(),
@@ -621,6 +710,7 @@ class EditDataController extends GetxController {
             phoneNumber: editNomorTelepon.getInput(),
             salespersonId: salesSelect != null ? salesSelect.id : customer.salesperson!.id,
             plusCode: editLokasiGoogle.getInput(),
+            branchId: branchSelected != null ? branchSelected.id : customer.branch!.id,
             provinceId: provinceSelect != null ? provinceSelect.id! : customer.province!.id,
             cityId: citySelect != null ? citySelect.id! : customer.city!.id,
             districtId: districSelect != null ? districSelect.id! : customer.district!.id,
@@ -703,7 +793,7 @@ class EditDataController extends GetxController {
                         'Bearer ${auth.token}',
                         auth.id,
                         Constant.xAppId!,
-                        "sales",
+                        "sales,sales lead",
                         1,
                         0
                     ],

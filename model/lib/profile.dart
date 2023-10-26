@@ -1,3 +1,4 @@
+import 'package:model/branch.dart';
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/module_model.dart';
 import 'package:model/internal_app/role_model.dart';
@@ -61,7 +62,10 @@ class Profile extends BaseEntity {
     @IsChild()
     ModuleModel? modules;
 
-    Profile({this.id, this.userCode, this.userName, this.fullName, this.email, this.phoneNumber, this.userType, this.status = 1, this.refOwnerId, this.createdDate, this.cmsId, this.roles, this.modules, this.name, this.waNumber, this.role, this.organizationId, this.organizationName});
+    @IsChild()
+    Branch? branch;
+
+    Profile({this.id, this.userCode, this.userName, this.fullName, this.email, this.phoneNumber, this.userType, this.status = 1, this.refOwnerId, this.createdDate, this.cmsId, this.roles, this.modules, this.name, this.waNumber, this.role, this.organizationId, this.organizationName, this.branch});
 
     @override
     Profile toModelEntity(Map<String, dynamic> map) {
@@ -104,6 +108,7 @@ class Profile extends BaseEntity {
             role: map['role'],
             organizationId: map['organizationId'],
             organizationName: map['organizationName'],
+            branch: Mapper.child<Branch>(map['branch']),
         );
     }
 }

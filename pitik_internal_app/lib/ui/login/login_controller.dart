@@ -146,9 +146,9 @@ class LoginActivityController extends GetxController {
                 },
                 onTokenInvalid: Constant.invalidResponse()
             ));
-        } catch (err, st) {
+        } catch (err) {
             isLoading.value = false;
-            Get.snackbar("Pesan", "$st",
+            Get.snackbar("Pesan", "Terjadi Kesalah Internal, $err",
                         duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
         }
     }
@@ -156,39 +156,76 @@ class LoginActivityController extends GetxController {
 
     void loginWithApple() async {
         try {
-            final _ = await SignInWithApple.getAppleIDCredential(
+            final credentials = await SignInWithApple.getAppleIDCredential(
                 scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
             );
+            String appId = FirebaseRemoteConfig.instance.getString("appId");
+            if(appId.isEmpty) {
+                appId = FirebaseRemoteConfig.instance.getString("appId");
+            }
+            if(await XAppIdImpl().getById(appId) ==null ) XAppIdImpl().save(XAppId(appId: appId));
+            Constant.xAppId = appId;
+            // ignore: use_build_context_synchronously
+            Service.push(apiKey: 'userApi', service: ListApi.loginWithApple, context: context, body: [credentials.identityToken], 
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) {
+                    Constant.auth = (body as AuthResponse).data;
+                    AuthImpl().save(body.data);
+                    Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: [body.data!.token, body.data!.id, appId], 
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            ProfileImpl().save((body as ProfileResponse).data);
+                            Constant.profileUser = body.data;
 
-            // final signInWithAppleEndpoint = Uri(
-            //     scheme: 'https',
-            //     host: 'flutter-sign-in-with-apple-example.glitch.me',
-            //     path: '/sign_in_with_apple',
-            //     queryParameters: <String, String>{
-            //         'code': credential.authorizationCode,
-            //         if (credential.givenName != null) 'firstName': credential.givenName!,
-            //         if (credential.familyName != null) 'lastName': credential.familyName!,
-            //         'useBundleId': 'true',
-            //         if (credential.state != null) 'state': credential.state!,
-            //     },
-            // );
-
-            // final _ = await http.Client().post(
-            //     signInWithAppleEndpoint,
-            // );
-            Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                            Get.offAllNamed(RoutePage.homePage);
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                duration: const Duration(seconds: 5),
+                                backgroundColor: Colors.red,
+                            );
+                            isLoading.value = false;
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi kesalahan internal",
+                                snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
-                snackPosition: SnackPosition.TOP,
-            );
-        } catch (e) {
-            Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
-                        duration: const Duration(seconds: 5),
-                snackPosition: SnackPosition.TOP,
-            );
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                            );
+                            isLoading.value = false;
+                        },
+                        onTokenInvalid: () {}
+                    ));
+                },
+                onResponseFail: (code, message, body, id, packet) {
+                    isLoading.value = false;
+                    Get.snackbar(
+                        "Pesan",
+                        "Fail, ${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    isLoading.value = false;
+                    Get.snackbar("Pesan", "Error, $stacktrace",
+                        duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
+                },
+                onTokenInvalid: Constant.invalidResponse()
+            ));
+        } catch (err) {
+            isLoading.value = false;
+            Get.snackbar("Pesan", "Terjadi Kesalahan Internal, $err",
+                        duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
         }
     }
 

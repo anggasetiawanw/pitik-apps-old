@@ -35,7 +35,7 @@ class StockOpnameTwoFieldController extends GetxController {
 
         product.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
         for (var element in product.productItems!) {
-            efSku.value.add(EditFieldTwoRow(controller: GetXCreator.putEditFieldTwoRowController(element!.name!), label: "${element.name!}*", hint: "0", alertText: "Kolom ini harus di isi", textUnit1: product.quantityUOM!,textUnit2: product.weightUOM!, maxInput: 50, onTyping1: (value,control){}, onTyping2: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
+            efSku.value.add(EditFieldTwoRow(controller: GetXCreator.putEditFieldTwoRowController(element!.name!), label: element.name!, hint: "0", alertText: "Kolom ini harus di isi", textUnit1: product.quantityUOM!,textUnit2: product.weightUOM!, maxInput: 50, onTyping1: (value,control){}, onTyping2: (value,control){}, action: TextInputAction.next,inputType: TextInputType.number,));
             efSku.refresh();
         }
     }

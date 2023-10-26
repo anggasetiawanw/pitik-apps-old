@@ -51,6 +51,7 @@ class EditData extends GetView<EditDataController> {
                                     controller.editNamaPemilik,
                                     controller.editNomorTelepon,
                                     Obx(() => controller.isLoading.isTrue ? controller.spinnerPicSales : controller.spinnerPicSales),
+                                    controller.spBranch,
                                     controller.editLokasiGoogle,
                                     Obx(() => controller.isLoadApi.isTrue ? controller.spinnerProvince : controller.spinnerProvince),
                                     Obx(() => controller.isLoadApi.isTrue ? controller.spinnerKota : controller.spinnerKota),

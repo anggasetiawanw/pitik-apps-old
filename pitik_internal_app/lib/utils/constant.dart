@@ -21,6 +21,8 @@ class Constant {
     static UserGoogle? userGoogle;
     static Profile? profileUser;
     static String? xAppId;
+    static var isChangeBranch = false.obs;
+    static var isDeveloper = false.obs;
     static const double bottomSheetMargin = 24;
 
     static set deviceId(String deviceId) {
