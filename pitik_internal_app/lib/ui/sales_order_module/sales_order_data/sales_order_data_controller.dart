@@ -150,7 +150,7 @@ class SalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOrders,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY","ALLOCATED"],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as SalesOrderListResponse).data.isNotEmpty) {

@@ -33,6 +33,10 @@ class Order {
   String? returnReason;
   String? grStatus;
   String? category;
+  String? driverId;
+  String? remarks;
+  String? driverRemarks;
+  String? deliveryTime;
 
   @IsChild()
   Customer? customer;
@@ -53,7 +57,41 @@ class Order {
   @IsChild()
   SalesPerson? userCreator;
 
-  Order({this.id, this.customerId, this.status, this.operationUnitId, this.operationUnit, this.salespersonId, this.createdDate, this.customer, this.products, this.salesperson, this.modifiedDate, this.userModifier, this.code, this.returnStatus, this.driver, this.type, this.productNotes, this.totalWeight, this.totalQuantity, this.totalPrice, this.paymentMethod, this.paymentAmount, this.latitude, this.longitude, this.returnedProducts, this.reason, this.returnReason, this.grStatus, this.category, this.userCreator});
+  Order(
+      {this.id,
+      this.customerId,
+      this.status,
+      this.operationUnitId,
+      this.operationUnit,
+      this.salespersonId,
+      this.createdDate,
+      this.customer,
+      this.products,
+      this.salesperson,
+      this.modifiedDate,
+      this.userModifier,
+      this.code,
+      this.returnStatus,
+      this.driver,
+      this.type,
+      this.productNotes,
+      this.totalWeight,
+      this.totalQuantity,
+      this.totalPrice,
+      this.paymentMethod,
+      this.paymentAmount,
+      this.latitude,
+      this.longitude,
+      this.returnedProducts,
+      this.reason,
+      this.returnReason,
+      this.grStatus,
+      this.category,
+      this.userCreator,
+      this.driverId,
+      this.remarks,
+      this.driverRemarks,
+      this.deliveryTime});
 
   static Order toResponseModel(Map<String, dynamic> map) {
     if (map['totalWeight'] is int) {
@@ -93,6 +131,10 @@ class Order {
       grStatus: map['grStatus'],
       category: map['category'],
       userCreator: Mapper.child<SalesPerson>(map['userCreator']),
+      driverId: map['driverId'],
+      remarks: map['remarks'],
+      driverRemarks: map['driverRemarks'],
+      deliveryTime: map['deliveryTime'],
     );
   }
 }

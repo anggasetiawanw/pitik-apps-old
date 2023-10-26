@@ -15,10 +15,12 @@ import 'package:global_variable/strings.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
-import 'package:model/internal_app/order_request.dart';
+import 'package:model/internal_app/operation_unit_model.dart';
+import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/customer_list_response.dart';
+import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
@@ -58,6 +60,7 @@ class NewDataSalesOrderController extends GetxController {
   Rx<Map<String, bool>> mapListSku = Rx<Map<String, bool>>({});
   Rx<Map<String, bool>> mapListRemark = Rx<Map<String, bool>>({});
   Rx<Map<int, List<Products?>>> listSku = Rx<Map<int, List<Products?>>>({});
+  Rx<List<OperationUnitModel?>> listSource = Rx<List<OperationUnitModel>>([]);
 
   late SpinnerSearch spinnerCustomer = SpinnerSearch(
     controller: GetXCreator.putSpinnerSearchController("customer"),
@@ -65,11 +68,16 @@ class NewDataSalesOrderController extends GetxController {
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
     items: const {},
-    onSpinnerSelected: (text) {
-      if (text.isNotEmpty) {
-        // editNamaSupplier.controller.visibleField();
-      }
-    },
+    onSpinnerSelected: (text) {},
+  );
+
+  late SpinnerSearch spSumber = SpinnerSearch(
+    controller: GetXCreator.putSpinnerSearchController("spSumber"),
+    label: "Sumber*",
+    hint: "Pilih salah satu",
+    alertText: "Sumber harus dipilih!",
+    items: const {},
+    onSpinnerSelected: (text) {},
   );
   late SpinnerField spinnerOrderType = SpinnerField(
     controller: GetXCreator.putSpinnerFieldController("orderType"),
@@ -213,6 +221,9 @@ class NewDataSalesOrderController extends GetxController {
     editFieldJumlahAyam.controller.disable();
     editFieldKebutuhan.controller.disable();
     editFieldHarga.controller.disable();
+    if (isInbound.isTrue) {
+      getListSource();
+    }
     getListCustomer();
     getCategorySku();
     super.onReady();
@@ -413,11 +424,66 @@ class NewDataSalesOrderController extends GetxController {
             onTokenInvalid: () {}));
   }
 
+  void getListSource() {
+    spSumber.controller
+      ..disable()
+      ..setTextSelected("Loading...")
+      ..showLoading();
+    Service.push(
+        service: ListApi.getListOperationUnits,
+        context: context,
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) {
+              Map<String, bool> mapList = {};
+              for (var units in (body as ListOperationUnitsResponse).data) {
+                mapList[units!.operationUnitName!] = false;
+              }
+              Timer(const Duration(milliseconds: 500), () {
+                spSumber.controller.generateItems(mapList);
+              });
+              for (var result in body.data) {
+                listSource.value.add(result);
+              }
+              spSumber.controller
+                ..enable()
+                ..setTextSelected("")
+                ..hideLoading();
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              spSumber.controller
+                ..setTextSelected("")
+                ..hideLoading();
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "Terjadi kesalahan internal",
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              spSumber.controller
+                ..setTextSelected("")
+                ..hideLoading();
+            },
+            onTokenInvalid: Constant.invalidResponse()));
+  }
+
   void saveOrder() {
     List ret = produkType.value == "LB" ? validationLb() : validationNonLb();
     if (ret[0]) {
       isLoading.value = true;
-      OrderRequest purchasePayload = generatePayload();
+      Order purchasePayload = generatePayload();
       Service.push(
         service: ListApi.createSalesOrder,
         context: context,
@@ -457,7 +523,7 @@ class NewDataSalesOrderController extends GetxController {
     }
   }
 
-  OrderRequest generatePayload() {
+  Order generatePayload() {
     List<Products?> productList = [];
     List<Products?> lbProductList = [];
     List<Products?> remarkProductList = [];
@@ -468,18 +534,26 @@ class NewDataSalesOrderController extends GetxController {
     } else {
       productList = _generateProductList();
     }
+    OperationUnitModel? sourceSelected;
+    Customer? customerSelected;
+    if (spinnerCustomer.controller.textSelected.value.isNotEmpty) {
+      customerSelected = listCustomer.value.firstWhere(
+        (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
+      );
+    }
+    if (spSumber.controller.textSelected.value.isNotEmpty && isInbound.isTrue) {
+      sourceSelected = listSource.value.firstWhere((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
+    }
 
-    Customer? customerSelected = listCustomer.value.firstWhere(
-      (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
-    );
-
-    return OrderRequest(
-      customerId: customerSelected?.id ?? "", // Ganti dengan nilai default jika tidak ada customer terpilih
+    return Order(
+      customerId: customerSelected?.id, // Ganti dengan nilai default jika tidak ada customer terpilih
+      operationUnitId: sourceSelected?.id,
       products: produkType.value == "LB" ? lbProductList : productList,
       productNotes: produkType.value == "LB" ? remarkProductList : null,
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
+      remarks: efRemartk.getInput(),
     );
   }
 
@@ -568,9 +642,13 @@ class NewDataSalesOrderController extends GetxController {
 
   List validationNonLb() {
     List ret = [true, ""];
-    if (spinnerCustomer.controller.textSelected.value.isEmpty) {
+    if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
       spinnerCustomer.controller.showAlert();
       Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
+      return ret = [false, ""];
+    } else if (spSumber.controller.textSelected.value.isEmpty && isInbound.isTrue) {
+      spSumber.controller.showAlert();
+      Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
 
@@ -580,9 +658,13 @@ class NewDataSalesOrderController extends GetxController {
 
   List validationLb() {
     List ret = [true, ""];
-    if (spinnerCustomer.controller.textSelected.value.isEmpty) {
+    if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
       spinnerCustomer.controller.showAlert();
       Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
+      return ret = [false, ""];
+    } else if (spSumber.controller.textSelected.value.isEmpty && isInbound.isTrue) {
+      spSumber.controller.showAlert();
+      Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
     } else if (spinnerCategories.controller.textSelected.value.isEmpty) {
       spinnerCategories.controller.showAlert();

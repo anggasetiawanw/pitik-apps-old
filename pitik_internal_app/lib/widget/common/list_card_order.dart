@@ -121,11 +121,7 @@ class CardListOrder extends StatelessWidget {
                 children: [
                   Text("Total Ekor : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
-                    order.products!.isEmpty
-                        ? "-"
-                        : order.products!.length > 1
-                            ? "${order.products![0]!.name} and ${order.products!.length - 1} lainnya"
-                            : "${order.products![0]!.name}",
+                    order.totalQuantity == null ? "-" : "${order.totalQuantity} Ekor",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),

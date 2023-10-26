@@ -14,6 +14,7 @@ import 'package:open_store/open_store.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/role.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 class BerandaController extends GetxController {
     BuildContext context;
@@ -53,9 +54,19 @@ class BerandaController extends GetxController {
                     Constant.isChangeBranch.value = true;
                     Constant.isChangeBranch.refresh();
                 }
-                if(role.name == "developer"){
+                if(role.name == RoleEnum.developer){
                     Constant.isDeveloper.value = true;
                     Constant.isDeveloper.refresh();
+                }
+                if(role.name == RoleEnum.shopkeeper){
+                    print("Iam Shopkeeper");
+                    Constant.isShopKepper.value = true;
+                    Constant.isShopKepper.refresh();
+                }
+                if(role.name == RoleEnum.scRelation){
+                    print("Iam SC Relation");
+                    Constant.isScRelation.value = true;
+                    Constant.isScRelation.refresh();
                 }
             }
         }
