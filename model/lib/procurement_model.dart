@@ -38,6 +38,7 @@ class Procurement {
     String? branchTargetId;
     String? subcategoryCode;
     String? subcategoryName;
+    String? uom;
     String? productName;
     double? quantity;
     String? datePlanned;
@@ -65,7 +66,7 @@ class Procurement {
 
     Procurement({this.id, this.poCode, this.purchaseRequestErpCode, this.type, this.deliveryDate, this.status, this.statusText, this.farmingCycleId, this.requestSchedule, this.erpCode, this.arrivalDate,
                  this.description, this.isFulfilled, this.notes, this.coopTargetName, this.coopSourceName, this.branchSourceName, this.branchTargetName, this.coopId, this.coopSourceId, this.coopTargetId,
-                 this.branchSourceId, this.branchTargetId, this.subcategoryCode, this.subcategoryName, this.productName, this.quantity, this.datePlanned, this.internalOvkTransferRequestId, this.logisticOption,
+                 this.branchSourceId, this.branchTargetId, this.subcategoryCode, this.subcategoryName, this.uom, this.productName, this.quantity, this.datePlanned, this.internalOvkTransferRequestId, this.logisticOption,
                  this.route, this.mergedLogistic, this.mergedCoopId, this.mergedLogisticCoopName, this.mergedLogisticFarmingCycleDays, this.isTransferRequest, this.details = const [],
                  this.goodsReceipts = const [], this.photos = const [], this.internalOvkTransferRequest});
 
@@ -96,6 +97,7 @@ class Procurement {
             branchTargetId: map['branchTargetId'],
             subcategoryCode: map['subcategoryCode'],
             subcategoryName: map['subcategoryName'],
+            uom: map['uom'],
             productName: map['productName'],
             quantity: map['quantity'] != null ? map['quantity'].toDouble() : map['quantity'],
             datePlanned: map['datePlanned'],

@@ -66,10 +66,16 @@ class ListApi {
     static const String searchOvkUnit = "searchOvkUnit";
     static const String saveOrderRequest = "purchaseRequest";
     static const String saveOrderRequestForCoopRest = "purchaseRequestForCoopRest";
-    static const String updateOrderRequest = "purchaseRequestUpdate";
+    static const String saveTransferRequest = "transferRequest";
+    static const String updateOrderOrTransferRequest = "purchaseOrTransferRequestUpdate";
     static const String cancelOrder = "cancelOrder";
     static const String rejectOrder = "rejectOrder";
     static const String approveOrder = "approvalOrder";
+    static const String getListTransferSend = "getTransferSend";
+    static const String getListTransferReceived = "getTransferReceived";
+    static const String getTransferDetail = "getTransferDetail";
+    static const String getStocks = "getStocks";
+    static const String getStocksSummary = "getStocksSummary";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
@@ -167,8 +173,13 @@ class ListApi {
     static String pathGetRequestDocByFarmingId(String farmingCycleId) {
         return 'v2/farming-cycles/$farmingCycleId/doc-in';
     }
+    
     static String pathGetRequestDetail(String requestId) {
         return 'v2/purchase-requests/$requestId';
+    }
+
+    static String pathGetTransferRequestDetail(String requestId) {
+        return 'v2/transfer-requests/$requestId';
     }
 
     static String pathGetRequestChickinDetail(String requestId){
@@ -179,4 +190,19 @@ class ListApi {
         return "v2/chick-in-requests/$requestId/approve";
     }
     
+    static String pathFeedStocks(String farmingCycle) {
+        return "v2/feedstocks/$farmingCycle/summaries";
+    }
+    
+    static String pathOvkStocks(String farmingCycle) {
+        return "v2/ovkstocks/$farmingCycle/summaries";
+    }
+
+    static String pathFeedSummaryStocks(String farmingCycle) {
+        return "v2/feedstocks/$farmingCycle/summaries-by-type";
+    }
+
+    static String pathOvkSummaryStocks(String farmingCycle) {
+        return "v2/ovkstocks/$farmingCycle/summaries-by-type";
+    }
 }

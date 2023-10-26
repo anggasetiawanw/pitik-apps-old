@@ -59,7 +59,7 @@ class MediaField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: Column(
                     children: <Widget>[
-                        controller.hideLabel.isFalse ? label.isEmpty ? Container() : labelField : Container(),
+                        controller.hideLabel.isFalse ? const SizedBox() : labelField,
                         Padding(
                             padding: const EdgeInsets.only(bottom: 8, top: 8),
                             child: Column(
@@ -104,7 +104,7 @@ class MediaField extends StatelessWidget {
                                                 children: [
                                                     Padding(
                                                         padding: const EdgeInsets.only(right: 8),
-                                                        child: Image.asset('images/error_icon.png')
+                                                        child: SvgPicture.asset('images/error_icon.svg')
                                                     ),
                                                     Text(
                                                         alertText,

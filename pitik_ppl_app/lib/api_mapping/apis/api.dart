@@ -54,7 +54,7 @@ class API {
 
     @POST(value :"v2/upload", as: MediaUploadResponse, error: ErrorResponse)
     @Multipart()
-    void uploadImage(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("folder") String folder, @Parameter("file") File file){}
+    void uploadImage(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("folder") String folder, @Parameter("file") File file) {}
 
     /// It gets the approval document.
     ///

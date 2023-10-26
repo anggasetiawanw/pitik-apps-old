@@ -23,67 +23,55 @@ import 'package:pitik_ppl_app/route.dart';
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 06/10/2023
 
-class ListOrderController extends GetxController with GetSingleTickerProviderStateMixin {
+class ListTransferController extends GetxController with GetSingleTickerProviderStateMixin {
     BuildContext context;
-    ListOrderController({required this.context});
+    ListTransferController({required this.context});
 
     late TabController tabController;
     late Coop coop;
-    late bool fromCoopRest;
 
     var isLoading = false.obs;
-    RxList<Procurement?> orderList = <Procurement?>[].obs;
+    RxList<Procurement?> transferList = <Procurement?>[].obs;
 
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments[0];
-        fromCoopRest = Get.arguments[1];
+        coop = Get.arguments;
 
-        tabController = TabController(vsync: this, length: 3);
+        tabController = TabController(vsync: this, length: 2);
         tabController.addListener(() {
             if (tabController.index == 0) {
-                getListRequested();
-            } else if (tabController.index == 1) {
-                getListProcessed();
+                getListSend();
             } else {
                 getListReceived();
             }
         });
 
-        getListRequested();
+        getListSend();
     }
 
-    void getListRequested({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseRequestForCoopRest : ListApi.getListPurchaseRequest,
+    void getListSend({String? type, String? fromDate, String? untilDate}) => _requestTransferDataToServer(
+        route: ListApi.getListTransferSend,
         type: type,
         fromDate: fromDate,
         untilDate: untilDate
     );
 
-    void getListProcessed({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
-        type: type,
-        fromDate: fromDate,
-        untilDate: untilDate,
-        status: "draft,rejected"
-    );
-
-    void getListReceived({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
+    void getListReceived({String? type, String? fromDate, String? untilDate}) => _requestTransferDataToServer(
+        route: ListApi.getListTransferReceived,
         type: type,
         fromDate: fromDate,
         untilDate: untilDate,
         status: "approved"
     );
 
-    void _requestOrderDataToServer({required String route, String? type, String? fromDate, String? untilDate, String? status}) {
+    void _requestTransferDataToServer({required String route, String? type, String? fromDate, String? untilDate, String? status}) {
         isLoading.value = true;
         AuthImpl().get().then((auth) {
             if (auth != null) {
-                List<dynamic> body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate, status];
+                List<dynamic> body = ['Bearer ${auth.token}', auth.id, coop.farmingCycleId, type, fromDate, untilDate, status];
                 if (tabController.index == 0) {
-                    body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate];
+                    body = ['Bearer ${auth.token}', auth.id, coop.farmingCycleId, type, fromDate, untilDate];
                 }
 
                 Service.push(
@@ -93,7 +81,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                     body: body,
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            orderList.value = (body as ProcurementListResponse).data;
+                            transferList.value = (body as ProcurementListResponse).data;
                             isLoading.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) {
@@ -113,7 +101,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         });
     }
     
-    Widget _getStatusOrderWidget({required int tabPosition, required String statusText}) {
+    Widget _getStatusTransferWidget({required int tabPosition, required String statusText}) {
         Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SEBAGIAN || statusText == GlobalVar.NEED_APPROVAL || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryLight2 :
                            statusText == GlobalVar.DIPROSES ? GlobalVar.primaryLight3 :
                            statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.redBackground :
@@ -146,35 +134,21 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         );
     }
 
-    void refreshOrderList() {
+    void refreshTransferList() {
         if (tabController.index == 0) {
-            getListRequested();
-        } else if (tabController.index == 1) {
-            getListProcessed();
+            getListSend();
         } else {
             getListReceived();
         }
     }
 
-    Widget createOrderCard({required int typePosition, Procurement? procurement}) {
+    Widget createTransferCard({required int typePosition, Procurement? procurement}) {
         if (procurement != null) {
-            bool isReceivedApproved = typePosition == 2;
             String title = 'N/A';
-            String type = 'N/A';
-            if (procurement.type != null) {
-                if (isReceivedApproved && procurement.type == 'pakan') {
-                    title = 'Pakan Masuk';
-                    type = 'Merek Pakan';
-                } else if (isReceivedApproved && procurement.type == 'ovk') {
-                    title = 'OVK Masuk';
-                    type = 'Merek OVK';
-                } else if (procurement.type == 'pakan') {
-                    title = 'Order Pakan';
-                    type = 'Merek Pakan';
-                } else {
-                    title = 'Order OVK';
-                    type = 'Merek OVK';
-                }
+            if (typePosition == 0) {
+                title = procurement.coopTargetName ?? 'N/A';
+            } else {
+                title = procurement.coopSourceName ?? 'N/A';
             }
 
             return Padding(
@@ -182,9 +156,9 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 child: GestureDetector(
                     onTap: () {
                         if (typePosition == 0) {
-                            Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
+                            Get.toNamed(RoutePage.transferDetailPage, arguments: [coop, procurement, typePosition == 0])!.then((value) => refreshTransferList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement])!.then((value) => refreshTransferList());
                         }
                     },
                     child: Container(
@@ -201,24 +175,24 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                         Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
-                                        _getStatusOrderWidget(tabPosition: typePosition, statusText: procurement.statusText == null ? '-' : procurement.statusText!)
+                                        _getStatusTransferWidget(tabPosition: typePosition, statusText: procurement.statusText == null ? '-' : procurement.statusText!)
                                     ],
                                 ),
-                                Text(procurement.deliveryDate == null ? '-' : procurement.deliveryDate!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                Text('Pengiriman ${procurement.deliveryDate == null ? '-' : procurement.deliveryDate!}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
                                 const SizedBox(height: 8),
-                                typePosition != 0 ? Row(
+                                Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text('Kode Pesanan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(procurement.erpCode == null ? '-' : procurement.erpCode!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                        Text(typePosition == 0 ? 'Kandang Tujuan' : 'Asal Kandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        Text(procurement.coopTargetName == null || procurement.coopTargetName == '' ? procurement.branchTargetName! : procurement.coopTargetName!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                     ],
-                                ) : const SizedBox(),
+                                ),
                                 const SizedBox(height: 8),
                                 Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text(type, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        Text(procurement.type == null ? 'N/A' : procurement.type == 'pakan' ? 'Merek Pakan' : 'Jenis OVK', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                         const SizedBox(width: 16),
                                         Expanded(child: Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right))
                                     ],
@@ -235,17 +209,17 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
 
     void showMenuBottomSheet() {
         DateTimeField fromDateField = DateTimeField(
-            controller: GetXCreator.putDateTimeFieldController("filterOrderFromDateField"), label: "Tanggal Dari", hint: "Pilih tanggal", alertText: "Tanggal harus dipilih..!", flag: DateTimeField.DATE_FLAG,
+            controller: GetXCreator.putDateTimeFieldController("filterTransferFromDateField"), label: "Tanggal Dari", hint: "Pilih tanggal", alertText: "Tanggal harus dipilih..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}')
         );
 
         DateTimeField untilDateField = DateTimeField(
-            controller: GetXCreator.putDateTimeFieldController("filterOrderUntilDateField"), label: "Tanggal Sampai", hint: "Pilih tanggal", alertText: "Tanggal harus dipilih..!", flag: DateTimeField.DATE_FLAG,
+            controller: GetXCreator.putDateTimeFieldController("filterTransferUntilDateField"), label: "Tanggal Sampai", hint: "Pilih tanggal", alertText: "Tanggal harus dipilih..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}')
         );
 
         SpinnerField typeField = SpinnerField(
-            controller: GetXCreator.putSpinnerFieldController("filterOrderTypeField"), label: "Jenis Order", hint: "Pilih salah satu", alertText: "Harus pilih jenis..!", items: const {"Pakan": false, "OVK": false},
+            controller: GetXCreator.putSpinnerFieldController("filterTransferTypeField"), label: "Jenis Transfer", hint: "Pilih salah satu", alertText: "Harus pilih jenis..!", items: const {"Pakan": false, "OVK": false},
             onSpinnerSelected: (textSelected) {}
         );
 
@@ -283,7 +257,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                 untilDateField,
                                 typeField,
                                 const SizedBox(height: 50),
-                                ButtonFill(controller: GetXCreator.putButtonFillController("btnFilterOrderList"), label: "Konfirmasi Filter", onClick: () {
+                                ButtonFill(controller: GetXCreator.putButtonFillController("btnFilterTransferList"), label: "Konfirmasi Filter", onClick: () {
                                     bool isPass = true;
 
                                     if (fromDateField.getController().textSelected.isEmpty) {
@@ -302,13 +276,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     if (isPass) {
                                         Navigator.pop(Get.context!);
                                         if (tabController.index == 0) {
-                                            getListRequested(
-                                                type: typeField.getController().textSelected.value.toLowerCase(),
-                                                fromDate: fromDateField.getLastTimeSelectedText(),
-                                                untilDate: untilDateField.getLastTimeSelectedText()
-                                            );
-                                        } else if (tabController.index == 1) {
-                                            getListProcessed(
+                                            getListSend(
                                                 type: typeField.getController().textSelected.value.toLowerCase(),
                                                 fromDate: fromDateField.getLastTimeSelectedText(),
                                                 untilDate: untilDateField.getLastTimeSelectedText()
@@ -332,12 +300,12 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
     }
 }
 
-class ListOrderBinding extends Bindings {
+class ListTransferBinding extends Bindings {
     BuildContext context;
-    ListOrderBinding({required this.context});
+    ListTransferBinding({required this.context});
 
     @override
     void dependencies() {
-        Get.lazyPut<ListOrderController>(() => ListOrderController(context: context));
+        Get.lazyPut<ListTransferController>(() => ListTransferController(context: context));
     }
 }
