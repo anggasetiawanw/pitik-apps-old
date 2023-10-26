@@ -59,12 +59,10 @@ class BerandaController extends GetxController {
                     Constant.isDeveloper.refresh();
                 }
                 if(role.name == RoleEnum.shopkeeper){
-                    print("Iam Shopkeeper");
                     Constant.isShopKepper.value = true;
                     Constant.isShopKepper.refresh();
                 }
                 if(role.name == RoleEnum.scRelation){
-                    print("Iam SC Relation");
                     Constant.isScRelation.value = true;
                     Constant.isScRelation.refresh();
                 }
