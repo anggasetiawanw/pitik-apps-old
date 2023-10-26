@@ -1,17 +1,16 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/product_model.dart';
-
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
 ///@create date 19/05/23
 @SetupModel
-class OrderRequest {
+class OrderRequest{
+
   String? customerId;
   String? operationUnitId;
   String? driverId;
   String? status;
   String? type;
-  String? category;
 
   @IsChildren()
   List<Products?>? products;
@@ -19,7 +18,8 @@ class OrderRequest {
   @IsChildren()
   List<Products?>? productNotes;
 
-  OrderRequest({this.customerId, this.status, this.products, this.operationUnitId, this.driverId, this.type, this.productNotes, this.category});
+
+  OrderRequest({this.customerId, this.status, this.products,this.operationUnitId, this.driverId, this.type, this.productNotes});
 
   static OrderRequest toResponseModel(Map<String, dynamic> map) {
     return OrderRequest(
@@ -30,7 +30,6 @@ class OrderRequest {
       operationUnitId: map['operationUnitId'],
       driverId: map['driverId'],
       type: map['type'],
-      category: map['category'],
     );
   }
 }

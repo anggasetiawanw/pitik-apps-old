@@ -79,7 +79,7 @@ class SkuCardOrderController extends GetxController{
                             CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == value); 
                             getSku(selectCategory!, numberList);
                             if (value == AppStrings.AYAM_UTUH ||
-                                value == AppStrings.BRANGKAS || value == AppStrings.KARKAS) {
+                                value == AppStrings.BRANGKAS) {
                             // editFieldJumlahAyam.value[numberList].controller.enable();
                                 editFieldKebutuhan.value[numberList].controller.disable();
                                 editFieldHarga.value[numberList].controller.disable();
@@ -112,7 +112,7 @@ class SkuCardOrderController extends GetxController{
                     onSpinnerSelected: (value) {
                         if (listCategories.value.isNotEmpty) {
                             if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
-                                spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS ||  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
+                                spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS) {
                                 editFieldJumlahAyam.value[numberList].controller.enable();
                             }
                             editFieldJumlahAyam.value[numberList].setInput("");
@@ -143,7 +143,7 @@ class SkuCardOrderController extends GetxController{
             editFieldPotongan.value.add(EditField(
                 controller: GetXCreator.putEditFieldController(
                     "editPotongan${numberList}Sku"),
-                label: "Potongan",
+                label: "Potongan*",
                 hint: "Ketik di sini",
                 alertText: "Kolom Ini Harus Di Isi",
                 textUnit: "Potongan",
@@ -168,7 +168,7 @@ class SkuCardOrderController extends GetxController{
                                 if (selectCategory != null) {
                                     if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.LIVE_BIRD ||
                                         spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
-                                        spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
+                                        spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS) {
                                         mapSumNeeded[numberList] = control.getInputNumber();
                                         refreshtotalPurchase();
                                     }else {
@@ -190,7 +190,6 @@ class SkuCardOrderController extends GetxController{
                 textUnit: "/Kg",
                 textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
                 inputType: TextInputType.number,
-                isNumberFormatter : true,
                 maxInput: 20,
                 onTyping: (value, control) {
                 if(control.getInput().length < 4){
@@ -221,7 +220,7 @@ class SkuCardOrderController extends GetxController{
             for (var idx in index.value) {
                 if (spinnerCategories.value[idx].controller.textSelected.value == AppStrings.LIVE_BIRD ||
                     spinnerCategories.value[idx].controller.textSelected.value == AppStrings.AYAM_UTUH ||
-                    spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
+                    spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS) {
                         List<Products?> listSkuSelect = listSku.value[idx]!;
                             if(listSkuSelect.isNotEmpty){
                                 Products? selectProduct = listSkuSelect.firstWhere((element) => element!.name! == spinnerSku.value[idx].controller.textSelected.value);
@@ -283,10 +282,18 @@ class SkuCardOrderController extends GetxController{
                 isValid = false;
                 return [isValid, error];
             }
-        if(spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.KARKAS){
+        if(spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS){
             if (editFieldJumlahAyam.value[whichItem].getInput().isEmpty) {
                 editFieldJumlahAyam.value[whichItem].controller.showAlert();
                 Scrollable.ensureVisible(editFieldJumlahAyam.value[whichItem].controller.formKey.currentContext!);
+
+                isValid = false;
+                return [isValid, error];
+            }
+
+            if (editFieldPotongan.value[whichItem].getInput().isEmpty) {
+                editFieldPotongan.value[whichItem].controller.showAlert();
+                Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
 
                 isValid = false;
                 return [isValid, error];
