@@ -275,7 +275,7 @@ class TransferDetailController extends GetxController {
                                 isLoading.value = false;
                                 Get.off(TransactionSuccessActivity(
                                     keyPage: "transfer${isCancel ? 'Cancel' : 'Reject'}${procurement.value.id}",
-                                    message: isCancel ? "Kamu telah membatalkan permintaan sapronak" : "Kamu telah menolak permintaan sapronak",
+                                    message: isCancel ? "Kamu telah berhasil melakukan pembatalan transfer Pakan" : "Kamu telah menolak permintaan transfer sapronak",
                                     showButtonHome: false,
                                     icon: Image.asset(
                                         "images/information_orange_icon.gif",

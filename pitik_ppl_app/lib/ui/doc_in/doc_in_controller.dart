@@ -342,6 +342,12 @@ class DocInController extends GetxController {
         efBw.controller.disable();
         efUniform.setInput((request.uniformity ?? 0).toString());
         efUniform.controller.disable();
+        efDesc.setInput(request.notes ?? '');
+        efDesc.controller.disable();
+
+        mfAnotherDoc.controller.disable();
+        mfFormDOC.controller.disable();
+        mfSuratJalan.controller.disable();
     }
 
     void uploadFile(File? file, String mediaField) {

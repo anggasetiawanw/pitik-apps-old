@@ -3,6 +3,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
+import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/media_field/media_field.dart';
@@ -71,6 +72,9 @@ class TransferRequestController extends GetxController {
     var prestarterStockSummary = "-".obs;
     var starterStockSummary = "-".obs;
     var finisherStockSummary = "-".obs;
+
+    RxList<Product?> feedStockSummaryList = <Product?>[].obs;
+    RxList<Product?> ovkStockSummaryList = <Product?>[].obs;
 
     @override
     void onInit() {
@@ -409,6 +413,122 @@ class TransferRequestController extends GetxController {
         if (_validation()) {
             _showFeedSummary(isFeed: isFeed.value);
         }
+    }
+
+    void showStockSummary() {
+        showModalBottomSheet(
+            useSafeArea: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                )
+            ),
+            isScrollControlled: true,
+            context: Get.context!,
+            builder: (context) => Container(
+                color: Colors.transparent,
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Center(
+                                    child: Container(
+                                        width: 60,
+                                        height: 4,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                                            color: GlobalVar.outlineColor
+                                        )
+                                    )
+                                ),
+                                const SizedBox(height: 32),
+                                Expandable(
+                                    controller: GetXCreator.putAccordionController("accordionFeedStockSummary"),
+                                    headerText: 'Pakan',
+                                    child: Column(
+                                        children: List.generate(feedStockSummaryList.length + 1, (index) {
+                                            if (index == 0) {
+                                                return Column(
+                                                    children: [
+                                                        Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text('Merek Pakan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                                                Text('Stok', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold))
+                                                            ],
+                                                        ),
+                                                        const SizedBox(height: 8)
+                                                    ],
+                                                );
+                                            } else {
+                                                return Column(
+                                                    children: [
+                                                        Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text(getFeedProductName(product: feedStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                                Text(feedStockSummaryList[index - 1] == null ? '-' : _getRemainingQuantity(feedStockSummaryList[index - 1]!), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                        const SizedBox(height: 4)
+                                                    ],
+                                                );
+                                            }
+                                        }),
+                                    )
+                                ),
+                                const SizedBox(height: 16),
+                                Expandable(
+                                    expanded: true,
+                                    controller: GetXCreator.putAccordionController("accordionOvkStockSummary"),
+                                    headerText: 'OVK',
+                                    child: Column(
+                                        children: List.generate(ovkStockSummaryList.length + 1, (index) {
+                                            if (index == 0) {
+                                                return Column(
+                                                    children: [
+                                                        Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text('Merek OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                                                Text('Stok', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold))
+                                                            ]
+                                                        ),
+                                                        const SizedBox(height: 8)
+                                                    ]
+                                                );
+                                            } else {
+                                                return Column(
+                                                    children: [
+                                                        Row(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text(getOvkProductName(product: ovkStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                                Text(ovkStockSummaryList[index - 1] == null ? '-' : _getRemainingQuantity(ovkStockSummaryList[index - 1]!), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                        const SizedBox(height: 4)
+                                                    ],
+                                                );
+                                            }
+                                        }),
+                                    )
+                                ),
+                                const SizedBox(height: 32),
+                            ]
+                        )
+                    )
+                )
+            )
+        );
     }
 
     void _showFeedSummary({bool isFeed = true}) {
@@ -761,7 +881,7 @@ class TransferRequestController extends GetxController {
     });
 
     String _getRemainingQuantity(Product product) {
-        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} Karung';
+        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
     }
 
     void _getFeedStockSummary() => AuthImpl().get().then((auth) => {
@@ -774,6 +894,8 @@ class TransferRequestController extends GetxController {
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if ((body as StockSummaryResponse).data != null && body.data!.summaries.isNotEmpty) {
+                            feedStockSummaryList.value = body.data!.summaries;
+
                             for (var product in body.data!.summaries) {
                                 if (product != null) {
                                     if (product.subcategoryCode != null && product.subcategoryCode == "PRESTARTER") {
@@ -788,7 +910,7 @@ class TransferRequestController extends GetxController {
                         }
                     },
                     onResponseFail: (code, message, body, id, packet) {},
-                    onResponseError: (exception, stacktrace, id, packet) {},
+                    onResponseError: (exception, stacktrace, id, packet) => print('$exception -> $stacktrace'),
                     onTokenInvalid: () => GlobalVar.invalidResponse()
                 )
             )
@@ -810,6 +932,8 @@ class TransferRequestController extends GetxController {
                         String uom = '';
 
                         if ((body as StockSummaryResponse).data != null && body.data!.summaries.isNotEmpty) {
+                            ovkStockSummaryList.value = body.data!.summaries;
+
                             for (var product in body.data!.summaries) {
                                 ovkStock += product == null ? 0.0 : product.remainingQuantity ?? 0.0;
                                 uom = product == null ? '' : product.uom ?? product.purchaseUom ?? '';
@@ -832,7 +956,7 @@ class TransferRequestController extends GetxController {
         field.getController().setupObjects(productList);
         for (var product in productList) {
             String key = isFeed ?
-                         '${product == null || product.subcategoryName == null ? '' : product.subcategoryName} - ${product == null || product.productName == null ? '' : product.productName}' :
+                         '${product == null || product.subcategoryCode == null ? '' : product.subcategoryCode} - ${product == null || product.productName == null ? '' : product.productName}' :
                          '${product == null || product.productName == null ? '' : product.productName}';
 
             field.getController().addItems(value: key, isActive: false);
@@ -885,12 +1009,12 @@ class TransferRequestController extends GetxController {
 
     String getFeedProductName({Product? product}) {
         if (product != null) {
-            return '${product.subcategoryName ?? ''} - ${product.productName ?? ''}';
+            return '${product.subcategoryCode ?? ''} - ${product.productName ?? ''}';
         } else {
             if (feedSpinnerField.getController().selectedObject == null) {
                 return '';
             } else {
-                return '${(feedSpinnerField.getController().selectedObject as Product).subcategoryName ?? ''} - ${(feedSpinnerField.getController().selectedObject as Product).productName ?? ''}';
+                return '${(feedSpinnerField.getController().selectedObject as Product).subcategoryCode ?? ''} - ${(feedSpinnerField.getController().selectedObject as Product).productName ?? ''}';
             }
         }
     }
