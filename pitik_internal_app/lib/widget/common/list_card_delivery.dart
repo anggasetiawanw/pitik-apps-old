@@ -84,10 +84,13 @@ class CardListDelivery extends StatelessWidget {
                   "SKU: ",
                   style: AppTextStyle.greyTextStyle,
                 ),
-                Text(
-                  isPenjualan? order!.products!.length > 1 ? "${order!.products![0]!.name} and ${order!.products!.length -1 } lainnya" : "${order!.products![0]!.name}": "${transferModel!.products!.isNotEmpty ? transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name : "null" : "-"}",
-                  style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                Expanded(
+                  child: Text(
+                    isPenjualan? order!.products!.length > 1 ? "${order!.products![0]!.name} and ${order!.products!.length -1 } lainnya" : "${order!.products![0]!.name}": "${transferModel!.products!.isNotEmpty ? transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name : "null" : "-"}",
+                    style: AppTextStyle.blackTextStyle
+                        .copyWith(fontWeight: AppTextStyle.medium),
+                        overflow: TextOverflow.ellipsis,
+                  ),
                 )
               ],
             ),
