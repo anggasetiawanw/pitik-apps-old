@@ -89,7 +89,7 @@ class StockOpnameActivity extends StatelessWidget {
                         children: [
                               controller.sourceStock,
                               if(controller.listStockField.value.isNotEmpty)  ...controller.listStockField.value,
-                              if(controller.listStockTwoField.value.isNotEmpty)...controller.listStockTwoField.value,
+                              controller.efTotal,
                               const SizedBox(height: 100,)
                         ],
                     ),

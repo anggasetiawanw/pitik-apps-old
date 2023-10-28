@@ -1,27 +1,21 @@
-import 'dart:async';
-
-import 'package:components/button_fill/button_fill.dart';
-import 'package:components/button_outline/button_outline.dart';
 import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:global_variable/global_variable.dart';
+import 'package:global_variable/colors.dart';
+import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval_controller.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/stock_status.dart';
 
-class StockDetailActivity extends StatelessWidget {
-  const StockDetailActivity({super.key});
+class StockApprovalActivity extends StatelessWidget {
+  const StockApprovalActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final StockDetailController controller = Get.put(StockDetailController(context: context));
+    StockApprovalController controller = Get.put(StockApprovalController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -46,41 +40,14 @@ class StockDetailActivity extends StatelessWidget {
       return Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-          ),
-          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("editButton"),
-                      label: "Edit",
-                      onClick: () {
-                        Get.toNamed(RoutePage.stockOpname, arguments: [controller.opnameModel, true, null])!.then((value) {
-                          controller.isLoading.value = true;
-                          Timer(const Duration(milliseconds: 500), () {
-                            controller.getDetailStock();
-                          });
-                        });
-                      })),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                  child: ButtonOutline(
-                      controller: GetXCreator.putButtonOutlineController("cancelButton"),
-                      label: "Batal",
-                      onClick: () {
-                        _showBottomDialog(context, controller);
-                      })),
-            ],
-          ),
-        ),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+            ),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: controller.btConfirmed),
       );
     }
 
@@ -255,7 +222,7 @@ class StockDetailActivity extends StatelessWidget {
                                   )
                                 ],
                               ),
-                             if(product.productItems!.last != item && product.productItems!.length > 1)...[
+                              if (product.productItems!.last != item && product.productItems!.length > 1) ...[
                                 const SizedBox(
                                   height: 24,
                                 ),
@@ -303,22 +270,75 @@ class StockDetailActivity extends StatelessWidget {
                             ),
                             Column(children: controller.opnameModel.products!.map((e) => detailSKU(e!)).toList()),
                             Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.all(16),
-                                width: double.infinity  ,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: AppColors.outlineColor, width: 1),
-                                ),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                              margin: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.all(16),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.outlineColor, width: 1),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total/Global(kg)",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    "${(controller.opnameModel.totalWeight ?? 0)} Kg",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.all(16),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.outlineColor, width: 1),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  controller.efName,
+                                  controller.efMail,
+                                  Row(
                                     children: [
-                                        Text("Total/Global(kg)", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),),
-                                        const SizedBox(height: 16,),
-                                        Text("${(controller.opnameModel.totalWeight ??0)} Kg", style: AppTextStyle.blackTextStyle.copyWith( fontSize: 14),),
+                                      Obx(() => Checkbox(
+                                          value: controller.isSelectedBox.value,
+                                          activeColor: AppColors.primaryOrange,
+                                          side: const BorderSide(color: AppColors.primaryOrange, width: 2),
+                                          onChanged: (isSelect) {
+                                            controller.isSelectedBox.value = isSelect!;
+                                            controller.isSelectedBox.refresh();
+                                            if (controller.isSelectedBox.isTrue) {
+                                              controller.btConfirmed.controller.enable();
+                                            } else {
+                                              controller.btConfirmed.controller.disable();
+                                            }
+                                          })),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname diatas",
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                                        overflow: TextOverflow.clip,
+                                      ))
                                     ],
-                                ),
-
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 100,
@@ -327,73 +347,9 @@ class StockDetailActivity extends StatelessWidget {
                         ),
                       ),
                     ),
-                    controller.opnameModel.status == "DRAFT" ? bottomNavbar() : const SizedBox()
+                    bottomNavbar()
                   ],
                 ),
         ));
-  }
-
-  _showBottomDialog(BuildContext context, StockDetailController controller) {
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) {
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  width: 60,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.outlineColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                  child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
-                    style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24),
-                  child: SvgPicture.asset(
-                    "images/cancel_icon.svg",
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: controller.yesButton),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(child: controller.noButton),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: Constant.bottomSheetMargin,
-                )
-              ],
-            ),
-          );
-        });
   }
 }
