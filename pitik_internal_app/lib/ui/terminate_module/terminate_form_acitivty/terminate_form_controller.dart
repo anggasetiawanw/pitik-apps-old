@@ -58,7 +58,7 @@ class TerminateFormController extends GetxController {
                 Map<String, bool> mapList ={};
                 for (var element in products.productItems!) { mapList[element!.name!] = false;}
                 skuField.controller.generateItems(mapList);
-                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD){
+                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD || value == AppStrings.KARKAS){
                     amountField.controller.enable();
                     skuField.controller.setTextSelected("");
                     skuField.controller.enable();
@@ -153,7 +153,7 @@ class TerminateFormController extends GetxController {
             sourceField.controller.textSelected.value = terminateModel!.operationUnit!.operationUnitName!;
             categorySKUField.controller.enable();
             categorySKUField.controller.textSelected.value = terminateModel!.product!.name!;
-            if (terminateModel!.product!.name! == AppStrings.AYAM_UTUH || terminateModel!.product!.name! == AppStrings.BRANGKAS || terminateModel!.product!.name! == AppStrings.LIVE_BIRD) {
+            if (terminateModel!.product!.name! == AppStrings.AYAM_UTUH || terminateModel!.product!.name! == AppStrings.BRANGKAS || terminateModel!.product!.name! == AppStrings.LIVE_BIRD|| terminateModel!.product!.name! == AppStrings.KARKAS) {
                 amountField.controller.enable();
                 amountField.setInput(terminateModel!.product!.productItem!.quantity.toString());
             }
