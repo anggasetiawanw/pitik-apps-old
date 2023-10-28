@@ -2,36 +2,29 @@
 // https://github.com/dart-lang/reflectable.
 
 import 'dart:core';
-import 'package:engine/dao/annotation/attribute.dart' as prefix101;
-import 'package:engine/dao/annotation/table.dart' as prefix100;
+import 'package:engine/dao/annotation/attribute.dart' as prefix87;
+import 'package:engine/dao/annotation/table.dart' as prefix86;
 import 'package:engine/dao/base_entity.dart' as prefix5;
 import 'package:engine/model/base_model.dart' as prefix7;
 import 'package:engine/model/string_model.dart' as prefix11;
 import 'package:engine/offlinecapability/offline.dart' as prefix73;
-import 'package:engine/request/annotation/mediatype/json.dart' as prefix88;
-import 'package:engine/request/annotation/mediatype/multipart.dart' as prefix92;
-import 'package:engine/request/annotation/property/header.dart' as prefix93;
-import 'package:engine/request/annotation/property/parameter.dart' as prefix95;
-import 'package:engine/request/annotation/property/path.dart' as prefix94;
-import 'package:engine/request/annotation/property/query.dart' as prefix96;
-import 'package:engine/request/annotation/request/get.dart' as prefix90;
-import 'package:engine/request/annotation/request/post.dart' as prefix89;
-import 'package:engine/request/annotation/request/put.dart' as prefix91;
+import 'package:engine/request/annotation/mediatype/json.dart' as prefix74;
+import 'package:engine/request/annotation/mediatype/multipart.dart' as prefix78;
+import 'package:engine/request/annotation/property/header.dart' as prefix79;
+import 'package:engine/request/annotation/property/parameter.dart' as prefix81;
+import 'package:engine/request/annotation/property/path.dart' as prefix80;
+import 'package:engine/request/annotation/property/query.dart' as prefix82;
+import 'package:engine/request/annotation/request/get.dart' as prefix76;
+import 'package:engine/request/annotation/request/post.dart' as prefix75;
+import 'package:engine/request/annotation/request/put.dart' as prefix77;
 import 'package:engine/request/api_mapping_list.dart' as prefix1;
 import 'package:engine/request/base_api.dart' as prefix0;
-import 'package:engine/util/mapper/annotation/is_child.dart' as prefix103;
-import 'package:engine/util/mapper/annotation/is_children.dart' as prefix102;
-import 'package:model/approve_coop.dart' as prefix85;
+import 'package:engine/util/mapper/annotation/is_child.dart' as prefix89;
+import 'package:engine/util/mapper/annotation/is_children.dart' as prefix88;
 import 'package:model/auth_model.dart' as prefix6;
 import 'package:model/branch.dart' as prefix46;
-import 'package:model/coop_active_standard.dart' as prefix86;
-import 'package:model/coop_model.dart' as prefix79;
-import 'package:model/device_model.dart' as prefix76;
-import 'package:model/device_summary_model.dart' as prefix84;
 import 'package:model/error/error.dart' as prefix12;
 import 'package:model/error/error_detail.dart' as prefix70;
-import 'package:model/farm_model.dart' as prefix74;
-import 'package:model/graph_line.dart' as prefix77;
 import 'package:model/internal_app/branch_model.dart' as prefix71;
 import 'package:model/internal_app/category_model.dart' as prefix57;
 import 'package:model/internal_app/checkin_model.dart' as prefix50;
@@ -61,7 +54,6 @@ import 'package:model/internal_app/visit_customer_model.dart' as prefix62;
 import 'package:model/profile.dart' as prefix8;
 import 'package:model/response/%20branch_response.dart' as prefix14;
 import 'package:model/response/auth_response.dart' as prefix42;
-import 'package:model/response/historical_data_response.dart' as prefix78;
 import 'package:model/response/internal_app/category_list_response.dart'
     as prefix15;
 import 'package:model/response/internal_app/checkin_response.dart' as prefix16;
@@ -113,6 +105,7 @@ import 'package:model/response/internal_app/vendor_list_response.dart'
     as prefix39;
 import 'package:model/response/internal_app/visit_customer_response.dart'
     as prefix40;
+<<<<<<< HEAD
 import 'package:model/response/internal_app/visit_list_customer_response.dart'
     as prefix41;
 import 'package:model/response/sensor_position_response.dart' as prefix80;
@@ -121,15 +114,17 @@ import 'package:model/sensor_data_model.dart' as prefix87;
 import 'package:model/sensor_model.dart' as prefix81;
 import 'package:model/smart_scale/smart_scale_model.dart' as prefix75;
 import 'package:model/smart_scale/smart_scale_record_model.dart' as prefix83;
+=======
+>>>>>>> develop-stock
 import 'package:model/user_google_model.dart' as prefix9;
 import 'package:model/x_app_model.dart' as prefix10;
 import 'package:pitik_internal_app/api_mapping/apis/api.dart' as prefix2;
 import 'package:pitik_internal_app/api_mapping/apis/delivery_api.dart'
     as prefix3;
 import 'package:pitik_internal_app/api_mapping/apis/user_api.dart' as prefix4;
-import 'package:reflectable/reflectable.dart' as prefix97;
-import 'package:reflectable/src/reflectable_base.dart' as prefix99;
-import 'package:reflectable/src/reflectable_builder_based.dart' as prefix98;
+import 'package:reflectable/reflectable.dart' as prefix83;
+import 'package:reflectable/src/reflectable_base.dart' as prefix85;
+import 'package:reflectable/src/reflectable_builder_based.dart' as prefix84;
 
 // ignore_for_file: camel_case_types
 // ignore_for_file: implementation_imports
@@ -414,10 +409,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[3, 4, 5, 6, 7],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix88.JSON(isPlaint: true),
               const prefix89.POST(
                   value: prefix89.POST.PATH_PARAMETER,
                   as: prefix16.CheckInResponse,
+=======
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
+                  as: prefix15.CheckInResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -431,9 +433,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[8, 9, 10, 11, 12],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -447,9 +449,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[13, 14, 15, 16],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix40.VisitCustomerResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix39.VisitCustomerResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -463,9 +471,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[17, 18, 19, 20, 21, 22],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix41.ListVisitCustomerResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix40.ListVisitCustomerResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -479,7 +493,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[23, 24, 25],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/provinces",
                   as: prefix21.LocationListResponse,
                   error: prefix12.ErrorResponse)
@@ -495,7 +509,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[26, 27, 28, 29],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/cities",
                   as: prefix21.LocationListResponse,
                   error: prefix12.ErrorResponse)
@@ -511,7 +525,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[30, 31, 32, 33],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/districts",
                   as: prefix21.LocationListResponse,
                   error: prefix12.ErrorResponse)
@@ -527,7 +541,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[34, 35, 36],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/order-issue-categories/",
                   as: prefix28.OrderIssueResponse,
                   error: prefix12.ErrorResponse)
@@ -543,7 +557,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[37, 38, 39],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/product-categories/",
                   as: prefix15.CategoryListResponse,
                   error: prefix12.ErrorResponse)
@@ -559,7 +573,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[40, 41, 42, 43],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/products/",
                   as: prefix30.ProductListResponse,
                   error: prefix12.ErrorResponse)
@@ -575,7 +589,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[44, 45, 46, 47, 48, 49],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/fms-users",
                   as: prefix34.SalespersonListResponse,
                   error: prefix12.ErrorResponse)
@@ -591,7 +605,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[50, 51, 52, 53, 54],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/purchase-orders",
                   as: prefix31.ListPurchaseResponse,
                   error: prefix12.ErrorResponse)
@@ -607,7 +621,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[55, 56, 57, 58, 59, 60, 61, 62],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/purchase-orders",
                   as: prefix31.ListPurchaseResponse,
                   error: prefix12.ErrorResponse)
@@ -623,9 +637,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[63, 64, 65, 66],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix32.PurchaseResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix31.PurchaseResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -639,9 +659,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[67, 68, 69, 70],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -655,7 +675,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[71, 72, 73, 74],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/vendors",
                   as: prefix39.VendorListResponse,
                   error: prefix12.ErrorResponse)
@@ -671,7 +691,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[75, 76, 77, 78, 79, 80],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/operation-units",
                   as: prefix26.ListOperationUnitsResponse,
                   error: prefix12.ErrorResponse)
@@ -687,8 +707,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[81, 82, 83, 84],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/purchase-orders",
                   as: prefix32.PurchaseResponse,
                   error: prefix12.ErrorResponse)
@@ -704,9 +724,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[85, 86, 87, 88, 89],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -735,7 +755,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/sales-orders",
                   as: prefix33.SalesOrderListResponse,
                   error: prefix12.ErrorResponse)
@@ -771,7 +791,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/sales-orders",
                   as: prefix33.SalesOrderListResponse,
                   error: prefix12.ErrorResponse)
@@ -787,7 +807,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[123, 124, 125, 126, 127, 128],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/operation-units",
                   as: prefix26.ListOperationUnitsResponse,
                   error: prefix12.ErrorResponse)
@@ -803,7 +823,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[129, 130, 131, 132, 133],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/operation-units",
                   as: prefix26.ListOperationUnitsResponse,
                   error: prefix12.ErrorResponse)
@@ -819,7 +839,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[134, 135, 136, 137, 138, 139, 140],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/sales-orders",
                   as: prefix33.SalesOrderListResponse,
                   error: prefix12.ErrorResponse)
@@ -835,8 +855,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[141, 142, 143, 144, 145],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix75.POST(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -850,8 +870,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[146, 147, 148, 149],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/manufactures",
                   as: prefix24.ManufactureResponse,
                   error: prefix12.ErrorResponse)
@@ -867,10 +887,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[150, 151, 152, 153, 154],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix88.JSON(isPlaint: true),
               const prefix91.PUT(
                   value: prefix91.PUT.PATH_PARAMETER,
                   as: prefix24.ManufactureResponse,
+=======
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
+                  as: prefix23.ManufactureResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -884,7 +911,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[155, 156, 157, 158, 159],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/manufactures",
                   as: prefix22.ListManufactureResponse,
                   error: prefix12.ErrorResponse)
@@ -900,9 +927,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[160, 161, 162, 163],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix24.ManufactureResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix23.ManufactureResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -916,9 +949,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[164, 165, 166, 167],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix35.ListStockAggregateResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix34.ListStockAggregateResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -932,9 +971,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[168, 169, 170, 171, 172],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix35.ListStockAggregateResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix34.ListStockAggregateResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -948,9 +993,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[173, 174, 175, 176],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix23.ListManufactureOutputResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix22.ListManufactureOutputResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -964,8 +1015,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[177, 178, 179, 180],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/sales-orders",
                   as: prefix29.OrderResponse,
                   error: prefix12.ErrorResponse)
@@ -981,9 +1032,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[181, 182, 183, 184],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix29.OrderResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix28.OrderResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -997,11 +1054,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[185, 186, 187, 188, 189],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
+              const prefix75.POST(
                   value: "v2/upload",
                   as: prefix25.MediaUploadResponse,
                   error: prefix12.ErrorResponse),
-              const prefix92.Multipart()
+              const prefix78.Multipart()
             ]),
         r.MethodMirrorImpl(
             r'createTerminate',
@@ -1014,8 +1071,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[190, 191, 192, 193],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/stock-disposals",
                   as: prefix36.TerminateResponse,
                   error: prefix12.ErrorResponse)
@@ -1031,10 +1088,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[194, 195, 196, 197, 198],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix88.JSON(isPlaint: true),
               const prefix91.PUT(
                   value: prefix91.PUT.PATH_PARAMETER,
                   as: prefix36.TerminateResponse,
+=======
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
+                  as: prefix35.TerminateResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1048,7 +1112,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[199, 200, 201, 202, 203],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/stock-disposals",
                   as: prefix20.ListTerminateResponse,
                   error: prefix12.ErrorResponse)
@@ -1064,9 +1128,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[204, 205, 206, 207],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix36.TerminateResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix35.TerminateResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1080,7 +1150,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[208, 209, 210, 211, 212],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/internal-transfers",
                   as: prefix37.ListTransferResponse,
                   error: prefix12.ErrorResponse)
@@ -1096,7 +1166,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[213, 214, 215, 216, 217, 218, 219, 220],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/internal-transfers",
                   as: prefix37.ListTransferResponse,
                   error: prefix12.ErrorResponse)
@@ -1112,8 +1182,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[221, 222, 223, 224],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/goods-received",
                   error: prefix12.ErrorResponse)
             ]),
@@ -1128,9 +1198,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[225, 226, 227, 228],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix38.TransferResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix37.TransferResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1144,8 +1220,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[229, 230, 231, 232],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/internal-transfers",
                   error: prefix12.ErrorResponse)
             ]),
@@ -1160,10 +1236,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[233, 234, 235, 236, 237],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix88.JSON(isPlaint: true),
               const prefix91.PUT(
                   value: prefix91.PUT.PATH_PARAMETER,
                   as: prefix38.TransferResponse,
+=======
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
+                  as: prefix37.TransferResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1177,8 +1260,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[238, 239, 240, 241, 242],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1192,9 +1275,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[243, 244, 245, 246, 247],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1208,7 +1291,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[248, 249, 250, 251, 252, 253],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/fms-users",
                   as: prefix18.ListDriverResponse,
                   error: prefix12.ErrorResponse)
@@ -1224,8 +1307,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[254, 255, 256, 257],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/stock-opnames",
                   as: prefix27.OpnameResponse,
                   error: prefix12.ErrorResponse)
@@ -1241,10 +1324,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[258, 259, 260, 261, 262],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix88.JSON(isPlaint: true),
               const prefix91.PUT(
                   value: prefix91.PUT.PATH_PARAMETER,
                   as: prefix27.OpnameResponse,
+=======
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
+                  as: prefix26.OpnameResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1258,7 +1348,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[263, 264, 265, 266, 267, 268],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/stock-opnames",
                   as: prefix19.ListOpnameResponse,
                   error: prefix12.ErrorResponse)
@@ -1274,9 +1364,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[269, 270, 271, 272],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix27.OpnameResponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix26.OpnameResponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1290,9 +1386,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[273, 274, 275, 276, 277],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1306,9 +1402,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[278, 279, 280, 281, 282],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1322,8 +1418,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[283, 284, 285, 286, 287],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix75.POST(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1337,9 +1433,15 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[288, 289, 290, 291],
             const prefix0.BaseApi(),
             const <Object>[
+<<<<<<< HEAD
               const prefix90.GET(
                   value: prefix90.GET.PATH_PARAMETER,
                   as: prefix17.GoodReceiveReponse,
+=======
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
+                  as: prefix16.GoodReceiveReponse,
+>>>>>>> develop-stock
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1353,7 +1455,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[292, 293, 294, 295, 296, 297, 298, 299, 300, 301],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/sales-orders",
                   as: prefix33.SalesOrderListResponse,
                   error: prefix12.ErrorResponse)
@@ -1369,7 +1471,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[302, 303, 304, 305, 306, 307, 308, 309, 310, 311],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/internal-transfers",
                   as: prefix37.ListTransferResponse,
                   error: prefix12.ErrorResponse)
@@ -1385,8 +1487,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[312, 313, 314, 315, 316],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1400,9 +1502,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[317, 318, 319, 320, 321],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1416,7 +1518,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[322, 323, 324],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/branches",
                   as: prefix14.ListBranchResponse,
                   error: prefix12.ErrorResponse)
@@ -1434,7 +1536,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[325, 326, 327, 328, 329, 330, 331, 332, 333, 334],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/sales-orders",
                   as: prefix33.SalesOrderListResponse,
                   error: prefix12.ErrorResponse)
@@ -1450,7 +1552,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[335, 336, 337, 338, 339, 340, 341, 342, 343, 344],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/internal-transfers",
                   as: prefix37.ListTransferResponse,
                   error: prefix12.ErrorResponse)
@@ -1466,8 +1568,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[345, 346, 347, 348, 349],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1481,9 +1583,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[350, 351, 352, 353, 354],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
-                  value: prefix89.POST.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
+                  value: prefix75.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 2, -1, -1, -1, null, const <int>[],
@@ -1499,8 +1601,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[355],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(),
-              const prefix89.POST(
+              const prefix74.JSON(),
+              const prefix75.POST(
                   value: "v2/auth/google/login",
                   as: prefix42.AuthResponse,
                   error: prefix12.ErrorResponse)
@@ -1516,11 +1618,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[356, 357],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix89.POST(
+              const prefix75.POST(
                   value: "v2/auth",
                   as: prefix42.AuthResponse,
                   error: prefix12.ErrorResponse),
-              const prefix88.JSON()
+              const prefix74.JSON()
             ]),
         r.MethodMirrorImpl(
             r'profile',
@@ -1533,7 +1635,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[358, 359, 360],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/fms-users/me",
                   as: prefix45.ProfileResponse,
                   error: prefix12.ErrorResponse)
@@ -1549,8 +1651,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[361, 362, 363, 364],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix89.POST(
+              const prefix74.JSON(isPlaint: true),
+              const prefix75.POST(
                   value: "v2/sales/customers",
                   as: prefix44.CustomerResponse,
                   error: prefix12.ErrorResponse)
@@ -1566,9 +1668,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[365, 366, 367, 368, 369],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   as: prefix44.CustomerResponse,
                   error: prefix12.ErrorResponse)
             ]),
@@ -1583,7 +1685,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[370, 371, 372, 373, 374],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/customers",
                   as: prefix43.ListCustomerResponse,
                   error: prefix12.ErrorResponse)
@@ -1599,7 +1701,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[375, 376, 377],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/customers",
                   as: prefix43.ListCustomerResponse,
                   error: prefix12.ErrorResponse)
@@ -1615,7 +1717,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[378, 379, 380, 381, 382, 383],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/customers",
                   as: prefix43.ListCustomerResponse,
                   error: prefix12.ErrorResponse)
@@ -1631,7 +1733,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[384, 385, 386, 387, 388, 389, 390, 391],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
+              const prefix76.GET(
                   value: "v2/sales/customers",
                   as: prefix43.ListCustomerResponse,
                   error: prefix12.ErrorResponse)
@@ -1647,8 +1749,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[392, 393, 394, 395],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix90.GET(
-                  value: prefix90.GET.PATH_PARAMETER,
+              const prefix76.GET(
+                  value: prefix76.GET.PATH_PARAMETER,
                   as: prefix44.CustomerResponse,
                   error: prefix12.ErrorResponse)
             ]),
@@ -1663,9 +1765,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[396, 397, 398, 399],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1679,9 +1781,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[400, 401, 402, 403],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -1695,8 +1797,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[404],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(),
-              const prefix89.POST(
+              const prefix74.JSON(),
+              const prefix75.POST(
                   value: "v2/auth/apple/login",
                   as: prefix42.AuthResponse,
                   error: prefix12.ErrorResponse)
@@ -1712,9 +1814,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[405, 406, 407, 408, 409],
             const prefix0.BaseApi(),
             const <Object>[
-              const prefix88.JSON(isPlaint: true),
-              const prefix91.PUT(
-                  value: prefix91.PUT.PATH_PARAMETER,
+              const prefix74.JSON(isPlaint: true),
+              const prefix77.PUT(
+                  value: prefix77.PUT.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 3, -1, -1, -1, null, const <int>[],
@@ -1736,7 +1838,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1748,7 +1850,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1760,7 +1862,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1772,7 +1874,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1784,7 +1886,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1796,7 +1898,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1808,7 +1910,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1820,7 +1922,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1832,7 +1934,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1844,7 +1946,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1856,7 +1958,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1868,7 +1970,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1880,7 +1982,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1892,7 +1994,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1904,7 +2006,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1916,7 +2018,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1928,7 +2030,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1940,7 +2042,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1952,7 +2054,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1964,7 +2066,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1976,7 +2078,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -1988,7 +2090,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2000,7 +2102,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2012,7 +2114,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2024,7 +2126,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2036,7 +2138,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2048,7 +2150,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("provinceId")],
+            const <Object>[const prefix82.Query("provinceId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2060,7 +2162,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2072,7 +2174,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2084,7 +2186,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2096,7 +2198,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("cityId")],
+            const <Object>[const prefix82.Query("cityId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2108,7 +2210,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2120,7 +2222,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2132,7 +2234,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2144,7 +2246,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2156,7 +2258,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2168,7 +2270,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2180,7 +2282,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2192,7 +2294,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2204,7 +2306,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2216,7 +2318,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("categoryId")],
+            const <Object>[const prefix82.Query("categoryId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2228,7 +2330,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2240,7 +2342,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2252,7 +2354,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2264,7 +2366,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("userTypes")],
+            const <Object>[const prefix82.Query("userTypes")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2276,7 +2378,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2288,7 +2390,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2300,7 +2402,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2312,7 +2414,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2324,7 +2426,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2336,7 +2438,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2348,7 +2450,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2360,7 +2462,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2372,7 +2474,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2384,7 +2486,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2396,7 +2498,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2408,7 +2510,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2420,7 +2522,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2432,7 +2534,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2444,7 +2546,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("withinProductionTeam")],
+            const <Object>[const prefix82.Query("withinProductionTeam")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2456,7 +2558,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2468,7 +2570,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2480,7 +2582,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2492,7 +2594,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2504,7 +2606,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2516,7 +2618,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2528,7 +2630,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2540,7 +2642,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2552,7 +2654,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2564,7 +2666,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2576,7 +2678,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2588,7 +2690,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2600,7 +2702,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2612,7 +2714,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2624,7 +2726,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2636,7 +2738,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2648,7 +2750,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("type")],
+            const <Object>[const prefix82.Query("type")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2660,7 +2762,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("category")],
+            const <Object>[const prefix82.Query("category")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2672,7 +2774,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2684,7 +2786,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2696,7 +2798,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2708,7 +2810,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2720,7 +2822,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2732,7 +2834,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2744,7 +2846,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2756,7 +2858,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2768,7 +2870,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2780,7 +2882,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2792,7 +2894,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2804,7 +2906,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2816,7 +2918,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2828,7 +2930,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2840,7 +2942,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2852,7 +2954,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2864,7 +2966,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2876,7 +2978,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2888,7 +2990,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2900,7 +3002,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2912,7 +3014,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2924,7 +3026,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2948,7 +3050,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2960,7 +3062,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2972,7 +3074,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2984,7 +3086,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -2996,7 +3098,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3008,7 +3110,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("customerId")],
+            const <Object>[const prefix82.Query("customerId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3020,7 +3122,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("salespersonId")],
+            const <Object>[const prefix82.Query("salespersonId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3032,7 +3134,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("driverId")],
+            const <Object>[const prefix82.Query("driverId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3044,7 +3146,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3056,7 +3158,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("code")],
+            const <Object>[const prefix82.Query("code")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3068,7 +3170,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("sameBranch")],
+            const <Object>[const prefix82.Query("sameBranch")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3080,7 +3182,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("withinProductionTeam")],
+            const <Object>[const prefix82.Query("withinProductionTeam")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3092,7 +3194,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("customerCityId")],
+            const <Object>[const prefix82.Query("customerCityId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3104,7 +3206,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("customerProvinceId")],
+            const <Object>[const prefix82.Query("customerProvinceId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3116,7 +3218,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("customerName")],
+            const <Object>[const prefix82.Query("customerName")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3128,7 +3230,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("date")],
+            const <Object>[const prefix82.Query("date")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3140,7 +3242,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("minQuantityRange")],
+            const <Object>[const prefix82.Query("minQuantityRange")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3152,7 +3254,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("maxQuantityRange")],
+            const <Object>[const prefix82.Query("maxQuantityRange")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3164,7 +3266,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("createdBy")],
+            const <Object>[const prefix82.Query("createdBy")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3176,7 +3278,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3188,7 +3290,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3200,7 +3302,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3212,7 +3314,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3224,7 +3326,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("category")],
+            const <Object>[const prefix82.Query("category")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3236,7 +3338,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("withinProductionTeam")],
+            const <Object>[const prefix82.Query("withinProductionTeam")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3248,7 +3350,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3260,7 +3362,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3272,7 +3374,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3284,7 +3386,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3296,7 +3398,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("category")],
+            const <Object>[const prefix82.Query("category")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3308,7 +3410,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3320,7 +3422,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3332,7 +3434,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3344,7 +3446,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3356,7 +3458,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3368,7 +3470,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("grStatus")],
+            const <Object>[const prefix82.Query("grStatus")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3380,7 +3482,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("grStatus")],
+            const <Object>[const prefix82.Query("grStatus")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3392,7 +3494,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3404,7 +3506,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3416,7 +3518,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3428,7 +3530,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3440,7 +3542,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3452,7 +3554,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3464,7 +3566,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3476,7 +3578,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3488,7 +3590,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3500,7 +3602,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3512,7 +3614,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3524,7 +3626,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3536,7 +3638,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3548,7 +3650,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3560,7 +3662,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3572,7 +3674,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3584,7 +3686,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3596,7 +3698,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3608,7 +3710,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3620,7 +3722,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3632,7 +3734,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3644,7 +3746,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3656,7 +3758,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3668,7 +3770,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3680,7 +3782,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3692,7 +3794,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3704,7 +3806,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3716,7 +3818,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3728,7 +3830,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3740,7 +3842,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3752,7 +3854,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3764,7 +3866,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("productCategoryId")],
+            const <Object>[const prefix82.Query("productCategoryId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3776,7 +3878,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3788,7 +3890,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3800,7 +3902,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3812,7 +3914,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3824,7 +3926,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3836,7 +3938,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3848,7 +3950,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3860,7 +3962,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3872,7 +3974,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3884,7 +3986,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3896,7 +3998,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3908,7 +4010,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3920,7 +4022,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3932,7 +4034,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3944,7 +4046,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3956,7 +4058,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("folder")],
+            const <Object>[const prefix82.Query("folder")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3968,7 +4070,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("file")],
+            const <Object>[const prefix81.Parameter("file")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3980,7 +4082,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -3992,7 +4094,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4004,7 +4106,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4016,7 +4118,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4028,7 +4130,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4040,7 +4142,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4052,7 +4154,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4064,7 +4166,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4076,7 +4178,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4088,7 +4190,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4100,7 +4202,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4112,7 +4214,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4124,7 +4226,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4136,7 +4238,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4148,7 +4250,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4160,7 +4262,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4172,7 +4274,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4184,7 +4286,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4196,7 +4298,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4208,7 +4310,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4220,7 +4322,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4232,7 +4334,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4244,7 +4346,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4256,7 +4358,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4268,7 +4370,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4280,7 +4382,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4292,7 +4394,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4304,7 +4406,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4316,7 +4418,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4328,7 +4430,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4340,7 +4442,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("withinProductionTeam")],
+            const <Object>[const prefix82.Query("withinProductionTeam")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4352,7 +4454,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4364,7 +4466,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4376,7 +4478,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4388,7 +4490,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4400,7 +4502,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4412,7 +4514,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4424,7 +4526,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4436,7 +4538,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4448,7 +4550,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4460,7 +4562,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4472,7 +4574,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4484,7 +4586,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4496,7 +4598,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4508,7 +4610,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4520,7 +4622,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4532,7 +4634,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4544,7 +4646,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4556,7 +4658,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4568,7 +4670,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4580,7 +4682,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4592,7 +4694,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4604,7 +4706,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4616,7 +4718,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4628,7 +4730,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4640,7 +4742,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4652,7 +4754,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4664,7 +4766,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4676,7 +4778,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4688,7 +4790,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4700,7 +4802,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4712,7 +4814,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("userType")],
+            const <Object>[const prefix82.Query("userType")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4724,7 +4826,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4736,7 +4838,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4748,7 +4850,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4760,7 +4862,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4772,7 +4874,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4784,7 +4886,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4796,7 +4898,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4808,7 +4910,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4820,7 +4922,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4832,7 +4934,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4844,7 +4946,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4856,7 +4958,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4868,7 +4970,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4880,7 +4982,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4892,7 +4994,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("operationUnitId")],
+            const <Object>[const prefix82.Query("operationUnitId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4904,7 +5006,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4916,7 +5018,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4928,7 +5030,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4940,7 +5042,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4952,7 +5054,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4964,7 +5066,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4976,7 +5078,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -4988,7 +5090,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5000,7 +5102,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5012,7 +5114,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5024,7 +5126,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5036,7 +5138,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5048,7 +5150,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5060,7 +5162,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5072,7 +5174,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5084,7 +5186,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5096,7 +5198,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5108,7 +5210,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5120,7 +5222,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5132,7 +5234,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5144,7 +5246,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5156,7 +5258,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5168,7 +5270,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5180,7 +5282,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5192,7 +5294,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5204,7 +5306,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5216,7 +5318,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5228,7 +5330,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5240,7 +5342,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5252,7 +5354,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5264,7 +5366,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("driverId")],
+            const <Object>[const prefix82.Query("driverId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5276,7 +5378,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5288,7 +5390,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5300,7 +5402,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5312,7 +5414,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5324,7 +5426,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5336,7 +5438,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5348,7 +5450,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5360,7 +5462,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5372,7 +5474,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5384,7 +5486,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("driverId")],
+            const <Object>[const prefix82.Query("driverId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5396,7 +5498,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5408,7 +5510,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5420,7 +5522,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5432,7 +5534,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5444,7 +5546,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5456,7 +5558,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5468,7 +5570,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5480,7 +5582,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5492,7 +5594,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5504,7 +5606,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5516,7 +5618,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5528,7 +5630,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5540,7 +5642,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5552,7 +5654,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5564,7 +5666,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5576,7 +5678,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5588,7 +5690,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5600,7 +5702,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5612,7 +5714,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5624,7 +5726,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5636,7 +5738,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5648,7 +5750,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5660,7 +5762,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("driverId")],
+            const <Object>[const prefix82.Query("driverId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5672,7 +5774,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5684,7 +5786,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5696,7 +5798,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5708,7 +5810,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5720,7 +5822,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5732,7 +5834,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5744,7 +5846,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5756,7 +5858,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5768,7 +5870,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5780,7 +5882,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("driverId")],
+            const <Object>[const prefix82.Query("driverId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5792,7 +5894,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5804,7 +5906,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5816,7 +5918,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5828,7 +5930,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("status")],
+            const <Object>[const prefix82.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5840,7 +5942,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5852,7 +5954,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5864,7 +5966,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5876,7 +5978,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5888,7 +5990,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5900,7 +6002,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5912,7 +6014,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5924,7 +6026,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5936,7 +6038,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5948,7 +6050,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5960,7 +6062,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("credentials")],
+            const <Object>[const prefix81.Parameter("credentials")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5972,7 +6074,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("username")],
+            const <Object>[const prefix81.Parameter("username")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5984,7 +6086,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("password")],
+            const <Object>[const prefix81.Parameter("password")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -5996,7 +6098,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6008,7 +6110,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6020,7 +6122,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6032,7 +6134,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6044,7 +6146,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6056,7 +6158,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6068,7 +6170,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6080,7 +6182,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6092,7 +6194,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6104,7 +6206,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6116,7 +6218,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6128,7 +6230,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6140,7 +6242,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6152,7 +6254,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6164,7 +6266,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6176,7 +6278,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6188,7 +6290,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6200,7 +6302,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6212,7 +6314,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6224,7 +6326,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6236,7 +6338,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6248,7 +6350,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6260,7 +6362,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6272,7 +6374,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("businessName")],
+            const <Object>[const prefix82.Query("businessName")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6284,7 +6386,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6296,7 +6398,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6308,7 +6410,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6320,7 +6422,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6332,7 +6434,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6344,7 +6446,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("provinceId")],
+            const <Object>[const prefix82.Query("provinceId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6356,7 +6458,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("cityId")],
+            const <Object>[const prefix82.Query("cityId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6368,7 +6470,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("districId")],
+            const <Object>[const prefix82.Query("districId")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6380,7 +6482,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$page")],
+            const <Object>[const prefix82.Query("\$page")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6392,7 +6494,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix96.Query("\$limit")],
+            const <Object>[const prefix82.Query("\$limit")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6404,7 +6506,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6416,7 +6518,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6428,7 +6530,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6440,7 +6542,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6452,7 +6554,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6464,7 +6566,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6476,7 +6578,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6488,7 +6590,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6500,7 +6602,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6512,7 +6614,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6524,7 +6626,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6536,7 +6638,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6548,7 +6650,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("credentials")],
+            const <Object>[const prefix81.Parameter("credentials")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6560,7 +6662,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("Authorization")],
+            const <Object>[const prefix79.Header("Authorization")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6572,7 +6674,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-ID")],
+            const <Object>[const prefix79.Header("X-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6584,7 +6686,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix93.Header("X-APP-ID")],
+            const <Object>[const prefix79.Header("X-APP-ID")],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6596,7 +6698,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix94.Path()],
+            const <Object>[const prefix80.Path()],
             null,
             null),
         r.ParameterMirrorImpl(
@@ -6608,7 +6710,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix95.Parameter("params")],
+            const <Object>[const prefix81.Parameter("params")],
             null,
             null)
       ],
@@ -6744,23 +6846,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             0,
             const prefix5.BaseEntity(),
-            const <int>[0, 1, 2, 3, 4, 42, 43, 54],
+            const <int>[0, 1, 2, 3, 4, 32, 33, 44],
             const <int>[
-              55,
-              56,
-              57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              42,
-              44,
               45,
               46,
               47,
@@ -6769,10 +6856,25 @@ final _data = <r.Reflectable, r.ReflectorData>{
               50,
               51,
               52,
-              53
+              53,
+              54,
+              55,
+              56,
+              57,
+              32,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43
             ],
-            const <int>[43],
-            6,
+            const <int>[33],
+            5,
             {r'toResponseModel': () => prefix6.Auth.toResponseModel},
             {},
             {
@@ -6792,7 +6894,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_auth")
+              const prefix86.Table("t_auth")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -6821,16 +6923,25 @@ final _data = <r.Reflectable, r.ReflectorData>{
               21,
               22,
               23,
-              68,
-              69,
-              108
+              58,
+              59,
+              98
             ],
             const <int>[
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
               55,
               56,
               57,
               58,
-              59,
               60,
               61,
               62,
@@ -6840,6 +6951,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               66,
               67,
               68,
+              69,
               70,
               71,
               72,
@@ -6867,20 +6979,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
               94,
               95,
               96,
-              97,
-              98,
-              99,
-              100,
-              101,
-              102,
-              103,
-              104,
-              105,
-              106,
-              107
+              97
             ],
-            const <int>[69],
-            6,
+            const <int>[59],
+            5,
             {r'toResponseModel': () => prefix8.Profile.toResponseModel},
             {},
             {
@@ -6933,7 +7035,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("m_profile")
+              const prefix86.Table("m_profile")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -6942,29 +7044,29 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             2,
             const prefix5.BaseEntity(),
-            const <int>[24, 25, 109, 110, 115],
+            const <int>[24, 25, 99, 100, 105],
             const <int>[
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
               55,
               56,
               57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              109,
-              111,
-              112,
-              113,
-              114
+              99,
+              101,
+              102,
+              103,
+              104
             ],
-            const <int>[110],
-            6,
+            const <int>[100],
+            5,
             {r'toResponseModel': () => prefix9.UserGoogle.toResponseModel},
             {},
             {
@@ -6978,7 +7080,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_user")
+              const prefix86.Table("t_user")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -6987,27 +7089,27 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             3,
             const prefix5.BaseEntity(),
-            const <int>[26, 116, 117, 120],
+            const <int>[26, 106, 107, 110],
             const <int>[
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
               55,
               56,
               57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              116,
-              118,
-              119
+              106,
+              108,
+              109
             ],
-            const <int>[117],
-            6,
+            const <int>[107],
+            5,
             {r'toResponseModel': () => prefix10.XAppId.toResponseModel},
             {},
             {
@@ -7020,7 +7122,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_xapp")
+              const prefix86.Table("t_xapp")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -7029,31 +7131,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             4,
             const prefix5.BaseEntity(),
-            const <int>[27, 28, 29, 121, 128],
+            const <int>[27, 28, 29, 111, 118],
             const <int>[
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
               55,
               56,
               57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              121,
-              122,
-              123,
-              124,
-              125,
-              126,
-              127
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117
             ],
             const <int>[],
-            6,
+            5,
             {},
             {},
             {
@@ -7070,123 +7172,35 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix5.SetupEntity],
             null),
         r.NonGenericClassMirrorImpl(
-            r'SmartScale',
-            r'.SmartScale',
-            134217735,
-            5,
-            const prefix5.BaseEntity(),
-            const <int>[30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 129, 130, 151],
-            const <int>[
-              55,
-              56,
-              57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              130,
-              122,
-              123,
-              124,
-              125,
-              126,
-              127,
-              131,
-              132,
-              133,
-              134,
-              135,
-              136,
-              137,
-              138,
-              139,
-              140,
-              141,
-              142,
-              143,
-              144,
-              145,
-              146,
-              147,
-              148,
-              149,
-              150
-            ],
-            const <int>[129],
-            4,
-            {r'toResponseModel': () => prefix75.SmartScale.toResponseModel},
-            {},
-            {
-              r'': (bool b) => (
-                      {id,
-                      totalCount,
-                      averageWeight,
-                      roomId,
-                      room,
-                      records = const [],
-                      startDate,
-                      executionDate,
-                      createdDate,
-                      updatedDate}) =>
-                  b
-                      ? prefix75.SmartScale(
-                          averageWeight: averageWeight,
-                          createdDate: createdDate,
-                          executionDate: executionDate,
-                          id: id,
-                          records: records,
-                          room: room,
-                          roomId: roomId,
-                          startDate: startDate,
-                          totalCount: totalCount,
-                          updatedDate: updatedDate)
-                      : null
-            },
-            -1,
-            5,
-            const <int>[],
-            const <Object>[
-              prefix5.SetupEntity,
-              prefix7.SetupModel,
-              const prefix100.Table("t_smart_scale")
-            ],
-            null),
-        r.NonGenericClassMirrorImpl(
             r'BaseEntity',
             r'.BaseEntity',
             134217735,
-            6,
+            5,
             const prefix5.BaseEntity(),
-            const <int>[152, 153],
+            const <int>[119, 120],
             const <int>[
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
               55,
               56,
               57,
-              58,
-              59,
-              60,
-              61,
-              62,
-              63,
-              64,
-              65,
-              66,
-              67,
-              152
+              119
             ],
             const <int>[],
-            7,
+            6,
             {},
             {},
             {r'': (bool b) => () => b ? prefix5.BaseEntity() : null},
             -1,
-            6,
+            5,
             const <int>[],
             const [],
             null),
@@ -7194,21 +7208,21 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'Reflectable',
             r'reflectable.reflectable.Reflectable',
             134218247,
-            7,
+            6,
             const prefix5.BaseEntity(),
-            const <int>[40, 41, 154, 157, 158],
-            const <int>[55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67],
-            const <int>[154, 155, 156],
-            8,
+            const <int>[30, 31, 121, 124, 125],
+            const <int>[45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+            const <int>[121, 122, 123],
+            7,
             {
-              r'getInstance': () => prefix97.Reflectable.getInstance,
-              r'thisClassName': () => prefix97.Reflectable.thisClassName,
-              r'thisClassId': () => prefix97.Reflectable.thisClassId
+              r'getInstance': () => prefix83.Reflectable.getInstance,
+              r'thisClassName': () => prefix83.Reflectable.thisClassName,
+              r'thisClassId': () => prefix83.Reflectable.thisClassId
             },
             {},
             {},
             -1,
-            7,
+            6,
             const <int>[],
             const [],
             null),
@@ -7216,17 +7230,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'ReflectableImpl',
             r'reflectable.src.reflectable_builder_based.ReflectableImpl',
             134218247,
-            8,
+            7,
             const prefix5.BaseEntity(),
-            const <int>[61, 62, 63, 64, 65, 66, 67, 159, 160],
-            const <int>[55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67],
+            const <int>[51, 52, 53, 54, 55, 56, 57, 126, 127],
+            const <int>[45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
             const <int>[],
-            9,
+            8,
             {},
             {},
             {},
             -1,
-            8,
+            7,
             const <int>[],
             const [],
             null),
@@ -7234,12 +7248,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'ReflectableBase',
             r'reflectable.src.reflectable_base.ReflectableBase',
             134217735,
-            9,
+            8,
             const prefix5.BaseEntity(),
-            const <int>[60, 161, 162],
-            const <int>[55, 56, 57, 58, 59, 60],
+            const <int>[50, 128, 129],
+            const <int>[45, 46, 47, 48, 49, 50],
             const <int>[],
-            10,
+            9,
             {},
             {},
             {
@@ -7255,14 +7269,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
                       _cap8,
                       _cap9]) =>
                   b
-                      ? prefix99.ReflectableBase(_cap0, _cap1, _cap2, _cap3,
+                      ? prefix85.ReflectableBase(_cap0, _cap1, _cap2, _cap3,
                           _cap4, _cap5, _cap6, _cap7, _cap8, _cap9)
                       : null,
               r'fromList': (bool b) => (_capabilities) =>
-                  b ? prefix99.ReflectableBase.fromList(_capabilities) : null
+                  b ? prefix85.ReflectableBase.fromList(_capabilities) : null
             },
             -1,
-            9,
+            8,
             const <int>[],
             const [],
             null),
@@ -7270,11 +7284,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'Object',
             r'dart.core.Object',
             134217735,
-            10,
+            9,
             const prefix5.BaseEntity(),
-            const <int>[55, 56, 57, 163, 164, 165, 58, 59, 166],
-            const <int>[55, 56, 57, 58, 59],
-            const <int>[163, 164, 165],
+            const <int>[45, 46, 47, 130, 131, 132, 48, 49, 133],
+            const <int>[45, 46, 47, 48, 49],
+            const <int>[130, 131, 132],
             null,
             {
               r'hash': () => Object.hash,
@@ -7284,7 +7298,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {r'': (bool b) => () => b ? Object() : null},
             -1,
-            10,
+            9,
             const <int>[],
             const [],
             null)
@@ -7292,7 +7306,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
       <m.DeclarationMirror>[
         r.VariableMirrorImpl(r'id', 67239941, 0, const prefix5.BaseEntity(), -1,
             -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "id",
               type: "VARCHAR",
               length: 100,
@@ -7302,7 +7316,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'token', 67239941, 0, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "token",
               type: "VARCHAR",
               length: 255,
@@ -7311,12 +7325,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'refreshToken', 67239941, 0,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "refreshToken", type: "VARCHAR", length: 20)
         ]),
         r.VariableMirrorImpl(r'acceptTnc', 67239941, 0,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "acceptTnc", type: "INTEGER", length: 10)
         ]),
         r.VariableMirrorImpl(
@@ -7328,72 +7342,78 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix101.Attribute(name: "action")]),
+            const <Object>[const prefix87.Attribute(name: "action")]),
         r.VariableMirrorImpl(r'id', 67239941, 1, const prefix5.BaseEntity(), -1,
             -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "id", primaryKey: true, notNull: true)
+          const prefix87.Attribute(name: "id", primaryKey: true, notNull: true)
         ]),
         r.VariableMirrorImpl(r'cmsId', 67239941, 1, const prefix5.BaseEntity(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'name', 67239941, 1, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "name", length: 100)
+          const prefix87.Attribute(name: "name", length: 100)
         ]),
         r.VariableMirrorImpl(r'email', 67239941, 1, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "email", length: 100)
+          const prefix87.Attribute(name: "email", length: 100)
         ]),
         r.VariableMirrorImpl(r'phoneNumber', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "phoneNumber", length: 16)
+          const prefix87.Attribute(name: "phoneNumber", length: 16)
         ]),
         r.VariableMirrorImpl(r'waNumber', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "waNumber", length: 16)
+          const prefix87.Attribute(name: "waNumber", length: 16)
         ]),
-        r.VariableMirrorImpl(r'role', 67239941, 1, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "role", length: 50)
-        ]),
+        r.VariableMirrorImpl(
+            r'role',
+            67239941,
+            1,
+            const prefix5.BaseEntity(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix87.Attribute(name: "role", length: 50)]),
         r.VariableMirrorImpl(r'organizationId', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "organizationId", length: 50)
+          const prefix87.Attribute(name: "organizationId", length: 50)
         ]),
         r.VariableMirrorImpl(r'organizationName', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "organizationName", length: 100)
+          const prefix87.Attribute(name: "organizationName", length: 100)
         ]),
         r.VariableMirrorImpl(r'createdDate', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "createdDate", length: 100)
+          const prefix87.Attribute(name: "createdDate", length: 100)
         ]),
         r.VariableMirrorImpl(r'userCode', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userCode", length: 50)
+          const prefix87.Attribute(name: "userCode", length: 50)
         ]),
         r.VariableMirrorImpl(r'userName', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userName", length: 50)
+          const prefix87.Attribute(name: "userName", length: 50)
         ]),
         r.VariableMirrorImpl(r'fullName', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "fullName", length: 100)
+          const prefix87.Attribute(name: "fullName", length: 100)
         ]),
         r.VariableMirrorImpl(r'userType', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userType", length: 20)
+          const prefix87.Attribute(name: "userType", length: 20)
         ]),
         r.VariableMirrorImpl(r'status', 67239941, 1, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "status", type: "INTEGER", length: 2, defaultValue: "0")
         ]),
         r.VariableMirrorImpl(r'refOwnerId', 67239941, 1,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "refOwnerId", length: 100)
+          const prefix87.Attribute(name: "refOwnerId", length: 100)
         ]),
         r.VariableMirrorImpl(r'roles', 84017157, 1, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
+            -1, -1, -1, null, const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(
             r'modules',
             67239941,
@@ -7403,12 +7423,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'branch', 67239941, 1, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            -1, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'accessToken', 67239941, 2,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "accessToken",
               type: "VARCHAR",
               length: 100,
@@ -7418,7 +7438,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'email', 67239941, 2, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "email",
               type: "VARCHAR",
               length: 255,
@@ -7427,7 +7447,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'appId', 67239941, 3, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "appId",
               type: "VARCHAR",
               length: 100,
@@ -7436,7 +7456,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'idOffline', 67239941, 4,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "idOffline",
               type: "INTEGER",
               length: 10,
@@ -7447,7 +7467,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'expiredDate', 67239941, 4,
             const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "expiredDate",
               type: "VARCHAR",
               length: 50,
@@ -7456,66 +7476,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'flag', 67239941, 4, const prefix5.BaseEntity(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "flag", type: "INTEGER", length: 1, defaultValue: "0")
         ]),
-        r.VariableMirrorImpl(r'id', 67239941, 5, const prefix5.BaseEntity(), -1,
-            -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "id", type: "VARCHAR", length: 100, notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'totalCount', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "totalCount",
-              type: "INTEGER",
-              length: 10,
-              defaultValue: "0")
-        ]),
-        r.VariableMirrorImpl(r'averageWeight', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "averageWeight",
-              type: "REAL",
-              length: 10,
-              defaultValue: "0")
-        ]),
-        r.VariableMirrorImpl(r'roomId', 67239941, 5, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "roomId", type: "VARCHAR", length: 100, notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'room', 67239941, 5, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'records', 151126021, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "records", type: "VARCHAR", length: 1000),
-          const prefix102.IsChildren()
-        ]),
-        r.VariableMirrorImpl(r'startDate', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "startDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'executionDate', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "executionDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'createdDate', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "createdDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'updatedDate', 67239941, 5,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "updatedDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'thisClassName', 134349973, 7,
+        r.VariableMirrorImpl(r'thisClassName', 134349973, 6,
             const prefix5.BaseEntity(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'thisClassId', 134349973, 7,
+        r.VariableMirrorImpl(r'thisClassId', 134349973, 6,
             const prefix5.BaseEntity(), -1, -1, -1, null, const []),
         r.MethodMirrorImpl(
             r'toModelEntity',
@@ -7530,34 +7496,34 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 0, 0, -1, -1, null,
             const <int>[1], const prefix5.BaseEntity(), const []),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 0, 44),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 0, 45),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 1, 46),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 1, 47),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 2, 48),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 2, 49),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 3, 50),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 3, 51),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 4, 52),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 4, 53),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 0, 34),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 0, 35),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 1, 36),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 1, 37),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 2, 38),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 2, 39),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 3, 40),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 3, 41),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 4, 42),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 4, 43),
         r.MethodMirrorImpl(r'', 0, 0, -1, -1, -1, null,
             const <int>[2, 3, 4, 5, 6], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'==', 2097154, 10, -1, -1, -1, null,
-            const <int>[12], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'toString', 2097154, 10, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'==', 2097154, 9, -1, -1, -1, null, const <int>[12],
+            const prefix5.BaseEntity(), const []),
+        r.MethodMirrorImpl(r'toString', 2097154, 9, -1, -1, -1, null,
             const <int>[], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'noSuchMethod', 524290, 10, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'noSuchMethod', 524290, 9, -1, -1, -1, null,
             const <int>[13], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'hashCode', 2097155, 10, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'hashCode', 2097155, 9, -1, -1, -1, null,
             const <int>[], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'runtimeType', 2097155, 10, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'runtimeType', 2097155, 9, -1, -1, -1, null,
             const <int>[], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'capabilities', 35651587, 9, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'capabilities', 35651587, 8, -1, -1, -1, null,
             const <int>[], const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
             r'canReflect',
             2097154,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7568,7 +7534,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'reflect',
             2097154,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7579,7 +7545,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'canReflectType',
             2097154,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7590,7 +7556,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'reflectType',
             2097154,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7601,7 +7567,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'findLibrary',
             2097154,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7612,7 +7578,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'libraries',
             35651587,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7623,7 +7589,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'annotatedClasses',
             35651587,
-            8,
+            7,
             -1,
             -1,
             -1,
@@ -7644,44 +7610,44 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 1, 1, -1, -1, null,
             const <int>[20], const prefix5.BaseEntity(), const []),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 5, 70),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 5, 71),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 6, 72),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 6, 73),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 7, 74),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 7, 75),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 8, 76),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 8, 77),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 9, 78),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 9, 79),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 10, 80),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 10, 81),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 11, 82),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 11, 83),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 12, 84),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 12, 85),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 13, 86),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 13, 87),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 14, 88),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 14, 89),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 15, 90),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 15, 91),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 16, 92),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 16, 93),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 17, 94),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 17, 95),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 18, 96),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 18, 97),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 19, 98),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 19, 99),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 20, 100),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 20, 101),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 21, 102),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 21, 103),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 22, 104),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 22, 105),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 23, 106),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 23, 107),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 5, 60),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 5, 61),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 6, 62),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 6, 63),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 7, 64),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 7, 65),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 8, 66),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 8, 67),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 9, 68),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 9, 69),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 10, 70),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 10, 71),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 11, 72),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 11, 73),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 12, 74),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 12, 75),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 13, 76),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 13, 77),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 14, 78),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 14, 79),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 15, 80),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 15, 81),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 16, 82),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 16, 83),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 17, 84),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 17, 85),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 18, 86),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 18, 87),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 19, 88),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 19, 89),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 20, 90),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 20, 91),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 21, 92),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 21, 93),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 22, 94),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 22, 95),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 23, 96),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 23, 97),
         r.MethodMirrorImpl(
             r'',
             0,
@@ -7726,10 +7692,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 2, 2, -1, -1, null,
             const <int>[60], const prefix5.BaseEntity(), const []),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 24, 111),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 24, 112),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 25, 113),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 25, 114),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 24, 101),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 24, 102),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 25, 103),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 25, 104),
         r.MethodMirrorImpl(r'', 0, 2, -1, -1, -1, null, const <int>[61, 62],
             const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
@@ -7745,8 +7711,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 3, 3, -1, -1, null,
             const <int>[66], const prefix5.BaseEntity(), const []),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 26, 118),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 26, 119),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 26, 108),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 26, 109),
         r.MethodMirrorImpl(r'', 0, 3, -1, -1, -1, null, const <int>[67],
             const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
@@ -7760,51 +7726,26 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[69],
             const prefix5.BaseEntity(),
             const <Object>[override]),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 27, 122),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 27, 123),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 28, 124),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 28, 125),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 29, 126),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 29, 127),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 27, 112),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 27, 113),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 28, 114),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 28, 115),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 29, 116),
+        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 29, 117),
         r.MethodMirrorImpl(r'', 0, 4, -1, -1, -1, null, const <int>[70, 71, 72],
             const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'toResponseModel', 2097170, 5, 5, -1, -1, null,
+        r.MethodMirrorImpl(r'toModelEntity', 524290, 5, -1, -1, -1, null,
             const <int>[76], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(
-            r'toModelEntity',
-            2097154,
-            5,
-            5,
-            -1,
-            -1,
-            null,
-            const <int>[77],
-            const prefix5.BaseEntity(),
-            const <Object>[override]),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 30, 131),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 30, 132),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 31, 133),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 31, 134),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 32, 135),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 32, 136),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 33, 137),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 33, 138),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 34, 139),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 34, 140),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 35, 141),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 35, 142),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 36, 143),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 36, 144),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 37, 145),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 37, 146),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 38, 147),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 38, 148),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 39, 149),
-        r.ImplicitSetterMirrorImpl(const prefix5.BaseEntity(), 39, 150),
+        r.MethodMirrorImpl(r'', 128, 5, -1, -1, -1, null, const <int>[],
+            const prefix5.BaseEntity(), const []),
+        r.MethodMirrorImpl(r'getInstance', 2097170, 6, 6, -1, -1, null,
+            const <int>[77], const prefix5.BaseEntity(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 30, 122),
+        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 31, 123),
         r.MethodMirrorImpl(
             r'',
-            0,
-            5,
+            128,
+            6,
             -1,
             -1,
             -1,
@@ -7812,14 +7753,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
             const prefix5.BaseEntity(),
             const []),
-        r.MethodMirrorImpl(r'toModelEntity', 524290, 6, -1, -1, -1, null,
-            const <int>[98], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'', 128, 6, -1, -1, -1, null, const <int>[],
-            const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'getInstance', 2097170, 7, 7, -1, -1, null,
-            const <int>[99], const prefix5.BaseEntity(), const []),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 40, 155),
-        r.ImplicitGetterMirrorImpl(const prefix5.BaseEntity(), 41, 156),
+        r.MethodMirrorImpl(r'fromList', 128, 6, -1, -1, -1, null,
+            const <int>[88], const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
             r'',
             128,
@@ -7828,11 +7763,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
+            const <int>[89, 90, 91, 92, 93, 94, 95, 96, 97, 98],
             const prefix5.BaseEntity(),
             const []),
         r.MethodMirrorImpl(r'fromList', 128, 7, -1, -1, -1, null,
-            const <int>[110], const prefix5.BaseEntity(), const []),
+            const <int>[99], const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
             r'',
             128,
@@ -7841,74 +7776,61 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[111, 112, 113, 114, 115, 116, 117, 118, 119, 120],
+            const <int>[100, 101, 102, 103, 104, 105, 106, 107, 108, 109],
             const prefix5.BaseEntity(),
             const []),
         r.MethodMirrorImpl(r'fromList', 128, 8, -1, -1, -1, null,
-            const <int>[121], const prefix5.BaseEntity(), const []),
+            const <int>[110], const prefix5.BaseEntity(), const []),
         r.MethodMirrorImpl(
-            r'',
-            128,
+            r'hash',
+            2097170,
             9,
             -1,
             -1,
             -1,
             null,
-            const <int>[122, 123, 124, 125, 126, 127, 128, 129, 130, 131],
-            const prefix5.BaseEntity(),
-            const []),
-        r.MethodMirrorImpl(r'fromList', 128, 9, -1, -1, -1, null,
-            const <int>[132], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(
-            r'hash',
-            2097170,
-            10,
-            -1,
-            -1,
-            -1,
-            null,
             const <int>[
-              133,
-              134,
-              135,
-              136,
-              137,
-              138,
-              139,
-              140,
-              141,
-              142,
-              143,
-              144,
-              145,
-              146,
-              147,
-              148,
-              149,
-              150,
-              151,
-              152
+              111,
+              112,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130
             ],
             const prefix5.BaseEntity(),
             const []),
-        r.MethodMirrorImpl(r'hashAll', 2097170, 10, -1, -1, -1, null,
-            const <int>[153], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'hashAllUnordered', 2097170, 10, -1, -1, -1, null,
-            const <int>[154], const prefix5.BaseEntity(), const []),
-        r.MethodMirrorImpl(r'', 128, 10, -1, -1, -1, null, const <int>[],
+        r.MethodMirrorImpl(r'hashAll', 2097170, 9, -1, -1, -1, null,
+            const <int>[131], const prefix5.BaseEntity(), const []),
+        r.MethodMirrorImpl(r'hashAllUnordered', 2097170, 9, -1, -1, -1, null,
+            const <int>[132], const prefix5.BaseEntity(), const []),
+        r.MethodMirrorImpl(r'', 128, 9, -1, -1, -1, null, const <int>[],
             const prefix5.BaseEntity(), const [])
       ],
       <m.ParameterMirror>[
-        r.ParameterMirrorImpl(r'map', 151126022, 42, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'map', 151126022, 32, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 43, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'map', 151126022, 33, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'id', 67253254, 54, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'id', 67253254, 44, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'token',
             67253254,
-            54,
+            44,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -7920,7 +7842,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'refreshToken',
             67253254,
-            54,
+            44,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -7932,7 +7854,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'acceptTnc',
             67255302,
-            54,
+            44,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -7944,7 +7866,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'action',
             67253254,
-            54,
+            44,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -7953,40 +7875,40 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #action),
-        r.ParameterMirrorImpl(r'_id', 67240038, 45, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'_id', 67240038, 35, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_token', 67240038, 47,
+        r.ParameterMirrorImpl(r'_token', 67240038, 37,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_refreshToken', 67240038, 49,
+        r.ParameterMirrorImpl(r'_refreshToken', 67240038, 39,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_acceptTnc', 67240038, 51,
+        r.ParameterMirrorImpl(r'_acceptTnc', 67240038, 41,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_action', 67240038, 53,
+        r.ParameterMirrorImpl(r'_action', 67240038, 43,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'other', 134348806, 55,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'invocation', 134348806, 57,
+        r.ParameterMirrorImpl(r'other', 134348806, 45,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'invocation', 134348806, 47,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'reflectee', 134348806, 61,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'reflectee', 134348806, 62,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'type', 134348806, 63,
+        r.ParameterMirrorImpl(r'reflectee', 134348806, 51,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'reflectee', 134348806, 52,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'type', 134348806, 53,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'type', 134348806, 64,
+        r.ParameterMirrorImpl(r'type', 134348806, 54,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'libraryName', 134348806, 65,
+        r.ParameterMirrorImpl(r'libraryName', 134348806, 55,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 68, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'map', 151126022, 58, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 69, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'map', 151126022, 59, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'id', 67253254, 108, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'id', 67253254, 98, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'userCode',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -7998,7 +7920,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userName',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8010,7 +7932,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'fullName',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8022,7 +7944,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'email',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8034,7 +7956,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'phoneNumber',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8046,7 +7968,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userType',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8055,12 +7977,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #userType),
-        r.ParameterMirrorImpl(r'status', 67255302, 108,
+        r.ParameterMirrorImpl(r'status', 67255302, 98,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], 1, #status),
         r.ParameterMirrorImpl(
             r'refOwnerId',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8072,7 +7994,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8084,7 +8006,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'cmsId',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8096,7 +8018,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'roles',
             84030470,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8108,7 +8030,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modules',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8117,22 +8039,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #modules),
-        r.ParameterMirrorImpl(
-            r'name',
-            67253254,
-            108,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #name),
+        r.ParameterMirrorImpl(r'name', 67253254, 98, const prefix5.BaseEntity(),
+            -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'waNumber',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8141,22 +8053,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #waNumber),
-        r.ParameterMirrorImpl(
-            r'role',
-            67253254,
-            108,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #role),
+        r.ParameterMirrorImpl(r'role', 67253254, 98, const prefix5.BaseEntity(),
+            -1, -1, -1, null, const [], null, #role),
         r.ParameterMirrorImpl(
             r'organizationId',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8168,7 +8070,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'organizationName',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8180,7 +8082,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'branch',
             67253254,
-            108,
+            98,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8189,52 +8091,52 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #branch),
-        r.ParameterMirrorImpl(r'_id', 67240038, 71, const prefix5.BaseEntity(),
+        r.ParameterMirrorImpl(r'_id', 67240038, 61, const prefix5.BaseEntity(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cmsId', 67240038, 73,
+        r.ParameterMirrorImpl(r'_cmsId', 67240038, 63,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_name', 67240038, 75,
+        r.ParameterMirrorImpl(r'_name', 67240038, 65,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_email', 67240038, 77,
+        r.ParameterMirrorImpl(r'_email', 67240038, 67,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_phoneNumber', 67240038, 79,
+        r.ParameterMirrorImpl(r'_phoneNumber', 67240038, 69,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_waNumber', 67240038, 81,
+        r.ParameterMirrorImpl(r'_waNumber', 67240038, 71,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_role', 67240038, 83,
+        r.ParameterMirrorImpl(r'_role', 67240038, 73,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_organizationId', 67240038, 85,
+        r.ParameterMirrorImpl(r'_organizationId', 67240038, 75,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_organizationName', 67240038, 87,
+        r.ParameterMirrorImpl(r'_organizationName', 67240038, 77,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_createdDate', 67240038, 89,
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 79,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_userCode', 67240038, 91,
+        r.ParameterMirrorImpl(r'_userCode', 67240038, 81,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_userName', 67240038, 93,
+        r.ParameterMirrorImpl(r'_userName', 67240038, 83,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_fullName', 67240038, 95,
+        r.ParameterMirrorImpl(r'_fullName', 67240038, 85,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_userType', 67240038, 97,
+        r.ParameterMirrorImpl(r'_userType', 67240038, 87,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_status', 67240038, 99,
+        r.ParameterMirrorImpl(r'_status', 67240038, 89,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_refOwnerId', 67240038, 101,
+        r.ParameterMirrorImpl(r'_refOwnerId', 67240038, 91,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_roles', 84017254, 103,
+        r.ParameterMirrorImpl(r'_roles', 84017254, 93,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_modules', 67240038, 105,
+        r.ParameterMirrorImpl(r'_modules', 67240038, 95,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_branch', 67240038, 107,
+        r.ParameterMirrorImpl(r'_branch', 67240038, 97,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 109,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 110,
+        r.ParameterMirrorImpl(r'map', 151126022, 99, const prefix5.BaseEntity(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 100,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'accessToken',
             67253254,
-            115,
+            105,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8246,7 +8148,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'email',
             67253254,
-            115,
+            105,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8255,18 +8157,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #email),
-        r.ParameterMirrorImpl(r'_accessToken', 67240038, 112,
+        r.ParameterMirrorImpl(r'_accessToken', 67240038, 102,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_email', 67240038, 114,
+        r.ParameterMirrorImpl(r'_email', 67240038, 104,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 116,
+        r.ParameterMirrorImpl(r'map', 151126022, 106,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 117,
+        r.ParameterMirrorImpl(r'map', 151126022, 107,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'appId',
             67253254,
-            120,
+            110,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8275,14 +8177,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #appId),
-        r.ParameterMirrorImpl(r'_appId', 67240038, 119,
+        r.ParameterMirrorImpl(r'_appId', 67240038, 109,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 121,
+        r.ParameterMirrorImpl(r'map', 151126022, 111,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'idOffline',
             67253254,
-            128,
+            118,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8294,7 +8196,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'expiredDate',
             67253254,
-            128,
+            118,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8306,7 +8208,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'flag',
             67253254,
-            128,
+            118,
             const prefix5.BaseEntity(),
             -1,
             -1,
@@ -8315,259 +8217,125 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #flag),
-        r.ParameterMirrorImpl(r'_idOffline', 67240038, 123,
+        r.ParameterMirrorImpl(r'_idOffline', 67240038, 113,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_expiredDate', 67240038, 125,
+        r.ParameterMirrorImpl(r'_expiredDate', 67240038, 115,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_flag', 67240038, 127,
+        r.ParameterMirrorImpl(r'_flag', 67240038, 117,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 129,
+        r.ParameterMirrorImpl(r'map', 151126022, 119,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 130,
+        r.ParameterMirrorImpl(r'type', 134348806, 121,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'id', 67253254, 151, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const [], null, #id),
-        r.ParameterMirrorImpl(
-            r'totalCount',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #totalCount),
-        r.ParameterMirrorImpl(
-            r'averageWeight',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #averageWeight),
-        r.ParameterMirrorImpl(
-            r'roomId',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #roomId),
-        r.ParameterMirrorImpl(
-            r'room',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #room),
-        r.ParameterMirrorImpl(
-            r'records',
-            151141382,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            const [],
-            #records),
-        r.ParameterMirrorImpl(
-            r'startDate',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #startDate),
-        r.ParameterMirrorImpl(
-            r'executionDate',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #executionDate),
-        r.ParameterMirrorImpl(
-            r'createdDate',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #createdDate),
-        r.ParameterMirrorImpl(
-            r'updatedDate',
-            67253254,
-            151,
-            const prefix5.BaseEntity(),
-            -1,
-            -1,
-            -1,
-            null,
-            const [],
-            null,
-            #updatedDate),
-        r.ParameterMirrorImpl(r'_id', 67240038, 132, const prefix5.BaseEntity(),
-            -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_totalCount', 67240038, 134,
+        r.ParameterMirrorImpl(r'cap0', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_averageWeight', 67240038, 136,
+        r.ParameterMirrorImpl(r'cap1', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_roomId', 67240038, 138,
+        r.ParameterMirrorImpl(r'cap2', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_room', 67240038, 140,
+        r.ParameterMirrorImpl(r'cap3', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_records', 151126118, 142,
+        r.ParameterMirrorImpl(r'cap4', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_startDate', 67240038, 144,
+        r.ParameterMirrorImpl(r'cap5', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_executionDate', 67240038, 146,
+        r.ParameterMirrorImpl(r'cap6', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_createdDate', 67240038, 148,
+        r.ParameterMirrorImpl(r'cap7', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_updatedDate', 67240038, 150,
+        r.ParameterMirrorImpl(r'cap8', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 152,
+        r.ParameterMirrorImpl(r'cap9', 67244038, 124,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'type', 134348806, 154,
+        r.ParameterMirrorImpl(r'capabilities', 151126022, 125,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap0', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap0', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap1', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap1', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap2', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap2', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap3', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap3', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap4', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap4', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap5', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap5', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap6', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap6', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap7', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap7', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap8', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap8', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap9', 67244038, 157,
+        r.ParameterMirrorImpl(r'cap9', 67244038, 126,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'capabilities', 151126022, 158,
+        r.ParameterMirrorImpl(r'capabilities', 151126022, 127,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap0', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap0', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap1', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap1', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap2', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap2', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap3', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap3', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap4', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap4', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap5', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap5', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap6', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap6', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap7', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap7', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap8', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap8', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'cap9', 67244038, 159,
+        r.ParameterMirrorImpl(r'_cap9', 67245094, 128,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'capabilities', 151126022, 160,
+        r.ParameterMirrorImpl(r'_capabilities', 84018214, 129,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap0', 67245094, 161,
+        r.ParameterMirrorImpl(r'object1', 67239942, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object2', 67239942, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object3', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object4', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object5', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object6', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object7', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object8', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object9', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object10', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object11', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object12', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object13', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object14', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object15', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object16', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object17', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object18', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object19', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object20', 67246086, 130,
+            const prefix5.BaseEntity(), 9, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'objects', 151126022, 131,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap1', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap2', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap3', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap4', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap5', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap6', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap7', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap8', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_cap9', 67245094, 161,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_capabilities', 84018214, 162,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object1', 67239942, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object2', 67239942, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object3', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object4', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object5', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object6', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object7', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object8', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object9', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object10', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object11', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object12', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object13', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object14', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object15', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object16', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object17', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object18', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object19', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'object20', 67246086, 163,
-            const prefix5.BaseEntity(), 10, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'objects', 151126022, 164,
-            const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'objects', 151126022, 165,
+        r.ParameterMirrorImpl(r'objects', 151126022, 132,
             const prefix5.BaseEntity(), -1, -1, -1, null, const [], null, null)
       ],
       <Type>[
@@ -8576,14 +8344,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix9.UserGoogle,
         prefix10.XAppId,
         prefix73.Offline,
-        prefix75.SmartScale,
         prefix5.BaseEntity,
-        prefix97.Reflectable,
-        prefix98.ReflectableImpl,
-        prefix99.ReflectableBase,
+        prefix83.Reflectable,
+        prefix84.ReflectableImpl,
+        prefix85.ReflectableBase,
         Object
       ],
-      11,
+      10,
       {
         r'==': (dynamic instance) => (x) => instance == x,
         r'toString': (dynamic instance) => instance.toString,
@@ -8626,15 +8393,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'appId': (dynamic instance) => instance.appId,
         r'idOffline': (dynamic instance) => instance.idOffline,
         r'expiredDate': (dynamic instance) => instance.expiredDate,
-        r'flag': (dynamic instance) => instance.flag,
-        r'totalCount': (dynamic instance) => instance.totalCount,
-        r'averageWeight': (dynamic instance) => instance.averageWeight,
-        r'roomId': (dynamic instance) => instance.roomId,
-        r'room': (dynamic instance) => instance.room,
-        r'records': (dynamic instance) => instance.records,
-        r'startDate': (dynamic instance) => instance.startDate,
-        r'executionDate': (dynamic instance) => instance.executionDate,
-        r'updatedDate': (dynamic instance) => instance.updatedDate
+        r'flag': (dynamic instance) => instance.flag
       },
       {
         r'id=': (dynamic instance, value) => instance.id = value,
@@ -8672,19 +8431,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'idOffline=': (dynamic instance, value) => instance.idOffline = value,
         r'expiredDate=': (dynamic instance, value) =>
             instance.expiredDate = value,
-        r'flag=': (dynamic instance, value) => instance.flag = value,
-        r'totalCount=': (dynamic instance, value) =>
-            instance.totalCount = value,
-        r'averageWeight=': (dynamic instance, value) =>
-            instance.averageWeight = value,
-        r'roomId=': (dynamic instance, value) => instance.roomId = value,
-        r'room=': (dynamic instance, value) => instance.room = value,
-        r'records=': (dynamic instance, value) => instance.records = value,
-        r'startDate=': (dynamic instance, value) => instance.startDate = value,
-        r'executionDate=': (dynamic instance, value) =>
-            instance.executionDate = value,
-        r'updatedDate=': (dynamic instance, value) =>
-            instance.updatedDate = value
+        r'flag=': (dynamic instance, value) => instance.flag = value
       },
       null,
       []),
@@ -8696,6 +8443,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             0,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[0, 1, 2, 3, 4, 460, 461, 472],
             const <int>[
               473,
@@ -8725,6 +8473,37 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[461],
             80,
+=======
+            const <int>[0, 1, 2, 3, 4, 349, 350, 361],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374,
+              349,
+              351,
+              352,
+              353,
+              354,
+              355,
+              356,
+              357,
+              358,
+              359,
+              360
+            ],
+            const <int>[350],
+            66,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix6.Auth.toResponseModel},
             {},
             {
@@ -8744,7 +8523,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_auth")
+              const prefix86.Table("t_auth")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -8773,6 +8552,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               21,
               22,
               23,
+<<<<<<< HEAD
               486,
               487,
               526
@@ -8833,6 +8613,68 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[487],
             80,
+=======
+              375,
+              376,
+              415
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374,
+              375,
+              377,
+              378,
+              379,
+              380,
+              381,
+              382,
+              383,
+              384,
+              385,
+              386,
+              387,
+              388,
+              389,
+              390,
+              391,
+              392,
+              393,
+              394,
+              395,
+              396,
+              397,
+              398,
+              399,
+              400,
+              401,
+              402,
+              403,
+              404,
+              405,
+              406,
+              407,
+              408,
+              409,
+              410,
+              411,
+              412,
+              413,
+              414
+            ],
+            const <int>[376],
+            66,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix8.Profile.toResponseModel},
             {},
             {
@@ -8885,7 +8727,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("m_profile")
+              const prefix86.Table("m_profile")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -8894,6 +8736,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             2,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[24, 25, 527, 528, 533],
             const <int>[
               473,
@@ -8917,6 +8760,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[528],
             80,
+=======
+            const <int>[24, 25, 416, 417, 422],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374,
+              416,
+              418,
+              419,
+              420,
+              421
+            ],
+            const <int>[417],
+            66,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix9.UserGoogle.toResponseModel},
             {},
             {
@@ -8930,7 +8798,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_user")
+              const prefix86.Table("t_user")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -8939,6 +8807,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             3,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[26, 534, 535, 538],
             const <int>[
               473,
@@ -8960,6 +8829,29 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[535],
             80,
+=======
+            const <int>[26, 423, 424, 427],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374,
+              423,
+              425,
+              426
+            ],
+            const <int>[424],
+            66,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix10.XAppId.toResponseModel},
             {},
             {
@@ -8972,7 +8864,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               prefix5.SetupEntity,
               prefix7.SetupModel,
-              const prefix100.Table("t_xapp")
+              const prefix86.Table("t_xapp")
             ],
             null),
         r.NonGenericClassMirrorImpl(
@@ -8981,10 +8873,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             4,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[27, 539, 542],
             const <int>[473, 474, 475, 476, 477, 540, 541],
             const <int>[539],
             81,
+=======
+            const <int>[27, 428, 431],
+            const <int>[362, 363, 364, 365, 366, 429, 430],
+            const <int>[428],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix11.StringModel.toResponseModel},
             {},
             {
@@ -9002,10 +8901,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             5,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[28, 29, 543, 548],
             const <int>[473, 474, 475, 476, 477, 544, 545, 546, 547],
             const <int>[543],
             81,
+=======
+            const <int>[28, 29, 432, 437],
+            const <int>[362, 363, 364, 365, 366, 433, 434, 435, 436],
+            const <int>[432],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix12.ErrorResponse.toResponseModel},
             {},
             {
@@ -9023,10 +8929,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             6,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[30, 31, 549, 554],
             const <int>[473, 474, 475, 476, 477, 550, 551, 552, 553],
             const <int>[549],
             81,
+=======
+            const <int>[30, 31, 438, 443],
+            const <int>[362, 363, 364, 365, 366, 439, 440, 441, 442],
+            const <int>[438],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix13.ManufactureOutputModel.toResponseModel
@@ -9049,10 +8962,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             7,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[32, 33, 555, 560],
             const <int>[473, 474, 475, 476, 477, 556, 557, 558, 559],
             const <int>[555],
             81,
+=======
+            const <int>[32, 33, 444, 449],
+            const <int>[362, 363, 364, 365, 366, 445, 446, 447, 448],
+            const <int>[444],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix14.ListBranchResponse.toResponseModel
@@ -9098,10 +9018,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             9,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[36, 37, 567, 572],
             const <int>[473, 474, 475, 476, 477, 568, 569, 570, 571],
             const <int>[567],
             81,
+=======
+            const <int>[34, 35, 450, 455],
+            const <int>[362, 363, 364, 365, 366, 451, 452, 453, 454],
+            const <int>[450],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () => prefix16.CheckInResponse.toResponseModel
             },
@@ -9121,10 +9048,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             10,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[38, 39, 573, 578],
             const <int>[473, 474, 475, 476, 477, 574, 575, 576, 577],
             const <int>[573],
             81,
+=======
+            const <int>[36, 37, 456, 461],
+            const <int>[362, 363, 364, 365, 366, 457, 458, 459, 460],
+            const <int>[456],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix17.GoodReceiveReponse.toResponseModel
@@ -9145,10 +9079,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             11,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[40, 41, 579, 584],
             const <int>[473, 474, 475, 476, 477, 580, 581, 582, 583],
             const <int>[579],
             81,
+=======
+            const <int>[38, 39, 462, 467],
+            const <int>[362, 363, 364, 365, 366, 463, 464, 465, 466],
+            const <int>[462],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix18.ListDriverResponse.toResponseModel
@@ -9169,10 +9110,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             12,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[42, 43, 585, 590],
             const <int>[473, 474, 475, 476, 477, 586, 587, 588, 589],
             const <int>[585],
             81,
+=======
+            const <int>[40, 41, 468, 473],
+            const <int>[362, 363, 364, 365, 366, 469, 470, 471, 472],
+            const <int>[468],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix19.ListOpnameResponse.toResponseModel
@@ -9193,10 +9141,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             13,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[44, 45, 591, 596],
             const <int>[473, 474, 475, 476, 477, 592, 593, 594, 595],
             const <int>[591],
             81,
+=======
+            const <int>[42, 43, 474, 479],
+            const <int>[362, 363, 364, 365, 366, 475, 476, 477, 478],
+            const <int>[474],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix20.ListTerminateResponse.toResponseModel
@@ -9218,10 +9173,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             14,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[46, 47, 597, 602],
             const <int>[473, 474, 475, 476, 477, 598, 599, 600, 601],
             const <int>[597],
             81,
+=======
+            const <int>[44, 45, 480, 485],
+            const <int>[362, 363, 364, 365, 366, 481, 482, 483, 484],
+            const <int>[480],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix21.LocationListResponse.toResponseModel
@@ -9243,10 +9205,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             15,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[48, 49, 603, 608],
             const <int>[473, 474, 475, 476, 477, 604, 605, 606, 607],
             const <int>[603],
             81,
+=======
+            const <int>[46, 47, 486, 491],
+            const <int>[362, 363, 364, 365, 366, 487, 488, 489, 490],
+            const <int>[486],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix22.ListManufactureResponse.toResponseModel
@@ -9268,10 +9237,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             16,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[50, 51, 609, 614],
             const <int>[473, 474, 475, 476, 477, 610, 611, 612, 613],
             const <int>[609],
             81,
+=======
+            const <int>[48, 49, 492, 497],
+            const <int>[362, 363, 364, 365, 366, 493, 494, 495, 496],
+            const <int>[492],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix23.ListManufactureOutputResponse.toResponseModel
@@ -9294,10 +9270,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             17,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[52, 53, 615, 620],
             const <int>[473, 474, 475, 476, 477, 616, 617, 618, 619],
             const <int>[615],
             81,
+=======
+            const <int>[50, 51, 498, 503],
+            const <int>[362, 363, 364, 365, 366, 499, 500, 501, 502],
+            const <int>[498],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix24.ManufactureResponse.toResponseModel
@@ -9319,10 +9302,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             18,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[54, 55, 621, 626],
             const <int>[473, 474, 475, 476, 477, 622, 623, 624, 625],
             const <int>[621],
             81,
+=======
+            const <int>[52, 53, 504, 509],
+            const <int>[362, 363, 364, 365, 366, 505, 506, 507, 508],
+            const <int>[504],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix25.MediaUploadResponse.toResponseModel
@@ -9344,10 +9334,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             19,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[56, 57, 627, 632],
             const <int>[473, 474, 475, 476, 477, 628, 629, 630, 631],
             const <int>[627],
             81,
+=======
+            const <int>[54, 55, 510, 515],
+            const <int>[362, 363, 364, 365, 366, 511, 512, 513, 514],
+            const <int>[510],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix26.ListOperationUnitsResponse.toResponseModel
@@ -9369,11 +9366,19 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             20,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[58, 59, 633, 638],
             const <int>[473, 474, 475, 476, 477, 634, 635, 636, 637],
             const <int>[633],
             81,
             {r'toResponseModel': () => prefix27.OpnameResponse.toResponseModel},
+=======
+            const <int>[56, 57, 516, 521],
+            const <int>[362, 363, 364, 365, 366, 517, 518, 519, 520],
+            const <int>[516],
+            67,
+            {r'toResponseModel': () => prefix26.OpnameResponse.toResponseModel},
+>>>>>>> develop-stock
             {},
             {
               r'': (bool b) => ({code, data}) =>
@@ -9390,10 +9395,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             21,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[60, 61, 639, 644],
             const <int>[473, 474, 475, 476, 477, 640, 641, 642, 643],
             const <int>[639],
             81,
+=======
+            const <int>[58, 59, 522, 527],
+            const <int>[362, 363, 364, 365, 366, 523, 524, 525, 526],
+            const <int>[522],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix28.OrderIssueResponse.toResponseModel
@@ -9414,11 +9426,19 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             22,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[62, 63, 645, 650],
             const <int>[473, 474, 475, 476, 477, 646, 647, 648, 649],
             const <int>[645],
             81,
             {r'toResponseModel': () => prefix29.OrderResponse.toResponseModel},
+=======
+            const <int>[60, 61, 528, 533],
+            const <int>[362, 363, 364, 365, 366, 529, 530, 531, 532],
+            const <int>[528],
+            67,
+            {r'toResponseModel': () => prefix28.OrderResponse.toResponseModel},
+>>>>>>> develop-stock
             {},
             {
               r'': (bool b) => ({code, data}) =>
@@ -9435,10 +9455,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             23,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[64, 65, 651, 656],
             const <int>[473, 474, 475, 476, 477, 652, 653, 654, 655],
             const <int>[651],
             81,
+=======
+            const <int>[62, 63, 534, 539],
+            const <int>[362, 363, 364, 365, 366, 535, 536, 537, 538],
+            const <int>[534],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix30.ProductListResponse.toResponseModel
@@ -9460,10 +9487,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             24,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[66, 67, 657, 662],
             const <int>[473, 474, 475, 476, 477, 658, 659, 660, 661],
             const <int>[657],
             81,
+=======
+            const <int>[64, 65, 540, 545],
+            const <int>[362, 363, 364, 365, 366, 541, 542, 543, 544],
+            const <int>[540],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix31.ListPurchaseResponse.toResponseModel
@@ -9485,10 +9519,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             25,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[68, 69, 663, 668],
             const <int>[473, 474, 475, 476, 477, 664, 665, 666, 667],
             const <int>[663],
             81,
+=======
+            const <int>[66, 67, 546, 551],
+            const <int>[362, 363, 364, 365, 366, 547, 548, 549, 550],
+            const <int>[546],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix32.PurchaseResponse.toResponseModel
@@ -9509,10 +9550,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             26,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[70, 71, 669, 674],
             const <int>[473, 474, 475, 476, 477, 670, 671, 672, 673],
             const <int>[669],
             81,
+=======
+            const <int>[68, 69, 552, 557],
+            const <int>[362, 363, 364, 365, 366, 553, 554, 555, 556],
+            const <int>[552],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix33.SalesOrderListResponse.toResponseModel
@@ -9534,10 +9582,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             27,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[72, 73, 675, 680],
             const <int>[473, 474, 475, 476, 477, 676, 677, 678, 679],
             const <int>[675],
             81,
+=======
+            const <int>[70, 71, 558, 563],
+            const <int>[362, 363, 364, 365, 366, 559, 560, 561, 562],
+            const <int>[558],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix34.SalespersonListResponse.toResponseModel
@@ -9559,10 +9614,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             28,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[74, 75, 681, 686],
             const <int>[473, 474, 475, 476, 477, 682, 683, 684, 685],
             const <int>[681],
             81,
+=======
+            const <int>[72, 73, 564, 569],
+            const <int>[362, 363, 364, 365, 366, 565, 566, 567, 568],
+            const <int>[564],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix35.ListStockAggregateResponse.toResponseModel
@@ -9584,10 +9646,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             29,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[76, 77, 687, 692],
             const <int>[473, 474, 475, 476, 477, 688, 689, 690, 691],
             const <int>[687],
             81,
+=======
+            const <int>[74, 75, 570, 575],
+            const <int>[362, 363, 364, 365, 366, 571, 572, 573, 574],
+            const <int>[570],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix36.TerminateResponse.toResponseModel
@@ -9608,10 +9677,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             30,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[78, 79, 693, 698],
             const <int>[473, 474, 475, 476, 477, 694, 695, 696, 697],
             const <int>[693],
             81,
+=======
+            const <int>[76, 77, 576, 581],
+            const <int>[362, 363, 364, 365, 366, 577, 578, 579, 580],
+            const <int>[576],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix37.ListTransferResponse.toResponseModel
@@ -9633,10 +9709,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             31,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[80, 81, 699, 704],
             const <int>[473, 474, 475, 476, 477, 700, 701, 702, 703],
             const <int>[699],
             81,
+=======
+            const <int>[78, 79, 582, 587],
+            const <int>[362, 363, 364, 365, 366, 583, 584, 585, 586],
+            const <int>[582],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix38.TransferResponse.toResponseModel
@@ -9657,10 +9740,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             32,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[82, 83, 705, 710],
             const <int>[473, 474, 475, 476, 477, 706, 707, 708, 709],
             const <int>[705],
             81,
+=======
+            const <int>[80, 81, 588, 593],
+            const <int>[362, 363, 364, 365, 366, 589, 590, 591, 592],
+            const <int>[588],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix39.VendorListResponse.toResponseModel
@@ -9681,10 +9771,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             33,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[84, 85, 711, 716],
             const <int>[473, 474, 475, 476, 477, 712, 713, 714, 715],
             const <int>[711],
             81,
+=======
+            const <int>[82, 83, 594, 599],
+            const <int>[362, 363, 364, 365, 366, 595, 596, 597, 598],
+            const <int>[594],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix40.VisitCustomerResponse.toResponseModel
@@ -9706,10 +9803,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             34,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[86, 87, 717, 722],
             const <int>[473, 474, 475, 476, 477, 718, 719, 720, 721],
             const <int>[717],
             81,
+=======
+            const <int>[84, 85, 600, 605],
+            const <int>[362, 363, 364, 365, 366, 601, 602, 603, 604],
+            const <int>[600],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix41.ListVisitCustomerResponse.toResponseModel
@@ -9721,6 +9825,33 @@ final _data = <r.Reflectable, r.ReflectorData>{
                   : null
             },
             -1,
+<<<<<<< HEAD
+=======
+            33,
+            const <int>[],
+            const <Object>[prefix7.SetupModel],
+            null),
+        r.NonGenericClassMirrorImpl(
+            r'ListBranchResponse',
+            r'.ListBranchResponse',
+            134217735,
+            34,
+            const prefix7.BaseModel(),
+            const <int>[86, 87, 606, 611],
+            const <int>[362, 363, 364, 365, 366, 607, 608, 609, 610],
+            const <int>[606],
+            67,
+            {
+              r'toResponseModel': () =>
+                  prefix41.ListBranchResponse.toResponseModel
+            },
+            {},
+            {
+              r'': (bool b) => ({code, data}) =>
+                  b ? prefix41.ListBranchResponse(code: code, data: data) : null
+            },
+            -1,
+>>>>>>> develop-stock
             34,
             const <int>[],
             const <Object>[prefix7.SetupModel],
@@ -9731,10 +9862,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             35,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[88, 89, 723, 728],
             const <int>[473, 474, 475, 476, 477, 724, 725, 726, 727],
             const <int>[723],
             81,
+=======
+            const <int>[88, 89, 612, 617],
+            const <int>[362, 363, 364, 365, 366, 613, 614, 615, 616],
+            const <int>[612],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix42.AuthResponse.toResponseModel},
             {},
             {
@@ -9752,10 +9890,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             36,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[90, 91, 729, 734],
             const <int>[473, 474, 475, 476, 477, 730, 731, 732, 733],
             const <int>[729],
             81,
+=======
+            const <int>[90, 91, 618, 623],
+            const <int>[362, 363, 364, 365, 366, 619, 620, 621, 622],
+            const <int>[618],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix43.ListCustomerResponse.toResponseModel
@@ -9777,10 +9922,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             37,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[92, 93, 735, 740],
             const <int>[473, 474, 475, 476, 477, 736, 737, 738, 739],
             const <int>[735],
             81,
+=======
+            const <int>[92, 93, 624, 629],
+            const <int>[362, 363, 364, 365, 366, 625, 626, 627, 628],
+            const <int>[624],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix44.CustomerResponse.toResponseModel
@@ -9801,10 +9953,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             38,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[94, 95, 741, 746],
             const <int>[473, 474, 475, 476, 477, 742, 743, 744, 745],
             const <int>[741],
             81,
+=======
+            const <int>[94, 95, 630, 635],
+            const <int>[362, 363, 364, 365, 366, 631, 632, 633, 634],
+            const <int>[630],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () => prefix45.ProfileResponse.toResponseModel
             },
@@ -9824,10 +9983,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             39,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[96, 97, 747, 752],
             const <int>[473, 474, 475, 476, 477, 748, 749, 750, 751],
             const <int>[747],
             81,
+=======
+            const <int>[96, 97, 636, 641],
+            const <int>[362, 363, 364, 365, 366, 637, 638, 639, 640],
+            const <int>[636],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix46.Branch.toResponseModel},
             {},
             {
@@ -9845,10 +10011,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             40,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[98, 753, 756],
             const <int>[473, 474, 475, 476, 477, 754, 755],
             const <int>[753],
             81,
+=======
+            const <int>[98, 642, 645],
+            const <int>[362, 363, 364, 365, 366, 643, 644],
+            const <int>[642],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix47.ModuleModel.toResponseModel},
             {},
             {
@@ -9866,10 +10039,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             41,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[99, 100, 757, 762],
             const <int>[473, 474, 475, 476, 477, 758, 759, 760, 761],
             const <int>[757],
             81,
+=======
+            const <int>[99, 100, 646, 651],
+            const <int>[362, 363, 364, 365, 366, 647, 648, 649, 650],
+            const <int>[646],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix48.RoleModel.toResponseModel},
             {},
             {
@@ -9913,6 +10093,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               123,
               124,
               125,
+<<<<<<< HEAD
               763,
               814
             ],
@@ -9975,6 +10156,70 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[763],
             81,
+=======
+              652,
+              703
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              653,
+              654,
+              655,
+              656,
+              657,
+              658,
+              659,
+              660,
+              661,
+              662,
+              663,
+              664,
+              665,
+              666,
+              667,
+              668,
+              669,
+              670,
+              671,
+              672,
+              673,
+              674,
+              675,
+              676,
+              677,
+              678,
+              679,
+              680,
+              681,
+              682,
+              683,
+              684,
+              685,
+              686,
+              687,
+              688,
+              689,
+              690,
+              691,
+              692,
+              693,
+              694,
+              695,
+              696,
+              697,
+              698,
+              699,
+              700,
+              701,
+              702
+            ],
+            const <int>[652],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix49.Products.toResponseModel},
             {},
             {
@@ -10044,10 +10289,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             43,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[126, 127, 128, 815, 822],
             const <int>[473, 474, 475, 476, 477, 816, 817, 818, 819, 820, 821],
             const <int>[815],
             81,
+=======
+            const <int>[126, 127, 128, 704, 711],
+            const <int>[362, 363, 364, 365, 366, 705, 706, 707, 708, 709, 710],
+            const <int>[704],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix50.CheckInModel.toResponseModel},
             {},
             {
@@ -10098,6 +10350,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               154,
               155,
               156,
+<<<<<<< HEAD
               157,
               158,
               159,
@@ -10184,6 +10437,76 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[823],
             81,
+=======
+              712,
+              769
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              713,
+              714,
+              715,
+              716,
+              717,
+              718,
+              719,
+              720,
+              721,
+              722,
+              723,
+              724,
+              725,
+              726,
+              727,
+              728,
+              729,
+              730,
+              731,
+              732,
+              733,
+              734,
+              735,
+              736,
+              737,
+              738,
+              739,
+              740,
+              741,
+              742,
+              743,
+              744,
+              745,
+              746,
+              747,
+              748,
+              749,
+              750,
+              751,
+              752,
+              753,
+              754,
+              755,
+              756,
+              757,
+              758,
+              759,
+              760,
+              761,
+              762,
+              763,
+              764,
+              765,
+              766,
+              767,
+              768
+            ],
+            const <int>[712],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix51.Order.toResponseModel},
             {},
             {
@@ -10283,6 +10606,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               171,
               172,
               173,
+<<<<<<< HEAD
               174,
               175,
               176,
@@ -10335,6 +10659,54 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[893],
             81,
+=======
+              770,
+              805
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              771,
+              772,
+              773,
+              774,
+              775,
+              776,
+              777,
+              778,
+              779,
+              780,
+              781,
+              782,
+              783,
+              784,
+              785,
+              786,
+              787,
+              788,
+              789,
+              790,
+              791,
+              792,
+              793,
+              794,
+              795,
+              796,
+              797,
+              798,
+              799,
+              800,
+              801,
+              802,
+              803,
+              804
+            ],
+            const <int>[770],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix52.TransferModel.toResponseModel},
             {},
             {
@@ -10408,6 +10780,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               196,
               197,
               198,
+<<<<<<< HEAD
               199,
               200,
               201,
@@ -10476,6 +10849,70 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[929],
             81,
+=======
+              806,
+              857
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              807,
+              808,
+              809,
+              810,
+              811,
+              812,
+              813,
+              814,
+              815,
+              816,
+              817,
+              818,
+              819,
+              820,
+              821,
+              822,
+              823,
+              824,
+              825,
+              826,
+              827,
+              828,
+              829,
+              830,
+              831,
+              832,
+              833,
+              834,
+              835,
+              836,
+              837,
+              838,
+              839,
+              840,
+              841,
+              842,
+              843,
+              844,
+              845,
+              846,
+              847,
+              848,
+              849,
+              850,
+              851,
+              852,
+              853,
+              854,
+              855,
+              856
+            ],
+            const <int>[806],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix53.Customer.toResponseModel},
             {},
             {
@@ -10551,6 +10988,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               207,
               208,
               209,
+<<<<<<< HEAD
               210,
               211,
               212,
@@ -10591,6 +11029,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[981],
             81,
+=======
+              858,
+              881
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              859,
+              860,
+              861,
+              862,
+              863,
+              864,
+              865,
+              866,
+              867,
+              868,
+              869,
+              870,
+              871,
+              872,
+              873,
+              874,
+              875,
+              876,
+              877,
+              878,
+              879,
+              880
+            ],
+            const <int>[858],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix54.ManufactureModel.toResponseModel
@@ -10644,6 +11118,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               221,
               222,
               223,
+<<<<<<< HEAD
               224,
               225,
               226,
@@ -10690,6 +11165,48 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1005],
             81,
+=======
+              882,
+              911
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              883,
+              884,
+              885,
+              886,
+              887,
+              888,
+              889,
+              890,
+              891,
+              892,
+              893,
+              894,
+              895,
+              896,
+              897,
+              898,
+              899,
+              900,
+              901,
+              902,
+              903,
+              904,
+              905,
+              906,
+              907,
+              908,
+              909,
+              910
+            ],
+            const <int>[882],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix55.OperationUnitModel.toResponseModel
@@ -10748,6 +11265,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               234,
               235,
               236,
+<<<<<<< HEAD
               237,
               238,
               239,
@@ -10792,6 +11310,46 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1035],
             81,
+=======
+              912,
+              939
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              913,
+              914,
+              915,
+              916,
+              917,
+              918,
+              919,
+              920,
+              921,
+              922,
+              923,
+              924,
+              925,
+              926,
+              927,
+              928,
+              929,
+              930,
+              931,
+              932,
+              933,
+              934,
+              935,
+              936,
+              937,
+              938
+            ],
+            const <int>[912],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix56.StockModel.toResponseModel},
             {},
             {
@@ -10837,6 +11395,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             50,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[243, 244, 245, 246, 1063, 1072],
             const <int>[
               473,
@@ -10855,6 +11414,26 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1063],
             81,
+=======
+            const <int>[237, 238, 239, 240, 940, 949],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              941,
+              942,
+              943,
+              944,
+              945,
+              946,
+              947,
+              948
+            ],
+            const <int>[940],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix57.CategoryModel.toResponseModel},
             {},
             {
@@ -10887,6 +11466,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               253,
               254,
               255,
+<<<<<<< HEAD
               256,
               257,
               258,
@@ -10935,6 +11515,50 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1073],
             81,
+=======
+              950,
+              981
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              951,
+              952,
+              953,
+              954,
+              955,
+              956,
+              957,
+              958,
+              959,
+              960,
+              961,
+              962,
+              963,
+              964,
+              965,
+              966,
+              967,
+              968,
+              969,
+              970,
+              971,
+              972,
+              973,
+              974,
+              975,
+              976,
+              977,
+              978,
+              979,
+              980
+            ],
+            const <int>[950],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix58.Purchase.toResponseModel},
             {},
             {
@@ -10984,6 +11608,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             52,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[262, 263, 264, 265, 266, 267, 268, 269, 1105, 1122],
             const <int>[
               473,
@@ -11010,6 +11635,34 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1105],
             81,
+=======
+            const <int>[256, 257, 258, 259, 260, 261, 262, 263, 982, 999],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              983,
+              984,
+              985,
+              986,
+              987,
+              988,
+              989,
+              990,
+              991,
+              992,
+              993,
+              994,
+              995,
+              996,
+              997,
+              998
+            ],
+            const <int>[982],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () => prefix59.PurchaseRequest.toResponseModel
             },
@@ -11052,6 +11705,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               271,
               272,
               273,
+<<<<<<< HEAD
               274,
               275,
               276,
@@ -11090,6 +11744,40 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1123],
             81,
+=======
+              1000,
+              1021
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1001,
+              1002,
+              1003,
+              1004,
+              1005,
+              1006,
+              1007,
+              1008,
+              1009,
+              1010,
+              1011,
+              1012,
+              1013,
+              1014,
+              1015,
+              1016,
+              1017,
+              1018,
+              1019,
+              1020
+            ],
+            const <int>[1000],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix60.VendorModel.toResponseModel},
             {},
             {
@@ -11129,6 +11817,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             54,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[280, 281, 282, 283, 284, 1145, 1156],
             const <int>[
               473,
@@ -11149,6 +11838,28 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1145],
             81,
+=======
+            const <int>[274, 275, 276, 277, 278, 1022, 1033],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1023,
+              1024,
+              1025,
+              1026,
+              1027,
+              1028,
+              1029,
+              1030,
+              1031,
+              1032
+            ],
+            const <int>[1022],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix61.GoodsReceived.toResponseModel},
             {},
             {
@@ -11179,6 +11890,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               287,
               288,
               289,
+<<<<<<< HEAD
               290,
               291,
               292,
@@ -11219,6 +11931,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1157],
             81,
+=======
+              1034,
+              1057
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1035,
+              1036,
+              1037,
+              1038,
+              1039,
+              1040,
+              1041,
+              1042,
+              1043,
+              1044,
+              1045,
+              1046,
+              1047,
+              1048,
+              1049,
+              1050,
+              1051,
+              1052,
+              1053,
+              1054,
+              1055,
+              1056
+            ],
+            const <int>[1034],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix62.VisitCustomer.toResponseModel},
             {},
             {
@@ -11260,10 +12008,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             56,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[296, 297, 1181, 1186],
             const <int>[473, 474, 475, 476, 477, 1182, 1183, 1184, 1185],
             const <int>[1181],
             81,
+=======
+            const <int>[290, 291, 1058, 1063],
+            const <int>[362, 363, 364, 365, 366, 1059, 1060, 1061, 1062],
+            const <int>[1058],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix63.OrderIssueCategories.toResponseModel
@@ -11284,6 +12039,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             57,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[298, 299, 300, 301, 302, 303, 304, 1187, 1202],
             const <int>[
               473,
@@ -11308,6 +12064,32 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1187],
             81,
+=======
+            const <int>[292, 293, 294, 295, 296, 297, 298, 1064, 1079],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1065,
+              1066,
+              1067,
+              1068,
+              1069,
+              1070,
+              1071,
+              1072,
+              1073,
+              1074,
+              1075,
+              1076,
+              1077,
+              1078
+            ],
+            const <int>[1064],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix64.Location.toResponseModel},
             {},
             {
@@ -11341,6 +12123,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             58,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[305, 306, 307, 1203, 1210],
             const <int>[
               473,
@@ -11357,6 +12140,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1203],
             81,
+=======
+            const <int>[299, 300, 301, 1080, 1087],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1081,
+              1082,
+              1083,
+              1084,
+              1085,
+              1086
+            ],
+            const <int>[1080],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix65.SalesPerson.toResponseModel},
             {},
             {
@@ -11376,6 +12177,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             59,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[308, 309, 310, 311, 312, 313, 314, 315, 1211, 1228],
             const <int>[
               473,
@@ -11402,6 +12204,32 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1211],
             81,
+=======
+            const <int>[302, 303, 304, 305, 306, 307, 308, 1088, 1103],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1089,
+              1090,
+              1091,
+              1092,
+              1093,
+              1094,
+              1095,
+              1096,
+              1097,
+              1098,
+              1099,
+              1100,
+              1101,
+              1102
+            ],
+            const <int>[1088],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix66.OrderRequest.toResponseModel},
             {},
             {
@@ -11444,6 +12272,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               319,
               320,
               321,
+<<<<<<< HEAD
               322,
               323,
               324,
@@ -11483,6 +12312,46 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1229],
             81,
+=======
+              1104,
+              1131
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1105,
+              1106,
+              1107,
+              1108,
+              1109,
+              1110,
+              1111,
+              1112,
+              1113,
+              1114,
+              1115,
+              1116,
+              1117,
+              1118,
+              1119,
+              1120,
+              1121,
+              1122,
+              1123,
+              1124,
+              1125,
+              1126,
+              1127,
+              1128,
+              1129,
+              1130
+            ],
+            const <int>[1104],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix67.OpnameModel.toResponseModel},
             {},
             {
@@ -11497,7 +12366,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
                       modifiedDate,
                       status,
                       operationUnitId,
-                      products}) =>
+                      products,
+                      totalWeight,
+                      totalQuantity}) =>
                   b
                       ? prefix67.OpnameModel(
                           code: code,
@@ -11510,7 +12381,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
                           operationUnit: operationUnit,
                           operationUnitId: operationUnitId,
                           products: products,
-                          status: status)
+                          status: status,
+                          totalQuantity: totalQuantity,
+                          totalWeight: totalWeight)
                       : null
             },
             -1,
@@ -11525,12 +12398,21 @@ final _data = <r.Reflectable, r.ReflectorData>{
             61,
             const prefix7.BaseModel(),
             const <int>[
+<<<<<<< HEAD
+=======
+              322,
+              323,
+              324,
+              325,
+              326,
+>>>>>>> develop-stock
               327,
               328,
               329,
               330,
               331,
               332,
+<<<<<<< HEAD
               333,
               334,
               335,
@@ -11570,6 +12452,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1253],
             81,
+=======
+              1132,
+              1155
+            ],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1133,
+              1134,
+              1135,
+              1136,
+              1137,
+              1138,
+              1139,
+              1140,
+              1141,
+              1142,
+              1143,
+              1144,
+              1145,
+              1146,
+              1147,
+              1148,
+              1149,
+              1150,
+              1151,
+              1152,
+              1153,
+              1154
+            ],
+            const <int>[1132],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix68.TerminateModel.toResponseModel},
             {},
             {
@@ -11611,10 +12529,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             62,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[338, 339, 1277, 1282],
             const <int>[473, 474, 475, 476, 477, 1278, 1279, 1280, 1281],
             const <int>[1277],
             81,
+=======
+            const <int>[333, 334, 1156, 1161],
+            const <int>[362, 363, 364, 365, 366, 1157, 1158, 1159, 1160],
+            const <int>[1156],
+            67,
+>>>>>>> develop-stock
             {
               r'toResponseModel': () =>
                   prefix69.MediaUploadModel.toResponseModel
@@ -11635,10 +12560,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             63,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[340, 341, 1283, 1288],
             const <int>[473, 474, 475, 476, 477, 1284, 1285, 1286, 1287],
             const <int>[1283],
             81,
+=======
+            const <int>[335, 336, 1162, 1167],
+            const <int>[362, 363, 364, 365, 366, 1163, 1164, 1165, 1166],
+            const <int>[1162],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix70.ErrorDetail.toResponseModel},
             {},
             {
@@ -11657,10 +12589,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             64,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[342, 343, 1289, 1294],
             const <int>[473, 474, 475, 476, 477, 1290, 1291, 1292, 1293],
             const <int>[1289],
             81,
+=======
+            const <int>[337, 338, 1168, 1173],
+            const <int>[362, 363, 364, 365, 366, 1169, 1170, 1171, 1172],
+            const <int>[1168],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix71.BranchModel.toResponseModel},
             {},
             {
@@ -11678,6 +12617,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             65,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[344, 345, 346, 347, 348, 349, 350, 351, 1295, 1312],
             const <int>[
               473,
@@ -11704,6 +12644,34 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1295],
             81,
+=======
+            const <int>[339, 340, 341, 342, 343, 344, 345, 346, 1174, 1191],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              1175,
+              1176,
+              1177,
+              1178,
+              1179,
+              1180,
+              1181,
+              1182,
+              1183,
+              1184,
+              1185,
+              1186,
+              1187,
+              1188,
+              1189,
+              1190
+            ],
+            const <int>[1174],
+            67,
+>>>>>>> develop-stock
             {r'toResponseModel': () => prefix72.JagalModel.toResponseModel},
             {},
             {r'': (bool b) => ({id}) => b ? prefix72.JagalModel(id: id) : null},
@@ -11713,11 +12681,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix7.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'Farm',
-            r'.Farm',
+            r'BaseEntity',
+            r'.BaseEntity',
             134217735,
             66,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[352, 353, 354, 1313, 1320],
             const <int>[
               473,
@@ -11854,6 +12823,16 @@ final _data = <r.Reflectable, r.ReflectorData>{
             68,
             const prefix7.BaseModel(),
             const <int>[
+=======
+            const <int>[1192, 1193],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+>>>>>>> develop-stock
               368,
               369,
               370,
@@ -11861,6 +12840,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               372,
               373,
               374,
+<<<<<<< HEAD
               375,
               376,
               377,
@@ -12613,11 +13593,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[],
             83,
+=======
+              1192
+            ],
+            const <int>[],
+            68,
+>>>>>>> develop-stock
             {},
             {},
             {r'': (bool b) => () => b ? prefix5.BaseEntity() : null},
             -1,
-            80,
+            66,
             const <int>[],
             const [],
             null),
@@ -12625,11 +13611,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'Object',
             r'dart.core.Object',
             134217735,
-            81,
+            67,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[473, 474, 475, 1557, 1558, 1559, 476, 477, 1560],
             const <int>[473, 474, 475, 476, 477],
             const <int>[1557, 1558, 1559],
+=======
+            const <int>[362, 363, 364, 1194, 1195, 1196, 365, 366, 1197],
+            const <int>[362, 363, 364, 365, 366],
+            const <int>[1194, 1195, 1196],
+>>>>>>> develop-stock
             null,
             {
               r'hash': () => Object.hash,
@@ -12639,11 +13631,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {},
             {r'': (bool b) => () => b ? Object() : null},
             -1,
-            81,
+            67,
             const <int>[],
             const [],
             null),
         r.NonGenericClassMirrorImpl(
+<<<<<<< HEAD
             r'Offline',
             r'.Offline',
             134217735,
@@ -12690,11 +13683,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix5.SetupEntity],
             null),
         r.NonGenericClassMirrorImpl(
+=======
+>>>>>>> develop-stock
             r'Reflectable',
             r'reflectable.reflectable.Reflectable',
             134218247,
-            83,
+            68,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[458, 459, 1563, 1566, 1567],
             const <int>[
               473,
@@ -12713,15 +13709,35 @@ final _data = <r.Reflectable, r.ReflectorData>{
             ],
             const <int>[1563, 1564, 1565],
             84,
+=======
+            const <int>[347, 348, 1198, 1201, 1202],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374
+            ],
+            const <int>[1198, 1199, 1200],
+            69,
+>>>>>>> develop-stock
             {
-              r'getInstance': () => prefix97.Reflectable.getInstance,
-              r'thisClassName': () => prefix97.Reflectable.thisClassName,
-              r'thisClassId': () => prefix97.Reflectable.thisClassId
+              r'getInstance': () => prefix83.Reflectable.getInstance,
+              r'thisClassName': () => prefix83.Reflectable.thisClassName,
+              r'thisClassId': () => prefix83.Reflectable.thisClassId
             },
             {},
             {},
             -1,
-            83,
+            68,
             const <int>[],
             const [],
             null),
@@ -12729,8 +13745,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'ReflectableImpl',
             r'reflectable.src.reflectable_builder_based.ReflectableImpl',
             134218247,
-            84,
+            69,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[479, 480, 481, 482, 483, 484, 485, 1568, 1569],
             const <int>[
               473,
@@ -12746,14 +13763,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
               483,
               484,
               485
+=======
+            const <int>[368, 369, 370, 371, 372, 373, 374, 1203, 1204],
+            const <int>[
+              362,
+              363,
+              364,
+              365,
+              366,
+              367,
+              368,
+              369,
+              370,
+              371,
+              372,
+              373,
+              374
+>>>>>>> develop-stock
             ],
             const <int>[],
-            85,
+            70,
             {},
             {},
             {},
             -1,
-            84,
+            69,
             const <int>[],
             const [],
             null),
@@ -12761,12 +13795,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'ReflectableBase',
             r'reflectable.src.reflectable_base.ReflectableBase',
             134217735,
-            85,
+            70,
             const prefix7.BaseModel(),
+<<<<<<< HEAD
             const <int>[478, 1570, 1571],
             const <int>[473, 474, 475, 476, 477, 478],
+=======
+            const <int>[367, 1205, 1206],
+            const <int>[362, 363, 364, 365, 366, 367],
+>>>>>>> develop-stock
             const <int>[],
-            81,
+            67,
             {},
             {},
             {
@@ -12782,14 +13821,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
                       _cap8,
                       _cap9]) =>
                   b
-                      ? prefix99.ReflectableBase(_cap0, _cap1, _cap2, _cap3,
+                      ? prefix85.ReflectableBase(_cap0, _cap1, _cap2, _cap3,
                           _cap4, _cap5, _cap6, _cap7, _cap8, _cap9)
                       : null,
               r'fromList': (bool b) => (_capabilities) =>
-                  b ? prefix99.ReflectableBase.fromList(_capabilities) : null
+                  b ? prefix85.ReflectableBase.fromList(_capabilities) : null
             },
             -1,
-            85,
+            70,
             const <int>[],
             const [],
             null)
@@ -12797,7 +13836,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
       <m.DeclarationMirror>[
         r.VariableMirrorImpl(r'id', 67239941, 0, const prefix7.BaseModel(), -1,
             -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "id",
               type: "VARCHAR",
               length: 100,
@@ -12807,7 +13846,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'token', 67239941, 0, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "token",
               type: "VARCHAR",
               length: 255,
@@ -12816,12 +13855,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'refreshToken', 67239941, 0,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "refreshToken", type: "VARCHAR", length: 20)
         ]),
         r.VariableMirrorImpl(r'acceptTnc', 67239941, 0,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "acceptTnc", type: "INTEGER", length: 10)
         ]),
         r.VariableMirrorImpl(
@@ -12833,79 +13872,85 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix101.Attribute(name: "action")]),
+            const <Object>[const prefix87.Attribute(name: "action")]),
         r.VariableMirrorImpl(r'id', 67239941, 1, const prefix7.BaseModel(), -1,
             -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "id", primaryKey: true, notNull: true)
+          const prefix87.Attribute(name: "id", primaryKey: true, notNull: true)
         ]),
         r.VariableMirrorImpl(r'cmsId', 67239941, 1, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'name', 67239941, 1, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "name", length: 100)
+          const prefix87.Attribute(name: "name", length: 100)
         ]),
         r.VariableMirrorImpl(r'email', 67239941, 1, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "email", length: 100)
+          const prefix87.Attribute(name: "email", length: 100)
         ]),
         r.VariableMirrorImpl(r'phoneNumber', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "phoneNumber", length: 16)
+          const prefix87.Attribute(name: "phoneNumber", length: 16)
         ]),
         r.VariableMirrorImpl(r'waNumber', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "waNumber", length: 16)
+          const prefix87.Attribute(name: "waNumber", length: 16)
         ]),
-        r.VariableMirrorImpl(r'role', 67239941, 1, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "role", length: 50)
-        ]),
+        r.VariableMirrorImpl(
+            r'role',
+            67239941,
+            1,
+            const prefix7.BaseModel(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix87.Attribute(name: "role", length: 50)]),
         r.VariableMirrorImpl(r'organizationId', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "organizationId", length: 50)
+          const prefix87.Attribute(name: "organizationId", length: 50)
         ]),
         r.VariableMirrorImpl(r'organizationName', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "organizationName", length: 100)
+          const prefix87.Attribute(name: "organizationName", length: 100)
         ]),
         r.VariableMirrorImpl(r'createdDate', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "createdDate", length: 100)
+          const prefix87.Attribute(name: "createdDate", length: 100)
         ]),
         r.VariableMirrorImpl(r'userCode', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userCode", length: 50)
+          const prefix87.Attribute(name: "userCode", length: 50)
         ]),
         r.VariableMirrorImpl(r'userName', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userName", length: 50)
+          const prefix87.Attribute(name: "userName", length: 50)
         ]),
         r.VariableMirrorImpl(r'fullName', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "fullName", length: 100)
+          const prefix87.Attribute(name: "fullName", length: 100)
         ]),
         r.VariableMirrorImpl(r'userType', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "userType", length: 20)
+          const prefix87.Attribute(name: "userType", length: 20)
         ]),
         r.VariableMirrorImpl(r'status', 67239941, 1, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "status", type: "INTEGER", length: 2, defaultValue: "0")
         ]),
         r.VariableMirrorImpl(r'refOwnerId', 67239941, 1,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(name: "refOwnerId", length: 100)
+          const prefix87.Attribute(name: "refOwnerId", length: 100)
         ]),
         r.VariableMirrorImpl(r'roles', 84017157, 1, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
+            -1, -1, -1, null, const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'modules', 67239941, 1, const prefix7.BaseModel(),
-            40, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            40, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'branch', 67239941, 1, const prefix7.BaseModel(),
-            39, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            39, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'accessToken', 67239941, 2,
             const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "accessToken",
               type: "VARCHAR",
               length: 100,
@@ -12915,7 +13960,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'email', 67239941, 2, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "email",
               type: "VARCHAR",
               length: 255,
@@ -12924,7 +13969,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         ]),
         r.VariableMirrorImpl(r'appId', 67239941, 3, const prefix7.BaseModel(),
             -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
+          const prefix87.Attribute(
               name: "appId",
               type: "VARCHAR",
               length: 100,
@@ -12938,9 +13983,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'error', 67239941, 5, const prefix7.BaseModel(),
             63, -1, -1, null, const []),
         r.VariableMirrorImpl(r'input', 67239941, 6, const prefix7.BaseModel(),
-            42, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            42, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'output', 84017157, 6, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
+            -1, -1, -1, null, const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'code', 67239941, 7, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'data', 151126021, 7, const prefix7.BaseModel(),
@@ -13130,7 +14175,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'productCategory',
             67239941,
@@ -13140,7 +14185,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'productItem',
             67239941,
@@ -13150,7 +14195,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'productItems',
             84017157,
@@ -13160,7 +14205,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'latitude', 67239941, 43,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'longitude', 67239941, 43,
@@ -13226,7 +14271,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'operationUnit',
             67239941,
@@ -13236,7 +14281,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'products',
             84017157,
@@ -13246,7 +14291,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(
             r'returnedProducts',
             84017157,
@@ -13256,7 +14301,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(
             r'salesperson',
             67239941,
@@ -13266,7 +14311,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'userModifier',
             67239941,
@@ -13276,9 +14321,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'driver', 67239941, 44, const prefix7.BaseModel(),
-            1, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            1, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'productNotes',
             84017157,
@@ -13288,6 +14333,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <Object>[const prefix102.IsChildren()]),
         r.VariableMirrorImpl(
             r'userCreator',
@@ -13299,6 +14345,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             null,
             const <Object>[const prefix103.IsChild()]),
+=======
+            const <Object>[const prefix88.IsChildren()]),
+>>>>>>> develop-stock
         r.VariableMirrorImpl(r'id', 67239941, 45, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'code', 67239941, 45, const prefix7.BaseModel(),
@@ -13320,7 +14369,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'sourceOperationUnit',
             67239941,
@@ -13330,7 +14379,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'userCreator',
             67239941,
@@ -13340,7 +14389,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'userModifier',
             67239941,
@@ -13350,9 +14399,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'driver', 67239941, 45, const prefix7.BaseModel(),
-            1, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            1, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'products',
             84017157,
@@ -13362,7 +14411,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(
             r'goodsReceived',
             67239941,
@@ -13372,7 +14421,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'createdDate', 67239941, 45,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'createdBy', 67239941, 45,
@@ -13418,7 +14467,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'branchId', 67239941, 46,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'city', 67239941, 46, const prefix7.BaseModel(),
-            57, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            57, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'district',
             67239941,
@@ -13428,7 +14477,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'province',
             67239941,
@@ -13438,7 +14487,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'salesperson',
             67239941,
@@ -13448,7 +14497,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'latestVisit',
             67239941,
@@ -13458,7 +14507,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'products',
             84017157,
@@ -13468,9 +14517,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'branch', 67239941, 46, const prefix7.BaseModel(),
-            39, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            39, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'id', 67239941, 47, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'code', 67239941, 47, const prefix7.BaseModel(),
@@ -13496,11 +14545,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'input', 67239941, 47, const prefix7.BaseModel(),
-            42, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            42, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'output', 84017157, 47, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
+            -1, -1, -1, null, const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 48, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'operationUnitName', 67239941, 48,
@@ -13518,7 +14567,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'status', 67239941, 48, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'city', 67239941, 48, const prefix7.BaseModel(),
-            57, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            57, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'district',
             67239941,
@@ -13528,7 +14577,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'province',
             67239941,
@@ -13538,9 +14587,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'branch', 67239941, 48, const prefix7.BaseModel(),
-            64, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            64, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'jagalData',
             67239941,
@@ -13550,7 +14599,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'purchasableProducts',
             84017157,
@@ -13560,7 +14609,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 49, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'productCategoryId', 67239941, 49,
@@ -13592,7 +14641,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'productItems',
             84017157,
@@ -13602,7 +14651,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 50, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'name', 67239941, 50, const prefix7.BaseModel(),
@@ -13630,7 +14679,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'totalPrice', 67239941, 51,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'vendor', 67239941, 51, const prefix7.BaseModel(),
-            53, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            53, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'operationUnit',
             67239941,
@@ -13640,9 +14689,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'jagal', 67239941, 51, const prefix7.BaseModel(),
-            48, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            48, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'goodsReceived',
             67239941,
@@ -13652,7 +14701,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'products',
             84017157,
@@ -13662,7 +14711,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'status', 67239941, 51, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'vendorId', 67239941, 52,
@@ -13688,7 +14737,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 53, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'name', 67239941, 53, const prefix7.BaseModel(),
@@ -13702,7 +14751,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'type', 67239941, 53, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'city', 67239941, 53, const prefix7.BaseModel(),
-            57, -1, -1, null, const <Object>[const prefix103.IsChild()]),
+            57, -1, -1, null, const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'district',
             67239941,
@@ -13712,7 +14761,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'province',
             67239941,
@@ -13722,7 +14771,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'purchasableProducts',
             84017157,
@@ -13732,7 +14781,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 54, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'code', 67239941, 54, const prefix7.BaseModel(),
@@ -13750,7 +14799,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 55, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(
@@ -13762,7 +14811,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'createdDate', 67239941, 55,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'leadStatus', 67239941, 55,
@@ -13780,7 +14829,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'remarks', 67239941, 55,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'latitude', 67239941, 55,
@@ -13796,7 +14845,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 56, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'title', 67239941, 56, const prefix7.BaseModel(),
@@ -13842,7 +14891,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(
             r'productNotes',
             84017157,
@@ -13852,7 +14901,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 60, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(
@@ -13864,7 +14913,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'code', 67239941, 60, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'operationUnitId', 67239941, 60,
@@ -13872,6 +14921,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.VariableMirrorImpl(r'status', 67239941, 60, const prefix7.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'confirmedDate', 67239941, 60,
+            const prefix7.BaseModel(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalWeight', 67239941, 60,
+            const prefix7.BaseModel(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'totalQuantity', 67239941, 60,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(
             r'products',
@@ -13882,7 +14935,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix102.IsChildren()]),
+            const <Object>[const prefix88.IsChildren()]),
         r.VariableMirrorImpl(r'createdDate', 67239941, 60,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'createdBy', 67239941, 60,
@@ -13918,7 +14971,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(
             r'product',
             67239941,
@@ -13928,7 +14981,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <Object>[const prefix103.IsChild()]),
+            const <Object>[const prefix89.IsChild()]),
         r.VariableMirrorImpl(r'id', 67239941, 62, const prefix7.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'url', 67239941, 62, const prefix7.BaseModel(),
@@ -13957,362 +15010,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'operationalExpenses', 67239941, 65,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'id', 67239941, 66, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'name', 67239941, 66, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67239941, 66, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'id', 67239941, 67, const prefix7.BaseModel(), -1,
-            -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "id", type: "VARCHAR", length: 100, notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'totalCount', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "totalCount",
-              type: "INTEGER",
-              length: 10,
-              defaultValue: "0")
-        ]),
-        r.VariableMirrorImpl(r'averageWeight', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "averageWeight",
-              type: "REAL",
-              length: 10,
-              defaultValue: "0")
-        ]),
-        r.VariableMirrorImpl(r'roomId', 67239941, 67, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "roomId", type: "VARCHAR", length: 100, notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'room', 67239941, 67, const prefix7.BaseModel(),
-            74, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'records', 151126021, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "records", type: "VARCHAR", length: 1000),
-          const prefix102.IsChildren()
-        ]),
-        r.VariableMirrorImpl(r'startDate', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "startDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'executionDate', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "executionDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'createdDate', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "createdDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'updatedDate', 67239941, 67,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "updatedDate", type: "VARCHAR", length: 100)
-        ]),
-        r.VariableMirrorImpl(r'idOffline', 67239941, 82,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "idOffline",
-              type: "INTEGER",
-              length: 10,
-              defaultValue: "",
-              primaryKey: true,
-              autoIncrements: true,
-              notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'expiredDate', 67239941, 82,
-            const prefix7.BaseModel(), -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "expiredDate",
-              type: "VARCHAR",
-              length: 50,
-              defaultValue: "",
-              notNull: true)
-        ]),
-        r.VariableMirrorImpl(r'flag', 67239941, 82, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[
-          const prefix101.Attribute(
-              name: "flag", type: "INTEGER", length: 1, defaultValue: "0")
-        ]),
-        r.VariableMirrorImpl(r'id', 67239941, 68, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'deviceName', 67239941, 68,
+        r.VariableMirrorImpl(r'thisClassName', 134349973, 68,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'deviceType', 67239941, 68,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'deviceId', 67239941, 68,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopId', 67239941, 68, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'roomId', 67239941, 68, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'mac', 67239941, 68, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67239941, 68, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'sensorCount', 67239941, 68,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(
-            r'sensors',
-            151126021,
-            68,
-            const prefix7.BaseModel(),
-            -1,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix102.IsChildren()]),
-        r.VariableMirrorImpl(
-            r'deviceSummary',
-            67239941,
-            68,
-            const prefix7.BaseModel(),
-            76,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'order', 134348805, 69, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'current', 67239941, 69,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'label', 67239941, 69, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'benchmarkMin', 67239941, 69,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'benchmarkMax', 67239941, 69,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'code', 134348805, 70, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'data', 84017157, 70, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
-        r.VariableMirrorImpl(r'id', 67239941, 71, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'name', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67141637, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopId', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopName', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopType', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopStatus', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'farmId', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'chickInRequestId', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'farmingCycleId', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'farmName', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopDistrict', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopCity', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'period', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'isNew', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'startDate', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'closedDate', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'hasChickInRequest', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'day', 67239941, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'statusText', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'isActionNeeded', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'isOwnFarm', 67239941, 71,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'bw', 67239941, 71, const prefix7.BaseModel(), 78,
-            -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'ip', 67239941, 71, const prefix7.BaseModel(), 78,
-            -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'chickInRequest',
-            67239941,
-            71,
-            const prefix7.BaseModel(),
-            77,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'purchaseRequestOvk',
-            67239941,
-            71,
-            const prefix7.BaseModel(),
-            77,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'branch', 67239941, 71, const prefix7.BaseModel(),
-            39, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'room', 67239941, 71, const prefix7.BaseModel(),
-            74, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'rooms', 84017157, 71, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
-        r.VariableMirrorImpl(r'data', 151126021, 72, const prefix7.BaseModel(),
-            -1, -1, -1, null, const <Object>[const prefix102.IsChildren()]),
-        r.VariableMirrorImpl(r'id', 67239941, 73, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'name', 67239941, 73, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'position', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'deviceName', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'totalDevice', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'sensorCode', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'sensorMac', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'sensorType', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'temperature', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'humidity', 67239941, 73,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67239941, 73, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'roomId', 67239941, 73, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'room', 67239941, 73, const prefix7.BaseModel(),
-            74, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'id', 67239941, 74, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'name', 67239941, 74, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67239941, 74, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'level', 67239941, 74, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'roomCode', 67239941, 74,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(
-            r'devices',
-            151126021,
-            74,
-            const prefix7.BaseModel(),
-            -1,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix102.IsChildren()]),
-        r.VariableMirrorImpl(
-            r'roomType',
-            67239941,
-            74,
-            const prefix7.BaseModel(),
-            71,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'building',
-            67239941,
-            74,
-            const prefix7.BaseModel(),
-            71,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'id', 67239941, 75, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'count', 67239941, 75, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'weight', 67239941, 75, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(
-            r'temperature',
-            67239941,
-            76,
-            const prefix7.BaseModel(),
-            79,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'relativeHumidity',
-            67239941,
-            76,
-            const prefix7.BaseModel(),
-            79,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'ammonia',
-            67239941,
-            76,
-            const prefix7.BaseModel(),
-            79,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(
-            r'heatStressIndex',
-            67239941,
-            76,
-            const prefix7.BaseModel(),
-            79,
-            -1,
-            -1,
-            null,
-            const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'wind', 67239941, 76, const prefix7.BaseModel(),
-            79, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'lights', 67239941, 76, const prefix7.BaseModel(),
-            79, -1, -1, null, const <Object>[const prefix103.IsChild()]),
-        r.VariableMirrorImpl(r'id', 67239941, 76, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'coopCodeId', 67239941, 76,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'deviceId', 67239941, 76,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'id', 67239941, 77, const prefix7.BaseModel(), -1,
-            -1, -1, null, const []),
-        r.VariableMirrorImpl(r'farmingCycleId', 67239941, 77,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'isApproved', 67239941, 77,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'day', 67239941, 78, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'actual', 67239941, 78, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'standard', 67239941, 78,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'value', 67239941, 79, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'uom', 67239941, 79, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'status', 67239941, 79, const prefix7.BaseModel(),
-            -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'thisClassName', 134349973, 83,
-            const prefix7.BaseModel(), -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'thisClassId', 134349973, 83,
+        r.VariableMirrorImpl(r'thisClassId', 134349973, 68,
             const prefix7.BaseModel(), -1, -1, -1, null, const []),
         r.MethodMirrorImpl(
             r'toModelEntity',
@@ -14327,6 +15027,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 0, 0, -1, -1, null,
             const <int>[1], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 0, 462),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 0, 463),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 1, 464),
@@ -14337,24 +15038,36 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 3, 469),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 4, 470),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 4, 471),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 0, 351),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 0, 352),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 1, 353),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 1, 354),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 2, 355),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 2, 356),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 3, 357),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 3, 358),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 4, 359),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 4, 360),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 0, -1, -1, -1, null,
             const <int>[2, 3, 4, 5, 6], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'==', 2097154, 81, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'==', 2097154, 67, -1, -1, -1, null,
             const <int>[12], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'toString', 2097154, 81, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'toString', 2097154, 67, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'noSuchMethod', 524290, 81, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'noSuchMethod', 524290, 67, -1, -1, -1, null,
             const <int>[13], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'hashCode', 2097155, 81, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'hashCode', 2097155, 67, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'runtimeType', 2097155, 81, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'runtimeType', 2097155, 67, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const []),
-        r.MethodMirrorImpl(r'capabilities', 35651587, 85, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'capabilities', 35651587, 70, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(
             r'canReflect',
             2097154,
-            84,
+            69,
             -1,
             -1,
             -1,
@@ -14365,7 +15078,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'reflect',
             2097154,
-            84,
+            69,
             -1,
             -1,
             -1,
@@ -14376,7 +15089,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'canReflectType',
             2097154,
-            84,
+            69,
             -1,
             -1,
             -1,
@@ -14387,7 +15100,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'reflectType',
             2097154,
-            84,
+            69,
             -1,
             -1,
             -1,
@@ -14398,7 +15111,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'findLibrary',
             2097154,
-            84,
+            69,
             -1,
             -1,
             -1,
@@ -14406,9 +15119,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[18],
             const prefix7.BaseModel(),
             const <Object>[override]),
-        r.MethodMirrorImpl(r'libraries', 35651587, 84, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'libraries', 35651587, 69, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const <Object>[override]),
-        r.MethodMirrorImpl(r'annotatedClasses', 35651587, 84, -1, -1, -1, null,
+        r.MethodMirrorImpl(r'annotatedClasses', 35651587, 69, -1, -1, -1, null,
             const <int>[], const prefix7.BaseModel(), const <Object>[override]),
         r.MethodMirrorImpl(
             r'toModelEntity',
@@ -14423,6 +15136,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 1, 1, -1, -1, null,
             const <int>[20], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 5, 488),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 5, 489),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 6, 490),
@@ -14461,6 +15175,46 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 22, 523),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 23, 524),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 23, 525),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 5, 377),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 5, 378),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 6, 379),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 6, 380),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 7, 381),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 7, 382),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 8, 383),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 8, 384),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 9, 385),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 9, 386),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 10, 387),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 10, 388),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 11, 389),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 11, 390),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 12, 391),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 12, 392),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 13, 393),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 13, 394),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 14, 395),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 14, 396),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 15, 397),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 15, 398),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 16, 399),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 16, 400),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 17, 401),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 17, 402),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 18, 403),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 18, 404),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 19, 405),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 19, 406),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 20, 407),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 20, 408),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 21, 409),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 21, 410),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 22, 411),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 22, 412),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 23, 413),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 23, 414),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -14505,10 +15259,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 2, 2, -1, -1, null,
             const <int>[60], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 24, 529),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 24, 530),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 25, 531),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 25, 532),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 24, 418),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 24, 419),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 25, 420),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 25, 421),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 2, -1, -1, -1, null, const <int>[61, 62],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(
@@ -14524,312 +15285,580 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[override]),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 3, 3, -1, -1, null,
             const <int>[66], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 26, 536),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 26, 537),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 26, 425),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 26, 426),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 3, -1, -1, -1, null, const <int>[67],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 4, 4, -1, -1, null,
             const <int>[69], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 27, 540),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 27, 541),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 27, 429),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 27, 430),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 4, -1, -1, -1, null, const <int>[70],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 5, 5, -1, -1, null,
             const <int>[72], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 28, 544),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 28, 545),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 29, 546),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 29, 547),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 28, 433),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 28, 434),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 29, 435),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 29, 436),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 5, -1, -1, -1, null, const <int>[73, 74],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 6, 6, -1, -1, null,
             const <int>[77], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 30, 550),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 30, 551),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 31, 552),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 31, 553),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 30, 439),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 30, 440),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 31, 441),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 31, 442),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 6, -1, -1, -1, null, const <int>[78, 79],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 7, 7, -1, -1, null,
             const <int>[82], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 32, 556),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 32, 557),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 33, 558),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 33, 559),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 32, 445),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 32, 446),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 33, 447),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 33, 448),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 7, -1, -1, -1, null, const <int>[83, 84],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 8, 8, -1, -1, null,
             const <int>[87], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 34, 562),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 34, 563),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 35, 564),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 35, 565),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 34, 451),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 34, 452),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 35, 453),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 35, 454),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 8, -1, -1, -1, null, const <int>[88, 89],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 9, 9, -1, -1, null,
             const <int>[92], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 36, 568),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 36, 569),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 37, 570),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 37, 571),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 36, 457),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 36, 458),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 37, 459),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 37, 460),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 9, -1, -1, -1, null, const <int>[93, 94],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 10, 10, -1, -1, null,
             const <int>[97], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 38, 574),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 38, 575),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 39, 576),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 39, 577),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 38, 463),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 38, 464),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 39, 465),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 39, 466),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 10, -1, -1, -1, null, const <int>[98, 99],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 11, 11, -1, -1, null,
             const <int>[102], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 40, 580),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 40, 581),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 41, 582),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 41, 583),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 40, 469),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 40, 470),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 41, 471),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 41, 472),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 11, -1, -1, -1, null, const <int>[103, 104],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 12, 12, -1, -1, null,
             const <int>[107], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 42, 586),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 42, 587),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 43, 588),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 43, 589),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 42, 475),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 42, 476),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 43, 477),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 43, 478),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 12, -1, -1, -1, null, const <int>[108, 109],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 13, 13, -1, -1, null,
             const <int>[112], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 44, 592),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 44, 593),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 45, 594),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 45, 595),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 44, 481),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 44, 482),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 45, 483),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 45, 484),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 13, -1, -1, -1, null, const <int>[113, 114],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 14, 14, -1, -1, null,
             const <int>[117], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 46, 598),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 46, 599),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 47, 600),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 47, 601),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 46, 487),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 46, 488),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 47, 489),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 47, 490),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 14, -1, -1, -1, null, const <int>[118, 119],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 15, 15, -1, -1, null,
             const <int>[122], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 48, 604),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 48, 605),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 49, 606),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 49, 607),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 48, 493),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 48, 494),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 49, 495),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 49, 496),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 15, -1, -1, -1, null, const <int>[123, 124],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 16, 16, -1, -1, null,
             const <int>[127], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 50, 610),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 50, 611),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 51, 612),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 51, 613),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 50, 499),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 50, 500),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 51, 501),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 51, 502),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 16, -1, -1, -1, null, const <int>[128, 129],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 17, 17, -1, -1, null,
             const <int>[132], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 52, 616),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 52, 617),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 53, 618),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 53, 619),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 52, 505),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 52, 506),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 53, 507),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 53, 508),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 17, -1, -1, -1, null, const <int>[133, 134],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 18, 18, -1, -1, null,
             const <int>[137], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 54, 622),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 54, 623),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 55, 624),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 55, 625),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 54, 511),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 54, 512),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 55, 513),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 55, 514),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 18, -1, -1, -1, null, const <int>[138, 139],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 19, 19, -1, -1, null,
             const <int>[142], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 56, 628),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 56, 629),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 57, 630),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 57, 631),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 56, 517),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 56, 518),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 57, 519),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 57, 520),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 19, -1, -1, -1, null, const <int>[143, 144],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 20, 20, -1, -1, null,
             const <int>[147], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 58, 634),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 58, 635),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 59, 636),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 59, 637),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 58, 523),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 58, 524),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 59, 525),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 59, 526),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 20, -1, -1, -1, null, const <int>[148, 149],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 21, 21, -1, -1, null,
             const <int>[152], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 60, 640),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 60, 641),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 61, 642),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 61, 643),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 60, 529),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 60, 530),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 61, 531),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 61, 532),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 21, -1, -1, -1, null, const <int>[153, 154],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 22, 22, -1, -1, null,
             const <int>[157], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 62, 646),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 62, 647),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 63, 648),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 63, 649),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 62, 535),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 62, 536),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 63, 537),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 63, 538),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 22, -1, -1, -1, null, const <int>[158, 159],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 23, 23, -1, -1, null,
             const <int>[162], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 64, 652),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 64, 653),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 65, 654),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 65, 655),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 64, 541),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 64, 542),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 65, 543),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 65, 544),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 23, -1, -1, -1, null, const <int>[163, 164],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 24, 24, -1, -1, null,
             const <int>[167], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 66, 658),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 66, 659),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 67, 660),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 67, 661),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 66, 547),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 66, 548),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 67, 549),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 67, 550),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 24, -1, -1, -1, null, const <int>[168, 169],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 25, 25, -1, -1, null,
             const <int>[172], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 68, 664),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 68, 665),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 69, 666),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 69, 667),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 68, 553),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 68, 554),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 69, 555),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 69, 556),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 25, -1, -1, -1, null, const <int>[173, 174],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 26, 26, -1, -1, null,
             const <int>[177], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 70, 670),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 70, 671),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 71, 672),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 71, 673),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 70, 559),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 70, 560),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 71, 561),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 71, 562),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 26, -1, -1, -1, null, const <int>[178, 179],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 27, 27, -1, -1, null,
             const <int>[182], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 72, 676),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 72, 677),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 73, 678),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 73, 679),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 72, 565),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 72, 566),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 73, 567),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 73, 568),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 27, -1, -1, -1, null, const <int>[183, 184],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 28, 28, -1, -1, null,
             const <int>[187], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 74, 682),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 74, 683),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 75, 684),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 75, 685),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 74, 571),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 74, 572),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 75, 573),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 75, 574),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 28, -1, -1, -1, null, const <int>[188, 189],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 29, 29, -1, -1, null,
             const <int>[192], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 76, 688),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 76, 689),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 77, 690),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 77, 691),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 76, 577),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 76, 578),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 77, 579),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 77, 580),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 29, -1, -1, -1, null, const <int>[193, 194],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 30, 30, -1, -1, null,
             const <int>[197], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 78, 694),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 78, 695),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 79, 696),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 79, 697),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 78, 583),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 78, 584),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 79, 585),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 79, 586),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 30, -1, -1, -1, null, const <int>[198, 199],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 31, 31, -1, -1, null,
             const <int>[202], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 80, 700),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 80, 701),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 81, 702),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 81, 703),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 80, 589),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 80, 590),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 81, 591),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 81, 592),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 31, -1, -1, -1, null, const <int>[203, 204],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 32, 32, -1, -1, null,
             const <int>[207], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 82, 706),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 82, 707),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 83, 708),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 83, 709),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 82, 595),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 82, 596),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 83, 597),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 83, 598),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 32, -1, -1, -1, null, const <int>[208, 209],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 33, 33, -1, -1, null,
             const <int>[212], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 84, 712),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 84, 713),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 85, 714),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 85, 715),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 84, 601),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 84, 602),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 85, 603),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 85, 604),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 33, -1, -1, -1, null, const <int>[213, 214],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 34, 34, -1, -1, null,
             const <int>[217], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 86, 718),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 86, 719),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 87, 720),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 87, 721),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 86, 607),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 86, 608),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 87, 609),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 87, 610),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 34, -1, -1, -1, null, const <int>[218, 219],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 35, 35, -1, -1, null,
             const <int>[222], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 88, 724),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 88, 725),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 89, 726),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 89, 727),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 88, 613),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 88, 614),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 89, 615),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 89, 616),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 35, -1, -1, -1, null, const <int>[223, 224],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 36, 36, -1, -1, null,
             const <int>[227], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 90, 730),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 90, 731),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 91, 732),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 91, 733),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 90, 619),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 90, 620),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 91, 621),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 91, 622),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 36, -1, -1, -1, null, const <int>[228, 229],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 37, 37, -1, -1, null,
             const <int>[232], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 92, 736),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 92, 737),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 93, 738),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 93, 739),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 92, 625),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 92, 626),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 93, 627),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 93, 628),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 37, -1, -1, -1, null, const <int>[233, 234],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 38, 38, -1, -1, null,
             const <int>[237], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 94, 742),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 94, 743),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 95, 744),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 95, 745),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 94, 631),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 94, 632),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 95, 633),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 95, 634),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 38, -1, -1, -1, null, const <int>[238, 239],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 39, 39, -1, -1, null,
             const <int>[242], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 96, 748),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 96, 749),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 97, 750),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 97, 751),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 96, 637),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 96, 638),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 97, 639),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 97, 640),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 39, -1, -1, -1, null, const <int>[243, 244],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 40, 40, -1, -1, null,
             const <int>[247], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 98, 754),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 98, 755),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 98, 643),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 98, 644),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 40, -1, -1, -1, null, const <int>[248],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 41, 41, -1, -1, null,
             const <int>[250], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 99, 758),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 99, 759),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 100, 760),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 100, 761),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 99, 647),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 99, 648),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 100, 649),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 100, 650),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 41, -1, -1, -1, null, const <int>[251, 252],
             const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 42, 42, -1, -1, null,
             const <int>[255], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 101, 764),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 101, 765),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 102, 766),
@@ -14880,6 +15909,58 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 124, 811),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 125, 812),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 125, 813),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 101, 653),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 101, 654),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 102, 655),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 102, 656),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 103, 657),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 103, 658),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 104, 659),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 104, 660),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 105, 661),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 105, 662),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 106, 663),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 106, 664),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 107, 665),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 107, 666),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 108, 667),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 108, 668),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 109, 669),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 109, 670),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 110, 671),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 110, 672),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 111, 673),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 111, 674),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 112, 675),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 112, 676),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 113, 677),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 113, 678),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 114, 679),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 114, 680),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 115, 681),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 115, 682),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 116, 683),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 116, 684),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 117, 685),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 117, 686),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 118, 687),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 118, 688),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 119, 689),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 119, 690),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 120, 691),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 120, 692),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 121, 693),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 121, 694),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 122, 695),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 122, 696),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 123, 697),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 123, 698),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 124, 699),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 124, 700),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 125, 701),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 125, 702),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -14919,16 +16000,26 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 43, 43, -1, -1, null,
             const <int>[306], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 126, 816),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 126, 817),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 127, 818),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 127, 819),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 128, 820),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 128, 821),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 126, 705),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 126, 706),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 127, 707),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 127, 708),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 128, 709),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 128, 710),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 43, -1, -1, -1, null,
             const <int>[307, 308, 309], const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 44, 44, -1, -1, null,
             const <int>[313], const prefix7.BaseModel(), const []),
+<<<<<<< HEAD
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 129, 824),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 129, 825),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 130, 826),
@@ -14997,6 +16088,64 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 161, 889),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 162, 890),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 162, 891),
+=======
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 129, 713),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 129, 714),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 130, 715),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 130, 716),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 131, 717),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 131, 718),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 132, 719),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 132, 720),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 133, 721),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 133, 722),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 134, 723),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 134, 724),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 135, 725),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 135, 726),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 136, 727),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 136, 728),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 137, 729),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 137, 730),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 138, 731),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 138, 732),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 139, 733),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 139, 734),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 140, 735),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 140, 736),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 141, 737),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 141, 738),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 142, 739),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 142, 740),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 143, 741),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 143, 742),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 144, 743),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 144, 744),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 145, 745),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 145, 746),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 146, 747),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 146, 748),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 147, 749),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 147, 750),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 148, 751),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 148, 752),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 149, 753),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 149, 754),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 150, 755),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 150, 756),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 151, 757),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 151, 758),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 152, 759),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 152, 760),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 153, 761),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 153, 762),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 154, 763),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 154, 764),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 155, 765),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 155, 766),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 156, 767),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 156, 768),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15044,6 +16193,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 45, 45, -1, -1, null,
+<<<<<<< HEAD
             const <int>[382], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 163, 894),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 163, 895),
@@ -15079,6 +16229,43 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 178, 925),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 179, 926),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 179, 927),
+=======
+            const <int>[370], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 157, 771),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 157, 772),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 158, 773),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 158, 774),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 159, 775),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 159, 776),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 160, 777),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 160, 778),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 161, 779),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 161, 780),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 162, 781),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 162, 782),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 163, 783),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 163, 784),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 164, 785),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 164, 786),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 165, 787),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 165, 788),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 166, 789),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 166, 790),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 167, 791),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 167, 792),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 168, 793),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 168, 794),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 169, 795),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 169, 796),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 170, 797),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 170, 798),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 171, 799),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 171, 800),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 172, 801),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 172, 802),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 173, 803),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 173, 804),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15109,6 +16296,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 46, 46, -1, -1, null,
+<<<<<<< HEAD
             const <int>[417], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 180, 930),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 180, 931),
@@ -15160,6 +16348,59 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 203, 977),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 204, 978),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 204, 979),
+=======
+            const <int>[405], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 174, 807),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 174, 808),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 175, 809),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 175, 810),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 176, 811),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 176, 812),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 177, 813),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 177, 814),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 178, 815),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 178, 816),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 179, 817),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 179, 818),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 180, 819),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 180, 820),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 181, 821),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 181, 822),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 182, 823),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 182, 824),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 183, 825),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 183, 826),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 184, 827),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 184, 828),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 185, 829),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 185, 830),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 186, 831),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 186, 832),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 187, 833),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 187, 834),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 188, 835),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 188, 836),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 189, 837),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 189, 838),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 190, 839),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 190, 840),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 191, 841),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 191, 842),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 192, 843),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 192, 844),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 193, 845),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 193, 846),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 194, 847),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 194, 848),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 195, 849),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 195, 850),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 196, 851),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 196, 852),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 197, 853),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 197, 854),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 198, 855),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 198, 856),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15198,6 +16439,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 47, 47, -1, -1, null,
+<<<<<<< HEAD
             const <int>[468], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 205, 982),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 205, 983),
@@ -15221,6 +16463,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 214, 1001),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 215, 1002),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 215, 1003),
+=======
+            const <int>[456], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 199, 859),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 199, 860),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 200, 861),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 200, 862),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 201, 863),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 201, 864),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 202, 865),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 202, 866),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 203, 867),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 203, 868),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 204, 869),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 204, 870),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 205, 871),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 205, 872),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 206, 873),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 206, 874),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 207, 875),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 207, 876),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 208, 877),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 208, 878),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 209, 879),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 209, 880),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15233,6 +16500,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 48, 48, -1, -1, null,
+<<<<<<< HEAD
             const <int>[491], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 216, 1006),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 216, 1007),
@@ -15262,6 +16530,37 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 228, 1031),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 229, 1032),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 229, 1033),
+=======
+            const <int>[479], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 210, 883),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 210, 884),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 211, 885),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 211, 886),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 212, 887),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 212, 888),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 213, 889),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 213, 890),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 214, 891),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 214, 892),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 215, 893),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 215, 894),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 216, 895),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 216, 896),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 217, 897),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 217, 898),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 218, 899),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 218, 900),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 219, 901),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 219, 902),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 220, 903),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 220, 904),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 221, 905),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 221, 906),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 222, 907),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 222, 908),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 223, 909),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 223, 910),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15289,6 +16588,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 49, 49, -1, -1, null,
+<<<<<<< HEAD
             const <int>[520], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 230, 1036),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 230, 1037),
@@ -15316,6 +16616,35 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 241, 1059),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 242, 1060),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 242, 1061),
+=======
+            const <int>[508], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 224, 913),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 224, 914),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 225, 915),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 225, 916),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 226, 917),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 226, 918),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 227, 919),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 227, 920),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 228, 921),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 228, 922),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 229, 923),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 229, 924),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 230, 925),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 230, 926),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 231, 927),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 231, 928),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 232, 929),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 232, 930),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 233, 931),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 233, 932),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 234, 933),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 234, 934),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 235, 935),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 235, 936),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 236, 937),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 236, 938),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15342,6 +16671,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 50, 50, -1, -1, null,
+<<<<<<< HEAD
             const <int>[547], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 243, 1064),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 243, 1065),
@@ -15351,6 +16681,17 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 245, 1069),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 246, 1070),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 246, 1071),
+=======
+            const <int>[535], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 237, 941),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 237, 942),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 238, 943),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 238, 944),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 239, 945),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 239, 946),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 240, 947),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 240, 948),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15363,6 +16704,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 51, 51, -1, -1, null,
+<<<<<<< HEAD
             const <int>[556], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 247, 1074),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 247, 1075),
@@ -15394,6 +16736,39 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 260, 1101),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 261, 1102),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 261, 1103),
+=======
+            const <int>[544], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 241, 951),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 241, 952),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 242, 953),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 242, 954),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 243, 955),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 243, 956),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 244, 957),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 244, 958),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 245, 959),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 245, 960),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 246, 961),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 246, 962),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 247, 963),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 247, 964),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 248, 965),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 248, 966),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 249, 967),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 249, 968),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 250, 969),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 250, 970),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 251, 971),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 251, 972),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 252, 973),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 252, 974),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 253, 975),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 253, 976),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 254, 977),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 254, 978),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 255, 979),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 255, 980),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15422,6 +16797,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 52, 52, -1, -1, null,
+<<<<<<< HEAD
             const <int>[587], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 262, 1106),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 262, 1107),
@@ -15439,6 +16815,25 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 268, 1119),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 269, 1120),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 269, 1121),
+=======
+            const <int>[575], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 256, 983),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 256, 984),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 257, 985),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 257, 986),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 258, 987),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 258, 988),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 259, 989),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 259, 990),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 260, 991),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 260, 992),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 261, 993),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 261, 994),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 262, 995),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 262, 996),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 263, 997),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 263, 998),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15451,6 +16846,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 53, 53, -1, -1, null,
+<<<<<<< HEAD
             const <int>[604], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 270, 1124),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 270, 1125),
@@ -15472,6 +16868,29 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 278, 1141),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 279, 1142),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 279, 1143),
+=======
+            const <int>[592], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 264, 1001),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 264, 1002),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 265, 1003),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 265, 1004),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 266, 1005),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 266, 1006),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 267, 1007),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 267, 1008),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 268, 1009),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 268, 1010),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 269, 1011),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 269, 1012),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 270, 1013),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 270, 1014),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 271, 1015),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 271, 1016),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 272, 1017),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 272, 1018),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 273, 1019),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 273, 1020),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15484,6 +16903,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 54, 54, -1, -1, null,
+<<<<<<< HEAD
             const <int>[625], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 280, 1146),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 280, 1147),
@@ -15495,6 +16915,19 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 283, 1153),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 284, 1154),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 284, 1155),
+=======
+            const <int>[613], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 274, 1023),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 274, 1024),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 275, 1025),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 275, 1026),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 276, 1027),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 276, 1028),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 277, 1029),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 277, 1030),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 278, 1031),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 278, 1032),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15507,6 +16940,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 55, 55, -1, -1, null,
+<<<<<<< HEAD
             const <int>[636], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 285, 1158),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 285, 1159),
@@ -15530,6 +16964,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 294, 1177),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 295, 1178),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 295, 1179),
+=======
+            const <int>[624], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 279, 1035),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 279, 1036),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 280, 1037),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 280, 1038),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 281, 1039),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 281, 1040),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 282, 1041),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 282, 1042),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 283, 1043),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 283, 1044),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 284, 1045),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 284, 1046),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 285, 1047),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 285, 1048),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 286, 1049),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 286, 1050),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 287, 1051),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 287, 1052),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 288, 1053),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 288, 1054),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 289, 1055),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 289, 1056),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15542,6 +17001,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 56, 56, -1, -1, null,
+<<<<<<< HEAD
             const <int>[659], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 296, 1182),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 296, 1183),
@@ -15565,6 +17025,31 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 303, 1199),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 304, 1200),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 304, 1201),
+=======
+            const <int>[647], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 290, 1059),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 290, 1060),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 291, 1061),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 291, 1062),
+        r.MethodMirrorImpl(r'', 0, 56, -1, -1, -1, null, const <int>[648, 649],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 57, 57, -1, -1, null,
+            const <int>[652], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 292, 1065),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 292, 1066),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 293, 1067),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 293, 1068),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 294, 1069),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 294, 1070),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 295, 1071),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 295, 1072),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 296, 1073),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 296, 1074),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 297, 1075),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 297, 1076),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 298, 1077),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 298, 1078),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15577,6 +17062,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 58, 58, -1, -1, null,
+<<<<<<< HEAD
             const <int>[679], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 305, 1204),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 305, 1205),
@@ -15584,9 +17070,19 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 306, 1207),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 307, 1208),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 307, 1209),
+=======
+            const <int>[667], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 299, 1081),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 299, 1082),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 300, 1083),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 300, 1084),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 301, 1085),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 301, 1086),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(r'', 0, 58, -1, -1, -1, null,
             const <int>[680, 681, 682], const prefix7.BaseModel(), const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 59, 59, -1, -1, null,
+<<<<<<< HEAD
             const <int>[686], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 308, 1212),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 308, 1213),
@@ -15604,6 +17100,23 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 314, 1225),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 315, 1226),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 315, 1227),
+=======
+            const <int>[674], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 302, 1089),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 302, 1090),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 303, 1091),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 303, 1092),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 304, 1093),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 304, 1094),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 305, 1095),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 305, 1096),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 306, 1097),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 306, 1098),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 307, 1099),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 307, 1100),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 308, 1101),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 308, 1102),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15616,6 +17129,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix7.BaseModel(),
             const []),
         r.MethodMirrorImpl(r'toResponseModel', 2097170, 60, 60, -1, -1, null,
+<<<<<<< HEAD
             const <int>[703], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 316, 1230),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 316, 1231),
@@ -15639,6 +17153,35 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 325, 1249),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 326, 1250),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 326, 1251),
+=======
+            const <int>[689], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 309, 1105),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 309, 1106),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 310, 1107),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 310, 1108),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 311, 1109),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 311, 1110),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 312, 1111),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 312, 1112),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 313, 1113),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 313, 1114),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 314, 1115),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 314, 1116),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 315, 1117),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 315, 1118),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 316, 1119),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 316, 1120),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 317, 1121),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 317, 1122),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 318, 1123),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 318, 1124),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 319, 1125),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 319, 1126),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 320, 1127),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 320, 1128),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 321, 1129),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 321, 1130),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15647,6 +17190,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714],
             const prefix7.BaseModel(),
             const []),
@@ -15674,6 +17218,49 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 336, 1273),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 337, 1274),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 337, 1275),
+=======
+            const <int>[
+              690,
+              691,
+              692,
+              693,
+              694,
+              695,
+              696,
+              697,
+              698,
+              699,
+              700,
+              701,
+              702
+            ],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 61, 61, -1, -1, null,
+            const <int>[716], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 322, 1133),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 322, 1134),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 323, 1135),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 323, 1136),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 324, 1137),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 324, 1138),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 325, 1139),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 325, 1140),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 326, 1141),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 326, 1142),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 327, 1143),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 327, 1144),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 328, 1145),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 328, 1146),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 329, 1147),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 329, 1148),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 330, 1149),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 330, 1150),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 331, 1151),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 331, 1152),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 332, 1153),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 332, 1154),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             0,
@@ -15682,6 +17269,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[727, 728, 729, 730, 731, 732, 733, 734, 735, 736, 737],
             const prefix7.BaseModel(),
             const []),
@@ -15775,11 +17363,68 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.MethodMirrorImpl(
             r'',
             0,
+=======
+            const <int>[717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 62, 62, -1, -1, null,
+            const <int>[739], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 333, 1157),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 333, 1158),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 334, 1159),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 334, 1160),
+        r.MethodMirrorImpl(r'', 0, 62, -1, -1, -1, null, const <int>[740, 741],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 63, 63, -1, -1, null,
+            const <int>[744], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 335, 1163),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 335, 1164),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 336, 1165),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 336, 1166),
+        r.MethodMirrorImpl(r'', 0, 63, -1, -1, -1, null, const <int>[745, 746],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 64, 64, -1, -1, null,
+            const <int>[749], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 337, 1169),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 337, 1170),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 338, 1171),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 338, 1172),
+        r.MethodMirrorImpl(r'', 0, 64, -1, -1, -1, null, const <int>[750, 751],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'toResponseModel', 2097170, 65, 65, -1, -1, null,
+            const <int>[754], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 339, 1175),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 339, 1176),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 340, 1177),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 340, 1178),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 341, 1179),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 341, 1180),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 342, 1181),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 342, 1182),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 343, 1183),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 343, 1184),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 344, 1185),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 344, 1186),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 345, 1187),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 345, 1188),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 346, 1189),
+        r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 346, 1190),
+        r.MethodMirrorImpl(r'', 0, 65, -1, -1, -1, null, const <int>[755],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'toModelEntity', 524290, 66, -1, -1, -1, null,
+            const <int>[764], const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'', 128, 66, -1, -1, -1, null, const <int>[],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(
+            r'hash',
+            2097170,
+>>>>>>> develop-stock
             67,
             -1,
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[783, 784, 785, 786, 787, 788, 789, 790, 791, 792],
             const prefix7.BaseModel(),
             const []),
@@ -15813,14 +17458,51 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 377, 1370),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 378, 1371),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 378, 1372),
+=======
+            const <int>[
+              765,
+              766,
+              767,
+              768,
+              769,
+              770,
+              771,
+              772,
+              773,
+              774,
+              775,
+              776,
+              777,
+              778,
+              779,
+              780,
+              781,
+              782,
+              783,
+              784
+            ],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'hashAll', 2097170, 67, -1, -1, -1, null,
+            const <int>[785], const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'hashAllUnordered', 2097170, 67, -1, -1, -1, null,
+            const <int>[786], const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'', 128, 67, -1, -1, -1, null, const <int>[],
+            const prefix7.BaseModel(), const []),
+        r.MethodMirrorImpl(r'getInstance', 2097170, 68, 68, -1, -1, null,
+            const <int>[787], const prefix7.BaseModel(), const []),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 347, 1199),
+        r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 348, 1200),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
-            0,
+            128,
             68,
             -1,
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817],
             const prefix7.BaseModel(),
             const []),
@@ -15836,14 +17518,22 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 382, 1382),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 383, 1383),
         r.ImplicitSetterMirrorImpl(const prefix7.BaseModel(), 383, 1384),
+=======
+            const <int>[788, 789, 790, 791, 792, 793, 794, 795, 796, 797],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'fromList', 128, 68, -1, -1, -1, null,
+            const <int>[798], const prefix7.BaseModel(), const []),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
-            0,
+            128,
             69,
             -1,
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[830, 831, 832, 833, 834],
             const prefix7.BaseModel(),
             const []),
@@ -16176,14 +17866,22 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[1025], const prefix7.BaseModel(), const []),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 458, 1564),
         r.ImplicitGetterMirrorImpl(const prefix7.BaseModel(), 459, 1565),
+=======
+            const <int>[799, 800, 801, 802, 803, 804, 805, 806, 807, 808],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'fromList', 128, 69, -1, -1, -1, null,
+            const <int>[809], const prefix7.BaseModel(), const []),
+>>>>>>> develop-stock
         r.MethodMirrorImpl(
             r'',
             128,
-            83,
+            70,
             -1,
             -1,
             -1,
             null,
+<<<<<<< HEAD
             const <int>[
               1026,
               1027,
@@ -16255,11 +17953,29 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 461, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 472, const prefix7.BaseModel(),
+=======
+            const <int>[810, 811, 812, 813, 814, 815, 816, 817, 818, 819],
+            const prefix7.BaseModel(),
+            const []),
+        r.MethodMirrorImpl(r'fromList', 128, 70, -1, -1, -1, null,
+            const <int>[820], const prefix7.BaseModel(), const [])
+      ],
+      <m.ParameterMirror>[
+        r.ParameterMirrorImpl(r'map', 151126022, 349, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 350, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 361, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'token',
             67253254,
+<<<<<<< HEAD
             472,
+=======
+            361,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16271,7 +17987,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'refreshToken',
             67253254,
+<<<<<<< HEAD
             472,
+=======
+            361,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16283,7 +18003,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'acceptTnc',
             67255302,
+<<<<<<< HEAD
             472,
+=======
+            361,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16295,7 +18019,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'action',
             67253254,
+<<<<<<< HEAD
             472,
+=======
+            361,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16304,6 +18032,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #action),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 463, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_token', 67240038, 465,
@@ -16333,11 +18062,46 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 487, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 526, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 352, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_token', 67240038, 354,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_refreshToken', 67240038, 356,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_acceptTnc', 67240038, 358,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_action', 67240038, 360,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'other', 134348806, 362,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'invocation', 134348806, 364,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'reflectee', 134348806, 368,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'reflectee', 134348806, 369,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'type', 134348806, 370,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'type', 134348806, 371,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'libraryName', 134348806, 372,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 375, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 376, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 415, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'userCode',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16349,7 +18113,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userName',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16361,7 +18129,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'fullName',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16373,7 +18145,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'email',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16385,7 +18161,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'phoneNumber',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16397,7 +18177,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userType',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16406,12 +18190,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #userType),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'status', 67255302, 526,
+=======
+        r.ParameterMirrorImpl(r'status', 67255302, 415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], 1, #status),
         r.ParameterMirrorImpl(
             r'refOwnerId',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16423,7 +18215,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16435,7 +18231,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'cmsId',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16447,7 +18247,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'roles',
             84030470,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16459,7 +18263,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modules',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             40,
             -1,
@@ -16468,12 +18276,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #modules),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'name', 67253254, 526, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'name', 67253254, 415, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'waNumber',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16482,12 +18298,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #waNumber),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'role', 67253254, 526, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'role', 67253254, 415, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #role),
         r.ParameterMirrorImpl(
             r'organizationId',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16499,7 +18323,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'organizationName',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16511,7 +18339,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'branch',
             67253254,
+<<<<<<< HEAD
             526,
+=======
+            415,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             39,
             -1,
@@ -16520,6 +18352,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #branch),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 489, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_cmsId', 67240038, 491,
@@ -16561,11 +18394,58 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 527, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 528, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 378, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cmsId', 67240038, 380,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 382,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_email', 67240038, 384,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_phoneNumber', 67240038, 386,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_waNumber', 67240038, 388,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_role', 67240038, 390,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_organizationId', 67240038, 392,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_organizationName', 67240038, 394,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 396,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userCode', 67240038, 398,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userName', 67240038, 400,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_fullName', 67240038, 402,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userType', 67240038, 404,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 406,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_refOwnerId', 67240038, 408,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_roles', 84017254, 410,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modules', 67240038, 412,
+            const prefix7.BaseModel(), 40, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_branch', 67240038, 414,
+            const prefix7.BaseModel(), 39, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 416, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 417, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'accessToken',
             67253254,
+<<<<<<< HEAD
             533,
+=======
+            422,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16577,7 +18457,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'email',
             67253254,
+<<<<<<< HEAD
             533,
+=======
+            422,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16586,6 +18470,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #email),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_accessToken', 67240038, 530,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_email', 67240038, 532,
@@ -16593,11 +18478,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 534, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 535, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_accessToken', 67240038, 419,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_email', 67240038, 421,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 423, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 424, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'appId',
             67253254,
+<<<<<<< HEAD
             538,
+=======
+            427,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16606,6 +18504,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #appId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_appId', 67240038, 537,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 539, const prefix7.BaseModel(),
@@ -16617,11 +18516,28 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 543, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'code', 134358022, 548,
+=======
+        r.ParameterMirrorImpl(r'_appId', 67240038, 426,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 428, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'data', 67253254, 431, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_data', 67240038, 430,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 432, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 437,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'error',
             67249158,
+<<<<<<< HEAD
             548,
+=======
+            437,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             63,
             -1,
@@ -16630,16 +18546,28 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #error),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_code', 134348902, 545,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_error', 67240038, 547,
             const prefix7.BaseModel(), 63, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 549, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_code', 134348902, 434,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_error', 67240038, 436,
+            const prefix7.BaseModel(), 63, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 438, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'input',
             67253254,
+<<<<<<< HEAD
             554,
+=======
+            443,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             42,
             -1,
@@ -16651,7 +18579,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'output',
             84030470,
+<<<<<<< HEAD
             554,
+=======
+            443,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -16660,6 +18592,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #output),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_input', 67240038, 551,
             const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_output', 84017254, 553,
@@ -16995,11 +18928,352 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_name', 67240038, 751,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 753, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_input', 67240038, 440,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_output', 84017254, 442,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 444, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 449, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 449,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 446,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 448,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 450, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 455,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 455, const prefix7.BaseModel(),
+            43, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 452,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 454,
+            const prefix7.BaseModel(), 43, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 456, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 461,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 461, const prefix7.BaseModel(),
+            54, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 458,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 460,
+            const prefix7.BaseModel(), 54, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 462, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 467, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 467,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 464,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 466,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 468, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 473, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 473,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 470,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 472,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 474, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 479, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 479,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 476,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 478,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 480, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 485, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 485,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 482,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 484,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 486, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 491, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 491,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 488,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 490,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 492, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 497, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 497,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 494,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 496,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 498, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 503,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 503, const prefix7.BaseModel(),
+            47, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 500,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 502,
+            const prefix7.BaseModel(), 47, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 504, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 509, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 509, const prefix7.BaseModel(),
+            62, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 506,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 508,
+            const prefix7.BaseModel(), 62, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 510, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 515, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 515,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 512,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 514,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 516, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 521, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 521, const prefix7.BaseModel(),
+            60, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 518,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 520,
+            const prefix7.BaseModel(), 60, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 522, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 527, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 527,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 524,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 526,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 528, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 533,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 533, const prefix7.BaseModel(),
+            44, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 530,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 532,
+            const prefix7.BaseModel(), 44, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 534, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 539, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 539,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 536,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 538,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 540, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 545, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 545,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 542,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 544,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 546, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 551,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 551, const prefix7.BaseModel(),
+            51, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 548,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 550,
+            const prefix7.BaseModel(), 51, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 552, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 557, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 557,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 554,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 556,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 558, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 563, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 563,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 560,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 562,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 564, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 569, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 569,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 566,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 568,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 570, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 575, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 575, const prefix7.BaseModel(),
+            61, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 572,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 574,
+            const prefix7.BaseModel(), 61, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 576, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 581, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 581,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 578,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 580,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 582, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 587, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 587, const prefix7.BaseModel(),
+            45, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 584,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 586,
+            const prefix7.BaseModel(), 45, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 588, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 593, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 593,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 590,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 592,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 594, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 599, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67253254, 599, const prefix7.BaseModel(),
+            55, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 596,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 598,
+            const prefix7.BaseModel(), 55, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 600, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 605, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 605,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 602,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 604,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 606, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 611, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 611,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 608,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 610,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 612, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 617,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 617, const prefix7.BaseModel(),
+            0, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 614,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 616,
+            const prefix7.BaseModel(), 0, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 618, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 623, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 151135238, 623,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 620,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 151126118, 622,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 624, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 67253254, 629, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67253254, 629, const prefix7.BaseModel(),
+            46, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 626,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 628,
+            const prefix7.BaseModel(), 46, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 630, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'code', 134358022, 635,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'data', 67249158, 635, const prefix7.BaseModel(),
+            1, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 632,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_data', 67240038, 634,
+            const prefix7.BaseModel(), 1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 636, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 641, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 641, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(r'_id', 67240038, 638, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 640,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 642, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'downstreamApp',
             151141382,
+<<<<<<< HEAD
             756,
+=======
+            645,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17008,6 +19282,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             const [],
             #downstreamApp),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_downstreamApp', 151126118, 755,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 757, const prefix7.BaseModel(),
@@ -17025,11 +19300,34 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 814, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'name', 67253254, 814, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_downstreamApp', 151126118, 644,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 646, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 651, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 651, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(r'_id', 67240038, 648, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 650,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 652, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 703, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 703, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'dailyQuantity',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17041,7 +19339,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'price',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17053,7 +19355,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'category',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             50,
             -1,
@@ -17065,7 +19371,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'categoryId',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17074,12 +19384,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #categoryId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'uom', 67253254, 814, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'uom', 67253254, 703, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #uom),
         r.ParameterMirrorImpl(
             r'value',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17091,7 +19409,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'quantity',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17103,7 +19425,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'weight',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17115,7 +19441,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productItemId',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17127,7 +19457,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productCategoryId',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17139,7 +19473,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'lossPrecentage',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17151,7 +19489,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'numberOfCuts',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17163,7 +19505,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productItem',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             42,
             -1,
@@ -17175,7 +19521,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'returnQuantity',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17187,7 +19537,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'returnWeight',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17199,7 +19553,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'maxValue',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17211,7 +19569,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'minValue',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17223,7 +19585,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productCategory',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             50,
             -1,
@@ -17235,7 +19601,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productItems',
             84030470,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17247,7 +19617,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'quantityUOM',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17259,7 +19633,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'weightUOM',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17271,7 +19649,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalQuantity',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17283,7 +19665,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalWeight',
             67253254,
+<<<<<<< HEAD
             814,
+=======
+            703,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17292,6 +19678,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #totalWeight),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 765, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_name', 67240038, 767,
@@ -17343,11 +19730,68 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_productItems', 84017254, 813,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 815, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 654, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 656,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_dailyQuantity', 67240038, 658,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_price', 67240038, 660,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_uom', 67240038, 662, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_value', 67240038, 664,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_categoryId', 67240038, 666,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_quantity', 67240038, 668,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_weight', 67240038, 670,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productItemId', 67240038, 672,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productCategoryId', 67240038, 674,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_quantityUOM', 67240038, 676,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_weightUOM', 67240038, 678,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_numberOfCuts', 67240038, 680,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_returnQuantity', 67240038, 682,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_returnWeight', 67240038, 684,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_minValue', 67240038, 686,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_maxValue', 67240038, 688,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalWeight', 67240038, 690,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalQuantity', 67240038, 692,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_lossPrecentage', 67240038, 694,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_category', 67240038, 696,
+            const prefix7.BaseModel(), 50, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productCategory', 67240038, 698,
+            const prefix7.BaseModel(), 50, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productItem', 67240038, 700,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productItems', 84017254, 702,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 704, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'latitude',
             67253254,
+<<<<<<< HEAD
             822,
+=======
+            711,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17359,7 +19803,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'longitude',
             67253254,
+<<<<<<< HEAD
             822,
+=======
+            711,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17371,7 +19819,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'distance',
             67253254,
+<<<<<<< HEAD
             822,
+=======
+            711,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17380,6 +19832,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #distance),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_latitude', 67240038, 817,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_longitude', 67240038, 819,
@@ -17389,11 +19842,26 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 823, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 892, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_latitude', 67240038, 706,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_longitude', 67240038, 708,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_distance', 67240038, 710,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 712, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 769, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'customerId',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17405,7 +19873,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17417,7 +19889,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17429,7 +19905,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnit',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -17441,7 +19921,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'salespersonId',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17453,7 +19937,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17465,7 +19953,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'customer',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             46,
             -1,
@@ -17477,7 +19969,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17489,7 +19985,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'salesperson',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             58,
             -1,
@@ -17501,7 +20001,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17513,7 +20017,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userModifier',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             58,
             -1,
@@ -17522,12 +20030,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #userModifier),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'code', 67253254, 892, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'code', 67253254, 769, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'returnStatus',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17539,7 +20055,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'driver',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             1,
             -1,
@@ -17548,12 +20068,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #driver),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'type', 67253254, 892, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'type', 67253254, 769, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #type),
         r.ParameterMirrorImpl(
             r'productNotes',
             84030470,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17565,7 +20093,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalWeight',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17577,7 +20109,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalQuantity',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17589,7 +20125,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalPrice',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17601,7 +20141,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'paymentMethod',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17613,7 +20157,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'paymentAmount',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17625,7 +20173,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'latitude',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17637,7 +20189,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'longitude',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17649,7 +20205,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'returnedProducts',
             84030470,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17661,7 +20221,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'reason',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17673,7 +20237,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'returnReason',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17685,7 +20253,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'grStatus',
             67253254,
+<<<<<<< HEAD
             892,
+=======
+            769,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17694,6 +20266,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #grStatus),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(
             r'category',
             67253254,
@@ -17839,11 +20412,78 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 928, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'code', 67253254, 928, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 714, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_customerId', 67240038, 716,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 718,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_returnStatus', 67240038, 720,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 722,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salespersonId', 67240038, 724,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 726,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 728,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 730,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_type', 67240038, 732,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_paymentMethod', 67240038, 734,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_reason', 67240038, 736,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalQuantity', 67240038, 738,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalWeight', 67240038, 740,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalPrice', 67240038, 742,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_paymentAmount', 67240038, 744,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_latitude', 67240038, 746,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_longitude', 67240038, 748,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_returnReason', 67240038, 750,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_grStatus', 67240038, 752,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_customer', 67240038, 754,
+            const prefix7.BaseModel(), 46, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnit', 67240038, 756,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 758,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_returnedProducts', 84017254, 760,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salesperson', 67240038, 762,
+            const prefix7.BaseModel(), 58, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userModifier', 67240038, 764,
+            const prefix7.BaseModel(), 58, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_driver', 67240038, 766,
+            const prefix7.BaseModel(), 1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productNotes', 84017254, 768,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 770, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 805, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'code', 67253254, 805, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'createdBy',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17855,7 +20495,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17867,7 +20511,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedBy',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17879,7 +20527,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17891,7 +20543,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'driverId',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17903,7 +20559,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'sourceOperationUnit',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -17915,7 +20575,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'sourceOperationUnitId',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17927,7 +20591,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17939,7 +20607,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'targetOperationUnit',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -17951,7 +20623,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'targetOperationUnitId',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17963,7 +20639,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userCreator',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             1,
             -1,
@@ -17975,7 +20655,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'userModifier',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             1,
             -1,
@@ -17987,7 +20671,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -17999,7 +20687,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'driver',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             1,
             -1,
@@ -18011,7 +20703,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'goodsReceived',
             67253254,
+<<<<<<< HEAD
             928,
+=======
+            805,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             54,
             -1,
@@ -18020,6 +20716,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #goodsReceived),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 895, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_code', 67240038, 897,
@@ -18057,11 +20754,54 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 929, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 980, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 772, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 774,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_targetOperationUnitId', 67240038, 776,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_sourceOperationUnitId', 67240038, 778,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 780,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_driverId', 67240038, 782,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_targetOperationUnit', 67240038, 784,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_sourceOperationUnit', 67240038, 786,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userCreator', 67240038, 788,
+            const prefix7.BaseModel(), 1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_userModifier', 67240038, 790,
+            const prefix7.BaseModel(), 1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_driver', 67240038, 792,
+            const prefix7.BaseModel(), 1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 794,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_goodsReceived', 67240038, 796,
+            const prefix7.BaseModel(), 54, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 798,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdBy', 67240038, 800,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 802,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedBy', 67240038, 804,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 806, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 857, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'businessName',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18073,7 +20813,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'businessType',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18085,7 +20829,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'phoneNumber',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18097,7 +20845,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'salespersonId',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18109,7 +20861,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'plusCode',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18121,7 +20877,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'provinceId',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18133,7 +20893,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'cityId',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18142,12 +20906,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #cityId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'city', 67253254, 980, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'city', 67253254, 857, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             57, -1, -1, null, const [], null, #city),
         r.ParameterMirrorImpl(
             r'districtId',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18159,7 +20931,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'district',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -18171,7 +20947,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'supplier',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18183,7 +20963,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'supplierDetail',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18195,7 +20979,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'salesperson',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             58,
             -1,
@@ -18207,7 +20995,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'latestVisit',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             55,
             -1,
@@ -18219,7 +21011,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'isArchived',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18231,7 +21027,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'latitude',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18243,7 +21043,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'longitude',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18255,7 +21059,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'province',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -18267,7 +21075,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'ownerName',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18279,7 +21091,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18288,12 +21104,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #products),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'name', 67253254, 980, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'name', 67253254, 857, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'operationUnitName',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18305,7 +21129,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'branchId',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18317,7 +21145,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'branch',
             67253254,
+<<<<<<< HEAD
             980,
+=======
+            857,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             39,
             -1,
@@ -18326,6 +21158,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #branch),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 931, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_businessName', 67240038, 933,
@@ -18379,11 +21212,70 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 981, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1004, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 808, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_businessName', 67240038, 810,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_businessType', 67240038, 812,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_ownerName', 67240038, 814,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_phoneNumber', 67240038, 816,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salespersonId', 67240038, 818,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_plusCode', 67240038, 820,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_provinceId', 67240038, 822,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cityId', 67240038, 824,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_districtId', 67240038, 826,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_supplier', 67240038, 828,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_supplierDetail', 67240038, 830,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_isArchived', 67240038, 832,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_longitude', 67240038, 834,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_latitude', 67240038, 836,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 838,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitName', 67240038, 840,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_branchId', 67240038, 842,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_city', 67240038, 844,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_district', 67240038, 846,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_province', 67240038, 848,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salesperson', 67240038, 850,
+            const prefix7.BaseModel(), 58, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_latestVisit', 67240038, 852,
+            const prefix7.BaseModel(), 55, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 854,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_branch', 67240038, 856,
+            const prefix7.BaseModel(), 39, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 858, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 881, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18395,7 +21287,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18407,7 +21303,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdBy',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18419,7 +21319,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedBy',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18431,7 +21335,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18443,7 +21351,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnit',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -18455,7 +21367,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'input',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             42,
             -1,
@@ -18467,7 +21383,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'output',
             84030470,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18479,7 +21399,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             1004,
+=======
+            881,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18488,6 +21412,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #operationUnitId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'code', 67253254, 1004,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(r'_id', 67240038, 983, const prefix7.BaseModel(),
@@ -18515,11 +21440,44 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1005,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1034, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'code', 67253254, 881, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'_id', 67240038, 860, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 862,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 864,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 866,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 868,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdBy', 67240038, 870,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 872,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedBy', 67240038, 874,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnit', 67240038, 876,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_input', 67240038, 878,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_output', 84017254, 880,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 882, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 911, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'operationUnitName',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18528,6 +21486,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #operationUnitName),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'type', 67253254, 1034,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #type),
         r.ParameterMirrorImpl(r'city', 67253254, 1034,
@@ -18536,6 +21495,16 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'district',
             67253254,
             1034,
+=======
+        r.ParameterMirrorImpl(r'type', 67253254, 911, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #type),
+        r.ParameterMirrorImpl(r'city', 67253254, 911, const prefix7.BaseModel(),
+            57, -1, -1, null, const [], null, #city),
+        r.ParameterMirrorImpl(
+            r'district',
+            67253254,
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -18547,7 +21516,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'province',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -18559,7 +21532,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18571,7 +21548,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'latitude',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18583,7 +21564,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'longitude',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18595,7 +21580,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'plusCode',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18607,7 +21596,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'category',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18619,7 +21612,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'branch',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             64,
             -1,
@@ -18631,7 +21628,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'jagalData',
             67253254,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             65,
             -1,
@@ -18643,7 +21644,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'purchasableProducts',
             84030470,
+<<<<<<< HEAD
             1034,
+=======
+            911,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18652,6 +21657,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #purchasableProducts),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1007, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_operationUnitName', 67240038, 1009,
@@ -18683,11 +21689,48 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1035,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1062, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 884, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitName', 67240038, 886,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_type', 67240038, 888,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_category', 67240038, 890,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_plusCode', 67240038, 892,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_latitude', 67240038, 894,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_longitude', 67240038, 896,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 898,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_city', 67240038, 900,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_district', 67240038, 902,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_province', 67240038, 904,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_branch', 67240038, 906,
+            const prefix7.BaseModel(), 64, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_jagalData', 67240038, 908,
+            const prefix7.BaseModel(), 65, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_purchasableProducts', 84017254, 910,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 912, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 939, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'category',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             42,
             -1,
@@ -18699,7 +21742,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'availableQuantity',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18711,7 +21758,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'availableWeight',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18723,7 +21774,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'reservedQuantity',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18735,7 +21790,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'reservedWeight',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18747,7 +21806,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalQuantity',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18759,7 +21822,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalWeight',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18771,7 +21838,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productCategoryId',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18780,12 +21851,21 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #productCategoryId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'name', 67253254, 1062,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'productCategoryName',
             67253254,
             1062,
+=======
+        r.ParameterMirrorImpl(r'name', 67253254, 939, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(
+            r'productCategoryName',
+            67253254,
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18797,7 +21877,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productItemId',
             67253254,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18809,7 +21893,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'productItems',
             84030470,
+<<<<<<< HEAD
             1062,
+=======
+            939,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18818,6 +21906,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #productItems),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1037, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_productCategoryId', 67240038, 1039,
@@ -18854,6 +21943,44 @@ final _data = <r.Reflectable, r.ReflectorData>{
             r'maxValue',
             67253254,
             1072,
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 914, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productCategoryId', 67240038, 916,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productCategoryName', 67240038, 918,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productItemId', 67240038, 920,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 922,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalQuantity', 67240038, 924,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalWeight', 67240038, 926,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_availableQuantity', 67240038, 928,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_availableWeight', 67240038, 930,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_reservedQuantity', 67240038, 932,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_reservedWeight', 67240038, 934,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_category', 67240038, 936,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productItems', 84017254, 938,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 940, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 949, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 949, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(
+            r'maxValue',
+            67253254,
+            949,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18865,7 +21992,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'minValue',
             67253254,
+<<<<<<< HEAD
             1072,
+=======
+            949,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18874,6 +22005,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #minValue),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1065, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_name', 67240038, 1067,
@@ -18885,11 +22017,28 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1073,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1104, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 942, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 944,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_minValue', 67240038, 946,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_maxValue', 67240038, 948,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 950, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 981, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'vendor',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             53,
             -1,
@@ -18901,7 +22050,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnit',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -18913,7 +22066,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18925,7 +22082,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18937,7 +22098,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18949,7 +22114,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdBy',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18961,7 +22130,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18973,7 +22146,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedBy',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -18982,12 +22159,21 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #modifiedBy),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'code', 67253254, 1104,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'goodsReceived',
             67253254,
             1104,
+=======
+        r.ParameterMirrorImpl(r'code', 67253254, 981, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(
+            r'goodsReceived',
+            67253254,
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             54,
             -1,
@@ -18999,7 +22185,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'jagal',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -19011,7 +22201,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalQuantity',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19023,7 +22217,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalPrice',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19035,7 +22233,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'totalWeight',
             67253254,
+<<<<<<< HEAD
             1104,
+=======
+            981,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19044,6 +22246,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #totalWeight),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1075, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_createdDate', 67240038, 1077,
@@ -19075,11 +22278,48 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_status', 67240038, 1103,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 1105,
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 952, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 954,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdBy', 67240038, 956,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 958,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedBy', 67240038, 960,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 962,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalQuantity', 67240038, 964,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalWeight', 67240038, 966,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalPrice', 67240038, 968,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_vendor', 67240038, 970,
+            const prefix7.BaseModel(), 53, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnit', 67240038, 972,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_jagal', 67240038, 974,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_goodsReceived', 67240038, 976,
+            const prefix7.BaseModel(), 54, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 978,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 980,
+>>>>>>> develop-stock
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 982, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'vendorId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19091,7 +22331,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19103,7 +22347,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19115,7 +22363,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19127,7 +22379,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'purchaseOrderId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19139,7 +22395,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'internalTransferId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19151,7 +22411,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'salesOrderId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19163,7 +22427,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'jagalId',
             67253254,
+<<<<<<< HEAD
             1122,
+=======
+            999,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19172,6 +22440,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #jagalId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_vendorId', 67240038, 1107,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 1109,
@@ -19193,11 +22462,38 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1144, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'name', 67253254, 1144,
+=======
+        r.ParameterMirrorImpl(r'_vendorId', 67240038, 984,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 986,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_purchaseOrderId', 67240038, 988,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_internalTransferId', 67240038, 990,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salesOrderId', 67240038, 992,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 994,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_jagalId', 67240038, 996,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 998,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1000,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1021, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'vendorName',
             67253254,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19209,7 +22505,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'priceBasis',
             67253254,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19221,7 +22521,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19230,12 +22534,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #status),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'city', 67253254, 1144,
+=======
+        r.ParameterMirrorImpl(r'city', 67253254, 1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), 57, -1, -1, null, const [], null, #city),
         r.ParameterMirrorImpl(
             r'district',
             67253254,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -19247,7 +22559,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'province',
             67253254,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             57,
             -1,
@@ -19259,7 +22575,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'purchasableProducts',
             84030470,
+<<<<<<< HEAD
             1144,
+=======
+            1021,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19268,6 +22588,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #purchasableProducts),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'type', 67253254, 1144,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #type),
         r.ParameterMirrorImpl(r'_id', 67240038, 1125, const prefix7.BaseModel(),
@@ -19295,11 +22616,44 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1156, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'code', 67253254, 1156,
+=======
+        r.ParameterMirrorImpl(r'type', 67253254, 1021,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #type),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1002, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 1004,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_vendorName', 67240038, 1006,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_priceBasis', 67240038, 1008,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 1010,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_type', 67240038, 1012,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_city', 67240038, 1014,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_district', 67240038, 1016,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_province', 67240038, 1018,
+            const prefix7.BaseModel(), 57, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_purchasableProducts', 84017254, 1020,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1022,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1033, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'code', 67253254, 1033,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1156,
+=======
+            1033,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19311,7 +22665,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'purchaseOrder',
             67253254,
+<<<<<<< HEAD
             1156,
+=======
+            1033,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             51,
             -1,
@@ -19323,7 +22681,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1156,
+=======
+            1033,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19332,6 +22694,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #products),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1147, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_code', 67240038, 1149,
@@ -19345,11 +22708,30 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1157,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1180, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1024, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 1026,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 1028,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_purchaseOrder', 67240038, 1030,
+            const prefix7.BaseModel(), 51, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 1032,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1034,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1057, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'salesperson',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             58,
             -1,
@@ -19361,7 +22743,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19373,7 +22759,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'leadStatus',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19385,7 +22775,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'prospect',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19397,7 +22791,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19409,7 +22807,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'latitude',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19421,7 +22823,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'longitude',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19433,7 +22839,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'orderIssue',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19445,7 +22855,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'remarks',
             67253254,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19457,7 +22871,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'orderIssueCategories',
             84030470,
+<<<<<<< HEAD
             1180,
+=======
+            1057,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19466,6 +22884,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #orderIssueCategories),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1159, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_salesperson', 67240038, 1161,
@@ -19491,11 +22910,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1181,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1186, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1036, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_salesperson', 67240038, 1038,
+            const prefix7.BaseModel(), 58, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 1040,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_leadStatus', 67240038, 1042,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_prospect', 67240038, 1044,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_orderIssue', 67240038, 1046,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_orderIssueCategories', 84017254, 1048,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_remarks', 67240038, 1050,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_latitude', 67240038, 1052,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_longitude', 67240038, 1054,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 1056,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1058,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1063, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'title',
             67253254,
+<<<<<<< HEAD
             1186,
+=======
+            1063,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19504,6 +22954,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #title),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1183, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_title', 67240038, 1185,
@@ -19513,11 +22964,26 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1202, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'name', 67253254, 1202,
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1060, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_title', 67240038, 1062,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1064,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1079, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #name),
         r.ParameterMirrorImpl(
             r'cityId',
             67253254,
+<<<<<<< HEAD
             1202,
+=======
+            1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19529,7 +22995,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'cityName',
             67253254,
+<<<<<<< HEAD
             1202,
+=======
+            1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19541,7 +23011,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'districtName',
             67253254,
+<<<<<<< HEAD
             1202,
+=======
+            1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19553,7 +23027,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'provinceId',
             67253254,
+<<<<<<< HEAD
             1202,
+=======
+            1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19565,7 +23043,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'provinceName',
             67253254,
+<<<<<<< HEAD
             1202,
+=======
+            1079,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19574,6 +23056,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #provinceName),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1189, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_provinceId', 67240038, 1191,
@@ -19591,11 +23074,34 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'map', 151126022, 1203,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1210, const prefix7.BaseModel(),
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1066, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_provinceId', 67240038, 1068,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cityId', 67240038, 1070,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_districtName', 67240038, 1072,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cityName', 67240038, 1074,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 1076,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_provinceName', 67240038, 1078,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1080,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1087, const prefix7.BaseModel(),
+>>>>>>> develop-stock
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'email',
             67253254,
+<<<<<<< HEAD
             1210,
+=======
+            1087,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19607,7 +23113,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'fullName',
             67253254,
+<<<<<<< HEAD
             1210,
+=======
+            1087,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19616,6 +23126,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #fullName),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1205, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_email', 67240038, 1207,
@@ -19623,11 +23134,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_fullName', 67240038, 1209,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 1211,
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1082, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_email', 67240038, 1084,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_fullName', 67240038, 1086,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1088,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'customerId',
             67253254,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19639,7 +23163,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19651,7 +23179,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19663,7 +23195,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19675,7 +23211,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'driverId',
             67253254,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19684,12 +23224,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #driverId),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'type', 67253254, 1228,
+=======
+        r.ParameterMirrorImpl(r'type', 67253254, 1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #type),
         r.ParameterMirrorImpl(
             r'productNotes',
             84030470,
+<<<<<<< HEAD
             1228,
+=======
+            1103,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19698,6 +23246,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #productNotes),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(
             r'category',
             67253254,
@@ -19731,11 +23280,36 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1252, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'code', 67253254, 1252,
+=======
+        r.ParameterMirrorImpl(r'_customerId', 67240038, 1090,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 1092,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_driverId', 67240038, 1094,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 1096,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_type', 67240038, 1098,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 1100,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_productNotes', 84017254, 1102,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1104,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1131, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'code', 67253254, 1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'operationUnit',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -19747,7 +23321,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'confirmedDate',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19759,7 +23337,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19771,7 +23353,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdBy',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19783,7 +23369,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedBy',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19795,7 +23385,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19807,7 +23401,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19819,7 +23417,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19831,7 +23433,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'products',
             84030470,
+<<<<<<< HEAD
             1252,
+=======
+            1131,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19840,6 +23446,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #products),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1231, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_operationUnit', 67240038, 1233,
@@ -19867,11 +23474,72 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1276, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(r'code', 67253254, 1276,
+=======
+        r.ParameterMirrorImpl(
+            r'totalWeight',
+            67253254,
+            1131,
+            const prefix7.BaseModel(),
+            -1,
+            -1,
+            -1,
+            null,
+            const [],
+            null,
+            #totalWeight),
+        r.ParameterMirrorImpl(
+            r'totalQuantity',
+            67253254,
+            1131,
+            const prefix7.BaseModel(),
+            -1,
+            -1,
+            -1,
+            null,
+            const [],
+            null,
+            #totalQuantity),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1106, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnit', 67240038, 1108,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 1110,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 1112,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 1114,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_confirmedDate', 67240038, 1116,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalWeight', 67240038, 1118,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_totalQuantity', 67240038, 1120,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_products', 84017254, 1122,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 1124,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdBy', 67240038, 1126,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 1128,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedBy', 67240038, 1130,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1132,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1155, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'code', 67253254, 1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(
             r'status',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19883,7 +23551,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnitId',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19895,7 +23567,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'imageLink',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19907,7 +23583,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdDate',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19919,7 +23599,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'createdBy',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19931,7 +23615,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedDate',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19943,7 +23631,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'modifiedBy',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -19955,7 +23647,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'operationUnit',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             48,
             -1,
@@ -19967,7 +23663,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'product',
             67253254,
+<<<<<<< HEAD
             1276,
+=======
+            1155,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             42,
             -1,
@@ -19976,6 +23676,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #product),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_id', 67240038, 1255, const prefix7.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_code', 67240038, 1257,
@@ -20009,11 +23710,50 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_url', 67240038, 1281,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 1283,
+=======
+        r.ParameterMirrorImpl(r'_id', 67240038, 1134, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_code', 67240038, 1136,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_status', 67240038, 1138,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnitId', 67240038, 1140,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_imageLink', 67240038, 1142,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdDate', 67240038, 1144,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_createdBy', 67240038, 1146,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedDate', 67240038, 1148,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_modifiedBy', 67240038, 1150,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationUnit', 67240038, 1152,
+            const prefix7.BaseModel(), 48, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_product', 67240038, 1154,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1156,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1161, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'url', 67253254, 1161, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #url),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1158, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_url', 67240038, 1160,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1162,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(
             r'message',
             67249158,
+<<<<<<< HEAD
             1288,
+=======
+            1167,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -20025,7 +23765,11 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'stack',
             67249158,
+<<<<<<< HEAD
             1288,
+=======
+            1167,
+>>>>>>> develop-stock
             const prefix7.BaseModel(),
             -1,
             -1,
@@ -20034,6 +23778,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #stack),
+<<<<<<< HEAD
         r.ParameterMirrorImpl(r'_message', 67240038, 1285,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_stack', 67240038, 1287,
@@ -21427,6 +25172,155 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'_cap9', 67245094, 1570,
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_capabilities', 84018214, 1571,
+=======
+        r.ParameterMirrorImpl(r'_message', 67240038, 1164,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_stack', 67240038, 1166,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1168,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1173, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'name', 67253254, 1173,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1170, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_name', 67240038, 1172,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1174,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1191, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1176, const prefix7.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_priceBasis', 67240038, 1178,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_liveBird', 67240038, 1180,
+            const prefix7.BaseModel(), 42, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_innardsPrice', 67240038, 1182,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_headPrice', 67240038, 1184,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_feetPrice', 67240038, 1186,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationalDays', 67240038, 1188,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_operationalExpenses', 67240038, 1190,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1192,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object1', 67239942, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object2', 67239942, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object3', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object4', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object5', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object6', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object7', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object8', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object9', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object10', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object11', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object12', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object13', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object14', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object15', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object16', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object17', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object18', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object19', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'object20', 67246086, 1194,
+            const prefix7.BaseModel(), 67, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'objects', 151126022, 1195,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'objects', 151126022, 1196,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'type', 134348806, 1198,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap0', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap1', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap2', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap3', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap4', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap5', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap6', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap7', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap8', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap9', 67244038, 1201,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'capabilities', 151126022, 1202,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap0', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap1', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap2', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap3', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap4', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap5', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap6', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap7', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap8', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'cap9', 67244038, 1203,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'capabilities', 151126022, 1204,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap0', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap1', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap2', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap3', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap4', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap5', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap6', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap7', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap8', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_cap9', 67245094, 1205,
+            const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_capabilities', 84018214, 1206,
+>>>>>>> develop-stock
             const prefix7.BaseModel(), -1, -1, -1, null, const [], null, null)
       ],
       <Type>[
@@ -21496,28 +25390,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix70.ErrorDetail,
         prefix71.BranchModel,
         prefix72.JagalModel,
-        prefix74.Farm,
-        prefix75.SmartScale,
-        prefix76.Device,
-        prefix77.GraphLine,
-        prefix78.HistoricalDataResponse,
-        prefix79.Coop,
-        prefix80.SensorPositionResponse,
-        prefix81.Sensor,
-        prefix82.Room,
-        prefix83.SmartScaleRecord,
-        prefix84.DeviceSummary,
-        prefix85.ApproveCoop,
-        prefix86.CoopActiveStandard,
-        prefix87.SensorData,
         prefix5.BaseEntity,
         Object,
-        prefix73.Offline,
-        prefix97.Reflectable,
-        prefix98.ReflectableImpl,
-        prefix99.ReflectableBase
+        prefix83.Reflectable,
+        prefix84.ReflectableImpl,
+        prefix85.ReflectableBase
       ],
-      86,
+      71,
       {
         r'==': (dynamic instance) => (x) => instance == x,
         r'toString': (dynamic instance) => instance.toString,
@@ -21683,77 +25562,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'feetPrice': (dynamic instance) => instance.feetPrice,
         r'operationalDays': (dynamic instance) => instance.operationalDays,
         r'operationalExpenses': (dynamic instance) =>
-            instance.operationalExpenses,
-        r'idOffline': (dynamic instance) => instance.idOffline,
-        r'expiredDate': (dynamic instance) => instance.expiredDate,
-        r'flag': (dynamic instance) => instance.flag,
-        r'totalCount': (dynamic instance) => instance.totalCount,
-        r'averageWeight': (dynamic instance) => instance.averageWeight,
-        r'roomId': (dynamic instance) => instance.roomId,
-        r'room': (dynamic instance) => instance.room,
-        r'records': (dynamic instance) => instance.records,
-        r'startDate': (dynamic instance) => instance.startDate,
-        r'executionDate': (dynamic instance) => instance.executionDate,
-        r'updatedDate': (dynamic instance) => instance.updatedDate,
-        r'deviceName': (dynamic instance) => instance.deviceName,
-        r'deviceType': (dynamic instance) => instance.deviceType,
-        r'deviceId': (dynamic instance) => instance.deviceId,
-        r'coopId': (dynamic instance) => instance.coopId,
-        r'mac': (dynamic instance) => instance.mac,
-        r'sensorCount': (dynamic instance) => instance.sensorCount,
-        r'sensors': (dynamic instance) => instance.sensors,
-        r'deviceSummary': (dynamic instance) => instance.deviceSummary,
-        r'order': (dynamic instance) => instance.order,
-        r'current': (dynamic instance) => instance.current,
-        r'label': (dynamic instance) => instance.label,
-        r'benchmarkMin': (dynamic instance) => instance.benchmarkMin,
-        r'benchmarkMax': (dynamic instance) => instance.benchmarkMax,
-        r'coopName': (dynamic instance) => instance.coopName,
-        r'coopType': (dynamic instance) => instance.coopType,
-        r'coopStatus': (dynamic instance) => instance.coopStatus,
-        r'farmId': (dynamic instance) => instance.farmId,
-        r'chickInRequestId': (dynamic instance) => instance.chickInRequestId,
-        r'farmingCycleId': (dynamic instance) => instance.farmingCycleId,
-        r'farmName': (dynamic instance) => instance.farmName,
-        r'coopDistrict': (dynamic instance) => instance.coopDistrict,
-        r'coopCity': (dynamic instance) => instance.coopCity,
-        r'period': (dynamic instance) => instance.period,
-        r'isNew': (dynamic instance) => instance.isNew,
-        r'closedDate': (dynamic instance) => instance.closedDate,
-        r'hasChickInRequest': (dynamic instance) => instance.hasChickInRequest,
-        r'day': (dynamic instance) => instance.day,
-        r'statusText': (dynamic instance) => instance.statusText,
-        r'isActionNeeded': (dynamic instance) => instance.isActionNeeded,
-        r'isOwnFarm': (dynamic instance) => instance.isOwnFarm,
-        r'bw': (dynamic instance) => instance.bw,
-        r'ip': (dynamic instance) => instance.ip,
-        r'chickInRequest': (dynamic instance) => instance.chickInRequest,
-        r'purchaseRequestOvk': (dynamic instance) =>
-            instance.purchaseRequestOvk,
-        r'rooms': (dynamic instance) => instance.rooms,
-        r'position': (dynamic instance) => instance.position,
-        r'totalDevice': (dynamic instance) => instance.totalDevice,
-        r'sensorCode': (dynamic instance) => instance.sensorCode,
-        r'sensorMac': (dynamic instance) => instance.sensorMac,
-        r'sensorType': (dynamic instance) => instance.sensorType,
-        r'temperature': (dynamic instance) => instance.temperature,
-        r'humidity': (dynamic instance) => instance.humidity,
-        r'level': (dynamic instance) => instance.level,
-        r'roomCode': (dynamic instance) => instance.roomCode,
-        r'devices': (dynamic instance) => instance.devices,
-        r'roomType': (dynamic instance) => instance.roomType,
-        r'building': (dynamic instance) => instance.building,
-        r'count': (dynamic instance) => instance.count,
-        r'isNullObject': (dynamic instance) => instance.isNullObject,
-        r'relativeHumidity': (dynamic instance) => instance.relativeHumidity,
-        r'ammonia': (dynamic instance) => instance.ammonia,
-        r'heatStressIndex': (dynamic instance) => instance.heatStressIndex,
-        r'wind': (dynamic instance) => instance.wind,
-        r'lights': (dynamic instance) => instance.lights,
-        r'coopCodeId': (dynamic instance) => instance.coopCodeId,
-        r'isApproved': (dynamic instance) => instance.isApproved,
-        r'actual': (dynamic instance) => instance.actual,
-        r'standard': (dynamic instance) => instance.standard
+            instance.operationalExpenses
       },
       {
         r'id=': (dynamic instance, value) => instance.id = value,
@@ -21971,104 +25780,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'operationalDays=': (dynamic instance, value) =>
             instance.operationalDays = value,
         r'operationalExpenses=': (dynamic instance, value) =>
-            instance.operationalExpenses = value,
-        r'idOffline=': (dynamic instance, value) => instance.idOffline = value,
-        r'expiredDate=': (dynamic instance, value) =>
-            instance.expiredDate = value,
-        r'flag=': (dynamic instance, value) => instance.flag = value,
-        r'totalCount=': (dynamic instance, value) =>
-            instance.totalCount = value,
-        r'averageWeight=': (dynamic instance, value) =>
-            instance.averageWeight = value,
-        r'roomId=': (dynamic instance, value) => instance.roomId = value,
-        r'room=': (dynamic instance, value) => instance.room = value,
-        r'records=': (dynamic instance, value) => instance.records = value,
-        r'startDate=': (dynamic instance, value) => instance.startDate = value,
-        r'executionDate=': (dynamic instance, value) =>
-            instance.executionDate = value,
-        r'updatedDate=': (dynamic instance, value) =>
-            instance.updatedDate = value,
-        r'deviceName=': (dynamic instance, value) =>
-            instance.deviceName = value,
-        r'deviceType=': (dynamic instance, value) =>
-            instance.deviceType = value,
-        r'deviceId=': (dynamic instance, value) => instance.deviceId = value,
-        r'coopId=': (dynamic instance, value) => instance.coopId = value,
-        r'mac=': (dynamic instance, value) => instance.mac = value,
-        r'sensorCount=': (dynamic instance, value) =>
-            instance.sensorCount = value,
-        r'sensors=': (dynamic instance, value) => instance.sensors = value,
-        r'deviceSummary=': (dynamic instance, value) =>
-            instance.deviceSummary = value,
-        r'order=': (dynamic instance, value) => instance.order = value,
-        r'current=': (dynamic instance, value) => instance.current = value,
-        r'label=': (dynamic instance, value) => instance.label = value,
-        r'benchmarkMin=': (dynamic instance, value) =>
-            instance.benchmarkMin = value,
-        r'benchmarkMax=': (dynamic instance, value) =>
-            instance.benchmarkMax = value,
-        r'coopName=': (dynamic instance, value) => instance.coopName = value,
-        r'coopType=': (dynamic instance, value) => instance.coopType = value,
-        r'coopStatus=': (dynamic instance, value) =>
-            instance.coopStatus = value,
-        r'farmId=': (dynamic instance, value) => instance.farmId = value,
-        r'chickInRequestId=': (dynamic instance, value) =>
-            instance.chickInRequestId = value,
-        r'farmingCycleId=': (dynamic instance, value) =>
-            instance.farmingCycleId = value,
-        r'farmName=': (dynamic instance, value) => instance.farmName = value,
-        r'coopDistrict=': (dynamic instance, value) =>
-            instance.coopDistrict = value,
-        r'coopCity=': (dynamic instance, value) => instance.coopCity = value,
-        r'period=': (dynamic instance, value) => instance.period = value,
-        r'isNew=': (dynamic instance, value) => instance.isNew = value,
-        r'closedDate=': (dynamic instance, value) =>
-            instance.closedDate = value,
-        r'hasChickInRequest=': (dynamic instance, value) =>
-            instance.hasChickInRequest = value,
-        r'day=': (dynamic instance, value) => instance.day = value,
-        r'statusText=': (dynamic instance, value) =>
-            instance.statusText = value,
-        r'isActionNeeded=': (dynamic instance, value) =>
-            instance.isActionNeeded = value,
-        r'isOwnFarm=': (dynamic instance, value) => instance.isOwnFarm = value,
-        r'bw=': (dynamic instance, value) => instance.bw = value,
-        r'ip=': (dynamic instance, value) => instance.ip = value,
-        r'chickInRequest=': (dynamic instance, value) =>
-            instance.chickInRequest = value,
-        r'purchaseRequestOvk=': (dynamic instance, value) =>
-            instance.purchaseRequestOvk = value,
-        r'rooms=': (dynamic instance, value) => instance.rooms = value,
-        r'position=': (dynamic instance, value) => instance.position = value,
-        r'totalDevice=': (dynamic instance, value) =>
-            instance.totalDevice = value,
-        r'sensorCode=': (dynamic instance, value) =>
-            instance.sensorCode = value,
-        r'sensorMac=': (dynamic instance, value) => instance.sensorMac = value,
-        r'sensorType=': (dynamic instance, value) =>
-            instance.sensorType = value,
-        r'temperature=': (dynamic instance, value) =>
-            instance.temperature = value,
-        r'humidity=': (dynamic instance, value) => instance.humidity = value,
-        r'level=': (dynamic instance, value) => instance.level = value,
-        r'roomCode=': (dynamic instance, value) => instance.roomCode = value,
-        r'devices=': (dynamic instance, value) => instance.devices = value,
-        r'roomType=': (dynamic instance, value) => instance.roomType = value,
-        r'building=': (dynamic instance, value) => instance.building = value,
-        r'count=': (dynamic instance, value) => instance.count = value,
-        r'relativeHumidity=': (dynamic instance, value) =>
-            instance.relativeHumidity = value,
-        r'ammonia=': (dynamic instance, value) => instance.ammonia = value,
-        r'heatStressIndex=': (dynamic instance, value) =>
-            instance.heatStressIndex = value,
-        r'wind=': (dynamic instance, value) => instance.wind = value,
-        r'lights=': (dynamic instance, value) => instance.lights = value,
-        r'coopCodeId=': (dynamic instance, value) =>
-            instance.coopCodeId = value,
-        r'isApproved=': (dynamic instance, value) =>
-            instance.isApproved = value,
-        r'actual=': (dynamic instance, value) => instance.actual = value,
-        r'standard=': (dynamic instance, value) => instance.standard = value
+            instance.operationalExpenses = value
       },
       null,
       [])

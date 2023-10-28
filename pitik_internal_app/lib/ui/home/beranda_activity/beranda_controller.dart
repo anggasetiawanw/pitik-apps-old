@@ -65,6 +65,9 @@ class BerandaController extends GetxController {
                 if(role.name == RoleEnum.scRelation){
                     Constant.isScRelation.value = true;
                     Constant.isScRelation.refresh();
+                if(role.name == "operational lead"){
+                    Constant.isOpsLead.value = true;
+                    Constant.isOpsLead.refresh();
                 }
             }
         }

@@ -68,6 +68,7 @@ class NewDataSalesOrderController extends GetxController {
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
     items: const {},
+<<<<<<< HEAD
     onSpinnerSelected: (text) {},
   );
 
@@ -79,6 +80,14 @@ class NewDataSalesOrderController extends GetxController {
     items: const {},
     onSpinnerSelected: (text) {},
   );
+=======
+    onSpinnerSelected: (text) {
+      if (text.isNotEmpty) {
+        // editNamaSupplier.controller.visibleField();
+      }
+    },
+  );
+>>>>>>> develop-stock
   late SpinnerField spinnerOrderType = SpinnerField(
     controller: GetXCreator.putSpinnerFieldController("orderType"),
     label: "Jenis Penjualan*",
@@ -246,6 +255,7 @@ class NewDataSalesOrderController extends GetxController {
     });
   }
 
+<<<<<<< HEAD
   void refreshtotalPurchase() {
     // Mendapatkan produk yang dipilih dari listProduct
     Products? selectProduct = listProduct.value.firstWhere(
@@ -269,6 +279,17 @@ class NewDataSalesOrderController extends GetxController {
       sumPriceMin.value = harga * minValue;
       sumPriceMax.value = harga * maxValue;
     }
+=======
+  refreshtotalPurchase() {
+    Products? selectProduct = listProduct.value.firstWhere((element) => element!.name! == spinnerSku.controller.textSelected.value);
+    double minValue = selectProduct!.minValue! * (editFieldJumlahAyam.getInputNumber() ?? 0);
+    double maxValue = selectProduct.maxValue! * (editFieldJumlahAyam.getInputNumber() ?? 0);
+    sumNeededMin.value = minValue;
+    sumNeededMax.value = maxValue;
+    sumChick.value = editFieldJumlahAyam.getInputNumber()!.toInt();
+    sumPriceMin.value = (editFieldHarga.getInputNumber() ?? 0) * minValue;
+    sumPriceMax.value = (editFieldHarga.getInputNumber() ?? 0) * maxValue;
+>>>>>>> develop-stock
   }
 
   void getListCustomer() {
@@ -424,6 +445,7 @@ class NewDataSalesOrderController extends GetxController {
             onTokenInvalid: () {}));
   }
 
+<<<<<<< HEAD
   void getListSource() {
     spSumber.controller
       ..disable()
@@ -479,6 +501,8 @@ class NewDataSalesOrderController extends GetxController {
             onTokenInvalid: Constant.invalidResponse()));
   }
 
+=======
+>>>>>>> develop-stock
   void saveOrder() {
     List ret = produkType.value == "LB" ? validationLb() : validationNonLb();
     if (ret[0]) {
@@ -523,6 +547,7 @@ class NewDataSalesOrderController extends GetxController {
     }
   }
 
+<<<<<<< HEAD
   Order generatePayload() {
     List<Products?> productList = [];
     List<Products?> lbProductList = [];
@@ -573,12 +598,55 @@ class NewDataSalesOrderController extends GetxController {
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldPotongan.value[whichItem]),
+=======
+  OrderRequest generatePayload() {
+    List<Products?> listProductPayload = [];
+    List<Products?> listProductLbPayload = [];
+    List<Products?> listRemarkPayload = [];
+
+    if (produkType.value == "LB") {
+      // CategoryModel? categoryLbSelected = listCategoriesRemark.value.firstWhere((element) =>
+      // element!.name == spinnerCategories.controller.textSelected.value,);
+      Products? produkSkuSelected = listProduct.value.firstWhere(
+        (element) => element!.name == spinnerSku.controller.textSelected.value,
+      );
+
+      listProductLbPayload.add(Products(
+        productItemId: produkSkuSelected!.id,
+        quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
+        numberOfCuts: 0,
+        price: editFieldHarga.getInputNumber(),
+        weight: editFieldKebutuhan.getInputNumber(),
+      ));
+
+      for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+        int whichItem = skuCardRemark.controller.index.value[i];
+        var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
+        Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        listRemarkPayload.add(Products(
+          productItemId: productSelected!.id,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber() ?? 0).toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCardRemark.controller.editFieldPotongan.value[whichItem].getInputNumber() ?? 0).toInt() : null,
+          weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
+        ));
+      }
+    } else {
+      for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
+        int whichItem = skuCard.controller.index.value[i];
+        var listProductTemp = skuCard.controller.listSku.value.values.toList();
+        Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        listProductPayload.add(Products(
+          productItemId: productSelected!.id,
+          quantity: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber() ?? 0).toInt() : null,
+          numberOfCuts: productSelected.category!.name! == AppStrings.AYAM_UTUH || productSelected.category!.name! == AppStrings.BRANGKAS || productSelected.category!.name! == AppStrings.LIVE_BIRD ? (skuCard.controller.editFieldPotongan.value[whichItem].getInputNumber() ?? 0).toInt() : 0,
+>>>>>>> develop-stock
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
       }
     }
 
+<<<<<<< HEAD
     return productList;
   }
 
@@ -640,6 +708,21 @@ class NewDataSalesOrderController extends GetxController {
     return null;
   }
 
+=======
+    Customer? customerSelected = listCustomer.value.firstWhere(
+      (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
+    );
+
+    return OrderRequest(
+      customerId: customerSelected!.id!,
+      products: produkType.value == "LB" ? listProductLbPayload : listProductPayload,
+      productNotes: produkType.value == "LB" ? listRemarkPayload : null,
+      type: produkType.value == "LB" ? "LB" : "NON_LB",
+      status: status.value,
+    );
+  }
+
+>>>>>>> develop-stock
   List validationNonLb() {
     List ret = [true, ""];
     if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
@@ -662,10 +745,13 @@ class NewDataSalesOrderController extends GetxController {
       spinnerCustomer.controller.showAlert();
       Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
       return ret = [false, ""];
+<<<<<<< HEAD
     } else if (spSumber.controller.textSelected.value.isEmpty && isInbound.isTrue) {
       spSumber.controller.showAlert();
       Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
+=======
+>>>>>>> develop-stock
     } else if (spinnerCategories.controller.textSelected.value.isEmpty) {
       spinnerCategories.controller.showAlert();
       Scrollable.ensureVisible(spinnerCategories.controller.formKey.currentContext!);

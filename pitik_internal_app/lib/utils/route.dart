@@ -82,6 +82,8 @@ import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/deta
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/detail_sales_order_controller.dart';
 import 'package:pitik_internal_app/ui/splash_activity/splash_activity.dart';
 import 'package:pitik_internal_app/ui/splash_activity/splash_controller.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_activity.dart';
@@ -166,6 +168,7 @@ class RoutePage {
     static const String stockOpname = "/stock-opname";
     static const String stockDetail = "/stock-detail";
     static const String stockEdit = "/stock-edit";
+    static const String stockApproval = "/stock-Approval";
 
     //Transfer Module
     static const String homeTransfer = "/transfer-home";
@@ -247,6 +250,7 @@ class AppRoutes {
         GetPage(name: RoutePage.homeStock, page: ()=>const StockHomeActivity(), binding: StockHomeBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockOpname, page: ()=>const StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockDetail, page: ()=>const StockDetailActivity(),binding: StockDetailBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.stockApproval, page: ()=>const StockApprovalActivity(),binding: StockApprovalBindings(context: Constant.getContext())),
 
         //Transfer Module
         GetPage(name: RoutePage.homeTransfer, page: ()=>const TransferHomeActivity(), binding: TransferHomeBindings(context: Constant.getContext())),
