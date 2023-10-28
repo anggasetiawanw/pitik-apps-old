@@ -57,6 +57,10 @@ class BerandaController extends GetxController {
                     Constant.isDeveloper.value = true;
                     Constant.isDeveloper.refresh();
                 }
+                if(role.name == "operational lead"){
+                    Constant.isOpsLead.value = true;
+                    Constant.isOpsLead.refresh();
+                }
             }
         }
     }
