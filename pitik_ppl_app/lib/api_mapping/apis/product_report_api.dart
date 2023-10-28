@@ -283,6 +283,9 @@ class ProductReportApi {
     @GET(value : GET.PATH_PARAMETER, as : ProcurementDetailResponse, error : ErrorResponse)
     void getDetailRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String purchaseRequestId){}
 
+    @GET(value : GET.PATH_PARAMETER, as : ProcurementDetailResponse, error : ErrorResponse)
+    void getDetailReceived(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String purchaseRequestId){}
+
     /// A GET request that returns a RequestChickinResponse object.
     ///
     /// @param authorization Authorization header
@@ -511,7 +514,57 @@ class ProductReportApi {
     @GET(value: GET.PATH_PARAMETER, as: ProductsResponse, error: ErrorResponse)
     void getStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 
+    /// The function `getStocksSummary` is a GET request that retrieves stock
+    /// summary information using the provided authorization, X-ID, and path
+    /// parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains a token or credentials to authenticate the request. It is
+    /// used to verify the identity of the user making the request and determine if
+    /// they have the necessary permissions to access the requested resource.
+    ///   xId (String): The "xId" parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used to track or identify
+    /// a specific request or user.
+    ///   path (String): The `path` parameter is used to specify the path of the API
+    /// endpoint that you want to access. It is typically a string value that
+    /// represents the specific resource or action you want to perform on the
+    /// server.
     @GET(value: GET.PATH_PARAMETER, as: StockSummaryResponse, error: ErrorResponse)
     void getStocksSummary(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `createReceiptOrder` is a POST request that creates a receipt
+    /// order for purchase orders.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains an authentication token or credentials to authorize the
+    /// request. It is used to authenticate the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// payload or body of the HTTP request. It contains the information needed to
+    /// create a receipt order for purchase orders.
+    @POST(value: "v2/goods-receipts/purchase-orders", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void createReceiptOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    /// The function creates a receipt transfer request with the given
+    /// authorization, X-ID, and data.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to provide
+    /// authentication credentials for the request. It typically contains a token or
+    /// other form of authentication information.
+    ///   xId (String): The xId parameter is a unique identifier that is used to
+    /// associate the request with a specific entity or transaction. It is typically
+    /// used for tracking or auditing purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// payload or body of the HTTP request. It contains the information needed to
+    /// create a receipt transfer.
+    @POST(value: "v2/goods-receipts/transfer-requests", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void createReceiptTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
 }

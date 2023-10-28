@@ -23,6 +23,8 @@ import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_hom
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_activity.dart';
+import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
@@ -72,6 +74,9 @@ class AppRoutes {
         GetPage(name: RoutePage.listTransferPage, page: () => const ListTransferActivity(), binding: ListTransferBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.transferDetailPage, page: () => const TransferDetailActivity(), binding: TransferDetailBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.transferRequestPage, page: () => const TransferRequestActivity(), binding: TransferRequestBinding(context: GlobalVar.getContext())),
+
+        // GR Confirmation Page
+        GetPage(name: RoutePage.confirmationReceivedPage, page: () => const GrConfirmationActivity(), binding: GrConfirmationBinding(context: GlobalVar.getContext())),
 
         // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),

@@ -76,6 +76,9 @@ class ListApi {
     static const String getTransferDetail = "getTransferDetail";
     static const String getStocks = "getStocks";
     static const String getStocksSummary = "getStocksSummary";
+    static const String getDetailReceived = "getDetailReceived";
+    static const String createReceiptOrder = "createReceiptOrder";
+    static const String createReceiptTransfer = "createReceiptTransfer";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
