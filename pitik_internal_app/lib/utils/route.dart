@@ -90,12 +90,16 @@ import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_hom
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_controller.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_form_acitivty/terminate_form_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_form_acitivty/terminate_form_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_home_activity/terminate_home_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_home_activity/terminate_home_controller.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_rejected_activity/terminate_rejected.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_rejected_activity/terminate_rejected_controller.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_detail_activity/transfer_detail_activity.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_detail_activity/transfer_detail_controller.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_driver_activity/transfer_driver_activity.dart';
@@ -181,6 +185,8 @@ class RoutePage {
     static const String terminateForm = "/terminate-form";
     static const String terminateDetail = "/terminate-detail";
     static const String terminateEdit = "/terminate-edit";
+    static const String terminateApprove = "/terminate-Approve";
+    static const String terminateRejected = "/terminate-Rejected";
 
     //Manufacture Module
     static const String homeManufacture = "/manufacture-home";
@@ -262,6 +268,8 @@ class AppRoutes {
         GetPage(name: RoutePage.homeTerminate, page: ()=>const TerminateHomeAcitivity(),binding: TerminateHomeBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.terminateForm, page: ()=>const TerminateFormActivity(), binding: TerminateFormBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.terminateDetail, page: ()=>const TerminateDetailActivity(), binding: TerminateDetailBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.terminateApprove, page: ()=>const TerminateApproveActivity(), binding: TerminateApproveBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.terminateRejected, page: ()=>const TerminateRejectedActivity(), binding: TerminateRejectedBindings(context: Constant.getContext())),
 
         //Manufacture Module
         GetPage(name: RoutePage.homeManufacture, page: ()=> const ManufactureHomeActivity(), binding: ManufactureHomeBindings(context: Constant.getContext())),
