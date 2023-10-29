@@ -90,6 +90,8 @@ import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_hom
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_controller.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_rejected_activity/stock_rejected.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_rejected_activity/stock_rejected_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_activity.dart';
@@ -173,6 +175,7 @@ class RoutePage {
     static const String stockDetail = "/stock-detail";
     static const String stockEdit = "/stock-edit";
     static const String stockApproval = "/stock-Approval";
+    static const String stockRejected = "/stock-Rejected";
 
     //Transfer Module
     static const String homeTransfer = "/transfer-home";
@@ -257,6 +260,8 @@ class AppRoutes {
         GetPage(name: RoutePage.stockOpname, page: ()=>const StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockDetail, page: ()=>const StockDetailActivity(),binding: StockDetailBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockApproval, page: ()=>const StockApprovalActivity(),binding: StockApprovalBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.stockRejected, page: ()=>const StockRejectedActivity(),binding: StockRejectedBindings(context: Constant.getContext())),
+
 
         //Transfer Module
         GetPage(name: RoutePage.homeTransfer, page: ()=>const TransferHomeActivity(), binding: TransferHomeBindings(context: Constant.getContext())),

@@ -6,16 +6,16 @@ import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval_controller.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_rejected_activity/stock_rejected_controller.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/stock_status.dart';
 
-class StockApprovalActivity extends StatelessWidget {
-  const StockApprovalActivity({super.key});
+class StockRejectedActivity extends StatelessWidget {
+  const StockRejectedActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    StockApprovalController controller = Get.put(StockApprovalController(context: context));
+    StockRejectedController controller = Get.put(StockRejectedController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -30,7 +30,7 @@ class StockApprovalActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Setujui Stock Opname",
+          "Tolak Stock Opname",
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -294,52 +294,7 @@ class StockApprovalActivity extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              padding: const EdgeInsets.all(16),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: AppColors.outlineColor, width: 1),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  controller.efName,
-                                  controller.efMail,
-                                  Row(
-                                    children: [
-                                      Obx(() => Checkbox(
-                                          value: controller.isSelectedBox.value,
-                                          activeColor: AppColors.primaryOrange,
-                                          side: const BorderSide(color: AppColors.primaryOrange, width: 2),
-                                          onChanged: (isSelect) {
-                                            controller.isSelectedBox.value = isSelect!;
-                                            controller.isSelectedBox.refresh();
-                                            if (controller.isSelectedBox.isTrue) {
-                                              controller.btConfirmed.controller.enable();
-                                            } else {
-                                              controller.btConfirmed.controller.disable();
-                                            }
-                                          })),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname diatas",
-                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
-                                        overflow: TextOverflow.clip,
-                                      ))
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            controller.efRemartk,
                             const SizedBox(
                               height: 100,
                             )
