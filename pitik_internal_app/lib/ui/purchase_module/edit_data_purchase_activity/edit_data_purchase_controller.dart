@@ -89,7 +89,7 @@ class EditDataPurchaseController extends GetxController {
                 spinnerDestination.controller.enable();
                 if(spinnerTypeSource.controller.textSelected.value == "Vendor"){
                     VendorModel? vendorSelected;
-                    vendorSelected = listSourceVendor.value.firstWhere((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
+                    vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
                     if(vendorSelected!.type == AppStrings.INTERNAL){
                         skuCard.controller.invisibleCard();
                         getCategorySkuInternal();
@@ -471,7 +471,7 @@ class EditDataPurchaseController extends GetxController {
                         sku.controller.editFieldHarga.value[j].getInputNumber()!;
 
                     Timer(const Duration(milliseconds: 500), () {
-                        CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! ==sku.controller.spinnerCategories.value[j].controller.textSelected.value);
+                        CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! ==sku.controller.spinnerCategories.value[j].controller.textSelected.value);
                         sku.controller.getLoadSku(selectCategory!, j);
                         if (sku.controller.spinnerCategories.value[j].controller
                                     .textSelected.value ==
@@ -542,10 +542,10 @@ class EditDataPurchaseController extends GetxController {
         VendorModel? vendorSelected;
         OperationUnitModel? jagalSelected;
         if (spinnerTypeSource.controller.textSelected.value == "Vendor") {
-        vendorSelected = listSourceVendor.value.firstWhere((element) =>
+        vendorSelected = listSourceVendor.value.firstWhereOrNull((element) =>
             element!.vendorName == spinnerSource.controller.textSelected.value);
         } else {
-        jagalSelected = listSourceJagal.value.firstWhere((element) =>
+        jagalSelected = listSourceJagal.value.firstWhereOrNull((element) =>
             element!.operationUnitName ==
             spinnerSource.controller.textSelected.value);
         }
@@ -553,10 +553,10 @@ class EditDataPurchaseController extends GetxController {
             spinnerTypeSource.controller.textSelected.value == "Vendor") {
         for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
             int whichItem = skuCardInternal.controller.index.value[i];
-            // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+            // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
             var listProductTemp =
                 skuCardInternal.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere(
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
                 (element) =>
                     element!.name! ==
                     skuCardInternal.controller.spinnerSku.value[whichItem]
@@ -581,9 +581,9 @@ class EditDataPurchaseController extends GetxController {
         } else {
         for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
-            // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+            // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
             var listProductTemp = skuCard.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere(
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
                 (element) =>
                     element!.name! ==
                     skuCard.controller.spinnerSku.value[whichItem].controller
@@ -606,7 +606,7 @@ class EditDataPurchaseController extends GetxController {
         }
 
         OperationUnitModel? destinationPurchaseSelected =
-            listDestinationPurchase.value.firstWhere(
+            listDestinationPurchase.value.firstWhereOrNull(
         (element) =>
             element!.operationUnitName ==
             spinnerDestination.controller.textSelected.value,
@@ -639,7 +639,7 @@ class EditDataPurchaseController extends GetxController {
         }
         if (spinnerTypeSource.controller.textSelected.value == "Vendor") {
         VendorModel? vendorSelected;
-        vendorSelected = listSourceVendor.value.firstWhere((element) =>
+        vendorSelected = listSourceVendor.value.firstWhereOrNull((element) =>
             element!.vendorName == spinnerSource.controller.textSelected.value);
         if (vendorSelected!.type == "EXTERNAL") {
             ret = skuCard.controller.validation();

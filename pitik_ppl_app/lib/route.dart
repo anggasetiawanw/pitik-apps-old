@@ -34,6 +34,12 @@ import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.da
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen.dart';
+import 'package:pitik_ppl_app/ui/transfer/list_transfer_activity.dart';
+import 'package:pitik_ppl_app/ui/transfer/list_transfer_controller.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_activity.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -62,6 +68,11 @@ class AppRoutes {
         GetPage(name: RoutePage.orderRequestPage, page: () => const OrderRequestActivity(), binding: OrderRequestBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.orderDetailPage, page: () => const OrderDetailActivity(), binding: OrderDetailBinding(context: GlobalVar.getContext())),
 
+        // Transfer Page
+        GetPage(name: RoutePage.listTransferPage, page: () => const ListTransferActivity(), binding: ListTransferBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.transferDetailPage, page: () => const TransferDetailActivity(), binding: TransferDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.transferRequestPage, page: () => const TransferRequestActivity(), binding: TransferRequestBinding(context: GlobalVar.getContext())),
+
         // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext())),
@@ -87,6 +98,9 @@ class RoutePage {
     static const String listOrderPage = "/listOrder";
     static const String orderRequestPage = "/orderRequest";
     static const String orderDetailPage = "/orderDetail";
+    static const String listTransferPage = "/listTransfer";
+    static const String transferDetailPage = "/transferDetail";
+    static const String transferRequestPage = "/transferRequest";
     static const String confirmationReceivedPage = "/confirmationReceived";
     static const String docInPage = "/docIn";
     static const String reqDocInPage = "/req-docIn";

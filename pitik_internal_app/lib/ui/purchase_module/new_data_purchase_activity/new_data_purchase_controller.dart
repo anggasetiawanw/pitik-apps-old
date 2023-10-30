@@ -81,7 +81,7 @@ class NewDataPurchaseController extends GetxController{
                 spinnerDestination.controller.enable();
                 if(spinnerTypeSource.controller.textSelected.value == "Vendor"){
                     VendorModel? vendorSelected;
-                    vendorSelected = listSourceVendor.value.firstWhere((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
+                    vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
                     if(vendorSelected!.type == AppStrings.INTERNAL){
                         skuCard.controller.invisibleCard();
                         getCategorySkuInternal();
@@ -470,18 +470,18 @@ class NewDataPurchaseController extends GetxController{
         VendorModel? vendorSelected;
         OperationUnitModel? jagalSelected;
         if(spinnerTypeSource.controller.textSelected.value == "Vendor"){
-        vendorSelected = listSourceVendor.value.firstWhere(
+        vendorSelected = listSourceVendor.value.firstWhereOrNull(
                 (element) => element!.vendorName == spinnerSource.controller.textSelected.value);
         }else{
-        jagalSelected = listSourceJagal.value.firstWhere(
+        jagalSelected = listSourceJagal.value.firstWhereOrNull(
                 (element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
         }
         if(vendorSelected?.type == AppStrings.INTERNAL && spinnerTypeSource.controller.textSelected.value == "Vendor"){
             for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
                 int whichItem = skuCardInternal.controller.index.value[i];
-                // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+                // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
                 var listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
-                Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+                Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
                 listProductPayload.add(Products(
                     productItemId: productSelected!.id,
                     quantity: skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
@@ -492,9 +492,9 @@ class NewDataPurchaseController extends GetxController{
         } else {
             for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
-            // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+            // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
             var listProductTemp = skuCard.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
             listProductPayload.add(Products(
                 productItemId: productSelected!.id,
                 quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
@@ -505,7 +505,7 @@ class NewDataPurchaseController extends GetxController{
         }
 
 
-        OperationUnitModel? destinationPurchaseSelected = listDestinationPurchase.value.firstWhere(
+        OperationUnitModel? destinationPurchaseSelected = listDestinationPurchase.value.firstWhereOrNull(
             (element) => element!.operationUnitName == spinnerDestination.controller.textSelected.value,
         );
 
@@ -535,7 +535,7 @@ class NewDataPurchaseController extends GetxController{
         }
         if(spinnerTypeSource.controller.textSelected.value == "Vendor"){
             VendorModel? vendorSelected;
-            vendorSelected = listSourceVendor.value.firstWhere((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
+            vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
             if(vendorSelected!.type == "EXTERNAL"){
                 ret = skuCard.controller.validation();
             } else {

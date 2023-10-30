@@ -22,63 +22,63 @@ class NewDataSalesOrder extends StatelessWidget {
     final NewDataSalesOrderController controller = Get.put(NewDataSalesOrderController(context: context));
 
     Widget appBar() {
-        return AppBar(
-            elevation: 0,
-            leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-            ),
-            shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-            ),
-            backgroundColor: AppColors.primaryOrange,
-            centerTitle: true,
-            title: Text(
-            "Penjualan",
-            style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-            ),
-        );
+      return AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+        ),
+        backgroundColor: AppColors.primaryOrange,
+        centerTitle: true,
+        title: Text(
+          "Penjualan",
+          style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+        ),
+      );
     }
 
     Widget buttonFormPurchase() {
-        return Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-            ),
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                Expanded(
-                    child: ButtonFill(
-                    controller: GetXCreator.putButtonFillController("saveDataSalesOrder"),
-                    label: "Simpan",
-                    onClick: () {
-                        controller.status.value = "DRAFT";
-                        controller.saveOrder();
-                    },
-                    ),
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+          ),
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ButtonFill(
+                  controller: GetXCreator.putButtonFillController("saveDataSalesOrder"),
+                  label: "Simpan",
+                  onClick: () {
+                    controller.status.value = "DRAFT";
+                    controller.saveOrder();
+                  },
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                    child: ButtonOutline(
-                    controller: GetXCreator.putButtonOutlineController("confirmDataSalesOrder"),
-                    label: "Konfirmasi",
-                    onClick: () {
-                        controller.status.value = "CONFIRMED";
-                        _showBottomDialog(context, controller);
-                    },
-                    ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: ButtonOutline(
+                  controller: GetXCreator.putButtonOutlineController("confirmDataSalesOrder"),
+                  label: "Konfirmasi",
+                  onClick: () {
+                    controller.status.value = "CONFIRMED";
+                    _showBottomDialog(context, controller);
+                  },
                 ),
-                ],
-            ),
-            ),
-        );
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     Widget cardSKULB() {
@@ -140,6 +140,7 @@ class NewDataSalesOrder extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            controller.isInbound.isTrue ? controller.spSumber : const SizedBox(),
                             controller.spinnerCustomer,
                             controller.spinnerOrderType,
                             Obx(() => controller.produkType.value == "Non-LB" ? controller.skuCard : cardSKULB()),
@@ -300,7 +301,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                           ],
                                         ),
                                 )),
-                            // controller.efRemartk,
+                            controller.efRemartk,
                             const SizedBox(height: 100)
                           ],
                         ),
@@ -313,66 +314,67 @@ class NewDataSalesOrder extends StatelessWidget {
   }
 
   _showBottomDialog(BuildContext context, NewDataSalesOrderController controller) {
-        return showModalBottomSheet(
-            backgroundColor: Colors.transparent,
-            context: context,
-            builder: (context) {
-            return Container(
-                decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  width: 60,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.outlineColor,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
+                Container(
+                  margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                  child: Text(
+                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                  ),
                 ),
-                child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                    Container(
-                    margin: const EdgeInsets.only(top: 8),
-                    width: 60,
-                    height: 4,
-                    decoration: BoxDecoration(
-                        color: AppColors.outlineColor,
-                        borderRadius: BorderRadius.circular(2),
-                    ),
-                    ),
-                    Container(
-                    margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                    child: Text(
-                        "Apakah kamu yakin data yang dimasukan sudah benar?",
-                        style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
-                    ),
-                    ),
-                    Container(
-                    margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                    child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
-                    ),
-                    Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    child: SvgPicture.asset(
-                        "images/visit_customer.svg",
-                    ),
-                    ),
-                    Container(
-                    margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        Expanded(child: controller.iyaOrderButton),
-                        const SizedBox(
-                            width: 16,
-                        ),
-                        Expanded(child: controller.tidakOrderButton),
-                        ],
-                    ),
-                    ),
-                    const SizedBox(
-                    height: Constant.bottomSheetMargin,
-                    )
-                ],
+                Container(
+                  margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
-            );
-            });
-    }
+                Container(
+                  margin: const EdgeInsets.only(top: 24),
+                  child: SvgPicture.asset(
+                    "images/visit_customer.svg",
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(child: controller.iyaOrderButton),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(child: controller.tidakOrderButton),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: Constant.bottomSheetMargin,
+                )
+              ],
+            ),
+          );
+        });
+  }
 }

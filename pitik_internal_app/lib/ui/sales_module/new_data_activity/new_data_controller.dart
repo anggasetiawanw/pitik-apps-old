@@ -113,7 +113,7 @@ class NewDataController extends GetxController {
         onSpinnerSelected: (text) {
             try {
                 if (province.value.isNotEmpty) {
-                    Location? selectLocation = province.value.firstWhere((element) => element!.provinceName! == text);
+                    Location? selectLocation = province.value.firstWhereOrNull((element) => element!.provinceName! == text);
                     if (selectLocation != null) {
                         getCity(selectLocation);
                     }
@@ -132,7 +132,7 @@ class NewDataController extends GetxController {
         onSpinnerSelected: (text) {
             try {
                 if (city.value.isNotEmpty) {
-                    Location? selectLocation = city.value.firstWhere((element) => element!.cityName! == text);
+                    Location? selectLocation = city.value.firstWhereOrNull((element) => element!.cityName! == text);
                     if (selectLocation != null) {
                         getDistrict(selectLocation);
                     }
@@ -552,25 +552,25 @@ class NewDataController extends GetxController {
         var listProductTemp = skuCard.controller.listProduct.value.values.toList();
         for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
-            CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
+            CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
             Products? selectProduct;
-            selectProduct = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
+            selectProduct = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
             selectProduct?.category = selectCategory;
             selectProduct?.dailyQuantity = skuCard.controller.editFieldJenis.value[whichItem].getInputNumber()!.toInt();
             selectProduct?.price = skuCard.controller.editFieldHarga.value[whichItem].getInputNumber();
             listProductPayload.add(selectProduct);
         }
-        Branch? branchSelected = listBranch.value.firstWhere((element) => element!.name == spBranch.controller.textSelected.value);
+        Branch? branchSelected = listBranch.value.firstWhereOrNull((element) => element!.name == spBranch.controller.textSelected.value);
 
-        Location? provinceSelect = province.value.firstWhere(
+        Location? provinceSelect = province.value.firstWhereOrNull(
             (element) => element!.provinceName == spinnerProvince.controller.textSelected.value,
         );
 
-        Location? citySelect = city.value.firstWhere(
+        Location? citySelect = city.value.firstWhereOrNull(
             (element) => element!.cityName == spinnerKota.controller.textSelected.value,
         );
 
-        Location? districSelect = district.value.firstWhere(
+        Location? districSelect = district.value.firstWhereOrNull(
           (element) => element!.districtName == spinnerKecamatan.controller.textSelected.value,
         );
 

@@ -16,7 +16,7 @@ class CardListTransfer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime created = Convert.getDatetime(transferModel.createdDate!);
-    final DateTime modified = Convert.getDatetime(transferModel.modifiedDate!);
+    // final DateTime modified = Convert.getDatetime(transferModel.modifiedDate!);
     return GestureDetector(
         onTap: onTap,
       child: Container(
@@ -64,12 +64,12 @@ class CardListTransfer extends StatelessWidget {
               children: [
                 Text(
                   "Sumber: ",
-                  style: AppTextStyle.greyTextStyle,
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
                   "${transferModel.sourceOperationUnit!.operationUnitName}",
                   style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                      .copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -80,23 +80,46 @@ class CardListTransfer extends StatelessWidget {
               children: [
                 Text(
                   "SKU: ",
-                  style: AppTextStyle.greyTextStyle,
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
                   " ${transferModel.products!.isNotEmpty ? transferModel.products![0]!.productItems != null ? transferModel.products![0]!.productItems![0]!.name : "null" : "-"}",
                   style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                      .copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
+                )
+              ],
+            ),const SizedBox(
+              height: 6,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Total Ekor: ",
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                ),
+                Text(
+                  "${transferModel.products!.isNotEmpty ? transferModel.products![0]!.productItems != null ? transferModel.products![0]!.productItems![0]!.quantity : "null" : "-"} Ekor",
+                  style: AppTextStyle.blackTextStyle
+                      .copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
+                )
+              ],
+            ),const SizedBox(
+              height: 6,
+            ),
+            Row(
+              children: [
+                Text(
+                  "Dibuat oleh: ",
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                ),
+                Text(
+                  "${transferModel.createdBy}",
+                  style: AppTextStyle.blackTextStyle
+                      .copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              "${transferModel.modifiedBy} - (${modified.day} ${DateFormat.MMM().format(modified)} ${modified.year})",
-              style: AppTextStyle.greyTextStyle
-                  .copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
-            )
+            
           ],
         ),
       ),

@@ -13,7 +13,8 @@ import 'app.dart';
 
 void main() async{
     F.appFlavor = Flavor.PROD;
-    ChuckerFlutter.showOnRelease = false;
+    ChuckerFlutter.showNotification = false;
+    ChuckerFlutter.showOnRelease = true;
     initializeReflectable();
     await initPlatformState();
     Service.setApiMapping(ApiMapping());

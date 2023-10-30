@@ -22,6 +22,10 @@ class Constant {
     static Profile? profileUser;
     static String? xAppId;
     static var isChangeBranch = false.obs;
+    static var isDeveloper = false.obs;
+    static var isShopKepper = false.obs;
+    static var isScRelation = false.obs;
+    static var isOpsLead = false.obs;
     static const double bottomSheetMargin = 24;
 
     static set deviceId(String deviceId) {

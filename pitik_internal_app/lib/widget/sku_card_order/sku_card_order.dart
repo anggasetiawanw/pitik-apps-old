@@ -111,6 +111,7 @@ class SkuCardOrder extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

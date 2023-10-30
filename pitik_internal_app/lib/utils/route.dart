@@ -16,6 +16,7 @@ import 'package:pitik_internal_app/ui/home/dashboard_activity/dashboard_controll
 import 'package:pitik_internal_app/ui/home/profile_activity/about_us_screen.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/change_branch/change_branch.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/change_branch/change_branch_controller.dart';
+import 'package:pitik_internal_app/ui/home/profile_activity/developer/developer_activity.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/help_screen.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/license_screen.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/privacy_screen.dart';
@@ -81,18 +82,26 @@ import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/deta
 import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/detail_sales_order_controller.dart';
 import 'package:pitik_internal_app/ui/splash_activity/splash_activity.dart';
 import 'package:pitik_internal_app/ui/splash_activity/splash_controller.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_controller.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_activity.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_controller.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_rejected_activity/stock_rejected.dart';
+import 'package:pitik_internal_app/ui/stock_module/stock_rejected_activity/stock_rejected_controller.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_approve_activity/terminate_approve_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_form_acitivty/terminate_form_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_form_acitivty/terminate_form_controller.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_home_activity/terminate_home_activity.dart';
 import 'package:pitik_internal_app/ui/terminate_module/terminate_home_activity/terminate_home_controller.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_rejected_activity/terminate_rejected.dart';
+import 'package:pitik_internal_app/ui/terminate_module/terminate_rejected_activity/terminate_rejected_controller.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_detail_activity/transfer_detail_activity.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_detail_activity/transfer_detail_controller.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_driver_activity/transfer_driver_activity.dart';
@@ -113,6 +122,7 @@ class RoutePage {
     static const String aboutUsPage ="/about-us";
     static const String helpPage ="/help";
     static const String changeBranch ="/changeBranch";
+    static const String developer ="/developer";
 
     //Sales Module
     static const String homePageCustomer = "/homeCustomer";
@@ -164,6 +174,8 @@ class RoutePage {
     static const String stockOpname = "/stock-opname";
     static const String stockDetail = "/stock-detail";
     static const String stockEdit = "/stock-edit";
+    static const String stockApproval = "/stock-Approval";
+    static const String stockRejected = "/stock-Rejected";
 
     //Transfer Module
     static const String homeTransfer = "/transfer-home";
@@ -176,6 +188,8 @@ class RoutePage {
     static const String terminateForm = "/terminate-form";
     static const String terminateDetail = "/terminate-detail";
     static const String terminateEdit = "/terminate-edit";
+    static const String terminateApprove = "/terminate-Approve";
+    static const String terminateRejected = "/terminate-Rejected";
 
     //Manufacture Module
     static const String homeManufacture = "/manufacture-home";
@@ -199,6 +213,7 @@ class AppRoutes {
         GetPage(name: RoutePage.newDataCustomer,page: () => const NewData(),bindings: [ NewDataBindings(context: Constant.getContext()),],),
         GetPage(name: RoutePage.visitCustomer,page: () => const VisitActivity(),binding: VisitBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.editCustomer,page: () => const EditData(),binding: EditDataBindings(context: Constant.getContext()),),
+        GetPage(name: RoutePage.developer,page: () => const DeveloperActivity()),
 
         //Purchase Module
         GetPage(name: RoutePage.newDataPurchase,page: () => const NewDataPurchase(),bindings: [ NewDataPurchaseBindings(context: Constant.getContext()),],),
@@ -244,6 +259,9 @@ class AppRoutes {
         GetPage(name: RoutePage.homeStock, page: ()=>const StockHomeActivity(), binding: StockHomeBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockOpname, page: ()=>const StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockDetail, page: ()=>const StockDetailActivity(),binding: StockDetailBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.stockApproval, page: ()=>const StockApprovalActivity(),binding: StockApprovalBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.stockRejected, page: ()=>const StockRejectedActivity(),binding: StockRejectedBindings(context: Constant.getContext())),
+
 
         //Transfer Module
         GetPage(name: RoutePage.homeTransfer, page: ()=>const TransferHomeActivity(), binding: TransferHomeBindings(context: Constant.getContext())),
@@ -255,6 +273,8 @@ class AppRoutes {
         GetPage(name: RoutePage.homeTerminate, page: ()=>const TerminateHomeAcitivity(),binding: TerminateHomeBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.terminateForm, page: ()=>const TerminateFormActivity(), binding: TerminateFormBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.terminateDetail, page: ()=>const TerminateDetailActivity(), binding: TerminateDetailBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.terminateApprove, page: ()=>const TerminateApproveActivity(), binding: TerminateApproveBindings(context: Constant.getContext())),
+        GetPage(name: RoutePage.terminateRejected, page: ()=>const TerminateRejectedActivity(), binding: TerminateRejectedBindings(context: Constant.getContext())),
 
         //Manufacture Module
         GetPage(name: RoutePage.homeManufacture, page: ()=> const ManufactureHomeActivity(), binding: ManufactureHomeBindings(context: Constant.getContext())),

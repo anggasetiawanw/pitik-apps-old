@@ -78,11 +78,11 @@ class SpinnerField extends StatelessWidget {
                 key: controller.formKey,
                 padding: EdgeInsets.only(top: controller.hideLabel.isFalse ? 16 : 0),
                 child: Column(
-                    children: <Widget>[
+                    children: [
                         controller.hideLabel.isFalse ? labelField : const SizedBox(),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
+                            children: [
                                 Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
@@ -96,13 +96,17 @@ class SpinnerField extends StatelessWidget {
                                             width: 2
                                         )
                                     ),
-                                    child: controller.items.value.isNotEmpty ? 
+                                    child: controller.items.isNotEmpty ?
                                     createDropdown() :
                                     GestureDetector(
-                                        onTap: () => Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
-                                                        duration: const Duration(seconds: 5),
-                                                        colorText: Colors.white,
-                                                        backgroundColor: Colors.red),
+                                        onTap: () {
+                                            if(controller.activeField.isTrue) {
+                                            Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
+                                                duration: const Duration(seconds: 5),
+                                                colorText: Colors.white,
+                                                backgroundColor: Colors.red);
+                                            }
+                                        },
                                         child: createDropdown()
                                     )
                                 ),
@@ -159,7 +163,7 @@ class SpinnerField extends StatelessWidget {
                         alignment: Alignment.center,
                         child : Row(
                             children: [
-                                controller.isloading.isTrue ?
+                                controller.isLoading.isTrue ?
                                 Container(
                                     margin: const EdgeInsets.only(right: 16),
                                     child: const SizedBox(
@@ -181,20 +185,20 @@ class SpinnerField extends StatelessWidget {
                     }
                     controller.isShowList.value = isOpen;
                 },
-                items: controller.items.value.isNotEmpty? renderItems() : <DropdownMenuItem<String>>[],
+                items: controller.items.isNotEmpty? renderItems() : <DropdownMenuItem<String>>[],
                 underline: Container(),
                 hint: Text(
                     controller.textSelected.value == "" ? hint : controller.textSelected.value,
                     style: TextStyle(color: controller.textSelected.value == "" ? const Color(0xFF9E9D9D) : GlobalVar.black, fontSize: 14)
                 ),
                 onChanged: controller.activeField.isTrue ? (String? newValue) {
-                    controller.items.value.forEach((key, value) {
+                    controller.items.forEach((key, value) {
                         if (key == newValue) {
-                            controller.items.value[key] = true;
+                            controller.items[key] = true;
                             controller.textSelected.value = key;
 
                             int index = 0;
-                            controller.items.value.forEach((label, value) {
+                            controller.items.forEach((label, value) {
                                 if (key == label) {
                                     controller.selectedIndex = index;
 
@@ -210,7 +214,7 @@ class SpinnerField extends StatelessWidget {
                             controller.showTooltip.value = false;
                             controller.isShowList.value = false;
                         } else {
-                            controller.items.value[key] = false;
+                            controller.items[key] = false;
                         }
                     });
                 } : null,
@@ -221,14 +225,14 @@ class SpinnerField extends StatelessWidget {
     List<DropdownMenuItem<String>> renderItems() {
         List<DropdownMenuItem<String>> result = [];
 
-        controller.items.value.forEach((key, value) {
+        controller.items.forEach((key, value) {
             result.add(
                 DropdownMenuItem(
                     value: key,
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                            controller.items.value[key] == true ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
+                            controller.items[key] == true ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                             const SizedBox(width: 8),
                             isDetail ? Center(
                                 child: Container(

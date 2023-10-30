@@ -205,10 +205,7 @@ class CoopDashboardController extends GetxController {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
-                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () {  // DAILY REPORT
-                                                Get.toNamed(RoutePage.dailyReport, arguments: coop); 
-                                                // TO Daily Report
-                                            }),
+                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
                                             _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () {  // HARVEST
                                                 // TO Harvest
                                             }),
@@ -243,9 +240,7 @@ class CoopDashboardController extends GetxController {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
-                                            _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () {  // TRANSFER
-                                                // TO TRANSFER
-                                            }),
+                                            _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () => Get.toNamed(RoutePage.listTransferPage, arguments: coop)),
                                             const SizedBox(width: 60)
                                         ],
                                     ),

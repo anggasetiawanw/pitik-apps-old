@@ -89,7 +89,7 @@ class StockOpnameActivity extends StatelessWidget {
                         children: [
                               controller.sourceStock,
                               if(controller.listStockField.value.isNotEmpty)  ...controller.listStockField.value,
-                              if(controller.listStockTwoField.value.isNotEmpty)...controller.listStockTwoField.value,
+                              controller.efTotal,
                               const SizedBox(height: 100,)
                         ],
                     ),
@@ -104,6 +104,7 @@ class StockOpnameActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

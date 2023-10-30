@@ -57,8 +57,8 @@ class SalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("btPenjualan"),
       label: "Buat Penjualan",
       onClick: () {
-        backFromForm(false);
-        // _showBottomDialog();
+        // backFromForm(false);
+        _showBottomDialog();
       });
 
   DateTimeField dtTanggalPenjualan = DateTimeField(
@@ -82,7 +82,7 @@ class SalesOrderController extends GetxController {
         spCity.controller.setTextSelected("");
         spCity.controller.disable();
         if (province.value.isNotEmpty) {
-          Location? selectLocation = province.value.firstWhere((element) => element!.provinceName! == value);
+          Location? selectLocation = province.value.firstWhereOrNull((element) => element!.provinceName! == value);
           if (selectLocation != null) {
             getCity(selectLocation);
           }
@@ -150,7 +150,7 @@ class SalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOrders,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY","ALLOCATED"],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as SalesOrderListResponse).data.isNotEmpty) {
@@ -236,21 +236,21 @@ class SalesOrderController extends GetxController {
       Location? provinceSelect;
 
       if (spProvince.controller.textSelected.value.isNotEmpty) {
-        provinceSelect = province.value.firstWhere(
+        provinceSelect = province.value.firstWhereOrNull(
           (element) => element!.provinceName == spProvince.controller.textSelected.value,
         );
       }
 
       Location? citySelect;
       if (spCity.controller.textSelected.value.isNotEmpty) {
-        citySelect = city.value.firstWhere(
+        citySelect = city.value.firstWhereOrNull(
           (element) => element!.cityName == spCity.controller.textSelected.value,
         );
       }
 
       SalesPerson? salesSelect;
       if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        salesSelect = listSalesperson.value.firstWhere(
+        salesSelect = listSalesperson.value.firstWhereOrNull(
           (element) => element!.email == spCreatedBy.controller.textSelected.value,
         );
       }

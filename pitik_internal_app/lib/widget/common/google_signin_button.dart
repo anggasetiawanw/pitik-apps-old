@@ -30,7 +30,7 @@ class GoogleSignInButton extends StatelessWidget {
                     ),
                 ),
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    margin: const EdgeInsets.symmetric(vertical: 12),
                     child: Row(
                         children: [
                             SvgPicture.asset('images/google_icon.svg', width: 64, height: 64),

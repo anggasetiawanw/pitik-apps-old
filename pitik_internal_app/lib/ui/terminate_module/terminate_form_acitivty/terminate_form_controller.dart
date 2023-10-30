@@ -39,7 +39,7 @@ class TerminateFormController extends GetxController {
     });
    
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
-            sourceSelect = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
+            sourceSelect = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
             if(sourceSelect != null){
                 Map<String, bool> mapList ={};
                 for (var element in sourceSelect!.purchasableProducts!) {
@@ -53,12 +53,12 @@ class TerminateFormController extends GetxController {
     late SpinnerField categorySKUField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("categorySKU"), label: "Kategori SKU*", hint: "Pilih salah satu", alertText: "Kategori SKU harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if(sourceSelect != null ){
             totalField.controller.enable();
-            Products? products = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name! == value);
+            Products? products = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name! == value);
             if(products != null){
                 Map<String, bool> mapList ={};
                 for (var element in products.productItems!) { mapList[element!.name!] = false;}
                 skuField.controller.generateItems(mapList);
-                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD){
+                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD || value == AppStrings.KARKAS){
                     amountField.controller.enable();
                     skuField.controller.setTextSelected("");
                     skuField.controller.enable();
@@ -153,7 +153,7 @@ class TerminateFormController extends GetxController {
             sourceField.controller.textSelected.value = terminateModel!.operationUnit!.operationUnitName!;
             categorySKUField.controller.enable();
             categorySKUField.controller.textSelected.value = terminateModel!.product!.name!;
-            if (terminateModel!.product!.name! == AppStrings.AYAM_UTUH || terminateModel!.product!.name! == AppStrings.BRANGKAS || terminateModel!.product!.name! == AppStrings.LIVE_BIRD) {
+            if (terminateModel!.product!.name! == AppStrings.AYAM_UTUH || terminateModel!.product!.name! == AppStrings.BRANGKAS || terminateModel!.product!.name! == AppStrings.LIVE_BIRD|| terminateModel!.product!.name! == AppStrings.KARKAS) {
                 amountField.controller.enable();
                 amountField.setInput(terminateModel!.product!.productItem!.quantity.toString());
             }
@@ -189,7 +189,7 @@ class TerminateFormController extends GetxController {
                         ..generateItems(mapList);
                     });
                     if(isEdit.isTrue){
-                        sourceSelect = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == terminateModel!.operationUnit!.operationUnitName!);
+                        sourceSelect = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == terminateModel!.operationUnit!.operationUnitName!);
                         if(sourceSelect != null){
                             Map<String, bool> mapList ={};
                             for (var element in sourceSelect!.purchasableProducts!) {
@@ -350,9 +350,9 @@ class TerminateFormController extends GetxController {
     }
 
     TerminateModel generatePayload(String status){
-        OperationUnitModel? selectSource = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
-         Products? selectProduct = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name == categorySKUField.controller.textSelected.value,);
-        Products? selectItem = selectProduct!.productItems!.firstWhere((element) => element!.name == skuField.controller.textSelected.value);
+        OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
+         Products? selectProduct = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name == categorySKUField.controller.textSelected.value,);
+        Products? selectItem = selectProduct!.productItems!.firstWhereOrNull((element) => element!.name == skuField.controller.textSelected.value);
         return TerminateModel(
             operationUnitId: selectSource!.id,
             status: status,

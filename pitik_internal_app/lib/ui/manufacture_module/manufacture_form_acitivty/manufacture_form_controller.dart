@@ -35,14 +35,14 @@ class ManufactureFromController extends GetxController {
    
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if (listOperationUnits.value.isNotEmpty) {
-            OperationUnitModel? selectUnit = listOperationUnits.value.firstWhere((element) => element!.operationUnitName! == value);
+            OperationUnitModel? selectUnit = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName! == value);
             if (selectUnit != null) {
                 getCategorySKU(selectUnit.id!);
             }
         }
     });
     late SpinnerField categorySKUField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("categorySKU"), label: "Kategori SKU*", hint: "Pilih salah satu", alertText: "Kategori SKU harus dipilih!",isDetail: true, items: const {}, onSpinnerSelected: (value){
-         categorySelect = listSkuStock.value.firstWhere((element) => element!.productCategoryName! == value);
+         categorySelect = listSkuStock.value.firstWhereOrNull((element) => element!.productCategoryName! == value);
         if(categorySelect != null){
             Map<String, bool> mapList = {};
             Map<String, int> mapListAmount = {};
@@ -243,8 +243,8 @@ class ManufactureFromController extends GetxController {
     }
 
     ManufactureModel generatePayload(String status){
-        OperationUnitModel? selectSource = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == sourceField.controller.textSelected.value,);
-        StockModel? selectStock = categorySelect!.productItems!.firstWhere((element) => element!.name == skuField.controller.textSelected.value,);
+        OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value,);
+        StockModel? selectStock = categorySelect!.productItems!.firstWhereOrNull((element) => element!.name == skuField.controller.textSelected.value,);
         return ManufactureModel(
             operationUnitId: selectSource!.id,
             status: status,
