@@ -18,7 +18,7 @@ class CardListTerminate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime created = Convert.getDatetime(terminateModel.createdDate!);
-    final DateTime modified = Convert.getDatetime(terminateModel.modifiedDate!);
+    // final DateTime modified = Convert.getDatetime(terminateModel.modifiedDate!);
     return GestureDetector(
       onTap: onTap,
       child: Container(

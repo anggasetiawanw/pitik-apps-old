@@ -247,13 +247,8 @@ class NewDataSalesOrderController extends GetxController {
   }
 
   void refreshtotalPurchase() {
-    // Mendapatkan produk yang dipilih dari listProduct
-    Products? selectProduct = listProduct.value.firstWhere(
-      (element) => element!.name! == spinnerSku.controller.textSelected.value,
-      orElse: () => null, // Menggunakan orElse untuk mengatasi jika elemen tidak ditemukan
-    );
+    Products? selectProduct = listProduct.value.firstWhereOrNull((element) => element!.name! == spinnerSku.controller.textSelected.value);
 
-    // Jika produk ditemukan, lakukan perhitungan
     if (selectProduct != null) {
       double jumlahAyam = editFieldJumlahAyam.getInputNumber() ?? 0;
       double harga = editFieldHarga.getInputNumber() ?? 0;
@@ -537,12 +532,12 @@ class NewDataSalesOrderController extends GetxController {
     OperationUnitModel? sourceSelected;
     Customer? customerSelected;
     if (spinnerCustomer.controller.textSelected.value.isNotEmpty) {
-      customerSelected = listCustomer.value.firstWhere(
+      customerSelected = listCustomer.value.firstWhereOrNull(
         (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
       );
     }
     if (spSumber.controller.textSelected.value.isNotEmpty && isInbound.isTrue) {
-      sourceSelected = listSource.value.firstWhere((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
+      sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
     }
 
     return Order(
@@ -563,12 +558,11 @@ class NewDataSalesOrderController extends GetxController {
     for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
       int whichItem = skuCard.controller.index.value[i];
       var listProductTemp = skuCard.controller.listSku.value.values.toList();
-      Products? productSelected = listProductTemp[whichItem].firstWhere(
+      Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
         (element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value,
-        orElse: () => null,
       );
 
-      if (productSelected != null) {
+      if (productSelected!.id != null) {
         productList.add(Products(
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
@@ -584,10 +578,7 @@ class NewDataSalesOrderController extends GetxController {
 
   List<Products?> _generateLbProductList() {
     List<Products?> lbProductList = [];
-    Products? produkSkuSelected = listProduct.value.firstWhere(
-      (element) => element!.name == spinnerSku.controller.textSelected.value,
-      orElse: () => null,
-    );
+    Products? produkSkuSelected = listProduct.value.firstWhereOrNull((element) => element!.name == spinnerSku.controller.textSelected.value);
 
     if (produkSkuSelected != null) {
       lbProductList.add(Products(
@@ -607,18 +598,17 @@ class NewDataSalesOrderController extends GetxController {
 
     for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
       int whichItem = skuCardRemark.controller.index.value[i];
-      var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
-      Products? productSelected = listProductTemp[whichItem].firstWhere(
-        (element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value,
-        orElse: () => null,
+      CategoryModel? productSelected = listCategoriesRemark.value.firstWhereOrNull(
+        (element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[whichItem].controller.textSelected.value,
       );
 
       if (productSelected != null) {
         remarkProductList.add(Products(
           productItemId: productSelected.id,
-          quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
-          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
+          quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
+          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value,
+          weight: null,
         ));
       }
     }

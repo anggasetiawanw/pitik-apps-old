@@ -38,7 +38,7 @@ class TransferFormController extends GetxController {
     });
    
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
-        sourceSelect = listSourceOperationUnits.value.firstWhere((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
+        sourceSelect = listSourceOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
         if(sourceSelect != null){
             Map<String, bool> mapList ={};
             for (var element in sourceSelect!.purchasableProducts!) {
@@ -55,12 +55,12 @@ class TransferFormController extends GetxController {
     late SpinnerField categorySKUField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("categorySKU"), label: "Kategori SKU*", hint: "Pilih salah satu", alertText: "Kategori SKU harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if(sourceSelect != null ){
             totalField.controller.enable();
-            Products? products = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name! == value);
+            Products? products = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name! == value);
             if(products != null){
                 Map<String, bool> mapList ={};
                 for (var element in products.productItems!) { mapList[element!.name!] = false;}
                 skuField.controller.generateItems(mapList);
-                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD){
+                if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD  || value == AppStrings.KARKAS){
                     amountField.controller.enable();
                     skuField.controller.setTextSelected("");
                     skuField.controller.enable();
@@ -121,7 +121,7 @@ class TransferFormController extends GetxController {
             destinationField.controller.textSelected.value = transferModel!.targetOperationUnit!.operationUnitName!;
             destinationField.controller.enable();
             categorySKUField.controller.textSelected.value = transferModel!.products !=null ? transferModel!.products![0]!.name ?? "" :"";
-            if( categorySKUField.controller.textSelected.value == AppStrings.AYAM_UTUH || categorySKUField.controller.textSelected.value == AppStrings.BRANGKAS|| categorySKUField.controller.textSelected.value == AppStrings.LIVE_BIRD){
+            if( categorySKUField.controller.textSelected.value == AppStrings.AYAM_UTUH || categorySKUField.controller.textSelected.value == AppStrings.BRANGKAS|| categorySKUField.controller.textSelected.value == AppStrings.LIVE_BIRD|| categorySKUField.controller.textSelected.value == AppStrings.KARKAS){
                 amountField.controller.enable();
                 amountField.setInput(transferModel!.products![0]!.productItems![0]!.quantity!.toString());
             }
@@ -161,7 +161,7 @@ class TransferFormController extends GetxController {
                     });
 
                     if(isEdit.isTrue){
-                        sourceSelect = listSourceOperationUnits.value.firstWhere((element) => element!.operationUnitName == transferModel!.sourceOperationUnit!.operationUnitName!);
+                        sourceSelect = listSourceOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == transferModel!.sourceOperationUnit!.operationUnitName!);
                         if(sourceSelect != null){
                             skuField.controller.showLoading();
                             Map<String, bool> mapList ={};
@@ -174,7 +174,7 @@ class TransferFormController extends GetxController {
                                 categorySKUField.controller.enable();
                                 refresh();
                             });
-                            Products? products = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name! == transferModel!.products![0]!.name);
+                            Products? products = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name! == transferModel!.products![0]!.name);
                             Timer(const Duration(milliseconds: 500), () { 
                                 Map<String, bool> mapList2 ={};
                                 for (var element in products!.productItems!) { mapList2[element!.name!] = false;}
@@ -342,17 +342,17 @@ class TransferFormController extends GetxController {
     }
 
     TransferModel generatePayload(String status){
-        OperationUnitModel? selectSource = listSourceOperationUnits.value.firstWhere((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
-        OperationUnitModel? selectDestination = listDestinationOperationUnits.value.firstWhere((element) => element!.operationUnitName == destinationField.controller.textSelected.value);
-        Products? selectProduct = sourceSelect!.purchasableProducts!.firstWhere((element) => element!.name == categorySKUField.controller.textSelected.value,);
-        Products? selectItem = selectProduct!.productItems!.firstWhere((element) => element!.name == skuField.controller.textSelected.value);
+        OperationUnitModel? selectSource = listSourceOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
+        OperationUnitModel? selectDestination = listDestinationOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == destinationField.controller.textSelected.value);
+        Products? selectProduct = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name == categorySKUField.controller.textSelected.value,);
+        Products? selectItem = selectProduct!.productItems!.firstWhereOrNull((element) => element!.name == skuField.controller.textSelected.value);
         return TransferModel(
             sourceOperationUnitId: selectSource!.id,
             targetOperationUnitId: selectDestination!.id,
             status: status,
             products: [Products(
                 productItemId: selectItem!.id,
-                quantity: selectProduct.name == AppStrings.AYAM_UTUH || selectProduct.name == AppStrings.BRANGKAS || selectProduct.name == AppStrings.LIVE_BIRD ? amountField.getInputNumber()!.toInt() : null,
+                quantity: selectProduct.name == AppStrings.AYAM_UTUH || selectProduct.name == AppStrings.BRANGKAS || selectProduct.name == AppStrings.LIVE_BIRD || selectProduct.name == AppStrings.KARKAS? amountField.getInputNumber()!.toInt() : null,
                 weight:  totalField.getInputNumber()
             )]
         );

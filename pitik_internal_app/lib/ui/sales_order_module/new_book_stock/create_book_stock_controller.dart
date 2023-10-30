@@ -203,7 +203,7 @@ class CreateBookStockController extends GetxController {
   }
 
   void updateBookStock() {
-    OperationUnitModel? sourceSelected = listSource.value.firstWhere((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value, orElse: () => OperationUnitModel());
+    OperationUnitModel? sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
 
     if (isAllocated.isFalse) {
       List<Products?> products = [];

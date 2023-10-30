@@ -100,7 +100,7 @@ class StockApprovalActivity extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                StockStatus(stockStatus: "${controller.opnameModel.status}"),
+                StockStatus(stockStatus: "${controller.opnameModel.status}", isApprove: controller.opnameModel.reviewer != null ? true :false,),
               ],
             ),
             const SizedBox(

@@ -47,7 +47,7 @@ class StockHomeController extends GetxController {
     Products? selectCategory;
     late SpinnerField  sourceLatestStock = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceLatestStock"), label: "Sumber*", hint: "Pilih Salah Satu", alertText: "Sumber Harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if(listOperationUnits.value.isNotEmpty){
-                OperationUnitModel? selectSource = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == value);
+                OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
                 if(selectSource != null){
                     // isLoadingStock.value = true;
                     // pieData.value.clear();
@@ -65,7 +65,7 @@ class StockHomeController extends GetxController {
 
     late SpinnerField categoryStock = SpinnerField(controller: GetXCreator.putSpinnerFieldController("catStockOpname"), label: "Kategori SKU*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if(sourceStock != null){
-             selectCategory = sourceStock!.purchasableProducts!.firstWhere((element) => element!.name == value);
+             selectCategory = sourceStock!.purchasableProducts!.firstWhereOrNull((element) => element!.name == value);
             chartData.value.clear();
             getLatestStock(sourceStock!.id!, selectCategory!.id!);
         }
@@ -73,7 +73,7 @@ class StockHomeController extends GetxController {
     
     late SpinnerField sourceOpname = SpinnerField(controller: GetXCreator.putSpinnerFieldController("souceOpname"), label: "Sumber*", hint: "Pilih Salah Satu", alertText: "Sumber Harus Di pilih", items: const {}, onSpinnerSelected: (value){
         if(listOperationUnits.value.isNotEmpty){
-            selectSourceOpname = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == value);
+            selectSourceOpname = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
             if(selectSourceOpname != null){
                 isLoadingOpname.value = true;
                 listOpname.value.clear();
@@ -212,6 +212,7 @@ class StockHomeController extends GetxController {
                     isLoadingOpname.value = false;
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
+                    print(stacktrace);
                     Get.snackbar(
                         "Pesan",
                         "Terjadi kesalahan internal",

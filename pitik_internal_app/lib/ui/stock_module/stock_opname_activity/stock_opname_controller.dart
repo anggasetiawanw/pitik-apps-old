@@ -40,7 +40,7 @@ class StockOpnameController extends GetxController {
       items: const {},
       onSpinnerSelected: (value) {
         if (listOperationUnits.value.isNotEmpty) {
-          OperationUnitModel? selectSource = listOperationUnits.value.firstWhere((element) => element!.operationUnitName == value);
+          OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
           if (selectSource != null) {
             efTotal.controller.visibleField();
             showWidget(selectSource.purchasableProducts!, false);
@@ -348,13 +348,13 @@ class StockOpnameController extends GetxController {
 
   OpnameModel generatePayload(String status) {
     List<Products?> products = [];
-    OperationUnitModel? selectSource = listOperationUnits.value.firstWhere(
+    OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull(
       (element) => element!.operationUnitName == sourceStock.controller.textSelected.value,
     );
     for (var stock in listStockField.value) {
-      Products? purchaseProduct = selectSource!.purchasableProducts!.firstWhere((element) => element!.name == stock.title);
+      Products? purchaseProduct = selectSource!.purchasableProducts!.firstWhereOrNull((element) => element!.name == stock.title);
       for (var item in stock.controller.efSku.value) {
-        Products? productItem = purchaseProduct!.productItems!.firstWhere((element) => element!.name == item.controller.tag);
+        Products? productItem = purchaseProduct!.productItems!.firstWhereOrNull((element) => element!.name == item.controller.tag);
         products.add(Products(productItemId: productItem!.id, quantity: (item.getInputNumber() ?? 0).toInt(), weight: item.getInputNumber() ?? 0));
       }
     }

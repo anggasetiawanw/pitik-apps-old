@@ -16,6 +16,8 @@ class OpnameModel {
   String? reviewerId;
   double? totalWeight;
   int? totalQuantity;
+  double? previousWeight;
+  int? previousQuantity;
   @IsChild()
   SalesPerson? reviewer;
 
@@ -43,11 +45,16 @@ class OpnameModel {
     this.totalQuantity,
     this.reviewerId,
     this.reviewer,
+    this.previousWeight,
+    this.previousQuantity,
   });
 
   static OpnameModel toResponseModel(Map<String, dynamic> map) {
     if (map['totalWeight'] is int) {
       map['totalWeight'] = map['totalWeight'].toDouble();
+    }
+    if (map['previousWeight'] is int) {
+      map['previousWeight'] = map['previousWeight'].toDouble();
     }
     return OpnameModel(
       id: map['id'],
@@ -65,6 +72,8 @@ class OpnameModel {
       totalQuantity: map['totalQuantity'],
       reviewerId: map['reviewerId'],
       reviewer: Mapper.child<SalesPerson>(map['reviewer']),
+      previousWeight: map['previousWeight'],
+      previousQuantity: map['previousQuantity'],
     );
   }
 }

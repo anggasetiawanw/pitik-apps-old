@@ -216,6 +216,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                             });
                                                         });
                                                     },
+                                                    isApprove: controller.listOpname.value[index]!.reviewer != null ? true :false,
                                                 ) : const SizedBox(),
                                                   index == controller.listOpname.value.length - 1 ? const SizedBox(height: 120): const SizedBox(),
                                               ],

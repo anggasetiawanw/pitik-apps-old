@@ -31,7 +31,7 @@ class AppleSignInButton extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
                 child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    margin: const EdgeInsets.symmetric( vertical: 12),
                     child: Row(
                         children: [
                             SvgPicture.asset('images/apple_logo.svg', width: 64, height: 64),

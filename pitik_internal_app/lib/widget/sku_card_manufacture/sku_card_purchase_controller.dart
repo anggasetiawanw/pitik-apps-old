@@ -62,7 +62,7 @@ class SkuCardManufactureController extends GetxController{
             items: const {},
             onSpinnerSelected: (value) {
                 if (listCategories.value.isNotEmpty) {
-                    CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == value); 
+                    CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value); 
                     getSku(selectCategory!, numberList);
                     if (value == AppStrings.LIVE_BIRD ||
                         value == AppStrings.AYAM_UTUH ||

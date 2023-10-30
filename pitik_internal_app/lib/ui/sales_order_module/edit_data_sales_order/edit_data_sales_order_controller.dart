@@ -239,7 +239,7 @@ class EditDataSalesOrderController extends GetxController {
   }
 
   refreshtotalPurchase() {
-    Products? selectProduct = listProduct.value.firstWhere((element) => element!.name! == spinnerSku.controller.textSelected.value);
+    Products? selectProduct = listProduct.value.firstWhereOrNull((element) => element!.name! == spinnerSku.controller.textSelected.value);
     double minValue = selectProduct!.minValue! * (editFieldJumlahAyam.getInputNumber() ?? 0);
     double maxValue = selectProduct.maxValue! * (editFieldJumlahAyam.getInputNumber() ?? 0);
     sumNeededMin.value = minValue;
@@ -275,32 +275,32 @@ class EditDataSalesOrderController extends GetxController {
             listSkuRemark[product!.name!] = false;
           }
 
-          for (int j = 0; j < orderDetail.productNotes!.length; j++) {
-            skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.category!.name!);
-            skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
-            skuCardRemark.controller.spinnerSku.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
-            skuCardRemark.controller.editFieldKebutuhan.value[j].setInput(orderDetail.productNotes![j]!.weight!.toString());
+          //   for (int j = 0; j < orderDetail.productNotes!.length; j++) {
+          //     skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.category!.name!);
+          //     skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
+          //     skuCardRemark.controller.spinnerSku.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
+          //     skuCardRemark.controller.editFieldKebutuhan.value[j].setInput(orderDetail.productNotes![j]!.weight!.toString());
 
-            skuCardRemark.controller.listSku.value[j] = orderDetail.productNotes!;
-            skuCardRemark.controller.mapSumNeeded[j] = skuCardRemark.controller.editFieldKebutuhan.value[j].getInputNumber()!;
+          //     skuCardRemark.controller.listSku.value[j] = orderDetail.productNotes!;
+          //     skuCardRemark.controller.mapSumNeeded[j] = skuCardRemark.controller.editFieldKebutuhan.value[j].getInputNumber()!;
 
-            Timer(const Duration(milliseconds: 500), () {
-              CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value);
-              skuCardRemark.controller.getLoadSku(selectCategory!, j);
-              if (skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD) {
-                skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
-                skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
-                skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.enable();
-                skuCardRemark.controller.editFieldPotongan.value[j].controller.enable();
+          //     Timer(const Duration(milliseconds: 500), () {
+          //       CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value);
+          //       skuCardRemark.controller.getLoadSku(selectCategory!, j);
+          //       if (skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD) {
+          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
+          //         skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
+          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.enable();
+          //         skuCardRemark.controller.editFieldPotongan.value[j].controller.enable();
 
-                skuCardRemark.controller.mapSumChick[j] = skuCardRemark.controller.editFieldJumlahAyam.value[j].getInputNumber()!;
-              } else {
-                skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.disable();
-                skuCardRemark.controller.editFieldPotongan.value[j].controller.disable();
-              }
-              skuCardRemark.controller.editFieldKebutuhan.value[j].controller.enable();
-            });
-          }
+          //         skuCardRemark.controller.mapSumChick[j] = skuCardRemark.controller.editFieldJumlahAyam.value[j].getInputNumber()!;
+          //       } else {
+          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.disable();
+          //         skuCardRemark.controller.editFieldPotongan.value[j].controller.disable();
+          //       }
+          //       skuCardRemark.controller.editFieldKebutuhan.value[j].controller.enable();
+          //     });
+          //   }
 
           for (int j = 0; j < orderDetail.products!.length; j++) {
             listProduct.value.add(orderDetail.products![j]);
@@ -342,7 +342,7 @@ class EditDataSalesOrderController extends GetxController {
             skuCard.controller.mapSumTotalPrice[j] = skuCard.controller.mapSumPrice[j]! * skuCard.controller.mapSumNeeded[j]!;
 
             Timer(const Duration(milliseconds: 500), () {
-              CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerCategories.value[j].controller.textSelected.value);
+              CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerCategories.value[j].controller.textSelected.value);
               skuCard.controller.getLoadSku(selectCategory!, j);
               if (skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.KARKAS) {
                 skuCard.controller.editFieldJumlahAyam.value[j].controller.enable();
@@ -612,12 +612,12 @@ class EditDataSalesOrderController extends GetxController {
     OperationUnitModel? sourceSelected;
     Customer? customerSelected;
     if (spinnerCustomer.controller.textSelected.value.isNotEmpty) {
-      customerSelected = listCustomer.value.firstWhere(
+      customerSelected = listCustomer.value.firstWhereOrNull(
         (element) => element!.businessName == spinnerCustomer.controller.textSelected.value,
       );
     }
     if (spSumber.controller.textSelected.value.isNotEmpty && isInbound.isTrue) {
-      sourceSelected = listSource.value.firstWhere((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
+      sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
     }
 
     return Order(
@@ -638,10 +638,7 @@ class EditDataSalesOrderController extends GetxController {
     for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
       int whichItem = skuCard.controller.index.value[i];
       var listProductTemp = skuCard.controller.listSku.value.values.toList();
-      Products? productSelected = listProductTemp[whichItem].firstWhere(
-        (element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value,
-        orElse: () => null,
-      );
+      Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
 
       if (productSelected != null) {
         productList.add(Products(
@@ -659,10 +656,7 @@ class EditDataSalesOrderController extends GetxController {
 
   List<Products?> _generateLbProductList() {
     List<Products?> lbProductList = [];
-    Products? produkSkuSelected = listProduct.value.firstWhere(
-      (element) => element!.name == spinnerSku.controller.textSelected.value,
-      orElse: () => null,
-    );
+    Products? produkSkuSelected = listProduct.value.firstWhereOrNull((element) => element!.name == spinnerSku.controller.textSelected.value);
 
     if (produkSkuSelected != null) {
       lbProductList.add(Products(
@@ -680,23 +674,23 @@ class EditDataSalesOrderController extends GetxController {
   List<Products?> _generateRemarkProductList() {
     List<Products?> remarkProductList = [];
 
-    for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
-      int whichItem = skuCardRemark.controller.index.value[i];
-      var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
-      Products? productSelected = listProductTemp[whichItem].firstWhere(
-        (element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value,
-        orElse: () => null,
-      );
+    // for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+    //   int whichItem = skuCardRemark.controller.index.value[i];
+    //   var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
+    //   Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
+    //     (element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value,
+    //     orElse: () => null,
+    //   );
 
-      if (productSelected != null) {
-        remarkProductList.add(Products(
-          productItemId: productSelected.id,
-          quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
-          numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
-        ));
-      }
-    }
+    //   if (productSelected != null) {
+    //     remarkProductList.add(Products(
+    //       productItemId: productSelected.id,
+    //       quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+    //       numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
+    //       weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
+    //     ));
+    //   }
+    // }
 
     return remarkProductList;
   }

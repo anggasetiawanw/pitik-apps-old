@@ -82,7 +82,7 @@ class SalesOrderController extends GetxController {
         spCity.controller.setTextSelected("");
         spCity.controller.disable();
         if (province.value.isNotEmpty) {
-          Location? selectLocation = province.value.firstWhere((element) => element!.provinceName! == value);
+          Location? selectLocation = province.value.firstWhereOrNull((element) => element!.provinceName! == value);
           if (selectLocation != null) {
             getCity(selectLocation);
           }
@@ -236,21 +236,21 @@ class SalesOrderController extends GetxController {
       Location? provinceSelect;
 
       if (spProvince.controller.textSelected.value.isNotEmpty) {
-        provinceSelect = province.value.firstWhere(
+        provinceSelect = province.value.firstWhereOrNull(
           (element) => element!.provinceName == spProvince.controller.textSelected.value,
         );
       }
 
       Location? citySelect;
       if (spCity.controller.textSelected.value.isNotEmpty) {
-        citySelect = city.value.firstWhere(
+        citySelect = city.value.firstWhereOrNull(
           (element) => element!.cityName == spCity.controller.textSelected.value,
         );
       }
 
       SalesPerson? salesSelect;
       if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        salesSelect = listSalesperson.value.firstWhere(
+        salesSelect = listSalesperson.value.firstWhereOrNull(
           (element) => element!.email == spCreatedBy.controller.textSelected.value,
         );
       }

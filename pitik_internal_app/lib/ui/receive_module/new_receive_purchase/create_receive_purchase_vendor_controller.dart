@@ -301,10 +301,10 @@ class CreateGrPurchaseController extends GetxController {
         if (purchaseDetail.value!.vendor!.type == AppStrings.INTERNAL) {
         for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
             int whichItem = skuCardInternal.controller.index.value[i];
-            // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+            // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
             var listProductTemp =
                 skuCardInternal.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere(
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
                 (element) =>
                     element!.name! ==
                     skuCardInternal.controller.spinnerSku.value[whichItem]
@@ -329,9 +329,9 @@ class CreateGrPurchaseController extends GetxController {
         } else {
         for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
-            // CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
+            // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
             var listProductTemp = skuCard.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere(
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
                 (element) =>
                     element!.name! ==
                     skuCard.controller.spinnerSku.value[whichItem].controller

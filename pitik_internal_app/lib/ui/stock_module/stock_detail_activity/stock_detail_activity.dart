@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/stock_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/stock_status.dart';
@@ -56,28 +57,46 @@ class StockDetailActivity extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                  child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("editButton"),
-                      label: "Edit",
-                      onClick: () {
-                        Get.toNamed(RoutePage.stockOpname, arguments: [controller.opnameModel, true, null])!.then((value) {
-                          controller.isLoading.value = true;
-                          Timer(const Duration(milliseconds: 500), () {
-                            controller.getDetailStock();
+              if (controller.opnameModel.status == EnumStock.draft) ...[
+                Expanded(
+                    child: ButtonFill(
+                        controller: GetXCreator.putButtonFillController("editButton"),
+                        label: "Edit",
+                        onClick: () {
+                          Get.toNamed(RoutePage.stockOpname, arguments: [controller.opnameModel, true, null])!.then((value) {
+                            controller.isLoading.value = true;
+                            Timer(const Duration(milliseconds: 500), () {
+                              controller.getDetailStock();
+                            });
                           });
-                        });
-                      })),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                  child: ButtonOutline(
-                      controller: GetXCreator.putButtonOutlineController("cancelButton"),
-                      label: "Batal",
-                      onClick: () {
-                        _showBottomDialog(context, controller);
-                      })),
+                        })),
+                const SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                    child: ButtonOutline(
+                        controller: GetXCreator.putButtonOutlineController("cancelButton"),
+                        label: "Batal",
+                        onClick: () {
+                          _showBottomDialog(context, controller);
+                        })),
+              ] else if (controller.opnameModel.status == EnumStock.confirmed) ...[
+                if (Constant.isOpsLead.isTrue) ...[
+                  Expanded(child: controller.btSetujui),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(child: controller.btTolak)
+                ] else ...[
+                  Expanded(
+                      child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController("cancelButton"),
+                          label: "Batal",
+                          onClick: () {
+                            _showBottomDialog(context, controller);
+                          })),
+                ]
+              ]
             ],
           ),
         ),
@@ -133,7 +152,10 @@ class StockDetailActivity extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                StockStatus(stockStatus: "${controller.opnameModel.status}"),
+                StockStatus(
+                  stockStatus: "${controller.opnameModel.status}",
+                  isApprove: controller.opnameModel.reviewer != null ? true : false,
+                ),
               ],
             ),
             const SizedBox(
@@ -142,22 +164,6 @@ class StockDetailActivity extends StatelessWidget {
             infoDetailHeader("Sumber", "${controller.opnameModel.operationUnit!.operationUnitName}"),
           ],
         ),
-      );
-    }
-
-    Widget infoDetailSKU(String title, String name) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-          ),
-          Text(
-            name,
-            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-          )
-        ],
       );
     }
 
@@ -255,7 +261,7 @@ class StockDetailActivity extends StatelessWidget {
                                   )
                                 ],
                               ),
-                             if(product.productItems!.last != item && product.productItems!.length > 1)...[
+                              if (product.productItems!.last != item && product.productItems!.length > 1) ...[
                                 const SizedBox(
                                   height: 24,
                                 ),
@@ -294,6 +300,42 @@ class StockDetailActivity extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             detailInformation(),
+                            if (controller.opnameModel.reviewer != null) ...[
+                              Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: AppColors.outlineColor, width: 1),
+                                ),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                                Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()), style: AppTextStyle.blackTextStyle.copyWith()),
+                                            ],
+                                        ),
+                                        const SizedBox(height: 16,),
+                                        Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        const SizedBox(height: 8,),
+                                        Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight:  AppTextStyle.medium)),
+                                        const SizedBox(height: 16,),
+                                        Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        const SizedBox(height: 8,),
+                                        Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                        const SizedBox(height: 16,),
+                                        Row(children: [
+                                            SvgPicture.asset("images/checkbox_fill.svg"),
+                                            const SizedBox(width: 8,),
+                                            Expanded(child: Text("Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname", style: AppTextStyle.blackTextStyle, overflow: TextOverflow.clip,)),
+                                        ],)
+                                    ],
+                                )
+                              ),
+                            ],
                             Container(
                               margin: const EdgeInsets.only(top: 16),
                               child: Text(
@@ -303,22 +345,29 @@ class StockDetailActivity extends StatelessWidget {
                             ),
                             Column(children: controller.opnameModel.products!.map((e) => detailSKU(e!)).toList()),
                             Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.all(16),
-                                width: double.infinity  ,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: AppColors.outlineColor, width: 1),
-                                ),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                        Text("Total/Global(kg)", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),),
-                                        const SizedBox(height: 16,),
-                                        Text("${(controller.opnameModel.totalWeight ??0)} Kg", style: AppTextStyle.blackTextStyle.copyWith( fontSize: 14),),
-                                    ],
-                                ),
-
+                              margin: const EdgeInsets.only(top: 16),
+                              padding: const EdgeInsets.all(16),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.outlineColor, width: 1),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total/Global(kg)",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    "${(controller.opnameModel.totalWeight ?? 0)} Kg",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 100,
@@ -327,7 +376,7 @@ class StockDetailActivity extends StatelessWidget {
                         ),
                       ),
                     ),
-                    controller.opnameModel.status == "DRAFT" ? bottomNavbar() : const SizedBox()
+                    bottomNavbar()
                   ],
                 ),
         ));

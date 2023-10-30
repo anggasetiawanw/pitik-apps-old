@@ -45,7 +45,7 @@ class ManufactureOutputController extends GetxController {
         List<String> items = value.split(" , ");
         Map<String, bool> mapList = {};
         for (var item in items) {
-           CategoryModel? selected = listCategories.value.firstWhere((element) => element!.name! == item);
+           CategoryModel? selected = listCategories.value.firstWhereOrNull((element) => element!.name! == item);
             listCategoriesSelected.value.add(selected);
              mapList[item] = false;
         }
@@ -130,7 +130,7 @@ class ManufactureOutputController extends GetxController {
         Timer(const Duration(milliseconds: 500), () {
             List<String> items = typeOutput.controller.textSelected.value.split(" , ");
             for (var item in items) {
-            CategoryModel? selected = listCategories.value.firstWhere((element) => element!.name! == item);
+            CategoryModel? selected = listCategories.value.firstWhereOrNull((element) => element!.name! == item);
                 listCategoriesSelected.value.add(selected);
             }
             for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
@@ -285,7 +285,7 @@ class ManufactureOutputController extends GetxController {
         for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
             var listProductTemp = skuCard.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
             output.add(Products(
                 productItemId: productSelected!.id,
                 quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),

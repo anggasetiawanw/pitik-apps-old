@@ -76,7 +76,7 @@ class SkuCardOrderController extends GetxController{
                     onSpinnerSelected: (value) {
                         try {
                         if (listCategories.value.isNotEmpty) {
-                            CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == value); 
+                            CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value); 
                             getSku(selectCategory!, numberList);
                             if (value == AppStrings.AYAM_UTUH ||
                                 value == AppStrings.BRANGKAS || value == AppStrings.KARKAS) {
@@ -164,7 +164,7 @@ class SkuCardOrderController extends GetxController{
                 onTyping: (value, control) {
                     if(value.isNotEmpty){
                         if (listCategories.value.isNotEmpty) {
-                            CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == spinnerCategories.value[numberList].controller.textSelected.value);
+                            CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == spinnerCategories.value[numberList].controller.textSelected.value);
                                 if (selectCategory != null) {
                                     if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.LIVE_BIRD ||
                                         spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
@@ -224,7 +224,7 @@ class SkuCardOrderController extends GetxController{
                     spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
                         List<Products?> listSkuSelect = listSku.value[idx]!;
                             if(listSkuSelect.isNotEmpty){
-                                Products? selectProduct = listSkuSelect.firstWhere((element) => element!.name! == spinnerSku.value[idx].controller.textSelected.value);
+                                Products? selectProduct = listSkuSelect.firstWhereOrNull((element) => element!.name! == spinnerSku.value[idx].controller.textSelected.value);
                                 double minValue = selectProduct!.minValue! * (mapSumChick[idx]?? 0);
                                 double maxValue = selectProduct.maxValue! * (mapSumChick[idx] ?? 0);
                                 sumNeededMin.value += minValue;

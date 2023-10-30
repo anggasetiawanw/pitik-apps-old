@@ -1,16 +1,15 @@
-
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
-import 'package:engine/util/convert.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/colors.dart';
+import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/opname_model.dart';
@@ -30,7 +29,7 @@ class StockRejectedController extends GetxController {
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("APPROVE"));
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("REJECTED"));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
   @override
   void onInit() {
@@ -42,10 +41,6 @@ class StockRejectedController extends GetxController {
     getDetailStock();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
   // @override
   // void onClose() {
   //     super.onClose();
@@ -127,8 +122,10 @@ class StockRejectedController extends GetxController {
   OpnameModel generatePayload(String status) {
     List<Products?> products = [];
 
-    for (var element in opnameModel.products!) {
-      products.add(Products(productCategoryId: element!.id, quantity: element.quantity, weight: element.weight));
+    for (var product in opnameModel.products!) {
+      for (var item in product!.productItems!) {
+        products.add(Products(productItemId: item!.id, quantity: item.quantity, weight: item.weight));
+      }
     }
 
     return OpnameModel(
@@ -136,6 +133,8 @@ class StockRejectedController extends GetxController {
       status: status,
       products: products,
       reviewerId: Constant.profileUser!.id,
+      totalWeight: opnameModel.totalWeight ?? 0,
+      confirmedDate: Convert.getStringIso(DateTime.now()),
     );
   }
 

@@ -11,13 +11,15 @@ class CardListStock extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.opnameModel,
+    required this.isApprove,
   });
   final Function() onTap;
   final OpnameModel opnameModel;
+  final bool isApprove;
 
   @override
   Widget build(BuildContext context) {
-    final DateTime modified = Convert.getDatetime(opnameModel.modifiedDate!);
+    // final DateTime modified = Convert.getDatetime(opnameModel.modifiedDate!);
     final DateTime createdDate = Convert.getDatetime(opnameModel.createdDate!);
     return GestureDetector(
       onTap: onTap,
@@ -53,7 +55,7 @@ class CardListStock extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                StockStatus(stockStatus: opnameModel.status),
+                StockStatus(stockStatus: opnameModel.status, isApprove: isApprove,),
               ],
             ),
             const SizedBox(

@@ -16,6 +16,7 @@ import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/stock_status.dart';
 
 class StockApprovalController extends GetxController {
   BuildContext context;
@@ -31,7 +32,7 @@ class StockApprovalController extends GetxController {
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("APPROVE"));
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock(EnumStock.finished));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
   @override
   void onInit() {
@@ -133,8 +134,10 @@ class StockApprovalController extends GetxController {
   OpnameModel generatePayload(String status) {
     List<Products?> products = [];
 
-    for (var element in opnameModel.products!) {
-      products.add(Products(productCategoryId: element!.id, quantity: element.quantity, weight: element.weight));
+    for (var product in opnameModel.products!) {
+      for (var item in product!.productItems!) {
+        products.add(Products(productItemId: item!.id, quantity: item.quantity, weight: item.weight));
+      }
     }
 
     return OpnameModel(
@@ -142,6 +145,8 @@ class StockApprovalController extends GetxController {
       status: status,
       products: products,
       reviewerId: Constant.profileUser!.id,
+      totalWeight: opnameModel.totalWeight ?? 0,
+      confirmedDate: Convert.getStringIso(DateTime.now()),
     );
   }
 
@@ -149,6 +154,7 @@ class StockApprovalController extends GetxController {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

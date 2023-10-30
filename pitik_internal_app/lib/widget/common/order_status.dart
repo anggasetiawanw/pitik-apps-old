@@ -45,7 +45,7 @@ class OrderStatus extends StatelessWidget{
           child: Text(
             orderStatus == null ? "Draft" :
             orderStatus == EnumSO.readyToDeliver? "Siap Kirim" :
-            orderStatus == EnumSO.delivered ? "Terkonfirmasi" :
+            orderStatus == EnumSO.confirmed ? "Terkonfirmasi" :
             orderStatus== EnumSO.allocated ? "Teralokasi" :
             orderStatus == EnumSO.booked ? "Dipesan" :
             orderStatus == EnumSO.cancelled ? "Dibatalkan" :
@@ -64,7 +64,7 @@ class OrderStatus extends StatelessWidget{
             style: orderStatus == null ? AppTextStyle.blackTextStyle :
             orderStatus == EnumSO.readyToDeliver? const TextStyle(color: Color(0xFFF4B420)) :
             orderStatus == EnumSO.draft ? AppTextStyle.primaryTextStyle :
-            orderStatus == EnumSO.delivered ? const TextStyle(color: Color(0xFF198BDB)) :
+            orderStatus == EnumSO.confirmed ? const TextStyle(color: Color(0xFF198BDB)) :
             orderStatus == EnumSO.cancelled ? const TextStyle(color: Color(0xFFDD1E25)) :
             orderStatus== EnumSO.allocated ? const TextStyle(color: Color(0xFF6938EF)) :
             orderStatus == EnumSO.booked ? const TextStyle(color: Color(0xFFAB6116)) :

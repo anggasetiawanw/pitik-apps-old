@@ -80,10 +80,9 @@ class SkuCardRemark extends StatelessWidget {
                 child: Column(
                   children: [
                     controller.spinnerCategories.value[index],
-                    Obx(() => controller.isLoadApi.isTrue ? controller.spinnerSku.value[index] : controller.spinnerSku.value[index],),
                     controller.editFieldJumlahAyam.value[index],
+                    controller.spinnerTypePotongan.value[index],
                     controller.editFieldPotongan.value[index],
-                    controller.editFieldKebutuhan.value[index],
                     index == (controller.index.value[controller.itemCount.value - 1]) && controller.itemCount.value != 1 ?
                     ButtonOutline(
                         controller: GetXCreator.putButtonOutlineController("Cancel$index"),
