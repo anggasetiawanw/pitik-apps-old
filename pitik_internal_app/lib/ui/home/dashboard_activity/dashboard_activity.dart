@@ -5,7 +5,6 @@ import 'package:global_variable/text_style.dart';
 import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_activity.dart';
 import 'package:pitik_internal_app/ui/home/job_activity/job_activity.dart';
 import 'package:pitik_internal_app/ui/home/profile_activity/profile_activity.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
 
 import 'dashboard_controller.dart';
 
@@ -18,11 +17,20 @@ class DashboardPage extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
             body: IndexedStack(
-              index: controller.tabIndex,
-              children: const [
-                BerandaActivity(),
-                ProfileActivity(),
-                JobActivity(),
+              index: controller.tabIndex.value,
+              children: [
+                Visibility(
+                  visible: controller.tabIndex.value == 0,
+                  child: const BerandaActivity(),
+                ),
+                Visibility(
+                  visible: controller.tabIndex.value == 1,
+                  child: const ProfileActivity(),
+                ),
+                Visibility(
+                  visible: controller.tabIndex.value == 2,
+                  child: const JobActivity(),
+                )
               ],
             ),
             bottomNavigationBar: Container(
@@ -46,15 +54,15 @@ class DashboardPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(controller.tabIndex == 0 ? "images/beranda_on_icon.svg" : "images/beranda_off_icon.svg"),
+                        SvgPicture.asset(controller.tabIndex.value == 0 ? "images/beranda_on_icon.svg" : "images/beranda_off_icon.svg"),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Beranda", style: controller.tabIndex == 0 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                        Text("Beranda", style: controller.tabIndex.value == 0 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                       ],
                     ),
                   ),
-                  if (Constant.isOpsLead.isTrue) ...[
+                  if (controller.isOpslead.isTrue) ...[
                     GestureDetector(
                       onTap: () {
                         controller.changeTabIndex(2);
@@ -62,11 +70,11 @@ class DashboardPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(controller.tabIndex == 2 ? "images/job_on.svg" : "images/job_off.svg"),
+                          SvgPicture.asset(controller.tabIndex.value == 2 ? "images/job_on.svg" : "images/job_off.svg"),
                           const SizedBox(
                             height: 5,
                           ),
-                          Text("Tugas", style: controller.tabIndex == 2 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                          Text("Tugas", style: controller.tabIndex.value == 2 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                         ],
                       ),
                     ),
@@ -78,11 +86,11 @@ class DashboardPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(controller.tabIndex == 1 ? "images/profile_on_icon.svg" : "images/profile_off_icon.svg"),
+                        SvgPicture.asset(controller.tabIndex.value == 1 ? "images/profile_on_icon.svg" : "images/profile_off_icon.svg"),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Profil", style: controller.tabIndex == 1 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                        Text("Profil", style: controller.tabIndex.value == 1 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                       ],
                     ),
                   ),

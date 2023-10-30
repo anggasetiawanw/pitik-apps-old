@@ -76,6 +76,8 @@ class ListApi {
     static const String editUser ="editUser";
     static const String getListOrdersFilter ="getListOrdersFilter";
     static const String loginWithApple = "loginWithApple";
+    static const String getListOpnameJob = "getListOpnameJob";
+    static const String getListTerminateJob = "getListTerminateJob";
 
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";
