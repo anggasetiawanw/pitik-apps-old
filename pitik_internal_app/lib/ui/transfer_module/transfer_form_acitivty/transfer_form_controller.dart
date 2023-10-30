@@ -88,6 +88,8 @@ class TransferFormController extends GetxController {
     EditField amountField = EditField(controller: GetXCreator.putEditFieldController("amountBirds"), label: "Jumlah Ekor*", hint: "0", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
     EditField totalField = EditField(controller: GetXCreator.putEditFieldController("totalFields"), label: "Total*", hint: "0.0", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
 
+    EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+
 
     Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
     Rx<List<OperationUnitModel?>> listSourceOperationUnits = Rx<List<OperationUnitModel?>>([]);
@@ -131,6 +133,7 @@ class TransferFormController extends GetxController {
             }
             totalField.controller.enable();
             totalField.setInput(transferModel!.products![0]!.productItems![0]!.weight!.toString());
+            efRemartk.setInput(transferModel!.remarks??"");
         }
     }
 

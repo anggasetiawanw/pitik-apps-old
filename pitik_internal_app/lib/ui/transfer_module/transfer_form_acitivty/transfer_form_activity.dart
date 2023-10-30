@@ -106,6 +106,10 @@ class TransferFormActivity extends StatelessWidget {
                       controller.skuField,
                       controller.amountField,
                       controller.totalField,
+                      controller.efRemartk,
+                      const SizedBox(
+                              height: 120,
+                            ),
                       MediaQuery.of(context).viewInsets.bottom > 0.0
                           ? const SizedBox(
                               height: 120,
