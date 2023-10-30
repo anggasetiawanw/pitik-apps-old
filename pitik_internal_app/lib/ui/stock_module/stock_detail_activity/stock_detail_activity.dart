@@ -300,41 +300,59 @@ class StockDetailActivity extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             detailInformation(),
-                            if (controller.opnameModel.reviewer != null) ...[
+                            if (controller.opnameModel.reviewer != null && controller.opnameModel.status == EnumStock.finished) ...[
                               Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: AppColors.outlineColor, width: 1),
-                                ),
-                                child: Column(
+                                  margin: const EdgeInsets.only(top: 16),
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: AppColors.outlineColor, width: 1),
+                                  ),
+                                  child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                        Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                                Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                                Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()), style: AppTextStyle.blackTextStyle.copyWith()),
-                                            ],
-                                        ),
-                                        const SizedBox(height: 16,),
-                                        Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
-                                        const SizedBox(height: 8,),
-                                        Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight:  AppTextStyle.medium)),
-                                        const SizedBox(height: 16,),
-                                        Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
-                                        const SizedBox(height: 8,),
-                                        Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
-                                        const SizedBox(height: 16,),
-                                        Row(children: [
-                                            SvgPicture.asset("images/checkbox_fill.svg"),
-                                            const SizedBox(width: 8,),
-                                            Expanded(child: Text("Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname", style: AppTextStyle.blackTextStyle, overflow: TextOverflow.clip,)),
-                                        ],)
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                          Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()), style: AppTextStyle.blackTextStyle.copyWith()),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset("images/checkbox_fill.svg"),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Expanded(
+                                              child: Text(
+                                            "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname",
+                                            style: AppTextStyle.blackTextStyle,
+                                            overflow: TextOverflow.clip,
+                                          )),
+                                        ],
+                                      )
                                     ],
-                                )
-                              ),
+                                  )),
                             ],
                             Container(
                               margin: const EdgeInsets.only(top: 16),
@@ -376,7 +394,7 @@ class StockDetailActivity extends StatelessWidget {
                         ),
                       ),
                     ),
-                    bottomNavbar()
+                    controller.opnameModel.status == EnumStock.draft || controller.opnameModel.status == EnumStock.confirmed ? bottomNavbar() : const SizedBox()
                   ],
                 ),
         ));
@@ -386,6 +404,7 @@ class StockDetailActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

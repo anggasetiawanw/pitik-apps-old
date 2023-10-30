@@ -99,7 +99,7 @@ class TerminateRejectedActivity extends StatelessWidget {
                     ],
                   ),
                 ),
-                TerminateStatus(terminateStatus: controller.terminateModel.status),
+                TerminateStatus(terminateStatus: controller.terminateModel.status,isApproved: controller.terminateModel.reviewer != null ? true : false),
               ],
             ),
             const SizedBox(
@@ -206,7 +206,6 @@ class TerminateRejectedActivity extends StatelessWidget {
                                 );
                               },
                             ),
-                            controller.efRemartk,
                             const SizedBox(
                               height: 100,
                             )

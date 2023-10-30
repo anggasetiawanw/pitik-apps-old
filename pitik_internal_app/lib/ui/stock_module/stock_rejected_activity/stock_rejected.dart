@@ -294,7 +294,6 @@ class StockRejectedActivity extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            controller.efRemartk,
                             const SizedBox(
                               height: 100,
                             )

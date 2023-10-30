@@ -10,10 +10,12 @@ class CardListTerminate extends StatelessWidget {
   const CardListTerminate({
     super.key,
     required this.onTap,
-    required this.terminateModel,
+    required this.terminateModel, required this.isApproved,
   });
   final Function() onTap;
   final TerminateModel terminateModel;
+
+  final bool isApproved;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class CardListTerminate extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                TerminateStatus(terminateStatus: terminateModel.status),
+                TerminateStatus(terminateStatus: terminateModel.status, isApproved: isApproved,),
               ],
             ),
             const SizedBox(

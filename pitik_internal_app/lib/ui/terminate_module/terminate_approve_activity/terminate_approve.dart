@@ -99,7 +99,7 @@ class TerminateApproveActivity extends StatelessWidget {
                     ],
                   ),
                 ),
-                TerminateStatus(terminateStatus: controller.terminateModel.status),
+                TerminateStatus(terminateStatus: controller.terminateModel.status, isApproved: controller.terminateModel.reviewer != null ? true : false,),
               ],
             ),
             const SizedBox(

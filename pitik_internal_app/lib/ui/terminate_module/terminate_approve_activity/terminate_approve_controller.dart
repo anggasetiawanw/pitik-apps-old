@@ -15,6 +15,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/terminate_status.dart';
 
 import '../../../api_mapping/list_api.dart';
 
@@ -31,7 +32,7 @@ class TerminateApproveController extends GetxController {
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate("APPROVE"));
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.finished));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
 
   @override
@@ -89,6 +90,7 @@ class TerminateApproveController extends GetxController {
   }
 
   void updateTerminate(String status) {
+    Get.back();
     isLoading.value = true;
     Service.push(
         service: ListApi.updateTerminateById,
@@ -125,7 +127,16 @@ class TerminateApproveController extends GetxController {
   }
 
   TerminateModel generatePayload(String status) {
-    return TerminateModel(operationUnitId: terminateModel.operationUnit!.id, status: status, imageLink: terminateModel.imageLink, product: Products(productItemId: terminateModel.product!.productItem!.id, quantity: terminateModel.product!.productItem!.quantity, weight: terminateModel.product!.productItem!.weight));
+    return TerminateModel(
+        operationUnitId: terminateModel.operationUnit!.id,
+        status: status,
+        imageLink: terminateModel.imageLink,
+        reviewerId: Constant.profileUser!.id,
+        product: Products(
+          productItemId: terminateModel.product!.productItem!.id,
+          quantity: terminateModel.product!.productItem!.quantity,
+          weight: terminateModel.product!.productItem!.weight,
+        ));
   }
 
   // @override

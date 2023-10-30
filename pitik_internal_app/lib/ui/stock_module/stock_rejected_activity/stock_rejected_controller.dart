@@ -1,6 +1,5 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
-import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -24,9 +23,6 @@ class StockRejectedController extends GetxController {
   late DateTime createdDate;
   var isLoading = false.obs;
   var isSelectedBox = false.obs;
-
-  EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan Penolakan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
-
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
   late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("REJECTED"));

@@ -586,6 +586,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

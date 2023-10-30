@@ -1,6 +1,5 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
-import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -15,6 +14,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/terminate_status.dart';
 
 import '../../../api_mapping/list_api.dart';
 
@@ -25,11 +25,10 @@ class TerminateRejectedController extends GetxController {
   var isSelectedBox = false.obs;
   late TerminateModel terminateModel;
   late DateTime createdDate;
-  EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan Penolakan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate("REJECTED"));
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.rejected));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
 
   @override
@@ -77,6 +76,7 @@ class TerminateRejectedController extends GetxController {
   }
 
   void updateTerminate(String status) {
+    Get.back();
     isLoading.value = true;
     Service.push(
         service: ListApi.updateTerminateById,
@@ -113,7 +113,16 @@ class TerminateRejectedController extends GetxController {
   }
 
   TerminateModel generatePayload(String status) {
-    return TerminateModel(operationUnitId: terminateModel.operationUnit!.id, status: status, imageLink: terminateModel.imageLink, product: Products(productItemId: terminateModel.product!.productItem!.id, quantity: terminateModel.product!.productItem!.quantity, weight: terminateModel.product!.productItem!.weight));
+    return TerminateModel(
+        operationUnitId: terminateModel.operationUnit!.id,
+        status: status,
+        imageLink: terminateModel.imageLink,
+        reviewerId: Constant.profileUser!.id,
+        product: Products(
+          productItemId: terminateModel.product!.productItem!.id,
+          quantity: terminateModel.product!.productItem!.quantity,
+          weight: terminateModel.product!.productItem!.weight,
+        ));
   }
 
   // @override

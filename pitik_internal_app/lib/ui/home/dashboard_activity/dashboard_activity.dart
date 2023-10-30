@@ -62,7 +62,7 @@ class DashboardPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(controller.tabIndex == 2 ? "images/job_on.svg" : "images/profile_off_icon.svg"),
+                          SvgPicture.asset(controller.tabIndex == 2 ? "images/job_on.svg" : "images/job_off.svg"),
                           const SizedBox(
                             height: 5,
                           ),
