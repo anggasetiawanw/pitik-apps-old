@@ -1,7 +1,9 @@
 import 'package:components/library/dao_impl_library.dart';
 import 'package:dao_impl/user_google_impl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/user_google_model.dart';
@@ -83,12 +85,15 @@ class Constant {
     /// Returns:
     ///   A `VoidCallback` is being returned.
     static VoidCallback invalidResponse() {
-        return () {
+        return () async{
             AuthImpl().delete(null, []);
             UserGoogleImpl().delete(null, []);
             ProfileImpl().delete(null, []);
             // XAppIdImpl().delete(null, []);
+            await GoogleSignIn().disconnect(); 
+            await FirebaseAuth.instance.signOut();
             Get.offAllNamed(RoutePage.loginPage);
+            
         };
     }
 }

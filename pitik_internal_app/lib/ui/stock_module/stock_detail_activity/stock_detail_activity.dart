@@ -315,7 +315,7 @@ class StockDetailActivity extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                          Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()), style: AppTextStyle.blackTextStyle.copyWith()),
+                                          Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.parse(controller.opnameModel.confirmedDate ?? DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()))), style: AppTextStyle.blackTextStyle.copyWith()),
                                         ],
                                       ),
                                       const SizedBox(

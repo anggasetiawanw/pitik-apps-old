@@ -53,6 +53,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
             ),
             TabBar(
               controller: controller.tabController.controller,
+              indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
                   text: "Stock Opname",
