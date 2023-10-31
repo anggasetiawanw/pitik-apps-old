@@ -218,7 +218,7 @@ class CreateBookStockController extends GetxController {
       }
       Order orderRequest = Order(
         customerId: orderDetail.value!.customer!.id!,
-        operationUnitId: sourceSelected!.id != null ? sourceSelected.id : orderDetail.value!.operationUnit!.id!,
+        operationUnitId: sourceSelected != null ? sourceSelected.id : orderDetail.value!.operationUnit!.id!,
         products: products,
         productNotes: productNote,
         type: orderDetail.value!.type,

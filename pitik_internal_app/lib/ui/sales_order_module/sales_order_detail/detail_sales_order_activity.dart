@@ -1,3 +1,4 @@
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
@@ -277,10 +278,10 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                             },
                           ),
                         )
-                      ] else if (Constant.isShopKepper.isTrue) ...[
+                      ] else ...[
                         Expanded(
-                          child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
+                          child: ButtonFill(
+                            controller: GetXCreator.putButtonFillController("batalPenjualan"),
                             label: "Batal",
                             onClick: () {
                               showBottomDialog(context, controller);
@@ -305,21 +306,23 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.allocated) ...[
-                      Expanded(
-                        child: controller.bookStockButton,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
-                          onClick: () {
-                            showBottomDialog(context, controller);
-                          },
+                      if (Constant.isShopKepper.isTrue) ...[
+                        Expanded(
+                          child: controller.bookStockButton,
                         ),
-                      )
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: ButtonOutline(
+                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
+                            label: "Batal",
+                            onClick: () {
+                              showBottomDialog(context, controller);
+                            },
+                          ),
+                        )
+                      ]
                     ] else if (controller.orderDetail.value!.status == EnumSO.booked && controller.orderDetail.value!.category == EnumSO.outbound) ...[
                       Expanded(
                         child: controller.sendButton,
@@ -340,10 +343,22 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       Expanded(
                         child: controller.bookStockButton,
                       ),
-                    ] else if (controller.orderDetail.value!.status == EnumSO.booked) ...[
+                    ] else if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
                       Expanded(
                         child: controller.editDriver,
                       ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
+                          label: "Batal",
+                          onClick: () {
+                            showBottomDialog(context, controller);
+                          },
+                        ),
+                      )
                     ]
                   ],
                 ),

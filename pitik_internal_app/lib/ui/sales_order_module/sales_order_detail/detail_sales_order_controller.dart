@@ -15,6 +15,7 @@ import 'package:model/internal_app/order_request.dart';
 import 'package:model/response/internal_app/order_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
 ///@author Robertus Mahardhi Kuncoro
@@ -171,9 +172,9 @@ class DetailSalesOrderController extends GetxController {
           Constant.auth!.token,
           Constant.auth!.id,
           Constant.xAppId,
-          orderDetail.value!.status! == "BOOKED"
+          orderDetail.value!.status! == EnumSO.booked
               ? ListApi.pathCancelBookedOrder(orderId)
-              : orderDetail.value!.status! == "READY_TO_DELIVER"
+              : orderDetail.value!.status! == EnumSO.readyToDeliver
                   ? ListApi.pathCancelDeliveryOrder(orderId)
                   : ListApi.pathCancelOrder(orderId),
           ""
