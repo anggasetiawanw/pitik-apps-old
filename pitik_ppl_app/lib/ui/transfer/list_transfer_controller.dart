@@ -158,7 +158,7 @@ class ListTransferController extends GetxController with GetSingleTickerProvider
                         if (typePosition == 0) {
                             Get.toNamed(RoutePage.transferDetailPage, arguments: [coop, procurement, typePosition == 0])!.then((value) => refreshTransferList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, procurement.type == 'pakan', true])!.then((value) => refreshTransferList());
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, true, false])!.then((value) => refreshTransferList());
                         }
                     },
                     child: Container(

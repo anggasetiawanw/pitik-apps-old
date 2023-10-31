@@ -35,7 +35,8 @@ import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
-import 'package:pitik_ppl_app/ui/splash_screen.dart';
+import 'package:pitik_ppl_app/ui/splash_screen/splash_screen.dart';
+import 'package:pitik_ppl_app/ui/splash_screen/splash_screen_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_activity.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_activity.dart';
@@ -51,7 +52,7 @@ class AppRoutes {
     static const initial = RoutePage.splashPage;
 
     static final page = [
-        GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity()),
+        GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity(), binding: SplashScreenBindings()),
         GetPage(name: RoutePage.boardingPage, page: () => const BoardingActivity()),
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),

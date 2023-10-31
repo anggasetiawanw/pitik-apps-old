@@ -910,7 +910,7 @@ class TransferRequestController extends GetxController {
                         }
                     },
                     onResponseFail: (code, message, body, id, packet) {},
-                    onResponseError: (exception, stacktrace, id, packet) => print('$exception -> $stacktrace'),
+                    onResponseError: (exception, stacktrace, id, packet) {},
                     onTokenInvalid: () => GlobalVar.invalidResponse()
                 )
             )

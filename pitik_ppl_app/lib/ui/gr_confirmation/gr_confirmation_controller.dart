@@ -1,22 +1,31 @@
 
+import 'dart:convert';
+
 import 'package:common_page/library/component_library.dart';
+import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_area_field/edit_area_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/global_var.dart';
+import 'package:components/media_field/media_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/good_receipt_model.dart';
+import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/procurement_detail_response.dart';
+
+import '../../route.dart';
+import '../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -28,23 +37,26 @@ class GrConfirmationController extends GetxController {
 
     late Coop coop;
     late Procurement procurement;
-    late bool isFeed;
     late bool isFromTransfer;
+    late bool fromCoopRest;
 
     late DateTimeField grReceivedDateField;
     late EditAreaField grNotesField;
+    late MediaField grPhotoField;
 
     var isLoading = false.obs;
-    RxList<Product?> productList = <Product?>[].obs;
-    RxMap<EditField, bool> efProductReceivedList = <EditField, bool>{}.obs;
+    var isLoadingPicture = false.obs;
+
+    RxMap<EditField, Product> efProductReceivedMap = <EditField, Product>{}.obs;
+    RxList<MediaUploadModel?> grPhotoList = <MediaUploadModel?>[].obs;
 
     @override
     void onInit() {
         super.onInit();
         coop = Get.arguments[0];
         procurement = Get.arguments[1];
-        isFeed = Get.arguments[2];
-        isFromTransfer = Get.arguments[3];
+        isFromTransfer = Get.arguments[2];
+        fromCoopRest = Get.arguments[3];
 
         grReceivedDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("grReceivedDateField$isFromTransfer"), label: "Tanggal Penerimaan", hint: "2022-12-31", alertText: "Tanggal Penerimaan harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}')
@@ -52,6 +64,56 @@ class GrConfirmationController extends GetxController {
 
         grNotesField = EditAreaField(controller: GetXCreator.putEditAreaFieldController("grNotesField$isFromTransfer"), label: "Keterangan", hint: "Tulis Keterangan disini...", alertText: "Keterangan belum diisi..!", maxInput: 250,
             onTyping: (text, field) {}
+        );
+
+        grPhotoField = MediaField(controller: GetXCreator.putMediaFieldController("grConfirmationPhotoField"), label: "Upload bukti foto", hideLabel: true, hint: "Upload bukti foto", alertText: "Harus diisi..!", type: MediaField.PHOTO,
+            onMediaResult: (file) => AuthImpl().get().then((auth) {
+                if (auth != null) {
+                    if (file != null) {
+                        isLoadingPicture.value = true;
+                        Service.push(
+                            service: ListApi.uploadImage,
+                            context: Get.context!,
+                            body: ['Bearer ${auth.token}', auth.id, "goods-receipt-purchase-order", file],
+                            listener: ResponseListener(
+                                onResponseDone: (code, message, body, id, packet) {
+                                    grPhotoList.add(body.data);
+                                    grPhotoField.getController().setInformasiText("File telah terupload");
+                                    grPhotoField.getController().showInformation();
+                                    isLoadingPicture.value = false;
+                                },
+                                onResponseFail: (code, message, body, id, packet) {
+                                    Get.snackbar(
+                                        "Pesan",
+                                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                        snackPosition: SnackPosition.TOP,
+                                        duration: const Duration(seconds: 5),
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.red
+                                    );
+
+                                    isLoadingPicture.value = false;
+                                },
+                                onResponseError: (exception, stacktrace, id, packet) {
+                                    Get.snackbar(
+                                        "Pesan",
+                                        "Terjadi kesalahan internal",
+                                        snackPosition: SnackPosition.TOP,
+                                        duration: const Duration(seconds: 5),
+                                        colorText: Colors.white,
+                                        backgroundColor: Colors.red
+                                    );
+
+                                    isLoadingPicture.value = false;
+                                },
+                                onTokenInvalid: () => GlobalVar.invalidResponse()
+                            )
+                        );
+                    }
+                } else {
+                    GlobalVar.invalidResponse();
+                }
+            })
         );
 
         _getDetailReceived();
@@ -73,7 +135,14 @@ class GrConfirmationController extends GetxController {
                     onResponseDone: (code, message, body, id, packet) {
                         if ((body as ProcurementDetailResponse).data != null) {
                             procurement = body.data!;
-                            productList.value = body.data!.details;
+
+                            // fill photo confirmation
+                            grPhotoList.value = body.data!.photos;
+                            if (grPhotoList.isNotEmpty) {
+                                grPhotoField.getController().setInformasiText("File telah terupload");
+                                grPhotoField.getController().showInformation();
+                                grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
+                            }
                         }
 
                         isLoading.value = false;
@@ -281,7 +350,7 @@ class GrConfirmationController extends GetxController {
     }
 
     Column createProductReceivedCards({required List<Product?> productList}) {
-        efProductReceivedList.clear();
+        efProductReceivedMap.clear();
         return Column(
             children: List.generate(procurement.details.length, (index) {
                 if (procurement.details[index] == null) {
@@ -293,12 +362,21 @@ class GrConfirmationController extends GetxController {
                         label: 'Total Diterima',
                         hint: 'Ketik di sini',
                         alertText: 'Harus diisi..!',
+                        inputType: TextInputType.number,
                         textUnit: product.uom ?? product.purchaseUom ?? '',
                         maxInput: 50,
-                        onTyping: (text, field) {}
+                        onTyping: (text, field) {
+                            product.quantity = field.getInputNumber();
+                            efProductReceivedMap.putIfAbsent(field, () => product);
+                        }
                     );
 
-                    efProductReceivedList[editField] = false;
+                    if (isFromTransfer) {
+                        editField.setInput(product.remaining!.toStringAsFixed(0));
+                        editField.getController().disable();
+                    }
+
+                    efProductReceivedMap[editField] = product;
                     return Container(
                         width: MediaQuery.of(Get.context!).size.width,
                         padding: const EdgeInsets.all(16),
@@ -311,33 +389,8 @@ class GrConfirmationController extends GetxController {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                // Row(
-                                //     children: [
-                                //         GestureDetector(
-                                //             onTap: () {
-                                //                 print('checked -> ${efProductReceivedList.value[editField]}');
-                                //                 if (efProductReceivedList[editField] == null || !efProductReceivedList[editField]!) {
-                                //                     efProductReceivedList.update(editField, (value) => true);
-                                //                 } else {
-                                //                     efProductReceivedList.update(editField, (value) => false);
-                                //                 }
-                                //             },
-                                //             child: Container(
-                                //                 width: 24,
-                                //                 height: 24,
-                                //                 decoration: BoxDecoration(
-                                //                     border: Border.fromBorderSide(BorderSide(color: efProductReceivedList[editField] != null && efProductReceivedList[editField]! ? GlobalVar.primaryOrange : GlobalVar.gray, width: 2)),
-                                //                     color: efProductReceivedList[editField] != null && efProductReceivedList[editField]! ? GlobalVar.primaryOrange : GlobalVar.gray
-                                //                 ),
-                                //             ),
-                                //         ),
-                                //         const SizedBox(width: 8),
-                                //         Text('Retur', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                //     ],
-                                // ),
-                                // const SizedBox(height: 8),
                                 Text(
-                                    '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                    '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                                 editField
@@ -379,9 +432,268 @@ class GrConfirmationController extends GetxController {
         );
     }
 
+    bool _validation() {
+        bool isPass = true;
+
+        if (grReceivedDateField.getController().textSelected.isEmpty) {
+            grReceivedDateField.getController().showAlert();
+            isPass  = false;
+        }
+        if (grNotesField.getInput().isEmpty) {
+            grNotesField.getController().showAlert();
+            isPass  = false;
+        }
+        if (grPhotoList.isEmpty) {
+            grPhotoField.getController().showAlert();
+            isPass = false;
+        }
+
+        efProductReceivedMap.forEach((key, value) {
+            if (key.getInput().isEmpty) {
+                key.getController().showAlert();
+                isPass  = false;
+            }
+        });
+
+        return isPass;
+    }
+
     void sendConfirmation() {
-        for (var data in efProductReceivedList.keys) {
-            print('ef data -> ${data.getInputNumber()} => key : ${data.getController().tag}}');
+        if (_validation()) {
+            showModalBottomSheet(
+                useSafeArea: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                    )
+                ),
+                isScrollControlled: true,
+                context: Get.context!,
+                builder: (context) => Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Center(
+                                        child: Container(
+                                            width: 60,
+                                            height: 4,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                color: GlobalVar.outlineColor
+                                            )
+                                        )
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                    const SizedBox(height: 16),
+                                    Text('Detail ${procurement.type == 'pakan' ? 'Pakan' : 'OVK'}', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Kode Pesanan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(procurement.erpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Kode Pembelian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(procurement.purchaseRequestErpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Tanggal Penerimaan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(grReceivedDateField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    const Divider(height: 2, color: GlobalVar.gray),
+                                    const SizedBox(height: 16),
+                                    if (isAlreadyReturned()) ...[
+                                        Text('${procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diretur', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 4),
+                                        Padding(
+                                            padding: const EdgeInsets.only(left: 12),
+                                            child: Column(
+                                                children: efProductReceivedMap.entries.map((entry) {
+                                                    if (entry.value.isReturned != null && entry.value.isReturned!) {
+                                                        String quantity = efProductReceivedMap[entry.key]!.quantity == null ? '-' : efProductReceivedMap[entry.key]!.quantity!.toStringAsFixed(0);
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(top: 4),
+                                                            child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                    Expanded(
+                                                                        child: Text(
+                                                                            getProductName(product: efProductReceivedMap[entry.key], isFeed: procurement.type == 'pakan'),
+                                                                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                        )
+                                                                    ),
+                                                                    Text(
+                                                                        '${Convert.toCurrencyWithoutDecimal(quantity, '', '.')} ${entry.key.getController().textUnit}',
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
+                                                                ]
+                                                            )
+                                                        );
+                                                    } else {
+                                                        return const SizedBox();
+                                                    }
+                                                }).toList()
+                                            ),
+                                        )
+                                    ] else ...[const SizedBox()],
+                                    Text('${procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diterima', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                    const SizedBox(height: 4),
+                                    Padding(
+                                        padding: const EdgeInsets.only(left: 12),
+                                        child: Column(
+                                            children: efProductReceivedMap.entries.map((entry) {
+                                                if (entry.value.isReturned == null || !entry.value.isReturned!) {
+                                                    return Padding(
+                                                        padding: const EdgeInsets.only(top: 4),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                                Expanded(
+                                                                    child: Text(
+                                                                        getProductName(product: efProductReceivedMap[entry.key], isFeed: procurement.type == 'pakan'),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
+                                                                ),
+                                                                Text(
+                                                                    '${Convert.toCurrencyWithoutDecimal(entry.key.getInput(), '', '.')} ${entry.key.getController().textUnit}',
+                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                )
+                                                            ]
+                                                        )
+                                                    );
+                                                } else {
+                                                    return const SizedBox();
+                                                }
+                                            }).toList()
+                                        ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    SizedBox(
+                                        width: MediaQuery.of(Get.context!).size.width - 32,
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                                Text('Keterangan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                const SizedBox(width: 16),
+                                                Expanded(child: Text(grNotesField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium), textAlign: TextAlign.right))
+                                            ]
+                                        ),
+                                    ),
+                                    const SizedBox(height: 50),
+                                    SizedBox(
+                                        width: MediaQuery.of(Get.context!).size.width - 32,
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Expanded(
+                                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitGrConfirmation"), label: "Yakin", onClick: () {
+                                                        Navigator.pop(Get.context!);
+                                                        isLoading.value = true;
+                                                        AuthImpl().get().then((auth) {
+                                                            if (auth != null) {
+                                                                String? productListJson = Mapper.asJsonString(efProductReceivedMap.entries.map((entry) => entry.value).toList());
+                                                                String? photoListJson = Mapper.asJsonString(grPhotoList);
+
+                                                                Map<String, dynamic> bodyRequest = {
+                                                                    'purchaseOrderId': procurement.id,
+                                                                    'transferRequestId': procurement.id,
+                                                                    'receivedDate': grReceivedDateField.getLastTimeSelectedText(),
+                                                                    'remarks': grNotesField.getInput(),
+                                                                    'details': json.decode(productListJson ?? '[]'),
+                                                                    'photos': json.decode(photoListJson ?? '[]')
+                                                                };
+
+                                                                Service.push(
+                                                                    apiKey: 'productReportApi',
+                                                                    service: isFromTransfer ? ListApi.createReceiptTransfer : ListApi.createReceiptOrder,
+                                                                    context: Get.context!,
+                                                                    body: ['Bearer ${auth.token}', auth.id, json.encode(bodyRequest)],
+                                                                    listener: ResponseListener(
+                                                                        onResponseDone: (code, message, body, id, packet) {
+                                                                            isLoading.value = false;
+                                                                            Get.off(TransactionSuccessActivity(
+                                                                                keyPage: "grConfirmationSaved",
+                                                                                message: "Kamu telah berhasil melakukan penerimaan sapronak",
+                                                                                showButtonHome: false,
+                                                                                onTapClose: () => Get.toNamed(
+                                                                                    isFromTransfer ? RoutePage.listTransferPage : RoutePage.listOrderPage,
+                                                                                    arguments: isFromTransfer ? coop : [coop, fromCoopRest]
+                                                                                ),
+                                                                                onTapHome: () {}
+                                                                            ));
+                                                                        },
+                                                                        onResponseFail: (code, message, body, id, packet) {
+                                                                            isLoading.value = false;
+                                                                            Get.snackbar(
+                                                                                "Pesan",
+                                                                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                                                                snackPosition: SnackPosition.TOP,
+                                                                                colorText: Colors.white,
+                                                                                backgroundColor: Colors.red,
+                                                                            );
+                                                                        },
+                                                                        onResponseError: (exception, stacktrace, id, packet) {
+                                                                            isLoading.value = false;
+                                                                            Get.snackbar(
+                                                                                "Pesan",
+                                                                                "Terjadi Kesalahan, $exception",
+                                                                                snackPosition: SnackPosition.TOP,
+                                                                                colorText: Colors.white,
+                                                                                backgroundColor: Colors.red,
+                                                                            );
+                                                                        },
+                                                                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                                                                    )
+                                                                );
+                                                            } else {
+                                                                GlobalVar.invalidResponse();
+                                                            }
+                                                        });
+                                                    })
+                                                ),
+                                                const SizedBox(width: 16),
+                                                Expanded(
+                                                    child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnCancelGrConfirmation"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                                                )
+                                            ],
+                                        ),
+                                    ),
+                                    const SizedBox(height: 32),
+                                ]
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }
+
+    String getProductName({Product? product, bool isFeed = true}) {
+        if (product != null) {
+            return isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? '';
+        } else {
+            return '-';
         }
     }
 }

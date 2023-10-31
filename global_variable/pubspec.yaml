@@ -10,6 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  model:
+    path: ../model
+  components:
+    path: ../components
+
   intl: ^0.18.0
   flutter_masked_text2: ^0.9.1
 

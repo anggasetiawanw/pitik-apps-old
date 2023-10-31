@@ -162,7 +162,10 @@ class EditField extends StatelessWidget {
                                                     ),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: const BorderSide(color: GlobalVar.primaryLight)
+                                                        borderSide: BorderSide(
+                                                            color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryLight : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white,
+                                                            width: 2.0,
+                                                        )
                                                     ),
                                                     filled: true,
                                                 ),

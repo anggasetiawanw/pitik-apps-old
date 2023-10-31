@@ -205,9 +205,27 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                             children: [
                                                 Text('Sisa Belum Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                                 const SizedBox(height: 8),
-                                                controller.createProductReceivedCards(productList: controller.procurement.details)
+                                                controller.createProductReceivedCards(productList: controller.procurement.details),
+                                                controller.grReceivedDateField,
+                                                controller.grNotesField,
+                                                controller.isLoadingPicture.isTrue ? SizedBox(
+                                                    height: 50,
+                                                    width: MediaQuery.of(context).size.width - 32,
+                                                    child: Padding(
+                                                        padding: const EdgeInsets.only(top: 16),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                                const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                                const SizedBox(width: 16),
+                                                                Text('Upload bukti foto...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                    )
+                                                ) : controller.grPhotoField,
+                                                const SizedBox(height: 32)
                                             ],
-                                        ) : const SizedBox()
+                                        ) : const SizedBox(),
                                     ]
                                 )
                             ]
