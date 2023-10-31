@@ -93,7 +93,6 @@ class Constant {
             await GoogleSignIn().disconnect(); 
             await FirebaseAuth.instance.signOut();
             Get.offAllNamed(RoutePage.loginPage);
-            
         };
     }
 }
