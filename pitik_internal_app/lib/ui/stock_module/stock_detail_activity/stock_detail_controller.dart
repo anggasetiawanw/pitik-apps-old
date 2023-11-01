@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
@@ -13,12 +15,18 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/product_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StockDetailController extends GetxController {
   BuildContext context;
+  ScreenshotController screenshotController = ScreenshotController();
   StockDetailController({required this.context});
   late ButtonFill yesButton = ButtonFill(
       controller: GetXCreator.putButtonFillController("yesButton"),
@@ -58,6 +66,17 @@ class StockDetailController extends GetxController {
           Timer(const Duration(milliseconds: 500), () {
             getDetailStock();
           });
+        });
+      });
+
+  late ButtonFill btShareOpname = ButtonFill(
+      controller: GetXCreator.putButtonFillController("btShareOpname"),
+      label: "Share PDF",
+      onClick: () async {
+        screenshotController.capture().then((Uint8List? image) async {
+          if (image != null) {
+            await shareWithPdf(image);
+          }
         });
       });
 
@@ -141,6 +160,32 @@ class StockDetailController extends GetxController {
               isLoading.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));
+  }
+
+  Future<void> shareWithPdf(Uint8List screenShot) async {
+    Directory appDocDirectory = await getApplicationDocumentsDirectory();
+
+    Directory('${appDocDirectory.path}/dir').create(recursive: true).then((Directory directory) async {
+      print('Path of New Dir: ${directory.path}');
+      final pdf = pw.Document();
+      pdf.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (context) {
+            return pw.Center(
+              child: pw.Image(pw.MemoryImage(screenShot), fit: pw.BoxFit.contain),
+            );
+          },
+        ),
+      );
+      final output = File('${directory.path}/share${opnameModel.code}.pdf');
+      File pdfFile = await output.writeAsBytes(await pdf.save());
+      final result = await Share.shareXFiles([XFile(pdfFile.path)], text: "Berita Acara Opname ${opnameModel.operationUnit!.operationUnitName} - ${Convert.getDatetime(opnameModel.confirmedDate!)}");
+
+      if (result.status == ShareResultStatus.success) {
+        print('Thank you for sharing my website!');
+      }
+    });
   }
 
   OpnameModel generatePayload(String status) {

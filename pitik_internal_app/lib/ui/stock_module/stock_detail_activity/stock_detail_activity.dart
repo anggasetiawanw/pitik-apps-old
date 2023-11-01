@@ -16,6 +16,7 @@ import 'package:pitik_internal_app/utils/enum/stock_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/stock_status.dart';
+import 'package:screenshot/screenshot.dart';
 
 class StockDetailActivity extends StatelessWidget {
   const StockDetailActivity({super.key});
@@ -286,117 +287,120 @@ class StockDetailActivity extends StatelessWidget {
           preferredSize: const Size.fromHeight(60),
           child: appBar(),
         ),
-        body: Obx(
-          () => controller.isLoading.isTrue
-              ? const Center(
-                  child: ProgressLoading(),
-                )
-              : Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            detailInformation(),
-                            if (controller.opnameModel.reviewer != null && controller.opnameModel.status == EnumStock.finished) ...[
+        body: Screenshot(
+          controller: controller.screenshotController,
+          child: Obx(
+            () => controller.isLoading.isTrue
+                ? const Center(
+                    child: ProgressLoading(),
+                  )
+                : Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              detailInformation(),
+                              if (controller.opnameModel.reviewer != null && controller.opnameModel.status == EnumStock.finished) ...[
+                                Container(
+                                    margin: const EdgeInsets.only(top: 16),
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: AppColors.outlineColor, width: 1),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                            Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.parse(controller.opnameModel.confirmedDate ?? DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()))), style: AppTextStyle.blackTextStyle.copyWith()),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset("images/checkbox_fill.svg"),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname",
+                                              style: AppTextStyle.blackTextStyle,
+                                              overflow: TextOverflow.clip,
+                                            )),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                              ],
                               Container(
-                                  margin: const EdgeInsets.only(top: 16),
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: AppColors.outlineColor, width: 1),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                          Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.parse(controller.opnameModel.confirmedDate ?? DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()))), style: AppTextStyle.blackTextStyle.copyWith()),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset("images/checkbox_fill.svg"),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                            "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname",
-                                            style: AppTextStyle.blackTextStyle,
-                                            overflow: TextOverflow.clip,
-                                          )),
-                                        ],
-                                      )
-                                    ],
-                                  )),
+                                margin: const EdgeInsets.only(top: 16),
+                                child: Text(
+                                  "Detail SKU",
+                                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              Column(children: controller.opnameModel.products!.map((e) => detailSKU(e!)).toList()),
+                              Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.all(16),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: AppColors.outlineColor, width: 1),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Total/Global(kg)",
+                                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Text(
+                                      "${(controller.opnameModel.totalWeight ?? 0)} Kg",
+                                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 100,
+                              )
                             ],
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              child: Text(
-                                "Detail SKU",
-                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            Column(children: controller.opnameModel.products!.map((e) => detailSKU(e!)).toList()),
-                            Container(
-                              margin: const EdgeInsets.only(top: 16),
-                              padding: const EdgeInsets.all(16),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: AppColors.outlineColor, width: 1),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total/Global(kg)",
-                                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Text(
-                                    "${(controller.opnameModel.totalWeight ?? 0)} Kg",
-                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 100,
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    controller.opnameModel.status == EnumStock.draft || controller.opnameModel.status == EnumStock.confirmed ? bottomNavbar() : const SizedBox()
-                  ],
-                ),
+                      controller.opnameModel.status == EnumStock.draft || controller.opnameModel.status == EnumStock.confirmed ? bottomNavbar() : const SizedBox()
+                    ],
+                  ),
+          ),
         ));
   }
 

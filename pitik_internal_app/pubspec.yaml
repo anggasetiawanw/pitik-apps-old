@@ -92,6 +92,9 @@ dependencies:
   autocomplete_textfield: ^2.0.1
   shorebird_code_push: ^1.1.0
   restart_app: ^1.2.1
+  pdf: ^3.10.4
+  screenshot: ^2.1.0
+  share_plus: ^7.2.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

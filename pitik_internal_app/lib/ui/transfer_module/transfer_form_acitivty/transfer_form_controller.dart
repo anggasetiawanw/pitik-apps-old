@@ -353,6 +353,7 @@ class TransferFormController extends GetxController {
             sourceOperationUnitId: selectSource!.id,
             targetOperationUnitId: selectDestination!.id,
             status: status,
+            remarks: efRemark.getInput(),
             products: [Products(
                 productItemId: selectItem!.id,
                 quantity: selectProduct.name == AppStrings.AYAM_UTUH || selectProduct.name == AppStrings.BRANGKAS || selectProduct.name == AppStrings.LIVE_BIRD || selectProduct.name == AppStrings.KARKAS? amountField.getInputNumber()!.toInt() : null,
