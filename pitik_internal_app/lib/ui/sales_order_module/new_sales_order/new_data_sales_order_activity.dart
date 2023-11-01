@@ -301,7 +301,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                           ],
                                         ),
                                 )),
-                            controller.efRemartk,
+                            controller.efRemark,
                             const SizedBox(height: 100)
                           ],
                         ),

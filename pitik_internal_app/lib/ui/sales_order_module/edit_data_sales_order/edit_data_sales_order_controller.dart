@@ -180,7 +180,7 @@ class EditDataSalesOrderController extends GetxController {
         refreshtotalPurchase();
       });
 
-  EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   @override
   void onInit() {
@@ -257,7 +257,7 @@ class EditDataSalesOrderController extends GetxController {
     if (isInbound.isTrue) {
       spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName ?? "");
     }
-    efRemartk.setInput(order.remarks ?? "");
+    efRemark.setInput(order.remarks ?? "");
 
     if (order.type! == "LB") {
       getSku(orderDetail.products![0]!.category!.id!);
@@ -628,7 +628,7 @@ class EditDataSalesOrderController extends GetxController {
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: orderDetail.category,
-      remarks: efRemartk.getInput(),
+      remarks: efRemark.getInput(),
     );
   }
 

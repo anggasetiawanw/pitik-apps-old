@@ -120,47 +120,46 @@ class JobActivity extends GetView<JobController> {
             onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullrefreshTerminate()),
             color: AppColors.primaryOrange,
             child: ListView.builder(
-          controller: controller.scrollTerminate,
-          itemCount: controller.isLoadMore.isTrue ? controller.listTerminate.value.length + 1 : controller.listTerminate.value.length,
-          itemBuilder: (context, index) {
-            int length = controller.listTerminate.value.length;
-            if (index >= length) {
-              return const Column(
-                children: [
-                  Center(child: ProgressLoading()),
-                  SizedBox(height: 100),
-                ],
-              );
-            }
-            return Column(
-              children: [
-                CardListTerminate(
-                  onTap: () {
-                    Get.toNamed(RoutePage.terminateDetail, arguments: controller.listTerminate.value[index]!)!.then((value) {
-                      controller.isLoadingTerminate.value = true;
-                      controller.listTerminate.value.clear();
-                      controller.pageTerminate.value = 1;
-                      Timer(const Duration(milliseconds: 500), () {
-                        controller.getListTerminate();
-                      });
-                    });
-                  },
-                  terminateModel: controller.listTerminate.value[index]!,
-                  isApproved: controller.listTerminate.value[index]!.reviewer != null ? true : false,
-                ),
-                index == controller.listTerminate.value.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
-              ],
-            );
-          },
-        ),
+              controller: controller.scrollTerminate,
+              itemCount: controller.isLoadMore.isTrue ? controller.listTerminate.value.length + 1 : controller.listTerminate.value.length,
+              itemBuilder: (context, index) {
+                int length = controller.listTerminate.value.length;
+                if (index >= length) {
+                  return const Column(
+                    children: [
+                      Center(child: ProgressLoading()),
+                      SizedBox(height: 100),
+                    ],
+                  );
+                }
+                return Column(
+                  children: [
+                    CardListTerminate(
+                      onTap: () {
+                        Get.toNamed(RoutePage.terminateDetail, arguments: controller.listTerminate.value[index]!)!.then((value) {
+                          controller.isLoadingTerminate.value = true;
+                          controller.listTerminate.value.clear();
+                          controller.pageTerminate.value = 1;
+                          Timer(const Duration(milliseconds: 500), () {
+                            controller.getListTerminate();
+                          });
+                        });
+                      },
+                      terminateModel: controller.listTerminate.value[index]!,
+                      isApproved: controller.listTerminate.value[index]!.reviewer != null ? true : false,
+                    ),
+                    index == controller.listTerminate.value.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                  ],
+                );
+              },
+            ),
           ),
         ),
-        
-        
       );
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: CustomAppbar(

@@ -175,7 +175,7 @@ class NewDataSalesOrderController extends GetxController {
         refreshtotalPurchase();
       });
 
-  EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   @override
   void onInit() {
@@ -548,7 +548,7 @@ class NewDataSalesOrderController extends GetxController {
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
-      remarks: efRemartk.getInput(),
+      remarks: efRemark.getInput(),
     );
   }
 
