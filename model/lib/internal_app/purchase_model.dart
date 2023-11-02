@@ -29,6 +29,9 @@ class Purchase {
   String? status;
   String? jagalId;
   String? remarks;
+  String? grRemarks;
+
+  double? grTotalWeight;
 
   @IsChild()
   VendorModel? vendor;
@@ -64,6 +67,8 @@ class Purchase {
     this.salesOrderId,
     this.jagalId,
     this.remarks,
+    this.grRemarks,
+    this.grTotalWeight,
   });
 
   static Purchase toResponseModel(Map<String, dynamic> map) {
@@ -96,6 +101,8 @@ class Purchase {
       salesOrderId: map['salesOrderId'],
       jagalId: map['jagalId'],
       remarks: map['remarks'],
+      grRemarks: map['grRemarks'],
+      grTotalWeight: map['grTotalWeight'],
     );
   }
 }

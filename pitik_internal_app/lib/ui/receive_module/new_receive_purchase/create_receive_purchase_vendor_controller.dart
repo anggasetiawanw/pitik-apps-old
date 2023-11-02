@@ -288,8 +288,8 @@ class CreateGrPurchaseController extends GetxController {
     return Purchase(
       products: listProductPayload,
       purchaseOrderId: purchaseDetail.value!.id,
-      grRemarks: efRemark.getInput(),
-      grTotalWeight: efTotalKG.getInputNumber(),
+      remarks: efRemark.getInput(),
+      totalWeight: efTotalKG.getInputNumber(),
     );
   }
 

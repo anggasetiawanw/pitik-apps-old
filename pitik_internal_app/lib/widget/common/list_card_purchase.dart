@@ -19,7 +19,7 @@ class CardListPurchase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime createdDate = Convert.getDatetime(purchase.createdDate!);
-    final DateTime modifiedDate = Convert.getDatetime(purchase.modifiedDate!);
+    // final DateTime modifiedDate = Convert.getDatetime(purchase.modifiedDate!);
 
     return GestureDetector(
         onTap: onTap,

@@ -48,7 +48,7 @@ class StockOpnameController extends GetxController {
         }
       });
 
-  EditField efTotal = EditField(controller: GetXCreator.putEditFieldController("efTOtal"), label: "Total/Global(kg)", hint: "ketik disini", alertText: "Total harus diisi", textUnit: "kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+  EditField efTotal = EditField(controller: GetXCreator.putEditFieldController("efTOtal"), label: "Total/Global(kg)*", hint: "ketik disini", alertText: "Total harus diisi", textUnit: "kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
   late ButtonFill yesButton = ButtonFill(
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
