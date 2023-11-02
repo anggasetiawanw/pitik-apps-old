@@ -172,7 +172,7 @@ class StockDetailActivity extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController(product.name!),
+            controller: GetXCreator.putAccordionController("${product.name!}Detail"),
             headerText: product.name!,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,8 +203,16 @@ class StockDetailActivity extends StatelessWidget {
                                         height: 4,
                                       ),
                                       Text(
-                                        "${item.quantity ?? item.weight ?? 0} ${item.quantity != null ? "Ekor" : "Kg"}",
-                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                        item.previousQuantity == null && item.previousWeight == null ? "-" : "${item.previousQuantity ?? item.previousWeight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
+                                        style: item.previousQuantity == null && item.previousWeight == null
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.previousWeight == 0 || item.previousQuantity == 0
+                                                ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : item.quantity == item.previousQuantity
+                                                    ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                    : item.weight == item.previousWeight
+                                                        ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
                                       )
                                     ],
                                   ),
@@ -222,8 +230,16 @@ class StockDetailActivity extends StatelessWidget {
                                         height: 4,
                                       ),
                                       Text(
-                                        "${item.quantity ?? item.weight ?? 0} ${item.quantity != null ? "Ekor" : "Kg"}",
-                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                        "${item.quantity ?? item.weight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
+                                        style: item.quantity == null && item.weight == null
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.weight == 0 || item.quantity == 0
+                                                ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : item.quantity == item.previousQuantity
+                                                    ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                    : item.weight == item.previousWeight
+                                                        ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
                                       )
                                     ],
                                   ),
@@ -243,22 +259,26 @@ class StockDetailActivity extends StatelessWidget {
                                     height: 4,
                                   ),
                                   Text(
-                                    "${item.quantity != null ? item.quantity! > item.quantity! ? "> ${item.quantity! - item.quantity!}" : item.quantity! < item.quantity! ? "< ${item.quantity! - item.quantity!}" : item.quantity! - item.quantity! == 0 ? "-" : "-" : item.weight! > item.weight! ? "> ${item.weight! - item.weight!}" : item.weight! < item.weight! ? "< ${item.weight! - item.weight!}" : item.weight! - item.weight! == 0 ? "-" : "-"} ${item.quantity != null ? "Ekor" : "Kg"}",
-                                    style: item.quantity != null
-                                        ? item.quantity! > item.quantity!
-                                            ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                            : item.quantity! < item.quantity!
+                                    item.previousQuantity == null && item.previousWeight == null
+                                        ? "-"
+                                        : item.quantity != null ? item.quantity! > item.previousQuantity! ? "> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.quantity! < item.previousQuantity! ? "< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.quantity! == 0 ? "-" : "-" : item.weight! > item.previousWeight! ? "> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.weight! < item.previousWeight! ? "< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.weight! == 0 ? "-" : "-",
+                                    style: item.previousQuantity == null && item.previousWeight == null
+                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                        : item.quantity != null
+                                            ? item.quantity! > item.previousQuantity!
                                                 ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.quantity! - item.quantity! == 0
-                                                    ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                        : item.weight! > item.weight!
-                                            ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                            : item.weight! < item.weight!
+                                                : item.quantity! < item.previousQuantity!
+                                                    ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                    : item.previousQuantity! - item.quantity! == 0
+                                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.weight! > item.previousWeight!
                                                 ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.weight! - item.weight! == 0
-                                                    ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                                : item.weight! < item.previousWeight!
+                                                    ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                    : item.weight! - item.previousWeight! == 0
+                                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
                                   )
                                 ],
                               ),

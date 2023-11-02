@@ -31,7 +31,6 @@ class StockRejectedController extends GetxController {
   void onInit() {
     super.onInit();
     opnameModel = Get.arguments;
-    opnameModel = Get.arguments;
     createdDate = Convert.getDatetime(opnameModel.createdDate!);
     isLoading.value = true;
     getDetailStock();

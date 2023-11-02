@@ -31,6 +31,8 @@ class Products {
   double? totalWeight;
   int? totalQuantity;
   String? cutType;
+  int? previousQuantity;
+  double? previousWeight;
 
   int? lossPrecentage;
   @IsChild()
@@ -72,6 +74,8 @@ class Products {
     this.totalQuantity,
     this.totalWeight,
     this.cutType,
+    this.previousQuantity,
+    this.previousWeight
   });
 
   static Products toResponseModel(Map<String, dynamic> map) {
@@ -100,6 +104,9 @@ class Products {
     if (map['totalQuantity'] is double){
         map['totalQuantity'] = map['totalQuantity'].toInt();
     }
+    if (map['previousWeight'] is int){
+        map['previousWeight'] = map['previousWeight'].toDouble();
+    }
     return Products(
       id: map['id'],
       name: map['name'],
@@ -127,6 +134,7 @@ class Products {
       totalQuantity: map['totalQuantity'],
       totalWeight: map['totalWeight'],
       cutType: map['cutType'],
+        previousQuantity: map['previousQuantity'],
     );
   }
 }
