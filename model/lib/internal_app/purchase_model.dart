@@ -10,7 +10,7 @@ import 'vendor_model.dart';
 ///@create date 04/04/23
 
 @SetupModel
-class Purchase{
+class Purchase {
   String? id;
   String? createdDate;
   String? createdBy;
@@ -20,6 +20,15 @@ class Purchase{
   int? totalQuantity;
   double? totalWeight;
   double? totalPrice;
+
+  String? vendorId;
+  String? operationUnitId;
+  String? purchaseOrderId;
+  String? internalTransferId;
+  String? salesOrderId;
+  String? status;
+  String? jagalId;
+  String? remarks;
 
   @IsChild()
   VendorModel? vendor;
@@ -32,17 +41,36 @@ class Purchase{
   @IsChildren()
   List<Products?>? products;
 
-  String? status;
-
-
-  Purchase({this.id, this.vendor, this.operationUnit, this.status, this.products, this.createdDate, this.createdBy, this.modifiedDate, this.modifiedBy, this.code, this.goodsReceived, this.jagal, this.totalQuantity, this.totalPrice, this.totalWeight});
+  Purchase({
+    this.id,
+    this.vendor,
+    this.operationUnit,
+    this.status,
+    this.products,
+    this.createdDate,
+    this.createdBy,
+    this.modifiedDate,
+    this.modifiedBy,
+    this.code,
+    this.goodsReceived,
+    this.jagal,
+    this.totalQuantity,
+    this.totalPrice,
+    this.totalWeight,
+    this.vendorId,
+    this.operationUnitId,
+    this.purchaseOrderId,
+    this.internalTransferId,
+    this.salesOrderId,
+    this.jagalId,
+    this.remarks,
+  });
 
   static Purchase toResponseModel(Map<String, dynamic> map) {
-
-    if(map['totalWeight'] is int){
+    if (map['totalWeight'] is int) {
       map['totalWeight'] = map['totalWeight'].toDouble();
     }
-    if(map['totalPrice'] is int){
+    if (map['totalPrice'] is int) {
       map['totalPrice'] = map['totalPrice'].toDouble();
     }
     return Purchase(
@@ -61,6 +89,13 @@ class Purchase{
       totalQuantity: map['totalQuantity'],
       totalPrice: map['totalPrice'],
       totalWeight: map['totalWeight'],
+      vendorId: map['vendorId'],
+      operationUnitId: map['operationUnitId'],
+      purchaseOrderId: map['purchaseOrderId'],
+      internalTransferId: map['internalTransferId'],
+      salesOrderId: map['salesOrderId'],
+      jagalId: map['jagalId'],
+      remarks: map['remarks'],
     );
   }
 }

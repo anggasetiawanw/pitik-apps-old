@@ -141,22 +141,22 @@ class NewDataSalesOrderController extends GetxController {
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {
-        editFieldKebutuhan.controller.enable();
+        // editFieldKebutuhan.controller.enable();
         editFieldHarga.controller.enable();
         refreshtotalPurchase();
       });
 
-  late EditField editFieldKebutuhan = EditField(
-      controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
-      label: "Kebutuhan*",
-      hint: "Tulis Jumlah*",
-      alertText: "Kolom Ini Harus Di Isi",
-      textUnit: "Kg",
-      inputType: TextInputType.number,
-      maxInput: 20,
-      onTyping: (value, control) {
-        refreshtotalPurchase();
-      });
+//   late EditField editFieldKebutuhan = EditField(
+//       controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
+//       label: "Kebutuhan*",
+//       hint: "Tulis Jumlah*",
+//       alertText: "Kolom Ini Harus Di Isi",
+//       textUnit: "Kg",
+//       inputType: TextInputType.number,
+//       maxInput: 20,
+//       onTyping: (value, control) {
+//         refreshtotalPurchase();
+//       });
 
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
@@ -219,7 +219,7 @@ class NewDataSalesOrderController extends GetxController {
     skuCard.controller.visibleCard();
     skuCardRemark.controller.visibleCard();
     editFieldJumlahAyam.controller.disable();
-    editFieldKebutuhan.controller.disable();
+    // editFieldKebutuhan.controller.disable();
     editFieldHarga.controller.disable();
     if (isInbound.isTrue) {
       getListSource();
@@ -586,7 +586,7 @@ class NewDataSalesOrderController extends GetxController {
         quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
-        weight: editFieldKebutuhan.getInputNumber(),
+        weight: /*editFieldKebutuhan.getInputNumber()*/ 0,
       ));
     }
 
@@ -668,11 +668,13 @@ class NewDataSalesOrderController extends GetxController {
       editFieldJumlahAyam.controller.showAlert();
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
-    } else if (editFieldKebutuhan.getInput().isEmpty) {
-      editFieldKebutuhan.controller.showAlert();
-      Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
-      return ret = [false, ""];
-    } else if (editFieldHarga.getInput().isEmpty) {
+    } 
+    // else if (editFieldKebutuhan.getInput().isEmpty) {
+    //   editFieldKebutuhan.controller.showAlert();
+    //   Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
+    //   return ret = [false, ""];
+    // }
+     else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       Scrollable.ensureVisible(editFieldHarga.controller.formKey.currentContext!);
       return ret = [false, ""];
