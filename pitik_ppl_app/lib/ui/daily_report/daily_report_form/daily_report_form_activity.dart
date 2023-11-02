@@ -45,8 +45,8 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
         );
     }
 
-
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(120), 
             child: Column(
@@ -172,7 +172,7 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
                               ]),
                             ),
                             const SizedBox(height:  120 ,)
-                              
+
                         ],
                 ),
               ),

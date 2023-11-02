@@ -65,7 +65,7 @@ class DashboardLampController extends GetxController {
             service: ListApi.getFanData,
             context: context,
             body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathDeviceData("lamp",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
+                ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', "lamp",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
             listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
                 if ((body as FanListResponse).data!.isNotEmpty){
                     for (var result in (body).data!){

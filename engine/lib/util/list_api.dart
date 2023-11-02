@@ -36,6 +36,7 @@ class ListApi {
     static const String takePictureSmartCamera = "takePictureSmartCamera";
     
     // api SMART CONTROLLER
+    static const String getFloorList = "getFloor";
     static const String getDetailSmartController = "getDetailSmartController";
     static const String getDataGrowthDay = "getDataGrowthDay";
     static const String setController = "setController";
@@ -141,24 +142,24 @@ class ListApi {
         return "v2/b2b/iot-devices/smart-camera/jobs/$coopId";
     }
 
-    static String pathdetailSmartController(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/summary?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDetailSmartController(String basePath, String coopCodeId, String deviceId) {
+        return "$basePath?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
-    static String pathdetailGrowthDay(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/growth-day?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDeviceData(String basePath, String device, String coopCodeId, String deviceId){
+        return "$basePath$device?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
-    static String pathDeviceData(String device, String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDetailFanData(String basePath, String device, String coopCodeId, String deviceId, String id) {
+        return "$basePath$device/detail?coopId=$coopCodeId&deviceId=$deviceId&id=$id";
     }
 
-    static String pathDetailFanData(String device, String coopCodeId, String deviceId, String id){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device/detail?coopId=$coopCodeId&deviceId=$deviceId&id=$id";
-    }
-
-    static String pathSetController(String device, String coopCodeId){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device/$coopCodeId";
+    static String pathSetController(String basePath, String device, String coopCodeId, {bool forPitikConnect = true, String idForNonPitikConnect = ''}) {
+        if (forPitikConnect) {
+            return "$basePath$device/$coopCodeId";
+        } else {
+            return '$basePath$device/$idForNonPitikConnect';
+        }
     }
 
     static String pathSmartScaleForDetailAndUpdate(String weighingId) {

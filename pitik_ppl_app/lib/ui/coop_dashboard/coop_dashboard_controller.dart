@@ -259,9 +259,7 @@ class CoopDashboardController extends GetxController {
                                             _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () {  // SMART SCALE
                                                 // TO SMART SCALE
                                             }),
-                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () {  // SMART CONTROLLER
-                                                // TO SMART CONTROLLER
-                                            }),
+                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: coop)),
                                             _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () {  // SMART CAMERA
                                                 // TO SMART CAMERA
                                             }),

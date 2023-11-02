@@ -35,6 +35,8 @@ import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_activity.dart';
@@ -43,6 +45,8 @@ import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_activi
 import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_activity.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -85,6 +89,10 @@ class AppRoutes {
         GetPage(name: RoutePage.dailyReport, page: ()=> const DailyReportHomeActivity(), binding: DailyReportHomeBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportForm, page: ()=> const DailyReportFormActivity(), binding: DailyReportFormBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportDetail, page: ()=> const DailyReportDetailActivity(), binding: DailyReportDetailBindings(context: GlobalVar.getContext())),
+
+        // Smart Controller
+        GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartControllerDashboard, page: () => const SmartControllerDashboard(), binding: DetailSmartControllerBindings(context: GlobalVar.getContext())),
     ];
 }
 
@@ -113,4 +121,6 @@ class RoutePage {
     static const String dailyReport = "/daily-Report";
     static const String dailyReportForm = "/daily-Report-Form";
     static const String dailyReportDetail = "/daily-Report-Detail";
+    static const String smartControllerList = "/smartControllerList";
+    static const String smartControllerDashboard = "/smartControllerDashboard";
 }

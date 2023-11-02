@@ -23,9 +23,9 @@ import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/procurement_detail_response.dart';
+import 'package:common_page/transaction_success_activity.dart';
 
 import '../../route.dart';
-import '../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>

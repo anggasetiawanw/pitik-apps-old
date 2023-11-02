@@ -25,9 +25,8 @@ import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
 import 'package:model/response/stock_summary_response.dart';
+import 'package:common_page/transaction_success_activity.dart';
 import 'package:pitik_ppl_app/route.dart';
-
-import '../../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>

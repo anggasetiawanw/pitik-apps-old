@@ -231,9 +231,16 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         );
     }
 
+    bool _isCoopNew(Coop coop) {
+        return coop.isNew != null && coop.isNew!;
+    }
+
     Widget createCoopActiveCard(int index) {
         Coop coop = coopFilteredList[index]!;
-        DateTime startDate = Convert.getDatetime(coop.startDate!);
+        DateTime? startDate;
+        if (coop.startDate != null) {
+            startDate = Convert.getDatetime(coop.startDate!);
+        }
 
         return GestureDetector(
             onTap: () => actionCoop(coop),
@@ -252,22 +259,22 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Expanded(child: Text(coop.coopName!, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black),overflow: TextOverflow.clip,)),
-                                        coop.isNew! ? const SizedBox() : Text("Hari ${coop.day}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                        Expanded(child: Text(coop.coopName ?? '-', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black),overflow: TextOverflow.clip,)),
+                                        _isCoopNew(coop) ? const SizedBox() : Text("Hari ${coop.day}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                     ],
                                 ),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Expanded(child: Text('${coop.coopDistrict!}, ${coop.coopCity!}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), overflow: TextOverflow.clip,)),
-                                        Text(
+                                        Expanded(child: Text('${coop.coopDistrict ?? '-'}, ${coop.coopCity ?? '-'}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), overflow: TextOverflow.clip,)),
+                                        startDate != null ? Text(
                                             "DOC-In ${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}",
                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)
-                                        )
+                                        ) : const SizedBox()
                                     ],
                                 ),
                                 const SizedBox(height: 8),
-                                coop.isNew! ? Container(
+                                _isCoopNew(coop) ? Container(
                                     decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(10)),
                                         color: GlobalVar.greenBackground
@@ -277,7 +284,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                         child: Text(GlobalVar.NEW, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.green)),
                                     ),
                                 ) : const SizedBox(),
-                                coop.isNew! ? const SizedBox() :
+                                _isCoopNew(coop) ? const SizedBox() :
                                 Container(
                                     decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -307,8 +314,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                         ),
                                     ),
                                 ),
-                                SizedBox(height: coop.isNew! ? 0 : 8),
-                                coop.isNew! ? const SizedBox() :
+                                SizedBox(height: _isCoopNew(coop) ? 0 : 8),
+                                _isCoopNew(coop) ? const SizedBox() :
                                 Container(
                                     decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -338,7 +345,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                         ),
                                     ),
                                 ),
-                                coop.isActionNeeded! ?
+                                coop.isActionNeeded != null && coop.isActionNeeded! ?
                                 ButtonFill(controller: GetXCreator.putButtonFillController("btnCoopActionNeeded"), label: 'Cek Laporan Harian',
                                     onClick: () {
                                         // TO DAILY REPORT

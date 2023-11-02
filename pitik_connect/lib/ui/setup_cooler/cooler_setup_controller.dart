@@ -105,7 +105,7 @@ class CoolerSetupController extends GetxController {
             service: ListApi.getCoolerData,
             context: context,
             body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathDeviceData("cooler/detail",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
+                ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', "cooler/detail",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
             listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
                 if ((body as CoolerResponse).data != null){
                     loadData((body).data!);
@@ -170,7 +170,7 @@ class CoolerSetupController extends GetxController {
                     service: ListApi.setController,
                     context: context,
                     body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId,
-                        ListApi.pathSetController("cooler/detail", device.deviceSummary!.coopCodeId!),
+                        ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "cooler/detail", device.deviceSummary!.coopCodeId!),
                         Mapper.asJsonString(payload)],
                     listener:ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
