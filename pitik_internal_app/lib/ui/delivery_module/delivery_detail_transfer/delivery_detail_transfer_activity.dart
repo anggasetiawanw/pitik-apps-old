@@ -170,79 +170,51 @@ class DeliveryDetailTransfer extends StatelessWidget {
               ? const Center(child: ProgressLoading())
               : Stack(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        detailInformation(),
-                        if (controller.transferModel.products!.isNotEmpty) ...[
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 16),
-                            child: Text(
-                              "Detail SKU",
-                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                    SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          detailInformation(),
+                          if (controller.transferModel.products!.isNotEmpty) ...[
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 16),
+                              child: Text(
+                                "Detail SKU",
+                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 48,
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                            decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-                            child: Text(
-                              "${controller.transferModel.products![0]!.productItems![0]!.name}",
-                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
+                            Container(
+                              width: double.infinity,
+                              height: 48,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                              decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                              child: Text(
+                                "${controller.transferModel.products![0]!.productItems![0]!.name}",
+                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(border: Border.all(color: AppColors.outlineColor, width: 1), borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
-                            child: Column(
-                              children: [
-                                infoDetailSKU("Kategori SKU", "${controller.transferModel.products != null ? controller.transferModel.products![0]!.name : "null"}"),
-                                if (controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(border: Border.all(color: AppColors.outlineColor, width: 1), borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                              child: Column(
+                                children: [
+                                  infoDetailSKU("Kategori SKU", "${controller.transferModel.products != null ? controller.transferModel.products![0]!.name : "null"}"),
+                                  if (controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
+                                    const SizedBox(
+                                      height: 14,
+                                    ),
+                                    infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                  ],
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                  infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight} Kg"),
                                 ],
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight} Kg"),
-                              ],
+                              ),
                             ),
-                          ),
-                        ] else
-                          const SizedBox(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppColors.outlineColor, width: 1),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Catatan",
-                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Text(
-                                controller.transferModel.remarks ?? "-",
-                                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
-                              )
-                            ],
-                          ),
-                        ),
-                        if (controller.isSendItem.isTrue) controller.efRemark,
-                        if (controller.transferModel.status != "READY_TO_DELIVER") ...[
+                          ] else
+                            const SizedBox(),
                           const SizedBox(
                             height: 16,
                           ),
@@ -257,21 +229,52 @@ class DeliveryDetailTransfer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan Pengiriman",
+                                  "Catatan",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.driverRemarks ?? "-",
+                                  controller.transferModel.remarks ?? "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
                             ),
                           ),
-                        ],
-                      ]),
+                          if (controller.isSendItem.isTrue) controller.efRemark,
+                          if (controller.transferModel.status != "READY_TO_DELIVER") ...[
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.outlineColor, width: 1),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Catatan Pengiriman",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    controller.transferModel.driverRemarks ?? "-",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                          const SizedBox(height: 120,),
+                        ]),
+                      ),
                     ),
                     controller.transferModel.status == "ON_DELIVERY" || controller.transferModel.status == "READY_TO_DELIVER" ? bottomNavbar() : const SizedBox()
                   ],

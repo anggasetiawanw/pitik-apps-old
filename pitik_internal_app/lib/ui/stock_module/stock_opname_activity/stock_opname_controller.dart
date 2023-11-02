@@ -291,6 +291,12 @@ class StockOpnameController extends GetxController {
       return false;
     }
 
+    if(efTotal.getInput().isEmpty){
+        efTotal.controller.showAlert();
+        Scrollable.ensureVisible(efTotal.controller.formKey.currentContext!);
+        return false;
+    }
+
     // for(var stock in listStockField.value){
     //     for(var item in stock.controller.efSku.value){
     //         if(item.getInput().isEmpty){
