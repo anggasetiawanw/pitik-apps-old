@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/switch_linear/switch_linear.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -121,6 +120,11 @@ class AssignDriverPage extends StatelessWidget {
                     controller: GetXCreator.putButtonFillController("assignDriver"),
                     label: "Kirim",
                     onClick: () {
+                      if (controller.spinnerDriver.controller.textSelected.isEmpty) {
+                        controller.spinnerDriver.controller.showAlert();
+                        Scrollable.ensureVisible(controller.spinnerDriver.controller.formKey.currentContext!);
+                        return;
+                      }
                       showBottomDialog(context, controller);
                     },
                   ),
@@ -341,6 +345,25 @@ class AssignDriverPage extends StatelessWidget {
                                     height: 8,
                                   ),
                                 ],
+                                if (controller.deliveryPrice.value != 0) ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Biaya Pengiriman",
+                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      Obx(
+                                        () => Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.deliveryPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
                                 Row(
                                   children: [
                                     Expanded(
@@ -350,7 +373,7 @@ class AssignDriverPage extends StatelessWidget {
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value + controller.deliveryPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
@@ -395,12 +418,7 @@ class AssignDriverPage extends StatelessWidget {
                                     "Biaya Pengiriman",
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                   ),
-                                  SwitchLinear(
-                                    controller: GetXCreator.putSwitchLinearController("switchAssignDriver"),
-                                    onSwitch: (isSwitch) {
-                                      controller.isSwitchOn.value = isSwitch;
-                                    },
-                                  ),
+                                  controller.swDelivery,
                                 ],
                               ),
                               Obx(() => controller.isSwitchOn.isTrue
@@ -504,5 +522,3 @@ class AssignDriverPage extends StatelessWidget {
         });
   }
 }
-
-

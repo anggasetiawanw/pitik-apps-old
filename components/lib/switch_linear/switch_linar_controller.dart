@@ -4,6 +4,10 @@ class SwitchLinearController extends GetxController {
     SwitchLinearController({required this.tag});
 
     var isSwitchOn = false.obs;
+    var isCanTap = true.obs;
+
+    void tapEnable() => isCanTap.value = true;
+    void tapDisable() => isCanTap.value = false;
     // @override
     // void onInit() {
     //     super.onInit();

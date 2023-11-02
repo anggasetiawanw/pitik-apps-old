@@ -1,10 +1,12 @@
-import 'dart:async';
+ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
+import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
@@ -16,6 +18,7 @@ import 'package:pitik_internal_app/utils/route.dart';
 class DeliveryDetailTransferController extends GetxController {
     BuildContext context;
 
+  var isSendItem = false.obs;
     DeliveryDetailTransferController({required this.context});
     late ButtonFill doneSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("doneSendButton"), label: "Terkirim", onClick: (){
         Get.toNamed(RoutePage.deliveryConfirmTransfer, arguments: transferModel)!.then((value) {
@@ -33,7 +36,9 @@ class DeliveryDetailTransferController extends GetxController {
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
         Get.back();        
-    });
+    }); 
+    EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkDeliveryTransfer"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+
 
     var isLoading = false.obs;
     late TransferModel transferModel;
@@ -85,7 +90,7 @@ class DeliveryDetailTransferController extends GetxController {
         Service.push(
             service: ListApi.transferEditStatus,
             context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, ""],
+            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, isSendItem.isTrue ? Mapper.asJsonString(TransferModel(driverRemarks: efRemark.getInput())):""],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     Get.back();

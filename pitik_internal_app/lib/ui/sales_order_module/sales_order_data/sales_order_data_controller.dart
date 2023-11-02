@@ -89,12 +89,28 @@ class SalesOrderController extends GetxController {
         }
       });
   SpinnerSearch spCity = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCity"), label: "Kota Customer", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
-  late EditField efMin = EditField(controller: GetXCreator.putEditFieldController("efMin"), label: "Rentang Min", hint: "Ketik Disini", alertText: "Min Max harus diiisi",inputType: TextInputType.number, textUnit: "Ekor", maxInput: 20, onTyping: (value, editField) {
-    efMax.controller.hideAlert();
-  });
-  late EditField efMax = EditField(controller: GetXCreator.putEditFieldController("efMax"), label: "Rentang Max", hint: "Ketik Disini", alertText: "Min Max harus diisi",inputType: TextInputType.number, textUnit: "Ekor", maxInput: 20, onTyping: (value, editField) {
-    efMin.controller.hideAlert();
-  });
+  late EditField efMin = EditField(
+      controller: GetXCreator.putEditFieldController("efMin"),
+      label: "Rentang Min",
+      hint: "Ketik Disini",
+      alertText: "Min Max harus diiisi",
+      inputType: TextInputType.number,
+      textUnit: "Ekor",
+      maxInput: 20,
+      onTyping: (value, editField) {
+        efMax.controller.hideAlert();
+      });
+  late EditField efMax = EditField(
+      controller: GetXCreator.putEditFieldController("efMax"),
+      label: "Rentang Max",
+      hint: "Ketik Disini",
+      alertText: "Min Max harus diisi",
+      inputType: TextInputType.number,
+      textUnit: "Ekor",
+      maxInput: 20,
+      onTyping: (value, editField) {
+        efMin.controller.hideAlert();
+      });
   SpinnerField spStatus = SpinnerField(
       controller: GetXCreator.putSpinnerFieldController("spStatus"),
       label: "Status",
@@ -150,7 +166,7 @@ class SalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOrders,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY","ALLOCATED"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY", "ALLOCATED"],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as SalesOrderListResponse).data.isNotEmpty) {
@@ -416,10 +432,14 @@ class SalesOrderController extends GetxController {
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
-                  onTap: () => backFromForm(false),
+                  onTap: () => Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? null : backFromForm(false),
                   child: Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: AppColors.outlineColor)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.outlineColor),
+                      color: Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? AppColors.grey : Colors.white,
+                    ),
                     child: Row(
                       children: [
                         SvgPicture.asset(
@@ -646,41 +666,40 @@ class SalesOrderController extends GetxController {
       isLoadData.value = true;
       getSearchOrder();
     } else {
-        if(efMax.getInput().isEmpty && efMin.getInput().isEmpty) {            
-            Get.back();
-            orderList.value.clear();
-            page.value = 1;
-            isLoadData.value = true;
-            getListOrders();
-        }
+      if (efMax.getInput().isEmpty && efMin.getInput().isEmpty) {
+        Get.back();
+        orderList.value.clear();
+        page.value = 1;
+        isLoadData.value = true;
+        getListOrders();
+      }
     }
   }
 
   bool validationFilter() {
     if (efMax.getInput().isNotEmpty) {
-        if( efMin.getInput().isEmpty){
-            efMin.controller.showAlert();
-            efMax.controller.showAlert();
-            return false;
-        }
+      if (efMin.getInput().isEmpty) {
+        efMin.controller.showAlert();
+        efMax.controller.showAlert();
+        return false;
+      }
     } else if (efMin.getInput().isNotEmpty) {
-        if(efMax.getInput().isEmpty){
-            efMax.controller.showAlert();
-            efMin.controller.showAlert();
-            return false;
-        }
-    }
-    else if(efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
-        if(efMin.getInputNumber()! > efMax.getInputNumber()!) {
-            Get.snackbar(
-                "Oops",
-                "Rentang Min Harus Lebih Kecil Dari Rentang Max",
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-            );
-            return false;
-        }
+      if (efMax.getInput().isEmpty) {
+        efMax.controller.showAlert();
+        efMin.controller.showAlert();
+        return false;
+      }
+    } else if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
+      if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
+        Get.snackbar(
+          "Oops",
+          "Rentang Min Harus Lebih Kecil Dari Rentang Max",
+          snackPosition: SnackPosition.TOP,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+        return false;
+      }
     }
     return true;
   }
@@ -785,7 +804,7 @@ class SalesOrderController extends GetxController {
                 ),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start ,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 8),

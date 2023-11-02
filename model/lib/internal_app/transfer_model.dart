@@ -41,6 +41,7 @@ class TransferModel {
   String? modifiedBy;
 
   String? remarks;
+  String? driverRemarks;
 
   TransferModel({
     this.id,
@@ -61,6 +62,7 @@ class TransferModel {
     this.driver,
     this.goodsReceived,
     this.remarks,
+    this.driverRemarks,
   });
 
   static TransferModel toResponseModel(Map<String, dynamic> map) {
@@ -83,6 +85,7 @@ class TransferModel {
       driver: Mapper.child<Profile>(map['driver']),
       goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
       remarks: map['remarks'],
+      driverRemarks: map['driverRemarks'],
     );
   }
 }

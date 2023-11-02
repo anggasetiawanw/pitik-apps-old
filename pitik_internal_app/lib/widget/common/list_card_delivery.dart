@@ -42,7 +42,7 @@ class CardListDelivery extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${isPenjualan? order!.customer!.businessName : transferModel!.targetOperationUnit!.operationUnitName}",
+                        "${isPenjualan? order!.customer?.businessName : transferModel!.targetOperationUnit!.operationUnitName}",
                         style: AppTextStyle.blackTextStyle
                             .copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),

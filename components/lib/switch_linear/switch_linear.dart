@@ -14,7 +14,7 @@ class SwitchLinear extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Switch(
+    return Obx(() => Switch(
         value: controller.isSwitchOn.value,
         activeColor: Colors.white,
         activeTrackColor: AppColors.primaryOrange,
@@ -27,7 +27,9 @@ class SwitchLinear extends StatelessWidget {
           return AppColors.primaryOrange; // Use the default color.
         }),
         onChanged: (isSwitch) {
-          controller.isSwitchOn.value = isSwitch;
+          if (controller.isCanTap.isTrue) {
+            controller.isSwitchOn.value = isSwitch;
+          }
           onSwitch(isSwitch);
         }));
   }

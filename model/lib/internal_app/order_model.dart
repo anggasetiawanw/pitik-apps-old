@@ -37,6 +37,7 @@ class Order {
   String? remarks;
   String? driverRemarks;
   String? deliveryTime;
+  bool? withDeliveryFee;
 
   @IsChild()
   Customer? customer;
@@ -57,41 +58,43 @@ class Order {
   @IsChild()
   SalesPerson? userCreator;
 
-  Order(
-      {this.id,
-      this.customerId,
-      this.status,
-      this.operationUnitId,
-      this.operationUnit,
-      this.salespersonId,
-      this.createdDate,
-      this.customer,
-      this.products,
-      this.salesperson,
-      this.modifiedDate,
-      this.userModifier,
-      this.code,
-      this.returnStatus,
-      this.driver,
-      this.type,
-      this.productNotes,
-      this.totalWeight,
-      this.totalQuantity,
-      this.totalPrice,
-      this.paymentMethod,
-      this.paymentAmount,
-      this.latitude,
-      this.longitude,
-      this.returnedProducts,
-      this.reason,
-      this.returnReason,
-      this.grStatus,
-      this.category,
-      this.userCreator,
-      this.driverId,
-      this.remarks,
-      this.driverRemarks,
-      this.deliveryTime});
+  Order({
+    this.id,
+    this.customerId,
+    this.status,
+    this.operationUnitId,
+    this.operationUnit,
+    this.salespersonId,
+    this.createdDate,
+    this.customer,
+    this.products,
+    this.salesperson,
+    this.modifiedDate,
+    this.userModifier,
+    this.code,
+    this.returnStatus,
+    this.driver,
+    this.type,
+    this.productNotes,
+    this.totalWeight,
+    this.totalQuantity,
+    this.totalPrice,
+    this.paymentMethod,
+    this.paymentAmount,
+    this.latitude,
+    this.longitude,
+    this.returnedProducts,
+    this.reason,
+    this.returnReason,
+    this.grStatus,
+    this.category,
+    this.userCreator,
+    this.driverId,
+    this.remarks,
+    this.driverRemarks,
+    this.deliveryTime,
+    this.withDeliveryFee,
+  });
 
   static Order toResponseModel(Map<String, dynamic> map) {
     if (map['totalWeight'] is int) {
@@ -135,6 +138,7 @@ class Order {
       remarks: map['remarks'],
       driverRemarks: map['driverRemarks'],
       deliveryTime: map['deliveryTime'],
+      withDeliveryFee: map['withDeliveryFee'],
     );
   }
 }

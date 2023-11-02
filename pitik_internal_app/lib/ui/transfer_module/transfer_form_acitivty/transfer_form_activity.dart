@@ -106,7 +106,7 @@ class TransferFormActivity extends StatelessWidget {
                       controller.skuField,
                       controller.amountField,
                       controller.totalField,
-                      controller.efRemartk,
+                      controller.efRemark,
                       const SizedBox(
                               height: 120,
                             ),

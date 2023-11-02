@@ -88,7 +88,7 @@ class TransferFormController extends GetxController {
     EditField amountField = EditField(controller: GetXCreator.putEditFieldController("amountBirds"), label: "Jumlah Ekor*", hint: "0", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
     EditField totalField = EditField(controller: GetXCreator.putEditFieldController("totalFields"), label: "Total*", hint: "0.0", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
 
-    EditField efRemartk = EditField(controller: GetXCreator.putEditFieldController("efRemartk"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+    EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
 
     Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
@@ -133,7 +133,7 @@ class TransferFormController extends GetxController {
             }
             totalField.controller.enable();
             totalField.setInput(transferModel!.products![0]!.productItems![0]!.weight!.toString());
-            efRemartk.setInput(transferModel!.remarks??"");
+            efRemark.setInput(transferModel!.remarks??"");
         }
     }
 
@@ -353,6 +353,7 @@ class TransferFormController extends GetxController {
             sourceOperationUnitId: selectSource!.id,
             targetOperationUnitId: selectDestination!.id,
             status: status,
+            remarks: efRemark.getInput(),
             products: [Products(
                 productItemId: selectItem!.id,
                 quantity: selectProduct.name == AppStrings.AYAM_UTUH || selectProduct.name == AppStrings.BRANGKAS || selectProduct.name == AppStrings.LIVE_BIRD || selectProduct.name == AppStrings.KARKAS? amountField.getInputNumber()!.toInt() : null,

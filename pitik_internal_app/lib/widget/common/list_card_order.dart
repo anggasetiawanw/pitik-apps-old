@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
-import 'package:intl/intl.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -19,8 +18,8 @@ class CardListOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime dateOrder = Convert.getDatetime(order.createdDate!);
-    final DateTime dateModified = Convert.getDatetime(order.modifiedDate!);
+    // final DateTime dateOrder = Convert.getDatetime(order.createdDate!);
+    // final DateTime dateModified = Convert.getDatetime(order.modifiedDate!);
     return GestureDetector(
         onTap: onTap,
         child: Container(
@@ -45,7 +44,7 @@ class CardListOrder extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          "${order.code} - ${dateOrder.day} ${DateFormat.MMM().format(dateOrder)} ${dateOrder.year} (${dateOrder.hour} : ${dateOrder.minute})",
+                          "${order.code} - ${Convert.getDateFormat(order.createdDate!)}",
                           style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                           overflow: TextOverflow.clip,
                         ),
@@ -99,6 +98,20 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text("Sumber : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text(
+                    order.operationUnit?.operationUnitName == null ? "-" : "${order.operationUnit?.operationUnitName}",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text("SKU : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
@@ -140,14 +153,6 @@ class CardListOrder extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "${order.salesperson == null ? "-" : order.salesperson!.email!.toString()}" "${" - "}" "(${dateModified.day} ${DateFormat.MMM().format(dateModified)} ${dateModified.year})",
-                style: AppTextStyle.subTextStyle.copyWith(fontSize: 11),
-                overflow: TextOverflow.clip,
               ),
             ])));
   }

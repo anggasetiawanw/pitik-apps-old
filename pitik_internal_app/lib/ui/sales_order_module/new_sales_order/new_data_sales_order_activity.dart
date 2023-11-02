@@ -108,7 +108,7 @@ class NewDataSalesOrder extends StatelessWidget {
                   controller.spinnerCategories,
                   controller.spinnerSku,
                   controller.editFieldJumlahAyam,
-                  controller.editFieldKebutuhan,
+                //   controller.editFieldKebutuhan,
                   controller.editFieldHarga,
                   const SizedBox(
                     height: 16,
@@ -301,7 +301,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                           ],
                                         ),
                                 )),
-                            controller.efRemartk,
+                            controller.efRemark,
                             const SizedBox(height: 100)
                           ],
                         ),

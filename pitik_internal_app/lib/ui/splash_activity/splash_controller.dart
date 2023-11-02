@@ -54,7 +54,6 @@ class SplashController extends GetxController {
                             Get.offNamed(RoutePage.loginPage);
                         } else {
                             Constant.auth = auth;
-                            Constant.userGoogle = userGoogle;
                             Constant.profileUser = userProfile;
                             String appId = FirebaseRemoteConfig.instance.getString("appId");
                             if(xAppId != null && (appId.isNotEmpty && xAppId.appId != appId) ){

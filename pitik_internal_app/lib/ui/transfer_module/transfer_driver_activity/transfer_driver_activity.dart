@@ -162,93 +162,96 @@ class TransferDriverDetail extends StatelessWidget {
         children: [
           Obx(() => controller.isLoading.isTrue
               ? const Center(child: ProgressLoading())
-              : Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      detailInformation(),
-                      if (controller.transferModel.products!.isNotEmpty) ...[
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            "Detail SKU",
-                            style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+              : SingleChildScrollView(
+                child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        detailInformation(),
+                        if (controller.transferModel.products!.isNotEmpty) ...[
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 16),
+                            child: Text(
+                              "Detail SKU",
+                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 48,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                          decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-                          child: Text(
-                            "${controller.transferModel.products![0]!.name}",
-                            style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
+                          Container(
+                            width: double.infinity,
+                            height: 48,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                            decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                            child: Text(
+                              "${controller.transferModel.products![0]!.name}",
+                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
+                            ),
                           ),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16),
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border(
+                                bottom: BorderSide(color: AppColors.outlineColor, width: 1),
+                                left: BorderSide(color: AppColors.outlineColor, width: 1),
+                                right: BorderSide(color: AppColors.outlineColor, width: 1),
+                                top: BorderSide(color: AppColors.outlineColor, width: 0),
+                              ),
+                              // border: Border.all(color: AppColors.grey, width: 1),
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                            ),
+                            child: Column(
+                              children: [
+                                infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
+                                if (controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                ],
+                                const SizedBox(
+                                  height: 14,
+                                ),
+                                controller.transferModel.products![0]!.productItems![0]!.weight != null ? infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg") : const SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ] else
+                          const SizedBox(),
+                        const SizedBox(
+                          height: 16,
                         ),
                         Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
-                            border: Border(
-                              bottom: BorderSide(color: AppColors.outlineColor, width: 1),
-                              left: BorderSide(color: AppColors.outlineColor, width: 1),
-                              right: BorderSide(color: AppColors.outlineColor, width: 1),
-                              top: BorderSide(color: AppColors.outlineColor, width: 0),
-                            ),
-                            // border: Border.all(color: AppColors.grey, width: 1),
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: AppColors.outlineColor, width: 1),
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
-                              if (controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
-                                const SizedBox(
-                                  height: 14,
-                                ),
-                                infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
-                              ],
-                              const SizedBox(
-                                height: 14,
+                              Text(
+                                "Catatan",
+                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                               ),
-                              controller.transferModel.products![0]!.productItems![0]!.weight != null ? infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg") : const SizedBox(),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                controller.transferModel.remarks ?? "-",
+                                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                              )
                             ],
                           ),
                         ),
-                      ] else
-                        const SizedBox(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: AppColors.outlineColor, width: 1),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Catatan",
-                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              controller.transferModel.remarks ?? "-",
-                              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ),
-                      controller.assignDriver
-                    ],
+                        controller.assignDriver,
+                        const SizedBox(height: 120,),
+                      ],
+                    ),
                   ),
-                )),
+              )),
           bottomNavbar()
         ],
       ),
