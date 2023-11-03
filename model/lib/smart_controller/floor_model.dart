@@ -28,8 +28,8 @@ class Floor {
             day: map['day'],
             periode: map['periode'],
             chickinDate: map['chickinDate'],
-            temperature: map['temperature'],
-            humidity: map['humidity']
+            temperature: map['temperature'] != null ? map['temperature'].toDouble() : map['temperature'],
+            humidity: map['humidity'] != null ? map['humidity'].toDouble() : map['humidity']
         );
     }
 }

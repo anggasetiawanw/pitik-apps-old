@@ -1,3 +1,4 @@
+import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
@@ -74,7 +75,7 @@ class SmartControllerListController extends GetxController {
                             deviceId: floor.deviceId,
                             coopId: floor.coopId,
                         );
-                        Get.toNamed(RoutePage.smartControllerDashboard, arguments: [coop, device, 'v2/controller/coop/'])!.then((value) => getFloorList());
+                        Get.toNamed(RoutePage.smartControllerDashboard, arguments: [coop, device, 'v2/controller/coop/', RoutePage.smartMonitorController])!.then((value) => getFloorList());
                     },
                     child: Container(
                         padding: const EdgeInsets.all(16),

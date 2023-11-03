@@ -12,7 +12,7 @@ import '../engine_library.dart';
 @SetupModel
 class LatestConditionResponse {
 
-    int code;
+    int? code;
     DeviceSummary? data;
 
     LatestConditionResponse({required this.code, required this.data});

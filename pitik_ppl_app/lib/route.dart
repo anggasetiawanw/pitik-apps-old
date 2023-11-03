@@ -8,6 +8,8 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/smart_controller/monitoring/smart_monitor_controller.dart';
+import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
 import 'package:components/global_var.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
@@ -93,6 +95,7 @@ class AppRoutes {
         // Smart Controller
         GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.smartControllerDashboard, page: () => const SmartControllerDashboard(), binding: DetailSmartControllerBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartMonitorController, page: () => const SmartMonitorControllerActivity(), binding: SmartMonitorControllerBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -123,4 +126,5 @@ class RoutePage {
     static const String dailyReportDetail = "/daily-Report-Detail";
     static const String smartControllerList = "/smartControllerList";
     static const String smartControllerDashboard = "/smartControllerDashboard";
+    static const String smartMonitorController = "/smartMonitorController";
 }

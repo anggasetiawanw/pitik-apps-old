@@ -29,14 +29,15 @@ class ExpandableMonitorRealTime extends StatelessWidget {
     String sensorType;
     String targetLabel;
     String averageLabel;
+    String? deviceIdForController;
+    String? coopIdForController;
     Function(bool) onExpand;
 
     ExpandableMonitorRealTime({super.key, required this.controller, required this.headerText, this.expanded = false, required this.value, required this.unitValue, this.icon = "images/temperature_icon.svg",
-                               this.valueTextColor = 0xFF2C2B2B, required this.onExpand, required this.coop, required this.roomId, required this.sensorType, this.averageLabel = "", this.targetLabel = ""});
+                               this.valueTextColor = 0xFF2C2B2B, required this.onExpand, required this.coop, required this.roomId, required this.sensorType, this.averageLabel = "", this.targetLabel = "",
+                               this.deviceIdForController, this.coopIdForController});
 
-    ExpandableMonitorRealTimeController getController() {
-        return Get.find(tag: controller.tag);
-    }
+    ExpandableMonitorRealTimeController getController() => Get.find(tag: controller.tag);
 
     @override
     Widget build(BuildContext context) {
@@ -45,7 +46,6 @@ class ExpandableMonitorRealTime extends StatelessWidget {
         return Obx(() =>
             GFAccordion(
                 margin: const EdgeInsets.only(top: 16),
-                // title: headerText,
                 titleChild: Row(
                     children: [
                         Row(
@@ -60,30 +60,24 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                             topLeft: Radius.circular(6),
                                             topRight: Radius.circular(6),
                                             bottomRight: Radius.circular(6),
-                                            bottomLeft: Radius.circular(6))),
-                                    child: Center(
-                                        child: SvgPicture.asset(icon, width: 32, height: 32,),
+                                            bottomLeft: Radius.circular(6)
+                                        )
                                     ),
+                                    child: Center(child: SvgPicture.asset(icon, width: 32, height: 32))
                                 )
-                            ],
+                            ]
                         ),
                         const SizedBox(width: 8),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                                Text(
-                                    headerText,
-                                    style: GlobalVar.greyTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)
-                                ),
+                                Text(headerText, style: GlobalVar.greyTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
                                 const SizedBox(height: 8,),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                        Text(
-                                            "$value $unitValue",
-                                            style: TextStyle(color: Color(valueTextColor), fontSize: 24, fontWeight: GlobalVar.medium)
-                                        )
+                                        Text("$value $unitValue", style: TextStyle(color: Color(valueTextColor), fontSize: 24, fontWeight: GlobalVar.medium))
                                     ]
                                 )
                             ]
@@ -95,12 +89,12 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                     onExpand(isExpand);
                     if (isExpand) {
                         controller.expand();
-                        controller.getRealTimeHistoricalData(
-                            sensorType: sensorType,
-                            coop: coop,
-                            day: 1,
-                            roomId: roomId
-                        );
+                        if (deviceIdForController != null) {
+                            controller.getRealTimeHistoricalDataForSmartController(sensorType: sensorType, day: 1, deviceIdForController: deviceIdForController!, coopIdForController: coopIdForController!);
+                        } else {
+                            controller.getRealTimeHistoricalData(sensorType: sensorType, coop: coop, day: 1, roomId: roomId);
+                        }
+
                         controller.indexTab.value = 0 ;
                     } else {
                         controller.collapse();
@@ -116,11 +110,11 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                 expandedIcon: SvgPicture.asset("images/arrow_up.svg"),
                 titleBorder: Border.all(color: GlobalVar.outlineColor),
                 titleBorderRadius: controller.expanded.isTrue ? const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
-                contentBorder: Border(
+                contentBorder: const Border(
                     bottom: BorderSide(color:GlobalVar.outlineColor, width: 1),
                     left: BorderSide(color: GlobalVar.outlineColor, width: 1),
                     right: BorderSide(color: GlobalVar.outlineColor, width: 1),
-                    top: BorderSide(color: GlobalVar.outlineColor, width: 0),
+                    top: BorderSide(color: GlobalVar.outlineColor, width: 0)
                 ),
                 contentBorderRadius: controller.expanded.isTrue ? const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
                 contentChild: Column(
@@ -130,15 +124,12 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                                Text(
-                                    "Riwayat $headerText Kandang",
-                                    style: GlobalVar.primaryTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)
-                                ),
+                                Text("Riwayat $headerText Kandang", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)),
                                 sensorType == "temperature" || sensorType == "relativeHumidity" ? GestureDetector(
                                     onTap: () => controller.showSensorMappingBottomSheet(),
                                     child: SvgPicture.asset('images/information_blue_icon.svg'),
                                 ) : const SizedBox()
-                            ],
+                            ]
                         ),
                         const SizedBox(height: 16),
                         Row(
@@ -183,10 +174,10 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                             Container(
                                                 width: 2,
                                                 height: 2,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: GlobalVar.black,
                                                     shape: BoxShape.circle
-                                                ),
+                                                )
                                             ),
                                             const SizedBox(width: 4),
                                             Text(
@@ -199,10 +190,7 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                             ),
                         ),
                         controller.isLoading.isTrue ?
-                        const Center(
-                            child:
-                            SizedBox(height: 124, width: 124, child: ProgressLoading()),
-                        ) : controller.gvSmartMonitoring,
+                        const Center(child: SizedBox(height: 124, width: 124, child: ProgressLoading())) : controller.gvSmartMonitoring,
                         Container(
                             margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                             child: Row(
@@ -211,12 +199,11 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                     GestureDetector(
                                         onTap: () {
                                             controller.indexTab.value = 0;
-                                            controller.getRealTimeHistoricalData(
-                                                sensorType: sensorType,
-                                                coop: coop,
-                                                day: 1,
-                                                roomId: roomId
-                                            );
+                                            if (deviceIdForController != null) {
+                                                controller.getRealTimeHistoricalDataForSmartController(sensorType: sensorType, day: 1, deviceIdForController: deviceIdForController!, coopIdForController: coopIdForController!);
+                                            } else {
+                                                controller.getRealTimeHistoricalData(sensorType: sensorType, coop: coop, day: 1, roomId: roomId);
+                                            }
                                         },
                                         child: Column(
                                             children: [
@@ -233,12 +220,11 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                     GestureDetector(
                                         onTap: () {
                                             controller.indexTab.value = 1;
-                                            controller.getRealTimeHistoricalData(
-                                                sensorType: sensorType,
-                                                coop: coop,
-                                                day: 3,
-                                                roomId: roomId
-                                            );
+                                            if (deviceIdForController != null) {
+                                                controller.getRealTimeHistoricalDataForSmartController(sensorType: sensorType, day: 3, deviceIdForController: deviceIdForController!, coopIdForController: coopIdForController!);
+                                            } else {
+                                                controller.getRealTimeHistoricalData(sensorType: sensorType, coop: coop, day: 3, roomId: roomId);
+                                            }
                                         },
                                         child: Column(
                                             children: [
@@ -255,12 +241,11 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                     GestureDetector(
                                         onTap: () {
                                             controller.indexTab.value = 2;
-                                            controller.getRealTimeHistoricalData(
-                                                sensorType: sensorType,
-                                                coop: coop,
-                                                day: 7,
-                                                roomId: roomId
-                                            );
+                                            if (deviceIdForController != null) {
+                                                controller.getRealTimeHistoricalDataForSmartController(sensorType: sensorType, day: 7, deviceIdForController: deviceIdForController!, coopIdForController: coopIdForController!);
+                                            } else {
+                                                controller.getRealTimeHistoricalData(sensorType: sensorType, coop: coop, day: 7, roomId: roomId);
+                                            }
                                         },
                                         child: Column(
                                             children: [
@@ -277,12 +262,11 @@ class ExpandableMonitorRealTime extends StatelessWidget {
                                     GestureDetector(
                                         onTap: () {
                                             controller.indexTab.value = 3;
-                                            controller.getRealTimeHistoricalData(
-                                                sensorType: sensorType,
-                                                coop: coop,
-                                                day: -1,
-                                                roomId: roomId
-                                            );
+                                            if (deviceIdForController != null) {
+                                                controller.getRealTimeHistoricalDataForSmartController(sensorType: sensorType, day: -1, deviceIdForController: deviceIdForController!, coopIdForController: coopIdForController!);
+                                            } else {
+                                                controller.getRealTimeHistoricalData(sensorType: sensorType, coop: coop, day: -1, roomId: roomId);
+                                            }
                                         },
                                         child: Column(
                                             children: [

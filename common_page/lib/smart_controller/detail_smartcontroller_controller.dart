@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:common_page/smart_controller/dashboard_fan/dashboard_fan_activity.dart';
 import 'package:common_page/smart_controller/dashboard_lamp/dashboard_lamp_activity.dart';
+import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
 import 'package:common_page/smart_controller/setup_alarm/alarm_setup_activity.dart';
 import 'package:common_page/smart_controller/setup_cooler/cooler_setup_activity.dart';
 import 'package:common_page/smart_controller/setup_growth/growth_setup_activity.dart';
@@ -51,6 +52,7 @@ class SmartControllerDashboardController extends GetxController {
     late Coop coop;
     late Device device;
     late String basePath;
+    late String routeSmartMonitor;
     String? modifySmartMonitorPage;
     
     DeviceController? deviceController;
@@ -97,11 +99,20 @@ class SmartControllerDashboardController extends GetxController {
         coop = Get.arguments[0];
         device = Get.arguments[1];
         basePath = Get.arguments[2];
-        if (Get.arguments.length > 3) {
-            modifySmartMonitorPage = Get.arguments[3];
+        routeSmartMonitor = Get.arguments[3];
+        if (Get.arguments.length > 4) {
+            modifySmartMonitorPage = Get.arguments[4];
         }
 
         getDetailSmartController();
+    }
+
+    void _initializeSmartMonitor() {
+        monitorContainer.value = CardListSmartController(
+            device: device,
+            onTap: () => Get.toNamed(routeSmartMonitor, arguments: [coop, device.deviceSummary, device.deviceId, device.coopId]),
+            isItemList: false,
+        );
     }
 
     void getDetailSmartController() => AuthImpl().get().then((auth) {
@@ -169,11 +180,7 @@ class SmartControllerDashboardController extends GetxController {
                                             relativeHumidity: SensorData(value: floor.humidity ?? 0.0, status: 'bad', uom: '%')
                                         );
 
-                                        monitorContainer.value = CardListSmartController(
-                                            device: device,
-                                            onTap: () {},
-                                            isItemList: false,
-                                        );
+                                        _initializeSmartMonitor();
                                     }
                                 }
                             }

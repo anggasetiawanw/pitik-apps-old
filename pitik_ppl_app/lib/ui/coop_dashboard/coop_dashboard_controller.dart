@@ -80,10 +80,10 @@ class CoopDashboardController extends GetxController {
         profile = await ProfileImpl().get();
 
         Get.put(HistoryController(context: Get.context!, coop: coop));
-        Get.put(DetailSmartMonitorController(context: Get.context!));
 
         historyActivity = HistoryActivity(coop: coop);
         detailSmartMonitor = DetailSmartMonitor(
+            controller: Get.put(DetailSmartMonitorController(tag: "smartMonitorForDashboard", context: Get.context!), tag: "smartMonitorForDashboard"),
             coop: coop,
             widgetLoading: Padding(
                 padding: const EdgeInsets.only(top: 80),
