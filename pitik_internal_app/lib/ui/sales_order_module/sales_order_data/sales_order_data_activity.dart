@@ -21,12 +21,15 @@ class SalesOrderPage extends StatefulWidget {
   State<SalesOrderPage> createState() => _SalesOrderPageState();
 }
 
-class _SalesOrderPageState extends State<SalesOrderPage>{
-
-
+class _SalesOrderPageState extends State<SalesOrderPage> {
+  String? selectedValue = "customer";
   @override
   Widget build(BuildContext context) {
     final SalesOrderController controller = Get.put(SalesOrderController(context: context));
+    final List<String> items = [
+      'Customer',
+      'Nomor SO',
+    ];
 
     Widget bottomNavbar() {
       return Align(
@@ -35,210 +38,220 @@ class _SalesOrderPageState extends State<SalesOrderPage>{
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromARGB(20, 158, 157, 157),
-                  blurRadius: 5,
-                  offset: Offset(0.75, 0.0))
-            ],
+            boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
             borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           ),
-          padding: const EdgeInsets.only(left: 16, bottom: 16,right: 16),
+          padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
           child: controller.btPenjualan,
         ),
       );
     }
 
-    Widget filterList(){
-        List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
-        return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: listFilter.length,
-            itemBuilder: (context, index) {
-                if (listFilter[index].value.isEmpty) {
-                    return const SizedBox();
-                }
-                return Container(
-                    height: 32,
-                    margin: const EdgeInsets.only(right: 8,top:8, bottom: 8),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: AppColors.bgAbu
-                    ),
-                    child: Row(
-                        children: [
-                            Text(
-                                listFilter[index].value,
-                                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-                            ),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                                onTap: ()=> controller.removeOneFilter(listFilter[index].key)  ,
-                                child: const Icon(Icons.close, size: 16, color: AppColors.primaryOrange),
-                            )
-                        ],
-                    ),
-                );
+    Widget filterList() {
+      List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+      return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: listFilter.length,
+          itemBuilder: (context, index) {
+            if (listFilter[index].value.isEmpty) {
+              return const SizedBox();
             }
-        );
+            return Container(
+              height: 32,
+              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.bgAbu),
+              child: Row(
+                children: [
+                  Text(
+                    listFilter[index].value,
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => controller.removeOneFilter(listFilter[index].key),
+                    child: const Icon(Icons.close, size: 16, color: AppColors.primaryOrange),
+                  )
+                ],
+              ),
+            );
+          });
     }
 
-
-
-    return Obx(()=>Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? 160: 110),
-          child: Column(
-            children: [
-                CustomAppbar(title: "Penjualan",onBack: ()=>Navigator.of(context).pop(), isFlat: true,),
+    return Obx(() => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
+            child: Column(
+              children: [
+                CustomAppbar(
+                  title: "Penjualan",
+                  onBack: () => Navigator.of(context).pop(),
+                  isFlat: true,
+                ),
                 Container(
-                    color: AppColors.primaryOrange,
-                    padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  color: AppColors.primaryOrange,
+                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                   child: Row(
-                  children: [
+                    children: [
                       GestureDetector(
-                        onTap: ()=> controller.openFilter(),
+                        onTap: () => controller.openFilter(),
                         child: Container(
-                            height: 32,
-                            width: 32,
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: AppColors.primaryLight
-                            ),
-                            child: SvgPicture.asset("images/filter_line.svg"),
+                          height: 32,
+                          width: 32,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
+                          child: SvgPicture.asset("images/filter_line.svg"),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: SizedBox(
-                            height: 40,
+                            height: 42,
                             child: TextField(
-                                controller: controller.searchController,
-                                onChanged: (text)=> controller.searchOrder(text),
-                                cursorColor: AppColors.primaryOrange,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: const Color(0xFFFFF9ED),
-                                    isDense: true,
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    hintText: "Cari Data by Customer",
-                                    hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                                    prefixIcon: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: SvgPicture.asset("images/search_icon.svg"),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)
-                                    ),
+                              controller: controller.searchController,
+                              onChanged: (text) => controller.searchOrder(text),
+                              cursorColor: AppColors.primaryOrange,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: const Color(0xFFFFF9ED),
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                hintText: "cari $selectedValue",
+                                hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                                  child: SvgPicture.asset("images/search_icon.svg"),
                                 ),
-                            ),
-                        ),
+                                // prefixIcon: Padding(
+                                //   padding: const EdgeInsets.symmetric(horizontal: 4),
+                                //   child: SizedBox(
+                                //     height: double.infinity,
+                                //     width: 65,
+                                //     child: Column(
+                                //       children: [
+                                //         const SizedBox(height: 3),
+                                //         DropdownButtonHideUnderline(
+                                //           child: DropdownButton2<String>(
+                                //             isExpanded: true,
+                                //             customButton: Container(
+                                //               padding: const EdgeInsets.only(top: 10),
+                                //               height: 32,
+                                //               width: 65,
+                                //               child: Text(
+                                //                 "$selectedValue:",
+                                //                 style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                //               ),
+                                //             ),
+                                //             items: items
+                                //                 .map((item) => DropdownMenuItem(
+                                //                       value: item,
+                                //                       child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 12)),
+                                //                     ))
+                                //                 .toList(),
+                                //             value: selectedValue, 
+                                //             onChanged: (String? value) {
+                                //               setState(() {
+                                //                 selectedValue = value;
+                                //               });
+                                //             },
+                                //             dropdownStyleData: const DropdownStyleData(
+                                //               width: 100,
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
+                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+                                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+                              ),
+                            )),
                       ),
-                  ],),
+                    ],
+                  ),
                 ),
-                Obx(() => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty? Expanded(child: filterList()):const SizedBox(),)
-            ],
-          )),
-      body: Obx(() =>
-          controller.isLoading.isTrue ? Center(
-              child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: const Center(
-                      child: ProgressLoading()
-                  )
-              ),
-            )
-              : Stack(
-        children: [
-        controller.isLoadData.isTrue ? const Center(
-                      child: ProgressLoading()
-                  ): controller.orderList.value.isEmpty
-              ? Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
-              child: Text(
-                "Data Order Belum Ada",
-                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ) : Container(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            child: RawScrollbar(
-                    controller: controller.scrollController,
-                    thumbColor: AppColors.primaryOrange,
-                    radius: const Radius.circular(8),
-                    child: RefreshIndicator(
-                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
-                        color: AppColors.primaryOrange,
-                        child: ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            controller: controller.scrollController,
-                            itemCount: controller.isLoadMore.isTrue
-                                ? controller.orderList.value.length + 1
-                                : controller.orderList.value.length,
-                            itemBuilder: (context, index) {
-                                int length = controller.orderList.value.length;
-                                if (index >= length) {
-                                return const Column(
-                                    children: [
-                                    Center(
-                                        child:ProgressLoading()
-                                    ),
-                                    SizedBox(height: 120),
-                                    ],
-                                );
-                            }
-                            return Column(
-                                children: [
-                                    CardListOrder(
-                                        isSoPage: true,
-                                    order:controller.orderList.value[index]!,
-                                    onTap: () {
-                                        Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
-                                        controller.isLoadData.value = true;
-                                        controller.orderList.value.clear();
-                                        controller.page.value = 1;
-                                        Timer(const Duration(milliseconds: 500), () {
-                                            if(controller.isFilter.isTrue ){
-                                                controller.getSearchOrder();
-                                            } else {
-                                                controller.getListOrder();
-                                            }
-                                        });
-                                        });
-                                    },
-                                    ),
-                                    index == controller.orderList.value.length - 1 ? const SizedBox(height: 120)
-                                        : const SizedBox(),
-                                ],
-                            );
-                        },
-                    ),
+                Obx(
+                  () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
                 )
-            ),
-          ),
-          bottomNavbar(),
-        ],
-      ),
-    )));
+              ],
+            )),
+        body: Obx(
+          () => controller.isLoading.isTrue
+              ? Center(
+                  child: SizedBox(height: MediaQuery.of(context).size.height, width: MediaQuery.of(context).size.width, child: const Center(child: ProgressLoading())),
+                )
+              : Stack(
+                  children: [
+                    controller.isLoadData.isTrue
+                        ? const Center(child: ProgressLoading())
+                        : controller.orderList.value.isEmpty
+                            ? Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Center(
+                                  child: Text(
+                                    "Data Order Belum Ada",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                                child: RawScrollbar(
+                                    controller: controller.scrollController,
+                                    thumbColor: AppColors.primaryOrange,
+                                    radius: const Radius.circular(8),
+                                    child: RefreshIndicator(
+                                      onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
+                                      color: AppColors.primaryOrange,
+                                      child: ListView.builder(
+                                        physics: const AlwaysScrollableScrollPhysics(),
+                                        controller: controller.scrollController,
+                                        itemCount: controller.isLoadMore.isTrue ? controller.orderList.value.length + 1 : controller.orderList.value.length,
+                                        itemBuilder: (context, index) {
+                                          int length = controller.orderList.value.length;
+                                          if (index >= length) {
+                                            return const Column(
+                                              children: [
+                                                Center(child: ProgressLoading()),
+                                                SizedBox(height: 120),
+                                              ],
+                                            );
+                                          }
+                                          return Column(
+                                            children: [
+                                              CardListOrder(
+                                                isSoPage: true,
+                                                order: controller.orderList.value[index]!,
+                                                onTap: () {
+                                                  Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderList.value[index])!.then((value) {
+                                                    controller.isLoadData.value = true;
+                                                    controller.orderList.value.clear();
+                                                    controller.page.value = 1;
+                                                    Timer(const Duration(milliseconds: 500), () {
+                                                      if (controller.isFilter.isTrue) {
+                                                        controller.getSearchOrder();
+                                                      } else {
+                                                        controller.getListOrder();
+                                                      }
+                                                    });
+                                                  });
+                                                },
+                                              ),
+                                              index == controller.orderList.value.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    )),
+                              ),
+                    bottomNavbar(),
+                  ],
+                ),
+        )));
   }
 }
-

@@ -112,7 +112,7 @@ class SalesOrderController extends GetxController {
         efMin.controller.hideAlert();
       });
   SpinnerField spStatus = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spStatus"),
+      controller: GetXCreator.putSpinnerFieldController("spStatusFilter"),
       label: "Status",
       hint: "Pilih Salah Satu",
       alertText: "",
@@ -133,6 +133,32 @@ class SalesOrderController extends GetxController {
 
   late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btBersihkanFilter"), label: "Bersihkan Filter", onClick: () => clearFilter());
 
+//   late TextField searchBar = TextField(
+//     controller: searchController,
+//     onChanged: (text) => searchOrder(text),
+//     cursorColor: AppColors.primaryOrange,
+//     decoration: InputDecoration(
+//       filled: true,
+//       fillColor: const Color(0xFFFFF9ED),
+//       isDense: true,
+//       contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+//       hintText: "Cari Data by Customer",
+//       hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+//       prefixIcon: Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+//         child: Row(
+//           children: [
+//             SvgPicture.asset("images/search_icon.svg"),
+//             Text("Cari", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium)),
+//           ],
+//         ),
+//       ),
+//       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+//       disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+//       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+//       border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+//     ),
+//   );
   @override
   void onInit() {
     super.onInit();
