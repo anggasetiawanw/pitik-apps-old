@@ -771,7 +771,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
               119,
               120,
               121,
-              122
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              128,
+              129,
+              130,
+              131,
+              132,
+              133
             ],
             const prefix0.BaseApi(),
             const <Object>[
@@ -788,7 +799,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[123, 124, 125, 126, 127, 128],
+            const <int>[134, 135, 136, 137, 138, 139],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -804,7 +815,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[129, 130, 131, 132, 133],
+            const <int>[140, 141, 142, 143, 144],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -820,7 +831,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[134, 135, 136, 137, 138, 139, 140],
+            const <int>[145, 146, 147, 148, 149, 150, 151],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -836,7 +847,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[141, 142, 143, 144, 145],
+            const <int>[152, 153, 154, 155, 156],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -851,7 +862,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[146, 147, 148, 149],
+            const <int>[157, 158, 159, 160],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -868,7 +879,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[150, 151, 152, 153, 154],
+            const <int>[161, 162, 163, 164, 165],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -885,7 +896,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[155, 156, 157, 158, 159],
+            const <int>[166, 167, 168, 169, 170],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -901,7 +912,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[160, 161, 162, 163],
+            const <int>[171, 172, 173, 174],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -917,7 +928,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[164, 165, 166, 167],
+            const <int>[175, 176, 177, 178],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -933,7 +944,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[168, 169, 170, 171, 172],
+            const <int>[179, 180, 181, 182, 183],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -949,7 +960,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[173, 174, 175, 176],
+            const <int>[184, 185, 186, 187],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -965,7 +976,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[177, 178, 179, 180],
+            const <int>[188, 189, 190, 191],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -982,7 +993,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[181, 182, 183, 184],
+            const <int>[192, 193, 194, 195],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -998,7 +1009,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[185, 186, 187, 188, 189],
+            const <int>[196, 197, 198, 199, 200],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1015,7 +1026,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[190, 191, 192, 193],
+            const <int>[201, 202, 203, 204],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1032,7 +1043,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[194, 195, 196, 197, 198],
+            const <int>[205, 206, 207, 208, 209],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1049,7 +1060,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[199, 200, 201, 202, 203],
+            const <int>[210, 211, 212, 213, 214],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1065,7 +1076,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[204, 205, 206, 207],
+            const <int>[215, 216, 217, 218],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1081,7 +1092,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[208, 209, 210, 211, 212],
+            const <int>[219, 220, 221, 222, 223],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1097,7 +1108,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[213, 214, 215, 216, 217, 218, 219, 220],
+            const <int>[224, 225, 226, 227, 228, 229, 230, 231],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1113,7 +1124,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[221, 222, 223, 224],
+            const <int>[232, 233, 234, 235],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1129,7 +1140,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[225, 226, 227, 228],
+            const <int>[236, 237, 238, 239],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1145,7 +1156,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[229, 230, 231, 232],
+            const <int>[240, 241, 242, 243],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1161,7 +1172,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[233, 234, 235, 236, 237],
+            const <int>[244, 245, 246, 247, 248],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1178,7 +1189,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[238, 239, 240, 241, 242],
+            const <int>[249, 250, 251, 252, 253],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1193,7 +1204,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[243, 244, 245, 246, 247],
+            const <int>[254, 255, 256, 257, 258],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1209,7 +1220,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[248, 249, 250, 251, 252, 253],
+            const <int>[259, 260, 261, 262, 263, 264],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1225,7 +1236,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[254, 255, 256, 257],
+            const <int>[265, 266, 267, 268],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1242,7 +1253,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[258, 259, 260, 261, 262],
+            const <int>[269, 270, 271, 272, 273],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1259,7 +1270,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[263, 264, 265, 266, 267, 268],
+            const <int>[274, 275, 276, 277, 278, 279],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1275,7 +1286,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[269, 270, 271, 272],
+            const <int>[280, 281, 282, 283],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1291,7 +1302,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[273, 274, 275, 276, 277],
+            const <int>[284, 285, 286, 287, 288],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1307,7 +1318,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[278, 279, 280, 281, 282],
+            const <int>[289, 290, 291, 292, 293],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1323,7 +1334,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[283, 284, 285, 286, 287],
+            const <int>[294, 295, 296, 297, 298],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1338,7 +1349,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[288, 289, 290, 291],
+            const <int>[299, 300, 301, 302],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1354,7 +1365,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[292, 293, 294, 295, 296, 297, 298, 299, 300, 301],
+            const <int>[303, 304, 305, 306, 307, 308, 309, 310, 311, 312],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1370,7 +1381,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[302, 303, 304, 305, 306, 307, 308, 309, 310, 311],
+            const <int>[313, 314, 315, 316, 317, 318, 319, 320, 321, 322],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1386,7 +1397,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[312, 313, 314, 315, 316],
+            const <int>[323, 324, 325, 326, 327],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1401,7 +1412,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[317, 318, 319, 320, 321],
+            const <int>[328, 329, 330, 331, 332],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1417,7 +1428,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[322, 323, 324],
+            const <int>[333, 334, 335],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1433,7 +1444,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[325, 326, 327, 328, 329, 330],
+            const <int>[336, 337, 338, 339, 340, 341],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1449,7 +1460,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[331, 332, 333, 334, 335, 336],
+            const <int>[342, 343, 344, 345, 346, 347],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1467,7 +1478,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[337, 338, 339, 340, 341, 342, 343, 344, 345, 346],
+            const <int>[348, 349, 350, 351, 352, 353, 354, 355, 356, 357],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1483,7 +1494,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[347, 348, 349, 350, 351, 352, 353, 354, 355, 356],
+            const <int>[358, 359, 360, 361, 362, 363, 364, 365, 366, 367],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1499,7 +1510,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[357, 358, 359, 360, 361],
+            const <int>[368, 369, 370, 371, 372],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1514,7 +1525,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[362, 363, 364, 365, 366],
+            const <int>[373, 374, 375, 376, 377],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1532,7 +1543,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[367],
+            const <int>[378],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(),
@@ -1549,7 +1560,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[368, 369],
+            const <int>[379, 380],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix89.POST(
@@ -1566,7 +1577,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[370, 371, 372],
+            const <int>[381, 382, 383],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1582,7 +1593,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[373, 374, 375, 376],
+            const <int>[384, 385, 386, 387],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1599,7 +1610,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[377, 378, 379, 380, 381],
+            const <int>[388, 389, 390, 391, 392],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -1616,7 +1627,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[382, 383, 384, 385, 386],
+            const <int>[393, 394, 395, 396, 397],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1632,7 +1643,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[387, 388, 389],
+            const <int>[398, 399, 400],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1648,7 +1659,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[390, 391, 392, 393, 394, 395],
+            const <int>[401, 402, 403, 404, 405, 406],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1664,7 +1675,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[396, 397, 398, 399, 400, 401, 402, 403],
+            const <int>[407, 408, 409, 410, 411, 412, 413, 414],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1680,7 +1691,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[404, 405, 406, 407],
+            const <int>[415, 416, 417, 418],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix90.GET(
@@ -1696,7 +1707,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[408, 409, 410, 411],
+            const <int>[419, 420, 421, 422],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(),
@@ -1712,7 +1723,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[412, 413, 414, 415],
+            const <int>[423, 424, 425, 426],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(),
@@ -1728,7 +1739,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[416],
+            const <int>[427],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(),
@@ -1745,7 +1756,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[417, 418, 419, 420, 421],
+            const <int>[428, 429, 430, 431, 432],
             const prefix0.BaseApi(),
             const <Object>[
               const prefix88.JSON(isPlaint: true),
@@ -3037,7 +3048,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'customerId',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3049,7 +3060,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'salesPersonId',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3061,7 +3072,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'driverId',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3073,7 +3084,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'status',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3085,7 +3096,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'code',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3097,7 +3108,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'sameBranch',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3109,7 +3120,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'withinProductionTeam',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3121,7 +3132,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'customerCityId',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3133,7 +3144,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'customerProvinceId',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3145,7 +3156,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'customerName',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3157,7 +3168,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'date',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3169,7 +3180,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'minQuantityRange',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3181,7 +3192,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'maxRangeQuantity',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3193,7 +3204,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null),
         r.ParameterMirrorImpl(
             r'createdBy',
-            134348806,
+            67239942,
             28,
             const prefix0.BaseApi(),
             -1,
@@ -3201,6 +3212,138 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             null,
             const <Object>[const prefix96.Query("createdBy")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'category',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("category")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'withinSalesTeam',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("withinSalesTeam")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusDraft',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusConfirmed',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusBooked',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusReadyDeliver',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusDelivered',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusCancel',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusRejected',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusOnDelivery',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'statusAllocated',
+            67239942,
+            28,
+            const prefix0.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix96.Query("status")],
             null,
             null),
         r.ParameterMirrorImpl(
