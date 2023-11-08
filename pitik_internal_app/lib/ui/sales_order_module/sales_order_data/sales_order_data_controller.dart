@@ -39,7 +39,41 @@ import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
-enum BodyQuerySales { token, auth, xAppId, page, limit, customerId, salesPersonId, driverId, status, code, sameBranch, withinProductionTeam, customerCityId, customerProvinceId, customerName, date, minQuantityRange, maxRangeQuantity, createdBy, category, withSalesTeam, status1, status2, status3, status4, status5, status6, status7, status8, status9 }
+enum BodyQuerySales {
+  token,
+  auth,
+  xAppId,
+  page,
+  limit,
+  customerId,
+  salesPersonId,
+  driverId,
+  status,
+  code,
+  sameBranch,
+  withinProductionTeam,
+  customerCityId,
+  customerProvinceId,
+  customerName,
+  date,
+  minQuantityRange,
+  maxRangeQuantity,
+  createdBy,
+  category,
+  withSalesTeam,
+  operationUnitId,
+  productItemId,
+  productCategoryId,
+  status1,
+  status2,
+  status3,
+  status4,
+  status5,
+  status6,
+  status7,
+  status8,
+  status9,
+}
 
 class SalesOrderController extends GetxController with GetSingleTickerProviderStateMixin {
   BuildContext context;
@@ -854,6 +888,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
     bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
     bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
+    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
@@ -947,6 +984,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
     bodyGeneralInbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
     bodyGeneralInbound[BodyQuerySales.date.index] = date; // date
+    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy

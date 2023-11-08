@@ -6,6 +6,7 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
+import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -53,6 +54,8 @@ class EditDataSalesOrderController extends GetxController {
   var limit = 10.obs;
   var status = "".obs;
   var produkType = "Non-LB".obs;
+  RxBool isDeliveryPrice = false.obs;
+  RxInt priceDelivery = 0.obs;
 
   late Order orderDetail;
   Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
@@ -147,22 +150,10 @@ class EditDataSalesOrderController extends GetxController {
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {
-        editFieldKebutuhan.controller.enable();
         editFieldHarga.controller.enable();
         refreshtotalPurchase();
       });
 
-  late EditField editFieldKebutuhan = EditField(
-      controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
-      label: "Kebutuhan*",
-      hint: "Tulis Jumlah*",
-      alertText: "Kolom Ini Harus Di Isi",
-      textUnit: "Kg",
-      inputType: TextInputType.number,
-      maxInput: 20,
-      onTyping: (value, control) {
-        refreshtotalPurchase();
-      });
 
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
@@ -181,6 +172,18 @@ class EditDataSalesOrderController extends GetxController {
       });
 
   EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+
+  late SwitchLinear deliveryPrice = SwitchLinear(
+      onSwitch: (active) {
+        if (active) {
+          priceDelivery.value = 10000;
+          isDeliveryPrice.value = true;
+        } else {
+          priceDelivery.value = 0;
+          isDeliveryPrice.value = false;
+        }
+      },
+      controller: GetXCreator.putSwitchLinearController("deliveryprice"));
 
   @override
   void onInit() {
@@ -254,6 +257,10 @@ class EditDataSalesOrderController extends GetxController {
     produkType.value = orderDetail.type! == "LB" ? "LB" : "Non-LB";
     spinnerCustomer.controller.setTextSelected(order.customer!.businessName!);
     spinnerOrderType.controller.setTextSelected(order.type! == "LB" ? "LB" : "Non-LB");
+    if (order.withDeliveryFee == true) {
+      deliveryPrice.controller.isSwitchOn();
+      isDeliveryPrice.value = true;
+    }
     if (isInbound.isTrue) {
       spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName ?? "");
     }
@@ -275,40 +282,12 @@ class EditDataSalesOrderController extends GetxController {
             listSkuRemark[product!.name!] = false;
           }
 
-          //   for (int j = 0; j < orderDetail.productNotes!.length; j++) {
-          //     skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.category!.name!);
-          //     skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
-          //     skuCardRemark.controller.spinnerSku.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
-          //     skuCardRemark.controller.editFieldKebutuhan.value[j].setInput(orderDetail.productNotes![j]!.weight!.toString());
-
-          //     skuCardRemark.controller.listSku.value[j] = orderDetail.productNotes!;
-          //     skuCardRemark.controller.mapSumNeeded[j] = skuCardRemark.controller.editFieldKebutuhan.value[j].getInputNumber()!;
-
-          //     Timer(const Duration(milliseconds: 500), () {
-          //       CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value);
-          //       skuCardRemark.controller.getLoadSku(selectCategory!, j);
-          //       if (skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCardRemark.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD) {
-          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
-          //         skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
-          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.enable();
-          //         skuCardRemark.controller.editFieldPotongan.value[j].controller.enable();
-
-          //         skuCardRemark.controller.mapSumChick[j] = skuCardRemark.controller.editFieldJumlahAyam.value[j].getInputNumber()!;
-          //       } else {
-          //         skuCardRemark.controller.editFieldJumlahAyam.value[j].controller.disable();
-          //         skuCardRemark.controller.editFieldPotongan.value[j].controller.disable();
-          //       }
-          //       skuCardRemark.controller.editFieldKebutuhan.value[j].controller.enable();
-          //     });
-          //   }
-
           for (int j = 0; j < orderDetail.products!.length; j++) {
             listProduct.value.add(orderDetail.products![j]);
             spinnerCategories.controller.setTextSelected(orderDetail.products![j]!.category!.name!);
             spinnerCategories.controller.generateItems(listSku);
             spinnerSku.controller.setTextSelected(orderDetail.products![j]!.name!);
             editFieldJumlahAyam.setInput(orderDetail.products![j]!.quantity!.toString());
-            editFieldKebutuhan.setInput(orderDetail.products![j]!.weight!.toString());
             editFieldHarga.setInput(orderDetail.products![j]!.price!.toString());
             refreshtotalPurchase();
           }
@@ -345,11 +324,12 @@ class EditDataSalesOrderController extends GetxController {
               CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerCategories.value[j].controller.textSelected.value);
               skuCard.controller.getLoadSku(selectCategory!, j);
               if (skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.KARKAS) {
-                skuCard.controller.editFieldJumlahAyam.value[j].controller.enable();
-                skuCard.controller.editFieldPotongan.value[j].controller.enable();
+                skuCard.controller.editFieldJumlahAyam.value[j].controller.visibleField();
+                skuCard.controller.editFieldPotongan.value[j].controller.visibleField();
+              } else {
+                skuCard.controller.editFieldKebutuhan.value[j].controller.visibleField();
               }
-              skuCard.controller.editFieldKebutuhan.value[j].controller.enable();
-              skuCard.controller.editFieldHarga.value[j].controller.enable();
+              skuCard.controller.editFieldHarga.value[j].controller.visibleField();
             });
           }
 
@@ -629,6 +609,7 @@ class EditDataSalesOrderController extends GetxController {
       status: status.value,
       category: orderDetail.category,
       remarks: efRemark.getInput(),
+      withDeliveryFee: isDeliveryPrice.value,
     );
   }
 
@@ -664,7 +645,7 @@ class EditDataSalesOrderController extends GetxController {
         quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
-        weight: editFieldKebutuhan.getInputNumber(),
+        weight: 0,
       ));
     }
 
@@ -739,11 +720,7 @@ class EditDataSalesOrderController extends GetxController {
       editFieldJumlahAyam.controller.showAlert();
       editFieldJumlahAyam.controller.focusNode.requestFocus();
       return ret = [false, ""];
-    } else if (editFieldKebutuhan.getInput().isEmpty) {
-      editFieldKebutuhan.controller.showAlert();
-      editFieldKebutuhan.controller.focusNode.requestFocus();
-      return ret = [false, ""];
-    } else if (editFieldHarga.getInput().isEmpty) {
+    }  else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       editFieldHarga.controller.focusNode.requestFocus();
       return ret = [false, ""];

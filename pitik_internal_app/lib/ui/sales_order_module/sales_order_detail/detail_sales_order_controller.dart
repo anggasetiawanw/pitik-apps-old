@@ -40,6 +40,8 @@ class DetailSalesOrderController extends GetxController {
   var sumKg = 0.0.obs;
   var sumPrice = 0.0.obs;
   var isLoading = false.obs;
+  var isDeliveryPrice = false.obs;
+  var priceDelivery = 0.obs;
   late ButtonFill editButton = ButtonFill(
       controller: GetXCreator.putButtonFillController("OrderEdit"),
       label: "Edit",
@@ -209,8 +211,10 @@ class DetailSalesOrderController extends GetxController {
     sumPriceMin.value = 0;
     sumKg.value = 0;
     sumPrice.value = 0;
+    isDeliveryPrice.value = data!.withDeliveryFee?? false;
+    priceDelivery.value = data.deliveryFee?? 0;
     if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER") {
-      for (var product in data!.products!) {
+      for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
             sumChick.value += product.quantity!;
@@ -232,7 +236,7 @@ class DetailSalesOrderController extends GetxController {
         }
       }
     } else {
-      for (var product in data!.products!) {
+      for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
             sumNeededMin.value += product.quantity! * product.minValue!;

@@ -156,7 +156,7 @@ class StockRejectedActivity extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Jumlah Sebelumn",
+                                        "Jumlah sebelum",
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                       ),
                                       const SizedBox(
