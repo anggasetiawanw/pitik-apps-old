@@ -24,7 +24,6 @@ import 'detail_smartmonitor_controller.dart';
 class DetailSmartMonitor extends StatelessWidget {
     DetailSmartMonitorController controller;
     Widget? widgetLoading;
-    Coop coop;
     Device? device;
     String? modifySmartMonitorPage;
     String? deviceIdForController;
@@ -40,7 +39,7 @@ class DetailSmartMonitor extends StatelessWidget {
     bool hideWind;
     bool hideLight;
 
-    DetailSmartMonitor({super.key, required this.controller, required this.coop, this.device, this.widgetLoading, this.modifySmartMonitorPage, this.deviceIdForController, this.coopIdForController, this.bundleLatestCondition,
+    DetailSmartMonitor({super.key, required this.controller, this.device, this.widgetLoading, this.modifySmartMonitorPage, this.deviceIdForController, this.coopIdForController, this.bundleLatestCondition,
                         this.hideBuildings = false, this.hideTemperature = false, this.hideHumidity = false, this.hideHeatStress = false, this.hideAmmonia = false, this.hideWind = false, this.hideLight = false});
     DetailSmartMonitorController getController() => Get.find(tag: controller.tag);
 
@@ -193,7 +192,7 @@ class DetailSmartMonitor extends StatelessWidget {
                     },
                     deviceIdForController: deviceIdForController,
                     coopIdForController: coopIdForController,
-                    coop: coop,
+                    coop: controller.coop!,
                     roomId: controller.spBuilding.value.getController().selectedObject == null || (controller.spBuilding.value.getController().selectedObject as Building).roomId == null ? '' :
                             (controller.spBuilding.value.getController().selectedObject as Building).roomId!,
                     targetLabel: sensorType == "temperature" ? "Target" :

@@ -33,6 +33,7 @@ dependencies:
   package_info_plus: ^4.1.0
   build_runner: ^2.4.4
   built_value_generator: ^8.5.0
+  app_settings: ^5.0.0
 
 dev_dependencies:
   flutter_test:

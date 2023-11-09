@@ -14,14 +14,20 @@ class SmartScaleRecord {
     String? id;
     int? count;
     double? weight;
+    int? section;
+    int? totalCount;
+    double? totalWeight;
 
-    SmartScaleRecord({this.id, this.count, this.weight});
+    SmartScaleRecord({this.id, this.count, this.weight, this.section, this.totalCount, this.totalWeight});
 
     static SmartScaleRecord toResponseModel(Map<String, dynamic> map) {
         return SmartScaleRecord(
             id: map['id'],
             count: map['count'],
-            weight: map['weight'].toDouble()
+            weight: map['weight'] != null ? map['weight'].toDouble() : map['weight'],
+            section: map['section'],
+            totalCount: map['totalCount'],
+            totalWeight: map['totalWeight'] != null ? map['totalWeight'].toDouble() : map['totalWeight']
         );
     }
 }

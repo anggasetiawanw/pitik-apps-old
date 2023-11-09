@@ -15,9 +15,7 @@ class DashboardFanActivity extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        final DashboardFanController controller =
-        Get.put(DashboardFanController(context: context));
-
+        final DashboardFanController controller = Get.put(DashboardFanController(context: context));
         return SafeArea(
             child: Scaffold(
                 backgroundColor: Colors.white,

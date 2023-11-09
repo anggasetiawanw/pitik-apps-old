@@ -6,6 +6,7 @@ import 'package:pitik_ppl_app/api_mapping/apis/farm_monitoring_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/product_report_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_controller_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_monitoring_api.dart';
+import 'package:pitik_ppl_app/api_mapping/apis/smart_scale_api.dart';
 
 import '../../flavors.dart';
 import 'apis/api.dart';
@@ -29,6 +30,7 @@ class ApiMapping extends ApiMappingList {
         "userApi": UserApi,
         "smartMonitoringApi": SmartMonitoringApi,
         "smartControllerApi": SmartControllerApi,
+        "smartScaleApi": SmartScaleApi,
         "productReportApi": ProductReportApi,
         "farmMonitoringApi": FarmMonitoringApi,
         "coopApi": CoopApi,

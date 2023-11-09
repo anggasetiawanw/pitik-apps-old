@@ -16,9 +16,7 @@ class DashboardLamp extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        final DashboardLampController controller =
-        Get.put(DashboardLampController(context: context));
-
+        final DashboardLampController controller = Get.put(DashboardLampController(context: context));
         return SafeArea(
             child: Scaffold(
                 backgroundColor: Colors.white,

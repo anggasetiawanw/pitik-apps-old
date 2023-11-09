@@ -7,7 +7,10 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
+import 'package:dao_impl/offline_body/smart_scale_body.dart';
+import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
@@ -16,6 +19,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/response/coop_list_response.dart';
+import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 
 import '../../flavors.dart';
@@ -41,6 +45,11 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     void onInit() {
         super.onInit();
         _initMixpanel();
+
+        // Start offline automation
+        OfflineAutomation()
+            .putWithRequest(SmartScaleImpl(), ServicePeripheral(keyMap: 'smartScaleApi', requestBody: SmartScaleBody(), baseUrl: ApiMapping().getBaseUrl()))
+            .launch();
 
         tabController = TabController(vsync: this, length: 2);
         tabController.addListener(() {

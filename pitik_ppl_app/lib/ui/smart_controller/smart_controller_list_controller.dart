@@ -1,4 +1,3 @@
-import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';

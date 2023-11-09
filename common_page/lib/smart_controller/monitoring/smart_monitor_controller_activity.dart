@@ -36,7 +36,6 @@ class SmartMonitorControllerActivity extends GetView<SmartMonitorController> {
                             useBundleLatestCondition: true,
                             bundleLatestCondition: controller.deviceSummary
                         ), tag: "smartMonitorForController"),
-                        coop: controller.coop,
                         deviceIdForController: controller.deviceIdForController,
                         coopIdForController: controller.coopIdForController,
                         hideBuildings: true,

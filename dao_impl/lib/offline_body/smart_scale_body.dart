@@ -4,6 +4,7 @@ import 'package:engine/request/transport/interface/service_body.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:model/auth_model.dart';
+import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 
 import '../auth_impl.dart';
@@ -20,7 +21,9 @@ class SmartScaleBody implements ServiceBody<SmartScale> {
     Future<List> body(SmartScale object, List<dynamic> extras) async {
         Auth? auth = await AuthImpl().get();
         if (auth != null) {
-            return [auth.token, auth.id, Mapper.asJsonString(object), object.id != null ? ListApi.pathSmartScaleForDetailAndUpdate(object.id!) : null];
+            List<SmartScale> scale = [object];
+            ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: scale);
+            return ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${object.farmingCycleId}', Mapper.asJsonString(bodyRequest)];
         } else {
             return [];
         }

@@ -1,8 +1,6 @@
 
 import 'package:common_page/smart_controller/setup_reset/reset_time_controller.dart';
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/button_fill/button_fill.dart';
-import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';

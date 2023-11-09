@@ -19,11 +19,20 @@ class SmartScale extends Offline {
     @Attribute(name: "id", type: "VARCHAR", length: 100, notNull: true)
     String? id;
 
+    @Attribute(name: "farmingCycleId", type: "VARCHAR", length: 200, notNull: true)
+    String? farmingCycleId;
+
+    @Attribute(name: "day", type: "INTEGER", length: 10, defaultValue: "0")
+    int? day;
+
     @Attribute(name: "totalCount", type: "INTEGER", length: 10, defaultValue: "0")
     int? totalCount;
 
     @Attribute(name: "averageWeight", type: "REAL", length: 10, defaultValue: "0")
     double? averageWeight;
+
+    @Attribute(name: "avgWeight", type: "REAL", length: 10, defaultValue: "0")
+    double? avgWeight;
 
     @Attribute(name: "roomId", type: "VARCHAR", length: 100, notNull: true)
     String? roomId;
@@ -34,6 +43,13 @@ class SmartScale extends Offline {
     @Attribute(name: "records", type: "VARCHAR", length: 1000)
     @IsChildren()
     List<SmartScaleRecord?> records;
+
+    @Attribute(name: "details", type: "VARCHAR", length: 1000)
+    @IsChildren()
+    List<SmartScaleRecord?> details;
+
+    @Attribute(name: "date", type: "VARCHAR", length: 100)
+    String? date;
 
     @Attribute(name: "startDate", type: "VARCHAR", length: 100)
     String? startDate;
@@ -47,16 +63,22 @@ class SmartScale extends Offline {
     @Attribute(name: "updatedDate", type: "VARCHAR", length: 100)
     String? updatedDate;
 
-    SmartScale({this.id, this.totalCount, this.averageWeight, this.roomId, this.room, this.records = const [], this.startDate, this.executionDate, this.createdDate, this.updatedDate});
+    SmartScale({this.id, this.farmingCycleId, this.day, this.totalCount, this.averageWeight, this.avgWeight, this.roomId, this.room, this.records = const [], this.details = const [], 
+                this.date, this.startDate, this.executionDate, this.createdDate, this.updatedDate});
 
     static SmartScale toResponseModel(Map<String, dynamic> map) {
         return SmartScale(
             id: map['id'],
+            farmingCycleId: map['farmingCycleId'],
+            day: map['day'],
             totalCount: map['totalCount'],
-            averageWeight: map['averageWeight'].toDouble(),
+            averageWeight: map['averageWeight'] != null ? map['averageWeight'].toDouble() : map['averageWeight'],
+            avgWeight: map['avgWeight'] != null ? map['avgWeight'].toDouble() : map['avgWeight'],
             roomId: map['roomId'],
             room: Mapper.child<Room>(map['room']),
             records: Mapper.children<SmartScaleRecord>(map['records']),
+            details: Mapper.children<SmartScaleRecord>(map['details']),
+            date: map['date'],
             startDate: map['startDate'],
             executionDate: map['executionDate'],
             createdDate: map['createdDate'],
@@ -68,10 +90,15 @@ class SmartScale extends Offline {
     SmartScale toModelEntity(Map<String, dynamic> map) {
         return SmartScale(
             id: map['id'],
+            farmingCycleId: map['farmingCycleId'],
+            day: map['day'],
             totalCount: map['totalCount'],
-            averageWeight: map['averageWeight'].toDouble(),
+            averageWeight: map['averageWeight'] != null ? map['averageWeight'].toDouble() : map['averageWeight'],
+            avgWeight: map['avgWeight'] != null ? map['avgWeight'].toDouble() : map['avgWeight'],
             roomId: map['roomId'],
             records: Mapper.children<SmartScaleRecord>(map['records']),
+            details: Mapper.children<SmartScaleRecord>(map['details']),
+            date: map['date'],
             startDate: map['startDate'],
             executionDate: map['executionDate'],
             createdDate: map['createdDate'],

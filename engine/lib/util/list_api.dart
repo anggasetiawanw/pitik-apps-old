@@ -45,7 +45,7 @@ class ListApi {
     static const String getCoolerData = "getCoolerData";
 
     // api SMART SCALE
-    static const String getListSmartScale = "getListSmartScale";
+    static const String getListHistoryScale = "getListHistoryScale";
     static const String getSmartScaleDetail = "getSmartScaleDetail";
     static const String saveSmartScale = "saveSmartScale";
     static const String updateSmartScale = "updateSmartScale";

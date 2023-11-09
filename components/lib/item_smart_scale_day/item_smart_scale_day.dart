@@ -1,7 +1,7 @@
 // ignore_for_file: slash_for_doc_comments
 
 import 'package:engine/util/convert.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 
 import '../global_var.dart';
@@ -12,24 +12,26 @@ import '../global_var.dart';
  * @create date 14/09/2023
  */
 
-class ItemSmartScale extends StatelessWidget {
-    const ItemSmartScale({super.key, required this.smartScale, required this.onTap, this.indeksCamera = 0 });
+class ItemSmartScaleDay extends StatelessWidget {
+    const ItemSmartScaleDay({super.key, required this.smartScale, required this.onTap, this.isRedChild = false});
 
-    final SmartScale? smartScale;
+    final bool isRedChild;
+    final SmartScale smartScale;
     final Function() onTap;
-    final int? indeksCamera ;
 
     @override
     Widget build(BuildContext context) {
-        final DateTime executionDate = Convert.getDatetime(smartScale!.executionDate!);
+        final DateTime date = Convert.getDatetime(smartScale.date!);
 
         return GestureDetector(onTap: onTap,
             child: Container(
-                margin: const EdgeInsets.only(top: 16 ),
+                margin: const EdgeInsets.only(top: 8),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: GlobalVar.outlineColor),
-                    borderRadius: BorderRadius.circular(8)),
+                    border: Border.all(width: isRedChild ? 0 : 1.4, color: GlobalVar.outlineColor),
+                    borderRadius: BorderRadius.circular(8),
+                    color: isRedChild ? GlobalVar.redBackground : Colors.transparent
+                ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,20 +45,26 @@ class ItemSmartScale extends StatelessWidget {
                                         child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                                Text(
-                                                    "Daftar Timbang ${Convert.getYear(executionDate)}/${Convert.getMonthNumber(executionDate)}/${Convert.getDay(executionDate)} - ${Convert.getHour(executionDate)}.${Convert.getMinute(executionDate)}",
-                                                    style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 14, overflow: TextOverflow.clip),
+                                                Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                        Text("Hari Ke ${smartScale.day}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 16, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)),
+                                                        Text("${Convert.getYear(date)}-${Convert.getMonthNumber(date)}-${Convert.getDay(date)}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 10, overflow: TextOverflow.clip, color: GlobalVar.grayText)),
+                                                    ],
                                                 ),
                                                 const SizedBox(height: 6),
-                                                Row(
+                                                smartScale.totalCount == null || smartScale.totalCount == 0 ? Text(
+                                                    "Belum ada data timbang!",
+                                                    style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)
+                                                ) : Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                         Expanded(
                                                             child: Row(
                                                                 children: [
-                                                                    Text("Total Ayam:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
+                                                                    Text("Total Sampel:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
                                                                     const SizedBox(width: 4),
-                                                                    Text("${smartScale!.totalCount} Ekor", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)),
+                                                                    Text("${smartScale.totalCount} Ekor", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)),
                                                                 ],
                                                             )
                                                         ),
@@ -65,7 +73,7 @@ class ItemSmartScale extends StatelessWidget {
                                                                 children: [
                                                                     Text("Berat rata-rata:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
                                                                     const SizedBox(width: 4),
-                                                                    Flexible(child: Text("${smartScale!.averageWeight == null ? '-' : smartScale!.averageWeight!.toStringAsFixed(2)} kg", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)))
+                                                                    Flexible(child: Text("${smartScale.avgWeight == null ? '-' : smartScale.avgWeight!.toStringAsFixed(2)} kg", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)))
                                                                 ]
                                                             )
                                                         )

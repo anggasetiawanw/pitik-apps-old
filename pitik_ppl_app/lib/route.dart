@@ -49,6 +49,8 @@ import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_acti
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
 import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
 import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -96,6 +98,9 @@ class AppRoutes {
         GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.smartControllerDashboard, page: () => const SmartControllerDashboard(), binding: DetailSmartControllerBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.smartMonitorController, page: () => const SmartMonitorControllerActivity(), binding: SmartMonitorControllerBinding(context: GlobalVar.getContext())),
+
+        // Smart Scale
+        GetPage(name: RoutePage.listSmartScale, page: () => const ListSmartScaleActivity(), binding: ListSmartScaleBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -127,4 +132,5 @@ class RoutePage {
     static const String smartControllerList = "/smartControllerList";
     static const String smartControllerDashboard = "/smartControllerDashboard";
     static const String smartMonitorController = "/smartMonitorController";
+    static const String listSmartScale = "/listSmartScale";
 }
