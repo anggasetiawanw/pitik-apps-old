@@ -1,8 +1,6 @@
 PODS:
   - app_settings (4.3.0):
     - Flutter
-  - carrier_info (0.0.1):
-    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.4):
@@ -190,7 +188,6 @@ PODS:
 
 DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
-  - carrier_info (from `.symlinks/plugins/carrier_info/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -242,8 +239,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
-  carrier_info:
-    :path: ".symlinks/plugins/carrier_info/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -287,7 +282,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app_settings: ee4ae4d1c9a907a23b81c40e5c56a5ca8a20a62b
-  carrier_info: 74da91657834617c4409e6afdb706ac4685efe66
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -335,4 +329,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8bd16479139fc90c6cfb7407d156bd88e30f2de3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.13.0
