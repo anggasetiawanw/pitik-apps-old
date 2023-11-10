@@ -49,6 +49,7 @@ class ListApi {
     static const String getSmartScaleDetail = "getSmartScaleDetail";
     static const String saveSmartScale = "saveSmartScale";
     static const String updateSmartScale = "updateSmartScale";
+    static const String getListSmartScale = "getListSmartScale";
     
     // api PRODUCT REPORT
     static const String getSapronak = "getSapronak";
