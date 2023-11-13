@@ -1,11 +1,12 @@
 
 import 'dart:convert';
 
-import 'package:common_page/library/component_library.dart';
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_area_field/edit_area_field.dart';
 import 'package:components/edit_field/edit_field.dart';
+import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/media_field/media_field.dart';
 import 'package:dao_impl/auth_impl.dart';

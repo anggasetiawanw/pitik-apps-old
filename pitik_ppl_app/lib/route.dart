@@ -8,6 +8,7 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
 import 'package:components/global_var.dart';
@@ -37,6 +38,8 @@ import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen.dart';
@@ -51,6 +54,7 @@ import 'package:common_page/smart_controller/detail_smartcontroller_activity.dar
 import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
 import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
 import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
+import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -101,6 +105,10 @@ class AppRoutes {
 
         // Smart Scale
         GetPage(name: RoutePage.listSmartScale, page: () => const ListSmartScaleActivity(), binding: ListSmartScaleBinding(context: GlobalVar.getContext())),
+
+        // Smart Camera
+        GetPage(name: RoutePage.listSmartCameraDay, page: () => const SmartCameraListDayActivity(), binding: SmartCameraListDayBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.listSmartCameraHistory, page: () => const SmartCameraListHistoryActivity(), binding: SmartCameraListHistoryBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -133,4 +141,6 @@ class RoutePage {
     static const String smartControllerDashboard = "/smartControllerDashboard";
     static const String smartMonitorController = "/smartMonitorController";
     static const String listSmartScale = "/listSmartScale";
+    static const String listSmartCameraDay = "/listSmartCameraDay";
+    static const String listSmartCameraHistory = "/listSmartCameraHistory";
 }

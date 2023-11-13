@@ -31,6 +31,7 @@ class ListApi {
     static const String getSensorPosition = "sensorPosition";
     
     // api SMART CAMERA
+    static const String getSmartCameraListDay = "getSmartCameraListDay";
     static const String getRecordImages = "getRecordImages";
     static const String getListDataCamera = "getListDataCamera";
     static const String takePictureSmartCamera = "takePictureSmartCamera";

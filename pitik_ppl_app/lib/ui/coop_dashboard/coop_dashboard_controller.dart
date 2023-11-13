@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:common_page/history/history_activity.dart';
 import 'package:common_page/history/history_controller.dart';
@@ -35,7 +33,6 @@ import 'package:model/profile.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
-import 'package:model/smart_scale/smart_scale_record_model.dart';
 import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
@@ -277,9 +274,7 @@ class CoopDashboardController extends GetxController {
                                         children: [
                                             _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () => Get.toNamed(RoutePage.listSmartScale, arguments: _getListSmartScaleBundle())),
                                             _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: coop)),
-                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () {  // SMART CAMERA
-                                                // TO SMART CAMERA
-                                            })
+                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
                                         ]
                                     )
                                 )

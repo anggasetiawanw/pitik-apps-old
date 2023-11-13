@@ -125,20 +125,20 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         Padding(
                                                             padding: const EdgeInsets.only(top: 28),
                                                             child:
-                                                            // controller.isTimeout.isTrue ?
-                                                            // Container(
-                                                            //     width: 32,
-                                                            //     height: 32,
-                                                            //     decoration: BoxDecoration(
-                                                            //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                                            //         border: Border.all(width: 2, color: GlobalVar.grayLightText),
-                                                            //     ),
-                                                            //     child: GestureDetector(
-                                                            //         // ignore: deprecated_member_use
-                                                            //         child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16, color: GlobalVar.grayLightText),
-                                                            //         onTap: () {},
-                                                            //     )
-                                                            // ) :
+                                                            controller.isTimeout.isTrue ?
+                                                            Container(
+                                                                width: 32,
+                                                                height: 32,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                                                    border: Border.all(width: 2, color: GlobalVar.grayLightText),
+                                                                ),
+                                                                child: GestureDetector(
+                                                                    // ignore: deprecated_member_use
+                                                                    child: SvgPicture.asset('images/add_orange_icon.svg', width: 16, height: 16, color: GlobalVar.grayLightText),
+                                                                    onTap: () {},
+                                                                )
+                                                            ) :
                                                             Container(
                                                                 width: 32,
                                                                 height: 32,
