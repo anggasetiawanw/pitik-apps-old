@@ -6,6 +6,7 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
+import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -52,6 +53,8 @@ class NewDataSalesOrderController extends GetxController {
   var limit = 10.obs;
   var status = "".obs;
   var produkType = "Non-LB".obs;
+  RxBool isDeliveryPrice = false.obs;
+  RxInt priceDelivery = 0.obs;
 
   Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
   Rx<List<CategoryModel?>> listCategoriesRemark = Rx<List<CategoryModel>>([]);
@@ -177,6 +180,16 @@ class NewDataSalesOrderController extends GetxController {
 
   EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
+  late SwitchLinear deliveryPrice = SwitchLinear(
+      onSwitch: (active) {
+        isDeliveryPrice.value = active;
+        if (active) {
+          priceDelivery.value = 10000;
+        } else {
+          priceDelivery.value = 0;
+        }
+      },
+      controller: GetXCreator.putSwitchLinearController("deliveryprice"));
   @override
   void onInit() {
     super.onInit();
@@ -549,6 +562,7 @@ class NewDataSalesOrderController extends GetxController {
       status: status.value,
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
       remarks: efRemark.getInput(),
+      withDeliveryFee: isDeliveryPrice.value,
     );
   }
 
@@ -668,13 +682,13 @@ class NewDataSalesOrderController extends GetxController {
       editFieldJumlahAyam.controller.showAlert();
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
-    } 
+    }
     // else if (editFieldKebutuhan.getInput().isEmpty) {
     //   editFieldKebutuhan.controller.showAlert();
     //   Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
     //   return ret = [false, ""];
     // }
-     else if (editFieldHarga.getInput().isEmpty) {
+    else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       Scrollable.ensureVisible(editFieldHarga.controller.formKey.currentContext!);
       return ret = [false, ""];

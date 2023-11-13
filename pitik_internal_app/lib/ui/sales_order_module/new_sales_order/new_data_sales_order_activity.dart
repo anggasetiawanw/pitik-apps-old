@@ -108,7 +108,7 @@ class NewDataSalesOrder extends StatelessWidget {
                   controller.spinnerCategories,
                   controller.spinnerSku,
                   controller.editFieldJumlahAyam,
-                //   controller.editFieldKebutuhan,
+                  //   controller.editFieldKebutuhan,
                   controller.editFieldHarga,
                   const SizedBox(
                     height: 16,
@@ -147,6 +147,32 @@ class NewDataSalesOrder extends StatelessWidget {
                             Obx(
                               () => controller.produkType.value == "Non-LB" ? const SizedBox() : controller.skuCardRemark,
                             ),
+                            if (controller.isInbound.isFalse) ...[
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Biaya Pengiriman",
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                      ),
+                                      controller.deliveryPrice
+                                    ],
+                                  ),
+                                  if (controller.isDeliveryPrice.isTrue) ...[
+                                    Text(
+                                      "Biaya Pengiriman Rp 10.000",
+                                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                                    ),
+                                  ]
+                                ],
+                              ),
+                            ],
                             Container(
                                 padding: const EdgeInsets.all(10),
                                 margin: const EdgeInsets.only(top: 16),
@@ -209,6 +235,23 @@ class NewDataSalesOrder extends StatelessWidget {
                                                     )),
                                               ],
                                             ),
+                                            if (controller.isDeliveryPrice.isTrue) ...[
+                                              const SizedBox(
+                                                height: 8,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      "Biaya Pengiriman",
+                                                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                                      overflow: TextOverflow.clip,
+                                                    ),
+                                                  ),
+                                                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                                ],
+                                              ),
+                                            ],
                                             const SizedBox(
                                               height: 8,
                                             ),
@@ -223,8 +266,8 @@ class NewDataSalesOrder extends StatelessWidget {
                                                 ),
                                                 Text(
                                                     controller.skuCard.controller.sumPriceMax.value - controller.skuCard.controller.sumPriceMin.value == 0
-                                                        ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value)
-                                                        : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMax.value)}",
+                                                        ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value + controller.priceDelivery.value)
+                                                        : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMax.value + controller.priceDelivery.value)}",
                                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip),
                                               ],
@@ -282,6 +325,23 @@ class NewDataSalesOrder extends StatelessWidget {
                                                     )),
                                               ],
                                             ),
+                                            if (controller.isDeliveryPrice.isTrue) ...[
+                                              const SizedBox(
+                                                height: 8,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      "Biaya Pengiriman",
+                                                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                                      overflow: TextOverflow.clip,
+                                                    ),
+                                                  ),
+                                                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                                ],
+                                              ),
+                                            ],
                                             const SizedBox(
                                               height: 8,
                                             ),
@@ -294,8 +354,12 @@ class NewDataSalesOrder extends StatelessWidget {
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
-                                                Text(controller.sumPriceMax.value - controller.sumPriceMin.value == 0 ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value) : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value)}",
-                                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                                Text(
+                                                    controller.sumPriceMax.value - controller.sumPriceMin.value == 0
+                                                        ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
+                                                        : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value + controller.priceDelivery.value)}",
+                                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                                    overflow: TextOverflow.clip),
                                               ],
                                             )
                                           ],

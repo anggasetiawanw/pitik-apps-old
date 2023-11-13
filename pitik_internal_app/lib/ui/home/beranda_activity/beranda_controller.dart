@@ -72,6 +72,14 @@ class BerandaController extends GetxController {
           Constant.isOpsLead.value = true;
           Constant.isOpsLead.refresh();
         }
+        if (role.name == RoleEnum.sales) {
+          Constant.isSales.value = true;
+          Constant.isSales.refresh();
+        }
+        if (role.name == RoleEnum.salesLead) {
+          Constant.isSalesLead.value = true;
+          Constant.isSalesLead.refresh();
+        }
       }
     }
   }

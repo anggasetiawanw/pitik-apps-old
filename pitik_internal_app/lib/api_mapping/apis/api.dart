@@ -409,6 +409,20 @@ class API {
     @Query("minQuantityRange") int minQuantityRange,
     @Query("maxQuantityRange") int maxRangeQuantity,
     @Query("createdBy") String createdBy,
+    @Query("category") String category,
+    @Query("withinSalesTeam") String withinSalesTeam,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("productItemId") String productItemId,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("status") String statusDraft,
+    @Query("status") String statusConfirmed,
+    @Query("status") String statusBooked,
+    @Query("status") String statusReadyDeliver,
+    @Query("status") String statusDelivered,
+    @Query("status") String statusCancel,
+    @Query("status") String statusRejected,
+    @Query("status") String statusOnDelivery,
+    @Query("status") String statusAllocated,
   ) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of

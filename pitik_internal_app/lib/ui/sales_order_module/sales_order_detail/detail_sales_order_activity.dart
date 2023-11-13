@@ -93,7 +93,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.customer!.businessName ?? "-",
+                  controller.orderDetail.value!.customer?.businessName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -474,6 +474,23 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       height: 8,
                                     ),
                                   ],
+                                  if (controller.isDeliveryPrice.isTrue) ...[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Biaya Pengiriman",
+                                            style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                        ),
+                                        Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                  ],
                                   Row(
                                     children: [
                                       Expanded(
@@ -483,7 +500,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
-                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value + controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                     ],
                                   )
                                 ] else ...[
@@ -541,6 +558,23 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       height: 8,
                                     ),
                                   ],
+                                  if (controller.isDeliveryPrice.isTrue) ...[
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Biaya Pengiriman",
+                                            style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                        ),
+                                        Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                  ],
                                   Row(
                                     children: [
                                       Expanded(
@@ -550,8 +584,12 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
-                                      Text(controller.sumPriceMax.value - controller.sumPriceMin.value == 0 ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value) : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value)}",
-                                          style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      Text(
+                                          controller.sumPriceMax.value - controller.sumPriceMin.value == 0
+                                              ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
+                                              : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value + controller.priceDelivery.value)}",
+                                          style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                          overflow: TextOverflow.clip),
                                     ],
                                   )
                                 ]

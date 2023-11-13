@@ -28,6 +28,8 @@ class Constant {
     static var isShopKepper = false.obs;
     static var isScRelation = false.obs;
     static var isOpsLead = false.obs;
+    static var isSales = false.obs;
+    static var isSalesLead = false.obs;
     static const double bottomSheetMargin = 24;
 
     static set deviceId(String deviceId) {

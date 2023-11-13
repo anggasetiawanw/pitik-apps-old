@@ -38,6 +38,7 @@ class Order {
   String? driverRemarks;
   String? deliveryTime;
   bool? withDeliveryFee;
+  int? deliveryFee;
 
   @IsChild()
   Customer? customer;
@@ -94,6 +95,7 @@ class Order {
     this.driverRemarks,
     this.deliveryTime,
     this.withDeliveryFee,
+    this.deliveryFee,
   });
 
   static Order toResponseModel(Map<String, dynamic> map) {
@@ -139,6 +141,7 @@ class Order {
       driverRemarks: map['driverRemarks'],
       deliveryTime: map['deliveryTime'],
       withDeliveryFee: map['withDeliveryFee'],
+        deliveryFee: map['deliveryFee'],
     );
   }
 }

@@ -12,6 +12,7 @@ import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -21,37 +22,102 @@ import 'package:global_variable/global_variable.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:model/error/error.dart';
+import 'package:model/internal_app/category_model.dart';
+import 'package:model/internal_app/operation_unit_model.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/place_model.dart';
+import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
+import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/location_list_response.dart';
+import 'package:model/response/internal_app/operation_units_response.dart';
+import 'package:model/response/internal_app/product_list_response.dart';
 import 'package:model/response/internal_app/sales_order_list_response.dart';
 import 'package:model/response/internal_app/salesperson_list_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
-class SalesOrderController extends GetxController {
+enum BodyQuerySales {
+  token,
+  auth,
+  xAppId,
+  page,
+  limit,
+  customerId,
+  salesPersonId,
+  driverId,
+  status,
+  code,
+  sameBranch,
+  withinProductionTeam,
+  customerCityId,
+  customerProvinceId,
+  customerName,
+  date,
+  minQuantityRange,
+  maxRangeQuantity,
+  createdBy,
+  category,
+  withSalesTeam,
+  operationUnitId,
+  productItemId,
+  productCategoryId,
+  status1,
+  status2,
+  status3,
+  status4,
+  status5,
+  status6,
+  status7,
+  status8,
+  status9,
+}
+
+class SalesOrderController extends GetxController with GetSingleTickerProviderStateMixin {
   BuildContext context;
   SalesOrderController({required this.context});
   TextEditingController searchController = TextEditingController();
-  var page = 1.obs;
-  var limit = 10.obs;
-  Rx<List<Order?>> orderList = Rx<List<Order>>([]);
-  Rx<List<SalesPerson?>> listSalesperson = Rx<List<SalesPerson>>([]);
-  Rx<List<Location?>> province = Rx<List<Location>>([]);
-  Rx<List<Location?>> city = Rx<List<Location>>([]);
 
-  var isLoading = false.obs;
-  var isLoadMore = false.obs;
-  var isFilter = false.obs;
-  var isSearch = false.obs;
-  var searchValue = "".obs;
-  var isLoadData = false.obs;
-  Rx<Map<String, String>> listFilter = Rx<Map<String, String>>({});
+  RxList<Order?> orderListOutbound = RxList<Order?>([]);
+  RxList<Order?> orderListInbound = RxList<Order?>([]);
+  RxList<SalesPerson?> listSalesperson = RxList<SalesPerson>([]);
+  RxList<Location?> province = RxList<Location>([]);
+  RxList<Location?> city = RxList<Location>([]);
+  RxList<OperationUnitModel?> listOperationUnits = RxList<OperationUnitModel>([]);
+  RxList<CategoryModel?> listCategory = RxList<CategoryModel>([]);
+  RxList<Products?> listProduct = RxList<Products>([]);
+
+  RxList<dynamic> bodyGeneralOutbound = RxList<dynamic>(List.generate(BodyQuerySales.values.length, (index) => null));
+  RxList<dynamic> bodyGeneralInbound = RxList<dynamic>(List.generate(BodyQuerySales.values.length, (index) => null));
+
+  FocusNode focusNode = FocusNode();
+  late TabController tabController;
+  RxInt page = 1.obs;
+  RxInt limit = 10.obs;
+  RxInt pageOutbound = 1.obs;
+  RxInt pageInbound = 1.obs;
+  RxBool isLoadingOutbond = false.obs;
+  RxBool isLoadingInbound = false.obs;
+  RxBool isLoadMore = false.obs;
+  RxBool isLoading = false.obs;
+  RxBool isFilter = false.obs;
+  RxBool isSearch = false.obs;
+  RxString searchValue = "".obs;
+  RxBool isLoadData = false.obs;
+  RxString selectedValue = "Nomor SO".obs;
+  RxBool isShowList = false.obs;
+  RxBool isOutbondTab = true.obs;
   Timer? debounce;
+  ScrollController scrollControllerOutbound = ScrollController();
+  ScrollController scrollControllerInbound = ScrollController();
 
-  ScrollController scrollController = ScrollController();
+  final List<String> items = [
+    'Customer',
+    'Nomor SO',
+  ];
+  Rx<Map<String, String>> listFilter = Rx<Map<String, String>>({});
 
   late ButtonFill btPenjualan = ButtonFill(
       controller: GetXCreator.putButtonFillController("btPenjualan"),
@@ -81,8 +147,8 @@ class SalesOrderController extends GetxController {
       onSpinnerSelected: (value) {
         spCity.controller.setTextSelected("");
         spCity.controller.disable();
-        if (province.value.isNotEmpty) {
-          Location? selectLocation = province.value.firstWhereOrNull((element) => element!.provinceName! == value);
+        if (province.isNotEmpty) {
+          Location? selectLocation = province.firstWhereOrNull((element) => element!.provinceName! == value);
           if (selectLocation != null) {
             getCity(selectLocation);
           }
@@ -112,14 +178,14 @@ class SalesOrderController extends GetxController {
         efMin.controller.hideAlert();
       });
   SpinnerField spStatus = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spStatus"),
+      controller: GetXCreator.putSpinnerFieldController("spStatusFilter"),
       label: "Status",
       hint: "Pilih Salah Satu",
       alertText: "",
       items: const {
         "Draft": false,
         "Terkonfirmasi": false,
-        // "Teralokasi": false,
+        "Teralokasi": false,
         "Dipesan": false,
         "Siap Dikirim": false,
         "Perjalanan": false,
@@ -129,79 +195,1165 @@ class SalesOrderController extends GetxController {
       },
       onSpinnerSelected: (value) {});
 
+  late SpinnerSearch spSource = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spSource"), label: "Sumber", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  late SpinnerField spCategory = SpinnerField(
+      controller: GetXCreator.putSpinnerFieldController("spCategoryFilter"),
+      label: "Kategori SKU",
+      hint: "Pilih Salah Satu",
+      alertText: "",
+      items: const {},
+      onSpinnerSelected: (value) {
+        if (listCategory.isNotEmpty) {
+          CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
+          if (selectCategory != null) {
+            getSku(selectCategory.id!);
+          }
+        }
+      });
+  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSkuFilter"), label: "SKU", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+
   late ButtonFill btKormasiFilter = ButtonFill(controller: GetXCreator.putButtonFillController("btKormasiFilter"), label: "Konfirmasi Filter", onClick: () => saveFilter());
 
   late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btBersihkanFilter"), label: "Bersihkan Filter", onClick: () => clearFilter());
+
+  late Obx searchBar = Obx(() => TextField(
+        controller: searchController,
+        focusNode: focusNode,
+        onChanged: (text) => searchOrder(text),
+        cursorColor: AppColors.primaryOrange,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: const Color(0xFFFFF9ED),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+          hintText: "cari ${selectedValue.value}",
+          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            child: SvgPicture.asset("images/search_icon.svg"),
+          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: SizedBox(
+              height: double.infinity,
+              width: 86,
+              child: Column(
+                children: [
+                  const SizedBox(height: 3),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      customButton: Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        height: 32,
+                        width: 86,
+                        child: Obx(() => Row(
+                              children: [
+                                Text(
+                                  "$selectedValue",
+                                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                isShowList.isTrue ? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
+                              ],
+                            )),
+                      ),
+                      items: items
+                          .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 12)),
+                              ))
+                          .toList(),
+                      value: selectedValue.value,
+                      onChanged: (String? value) {
+                        selectedValue.value = value ?? "Customer";
+                      },
+                      onMenuStateChange: (isOpen) {
+                        isShowList.value = isOpen;
+                      },
+                      dropdownStyleData: const DropdownStyleData(
+                        width: 100,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+          disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(width: 1.0, color: AppColors.primaryOrange)),
+        ),
+      ));
+
+  RxMap<String, bool> mapStatusOutbond = RxMap<String, bool>({
+    "Draft": false,
+    "Terkonfirmasi": false,
+    "Teralokasi": false,
+    "Dipesan": false,
+    "Siap Dikirim": false,
+    "Perjalanan": false,
+    "Terkirim": false,
+    "Ditolak": false,
+    "Batal": false,
+  });
+
+  RxMap<String, bool> mapStatusInbound = RxMap<String, bool>({
+    "Draft": false,
+    "Terkonfirmasi": false,
+    "Terkirim": false,
+    "Batal": false,
+  });
 
   @override
   void onInit() {
     super.onInit();
     initializeDateFormatting();
-    scrollListener();
+    tabController = TabController(vsync: this, length: 2);
+    scrollListenerOutbound();
+    scrollListenerInbound();
+    tabControllerListener();
   }
 
   @override
   void onReady() {
     super.onReady();
     isLoading.value = true;
-    getListOrders();
+    getListOutboundGeneral();
   }
 
-  scrollListener() async {
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
+  tabControllerListener() {
+    tabController.addListener(() {
+      if (tabController.index == 0) {
+        searchController.clear();
+        isSearch.value = true;
+        isFilter.value = false;
+        listFilter.value.clear();
+        focusNode.unfocus();
+        isOutbondTab.value = true;
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        getListOutboundGeneral();
+      } else {
+        searchController.clear();
+        isSearch.value = true;
+        isFilter.value = false;
+        listFilter.value.clear();
+        focusNode.unfocus();
+        isOutbondTab.value = false;
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        getListInboundGeneral();
+      }
+    });
+  }
+
+  scrollListenerOutbound() async {
+    scrollControllerOutbound.addListener(() {
+      if (scrollControllerOutbound.position.maxScrollExtent == scrollControllerOutbound.position.pixels) {
         isLoadMore.value = true;
-        if (isSearch.isTrue || isFilter.isTrue) {
-          page++;
-          getSearchOrder();
+        if (isSearch.isTrue) {
+          pageOutbound++;
+          searchOrderOutbound();
+        } else if (isFilter.isTrue) {
         } else {
-          page++;
-          getListOrders();
+          pageOutbound++;
+          getListOutboundGeneral();
         }
       }
     });
   }
 
-  void getListOrders() {
+  scrollListenerInbound() async {
+    scrollControllerInbound.addListener(() {
+      if (scrollControllerInbound.position.maxScrollExtent == scrollControllerInbound.position.pixels) {
+        isLoadMore.value = true;
+        if (isSearch.isTrue) {
+          pageInbound++;
+          searchOrderInbound();
+        } else if (isFilter.isTrue) {
+        } else {
+          pageInbound++;
+          getListInboundGeneral();
+        }
+      }
+    });
+  }
+
+  void fetchOrder(RxBool loading, List<dynamic> body, ResponseListener listener) {
+    loading.value = true;
+    Service.push(service: ListApi.getListOrdersFilter, context: context, body: body, listener: listener);
+  }
+
+  void setValueBody(BodyQuerySales index, dynamic value, List<dynamic> bodyGeneral) {
+    bodyGeneral[index.index] = value;
+  }
+
+  void resetAllBodyValue(List<dynamic> bodyGeneral) {
+    for (int i = 0; i < bodyGeneral.length; i++) {
+      bodyGeneral[i] = null;
+    }
+    bodyGeneral[BodyQuerySales.token.index] = Constant.auth!.token;
+    bodyGeneral[BodyQuerySales.auth.index] = Constant.auth!.id;
+    bodyGeneral[BodyQuerySales.xAppId.index] = Constant.xAppId;
+  }
+
+  void setGeneralheader(int page, int limit, String category, List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.page.index] = page;
+    bodyGeneral[BodyQuerySales.limit.index] = limit;
+    bodyGeneral[BodyQuerySales.category.index] = category;
+  }
+
+  void getListOutboundGeneral() {
+    resetAllBodyValue(bodyGeneralOutbound);
+    setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
+    if (Constant.isSales.isTrue) {
+      salesBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+      shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isScRelation.isTrue) {
+      scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+    }
+    fetchOrder(isLoadingOutbond, bodyGeneralOutbound, responOutbound());
+  }
+
+  void shopkeeperBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.status6.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
+    bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
+    bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
+  }
+
+  void salesBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.status6.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
+    bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
+    bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
+  }
+
+  void salesLeadBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.withSalesTeam.index] = "true";
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.status6.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
+    bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
+    bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
+  }
+
+  void scRelationdBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
+  }
+
+  ResponseListener responOutbound() {
+    return ResponseListener(
+        onResponseDone: (code, message, body, id, packet) {
+          if ((body as SalesOrderListResponse).data.isNotEmpty) {
+            for (var result in body.data) {
+              orderListOutbound.add(result as Order);
+            }
+            if (isLoadMore.isTrue) {
+              isLoadingOutbond.value = false;
+              isLoadMore.value = false;
+              isLoadData.value = false;
+            } else {
+              isLoadingOutbond.value = false;
+              isLoadData.value = false;
+            }
+          } else {
+            if (isLoadMore.isTrue) {
+              page.value = (orderListOutbound.length ~/ 10).toInt() + 1;
+              isLoadMore.value = false;
+              isLoadingOutbond.value = false;
+              isLoadData.value = false;
+            } else {
+              isLoadingOutbond.value = false;
+              isLoadData.value = false;
+            }
+          }
+        },
+        onResponseFail: (code, message, body, id, packet) {
+          onResponseFail(body, isLoadingOutbond);
+        },
+        onResponseError: (exception, stacktrace, id, packet) {
+          onResponseError(isLoadingOutbond);
+        },
+        onTokenInvalid: Constant.invalidResponse());
+  }
+
+  void getListInboundGeneral() {
+    resetAllBodyValue(bodyGeneralInbound);
+    setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
+    if (Constant.isSales.isTrue) {
+      salesBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isShopKepper.isTrue) {
+      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isOpsLead.isTrue) {
+      opsLeadBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralInbound(bodyGeneralInbound);
+    }
+    fetchOrder(isLoadingInbound, bodyGeneralInbound, responInbound());
+  }
+
+  void salesBodyGeneralInbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+  }
+
+  void shopkeeperBodyGeneralInbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+  }
+
+  void opsLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+  }
+
+  void salesLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
+    bodyGeneral[BodyQuerySales.withSalesTeam.index] = "true";
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+  }
+
+  ResponseListener responInbound() {
+    return ResponseListener(
+        onResponseDone: (code, message, body, id, packet) {
+          if ((body as SalesOrderListResponse).data.isNotEmpty) {
+            for (var result in body.data) {
+              orderListInbound.add(result as Order);
+            }
+            if (isLoadMore.isTrue) {
+              isLoadingInbound.value = false;
+              isLoadMore.value = false;
+              isLoadData.value = false;
+            } else {
+              isLoadingInbound.value = false;
+              isLoadData.value = false;
+            }
+          } else {
+            if (isLoadMore.isTrue) {
+              page.value = (orderListInbound.length ~/ 10).toInt() + 1;
+              isLoadMore.value = false;
+              isLoadingInbound.value = false;
+              isLoadData.value = false;
+            } else {
+              isLoadingInbound.value = false;
+              isLoadData.value = false;
+            }
+          }
+        },
+        onResponseFail: (code, message, body, id, packet) {
+          onResponseFail(body, isLoadingInbound);
+        },
+        onResponseError: (exception, stacktrace, id, packet) {
+          onResponseError(isLoadingInbound);
+        },
+        onTokenInvalid: Constant.invalidResponse());
+  }
+
+  void onResponseFail(dynamic body, RxBool loading) {
+    loading.value = false;
+    Get.snackbar(
+      "Pesan",
+      "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+      snackPosition: SnackPosition.TOP,
+      colorText: Colors.white,
+      backgroundColor: Colors.red,
+    );
+  }
+
+  void onResponseError(RxBool loading) {
+    Get.snackbar(
+      "Pesan",
+      "Terjadi kesalahan internal",
+      snackPosition: SnackPosition.TOP,
+      duration: const Duration(seconds: 5),
+      colorText: Colors.white,
+      backgroundColor: Colors.red,
+    );
+    loading.value = false;
+  }
+
+  void searchOrder(String text) {
+    if (text.isNotEmpty) {
+      if (debounce?.isActive ?? false) debounce?.cancel();
+      debounce = Timer(const Duration(milliseconds: 500), () {
+        isSearch.value = true;
+        isFilter.value = false;
+        listFilter.value.clear();
+        if (isOutbondTab.isTrue) {
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          isLoadData.value = true;
+          searchValue.value = text;
+          searchOrderOutbound();
+        } else {
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          isLoadData.value = true;
+          searchValue.value = text;
+          searchOrderInbound();
+        }
+      });
+    } else {
+      if (debounce?.isActive ?? false) debounce?.cancel();
+      debounce = Timer(const Duration(milliseconds: 500), () {
+        isSearch.value = false;
+        if (isOutbondTab.isFalse) {
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          isLoadData.value = true;
+          getListInboundGeneral();
+        } else {
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          isLoadData.value = true;
+          getListOutboundGeneral();
+        }
+      });
+    }
+  }
+
+  void searchOrderOutbound() {
+    resetAllBodyValue(bodyGeneralOutbound);
+    setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
+    if (Constant.isSales.isTrue) {
+      salesBodyGeneralOutbound(bodyGeneralOutbound);
+    }
+    if (selectedValue.value == "Customer") {
+      bodyGeneralOutbound[BodyQuerySales.customerName.index] = searchValue.value;
+    } else {
+      bodyGeneralOutbound[BodyQuerySales.code.index] = searchValue.value;
+    }
+
+    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+  }
+
+  void searchOrderInbound() {
+    resetAllBodyValue(bodyGeneralInbound);
+    setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
+    if (Constant.isSales.isTrue) {
+      salesBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (selectedValue.value == "Customer") {
+      bodyGeneralInbound[BodyQuerySales.customerName.index] = searchValue.value;
+    } else {
+      bodyGeneralInbound[BodyQuerySales.code.index] = searchValue.value;
+    }
+
+    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+  }
+
+  void backFromForm(bool isInbound) {
+    Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
+      if (isFilter.isTrue) {
+        if (isOutbondTab.isFalse) {
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          isLoadData.value = true;
+          getFilterInbound();
+        } else {
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          isLoadData.value = true;
+          getFilterOutbound();
+        }
+      } else if (isSearch.isTrue) {
+        if (isOutbondTab.isFalse) {
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          isLoadData.value = true;
+          searchOrderInbound();
+        } else {
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          isLoadData.value = true;
+          searchOrderOutbound();
+        }
+      } else {
+        Get.back();
+        tabController.index = 0;
+        isOutbondTab.value = true;
+        isLoadData.value = true;
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        getListOutboundGeneral();
+      }
+    });
+  }
+
+  void openFilter() {
+    if (spCity.controller.textSelected.isEmpty) {
+      spCity.controller.disable();
+    }
+    if (spSku.controller.textSelected.isEmpty) {
+      spSku.controller.disable();
+    }
+    getSalesList();
+    getProvince();
+    getCategorySku();
+    getListSource();
+    showFilter();
+  }
+
+  void saveFilter() {
+    if (validationFilter()) {
+      searchController.clear();
+      listFilter.value.clear();
+      if (dtTanggalPenjualan.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Tanggal Penjualan"] = dtTanggalPenjualan.controller.textSelected.value;
+      }
+      if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Dibuat Oleh"] = spCreatedBy.controller.textSelected.value;
+      }
+      if (spProvince.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Province"] = spProvince.controller.textSelected.value;
+      }
+      if (spCity.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Kota"] = spCity.controller.textSelected.value;
+      }
+      if (efMin.getInput().isNotEmpty) {
+        listFilter.value["Rentang Min"] = efMin.getInput();
+      }
+      if (efMax.getInput().isNotEmpty) {
+        listFilter.value["Rentang Max"] = efMax.getInput();
+      }
+      if (spStatus.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Status"] = spStatus.controller.textSelected.value;
+      }
+      if (spCategory.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Kategori"] = spCategory.controller.textSelected.value;
+      }
+      if (spSku.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["SKU"] = spSku.controller.textSelected.value;
+      }
+      if (spSource.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Sumber"] = spSource.controller.textSelected.value;
+      }
+
+      Get.back();
+      isFilter.value = true;
+      isSearch.value = false;
+      isLoadData.value = true;
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getFilterInbound();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getFilterOutbound();
+      }
+    } else {
+      if (efMax.getInput().isEmpty && efMin.getInput().isEmpty) {
+        Get.back();
+        if (isOutbondTab.isFalse) {
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          isLoadData.value = true;
+          getListInboundGeneral();
+        } else {
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          isLoadData.value = true;
+          getListOutboundGeneral();
+        }
+      }
+    }
+  }
+
+  void getFilterOutbound() {
+    Location? provinceSelect;
+
+    if (spProvince.controller.textSelected.value.isNotEmpty) {
+      provinceSelect = province.firstWhereOrNull(
+        (element) => element!.provinceName == spProvince.controller.textSelected.value,
+      );
+    }
+
+    Location? citySelect;
+    if (spCity.controller.textSelected.value.isNotEmpty) {
+      citySelect = city.firstWhereOrNull(
+        (element) => element!.cityName == spCity.controller.textSelected.value,
+      );
+    }
+
+    SalesPerson? salesSelect;
+    if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
+      salesSelect = listSalesperson.firstWhereOrNull(
+        (element) => element!.email == spCreatedBy.controller.textSelected.value,
+      );
+    }
+
+    CategoryModel? categorySelect;
+    if (spCategory.controller.textSelected.value.isNotEmpty) {
+      categorySelect = listCategory.firstWhereOrNull(
+        (element) => element!.name == spCategory.controller.textSelected.value,
+      );
+    }
+
+    Products? productSelect;
+    if (spSku.controller.textSelected.value.isNotEmpty) {
+      productSelect = listProduct.firstWhereOrNull(
+        (element) => element!.name == spSku.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? operationUnitSelect;
+    if (spSource.controller.textSelected.value.isNotEmpty) {
+      operationUnitSelect = listOperationUnits.firstWhere(
+        (element) => element!.operationUnitName == spSource.controller.textSelected.value,
+      );
+    }
+
+    String? status;
+    switch (spStatus.controller.textSelected.value) {
+      case "Draft":
+        status = "DRAFT";
+        break;
+      case "Terkonfirmasi":
+        status = "CONFIRMED";
+        break;
+      case "Teralokasi":
+        status = "ALLOCATED";
+        break;
+      case "Dipesan":
+        status = "BOOKED";
+        break;
+      case "Siap Dikirim":
+        status = "READY_TO_DELIVER";
+        break;
+      case "Perjalanan":
+        status = "ON_DELIVERY";
+        break;
+      case "Terkirim":
+        status = "DELIVERED";
+        break;
+      case "Ditolak":
+        status = "REJECTED";
+        break;
+      case "Batal":
+        status = "CANCELLED";
+        break;
+      default:
+    }
+    String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
+    resetAllBodyValue(bodyGeneralOutbound);
+    setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
+    if (Constant.isSales.isTrue) {
+      bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+    }
+    bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
+    bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
+    bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
+    bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
+    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
+    bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
+    bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
+    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+
+    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+  }
+
+  void getFilterInbound() {
+    Location? provinceSelect;
+
+    if (spProvince.controller.textSelected.value.isNotEmpty) {
+      provinceSelect = province.firstWhereOrNull(
+        (element) => element!.provinceName == spProvince.controller.textSelected.value,
+      );
+    }
+
+    Location? citySelect;
+    if (spCity.controller.textSelected.value.isNotEmpty) {
+      citySelect = city.firstWhereOrNull(
+        (element) => element!.cityName == spCity.controller.textSelected.value,
+      );
+    }
+
+    SalesPerson? salesSelect;
+    if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
+      salesSelect = listSalesperson.firstWhereOrNull(
+        (element) => element!.email == spCreatedBy.controller.textSelected.value,
+      );
+    }
+
+    CategoryModel? categorySelect;
+    if (spCategory.controller.textSelected.value.isNotEmpty) {
+      categorySelect = listCategory.firstWhereOrNull(
+        (element) => element!.name == spCategory.controller.textSelected.value,
+      );
+    }
+
+    Products? productSelect;
+    if (spSku.controller.textSelected.value.isNotEmpty) {
+      productSelect = listProduct.firstWhereOrNull(
+        (element) => element!.name == spSku.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? operationUnitSelect;
+    if (spSource.controller.textSelected.value.isNotEmpty) {
+      operationUnitSelect = listOperationUnits.firstWhere(
+        (element) => element!.operationUnitName == spSource.controller.textSelected.value,
+      );
+    }
+
+    String? status;
+    switch (spStatus.controller.textSelected.value) {
+      case "Draft":
+        status = "DRAFT";
+        break;
+      case "Terkonfirmasi":
+        status = "CONFIRMED";
+        break;
+      case "Teralokasi":
+        status = "ALLOCATED";
+        break;
+      case "Dipesan":
+        status = "BOOKED";
+        break;
+      case "Siap Dikirim":
+        status = "READY_TO_DELIVER";
+        break;
+      case "Perjalanan":
+        status = "ON_DELIVERY";
+        break;
+      case "Terkirim":
+        status = "DELIVERED";
+        break;
+      case "Ditolak":
+        status = "REJECTED";
+        break;
+      case "Batal":
+        status = "CANCELLED";
+        break;
+      default:
+    }
+    String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
+    resetAllBodyValue(bodyGeneralInbound);
+    setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
+    if (Constant.isSales.isTrue) {
+      //   salesBodyGeneralOutbound(bodyGeneralOutbound);
+      bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+    }
+    bodyGeneralInbound[BodyQuerySales.status.index] = status; // status
+    bodyGeneralInbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
+    bodyGeneralInbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
+    bodyGeneralInbound[BodyQuerySales.date.index] = date; // date
+    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
+    bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
+    bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+
+    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+  }
+
+  bool validationFilter() {
+    if (efMax.getInput().isNotEmpty) {
+      if (efMin.getInput().isEmpty) {
+        efMin.controller.showAlert();
+        efMax.controller.showAlert();
+        return false;
+      }
+    } else if (efMin.getInput().isNotEmpty) {
+      if (efMax.getInput().isEmpty) {
+        efMax.controller.showAlert();
+        efMin.controller.showAlert();
+        return false;
+      }
+    } else if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
+      if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
+        Get.snackbar(
+          "Oops",
+          "Rentang Min Harus Lebih Kecil Dari Rentang Max",
+          snackPosition: SnackPosition.TOP,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void clearFilter() {
+    dtTanggalPenjualan.controller.setTextSelected("");
+    spCreatedBy.controller.setTextSelected("");
+    spProvince.controller.setTextSelected("");
+    spCity.controller.setTextSelected("");
+    spCity.controller.disable();
+    efMin.setInput("");
+    efMax.setInput("");
+    spStatus.controller.setTextSelected("");
+    spCategory.controller.setTextSelected("");
+    spSku.controller.setTextSelected("");
+    spSku.controller.disable();
+    spSource.controller.setTextSelected("");
+    listFilter.value.clear();
+    Get.back();
+    if (isOutbondTab.isFalse) {
+      orderListInbound.clear();
+      pageInbound.value = 1;
+      isLoadData.value = true;
+      getListInboundGeneral();
+    } else {
+      orderListOutbound.clear();
+      pageOutbound.value = 1;
+      isLoadData.value = true;
+      getListOutboundGeneral();
+    }
+  }
+
+  void removeOneFilter(String key) {
+    switch (key) {
+      case "Tanggal Penjualan":
+        dtTanggalPenjualan.controller.setTextSelected("");
+        break;
+      case "Dibuat Oleh":
+        spCreatedBy.controller.setTextSelected("");
+        break;
+      case "Province":
+        spProvince.controller.setTextSelected("");
+        break;
+      case "Kota":
+        spCity.controller.setTextSelected("");
+        break;
+      case "Rentang Min":
+        listFilter.value.remove("Rentang Max");
+        efMin.setInput("");
+        efMax.setInput("");
+        break;
+      case "Rentang Max":
+        listFilter.value.remove("Rentang Min");
+        efMin.setInput("");
+        efMax.setInput("");
+        break;
+      case "Status":
+        spStatus.controller.setTextSelected("");
+        break;
+      case "Kategori":
+        spCategory.controller.setTextSelected("");
+        break;
+      case "SKU":
+        spSku.controller.setTextSelected("");
+        break;
+      case "Sumber":
+        spSource.controller.setTextSelected("");
+        break;
+
+      default:
+    }
+
+    listFilter.value.remove(key);
+    listFilter.refresh();
+    if (listFilter.value.isEmpty) {
+      orderListOutbound.clear();
+      page.value = 1;
+      isFilter.value = false;
+      isSearch.value = false;
+      isLoadData.value = true;
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getListInboundGeneral();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getListOutboundGeneral();
+      }
+    } else {
+      page.value = 1;
+      isLoadData.value = true;
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getFilterInbound();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getFilterOutbound();
+      }
+    }
+  }
+
+  void pullRefresh() {
+    orderListOutbound.clear();
+    if (isSearch.isTrue) {
+      page.value = 1;
+      isLoadData.value = true;
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        searchOrderInbound();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        searchOrderOutbound();
+      }
+    } else if (isFilter.isTrue) {
+      isLoadData.value = true;
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getFilterInbound();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getFilterOutbound();
+      }
+    } else if (isSearch.isFalse && isFilter.isFalse) {
+      page.value = 1;
+      isLoadData.value = true;
+      //   getListOrders();
+    }
+  }
+
+  void getProvince() {
+    spProvince.controller
+      ..disable()
+      ..showLoading();
+    Service.pushWithIdAndPacket(service: ListApi.getProvince, context: context, id: 1, packet: [province, spProvince], body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!], listener: locationListerner());
+  }
+
+  void getCity(Location province) {
+    spCity.controller
+      ..disable()
+      ..showLoading();
+    Service.pushWithIdAndPacket(service: ListApi.getCity, context: context, id: 2, packet: [city, spCity], body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, province.id], listener: locationListerner());
+  }
+
+  ResponseListener locationListerner() {
+    return ResponseListener(
+        onResponseDone: (code, message, body, id, packet) {
+          Map<String, bool> mapList = {};
+          for (var location in (body as LocationListResponse).data) {
+            if (id == 1) {
+              mapList[location!.provinceName!] = false;
+            } else {
+              mapList[location!.cityName!] = false;
+            }
+          }
+          for (var result in body.data) {
+            (packet[0] as RxList<Location?>).add(result);
+          }
+          (packet[1] as SpinnerSearch).controller
+            ..generateItems(mapList)
+            ..enable()
+            ..hideLoading();
+        },
+        onResponseFail: (code, message, body, id, packet) {
+          (packet[1] as SpinnerSearch).controller
+            ..enable()
+            ..hideLoading();
+          Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        },
+        onResponseError: (exception, stacktrace, id, packet) {
+          print(stacktrace);
+          (packet[1] as SpinnerSearch).controller
+            ..enable()
+            ..hideLoading();
+          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        },
+        onTokenInvalid: Constant.invalidResponse());
+  }
+
+  void getSalesList() {
+    AuthImpl().get().then((auth) => {
+          if (auth != null)
+            {
+              spCreatedBy.controller
+                ..showLoading()
+                ..disable(),
+              Service.push(
+                  apiKey: "api",
+                  service: ListApi.getSalesList,
+                  context: context,
+                  body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, "sales,sales lead", 1, 0],
+                  listener: ResponseListener(
+                      onResponseDone: (code, message, body, id, packet) {
+                        for (var result in (body as SalespersonListResponse).data) {
+                          listSalesperson.add(result);
+                        }
+                        Map<String, bool> mapList = {};
+                        for (var product in body.data) {
+                          mapList[product!.email!] = false;
+                        }
+                        spCreatedBy.controller.generateItems(mapList);
+                        spCreatedBy.controller.enable();
+                        spCreatedBy.controller.hideLoading();
+                      },
+                      onResponseFail: (code, message, body, id, packet) {
+                        Get.snackbar(
+                          "Pesan",
+                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          snackPosition: SnackPosition.TOP,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                        spCreatedBy.controller.hideLoading();
+                      },
+                      onResponseError: (exception, stacktrace, id, packet) {
+                        Get.snackbar(
+                          "Pesan",
+                          "Terjadi Kesalahan Internal",
+                          snackPosition: SnackPosition.TOP,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                        spCreatedBy.controller.hideLoading();
+                      },
+                      onTokenInvalid: () => Constant.invalidResponse()))
+            }
+          else
+            {Constant.invalidResponse()}
+        });
+  }
+
+  void getCategorySku() {
+    spCategory.controller.disable();
+    spCategory.controller.showLoading();
+    spCategory.controller.setTextSelected("Loading...");
     Service.push(
-        service: ListApi.getListOrders,
+      service: ListApi.getCategories,
+      context: context,
+      body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!],
+      listener: ResponseListener(
+          onResponseDone: (code, message, body, id, packet) {
+            for (var result in (body as CategoryListResponse).data) {
+              listCategory.add(result);
+            }
+            Map<String, bool> mapList = {};
+            for (var product in body.data) {
+              mapList[product!.name!] = false;
+            }
+            spCategory.controller.enable();
+            spCategory.controller.setTextSelected("");
+            spCategory.controller.hideLoading();
+            spCategory.controller.generateItems(mapList);
+          },
+          onResponseFail: (code, message, body, id, packet) {
+            Get.snackbar(
+              "Pesan",
+              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              snackPosition: SnackPosition.TOP,
+              duration: const Duration(seconds: 5),
+              colorText: Colors.white,
+              backgroundColor: Colors.red,
+            );
+            spCategory.controller.disable();
+            spCategory.controller.setTextSelected("");
+            spCategory.controller.hideLoading();
+          },
+          onResponseError: (exception, stacktrace, id, packet) {
+            Get.snackbar(
+              "Pesan",
+              "Terjadi KesalahanInternal",
+              snackPosition: SnackPosition.TOP,
+              duration: const Duration(seconds: 5),
+              colorText: Colors.white,
+              backgroundColor: Colors.red,
+            );
+            spCategory.controller.disable();
+            spCategory.controller.setTextSelected("");
+            spCategory.controller.hideLoading();
+            print(stacktrace);
+          },
+          onTokenInvalid: Constant.invalidResponse()),
+    );
+  }
+
+  void getListSource() {
+    spSource.controller
+      ..disable()
+      ..setTextSelected("Loading...")
+      ..showLoading();
+    Service.push(
+        service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value, "DRAFT", "CONFIRMED", "BOOKED", "READY_TO_DELIVER", "DELIVERED", "CANCELLED", "REJECTED", "ON_DELIVERY", "ALLOCATED"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              if ((body as SalesOrderListResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  orderList.value.add(result as Order);
-                }
-                if (isLoadMore.isTrue) {
-                  isLoading.value = false;
-                  isLoadMore.value = false;
-                  isLoadData.value = false;
-                } else {
-                  isLoading.value = false;
-                  isLoadData.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  page.value = (orderList.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                  isLoading.value = false;
-                  isLoadData.value = false;
-                } else {
-                  isLoading.value = false;
-                  isLoadData.value = false;
-                }
+              Map<String, bool> mapList = {};
+              for (var units in (body as ListOperationUnitsResponse).data) {
+                mapList[units!.operationUnitName!] = false;
               }
+              for (var result in body.data) {
+                listOperationUnits.add(result);
+              }
+
+              spSource.controller
+                ..enable()
+                ..setTextSelected("")
+                ..hideLoading();
+
+              spSource.controller.generateItems(mapList);
             },
             onResponseFail: (code, message, body, id, packet) {
-              isLoading.value = false;
               Get.snackbar(
                 "Pesan",
                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                 snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
+              spSource.controller
+                ..setTextSelected("")
+                ..hideLoading();
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
@@ -212,175 +1364,141 @@ class SalesOrderController extends GetxController {
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
-              isLoading.value = false;
+              spSource.controller
+                ..setTextSelected("")
+                ..hideLoading();
+              print(stacktrace);
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
 
-  /// @Query("customerId") String customerId,
-  /// @Query("salesPersonId") String salesPersonId,
-  /// @Query("driverId") String driverId,
-  /// @Query("status") String status,
-  /// @Query("code") String code,
-  /// @Query("sameBranch") bool sameBranch,
-  /// @Query("withinProductionTeam") bool withinProductionTeam,
-  /// @Query("customerCityId") int customerCityId,
-  /// @Query("customerProvinceId") int customerProvinceId,
-  /// @Query("customerName") String customerName,
-  /// @Query("date") String date,
-  /// @Query("minQuantityRange") int minQuantityRange,
-  /// @Query("maxRangeQuantity") int maxRangeQuantity,
-  /// @Query("createdBy") String createdBy,
-  void getSearchOrder() {
-    List<dynamic> body = [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value];
-    if (isSearch.isTrue) {
-      body.add(null); // customerId
-      body.add(null); // salesPersonId
-      body.add(null); // driverId
-      body.add(null); // status
-      body.add(null); // code
-      body.add(null); // sameBranch
-      body.add(null); // withinProductionTeam
-      body.add(null); // customerCityId
-      body.add(null); // customerProvinceId
-      body.add(searchValue.value); // customerName
-      body.add(null); // date
-      body.add(null); // minQuantityRange
-      body.add(null); // maxRangeQuantity
-      body.add(null); // createdBy
-    } else if (isFilter.isTrue) {
-      Location? provinceSelect;
-
-      if (spProvince.controller.textSelected.value.isNotEmpty) {
-        provinceSelect = province.value.firstWhereOrNull(
-          (element) => element!.provinceName == spProvince.controller.textSelected.value,
-        );
-      }
-
-      Location? citySelect;
-      if (spCity.controller.textSelected.value.isNotEmpty) {
-        citySelect = city.value.firstWhereOrNull(
-          (element) => element!.cityName == spCity.controller.textSelected.value,
-        );
-      }
-
-      SalesPerson? salesSelect;
-      if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        salesSelect = listSalesperson.value.firstWhereOrNull(
-          (element) => element!.email == spCreatedBy.controller.textSelected.value,
-        );
-      }
-
-      String? status;
-      switch (spStatus.controller.textSelected.value) {
-        case "Draft":
-          status = "DRAFT";
-          break;
-        case "Terkonfirmasi":
-          status = "CONFIRMED";
-          break;
-        case "Teralokasi":
-          status = "ALLOCATED";
-          break;
-        case "Dipesan":
-          status = "BOOKED";
-          break;
-        case "Siap Dikirim":
-          status = "READY_TO_DELIVER";
-          break;
-        case "Perjalanan":
-          status = "ON_DELIVERY";
-          break;
-        case "Terkirim":
-          status = "DELIVERED";
-          break;
-        case "Ditolak":
-          status = "REJECTED";
-          break;
-        case "Batal":
-          status = "CANCELLED";
-          break;
-        default:
-      }
-      String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
-
-      body.add(null); // customerId
-      body.add(null); // salesPersonId
-      body.add(null); // driverId
-      body.add(status); // status
-      body.add(null); // code
-      body.add(null); // sameBranch
-      body.add(null); // withinProductionTeam
-      body.add(citySelect?.id); // customerCityId
-      body.add(provinceSelect?.id); // customerProvinceId
-      body.add(null); // customerName
-      body.add(date); // date
-      body.add(efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null); // minQuantityRange
-      body.add(efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null); // maxRangeQuantity
-      body.add(salesSelect?.id); // createdBy
-    }
+  void getSku(String categoriId) {
     Service.push(
-        service: ListApi.getListOrdersFilter,
+        service: ListApi.getProductById,
         context: context,
-        body: body,
+        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, categoriId],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              if ((body as SalesOrderListResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  orderList.value.add(result as Order);
+              if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
+                Map<String, bool> mapList = {};
+                for (var product in body.data) {
+                  mapList[product!.name!] = false;
                 }
-                if (isLoadMore.isTrue) {
-                  isLoadData.value = false;
-                  isLoadMore.value = false;
-
-                  listFilter.refresh();
-                } else {
-                  isLoadData.value = false;
-
-                  listFilter.refresh();
+                for (var result in (body).data) {
+                  listProduct.add(result);
                 }
+                spSku.controller.generateItems(mapList);
+                spSku.controller.enable();
               } else {
-                if (isLoadMore.isTrue) {
-                  page.value = (orderList.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                  isLoadData.value = false;
-
-                  listFilter.refresh();
-                } else {
-                  isLoadData.value = false;
-
-                  listFilter.refresh();
-                }
+                spSku.controller
+                  ..textSelected.value = body.data[0]!.name!
+                  ..disable();
               }
             },
             onResponseFail: (code, message, body, id, packet) {
-              isLoadData.value = false;
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
+              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoadData.value = false;
+              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
-            onTokenInvalid: Constant.invalidResponse()));
+            onTokenInvalid: () {}));
+  }
+
+  showFilter() {
+    if (isOutbondTab.isTrue) {
+      spStatus.controller.generateItems(mapStatusOutbond);
+    } else {
+      spStatus.controller.generateItems(mapStatusInbound);
+    }
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: Get.context!,
+        isScrollControlled: true,
+        builder: (context) {
+          return FractionallySizedBox(
+            heightFactor: 0.90,
+            child: Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 8),
+                        width: 60,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: AppColors.outlineColor,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 24),
+                              dtTanggalPenjualan,
+                              spCreatedBy,
+                              spCategory,
+                              spSku,
+                              spSource,
+                              spProvince,
+                              spCity,
+                              Row(
+                                children: [
+                                  Expanded(child: efMin),
+                                  const SizedBox(width: 8),
+                                  Expanded(child: efMax),
+                                ],
+                              ),
+                              spStatus,
+                              const SizedBox(height: 120),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    ),
+                    padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: btKormasiFilter),
+                        const SizedBox(width: 8),
+                        Expanded(child: btBersihkanFilter),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 
   _showBottomDialog() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -438,12 +1556,12 @@ class SalesOrderController extends GetxController {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: AppColors.outlineColor),
-                      color: Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? AppColors.grey : Colors.white,
+                      color: Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? const Color(0xFFF0F0F0) : Colors.white,
                     ),
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          "images/icon_outbound.svg",
+                          Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? "images/outbound_off.svg" : "images/icon_outbound.svg",
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -469,377 +1587,6 @@ class SalesOrderController extends GetxController {
                 ),
                 const SizedBox(height: Constant.bottomSheetMargin),
               ],
-            ),
-          );
-        });
-  }
-
-  void backFromForm(bool isInbound) {
-    Get.back();
-    isLoadData.value = true;
-    orderList.value.clear();
-    page.value = 1;
-    Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
-      if (isFilter.isTrue) {
-        getSearchOrder();
-      } else {
-        getListOrder();
-      }
-    });
-  }
-
-  void getListOrder() {
-    isLoading.value = true;
-    orderList.value.clear();
-    page.value = 1;
-    Timer(const Duration(milliseconds: 100), () {
-      getListOrders();
-    });
-  }
-
-  void searchOrder(String text) {
-    if (text.isNotEmpty) {
-      if (debounce?.isActive ?? false) debounce?.cancel();
-      debounce = Timer(const Duration(milliseconds: 500), () {
-        page.value = 1;
-        isSearch.value = true;
-        listFilter.value.clear();
-        isFilter.value = false;
-        isLoadData.value = true;
-        searchValue.value = text;
-        orderList.value.clear();
-        getSearchOrder();
-      });
-    } else {
-      if (debounce?.isActive ?? false) debounce?.cancel();
-      debounce = Timer(const Duration(milliseconds: 500), () {
-        isSearch.value = false;
-        isLoadData.value = true;
-        searchValue.value = "";
-        orderList.value.clear();
-        page.value = 1;
-        getListOrders();
-      });
-    }
-  }
-
-  void openFilter() {
-    if (spCity.controller.textSelected.isEmpty) {
-      spCity.controller.disable();
-    }
-    getSalesList();
-    getProvince();
-    showFilter();
-  }
-
-  void getProvince() {
-    spProvince.controller
-      ..disable()
-      ..showLoading();
-    Service.pushWithIdAndPacket(service: ListApi.getProvince, context: context, id: 1, packet: [province, spProvince], body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!], listener: _getListLocationListener);
-  }
-
-  void getCity(Location province) {
-    spCity.controller
-      ..disable()
-      ..showLoading();
-    Service.pushWithIdAndPacket(service: ListApi.getCity, context: context, id: 2, packet: [city, spCity], body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, province.id], listener: _getListLocationListener);
-  }
-
-  final _getListLocationListener = ResponseListener(
-      onResponseDone: (code, message, body, id, packet) {
-        Map<String, bool> mapList = {};
-        for (var location in (body as LocationListResponse).data) {
-          if (id == 1) {
-            mapList[location!.provinceName!] = false;
-          } else {
-            mapList[location!.cityName!] = false;
-          }
-        }
-        for (var result in body.data) {
-          (packet[0] as Rx<List<Location?>>).value.add(result);
-        }
-        (packet[1] as SpinnerSearch).controller
-          ..generateItems(mapList)
-          ..enable()
-          ..hideLoading();
-      },
-      onResponseFail: (code, message, body, id, packet) {
-        (packet[1] as SpinnerSearch).controller
-          ..enable()
-          ..hideLoading();
-        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-      },
-      onResponseError: (exception, stacktrace, id, packet) {
-        print(stacktrace);
-        (packet[1] as SpinnerSearch).controller
-          ..enable()
-          ..hideLoading();
-        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-      },
-      onTokenInvalid: Constant.invalidResponse());
-
-  void getSalesList() {
-    AuthImpl().get().then((auth) => {
-          if (auth != null)
-            {
-              spCreatedBy.controller
-                ..showLoading()
-                ..disable(),
-              Service.push(
-                  apiKey: "api",
-                  service: ListApi.getSalesList,
-                  context: context,
-                  body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, "sales,sales lead", 1, 0],
-                  listener: ResponseListener(
-                      onResponseDone: (code, message, body, id, packet) {
-                        for (var result in (body as SalespersonListResponse).data) {
-                          listSalesperson.value.add(result);
-                        }
-
-                        Map<String, bool> mapList = {};
-                        for (var product in body.data) {
-                          mapList[product!.email!] = false;
-                        }
-                        spCreatedBy.controller.generateItems(mapList);
-                        spCreatedBy.controller.enable();
-                        spCreatedBy.controller.hideLoading();
-                      },
-                      onResponseFail: (code, message, body, id, packet) {
-                        Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                          snackPosition: SnackPosition.TOP,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.red,
-                        );
-                        spCreatedBy.controller.hideLoading();
-                      },
-                      onResponseError: (exception, stacktrace, id, packet) {
-                        Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
-                          snackPosition: SnackPosition.TOP,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.red,
-                        );
-                        spCreatedBy.controller.hideLoading();
-                      },
-                      onTokenInvalid: () => Constant.invalidResponse()))
-            }
-          else
-            {Constant.invalidResponse()}
-        });
-  }
-
-  void saveFilter() {
-    if (validationFilter()) {
-      searchController.clear();
-      listFilter.value.clear();
-      if (dtTanggalPenjualan.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Penjualan"] = dtTanggalPenjualan.controller.textSelected.value;
-      }
-      if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Dibuat Oleh"] = spCreatedBy.controller.textSelected.value;
-      }
-      if (spProvince.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Province"] = spProvince.controller.textSelected.value;
-      }
-      if (spCity.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Kota"] = spCity.controller.textSelected.value;
-      }
-      if (efMin.getInput().isNotEmpty) {
-        listFilter.value["Rentang Min"] = efMin.getInput();
-      }
-      if (efMax.getInput().isNotEmpty) {
-        listFilter.value["Rentang Max"] = efMax.getInput();
-      }
-      if (spStatus.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Status"] = spStatus.controller.textSelected.value;
-      }
-
-      Get.back();
-      orderList.value.clear();
-      page.value = 1;
-      isFilter.value = true;
-      isSearch.value = false;
-      isLoadData.value = true;
-      getSearchOrder();
-    } else {
-      if (efMax.getInput().isEmpty && efMin.getInput().isEmpty) {
-        Get.back();
-        orderList.value.clear();
-        page.value = 1;
-        isLoadData.value = true;
-        getListOrders();
-      }
-    }
-  }
-
-  bool validationFilter() {
-    if (efMax.getInput().isNotEmpty) {
-      if (efMin.getInput().isEmpty) {
-        efMin.controller.showAlert();
-        efMax.controller.showAlert();
-        return false;
-      }
-    } else if (efMin.getInput().isNotEmpty) {
-      if (efMax.getInput().isEmpty) {
-        efMax.controller.showAlert();
-        efMin.controller.showAlert();
-        return false;
-      }
-    } else if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
-      if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
-        Get.snackbar(
-          "Oops",
-          "Rentang Min Harus Lebih Kecil Dari Rentang Max",
-          snackPosition: SnackPosition.TOP,
-          colorText: Colors.white,
-          backgroundColor: Colors.red,
-        );
-        return false;
-      }
-    }
-    return true;
-  }
-
-  void clearFilter() {
-    dtTanggalPenjualan.controller.setTextSelected("");
-    spCreatedBy.controller.setTextSelected("");
-    spProvince.controller.setTextSelected("");
-    spCity.controller.setTextSelected("");
-    spCity.controller.disable();
-    efMin.setInput("");
-    efMax.setInput("");
-    spStatus.controller.setTextSelected("");
-    listFilter.value.clear();
-    Get.back();
-    orderList.value.clear();
-    page.value = 1;
-    isFilter.value = false;
-    isSearch.value = false;
-    isLoadData.value = true;
-    getListOrders();
-  }
-
-  void removeOneFilter(String key) {
-    switch (key) {
-      case "Tanggal Penjualan":
-        dtTanggalPenjualan.controller.setTextSelected("");
-        break;
-      case "Dibuat Oleh":
-        spCreatedBy.controller.setTextSelected("");
-        break;
-      case "Province":
-        spProvince.controller.setTextSelected("");
-        break;
-      case "Kota":
-        spCity.controller.setTextSelected("");
-        break;
-      case "Rentang Min":
-        listFilter.value.remove("Rentang Max");
-        efMin.setInput("");
-        efMax.setInput("");
-        break;
-      case "Rentang Max":
-        listFilter.value.remove("Rentang Min");
-        efMin.setInput("");
-        efMax.setInput("");
-        break;
-      case "Status":
-        spStatus.controller.setTextSelected("");
-        break;
-      default:
-    }
-
-    listFilter.value.remove(key);
-    listFilter.refresh();
-    if (listFilter.value.isEmpty) {
-      orderList.value.clear();
-      page.value = 1;
-      isFilter.value = false;
-      isSearch.value = false;
-      isLoadData.value = true;
-      getListOrders();
-    } else {
-      page.value = 1;
-      isLoadData.value = true;
-      getSearchOrder();
-    }
-  }
-
-  void pullRefresh() {
-    orderList.value.clear();
-    if (isSearch.isTrue) {
-      page.value = 1;
-      isLoadData.value = true;
-      getSearchOrder();
-    } else if (isFilter.isTrue) {
-      page.value = 1;
-      isLoadData.value = true;
-      getSearchOrder();
-    } else if (isSearch.isFalse && isFilter.isFalse) {
-      page.value = 1;
-      isLoadData.value = true;
-      getListOrders();
-    }
-  }
-
-  showFilter() {
-    return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        context: Get.context!,
-        isScrollControlled: true,
-        builder: (context) {
-          return FractionallySizedBox(
-            heightFactor: 0.95,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 8),
-                    width: 60,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: AppColors.outlineColor,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  dtTanggalPenjualan,
-                  spCreatedBy,
-                  spProvince,
-                  spCity,
-                  Row(
-                    children: [
-                      Expanded(child: efMin),
-                      const SizedBox(width: 8),
-                      Expanded(child: efMax),
-                    ],
-                  ),
-                  spStatus,
-                  const Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(child: btKormasiFilter),
-                      const SizedBox(width: 8),
-                      Expanded(child: btBersihkanFilter),
-                    ],
-                  ),
-                  const SizedBox(height: Constant.bottomSheetMargin),
-                ],
-              ),
             ),
           );
         });

@@ -52,6 +52,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
     Widget nameInfo() {
       return Container(
         margin: const EdgeInsets.only(top: 14),
+        padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -63,77 +64,36 @@ class _ProfileActivityState extends State<ProfileActivity> {
             const SizedBox(
               width: 8,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${Constant.profileUser!.fullName}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold, fontSize: 16),
-                  overflow: TextOverflow.clip,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  "${Constant.profileUser!.email}",
-                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
-                  overflow: TextOverflow.clip,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${Constant.profileUser!.fullName}",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold, fontSize: 16),
+                    overflow: TextOverflow.clip,
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "${Constant.profileUser!.email}",
+                    style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                    overflow: TextOverflow.clip,
+                  ),
+                  Text(
+                    Constant.profileUser!.roles!.map((element) => element!.name).toList().join(", "),
+                    style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                    overflow: TextOverflow.clip,
+                  ),
+                ],
+              ),
             )
           ],
         ),
       );
     }
 
-    Widget header() {
-      return Stack(
-        children: [
-          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
-          Container(
-            margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Selamat Datang\nDi Internal App!",
-                  style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-                ),
-                // Container(
-                //   width: 40,
-                //   height: 28,
-                //   child: Stack(
-                //     children: [
-                //       Align(
-                //         alignment: Alignment.bottomRight,
-                //         child: SvgPicture.asset(
-                //           "images/notification_icon.svg",
-                //           width: 21,
-                //           height: 20,
-                //         ),
-                //       ),
-                //       Container(
-                //         width: 30,
-                //         height: 16,
-                //         decoration: BoxDecoration(
-                //             color: AppColors.red,
-                //             borderRadius: BorderRadius.circular(8)),
-                //         child: Center(
-                //             child: Text(
-                //           "333",
-                //           style: AppTextStyle.whiteTextStyle.copyWith(
-                //               fontSize: 10, fontWeight: AppTextStyle.medium),
-                //         )),
-                //       ),
-                //     ],
-                //   ),
-                // )
-              ],
-            ),
-          )
-        ],
-      );
-    }
 
     Widget listComponent(Function() onTap, String imagePath, String title) {
       return GestureDetector(
@@ -171,7 +131,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
         //   Flexible(
         //     child: ListView(
         //       children: [
-                nameInfo(),
+                Center(child: nameInfo()),
                 Container(
                   margin: const EdgeInsets.only(top: 32, left: 39, right: 39),
                   child: const Divider(
