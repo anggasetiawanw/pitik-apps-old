@@ -81,14 +81,19 @@ class DashboardActivity extends StatelessWidget {
 
 
                 return Scaffold(
-                    body: IndexedStack(
-                        index: controller.tabIndex,
-                        children: const [
-                            BerandaActivity(),
-                            // PerformaActivity(),
-                            // CoopActivity(),
-                            ProfileActivity(),
-                        ],
+                    body: Container(
+                        color: GlobalVar.primaryOrange,
+                      child: SafeArea(
+                        child: IndexedStack(
+                            index: controller.tabIndex,
+                            children: const [
+                                BerandaActivity(),
+                                // PerformaActivity(),
+                                // CoopActivity(),
+                                ProfileActivity(),
+                            ],
+                        ),
+                      ),
                     ),
                     floatingActionButton: SizedBox(
                         height: 64,
