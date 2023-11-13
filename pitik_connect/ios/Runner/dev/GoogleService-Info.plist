@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>750861342043-jmgskuoslt8ue9nomr6bkpvj4cetc5oq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.750861342043-jmgskuoslt8ue9nomr6bkpvj4cetc5oq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>750861342043-dnkbqe21cf8ljpmva40e7fpjnnedff7c.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDJh_tpks6ZNLj6FbtrK13q9Q7XbqFih5c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>750861342043</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>id.pitik.mobile.pitikconnect.staging</string>
+	<key>PROJECT_ID</key>
+	<string>pitik-eksternal-app-staging</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pitik-eksternal-app-staging.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:750861342043:ios:85407529c3635c2942367e</string>
+</dict>
+</plist>
