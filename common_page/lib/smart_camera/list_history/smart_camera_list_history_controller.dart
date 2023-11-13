@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:common_page/smart_camera/bundle/smart_camera_list_bundle.dart';
 import 'package:common_page/smart_camera/history_detail/smart_camera_history_activity.dart';
 import 'package:common_page/smart_camera/take_picture/smart_camera_take_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
@@ -15,10 +16,8 @@ import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
-import 'package:model/device_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/record_model.dart';
-import 'package:model/response/camera_list_response.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:components/item_detail_smartcamera/item_detail_smartcamera.dart';
 
@@ -31,10 +30,9 @@ class SmartCameraListHistoryController extends GetxController {
     SmartCameraListHistoryController({required this.context});
 
     ScrollController scrollController = ScrollController();
-    Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
-    Rx<List<RecordCamera>> sensorCameras = Rx<List<RecordCamera>>([]);
-    Rx<List<RecordCamera>> recordImages = Rx<List<RecordCamera>>([]);
-
+    RxMap<String, bool> mapList = <String, bool>{}.obs;
+    RxList<RecordCamera> sensorCameras = <RecordCamera>[].obs;
+    RxList<RecordCamera> recordImages = <RecordCamera>[].obs;
 
     var isLoadMore = false.obs;
     var isLoading = false.obs;
@@ -42,9 +40,8 @@ class SmartCameraListHistoryController extends GetxController {
     var totalCamera = 0.obs;
     var deviceUpdatedName = "".obs;
     var limit = 10.obs;
-    late Device device;
-    late Coop coop;
-    late int day;
+
+    late SmartCameraBundle<SmartCameraListHistoryController> bundle;
     late DateTime timeStart;
 
     ScrollController scrollCameraController = ScrollController();
@@ -55,7 +52,7 @@ class SmartCameraListHistoryController extends GetxController {
                 scrollCameraController.position.pixels) {
                 isLoadMore.value = true;
                 pageSmartCamera++;
-                getListCamera();
+                bundle.onGetData(this);
             }
         });
     }
@@ -67,12 +64,9 @@ class SmartCameraListHistoryController extends GetxController {
         super.onInit();
         timeStart = DateTime.now();
         GlobalVar.track("Open_smart_camera_page");
-        device = Get.arguments[0];
-        coop = Get.arguments[1];
-        day = Get.arguments[2];
+        bundle = Get.arguments;
 
-        isLoading.value = true;
-        getListCamera();
+        bundle.onGetData(this);
     }
 
     @override
@@ -82,55 +76,6 @@ class SmartCameraListHistoryController extends GetxController {
             bfTakePicture.controller.disable();
         }
     }
-
-    /// The function `getListCamera` makes an API call to retrieve a list of camera
-    /// data and handles the response accordingly.
-    void getListCamera() => AuthImpl().get().then((auth) {
-        if (auth != null) {
-            Service.push(
-                apiKey: 'smartCameraApi',
-                service: ListApi.getListDataCamera,
-                context: context,
-                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', ListApi.pathListCamera(coop.coopId!, coop.room!.id!), pageSmartCamera, limit],
-                listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) {
-                        if ((body as CameraListResponse).data!.isNotEmpty) {
-                            for (var result in body.data!) {
-                                sensorCameras.value.add(result as RecordCamera);
-                            }
-                            totalCamera.value = sensorCameras.value.length;
-                        }
-                        DateTime timeEnd = DateTime.now();
-                        GlobalVar.sendRenderTimeMixpanel("Open_smart_camera_page", timeStart, timeEnd);
-                        isLoading.value = false;
-                    },
-                    onResponseFail: (code, message, body, id, packet) {
-                        isLoading.value = false;
-                        Get.snackbar(
-                            "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            duration: const Duration(seconds: 5),
-                            backgroundColor: Colors.red,
-                        );
-                    },
-                    onResponseError: (exception, stacktrace, id, packet) {
-                        isLoading.value = false;
-                        Get.snackbar(
-                            "Pesan", "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            duration: const Duration(seconds: 5),
-                            backgroundColor: Colors.red,
-                        );
-                    },
-                    onTokenInvalid: () => GlobalVar.invalidResponse()
-                )
-            );
-        } else {
-            GlobalVar.invalidResponse();
-        }
-    });
 
     /// The function `takePictureSmartCamera` is used to handle the process of
     /// taking pictures with a smart camera, including making API calls and handling
@@ -144,21 +89,21 @@ class SmartCameraListHistoryController extends GetxController {
                 apiKey: 'smartCameraApi',
                 service: ListApi.takePictureSmartCamera,
                 context: context,
-                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', Mapper.asJsonString(Coop(coopId: coop.coopId)), ListApi.pathTakeImage(coop.coopId!)],
+                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', Mapper.asJsonString(Coop(coopId: bundle.getCoop.id)), ListApi.pathTakeImage(bundle.getCoop.id!)],
                 listener:ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        recordImages.value.clear();
+                        recordImages.clear();
                         if ((body as CameraDetailResponse).data!.records!.isNotEmpty) {
                             for (var result in body.data!.records!) {
-                                recordImages.value.add(result as RecordCamera);
+                                recordImages.add(result as RecordCamera);
                             }
                         }
                         isLoading.value = false;
-                        Get.to(const SmartCameraTakeActivity(), arguments: [true, recordImages, coop])!.then((value) {
+                        Get.to(const SmartCameraTakeActivity(), arguments: [true, recordImages, bundle.getCoop])!.then((value) {
                             isLoading.value = true;
-                            sensorCameras.value.clear();
+                            sensorCameras.clear();
                             pageSmartCamera.value = 0;
-                            Timer(const Duration(milliseconds: 500), () => getListCamera());
+                            Timer(const Duration(milliseconds: 500), () => bundle.onGetData(this));
                         });
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -223,9 +168,9 @@ class SmartCameraListHistoryController extends GetxController {
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         child: ListView.builder(
             controller: scrollCameraController,
-            itemCount: isLoadMore.isTrue ? sensorCameras.value.length + 1 : sensorCameras.value.length,
+            itemCount: isLoadMore.isTrue ? sensorCameras.length + 1 : sensorCameras.length,
             itemBuilder: (context, index) {
-                int length = sensorCameras.value.length;
+                int length = sensorCameras.length;
                 if (index >= length) {
                     return const Column(
                         children: [
@@ -243,19 +188,19 @@ class SmartCameraListHistoryController extends GetxController {
                 return Column(
                     children: [
                         ItemDetailSmartCamera(
-                            camera: sensorCameras.value[index],
+                            camera: sensorCameras[index],
                             indeksCamera : index,
                             onTap: () {
                                 GlobalVar.track("Click_card_camera");
-                                Get.to(const SmartCameraHistoryActivity(), arguments: [false, sensorCameras.value[index], coop, index])!.then((value) {
+                                Get.to(const SmartCameraHistoryActivity(), arguments: [bundle, sensorCameras[index]])!.then((value) {
                                     isLoading.value = true;
-                                    sensorCameras.value.clear();
+                                    sensorCameras.clear();
                                     pageSmartCamera.value = 0;
-                                    Timer(const Duration(milliseconds: 500), () => getListCamera());
+                                    Timer(const Duration(milliseconds: 500), () => bundle.onGetData(this));
                                 });
                             }
                         ),
-                        index == sensorCameras.value.length - 1 ? const SizedBox(height: 120) : Container()
+                        index == sensorCameras.length - 1 ? const SizedBox(height: 120) : Container()
                     ]
                 );
             }

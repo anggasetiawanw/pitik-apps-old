@@ -16,6 +16,7 @@ class SmartCameraTakeActivity extends GetView<SmartCameraTakeController> {
 
     @override
     Widget build(BuildContext context) {
+        SmartCameraTakeController controller = Get.put(SmartCameraTakeController(context: context));
         return SafeArea(
             child: Obx(() =>
                 Scaffold(

@@ -1,5 +1,8 @@
 
+import 'package:common_page/library/model_library.dart';
+import 'package:common_page/smart_camera/bundle/smart_camera_list_bundle.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
+import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
@@ -10,8 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/response/sensor_position_response.dart';
 import 'package:model/response/smart_camera_day_list_response.dart';
 import 'package:model/smart_camera/smart_camera_day_model.dart';
+import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -77,10 +82,66 @@ class SmartCameraListDayController extends GetxController {
         }
     });
 
+    SmartCameraBundle<SmartCameraListHistoryController> _smartCameraListBundle(int day) => SmartCameraBundle<SmartCameraListHistoryController>(
+        getCoop: coop,
+        routeHistoryDetail: ListApi.getRecordImages,
+        basePath: 'v2/smart-camera/',
+        day: day,
+        onGetData: (controller) => AuthImpl().get().then((auth) {
+            if (auth != null) {
+                controller.isLoading.value = true;
+                Service.push(
+                    apiKey: 'smartCameraApi',
+                    service: ListApi.getListDataCamera,
+                    context: Get.context!,
+                    body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', 'v2/smart-camera/${coop.id}/cameras/$day'],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            if ((body as SensorPositionResponse).data.isNotEmpty) {
+                                controller.totalCamera.value = body.data.length;
+                                controller.sensorCameras.clear();
+                                for (var result in body.data) {
+                                    controller.sensorCameras.add(RecordCamera(sensor: result, recordCount: result == null ? 0 : result.recordCount));
+                                }
+                            }
+
+                            DateTime timeEnd = DateTime.now();
+                            GlobalVar.sendRenderTimeMixpanel("Open_smart_camera_page", controller.timeStart, timeEnd);
+                            controller.isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            controller.isLoading.value = false;
+                            Get.snackbar(
+                                "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                duration: const Duration(seconds: 5),
+                                backgroundColor: Colors.red,
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            controller.isLoading.value = false;
+                            Get.snackbar(
+                                "Pesan", "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                duration: const Duration(seconds: 5),
+                                backgroundColor: Colors.red,
+                            );
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                );
+            } else {
+                GlobalVar.invalidResponse();
+            }
+        })
+    );
+
     Widget addCard({bool isRedChild = false, required SmartCameraDay smartCameraDay}) {
         DateTime date = Convert.getDatetime(smartCameraDay.date!);
         return GestureDetector(
-            onTap: () => Get.to(const SmartCameraListHistoryActivity(), arguments: [null, coop, smartCameraDay.day]),
+            onTap: () => Get.toNamed(RoutePage.listSmartCameraHistory, arguments: _smartCameraListBundle(smartCameraDay.day ?? -1)),
             child: Container(
                 margin: const EdgeInsets.only(top: 8),
                 padding: const EdgeInsets.all(16),

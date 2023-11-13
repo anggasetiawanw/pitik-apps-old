@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:common_page/smart_camera/bundle/smart_camera_list_bundle.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -9,11 +10,9 @@ import 'package:engine/imageprocessing/smart_camera_image_processing.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
-import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/record_model.dart';
 import 'package:model/response/camera_detail_response.dart';
@@ -39,14 +38,12 @@ class SmartCameraHistoryController extends GetxController {
     var limit = 10.obs;
     var totalCamera = 0.obs;
 
+    late SmartCameraBundle bundle;
     late RecordCamera record;
-    late Coop coop;
 
     late String localPath;
     late bool permissionReady;
     late TargetPlatform? platform;
-    bool isTakePicture = false;
-    late int indexCamera = 0;
 
     ScrollController scrollCameraController = ScrollController();
 
@@ -70,21 +67,14 @@ class SmartCameraHistoryController extends GetxController {
             platform = TargetPlatform.iOS;
         }
 
-        isTakePicture = Get.arguments[0];
-        coop = Get.arguments[2];
-        indexCamera = Get.arguments[3];
-        indexCamera = indexCamera + 1;
+        bundle = Get.arguments[0];
+        record = Get.arguments[1];
     }
-
 
     @override
     void onReady() {
         super.onReady();
-        if(isTakePicture == false){
-            isLoading.value = true;
-            record = Get.arguments[1];
-            _getCameraImageByCameraId();
-        }
+        _getCameraImageByCameraId();
         scrollPurchaseListener();
     }
 
@@ -92,27 +82,38 @@ class SmartCameraHistoryController extends GetxController {
     /// camera ID.
     void _getCameraImageByCameraId() => AuthImpl().get().then((auth) {
         if (auth != null) {
+            isLoading.value = true;
             Service.push(
                 apiKey: 'smartCameraApi',
-                service: ListApi.getRecordImages,
-                context: context,
-                body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathCameraImages(coop.coopId!, record.sensor!.id!, coop.room!.id!), pageSmartCamera.value, limit.value],
+                service: bundle.routeHistoryDetail,
+                context: Get.context!,
+                body: [
+                    'Bearer ${auth.token}',
+                    auth.id,
+                    GlobalVar.xAppId ?? '-',
+                    '${bundle.basePath}${bundle.getCoop.id}/records/${bundle.day != null ? '${bundle.day}/' : ''}${record.sensor!.id!}',
+                    bundle.getCoop.room != null && bundle.getCoop.room!.id != null ? bundle.getCoop.room!.id : null,
+                    pageSmartCamera.value,
+                    limit.value
+                ],
                 listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet){
+                    onResponseDone: (code, message, body, id, packet) {
                         if ((body as CameraDetailResponse).data!.records!.isNotEmpty) {
                             for (var result in body.data!.records!) {
                                 recordImages.value.add(result as RecordCamera);
                             }
+
                             totalCamera.value = recordImages.value.length;
                             isLoading.value = false;
+
                             if (isLoadMore.isTrue) {
                                 isLoadMore.value = false;
                             }
                         } else {
                             if (isLoadMore.isTrue) {
-                                pageSmartCamera.value =
-                                    (recordImages.value.length ~/ 10).toInt() + 1;
+                                pageSmartCamera.value = (recordImages.value.length ~/ 10).toInt() + 1;
                                 isLoadMore.value = false;
+                                isLoading.value = false;
                             } else {
                                 isLoading.value = false;
                             }

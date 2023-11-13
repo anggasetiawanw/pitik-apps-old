@@ -24,15 +24,14 @@ class SmartCameraListHistoryActivity extends GetView<SmartCameraListHistoryContr
                         preferredSize: const Size.fromHeight(60),
                         child: AppBarFormForCoop(
                             title: 'Smart Camera',
-                            coop: controller.coop,
+                            coop: controller.bundle.getCoop,
                             hideCoopDetail: true,
                         ),
                     ),
                     body: Stack(
                         children: [
-                            controller.isLoading.isTrue ?
-                            const Center(child: ProgressLoading()) : controller.sensorCameras.value.isEmpty ?
-                            Center(
+                            controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
+                            controller.sensorCameras.isEmpty ? Center(
                                 child: Container(
                                     width: double.infinity,
                                     height: MediaQuery. of(context). size. height,
@@ -52,7 +51,8 @@ class SmartCameraListHistoryActivity extends GetView<SmartCameraListHistoryContr
                                     Container(
                                         decoration: BoxDecoration(
                                             color: GlobalVar.primaryLight,
-                                            borderRadius: BorderRadius.circular(8)
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(width: 1, color: GlobalVar.outlineColor)
                                         ),
                                         margin: const EdgeInsets.symmetric(horizontal: 16),
                                         padding: const EdgeInsets.all(12),
@@ -63,7 +63,7 @@ class SmartCameraListHistoryActivity extends GetView<SmartCameraListHistoryContr
                                                     children: [Expanded(child: Text("Detail Gambar ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)))],
                                                 ),
                                                 const SizedBox(height: 12),
-                                                controller.isLoading.isTrue ? Container() : Row(
+                                                Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                         Expanded(child: Text("Total Kamera", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium))),
@@ -89,10 +89,10 @@ class SmartCameraListHistoryActivity extends GetView<SmartCameraListHistoryContr
                                         )
                                     ),
                                     Expanded(child: controller.listSmartCamera())
-                                ],
+                                ]
                             ),
                             controller.bottomNavBar()
-                        ],
+                        ]
                     )
                 )
             )

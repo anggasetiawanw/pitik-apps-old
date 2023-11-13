@@ -24,11 +24,12 @@ class Sensor {
     double? humidity;
     int? status;
     String? roomId;
+    int? recordCount;
 
     @IsChild()
     Room? room;
 
-    Sensor({this.id, this.name, this.position, this.deviceName, this.totalDevice, this.temperature, this.humidity, this.sensorMac, this.sensorType, this.sensorCode, this.status, this.roomId, this.room});
+    Sensor({this.id, this.name, this.position, this.deviceName, this.totalDevice, this.temperature, this.humidity, this.sensorMac, this.sensorType, this.sensorCode, this.status, this.roomId, this.recordCount, this.room});
 
     static Sensor toResponseModel(Map<String, dynamic> map) {
         if (map['temperature'] is int) {
@@ -51,6 +52,7 @@ class Sensor {
             sensorCode: map['sensorCode'],
             status: map['status'],
             roomId: map['roomId'],
+            recordCount: map['recordCount'],
             room: Mapper.child<Room>(map['room']),
         );
     }

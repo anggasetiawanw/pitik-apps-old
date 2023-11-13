@@ -16,6 +16,7 @@ class SmartCameraHistoryActivity extends GetView<SmartCameraHistoryController> {
 
     @override
     Widget build(BuildContext context) {
+        SmartCameraHistoryController controller = Get.put(SmartCameraHistoryController(context: context));
         return SafeArea(
             child: Obx(() =>
                 Scaffold(
@@ -24,7 +25,7 @@ class SmartCameraHistoryActivity extends GetView<SmartCameraHistoryController> {
                         preferredSize: const Size.fromHeight(60),
                         child: AppBarFormForCoop(
                             title: 'Smart Camera',
-                            coop: controller.coop,
+                            coop: controller.bundle.getCoop,
                             hideCoopDetail: true,
                         ),
                     ),

@@ -9,7 +9,7 @@ import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/camera_detail_response.dart';
-import 'package:model/response/camera_list_response.dart';
+import 'package:model/response/sensor_position_response.dart';
 import 'package:model/response/smart_camera_day_list_response.dart';
 
 ///@author DICKY
@@ -47,7 +47,8 @@ class SmartCameraApi {
     /// of records to be returned in a single response. It determines the number of
     /// items that will be displayed per page.
     @GET(value: GET.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
-    void getRecordImages(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit) {}
+    void getRecordImages(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("roomId") String roomId,
+                         @Query("\$page") int page, @Query("\$limit") int limit) {}
 
     /// This function is a GET request that retrieves a list of camera data with the
     /// specified headers and path parameter.
@@ -67,7 +68,7 @@ class SmartCameraApi {
     /// or endpoint that you want to access in your API. It is typically used to
     /// specify a resource or a specific action that you want to perform on that
     /// resource.
-    @GET(value: GET.PATH_PARAMETER, as: CameraListResponse, error: ErrorResponse)
+    @GET(value: GET.PATH_PARAMETER, as: SensorPositionResponse, error: ErrorResponse)
     void getListDataCamera(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
 
     /// The function `takePictureSmartCamera` is a POST request that takes in
