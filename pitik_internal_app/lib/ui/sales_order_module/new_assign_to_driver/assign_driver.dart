@@ -373,7 +373,7 @@ class AssignDriverPage extends StatelessWidget {
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value + controller.deliveryPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.deliveryPrice.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
@@ -409,38 +409,7 @@ class AssignDriverPage extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Biaya Pengiriman",
-                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                                  ),
-                                  controller.swDelivery,
-                                ],
-                              ),
-                              Obx(() => controller.isSwitchOn.isTrue
-                                  ? Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Biaya Pengiriman",
-                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                          NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumKg.value < 10 ? 10000 : 0),
-                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                        )
-                                      ],
-                                    )
-                                  : const SizedBox()),
-                            ],
-                          ),
+
                           controller.spinnerDriver,
                           controller.dtWaktuPengiriman,
                           const SizedBox(

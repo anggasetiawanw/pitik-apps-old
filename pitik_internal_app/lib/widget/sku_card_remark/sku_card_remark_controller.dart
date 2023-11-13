@@ -129,7 +129,7 @@ class SkuCardRemarkController extends GetxController {
           return [isValid, error];
         }
 
-        if (editFieldPotongan.value[whichItem].getInput().isEmpty) {
+        if (editFieldPotongan.value[whichItem].getInput().isEmpty && spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa") {
           editFieldPotongan.value[whichItem].controller.showAlert();
           Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
 

@@ -116,8 +116,8 @@ class EditField extends StatelessWidget {
                                             width: width,
                                             height: height,
                                             child: TextFormField(
-                                                expands: inputType == TextInputType.multiline ? true : false,
-                                                maxLines: inputType == TextInputType.multiline ? null : 1,
+                                                expands: inputType == TextInputType.multiline ? false : false,
+                                                maxLines: inputType == TextInputType.multiline ? 5 : 1,
                                                 // focusNode: controller.focusNode,
                                                 controller: editFieldController,
                                                 enabled: controller.activeField.isTrue,
@@ -130,7 +130,8 @@ class EditField extends StatelessWidget {
                                                     onTyping(text, this);
                                                 },
                                                 decoration: InputDecoration(
-                                                    contentPadding: const EdgeInsets.only(left: 8),
+                                                    
+                                                    contentPadding: const EdgeInsets.all(8),
                                                     counterText: "",
                                                     hintText: hint,
                                                     hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9E9D9D)),

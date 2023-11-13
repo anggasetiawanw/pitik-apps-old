@@ -224,10 +224,10 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         decoration: InputDecoration(
           filled: true,
           fillColor: const Color(0xFFFFF9ED),
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-          hintText: "cari ${selectedValue.value}",
-          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          //   isDense: true,
+          contentPadding: const EdgeInsets.only(left: 4.0),
+          hintText: "Cari ${selectedValue.value}",
+          hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
           suffixIcon: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             child: SvgPicture.asset("images/search_icon.svg"),
@@ -235,23 +235,22 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: SizedBox(
-              height: double.infinity,
-              width: 86,
+              width: 90,
               child: Column(
                 children: [
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 1),
                   DropdownButtonHideUnderline(
                     child: DropdownButton2<String>(
                       isExpanded: true,
                       customButton: Container(
                         padding: const EdgeInsets.only(top: 10),
                         height: 32,
-                        width: 86,
+                        width: 90,
                         child: Obx(() => Row(
                               children: [
                                 Text(
                                   "$selectedValue",
-                                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  style: const TextStyle(fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(
                                   width: 4,
@@ -263,7 +262,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                       items: items
                           .map((item) => DropdownMenuItem(
                                 value: item,
-                                child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 12)),
+                                child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 14)),
                               ))
                           .toList(),
                       value: selectedValue.value,
@@ -329,7 +328,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     tabController.addListener(() {
       if (tabController.index == 0) {
         searchController.clear();
-        isSearch.value = true;
+        isSearch.value = false;
         isFilter.value = false;
         listFilter.value.clear();
         focusNode.unfocus();
@@ -339,7 +338,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         getListOutboundGeneral();
       } else {
         searchController.clear();
-        isSearch.value = true;
+        isSearch.value = false;
         isFilter.value = false;
         listFilter.value.clear();
         focusNode.unfocus();
@@ -533,6 +532,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
   }
 
   void opsLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -541,6 +541,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
   }
 
   void salesLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -882,7 +883,22 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     resetAllBodyValue(bodyGeneralOutbound);
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
     if (Constant.isSales.isTrue) {
-      bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      if (status == null) {
+        salesBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      }
+    } else if ((Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) {
+      if (status == null) {
+        shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
+      }
+      bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = "true";
+    } else if (Constant.isSalesLead.isTrue) {
+      if (status == null) {
+        salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
     }
     bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
     bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
@@ -893,7 +909,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect == null ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? null :Constant.profileUser?.id : salesSelect.id; // createdBy
 
     fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
   }
@@ -977,8 +993,22 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     resetAllBodyValue(bodyGeneralInbound);
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
-      //   salesBodyGeneralOutbound(bodyGeneralOutbound);
-      bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      if (status == null) {
+        salesBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      }
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+      if (status == null) {
+        shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+      }
+      bodyGeneralInbound[BodyQuerySales.withinProductionTeam.index] = "true";
+    } else if (Constant.isSalesLead.isTrue) {
+      if (status == null) {
+        salesLeadBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
     }
     bodyGeneralInbound[BodyQuerySales.status.index] = status; // status
     bodyGeneralInbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
@@ -989,7 +1019,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id?? Constant.profileUser?.id; // createdBy
 
     fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
   }
@@ -1158,7 +1188,17 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (isSearch.isFalse && isFilter.isFalse) {
       page.value = 1;
       isLoadData.value = true;
-      //   getListOrders();
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getListInboundGeneral();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getListOutboundGeneral();
+      }
     }
   }
 
@@ -1440,28 +1480,34 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                         ),
                       ),
                       Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 24),
-                              dtTanggalPenjualan,
-                              spCreatedBy,
-                              spCategory,
-                              spSku,
-                              spSource,
-                              spProvince,
-                              spCity,
-                              Row(
-                                children: [
-                                  Expanded(child: efMin),
-                                  const SizedBox(width: 8),
-                                  Expanded(child: efMax),
-                                ],
-                              ),
-                              spStatus,
-                              const SizedBox(height: 120),
-                            ],
+                        child: RawScrollbar(
+                          //   controller: controller.scrollControllerInbound,
+                          // thumbVisibility: true,
+                          // trackVisibility: true,
+                          thumbColor: AppColors.primaryOrange,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                dtTanggalPenjualan,
+                                spCreatedBy,
+                                spCategory,
+                                spSku,
+                                spSource,
+                                spProvince,
+                                spCity,
+                                Row(
+                                  children: [
+                                    Expanded(child: efMin),
+                                    const SizedBox(width: 8),
+                                    Expanded(child: efMax),
+                                  ],
+                                ),
+                                spStatus,
+                                const SizedBox(height: 120),
+                              ],
+                            ),
                           ),
                         ),
                       ),

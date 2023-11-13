@@ -195,10 +195,7 @@ class SalesOrderPage extends StatelessWidget {
                             order: controller.orderListInbound[index]!,
                             onTap: () {
                               Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListInbound[index])!.then((value) {
-                                controller.isLoadData.value = true;
-                                controller.orderListOutbound.clear();
-                                controller.pageInbound.value = 1;
-                                Timer(const Duration(milliseconds: 500), () {
+                                Timer(const Duration(milliseconds: 100), () {
                                   if (controller.isFilter.isTrue) {
                                     controller.orderListInbound.clear();
                                     controller.pageInbound.value = 1;
@@ -210,6 +207,9 @@ class SalesOrderPage extends StatelessWidget {
                                     controller.isLoadData.value = true;
                                     controller.searchOrderInbound();
                                   } else {
+                                    controller.isLoadData.value = true;
+                                    controller.orderListOutbound.clear();
+                                    controller.pageInbound.value = 1;
                                     controller.getListInboundGeneral();
                                   }
                                 });
@@ -313,7 +313,7 @@ class SalesOrderPage extends StatelessWidget {
                 ),
               ],
             ),
-            if(Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
+            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
           ],
         ),
       ),

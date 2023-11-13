@@ -419,7 +419,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                             ),
                             child: Column(
                               children: [
-                                if (controller.orderDetail.value!.status == "BOOKED" || controller.orderDetail.value!.status == "READY_TO_DELIVER") ...[
+                                if (controller.orderDetail.value!.status == EnumSO.booked || controller.orderDetail.value!.status == EnumSO.readyToDeliver|| controller.orderDetail.value!.status == EnumSO.onDelivery|| controller.orderDetail.value!.status == EnumSO.delivered) ...[
                                   Row(
                                     children: [
                                       Expanded(
@@ -500,7 +500,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
-                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value + controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.priceDelivery.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                     ],
                                   )
                                 ] else ...[

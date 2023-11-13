@@ -683,11 +683,6 @@ class NewDataSalesOrderController extends GetxController {
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
-    // else if (editFieldKebutuhan.getInput().isEmpty) {
-    //   editFieldKebutuhan.controller.showAlert();
-    //   Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
-    //   return ret = [false, ""];
-    // }
     else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       Scrollable.ensureVisible(editFieldHarga.controller.formKey.currentContext!);

@@ -31,7 +31,6 @@ class DetailSalesOrderController extends GetxController {
 
   var isShopkeeper = false.obs;
   var isScRelation = false.obs;
-
   var sumChick = 0.obs;
   var sumNeededMin = 0.0.obs;
   var sumNeededMax = 0.0.obs;
@@ -211,12 +210,12 @@ class DetailSalesOrderController extends GetxController {
     sumPriceMin.value = 0;
     sumKg.value = 0;
     sumPrice.value = 0;
-    isDeliveryPrice.value = data!.withDeliveryFee?? false;
+    isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
     priceDelivery.value = data.deliveryFee?? 0;
-    if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER") {
+    if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER" ||orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery|| orderDetail.value!.status == EnumSO.delivered) {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
-          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumChick.value += product.quantity!;
             sumKg.value += product.weight!;
             sumPrice.value += product.weight! * product.price!;
@@ -225,7 +224,7 @@ class DetailSalesOrderController extends GetxController {
             sumPrice.value += product.weight! * product.price!;
           }
         } else {
-          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumChick.value += product.quantity! - product.returnQuantity!;
             sumKg.value += (product.weight! - product.returnWeight!);
             sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
@@ -238,7 +237,7 @@ class DetailSalesOrderController extends GetxController {
     } else {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
-          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumNeededMin.value += product.quantity! * product.minValue!;
             sumNeededMax.value += product.quantity! * product.maxValue!;
             sumChick.value += product.quantity!;
@@ -251,7 +250,7 @@ class DetailSalesOrderController extends GetxController {
             sumPriceMax.value += product.weight! * product.price!;
           }
         } else {
-          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumNeededMin.value += (product.quantity! - product.returnQuantity!) * product.minValue!;
             sumNeededMax.value += (product.quantity! - product.returnQuantity!) * product.maxValue!;
             sumChick.value += product.quantity! - product.returnQuantity!;

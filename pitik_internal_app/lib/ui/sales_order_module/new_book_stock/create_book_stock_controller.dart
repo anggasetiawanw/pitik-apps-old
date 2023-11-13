@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
+import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -36,6 +37,15 @@ class CreateBookStockController extends GetxController {
   late SkuBookSO skuBookSOLB;
   var isLoading = false.obs;
   var isAllocated = false.obs;
+  var isSwitchOn = false.obs;
+  RxInt deliveryFee = RxInt(0);
+  var sumChick = 0.obs;
+  var sumNeededMin = 0.0.obs;
+  var sumNeededMax = 0.0.obs;
+  var sumPriceMin = 0.0.obs;
+  var sumPriceMax = 0.0.obs;
+  var sumKg = 0.0.obs;
+  var sumPrice = 0.0.obs;
 
   late ButtonFill bookStockButton = ButtonFill(controller: GetXCreator.putButtonFillController("bookStocked"), label: "Pesan Stock", onClick: () {});
 
@@ -70,12 +80,30 @@ class CreateBookStockController extends GetxController {
 
   Rx<List<OperationUnitModel?>> listSource = Rx<List<OperationUnitModel>>([]);
 
+  late SwitchLinear swDelivery = SwitchLinear(
+    controller: GetXCreator.putSwitchLinearController("switchAssignDriver"),
+    onSwitch: (isSwitch) {
+      if (isSwitch) {
+        isSwitchOn.value = true;
+        deliveryFee.value = 10000;
+      } else {
+        isSwitchOn.value = false;
+        deliveryFee.value = 0;
+      }
+    },
+  );
+
   @override
   void onInit() {
     super.onInit();
     isLoading.value = true;
     orderDetail.value = Get.arguments[0] as Order;
     isAllocated.value = Get.arguments[1] as bool;
+    if (orderDetail.value!.deliveryFee != null && orderDetail.value!.deliveryFee != 0) {
+      isSwitchOn.value = true;
+      swDelivery.controller.isSwitchOn.value = true;
+      deliveryFee.value = orderDetail.value!.deliveryFee!;
+    }
     getDetailOrder();
     spinnerCustomer.controller.disable();
     bookStockButton.controller.disable();
@@ -105,6 +133,7 @@ class CreateBookStockController extends GetxController {
     );
     if (isAllocated.isTrue) {
       bookStockButton.controller.changeLabel("Konfirmasi");
+      getTotalQuantity(orderDetail.value);
     }
     if (orderDetail.value!.customer != null) {
       spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
@@ -217,7 +246,7 @@ class CreateBookStockController extends GetxController {
         }
       }
       Order orderRequest = Order(
-        customerId: orderDetail.value!.customer!.id!,
+        customerId: orderDetail.value!.customer?.id,
         operationUnitId: sourceSelected != null ? sourceSelected.id : orderDetail.value!.operationUnit!.id!,
         products: products,
         productNotes: productNote,
@@ -274,6 +303,7 @@ class CreateBookStockController extends GetxController {
       status: EnumSO.allocated,
       category: orderDetail.value!.category,
       remarks: orderDetail.value!.remarks,
+      withDeliveryFee: isSwitchOn.value,
     );
     Service.push(
       service: ListApi.editSalesOrder,
@@ -293,6 +323,71 @@ class CreateBookStockController extends GetxController {
         Constant.invalidResponse();
       }),
     );
+  }
+
+  void getTotalQuantity(Order? data) {
+    sumNeededMin.value = 0;
+    sumNeededMax.value = 0;
+    sumChick.value = 0;
+    sumPriceMax.value = 0;
+    sumPriceMin.value = 0;
+    sumKg.value = 0;
+    sumPrice.value = 0;
+    // isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
+    // priceDelivery.value = data.deliveryFee ?? 0;
+    if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER") {
+      for (var product in data!.products!) {
+        if (product!.returnWeight == null) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+            sumChick.value += product.quantity!;
+            sumKg.value += product.weight!;
+            sumPrice.value += product.weight! * product.price!;
+          } else {
+            sumKg.value += product.weight!;
+            sumPrice.value += product.weight! * product.price!;
+          }
+        } else {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+            sumChick.value += product.quantity! - product.returnQuantity!;
+            sumKg.value += (product.weight! - product.returnWeight!);
+            sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+          } else {
+            sumKg.value += (product.weight! - product.returnWeight!);
+            sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+          }
+        }
+      }
+    } else {
+      for (var product in data!.products!) {
+        if (product!.returnWeight == null) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+            sumNeededMin.value += product.quantity! * product.minValue!;
+            sumNeededMax.value += product.quantity! * product.maxValue!;
+            sumChick.value += product.quantity!;
+            sumPriceMin.value += product.price! * (product.minValue! * product.quantity!);
+            sumPriceMax.value += product.price! * (product.maxValue! * product.quantity!);
+          } else {
+            sumNeededMin.value += product.weight!;
+            sumNeededMax.value += product.weight!;
+            sumPriceMin.value += product.weight! * product.price!;
+            sumPriceMax.value += product.weight! * product.price!;
+          }
+        } else {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+            sumNeededMin.value += (product.quantity! - product.returnQuantity!) * product.minValue!;
+            sumNeededMax.value += (product.quantity! - product.returnQuantity!) * product.maxValue!;
+            sumChick.value += product.quantity! - product.returnQuantity!;
+            sumPriceMin.value += product.price! * (product.minValue! * (product.quantity! - product.returnQuantity!));
+            sumPriceMax.value += product.price! * (product.maxValue! * (product.quantity! - product.returnQuantity!));
+          } else {
+            sumNeededMin.value += (product.weight! - product.returnWeight!);
+            sumNeededMax.value += (product.weight! - product.returnWeight!);
+            sumPriceMin.value += (product.weight! - product.returnWeight!) * product.price!;
+            sumPriceMax.value += (product.weight! - product.returnWeight!) * product.price!;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -157,6 +157,40 @@ class CreateBookStockPage extends StatelessWidget {
                                   )
                                 : controller.skuBookSOLB,
                           ],
+                          if (controller.isAllocated.isTrue) ...[
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Biaya Pengiriman",
+                                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                    ),
+                                    controller.swDelivery,
+                                  ],
+                                ),
+                                Obx(() => controller.isSwitchOn.isTrue
+                                    ? Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Biaya Pengiriman",
+                                            style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                                          ),
+                                          const SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.deliveryFee.value),
+                                            style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                                          )
+                                        ],
+                                      )
+                                    : const SizedBox()),
+                              ],
+                            ),
+                          ],
                           Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.only(top: 16),
@@ -166,8 +200,97 @@ class CreateBookStockPage extends StatelessWidget {
                               border: Border.all(color: AppColors.outlineColor, width: 1),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Column(
-                              children: [
+                            child: Column(children: [
+                              if (controller.isAllocated.isTrue) ...[
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Total Penjualan",
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Total Kg",
+                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                    Text(
+                                      controller.sumNeededMax.value - controller.sumNeededMin.value == 0 ? "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                      overflow: TextOverflow.clip,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                if (controller.sumChick.value != 0) ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Total Ekor",
+                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      Obx(() => Text(
+                                            "${controller.sumChick.value} Ekor",
+                                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                            overflow: TextOverflow.clip,
+                                          )),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                                if (controller.isSwitchOn.isTrue) ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Biaya Pengiriman",
+                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.deliveryFee.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Total Rp",
+                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                    Text(
+                                        controller.sumPriceMax.value - controller.sumPriceMin.value == 0
+                                            ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.deliveryFee.value)
+                                            : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.deliveryFee.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value + controller.deliveryFee.value)}",
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                        overflow: TextOverflow.clip),
+                                  ],
+                                )
+                              ] else ...[
                                 Row(
                                   children: [
                                     Expanded(
@@ -201,6 +324,23 @@ class CreateBookStockPage extends StatelessWidget {
                                 const SizedBox(
                                   height: 8,
                                 ),
+                                if (controller.isSwitchOn.isTrue) ...[
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Biaya Pengiriman",
+                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.deliveryFee.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
                                 Row(
                                   children: [
                                     Expanded(
@@ -210,11 +350,11 @@ class CreateBookStockPage extends StatelessWidget {
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuBookSO.controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.skuBookSO.controller.sumPrice.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
-                            ),
+                            ]),
                           ),
                           const SizedBox(
                             height: 120,
@@ -235,85 +375,86 @@ class CreateBookStockPage extends StatelessWidget {
         isScrollControlled: true,
         builder: (context) {
           return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: Obx(()=>Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  width: 60,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.outlineColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
-                if (controller.isAllocated.isTrue) ...[
-                  Container(
-                    margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                    child: Text(
-                      "Apakah kamu yakin data yang dimasukan sudah benar?",
-                      style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                    child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.only(top: 24),
-                      child: Lottie.asset(
-                        'images/yakin.json',
-                        height: 140,
-                        width: 130,
-                        fit: BoxFit.cover,
-                      )),
-                ] else ...[
-                  Container(
-                    margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                    child: Text(
-                      "Apakah kamu yakin untuk melakukan pemesanan stok?",
-                      style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                    child: const Text("Pastikan semua data yang akan dipesan stok sudah sesuai", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    child: SvgPicture.asset(
-                      "images/stock_icon.svg",
-                    ),
-                  ),
-                ],
-                Container(
-                  margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: controller.bfYesBook),
-                      const SizedBox(
-                        width: 16,
+              ),
+              child: Obx(
+                () => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 8),
+                      width: 60,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: AppColors.outlineColor,
+                        borderRadius: BorderRadius.circular(2),
                       ),
-                      Expanded(
-                        child: controller.boNoBook,
+                    ),
+                    if (controller.isAllocated.isTrue) ...[
+                      Container(
+                        margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                        child: Text(
+                          "Apakah kamu yakin data yang dimasukan sudah benar?",
+                          style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                        child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(top: 24),
+                          child: Lottie.asset(
+                            'images/yakin.json',
+                            height: 140,
+                            width: 130,
+                            fit: BoxFit.cover,
+                          )),
+                    ] else ...[
+                      Container(
+                        margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                        child: Text(
+                          "Apakah kamu yakin untuk melakukan pemesanan stok?",
+                          style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                        child: const Text("Pastikan semua data yang akan dipesan stok sudah sesuai", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 24),
+                        child: SvgPicture.asset(
+                          "images/stock_icon.svg",
+                        ),
                       ),
                     ],
-                  ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: controller.bfYesBook),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Expanded(
+                            child: controller.boNoBook,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: Constant.bottomSheetMargin,
+                    )
+                  ],
                 ),
-                const SizedBox(
-                  height: Constant.bottomSheetMargin,
-                )
-              ],
-            ),
-          ));
+              ));
         });
   }
 }

@@ -5,7 +5,6 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_search/spinner_search.dart';
-import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -49,10 +48,6 @@ class AssignDriverController extends GetxController {
     onSpinnerSelected: (text) {},
   );
 
-  SwitchLinear swDelivery = SwitchLinear(
-    controller: GetXCreator.putSwitchLinearController("switchAssignDriver"),
-    onSwitch: (isSwitch) {},
-  );
 
   late ButtonFill bfYesAssign;
   late ButtonOutline boNoAssign;
@@ -89,7 +84,6 @@ class AssignDriverController extends GetxController {
   void onReady() {
     getListDriver();
     super.onReady();
-    swDelivery.controller.tapDisable();
     bfYesAssign = ButtonFill(
       controller: GetXCreator.putButtonFillController("yesAssign"),
       label: "Ya",
@@ -155,7 +149,6 @@ class AssignDriverController extends GetxController {
     if (sumKg.value < 10) {
       deliveryPrice.value = 10000;
       isSwitchOn.value = true;
-      swDelivery.controller.isSwitchOn.value = true;
     }
   }
 
