@@ -296,7 +296,7 @@ class API {
     /// of records to be returned in a single response. It determines the number of
     /// items to be displayed per page or request.
     @GET(value: GET.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
-    void getRecordImages(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit) {}
+    void getRecordImages(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit, @Query("roomId") String roomId) {}
 
     /// This function is a GET request that retrieves a list of camera data with the
     /// specified headers and path parameter.
