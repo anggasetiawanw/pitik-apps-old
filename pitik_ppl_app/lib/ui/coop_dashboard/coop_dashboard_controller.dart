@@ -59,8 +59,8 @@ class CoopDashboardController extends GetxController {
     var showHarvestAlert = false.obs;
     var showDailyTaskAlert = false.obs;
     var showFarmClosingAlert = false.obs;
-    var showOrderAlert = true.obs;
-    var showTransferAlert = true.obs;
+    var showOrderAlert = false.obs;
+    var showTransferAlert = false.obs;
     var showSmartScaleAlert = false.obs;
     var showSmartControllerAlert = false.obs;
     var showSmartCameraAlert = false.obs;

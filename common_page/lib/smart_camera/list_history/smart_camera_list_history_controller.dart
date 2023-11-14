@@ -32,7 +32,6 @@ class SmartCameraListHistoryController extends GetxController {
     ScrollController scrollController = ScrollController();
     RxMap<String, bool> mapList = <String, bool>{}.obs;
     RxList<RecordCamera> sensorCameras = <RecordCamera>[].obs;
-    RxList<RecordCamera> recordImages = <RecordCamera>[].obs;
 
     var isLoadMore = false.obs;
     var isLoading = false.obs;
@@ -89,17 +88,18 @@ class SmartCameraListHistoryController extends GetxController {
                 apiKey: 'smartCameraApi',
                 service: ListApi.takePictureSmartCamera,
                 context: context,
-                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', Mapper.asJsonString(Coop(coopId: bundle.getCoop.id)), ListApi.pathTakeImage(bundle.getCoop.id!)],
+                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', '${bundle.basePath}jobs/${bundle.getCoop.id}', Mapper.asJsonString(Coop(coopId: bundle.getCoop.id))],
                 listener:ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        recordImages.clear();
+                        List<RecordCamera> recordImages = [];
                         if ((body as CameraDetailResponse).data!.records!.isNotEmpty) {
                             for (var result in body.data!.records!) {
                                 recordImages.add(result as RecordCamera);
                             }
                         }
+
                         isLoading.value = false;
-                        Get.to(const SmartCameraTakeActivity(), arguments: [true, recordImages, bundle.getCoop])!.then((value) {
+                        Get.to(const SmartCameraTakeActivity(), arguments: [bundle.getCoop, recordImages])!.then((value) {
                             isLoading.value = true;
                             sensorCameras.clear();
                             pageSmartCamera.value = 0;
@@ -108,17 +108,21 @@ class SmartCameraListHistoryController extends GetxController {
                     },
                     onResponseFail: (code, message, body, id, packet) {
                         isLoading.value = false;
-                        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
+                        Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
+                            snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
-                            colorText: Colors.white);
+                            colorText: Colors.white
+                        );
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
                         isLoading.value = false;
-                        Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
+                        Get.snackbar("Alert","Terjadi kesalahan internal",
+                            snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
-                            colorText: Colors.white);
+                            colorText: Colors.white
+                        );
                     },
                     onTokenInvalid: () => GlobalVar.invalidResponse()
                 )

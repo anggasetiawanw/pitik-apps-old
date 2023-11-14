@@ -2,7 +2,6 @@
 import 'package:common_page/smart_camera/take_picture/smart_camera_take_controller.dart';
 import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
-import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,8 +28,7 @@ class SmartCameraTakeActivity extends GetView<SmartCameraTakeController> {
                             hideCoopDetail: true,
                         ),
                     ),
-                    body: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-                        controller.recordImages.value.isEmpty ? Center(
+                    body: controller.recordImages.isEmpty ? Center(
                             child: Container(
                                 width: double.infinity,
                                 height: MediaQuery. of(context). size. height,
@@ -63,7 +61,7 @@ class SmartCameraTakeActivity extends GetView<SmartCameraTakeController> {
                                                 ]
                                             ),
                                             const SizedBox(height: 12),
-                                            controller.isLoading.isTrue ? Container() : Row(
+                                            Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                     Expanded(child: Text("Total Gambar", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),)),

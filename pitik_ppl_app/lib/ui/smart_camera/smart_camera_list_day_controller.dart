@@ -1,7 +1,5 @@
 
-import 'package:common_page/library/model_library.dart';
 import 'package:common_page/smart_camera/bundle/smart_camera_list_bundle.dart';
-import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -13,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/record_model.dart';
 import 'package:model/response/sensor_position_response.dart';
 import 'package:model/response/smart_camera_day_list_response.dart';
 import 'package:model/smart_camera/smart_camera_day_model.dart';
