@@ -8,6 +8,7 @@ import 'package:pitik_ppl_app/api_mapping/apis/smart_camera_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_controller_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_monitoring_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_scale_api.dart';
+import 'package:pitik_ppl_app/api_mapping/apis/task_api.dart';
 
 import '../../flavors.dart';
 import 'apis/api.dart';
@@ -27,6 +28,7 @@ class ApiMapping extends ApiMappingList {
     static const productReportApi = "productReportApi";
     static const farmMonitoringApi = "farmMonitoringApi";
     static const coopApi = "coopApi";
+    static const taskApi = "taskApi";
 
     Map<String, Type> apiMapping = {
         "api": API,
@@ -38,6 +40,7 @@ class ApiMapping extends ApiMappingList {
         "productReportApi": ProductReportApi,
         "farmMonitoringApi": FarmMonitoringApi,
         "coopApi": CoopApi,
+        "taskApi": TaskApi,
     };
 
     @override

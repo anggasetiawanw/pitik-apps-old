@@ -92,6 +92,9 @@ class ListApi {
     static const String getListHarvestRealization = "getListHarvestRealization";
     static const String updateRequestChickin = "updateRequestChickin";
 
+    // api TASK 
+    static const String getDailyReport = "getDailyReport";
+
     static String pathChangePassword(){
         return "v2/auth/reset-password";
     }
@@ -210,5 +213,9 @@ class ListApi {
 
     static String pathOvkSummaryStocks(String farmingCycle) {
         return "v2/ovkstocks/$farmingCycle/summaries-by-type";
+    }
+
+    static String pathDailyReport(String coopId) {
+        return "v2/farming-cycles/$coopId/daily-reports";
     }
 }

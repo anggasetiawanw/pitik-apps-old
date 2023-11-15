@@ -1,3 +1,8 @@
+/// @author [Angga Setiawan Wahyudin]
+/// @email [anggasetiaw@gmail.com]
+/// @create date 2023-11-15 11:44:47
+/// @modify date 2023-11-15 11:44:47
+/// @desc [description]
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
-import 'package:pitik_ppl_app/widget/common/custom_appbar.dart';
-import 'package:pitik_ppl_app/widget/common/status_daily.dart';
+import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
+import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
 class DailyReportFormActivity extends GetView<DailyReportFormController> {
   const DailyReportFormActivity({super.key});
