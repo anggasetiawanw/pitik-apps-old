@@ -12,6 +12,7 @@ import 'package:model/report.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
 import 'package:pitik_ppl_app/utils/enums/daily_report_enum.dart';
+import 'package:pitik_ppl_app/utils/widgets/coop_header.dart';
 import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
@@ -23,7 +24,12 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
     Widget listCard(Report? report) {
       return GestureDetector(
         onTap: () {
-          Get.toNamed(RoutePage.dailyReportForm);
+          if(report.status == EnumDailyReport.FILL_SOON){
+            Get.toNamed(RoutePage.dailyReportForm, arguments: [controller.coop,report]);
+          }
+          else {
+            Get.toNamed(RoutePage.dailyReportDetail, arguments: [controller.coop,report]);
+          }
         },
         child: Container(
           margin: const EdgeInsets.only(top: 16),
@@ -94,30 +100,7 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
           )),
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16, top: 8),
-            decoration: const BoxDecoration(
-              color: GlobalVar.primaryOrange,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Kandang 1 (Hari 275)",
-                  style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "DOC-In 2023-09-01",
-                  style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12),
-                ),
-              ],
-            ),
-          ),
+          CoopHeader(coop: controller.coop!,),
           Obx(() => controller.isLoading.isTrue
               ? const Center(
                   child: ProgressLoading(),
@@ -146,3 +129,5 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
     );
   }
 }
+
+
