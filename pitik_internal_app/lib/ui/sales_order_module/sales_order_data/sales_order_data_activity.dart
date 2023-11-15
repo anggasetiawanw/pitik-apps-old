@@ -275,7 +275,7 @@ class SalesOrderPage extends StatelessWidget {
                     controller: controller.tabController,
                     children: [
                       Obx(
-                        () => controller.isLoadingOutbond.isTrue
+                        () => controller.isLoadingOutbond.isTrue || controller.isLoadData.isTrue
                             ? const Center(
                                 child: ProgressLoading(),
                               )
@@ -292,7 +292,7 @@ class SalesOrderPage extends StatelessWidget {
                                   )
                                 : tabViewOutbound(),
                       ),
-                      Obx(() => controller.isLoadingInbound.isTrue
+                      Obx(() => controller.isLoadingInbound.isTrue || controller.isLoadData.isTrue
                           ? const Center(
                               child: ProgressLoading(),
                             )

@@ -131,7 +131,7 @@ class EditField extends StatelessWidget {
                                                 },
                                                 decoration: InputDecoration(
                                                     
-                                                    contentPadding: const EdgeInsets.all(8),
+                                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                     counterText: "",
                                                     hintText: hint,
                                                     hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9E9D9D)),
@@ -142,8 +142,8 @@ class EditField extends StatelessWidget {
                                                           style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
                                                       ),
                                                     ): null),
-                                                    suffixIcon: Padding(
-                                                        padding: const EdgeInsets.all(16),
+                                                    suffixIcon: Container(
+                                                        padding: const EdgeInsets.fromLTRB(16,16,16,0),
                                                         child: Text(
                                                             controller.textUnit.value,
                                                             style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)

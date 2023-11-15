@@ -320,7 +320,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   @override
   void onReady() {
     super.onReady();
-    isLoading.value = true;
+    isLoadingOutbond.value = true;
     getListOutboundGeneral();
   }
 
@@ -335,6 +335,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         isOutbondTab.value = true;
         orderListOutbound.clear();
         pageOutbound.value = 1;
+        isLoadingOutbond.value = true;
         getListOutboundGeneral();
       } else {
         searchController.clear();
@@ -345,6 +346,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         isOutbondTab.value = false;
         orderListInbound.clear();
         pageInbound.value = 1;
+        isLoadingInbound.value = true;
         getListInboundGeneral();
       }
     });
@@ -354,12 +356,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     scrollControllerOutbound.addListener(() {
       if (scrollControllerOutbound.position.maxScrollExtent == scrollControllerOutbound.position.pixels) {
         isLoadMore.value = true;
+        pageOutbound++;
         if (isSearch.isTrue) {
-          pageOutbound++;
           searchOrderOutbound();
         } else if (isFilter.isTrue) {
+          getFilterOutbound();
         } else {
-          pageOutbound++;
           getListOutboundGeneral();
         }
       }
@@ -370,20 +372,19 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     scrollControllerInbound.addListener(() {
       if (scrollControllerInbound.position.maxScrollExtent == scrollControllerInbound.position.pixels) {
         isLoadMore.value = true;
+        pageInbound++;
         if (isSearch.isTrue) {
-          pageInbound++;
           searchOrderInbound();
         } else if (isFilter.isTrue) {
+          getFilterInbound();
         } else {
-          pageInbound++;
           getListInboundGeneral();
         }
       }
     });
   }
 
-  void fetchOrder(RxBool loading, List<dynamic> body, ResponseListener listener) {
-    loading.value = true;
+  void fetchOrder(List<dynamic> body, ResponseListener listener) {
     Service.push(service: ListApi.getListOrdersFilter, context: context, body: body, listener: listener);
   }
 
@@ -418,7 +419,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (Constant.isScRelation.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
-    fetchOrder(isLoadingOutbond, bodyGeneralOutbound, responOutbound());
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void shopkeeperBodyGeneralOutbound(List<dynamic> bodyGeneral) {
@@ -513,7 +514,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralInbound(bodyGeneralInbound);
     }
-    fetchOrder(isLoadingInbound, bodyGeneralInbound, responInbound());
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   void salesBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -664,7 +665,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       bodyGeneralOutbound[BodyQuerySales.code.index] = searchValue.value;
     }
 
-    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void searchOrderInbound() {
@@ -679,7 +680,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       bodyGeneralInbound[BodyQuerySales.code.index] = searchValue.value;
     }
 
-    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   void backFromForm(bool isInbound) {
@@ -909,9 +910,13 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect == null ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? null :Constant.profileUser?.id : salesSelect.id; // createdBy
-
-    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect == null
+        ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue
+            ? null
+            : Constant.profileUser?.id
+        : salesSelect.id; // createdBy
+    isLoadData.value = true;
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void getFilterInbound() {
@@ -1019,9 +1024,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id?? Constant.profileUser?.id; // createdBy
-
-    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+    isLoadData.value = true;
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   bool validationFilter() {
@@ -1364,7 +1369,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, null,0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};

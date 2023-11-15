@@ -438,7 +438,7 @@ class API {
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
   @GET(value: "v2/sales/operation-units", as: ListOperationUnitsResponse, error: ErrorResponse)
-  void getListOperationUnits(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getListOperationUnits(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category, @Query("withinProductionTeam") String withinProductionTeam,@Query("\$limit") int limit) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
