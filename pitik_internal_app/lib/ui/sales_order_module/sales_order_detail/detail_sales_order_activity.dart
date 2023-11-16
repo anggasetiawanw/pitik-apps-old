@@ -213,7 +213,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   child: Column(
                     children: [
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                      if (products.name != null) infoDetailSku("SKU", "${products.name}"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" :"SKU", "${products.name}"),
                         if (products.quantity != null)infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                       if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR"? "Potong Biasa" :"Bekakak"),
                       if (products.numberOfCuts != null) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
