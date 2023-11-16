@@ -74,36 +74,41 @@ class DailyReportDetailActivity extends StatelessWidget {
         ),
       );
     }
- Widget bottomNavbar() {
-        return Align(
-            alignment: Alignment.bottomCenter,
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromARGB(20, 158, 157, 157),
-                                  blurRadius: 5,
-                                  offset: Offset(0.75, 0.0))
-                            ],
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                        ),
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                               
-                            ],
-                        ),
+
+    Widget bottomNavbar() {
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+              ),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (controller.report?.status == EnumDailyReport.FILLED || controller.report?.status == EnumDailyReport.REVIEWED) ...[
+                    controller.btEdit
+                  ] else if (controller.report?.status == EnumDailyReport.REVIEW_SOON) ...[
+                    Expanded(child: controller.btDataBenar),
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ],
-                ),
-            );
+                    Expanded(child: controller.btEditOutline)
+                  ]
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
     }
+
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(40),
@@ -225,7 +230,7 @@ class DailyReportDetailActivity extends StatelessWidget {
                         )
                       ],
                     ),
-                    if(controller.report!.status != EnumDailyReport.FINISHED && controller.report!.status != EnumDailyReport.LATE) bottomNavbar(),
+                    if (controller.report!.status != EnumDailyReport.FINISHED && controller.report!.status != EnumDailyReport.LATE) bottomNavbar(),
                   ],
                 ),
         ));
