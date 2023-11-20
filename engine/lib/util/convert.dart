@@ -286,4 +286,13 @@ class Convert {
             return '${dateTime.second}';
         }
     }
+
+    static String getDate(String? dateString) {
+        if (dateString != null) {
+            DateTime dateTime = getDatetime(dateString);
+            return '${getYear(dateTime)}-${getMonthNumber(dateTime)}-${getDay(dateTime)}';
+        } else {
+            return '-';
+        }
+    }
 }

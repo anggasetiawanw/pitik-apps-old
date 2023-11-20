@@ -28,6 +28,10 @@ import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_activity.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
@@ -109,6 +113,10 @@ class AppRoutes {
         // Smart Camera
         GetPage(name: RoutePage.listSmartCameraDay, page: () => const SmartCameraListDayActivity(), binding: SmartCameraListDayBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.listSmartCameraHistory, page: () => const SmartCameraListHistoryActivity(), binding: SmartCameraListHistoryBinding(context: GlobalVar.getContext())),
+
+        // Harvest
+        GetPage(name: RoutePage.listHarvest, page: () => const HarvestListActivity(), binding: HarvestListBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestSubmittedDetail, page: () => const HarvestSubmittedDetailActivity(), binding: HarvestSubmittedDetailBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -143,4 +151,6 @@ class RoutePage {
     static const String listSmartScale = "/listSmartScale";
     static const String listSmartCameraDay = "/listSmartCameraDay";
     static const String listSmartCameraHistory = "/listSmartCameraHistory";
+    static const String listHarvest = "/listHarvest";
+    static const String harvestSubmittedDetail = "/harvestSubmittedDetail";
 }

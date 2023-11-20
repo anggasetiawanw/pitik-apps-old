@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/coop_model.dart';
 class DailyReportHomeController extends GetxController {
     BuildContext context;
     DailyReportHomeController({required this.context});
@@ -7,18 +8,13 @@ class DailyReportHomeController extends GetxController {
     var isLoadingList = false.obs;
     ScrollController scrollController= ScrollController();
 
-    // @override
-    // void onInit() {
-    //     super.onInit();
-    // }
-    // @override
-    // void onReady() {
-    //     super.onReady();
-    // }
-    // @override
-    // void onClose() {
-    //     super.onClose();
-    // }
+    late Coop coop;
+
+    @override
+    void onInit() {
+        super.onInit();
+        coop = Get.arguments;
+    }
 }
 class DailyReportHomeBindings extends Bindings {
     BuildContext context;

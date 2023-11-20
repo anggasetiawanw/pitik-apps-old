@@ -91,6 +91,13 @@ class ListApi {
     static const String getDetailMonitoring = "getDetailMonitoring";
     static const String getListHarvestRealization = "getListHarvestRealization";
     static const String updateRequestChickin = "updateRequestChickin";
+    
+    // api HARVEST
+    static const String getSubmitsHarvest = "getSubmitsHarvest";
+    static const String getDealsHarvest = "getDealsHarvest";
+    static const String getRealizationHarvest = "getRealizationHarvest";
+    static const String getDetailHarvest = "getDetailHarvest";
+    static const String approveOrRejectHarvest = "approveOrRejectHarvest";
 
     static String pathChangePassword(){
         return "v2/auth/reset-password";
