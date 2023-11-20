@@ -281,7 +281,7 @@ class ManufactureDetailActivity extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 48,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: const BoxDecoration(
               color: AppColors.headerSku,
               borderRadius: BorderRadius.only(

@@ -8,7 +8,8 @@ import 'package:model/internal_app/product_model.dart';
 class SkuBookSOController extends GetxController {
   String tag;
   List<Products?> products;
-  SkuBookSOController({required this.tag, required this.products});
+  bool isRemarks;
+  SkuBookSOController({required this.tag, required this.products, required this.isRemarks});
   Rx<List<int>> index = Rx<List<int>>([]);
   Rx<List<EditField>> jumlahEkor = Rx<List<EditField>>([]);
   Rx<List<EditField>> jumlahkg = Rx<List<EditField>>([]);
@@ -49,16 +50,30 @@ class SkuBookSOController extends GetxController {
             refreshtotalPurchase();
           }));
 
-      if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD || products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS || products[numberList]!.category!.name! == AppStrings.KARKAS)) {
-        jumlahEkor.value[numberList].controller.invisibleField();
-        jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
-        mapSumKg[numberList] = products[numberList]!.weight ?? 0;
-        refreshtotalPurchase();
+      if (!isRemarks) {
+        if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD || products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS || products[numberList]!.category!.name! == AppStrings.KARKAS)) {
+          jumlahEkor.value[numberList].controller.invisibleField();
+          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          mapSumKg[numberList] = products[numberList]!.weight ?? 0;
+          refreshtotalPurchase();
+        } else {
+          jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
+          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          mapSumKg[numberList] = products[numberList]!.weight ?? 0;
+          refreshtotalPurchase();
+        }
       } else {
-        jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
-        jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
-        mapSumKg[numberList] = products[numberList]!.weight ?? 0;
-        refreshtotalPurchase();
+        if (!(products[numberList]!.name! == AppStrings.LIVE_BIRD || products[numberList]!.name! == AppStrings.AYAM_UTUH || products[numberList]!.name! == AppStrings.BRANGKAS || products[numberList]!.name! == AppStrings.KARKAS)) {
+          jumlahEkor.value[numberList].controller.invisibleField();
+          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          mapSumKg[numberList] = products[numberList]!.weight ?? 0;
+          refreshtotalPurchase();
+        } else {
+          jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
+          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          mapSumKg[numberList] = products[numberList]!.weight ?? 0;
+          refreshtotalPurchase();
+        }
       }
       itemCount.value = index.value.length;
       idx.value++;
@@ -81,9 +96,10 @@ class SkuBookSOController extends GetxController {
 class SkuBookSOBindings extends Bindings {
   final List<Products> products;
   final String tag;
-  SkuBookSOBindings({required this.products, required this.tag});
+  final bool isRemarks;
+  SkuBookSOBindings({required this.products, required this.tag, required this.isRemarks});
   @override
   void dependencies() {
-    Get.lazyPut(() => SkuBookSOController(tag: tag, products: products));
+    Get.lazyPut(() => SkuBookSOController(tag: tag, products: products, isRemarks: isRemarks));
   }
 }

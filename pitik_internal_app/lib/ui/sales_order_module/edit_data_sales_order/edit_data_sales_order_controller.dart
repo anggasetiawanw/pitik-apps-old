@@ -154,7 +154,6 @@ class EditDataSalesOrderController extends GetxController {
         refreshtotalPurchase();
       });
 
-
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
       label: "Harga*",
@@ -255,7 +254,7 @@ class EditDataSalesOrderController extends GetxController {
   Future<void> loadData(Order order) async {
     isLoadData.value = true;
     produkType.value = orderDetail.type! == "LB" ? "LB" : "Non-LB";
-    spinnerCustomer.controller.setTextSelected(order.customer?.businessName?? "");
+    spinnerCustomer.controller.setTextSelected(order.customer?.businessName ?? "");
     spinnerOrderType.controller.setTextSelected(order.type! == "LB" ? "LB" : "Non-LB");
     if (order.deliveryFee != null && order.deliveryFee! > 0) {
       deliveryPrice.controller.isSwitchOn.value = true;
@@ -291,6 +290,12 @@ class EditDataSalesOrderController extends GetxController {
             editFieldJumlahAyam.setInput(orderDetail.products![j]!.quantity!.toString());
             editFieldHarga.setInput(orderDetail.products![j]!.price!.toString());
             refreshtotalPurchase();
+
+            skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
+            skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
+            skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
+            skuCardRemark.controller.spinnerTypePotongan.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.cutType == "REGULAR" ? "Potong Buasa" : "Bekakak");
+            skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
           }
         });
         isLoadData.value = false;
@@ -505,7 +510,7 @@ class EditDataSalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -664,10 +669,10 @@ class EditDataSalesOrderController extends GetxController {
 
       if (productSelected != null) {
         remarkProductList.add(Products(
-          productItemId: productSelected.id,
+          productCategoryId: productSelected.id,
           quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value,
+          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa" ? "REGULAR" : "BEKAKAK",
           weight: null,
         ));
       }
@@ -708,7 +713,7 @@ class EditDataSalesOrderController extends GetxController {
 
   List validationLb() {
     List ret = [true, ""];
-if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
+    if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
       spinnerCustomer.controller.showAlert();
       Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
       return ret = [false, ""];

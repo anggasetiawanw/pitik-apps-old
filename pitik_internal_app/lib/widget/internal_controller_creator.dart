@@ -36,8 +36,8 @@ class InternalControllerCreator {
         return Get.put(SkuCardGrController(tag: tag, products: products), tag: tag,);
     }
 
-    static SkuBookSOController putSkuBookSOController(String tag, List<Products?> products) {
-        return Get.put(SkuBookSOController(tag: tag, products: products), tag: tag,);
+    static SkuBookSOController putSkuBookSOController(String tag, List<Products?> products, bool isRemarks) {
+        return Get.put(SkuBookSOController(tag: tag, products: products, isRemarks: isRemarks), tag: tag,);
     }
     static SkuCardManufactureController putSkuCardManufactureController(String tag,BuildContext context) {
         return Get.put(SkuCardManufactureController(tag: tag,context: context), tag: tag,);

@@ -114,9 +114,9 @@ class CreateBookStockController extends GetxController {
         Get.back();
       },
     );
-    skuBookSO = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("skuBookSO", orderDetail.value!.products!));
+    skuBookSO = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("skuBookSO", orderDetail.value!.products!, false));
     if (orderDetail.value!.type! == "LB") {
-      skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("LBSKUSTOCK", orderDetail.value!.productNotes!));
+      skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("LBSKUSTOCK", orderDetail.value!.productNotes!, true));
     }
   }
 
@@ -139,7 +139,6 @@ class CreateBookStockController extends GetxController {
       spinnerCustomer.controller.setTextSelected(orderDetail.value!.customer!.businessName!);
     }
     if (orderDetail.value!.operationUnit != null) {
-      print("operationUnitName : ${orderDetail.value!.operationUnit!.operationUnitName}");
       spinnerSource.controller.setTextSelected(orderDetail.value!.operationUnit!.operationUnitName!);
       spinnerSource.controller.disable();
       bookStockButton.controller.enable();
@@ -242,7 +241,7 @@ class CreateBookStockController extends GetxController {
       }
       if (orderDetail.value!.type == "LB") {
         for (int i = 0; i < skuBookSOLB.controller.itemCount.value; i++) {
-          productNote.add(Products(productItemId: orderDetail.value!.products![i]!.id, quantity: (skuBookSOLB.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(), weight: skuBookSOLB.controller.jumlahkg.value[i].getInputNumber() ?? 0, price: orderDetail.value!.products![i]!.price));
+          productNote.add(Products(productCategoryId: orderDetail.value!.productNotes![i]!.productCategoryId, quantity: (skuBookSOLB.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(), weight: orderDetail.value!.productNotes![i]!.weight, price: orderDetail.value!.productNotes![i]!.price));
         }
       }
       Order orderRequest = Order(

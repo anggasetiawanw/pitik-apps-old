@@ -142,7 +142,7 @@ class DeliveryHomeActivity extends StatelessWidget {
                                               });
                                             });
                                           },
-                                          isSoPage: false,
+                                          isSoPage: true,
                                         ),
                                       ],
                                     );

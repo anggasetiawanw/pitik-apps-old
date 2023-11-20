@@ -135,11 +135,14 @@ class EditField extends StatelessWidget {
                                                     counterText: "",
                                                     hintText: hint,
                                                     hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9E9D9D)),
-                                                    prefixIcon: childPrefix ?? (textPrefix != null ? Padding(
-                                                      padding: const EdgeInsets.all(16.0),
-                                                      child: Text(
-                                                          "$textPrefix",
-                                                          style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
+                                                    prefixIcon: childPrefix ?? (textPrefix != null ? SizedBox(
+                                                        width: 24,
+                                                        height: 24,
+                                                      child: Center(
+                                                        child: Text(
+                                                            "$textPrefix",
+                                                            style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
+                                                        ),
                                                       ),
                                                     ): null),
                                                     suffixIcon: Container(

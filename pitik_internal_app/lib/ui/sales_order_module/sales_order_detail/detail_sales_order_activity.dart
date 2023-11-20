@@ -186,7 +186,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
 
     Widget infoDetailSku(String title, String name) {
       return Container(
-        margin: const EdgeInsets.only(top: 14),
+        margin: const EdgeInsets.only(top: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -216,8 +216,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" :"SKU", "${products.name}"),
                         if (products.quantity != null)infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                       if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR"? "Potong Biasa" :"Bekakak"),
-                      if (products.numberOfCuts != null) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                      if (products.weight != null)infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.weight != 0)infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),

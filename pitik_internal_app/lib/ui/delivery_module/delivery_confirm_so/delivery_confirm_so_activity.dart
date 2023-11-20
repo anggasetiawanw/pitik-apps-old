@@ -91,39 +91,43 @@ class DeliveryConfirmSO extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      return (products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)
-          ? Container(
-              margin: const EdgeInsets.only(top: 16),
-              child: Expandable(
-                  controller: GetXCreator.putAccordionController("sku${products.name}"),
-                  headerText: "${products.name}",
-                  child: Column(
-                    children: [
-                      infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                      infoDetailSku("SKU", "${products.name}"),
-                      products.quantity != 0 ? infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor") : const SizedBox(),
-                      products.numberOfCuts != 0 ? infoDetailSku("Potongan", "${products.numberOfCuts} Potong") : const SizedBox(),
-                      infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
-                      infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                    ],
-                  )),
-            )
-          : Container(
-              margin: const EdgeInsets.only(top: 16),
-              child: Expandable(
-                  controller: GetXCreator.putAccordionController("sku${products.name}"),
-                  headerText: "${products.name}",
-                  child: Column(
-                    children: [
-                      infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                      infoDetailSku("SKU", "${products.name}"),
-                      products.quantity != 0 ? infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor") : const SizedBox(),
-                      products.numberOfCuts != 0 ? infoDetailSku("Potongan", "${products.numberOfCuts} Potong") : const SizedBox(),
-                      infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                      infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                    ],
-                  )),
-            );
+      if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      }
     }
 
     Widget bottomNvabar() {

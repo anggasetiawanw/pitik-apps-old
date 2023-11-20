@@ -233,9 +233,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
             child: SvgPicture.asset("images/search_icon.svg"),
           ),
           prefixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(
-              width: 90,
+              width: 100,
               child: Column(
                 children: [
                   const SizedBox(height: 1),
@@ -710,15 +710,25 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           searchOrderOutbound();
         }
       } else {
-        Get.back();
-        tabController.index = 0;
-        isOutbondTab.value = true;
-        isLoadData.value = true;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        getListOutboundGeneral();
+        if (isInbound) {
+          tabController.index = 1;
+          isOutbondTab.value = false;
+          isLoadData.value = true;
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          orderListInbound.clear();
+          pageInbound.value = 1;
+          getListInboundGeneral();
+        } else {
+          tabController.index = 0;
+          isOutbondTab.value = true;
+          isLoadData.value = true;
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          orderListOutbound.clear();
+          pageOutbound.value = 1;
+          getListOutboundGeneral();
+        }
       }
     });
   }
@@ -1369,7 +1379,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, null,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, null, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};

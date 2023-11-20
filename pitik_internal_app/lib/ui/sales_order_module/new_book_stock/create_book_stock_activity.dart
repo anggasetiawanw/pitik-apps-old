@@ -45,7 +45,7 @@ class CreateBookStockPage extends StatelessWidget {
 
     Widget infoDetailSku(String title, String name) {
       return Container(
-        margin: const EdgeInsets.only(top: 14),
+        margin: const EdgeInsets.only(top: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -66,16 +66,17 @@ class CreateBookStockPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController("sku${products.category!.name}"),
+            controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
             headerText: "${products.name}",
             child: Column(
               children: [
-                infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                infoDetailSku("SKU", "${products.name}"),
-                products.quantity != 0 ? infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor") : const SizedBox(),
-                products.numberOfCuts != 0 ? infoDetailSku("Potongan", "${products.numberOfCuts} Potong") : const SizedBox(),
-                infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
-                infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             )),
       );

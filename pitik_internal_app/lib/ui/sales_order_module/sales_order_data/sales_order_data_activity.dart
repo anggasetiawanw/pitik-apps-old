@@ -85,7 +85,7 @@ class SalesOrderPage extends StatelessWidget {
             }
             return Container(
               height: 32,
-              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8, left: 8),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.bgAbu),
               child: Row(
@@ -227,7 +227,7 @@ class SalesOrderPage extends StatelessWidget {
       () => Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
+            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 210 : 160),
             child: Column(
               children: [
                 CustomAppbar(
@@ -257,19 +257,16 @@ class SalesOrderPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                 tabBar(),
                 Obx(
                   () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
-                )
+                ),
               ],
             )),
         body: Stack(
           children: [
             Column(
               children: [
-                tabBar(),
-                const SizedBox(
-                  height: 10,
-                ),
                 Expanded(
                   child: TabBarView(
                     controller: controller.tabController,
