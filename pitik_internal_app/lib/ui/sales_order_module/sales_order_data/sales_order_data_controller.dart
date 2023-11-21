@@ -109,6 +109,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   RxString selectedValue = "Nomor SO".obs;
   RxBool isShowList = false.obs;
   RxBool isOutbondTab = true.obs;
+  RxInt tabIndex = 0.obs;
   Timer? debounce;
   ScrollController scrollControllerOutbound = ScrollController();
   ScrollController scrollControllerInbound = ScrollController();
@@ -311,45 +312,56 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   void onInit() {
     super.onInit();
     initializeDateFormatting();
-    tabController = TabController(vsync: this, length: 2);
+    tabController = TabController(vsync: this, length: 2)
+      ..addListener(() {
+        tabIndex.value = tabController.index;
+      });
     scrollListenerOutbound();
     scrollListenerInbound();
-    tabControllerListener();
   }
 
   @override
   void onReady() {
     super.onReady();
     isLoadingOutbond.value = true;
+    tabIndex.listen((value){
+        tabControllerListener(value);
+    });
     getListOutboundGeneral();
   }
 
-  tabControllerListener() {
-    tabController.addListener(() {
-      if (tabController.index == 0) {
-        searchController.clear();
-        isSearch.value = false;
-        isFilter.value = false;
-        listFilter.value.clear();
-        focusNode.unfocus();
-        isOutbondTab.value = true;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        isLoadingOutbond.value = true;
-        getListOutboundGeneral();
-      } else {
-        searchController.clear();
-        isSearch.value = false;
-        isFilter.value = false;
-        listFilter.value.clear();
-        focusNode.unfocus();
-        isOutbondTab.value = false;
-        orderListInbound.clear();
-        pageInbound.value = 1;
-        isLoadingInbound.value = true;
-        getListInboundGeneral();
-      }
-    });
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+    scrollControllerOutbound.dispose();
+    scrollControllerInbound.dispose();
+  }
+
+  tabControllerListener(int tab) {
+    if (tab == 0) {
+      searchController.clear();
+      isSearch.value = false;
+      isFilter.value = false;
+      listFilter.value.clear();
+      focusNode.unfocus();
+      isOutbondTab.value = true;
+      orderListOutbound.clear();
+      pageOutbound.value = 1;
+      isLoadingOutbond.value = true;
+      getListOutboundGeneral();
+    } else {
+      searchController.clear();
+      isSearch.value = false;
+      isFilter.value = false;
+      listFilter.value.clear();
+      focusNode.unfocus();
+      isOutbondTab.value = false;
+      orderListInbound.clear();
+      pageInbound.value = 1;
+      isLoadingInbound.value = true;
+      getListInboundGeneral();
+    }
   }
 
   scrollListenerOutbound() async {
@@ -684,6 +696,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   }
 
   void backFromForm(bool isInbound) {
+    Get.back();
     Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
       if (isFilter.isTrue) {
         if (isOutbondTab.isFalse) {
@@ -714,20 +727,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           tabController.index = 1;
           isOutbondTab.value = false;
           isLoadData.value = true;
-          orderListInbound.clear();
-          pageInbound.value = 1;
-          orderListInbound.clear();
-          pageInbound.value = 1;
-          getListInboundGeneral();
         } else {
           tabController.index = 0;
           isOutbondTab.value = true;
-          isLoadData.value = true;
-          orderListOutbound.clear();
-          pageOutbound.value = 1;
-          orderListOutbound.clear();
-          pageOutbound.value = 1;
-          getListOutboundGeneral();
         }
       }
     });

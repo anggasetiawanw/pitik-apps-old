@@ -294,7 +294,7 @@ class EditDataSalesOrderController extends GetxController {
             skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
             skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
             skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
-            skuCardRemark.controller.spinnerTypePotongan.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.cutType == "REGULAR" ? "Potong Buasa" : "Bekakak");
+            skuCardRemark.controller.spinnerTypePotongan.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak");
             skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
           }
         });

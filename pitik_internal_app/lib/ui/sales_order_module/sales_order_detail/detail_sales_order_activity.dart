@@ -159,6 +159,27 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                     ],
                   )
                 : const SizedBox(),
+            if (controller.orderDetail.value!.deliveryTime != null) ...[
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Target Pengiriman",
+                    style: AppTextStyle.subTextStyle.copyWith(
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    controller.orderDetail.value!.deliveryTime!=null? Convert.getDateFormat(controller.orderDetail.value!.deliveryTime!):"-",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              )
+            ]
           ],
         ),
       );
@@ -213,11 +234,11 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   child: Column(
                     children: [
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" :"SKU", "${products.name}"),
-                        if (products.quantity != null)infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR"? "Potong Biasa" :"Bekakak"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                      if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                       if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                      if (products.weight != 0)infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                      if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),

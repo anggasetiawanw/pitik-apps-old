@@ -57,7 +57,7 @@ class AssignDriverController extends GetxController {
 
   late DateTimeField dtWaktuPengiriman = DateTimeField(
     controller: GetXCreator.putDateTimeFieldController("waktuPengiriman"),
-    label: "Waktu Pengiriman",
+    label: "Pengiriman",
     hint: "Pilih Waktu Pengiriman",
     alertText: "Waktu Pengiriman harus diisi!",
     onDateTimeSelected: (dateTime, dateField) {
