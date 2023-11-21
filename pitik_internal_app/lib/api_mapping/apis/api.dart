@@ -438,7 +438,7 @@ class API {
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
   @GET(value: "v2/sales/operation-units", as: ListOperationUnitsResponse, error: ErrorResponse)
-  void getListOperationUnits(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category, @Query("withinProductionTeam") String withinProductionTeam,@Query("\$limit") int limit) {}
+  void getListOperationUnits(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category, @Query("withinProductionTeam") String withinProductionTeam, @Query("\$limit") int limit) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
@@ -723,6 +723,7 @@ class API {
   @PUT(value: PUT.PATH_PARAMETER, as: TransferResponse, error: ErrorResponse)
   void updateTransferById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 
+  @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
   void transferEditStatus(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 
@@ -846,6 +847,7 @@ class API {
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
   void getDeliveryListTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("driverId") String driverId, @Query("status") String readyToDeliver, @Query("status") String onDelivery, @Query("status") String delivered, @Query("status") String received) {}
 
+ @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
   void deliveryPickupSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 

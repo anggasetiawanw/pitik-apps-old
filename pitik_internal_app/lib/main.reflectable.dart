@@ -1195,6 +1195,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[253, 254, 255, 256, 257],
             const prefix0.BaseApi(),
             const <Object>[
+              const prefix88.JSON(isPlaint: true),
               const prefix89.POST(
                   value: prefix89.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)
@@ -1403,6 +1404,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[327, 328, 329, 330, 331],
             const prefix0.BaseApi(),
             const <Object>[
+              const prefix88.JSON(isPlaint: true),
               const prefix89.POST(
                   value: prefix89.POST.PATH_PARAMETER,
                   error: prefix12.ErrorResponse)

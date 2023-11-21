@@ -324,8 +324,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   void onReady() {
     super.onReady();
     isLoadingOutbond.value = true;
-    tabIndex.listen((value){
-        tabControllerListener(value);
+    tabIndex.listen((value) {
+      tabControllerListener(value);
     });
     getListOutboundGeneral();
   }
@@ -670,6 +670,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+      shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isScRelation.isTrue) {
+      scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralOutbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -685,6 +691,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isShopKepper.isTrue) {
+      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isOpsLead.isTrue) {
+      opsLeadBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralInbound(bodyGeneralInbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralInbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -724,12 +736,31 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         }
       } else {
         if (isInbound) {
-          tabController.index = 1;
-          isOutbondTab.value = false;
-          isLoadData.value = true;
+          if (tabController.index == 0) {
+            tabController.index = 1;
+            isOutbondTab.value = false;
+            isLoadData.value = true;
+          } else {
+            isLoadData.value = true;
+            isOutbondTab.value = false;
+            orderListInbound.clear();
+            pageInbound.value = 1;
+            isLoadingInbound.value = true;
+            getListInboundGeneral();
+          }
         } else {
-          tabController.index = 0;
-          isOutbondTab.value = true;
+          if (tabController.index == 1) {
+            tabController.index = 0;
+            isOutbondTab.value = true;
+            isLoadData.value = true;
+          } else {
+            isLoadData.value = true;
+            isOutbondTab.value = true;
+            orderListOutbound.clear();
+            pageOutbound.value = 1;
+            isLoadingOutbond.value = true;
+            getListOutboundGeneral();
+          }
         }
       }
     });

@@ -91,6 +91,9 @@ class AssignDriverController extends GetxController {
         assignToDriver();
       },
     );
+    if(orderDetail.value!.deliveryTime != null) {
+        dtWaktuPengiriman.controller.setTextSelected(DateFormat("dd/MM/yyyy HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)));
+    }
     getTotalQuantity(orderDetail.value);
   }
 

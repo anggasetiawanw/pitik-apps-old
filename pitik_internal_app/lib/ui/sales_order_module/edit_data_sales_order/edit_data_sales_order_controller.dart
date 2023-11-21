@@ -525,7 +525,6 @@ class EditDataSalesOrderController extends GetxController {
               }
               spSumber.controller
                 ..enable()
-                ..setTextSelected("")
                 ..hideLoading();
             },
             onResponseFail: (code, message, body, id, packet) {

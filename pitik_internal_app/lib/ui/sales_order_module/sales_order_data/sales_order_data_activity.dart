@@ -136,10 +136,7 @@ class SalesOrderPage extends StatelessWidget {
                             order: controller.orderListOutbound[index]!,
                             onTap: () {
                               Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListOutbound[index])!.then((value) {
-                                controller.isLoadData.value = true;
-                                controller.orderListOutbound.clear();
-                                controller.pageOutbound.value = 1;
-                                Timer(const Duration(milliseconds: 500), () {
+                                Timer(const Duration(milliseconds: 100), () {
                                   if (controller.isFilter.isTrue) {
                                     controller.orderListOutbound.clear();
                                     controller.pageOutbound.value = 1;
@@ -151,6 +148,9 @@ class SalesOrderPage extends StatelessWidget {
                                     controller.isLoadData.value = true;
                                     controller.searchOrderOutbound();
                                   } else {
+                                    controller.orderListOutbound.clear();
+                                    controller.pageOutbound.value = 1;
+                                    controller.isLoadData.value = true;
                                     controller.getListOutboundGeneral();
                                   }
                                 });
@@ -208,7 +208,7 @@ class SalesOrderPage extends StatelessWidget {
                                     controller.searchOrderInbound();
                                   } else {
                                     controller.isLoadData.value = true;
-                                    controller.orderListOutbound.clear();
+                                    controller.orderListInbound.clear();
                                     controller.pageInbound.value = 1;
                                     controller.getListInboundGeneral();
                                   }
@@ -257,7 +257,7 @@ class SalesOrderPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                 tabBar(),
+                tabBar(),
                 Obx(
                   () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
                 ),

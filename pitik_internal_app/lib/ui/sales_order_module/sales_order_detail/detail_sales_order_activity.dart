@@ -95,6 +95,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 Text(
                   controller.orderDetail.value!.customer?.businessName ?? "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.clip,
                 ),
               ],
             ),

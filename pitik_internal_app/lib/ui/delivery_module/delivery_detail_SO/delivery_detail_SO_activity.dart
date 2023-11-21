@@ -39,6 +39,7 @@ class DeliveryDetailSO extends StatelessWidget {
           Text(
             name,
             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
+            overflow: TextOverflow.ellipsis,
           )
         ],
       );

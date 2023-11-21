@@ -235,16 +235,13 @@ class NewDataController extends GetxController {
     Get.find<SkuCardController>(tag: "cardController").numberList.listen((p0) {
       generateListProduct(p0);
     });
-    Timer(const Duration(milliseconds: 500), () {
-      getProduct();
-    });
+
     spinnerKota.controller.disable();
     spinnerKecamatan.controller.disable();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Timer(const Duration(milliseconds: 500), () {
-        getProvince();
-        getBranch();
-      });
+      getProduct();
+      getProvince();
+      getBranch();
     });
   }
 
