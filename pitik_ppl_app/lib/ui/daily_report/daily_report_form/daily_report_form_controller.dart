@@ -7,6 +7,7 @@ import 'package:components/multiple_form_field/multiple_form_field.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/coop_model.dart';
 import 'package:model/product_model.dart';
 
 class DailyReportFormController extends GetxController with GetSingleTickerProviderStateMixin{
@@ -131,11 +132,13 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         
     });
 
-    
-    // @override
-    // void onInit() {
-    //     super.onInit();
-    // }
+    late Coop coop;
+
+    @override
+    void onInit() {
+        super.onInit();
+        coop = Get.arguments;
+    }
     // @override
     // void onReady() {
     //     super.onReady();

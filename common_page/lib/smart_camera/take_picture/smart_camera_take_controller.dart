@@ -18,59 +18,25 @@ class SmartCameraTakeController extends GetxController {
     BuildContext context;
     SmartCameraTakeController({required this.context});
 
-    ScrollController scrollController = ScrollController();
-    Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
-    Rx<List<RecordCamera>> recordImages = Rx<List<RecordCamera>>([]);
-
-    var isLoading = false.obs;
-    var isLoadMore = false.obs;
-    var pageSmartMonitor = 1.obs;
-    var pageSmartController = 1.obs;
-    var pageSmartCamera = 1.obs;
-    var limit = 10.obs;
     var totalCamera = 0.obs;
 
-    late RecordCamera record;
     late Coop coop;
-
-    late String localPath;
-    late bool permissionReady;
-    late TargetPlatform? platform;
-    bool isTakePicture = false;
-
-    ScrollController scrollCameraController = ScrollController();
-    scrollPurchaseListener() async {
-        scrollCameraController.addListener(() {
-            if (scrollCameraController.position.maxScrollExtent == scrollCameraController.position.pixels) {
-                isLoadMore.value = true;
-                pageSmartMonitor++;
-            }
-        });
-    }
+    late List<RecordCamera> recordImages;
 
     @override
     void onInit() {
         super.onInit();
         GlobalVar.track("Open_ambil_gambar_page");
-        if (Platform.isAndroid) {
-            platform = TargetPlatform.android;
-        } else {
-            platform = TargetPlatform.iOS;
-        }
 
-        isTakePicture = Get.arguments[0];
-        coop = Get.arguments[2];
-
-        recordImages.value.clear();
+        coop = Get.arguments[0];
         recordImages = Get.arguments[1];
-        totalCamera.value = recordImages.value.length;
+        totalCamera.value = recordImages.length;
     }
 
     Widget listRecordCamera() => ListView.builder(
-        controller: scrollCameraController,
-        itemCount: isLoadMore.isTrue ? recordImages.value.length + 1 : recordImages.value.length,
+        itemCount: recordImages.length,
         itemBuilder: (context, index) {
-            int length = recordImages.value.length;
+            int length = recordImages.length;
             if (index >= length) {
                 return const Column(
                     children: [
@@ -92,11 +58,11 @@ class SmartCameraTakeController extends GetxController {
                             children: [
                                 ItemTakePictureCamera(
                                     controller: GetXCreator.putItemTakePictureController("ItemTakePictureCamera$index",context),
-                                    recordCamera: recordImages.value[index],
+                                    recordCamera: recordImages[index],
                                     index: index,
                                     onOptionTap: () {}
                                 ),
-                                index == recordImages.value.length - 1 ? const SizedBox(height: 120) : Container()
+                                index == recordImages.length - 1 ? const SizedBox(height: 120) : Container()
                             ]
                         )
                     )

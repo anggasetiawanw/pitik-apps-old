@@ -94,5 +94,5 @@ class SmartCameraApi {
     /// the picture needs to be taken.
     @POST(value: POST.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
     @JSON(isPlaint: true)
-    void takePictureSmartCamera(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params, @Path() String path) {}
+    void takePictureSmartCamera(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 }

@@ -17,7 +17,7 @@ import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
 class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
-  const DailyReportHomeActivity({super.key});
+    const DailyReportHomeActivity({super.key});
 
   @override
   Widget build(BuildContext context) {

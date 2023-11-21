@@ -59,8 +59,8 @@ class CoopDashboardController extends GetxController {
     var showHarvestAlert = false.obs;
     var showDailyTaskAlert = false.obs;
     var showFarmClosingAlert = false.obs;
-    var showOrderAlert = true.obs;
-    var showTransferAlert = true.obs;
+    var showOrderAlert = false.obs;
+    var showTransferAlert = false.obs;
     var showSmartScaleAlert = false.obs;
     var showSmartControllerAlert = false.obs;
     var showSmartCameraAlert = false.obs;
@@ -222,9 +222,7 @@ class CoopDashboardController extends GetxController {
                                         children: [
                                             _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
-                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () {  // HARVEST
-                                                // TO Harvest
-                                            }),
+                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: coop)),
                                         ],
                                     ),
                                 ),

@@ -3,6 +3,7 @@
 import 'package:engine/request/api_mapping_list.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/coop_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/farm_monitoring_api.dart';
+import 'package:pitik_ppl_app/api_mapping/apis/harvest_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/product_report_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_camera_api.dart';
 import 'package:pitik_ppl_app/api_mapping/apis/smart_controller_api.dart';
@@ -29,6 +30,7 @@ class ApiMapping extends ApiMappingList {
     static const farmMonitoringApi = "farmMonitoringApi";
     static const coopApi = "coopApi";
     static const taskApi = "taskApi";
+    static const harvestApi = "harvestApi";
 
     Map<String, Type> apiMapping = {
         "api": API,
@@ -41,6 +43,7 @@ class ApiMapping extends ApiMappingList {
         "farmMonitoringApi": FarmMonitoringApi,
         "coopApi": CoopApi,
         "taskApi": TaskApi,
+        "harvestApi": HarvestApi
     };
 
     @override
