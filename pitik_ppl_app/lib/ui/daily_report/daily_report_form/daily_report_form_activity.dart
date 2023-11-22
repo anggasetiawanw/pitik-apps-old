@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
 class DailyReportFormActivity extends GetView<DailyReportFormController> {
@@ -12,153 +11,155 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    Widget tileInfoHeader(String title, String value){
-        return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-                Text(title, style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                const SizedBox(height: 4,),
-                Text(value, style: GlobalVar.blackTextStyle)
-            ],
-        );
+    Widget tileInfoHeader(String title, String value) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(value, style: GlobalVar.blackTextStyle)
+        ],
+      );
     }
 
-    Widget bottomNavbar() {
-        return Align(
-            alignment: Alignment.bottomCenter,
-                child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(20, 158, 157, 157),
-                              blurRadius: 5,
-                              offset: Offset(0.75, 0.0))
-                        ],
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                    ),
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                    child: controller.bfSimpan
+    return Obx(() => SafeArea(
+            child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(preferredSize: const Size.fromHeight(110), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop)),
+          bottomNavigationBar: controller.isLoading.isTrue
+              ? const SizedBox()
+              : Container(
+                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  decoration: const BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]),
+                  child: controller.bfSimpan,
                 ),
-        );
-    }
-
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(110),
-                child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop)
-            ),
-            body: Stack(
-                children: [
-                    SingleChildScrollView(
-                        child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                                children: [
-                                    Container(
-                                        margin: const EdgeInsets.only(top: 16),
-                                        padding: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                            color: GlobalVar.grayBackground,
-                                            borderRadius: BorderRadius.circular(8),
-                                            border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                                        ),
-                                        child: Column(
-                                            children: [
-                                                Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                        Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                                Text("Laporan Harian", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold),),
-                                                                const SizedBox(height: 4,),
-                                                                Text("2023-09-11",style: GlobalVar.blackTextStyle.copyWith(fontSize: 12), )
-                                                            ],
-                                                        ),
-                                                        const StatusDailyReport(status: "Segera Isi")
-                                                    ],
-                                                ),
-                                                const SizedBox(height: 16,),
-                                                Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                        Text("Daftar Stock", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                                        SvgPicture.asset("images/information_blue_icon.svg")
-                                                    ],
-                                                ),
-                                                const SizedBox(height: 16,),
-                                                tileInfoHeader("Pre-Starter", "15 karung"),
-                                                const SizedBox(height: 8,),
-                                                tileInfoHeader("Starter", "15 karung"),
-                                                const SizedBox(height: 8,),
-                                                tileInfoHeader("Finisher", "15 karung"),
-                                                const SizedBox(height: 8,),
-                                                tileInfoHeader("OVK", "100 Buah"),
-                                            ],
-                                        ),
-                                    ),
-                                    controller.efBobot,
-                                    Row(
-                                        children: [
-                                            Expanded(child: controller.efKematian),
-                                            const SizedBox(width: 4,),
-                                            Expanded(child: controller.efCulling)
-                                        ],
-                                    ),
-                                    controller.mfPhoto,
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            color: GlobalVar.primaryLight,
-                                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                                            border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                                        ),
-                                        child: TabBar(
-                                            //   indicator: BoxDecoration(
-                                            //       borderRadius:controller.tabController.index == 0 ? const BorderRadius.only(topLeft: Radius.circular(8)) : const BorderRadius.only(topRight: Radius.circular(8)),
-                                            //       color: GlobalVar.primaryLight2,
-                                            //   ),
-                                            controller: controller.tabController,
-                                            labelColor: GlobalVar.primaryOrange,
-                                            unselectedLabelColor: GlobalVar.grayText,
-                                            indicatorColor: GlobalVar.primaryOrange,
-                                            indicatorSize: TabBarIndicatorSize.tab,
-                                            indicatorWeight: 2,
-                                            indicatorPadding: const EdgeInsets.symmetric(horizontal: 16),
-                                            tabs: const [
-                                                Tab(text : "Konsumsi Pakan"),
-                                                Tab(text : "Konsumsi OVK"),
-                                            ]),
-                                    ),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            color: GlobalVar.grayBackground,
-                                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-                                            border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                                        ),
-                                        height: MediaQuery.of(context).size.height * 0.7,
-                                        child: TabBarView(
-                                            controller: controller.tabController,
-                                            children: [
-                                                controller.mffKonsumsiPakan,
-                                                controller.mffKonsumsiOVK,
-                                            ]),
-                                    ),
-                                    const SizedBox(height:  120 ,)
-
-                                ],
-                            ),
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: GlobalVar.grayBackground,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: GlobalVar.outlineColor, width: 1),
                         ),
-                    ),
-                    bottomNavbar()
-                ],
-            ),
-        )
-    );
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Laporan Harian",
+                                      style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      "${controller.report.date}",
+                                      style: GlobalVar.blackTextStyle.copyWith(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                                StatusDailyReport(status: controller.report.status!)
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Daftar Stock",
+                                  style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
+                                ),
+                                GestureDetector(
+                                  onTap: () => controller.showStockSummary(),
+                                  child: SvgPicture.asset('images/information_blue_icon.svg'),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            tileInfoHeader("Pre-Starter", "${controller.prestarterStockSummary} karung"),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            tileInfoHeader("Starter", "${controller.starterStockSummary} karung"),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            tileInfoHeader("Finisher", "${controller.finisherStockSummary} karung"),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            tileInfoHeader("OVK", "${controller.ovkStockSummary}"),
+                          ],
+                        ),
+                      ),
+                      controller.efBobot,
+                      Row(
+                        children: [
+                          Expanded(child: controller.efKematian),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(child: controller.efCulling)
+                        ],
+                      ),
+                      controller.mfPhoto,
+                      Column(
+                        children: [
+                          const SizedBox(height: 32),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => controller.isFeed.value = true,
+                                child: Container(
+                                  width: (MediaQuery.of(context).size.width / 2) - 16,
+                                  decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(10)), color: controller.isFeed.isTrue ? GlobalVar.primaryLight2 : GlobalVar.primaryLight),
+                                  child: Column(
+                                    children: [Container(padding: const EdgeInsets.only(top: 12, bottom: 12), child: Text('Konsumsi Pakan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: controller.isFeed.isTrue ? GlobalVar.primaryOrange : GlobalVar.grayLightText))), Container(height: 3, color: controller.isFeed.isTrue ? GlobalVar.primaryOrange : Colors.transparent)],
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => controller.isFeed.value = false,
+                                child: Container(
+                                  width: (MediaQuery.of(context).size.width / 2) - 16,
+                                  decoration: BoxDecoration(borderRadius: const BorderRadius.only(topRight: Radius.circular(10)), color: controller.isFeed.isFalse ? GlobalVar.primaryLight2 : GlobalVar.primaryLight),
+                                  child: Column(
+                                    children: [Container(padding: const EdgeInsets.only(top: 12, bottom: 12), child: Text('Konsumsi OVK', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: controller.isFeed.isFalse ? GlobalVar.primaryOrange : GlobalVar.grayLightText))), Container(height: 3, color: controller.isFeed.isFalse ? GlobalVar.primaryOrange : Colors.transparent)],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          controller.isFeed.isTrue ? controller.mffKonsumsiPakan : controller.mffKonsumsiOVK
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )));
   }
 }

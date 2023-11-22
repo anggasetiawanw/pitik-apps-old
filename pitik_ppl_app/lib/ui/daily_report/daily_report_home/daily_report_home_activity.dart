@@ -3,6 +3,7 @@
 /// @create date 2023-11-15 11:45:02
 /// @modify date 2023-11-15 11:45:02
 /// @desc [description]
+import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +13,20 @@ import 'package:model/report.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
 import 'package:pitik_ppl_app/utils/enums/daily_report_enum.dart';
-import 'package:pitik_ppl_app/utils/widgets/coop_header.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
 class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
-    const DailyReportHomeActivity({super.key});
+  const DailyReportHomeActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
     Widget listCard(Report? report) {
       return GestureDetector(
         onTap: () {
-          if(report.status == EnumDailyReport.FILL_SOON){
-            Get.toNamed(RoutePage.dailyReportForm, arguments: [controller.coop,report]);
-          }
-          else {
-            Get.toNamed(RoutePage.dailyReportDetail, arguments: [controller.coop,report]);
+          if (report.status == EnumDailyReport.FILL_SOON) {
+            Get.toNamed(RoutePage.dailyReportForm, arguments: [controller.coop!, report]);
+          } else {
+            Get.toNamed(RoutePage.dailyReportDetail, arguments: [controller.coop!, report]);
           }
         },
         child: Container(
@@ -38,7 +36,11 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
           child: Row(
             children: [
               SvgPicture.asset(
-                report?.status == EnumDailyReport.REVIEW_SOON || report?.status == EnumDailyReport.FILL_SOON || report?.status == EnumDailyReport.FILLED || report?.status == EnumDailyReport.REVIEWED ? "images/history_active_icon.svg" : report?.status == EnumDailyReport.FINISHED? "images/checkbox_circle_green.svg" : "images/alarm_warning.svg" ,
+                report?.status == EnumDailyReport.REVIEW_SOON || report?.status == EnumDailyReport.FILL_SOON || report?.status == EnumDailyReport.FILLED || report?.status == EnumDailyReport.REVIEWED
+                    ? "images/history_active_icon.svg"
+                    : report?.status == EnumDailyReport.FINISHED
+                        ? "images/checkbox_circle_green.svg"
+                        : "images/alarm_warning.svg",
                 width: 24,
                 height: 24,
               ),
@@ -68,7 +70,7 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
                             )
                           ],
                         ),
-                         StatusDailyReport(status: report!.status!)
+                        StatusDailyReport(status: report!.status!)
                       ],
                     ),
                     const SizedBox(
@@ -89,18 +91,9 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: CustomAppbar(
-            title: "Laporan Harian",
-            isFlat: true,
-            onBack: () {
-              Get.back();
-            },
-          )),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(110), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
       body: Column(
         children: [
-          CoopHeader(coop: controller.coop!,),
           Obx(() => controller.isLoading.isTrue
               ? const Center(
                   child: ProgressLoading(),
@@ -129,5 +122,3 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
     );
   }
 }
-
-

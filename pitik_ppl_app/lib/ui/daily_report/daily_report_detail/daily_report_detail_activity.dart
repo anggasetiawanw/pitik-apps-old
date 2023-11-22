@@ -1,3 +1,4 @@
+import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:engine/util/convert.dart';
@@ -6,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_controller.dart';
 import 'package:pitik_ppl_app/utils/enums/daily_report_enum.dart';
-import 'package:pitik_ppl_app/utils/widgets/coop_header.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';
 
 class DailyReportDetailActivity extends StatelessWidget {
@@ -111,14 +110,8 @@ class DailyReportDetailActivity extends StatelessWidget {
 
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: CustomAppbar(
-              title: "Laporan Harian",
-              isFlat: true,
-              onBack: () {
-                Get.back();
-              },
-            )),
+            preferredSize: const Size.fromHeight(110),
+                child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
         body: Obx(
           () => controller.isLoading.isTrue
               ? const Center(
@@ -128,7 +121,6 @@ class DailyReportDetailActivity extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        CoopHeader(coop: controller.coop!),
                         Expanded(
                           child: SingleChildScrollView(
                             child: Container(

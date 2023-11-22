@@ -102,6 +102,7 @@ class ListApi {
     // api TASK
     static const String getDailyReport = "getDailyReport";
     static const String getDetailDailyReport = "getDetailDailyReport";
+    static const String addReport = "addReport";
 
     static String pathChangePassword() {
         return "v2/auth/reset-password";
@@ -228,6 +229,10 @@ class ListApi {
     }
 
     static String pathDailyReportDetail(String coopId, String ticketId) {
+        return "v2/farming-cycles/$coopId/daily-reports/$ticketId";
+    }
+
+    static String pathAddReport(String coopId, String ticketId) {
         return "v2/farming-cycles/$coopId/daily-reports/$ticketId";
     }
 }

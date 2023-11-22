@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 
 class DocInActivity extends StatelessWidget {
     const DocInActivity({super.key});

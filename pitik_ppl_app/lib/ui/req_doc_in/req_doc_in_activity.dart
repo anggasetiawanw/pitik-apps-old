@@ -1,10 +1,8 @@
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 
 class RequestDocIn extends StatelessWidget {
     const RequestDocIn({super.key});

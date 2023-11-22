@@ -10,7 +10,6 @@ import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
-import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -35,7 +34,6 @@ class DailyReportHomeController extends GetxController {
   void onInit() {
     super.onInit();
     coop = Get.arguments;
-    print(Mapper.asJsonString(coop));
   }
 
   @override

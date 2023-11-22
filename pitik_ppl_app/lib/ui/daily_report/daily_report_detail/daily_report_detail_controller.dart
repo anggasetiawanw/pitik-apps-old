@@ -76,7 +76,6 @@ class DailyReportDetailController extends GetxController {
                           backgroundColor: Colors.red,
                         );
                         isLoading.value = false;
-                        print(stacktrace);
                       },
                       onTokenInvalid: () => GlobalVar.invalidResponse()))
             }
