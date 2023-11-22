@@ -814,11 +814,10 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       if (spSource.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Sumber"] = spSource.controller.textSelected.value;
       }
-
+      listFilter.refresh();
       Get.back();
       isFilter.value = true;
       isSearch.value = false;
-      isLoadData.value = true;
       if (isOutbondTab.isFalse) {
         orderListInbound.clear();
         pageInbound.value = 1;
@@ -833,6 +832,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else {
       if (efMax.getInput().isEmpty && efMin.getInput().isEmpty) {
         Get.back();
+        isFilter.value = false;
+        isFilter.value = false;
         if (isOutbondTab.isFalse) {
           orderListInbound.clear();
           pageInbound.value = 1;
@@ -938,7 +939,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       }
       bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = "true";
     } else if (Constant.isSalesLead.isTrue) {
-      if (status == null) {
+      if (status == null ) {
         salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
       } else {
         bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
@@ -948,17 +949,16 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
     bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
     bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
-    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
-    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
-    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
+    bodyGeneralOutbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralOutbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralOutbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect == null
+    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect == null
         ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue
             ? null
             : Constant.profileUser?.id
         : salesSelect.id; // createdBy
-    isLoadData.value = true;
     fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
@@ -1068,7 +1068,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
-    isLoadData.value = true;
     fetchOrder(bodyGeneralInbound, responInbound());
   }
 
@@ -1157,6 +1156,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         break;
       case "Kategori":
         spCategory.controller.setTextSelected("");
+        spSku.controller.setTextSelected("");
+        listFilter.value.remove("SKU");
         break;
       case "SKU":
         spSku.controller.setTextSelected("");
@@ -1290,7 +1291,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         },
         onResponseError: (exception, stacktrace, id, packet) {
-          print(stacktrace);
           (packet[1] as SpinnerSearch).controller
             ..enable()
             ..hideLoading();
@@ -1369,7 +1369,11 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
               mapList[product!.name!] = false;
             }
             spCategory.controller.enable();
-            spCategory.controller.setTextSelected("");
+            if (listFilter.value["Kategori"] != null) {
+              spCategory.controller.setTextSelected(listFilter.value["Kategori"]!);
+            } else {
+              spCategory.controller.setTextSelected("");
+            }
             spCategory.controller.hideLoading();
             spCategory.controller.generateItems(mapList);
           },
@@ -1478,9 +1482,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                 spSku.controller.generateItems(mapList);
                 spSku.controller.enable();
               } else {
-                spSku.controller
-                  ..textSelected.value = body.data[0]!.name!
-                  ..disable();
+                spSku.controller.disable();
               }
             },
             onResponseFail: (code, message, body, id, packet) {

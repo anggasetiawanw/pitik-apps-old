@@ -18,7 +18,7 @@ class CardListManufacture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime created = Convert.getDatetime(manufacture.createdDate!);
-    final DateTime modified = Convert.getDatetime(manufacture.modifiedDate!);
+    // final DateTime modified = Convert.getDatetime(manufacture.modifiedDate!);
     return GestureDetector(
       onTap: onTap,
       child: Container(
