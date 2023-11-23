@@ -55,7 +55,7 @@ class ManufactureFromController extends GetxController {
             skuField.controller.generateAmount(mapListAmount);
             skuField.controller.generateWeight(mapListWeight);
             skuField.controller.generateItems(mapList);
-            if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD){
+            if( value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.LIVE_BIRD || value == AppStrings.KARKAS){
                 amountField.controller.enable();
                 skuField.controller.setTextSelected("");
                 skuField.controller.enable();

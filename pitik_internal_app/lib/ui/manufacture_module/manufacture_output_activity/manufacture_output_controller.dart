@@ -21,8 +21,8 @@ import 'package:model/response/internal_app/manufacture_output_list_response.dar
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase_controller.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture_controller.dart';
 class ManufactureOutputController extends GetxController {
     BuildContext context;
     ManufactureOutputController({required this.context});
@@ -50,13 +50,13 @@ class ManufactureOutputController extends GetxController {
             listCategoriesSelected.value.add(selected);
              mapList[item] = false;
         }
-        Timer(const Duration(milliseconds: 500), () {
+        Timer(const Duration(milliseconds: 100), () {
             for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
                 skuCard.controller.spinnerCategories.value[i].controller.generateItems(mapList);     
                 skuCard.controller.spinnerCategories.value[i].controller.textSelected.value ="";
                 skuCard.controller.spinnerSku.value[i].controller..textSelected.value =""..disable();
-                skuCard.controller.editFieldJumlahAyam.value[i]..setInput("")..controller.disable();
-                skuCard.controller.editFieldJumlahKg.value[i]..setInput("")..controller.disable();
+                skuCard.controller.editFieldJumlahAyam.value[i]..setInput("")..controller.disable()..controller.visibleField();
+                skuCard.controller.editFieldJumlahKg.value[i]..setInput("")..controller.disable()..controller.invisibleField();
             }
             skuCard.controller.setMaplist(listCategoriesSelected.value);
             this.mapList.value = mapList; 
@@ -131,11 +131,11 @@ class ManufactureOutputController extends GetxController {
                 skuCard.controller.editFieldJumlahKg.value[idx].controller.enable();
                 listSku.add(product[i]!.productItems![j]);
                 if (skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.LIVE_BIRD || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
-                    skuCard.controller.editFieldJumlahAyam.value[idx].controller.enable();
-                    skuCard.controller.editFieldJumlahKg.value[idx].controller.disable();
+                    skuCard.controller.editFieldJumlahAyam.value[idx].controller..visibleField()..enable();
+                    skuCard.controller.editFieldJumlahKg.value[idx].controller.invisibleField();
                 } else {
-                    skuCard.controller.editFieldJumlahKg.value[idx].controller.enable();
-                    skuCard.controller.editFieldJumlahAyam.value[idx].controller.disable();
+                    skuCard.controller.editFieldJumlahKg.value[idx].controller..visibleField()..enable();
+                    skuCard.controller.editFieldJumlahAyam.value[idx].controller.invisibleField();
                 }
                 idx++;
 
@@ -309,7 +309,7 @@ class ManufactureOutputController extends GetxController {
             output.add(Products(
                 productItemId: productSelected?.id,
                 quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
-                weight: skuCard.controller.editFieldJumlahKg.value[whichItem].getInputNumber() ??0,
+                weight: skuCard.controller.editFieldJumlahKg.value[whichItem].getInputNumber() ?? 0,
             ));
         }
         return ManufactureModel(
@@ -318,7 +318,7 @@ class ManufactureOutputController extends GetxController {
             input: Products(
                 productItemId: manufactureModel.input!.productItems![0]!.id,
                 quantity:  manufactureModel.input!.productItems![0]!.quantity,
-                weight:  manufactureModel.input!.productItems![0]!.weight,
+                weight:  manufactureModel.input!.productItems![0]!.weight??0,
             ),
             output: output,
             outputTotalWeight: efTotalKG.getInputNumber() ?? 0,

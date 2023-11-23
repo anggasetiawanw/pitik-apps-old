@@ -62,3 +62,4 @@ sb-patch-dev-ios: ## Push Patch Shorebird Dev
 
 sb-patch-prod-ios: ## Push Patch Shorebird Production
 	shorebird patch ios-alpha --flavor prod -t lib/main_prod.dart	
+

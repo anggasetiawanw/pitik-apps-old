@@ -59,16 +59,16 @@ class SkuCardManufactureController extends GetxController {
           items: const {},
           onSpinnerSelected: (value) {
             if (listCategories.value.isNotEmpty) {
-              CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value);
+              CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element?.name == value);
               if (value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.KARKAS) {
                 // editFieldJumlahAyam.value[numberList].controller.enable();
                 spinnerSku.value[numberList].controller.enable();
-                editFieldJumlahAyam.value[numberList].controller.enable();
-                editFieldJumlahKg.value[numberList].controller.disable();
+                editFieldJumlahAyam.value[numberList].controller..visibleField()..enable();
+                editFieldJumlahKg.value[numberList].controller.invisibleField();
               } else {
                 spinnerSku.value[numberList].controller.disable();
-                editFieldJumlahAyam.value[numberList].controller.disable();
-                editFieldJumlahKg.value[numberList].controller.enable();
+                editFieldJumlahAyam.value[numberList].controller.invisibleField();
+                editFieldJumlahKg.value[numberList].controller..visibleField()..enable();
               }
 
               spinnerSku.value[numberList].controller.textSelected.value = "";
@@ -90,7 +90,6 @@ class SkuCardManufactureController extends GetxController {
             if (listCategories.value.isNotEmpty) {
               if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
                 editFieldJumlahAyam.value[numberList].setInput("");
-                editFieldJumlahKg.value[numberList].setInput("");
               }
             }
           }),
@@ -102,7 +101,7 @@ class SkuCardManufactureController extends GetxController {
 
     spinnerSku.value[numberList].controller.disable();
     editFieldJumlahAyam.value[numberList].controller.disable();
-    editFieldJumlahKg.value[numberList].controller.disable();
+    editFieldJumlahKg.value[numberList].controller.invisibleField();
     itemCount.value = index.value.length;
     idx.value++;
   }
@@ -114,6 +113,7 @@ class SkuCardManufactureController extends GetxController {
 
   setMaplist(List<CategoryModel?> map) {
     listCategories.value = map;
+    listCategories.refresh();
   }
 
   List validation() {

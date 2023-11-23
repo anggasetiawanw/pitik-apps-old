@@ -341,7 +341,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                             const SizedBox(height: 4,),
                             infoDetailSKU("Total Ekor", "${item.quantity} Ekor")
                         ],
-                        if(item.weight !=null )...[
+                        if(item.weight !=null && item.weight !=0 )...[
                             const SizedBox(height: 4,),
                             infoDetailSKU("Total kg", "${item.weight} Kg")
                         ]
@@ -388,7 +388,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                       ),
                     ),
                     Column(children : controller.manufactureModel.output!.map((e) => detailSKUOutput(e!)).toList()),
-                  ] else const SizedBox(),
+                  ],
 
                   if(controller.manufactureModel.outputTotalWeight != null && controller.manufactureModel.outputTotalWeight != 0) ...[
                     Container(
