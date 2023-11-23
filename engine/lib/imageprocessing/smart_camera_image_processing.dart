@@ -38,7 +38,7 @@ class SmartCameraImageProcessing {
             timeTake: timeTake
         );
 
-        if(isDownload){
+        if (isDownload) {
             Get.snackbar(
                 "Message", "Download complete",
                 snackPosition: SnackPosition.BOTTOM,
@@ -46,7 +46,7 @@ class SmartCameraImageProcessing {
                 duration: const Duration(seconds: 5),
                 backgroundColor: Colors.white,
             );
-        }else{
+        } else {
             // ignore: deprecated_member_use
             Share.shareFiles([pathImage], text: 'Nama Kamera : $cameraName \n Kandang : $coop \n Lantai : $floor \n Jam Ambil Gambar : $timeTake \n Temperature : $temperature \n Kelembapan : $humidity \n');
         }

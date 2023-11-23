@@ -293,4 +293,13 @@ class Convert {
         }
         return (price / 1000).ceil() * 1000;
     }
+    
+    static String getDate(String? dateString) {
+        if (dateString != null) {
+            DateTime dateTime = getDatetime(dateString);
+            return '${getYear(dateTime)}-${getMonthNumber(dateTime)}-${getDay(dateTime)}';
+        } else {
+            return '-';
+        }
+    }
 }

@@ -10,7 +10,7 @@ import 'sensor_model.dart';
  */
 
 @SetupModel
-class RecordCamera{
+class RecordCamera {
 
     int? seqNo;
     int? recordCount;

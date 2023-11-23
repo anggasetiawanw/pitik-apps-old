@@ -170,6 +170,8 @@ PODS:
     - Flutter
     - Protobuf (~> 3.5)
     - SwiftProtobuf (~> 1.0)
+  - restart_app (0.0.1):
+    - Flutter
   - SDWebImage (5.18.2):
     - SDWebImage/Core (= 5.18.2)
   - SDWebImage/Core (5.18.2)
@@ -204,6 +206,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - reactive_ble_mobile (from `.symlinks/plugins/reactive_ble_mobile/ios`)
+  - restart_app (from `.symlinks/plugins/restart_app/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -271,6 +274,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
   reactive_ble_mobile:
     :path: ".symlinks/plugins/reactive_ble_mobile/ios"
+  restart_app:
+    :path: ".symlinks/plugins/restart_app/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
@@ -319,6 +324,7 @@ SPEC CHECKSUMS:
   Protobuf: 970f7ee93a3a08e3cf64859b8efd95ee32b4f87f
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c
+  restart_app: 806659942bf932f6ce51c5372f91ce5e81c8c14a
   SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126

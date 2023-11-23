@@ -23,7 +23,7 @@ class TemperatureReduction{
         }
 
         return TemperatureReduction(
-            group: map['group'],
+            group: map['group'].toString(),
             day: map['day'],
             reduction: map['reduction']
         );

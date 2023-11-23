@@ -47,62 +47,83 @@ class ExpandableMonitorRealTimeController extends GetxController {
         );
     }
 
-    void expand() {
-        expanded.value = true;
-    }
+    void expand() => expanded.value = true;
     void collapse() => expanded.value = false;
 
-    void getRealTimeHistoricalData({required String sensorType, required int day, required Coop coop, required String roomId}){
-        isLoading.value = true;
-        AuthImpl().get().then((auth) => {
-            if (auth != null) {
-                Service.push(
-                    apiKey: 'smartMonitoringApi',
-                    service: ListApi.getRealTimeHistorical,
-                    context: context,
-                    body: ['Bearer ${auth.token}', auth.id, sensorType, coop.farmingCycleId, day, coop.farmId, coop.id, roomId],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            if ((body as HistoricalDataResponse).data!.isNotEmpty) {
-                                historicalList.value.clear();
-                                if ((body).data!.length == 1) {
-                                    body.data!.add(body.data![0]);
-                                }
+    void getRealTimeHistoricalDataForSmartController({required String sensorType, required int day, required String deviceIdForController, required String coopIdForController})  => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            isLoading.value = true;
+            List<dynamic> bodyRequest = ['Bearer ${auth.token}', auth.id, sensorType, deviceIdForController, day, coopIdForController, 'asc'];
+            _pushToServerForHistoricalData(
+                sensorType: sensorType,
+                route: ListApi.getRealTimeHistoricalForSmartController,
+                bodyRequest: bodyRequest,
+                roomId: ''
+            );
+        } else {
+            GlobalVar.invalidResponse();
+        }
+    });
 
-                                for (int i = 0 ; i < (body).data!.length ; i++) {
-                                    historicalList.value.add(GraphLine(order: i, benchmarkMax: body.data![i]!.benchmarkMax, benchmarkMin: body.data![i]!.benchmarkMin, label: body.data![i]!.label, current: body.data![i]!.current));
-                                }
-                            }
+    void getRealTimeHistoricalData({required String sensorType, required int day, required Coop coop, required String roomId}) => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            isLoading.value = true;
+            List<dynamic> bodyRequest = ['Bearer ${auth.token}', auth.id, sensorType, coop.farmingCycleId, day, coop.farmId, coop.id, roomId];
+            _pushToServerForHistoricalData(
+                sensorType: sensorType,
+                route: ListApi.getRealTimeHistorical,
+                bodyRequest: bodyRequest,
+                roomId: roomId
+            );
+        } else {
+            GlobalVar.invalidResponse();
+        }
+    });
 
-                            loadData(historicalList, sensorType);
-                            sensorPositionList.clear();
-                            if (sensorType == "temperature" || sensorType == "relativeHumidity") {
-                                getSensorPosition(sensorType: sensorType, roomId: roomId);
-                            } else {
-                                isLoading.value = false;
-                            }
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar(
-                                "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                duration: const Duration(seconds: 5),
-                                backgroundColor: Colors.red,
-                            );
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) =>isLoading.value = false,
-                        onTokenInvalid: () => GlobalVar.invalidResponse()
-                    )
-                )
-            } else {
-                GlobalVar.invalidResponse()
-            }
-        });
+    void _pushToServerForHistoricalData({required String sensorType, required String route, required List<dynamic> bodyRequest, required String roomId}) {
+        Service.push(
+            apiKey: 'smartMonitoringApi',
+            service: route,
+            context: context,
+            body: bodyRequest,
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) {
+                    historicalList.value.clear();
+                    if ((body as HistoricalDataResponse).data!.isNotEmpty) {
+                        if ((body).data!.length == 1) {
+                            body.data!.add(body.data![0]);
+                        }
+
+                        for (int i = 0 ; i < (body).data!.length ; i++) {
+                            historicalList.value.add(GraphLine(order: i, benchmarkMax: body.data![i]!.benchmarkMax, benchmarkMin: body.data![i]!.benchmarkMin, label: body.data![i]!.label, current: body.data![i]!.current));
+                        }
+                    }
+
+                    loadData(historicalList, sensorType);
+                    sensorPositionList.clear();
+                    if (sensorType == "temperature" || sensorType == "relativeHumidity") {
+                        getSensorPosition(sensorType: sensorType, roomId: roomId);
+                    } else {
+                        isLoading.value = false;
+                    }
+                },
+                onResponseFail: (code, message, body, id, packet) {
+                    isLoading.value = false;
+                    Get.snackbar(
+                        "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) =>isLoading.value = false,
+                onTokenInvalid: () => GlobalVar.invalidResponse()
+            )
+        );
     }
 
-    void getSensorPosition({String sensorType = "temperature", required roomId}) {
+    void getSensorPosition({String sensorType = "temperature", required String roomId}) {
         isLoading.value = true;
         AuthImpl().get().then((auth) => {
             if (auth != null) {
@@ -190,8 +211,8 @@ class ExpandableMonitorRealTimeController extends GetxController {
                                 child: Container(
                                     width: 60,
                                     height: 4,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(4)),
                                         color: GlobalVar.outlineColor
                                     )
                                 )
@@ -218,7 +239,7 @@ class ExpandableMonitorRealTimeController extends GetxController {
                                             Container(
                                                 width: 2,
                                                 height: 2,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     color: GlobalVar.black,
                                                     shape: BoxShape.circle
                                                 ),

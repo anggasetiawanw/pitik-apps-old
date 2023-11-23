@@ -57,7 +57,7 @@ class TransferRequestActivity extends GetView<TransferRequestController> {
                                                 children: [
                                                     Text('Daftar Stok', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
                                                     GestureDetector(
-                                                        onTap: () {},
+                                                        onTap: () => controller.showStockSummary(),
                                                         child: SvgPicture.asset('images/information_blue_icon.svg'),
                                                     )
                                                 ],

@@ -1,9 +1,9 @@
+import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
-import 'package:pitik_ppl_app/widget/common/custom_appbar.dart';
 
 class RequestDocIn extends StatelessWidget {
     const RequestDocIn({super.key});
@@ -42,39 +42,35 @@ class RequestDocIn extends StatelessWidget {
                 );
         }
 
-        return Scaffold(
-            appBar: PreferredSize(preferredSize: const Size.fromHeight(40), child: CustomAppbar(title: "Request Doc In", isFlat: true, onBack: () => Get.back())),
-            body: Obx(() =>
-                controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-                Stack(
-                    children: [
-                        SingleChildScrollView(
-                            child: Column(
-                                children: [
-                                    Container(
-                                        width: double.infinity,
-                                        padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16, top: 12),
-                                        decoration: const BoxDecoration(
-                                            color: GlobalVar.primaryOrange,
-                                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-                                        ),
-                                        child: Text("${controller.coop.coopName}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.bold)),
-                                    ),
-                                    Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                                        child: Column(
-                                            children: [
-                                                controller.dtTanggal,
-                                                controller.efPopulasi
-                                            ]
-                                        )
-                                    )
-                                ]
-                            )
-                        ),
-                        bottomNavbar(),
-                    ],
+        return SafeArea(
+            child: Scaffold(
+                appBar: PreferredSize(
+                    preferredSize: const Size.fromHeight(60),
+                    child: AppBarFormForCoop(
+                        title: 'Request Doc In',
+                        coop: controller.coop,
+                        hideCoopDetail: true,
+                    )
                 ),
+                body: Obx(() =>
+                    controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
+                    Stack(
+                        children: [
+                            SingleChildScrollView(
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                                    child: Column(
+                                        children: [
+                                            controller.dtTanggal,
+                                            controller.efPopulasi
+                                        ]
+                                    )
+                                )
+                            ),
+                            bottomNavbar()
+                        ]
+                    )
+                )
             )
         );
     }

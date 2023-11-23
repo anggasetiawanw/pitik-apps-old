@@ -11,7 +11,7 @@ import '../engine_library.dart';
  */
 
 @SetupModel
-class GrowthDay{
+class GrowthDay {
 
     double? temperature;
     double? requestTemperature;

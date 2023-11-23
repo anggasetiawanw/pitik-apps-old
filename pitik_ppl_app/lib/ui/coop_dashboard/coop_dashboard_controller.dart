@@ -1,25 +1,38 @@
+import 'dart:async';
+
 import 'package:common_page/history/history_activity.dart';
 import 'package:common_page/history/history_controller.dart';
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
+import 'package:common_page/smart_scale/bundle/smart_scale_weighing_bundle.dart';
+import 'package:common_page/smart_scale/detail_smart_scale/detail_smart_scale_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
+import 'package:common_page/smart_scale/bundle/list_smart_scale_bundle.dart';
+import 'package:common_page/smart_scale/weighing_smart_scale/smart_scale_weighing.dart';
 import 'package:components/global_var.dart';
+import 'package:components/item_smart_scale_day/item_smart_scale_day.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:model/coop_active_standard.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/coop_performance.dart';
 import 'package:model/monitoring.dart';
 import 'package:model/population.dart';
 import 'package:model/profile.dart';
+import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
+import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
@@ -46,8 +59,8 @@ class CoopDashboardController extends GetxController {
     var showHarvestAlert = false.obs;
     var showDailyTaskAlert = false.obs;
     var showFarmClosingAlert = false.obs;
-    var showOrderAlert = true.obs;
-    var showTransferAlert = true.obs;
+    var showOrderAlert = false.obs;
+    var showTransferAlert = false.obs;
     var showSmartScaleAlert = false.obs;
     var showSmartControllerAlert = false.obs;
     var showSmartCameraAlert = false.obs;
@@ -80,11 +93,14 @@ class CoopDashboardController extends GetxController {
         profile = await ProfileImpl().get();
 
         Get.put(HistoryController(context: Get.context!, coop: coop));
-        Get.put(DetailSmartMonitorController(context: Get.context!));
 
         historyActivity = HistoryActivity(coop: coop);
         detailSmartMonitor = DetailSmartMonitor(
-            coop: coop,
+            controller: Get.put(DetailSmartMonitorController(
+                tag: "smartMonitorForDashboard",
+                context: Get.context!,
+                coop: coop
+            ),  tag: "smartMonitorForDashboard"),
             widgetLoading: Padding(
                 padding: const EdgeInsets.only(top: 80),
                 child: Column(
@@ -206,9 +222,7 @@ class CoopDashboardController extends GetxController {
                                         children: [
                                             _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
-                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () {  // HARVEST
-                                                // TO Harvest
-                                            }),
+                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: coop)),
                                         ],
                                     ),
                                 ),
@@ -256,24 +270,166 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () {  // SMART SCALE
-                                                // TO SMART SCALE
-                                            }),
-                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () {  // SMART CONTROLLER
-                                                // TO SMART CONTROLLER
-                                            }),
-                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () {  // SMART CAMERA
-                                                // TO SMART CAMERA
-                                            }),
-                                        ],
-                                    ),
-                                ),
+                                            _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () => Get.toNamed(RoutePage.listSmartScale, arguments: _getListSmartScaleBundle())),
+                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: coop)),
+                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
+                                        ]
+                                    )
+                                )
                             ]
                         )
                     )
                 )
             )
         );
+    }
+
+    SmartScaleWeighingBundle _getSmartScaleWeighingBundle() => SmartScaleWeighingBundle(
+        routeSave: () => ListApi.saveSmartScale,
+        routeEdit: () => ListApi.saveSmartScale,
+        routeDetail: () => ListApi.getSmartScaleDetail,
+        getBodyRequest: (controller, auth, isEdit) async {
+            if (isEdit) {
+                await SmartScaleImpl().getById(controller.smartScaleData.value!.id!).then((record) async {
+                    if (record != null) {
+                        record.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                        record.date = Convert.getStringIso(DateTime.now());
+                        record.farmingCycleId = coop.farmingCycleId;
+
+                        controller.smartScaleData.value = record;
+                    } else {
+                        // setting body
+                        controller.smartScaleData.value!.id = controller.smartScaleData.value!.id;
+                        controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
+                        controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                        controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
+                        controller.smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+                    }
+                });
+            } else {
+                // setting body
+                controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
+                controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
+                controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
+                controller.smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+            }
+
+            ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: [controller.smartScaleData.value!]);
+            return ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}', Mapper.asJsonString(bodyRequest)];
+        },
+        getBodyDetail: (controller, auth) => ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}/dates/${controller.id}']
+    );
+
+    ListSmartScaleBundle _getListSmartScaleBundle() => ListSmartScaleBundle(
+        getCoop: () => coop,
+        isShowWeighingButton: () => false,
+        getWeighingBundle: () => _getSmartScaleWeighingBundle(),
+        onGetSmartScaleListData: (controller) => AuthImpl().get().then((auth) {
+            if (auth != null) {
+                Service.push(
+                    apiKey: "smartScaleApi",
+                    service: ListApi.getListHistoryScale,
+                    context: context,
+                    body: [auth.token, auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}', controller.pageSmartScale.value, controller.limit.value, controller.dateFilter.value == '' ? null : controller.dateFilter.value],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            controller.smartScaleList.value = body.data;
+                            _ascendingHistory(controller);
+
+                            controller.isLoadMore.value = false;
+                            controller.isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            controller.isLoadMore.value = false;
+                            controller.isLoading.value = false;
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            controller.isLoadMore.value = false;
+                            controller.isLoading.value = false;
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                );
+            } else {
+                GlobalVar.invalidResponse();
+            }
+        }),
+        onCreateCard: (controller, index) => ItemSmartScaleDay(
+            smartScale: controller.smartScaleList[index]!,
+            isRedChild: index == 0,
+            onTap: () async {
+                if (controller.smartScaleList[index]!.totalCount == null) {
+                    GlobalVar.track("Click_card_smart_scale_weighing");
+                    await Get.to(SmartScaleWeighingActivity(), arguments: [controller.bundle.getCoop(), controller.bundle.getWeighingBundle()]);
+
+                    controller.isLoading.value = true;
+                    controller.smartScaleList.clear();
+                    controller.pageSmartScale.value = 1;
+                    Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
+                } else {
+                    GlobalVar.track("Click_card_smart_scale_detail");
+                    if (controller.smartScaleList[index]!.id != null) {
+                        await Get.to(DetailSmartScaleActivity(), arguments: [controller.bundle.getCoop(), controller.smartScaleList[index]!.date, controller.bundle.getWeighingBundle()]);
+
+                        controller.isLoading.value = true;
+                        controller.smartScaleList.clear();
+                        controller.pageSmartScale.value = 1;
+                        Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
+                    } else {
+                        controller.showWeighingNotFound();
+                    }
+                }
+            }
+        )
+    );
+
+    void _ascendingHistory(ListSmartScaleController controller) {
+        List<SmartScale?> scalesAscending = [];
+
+        for (int i = coop.day ?? 0; i >= 1; i--) {
+            bool isInsert = false;
+            bool isLast = false;
+
+            if (controller.smartScaleList.isNotEmpty) {
+                for (var model in controller.smartScaleList) {
+                    if (model!.day == i) {
+                        scalesAscending.add(model);
+                        isInsert = true;
+                    } else if (i == coop.day) {
+                        isLast = true;
+                    }
+                }
+            } else {
+                if (i == coop.day) {
+                    isLast = true;
+                }
+            }
+
+            DateTime dateTime = Convert.getDatetime(coop.startDate!).add(Duration(days: i));
+            if (!isInsert && !isLast) {
+                SmartScale historyScaleTemp = SmartScale(
+                    date: '${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}',
+                    executionDate: '${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}',
+                    day: i,
+                    averageWeight: 0.00,
+                    totalCount: 0,
+                );
+
+                scalesAscending.add(historyScaleTemp);
+            } else if (isLast && !isInsert) {
+                SmartScale historyScaleTemp = SmartScale(
+                    date: '${Convert.getYear(DateTime.now())}-${Convert.getMonthNumber(DateTime.now())}-${Convert.getDay(DateTime.now())}',
+                    executionDate: '${Convert.getYear(DateTime.now())}-${Convert.getMonthNumber(DateTime.now())}-${Convert.getDay(DateTime.now())}',
+                    day: coop.day,
+                    averageWeight: null,
+                    totalCount: null,
+                );
+
+                scalesAscending.add(historyScaleTemp);
+            }
+        }
+
+        controller.smartScaleList.value = scalesAscending;
     }
 
     Widget _createMenu(String title, String imagePath, bool status, Function() function) {

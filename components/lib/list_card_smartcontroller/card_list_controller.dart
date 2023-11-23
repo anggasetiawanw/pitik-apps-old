@@ -15,13 +15,13 @@ import '../global_var.dart';
  */
 
 class CardListSmartController extends StatelessWidget {
-    final Device device;
+    final Device? device;
     final Function() onTap;
     final bool isItemList;
     static const String GOOD = "good";
     static const String BAD = "bad";
 
-    const CardListSmartController({super.key, required this.device, required this.onTap, this.isItemList = false});
+    const CardListSmartController({super.key, this.device, required this.onTap, this.isItemList = false});
 
     @override
     Widget build(BuildContext context) {
@@ -29,10 +29,11 @@ class CardListSmartController extends StatelessWidget {
             return Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(top: 12),
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                    borderRadius: BorderRadius.circular(8)
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white
                 ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +76,9 @@ class CardListSmartController extends StatelessWidget {
                                     margin: const EdgeInsets.only(left: 8),
                                     child: Text(
                                         "${sensorData.value ?? 0}",
-                                        style: sensorData.status == GOOD ? GlobalVar.greenTextStyle : sensorData.status == BAD ? GlobalVar.redTextStyle : GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold),
+                                        style: sensorData.status == GOOD ? GlobalVar.greenTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold) :
+                                               sensorData.status == BAD ? GlobalVar.redTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold) :
+                                               GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold),
                                         overflow: TextOverflow.clip
                                     )
                                 ),
@@ -103,7 +106,8 @@ class CardListSmartController extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     border: Border.all(color: GlobalVar.outlineColor, width: 1),
-                    borderRadius: BorderRadius.circular(8)
+                    borderRadius: BorderRadius.circular(8),
+                    color: GlobalVar.primaryLight
                 ),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,17 +116,17 @@ class CardListSmartController extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                                 Text(
-                                    isItemList == true ? device.deviceName! : "Kondisi Lantai",
+                                    isItemList == true ? device!.deviceName! : "Kondisi Lantai",
                                     style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                                 )
                             ]
                         ),
-                        if (device.deviceSummary != null)...[
-                            if(device.deviceSummary!.temperature != null)...[
-                                itemSensor("Temperature", device.deviceSummary!.temperature!),
+                        if (device != null && device!.deviceSummary != null)...[
+                            if(device!.deviceSummary!.temperature != null)...[
+                                itemSensor("Temperature", device!.deviceSummary!.temperature!),
                             ],
-                            if(device.deviceSummary!.relativeHumidity != null)...[
-                                itemSensor("Kelembaban", device.deviceSummary!.relativeHumidity!),
+                            if(device!.deviceSummary!.relativeHumidity != null)...[
+                                itemSensor("Kelembaban", device!.deviceSummary!.relativeHumidity!),
                             ],
                         ] else...[
                             itemSensor("Temperature", SensorData()),

@@ -184,7 +184,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                         if (typePosition == 0) {
                             Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, false, fromCoopRest])!.then((value) => refreshOrderList());
                         }
                     },
                     child: Container(

@@ -109,9 +109,9 @@ flavorizr:
 
       ios:
         bundleId: "id.pitik.mobile.pitikconnect"
-        icon: "images/launcher_pitik_connect.png"
-        # firebase:
-        #   config: ".firebase/apple/GoogleService-Info.plist"
+        icon: "ios/config/icon.png"
+        firebase:
+          config: "ios/config/prod/GoogleService-Info.plist"
 
     dev:
       app:
@@ -122,11 +122,11 @@ flavorizr:
         icon: "images/launcher_pitik_connect.png"
         firebase:
           config: "android/app/src/dev/google-services.json"
-      #        firebase:
-      #          config: "android/app/src/dev/google-services.json"
       ios:
         bundleId: "id.pitik.mobile.pitikconnect.staging"
-        icon: "images/launcher_pitik_connect.png"
+        icon: "ios/config/icon.png"
+        firebase:
+          config: "ios/config/dev/GoogleService-Info.plist"
 
 flutter_icons:
   android: true

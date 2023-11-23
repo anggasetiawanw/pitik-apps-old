@@ -100,16 +100,20 @@ class EditAreaField extends StatelessWidget {
                                                 fillColor: controller.activeField.isTrue ? background : GlobalVar.gray,
                                                 focusedBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: const BorderSide(
-                                                        width: 1.5,
-                                                        color: GlobalVar.primaryOrange
+                                                    borderSide: BorderSide(
+                                                        color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white,
+                                                        width: 2.0,
                                                     ),
+                                                ),
+                                                disabledBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    borderSide: const BorderSide(color: GlobalVar.gray),
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: const BorderSide(
-                                                        width: 1.5,
-                                                        color: GlobalVar.primaryOrange
+                                                    borderSide: BorderSide(
+                                                        color: controller.activeField.isTrue && controller.showTooltip.isFalse ? GlobalVar.primaryLight : controller.activeField.isTrue && controller.showTooltip.isTrue ? GlobalVar.red : Colors.white,
+                                                        width: 2.0,
                                                     ),
                                                 ),
                                                 filled: true,

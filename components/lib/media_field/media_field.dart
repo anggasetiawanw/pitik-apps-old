@@ -65,14 +65,14 @@ class MediaField extends StatelessWidget {
                             child: Column(
                                 children: <Widget>[
                                     GestureDetector(
-                                        onTap: () => _showChooserInBottomSheet(context),
+                                        onTap: () => controller.activeField.isTrue ? _showChooserInBottomSheet(context) : {},
                                         child: Container(
                                             width: MediaQuery.of(context).size.width,
                                             height: 40,
                                             decoration: BoxDecoration(
-                                                color: const Color(0xFFFFF9ED),
+                                                color: controller.activeField.isTrue ? const Color(0xFFFFF9ED) : GlobalVar.gray,
                                                 borderRadius: BorderRadius.circular(10.0),
-                                                border: Border.all(color: controller.activeField.isTrue && controller.showTooltop.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltop.isTrue ? GlobalVar.red : Colors.white, width: 2)
+                                                border: Border.all(color: controller.activeField.isTrue && controller.showTooltop.isFalse ? GlobalVar.primaryOrange : controller.activeField.isTrue && controller.showTooltop.isTrue ? GlobalVar.red : GlobalVar.gray, width: 2)
                                             ),
                                             child: Row(
                                                 children: [

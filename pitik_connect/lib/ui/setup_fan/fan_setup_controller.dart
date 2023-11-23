@@ -159,7 +159,7 @@ class FanSetupController extends GetxController {
             service: ListApi.getFanDetail,
             context: context,
             body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathDetailFanData("fan",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!, deviceSetting!.id!)],
+                ListApi.pathDetailFanData('v2/b2b/iot-devices/smart-controller/coop/', "fan",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!, deviceSetting!.id!)],
             listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
                 if ((body as FanDetailResponse).data != null){
                     loadPage((body).data);
@@ -200,7 +200,7 @@ class FanSetupController extends GetxController {
                     service: ListApi.setController,
                     context: context,
                     body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId,
-                        ListApi.pathSetController("fan", device.deviceSummary!.coopCodeId!),
+                        ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "fan", device.deviceSummary!.coopCodeId!),
                         Mapper.asJsonString(payload)],
                     listener:ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {

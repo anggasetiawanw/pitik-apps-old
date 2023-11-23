@@ -24,25 +24,19 @@ class ItemDecreaseTemperature extends StatelessWidget {
             Column(
                 children: controller.index.value.map((int index) {
                     return Container(
-                        margin: const EdgeInsets.only(top: 24),
+                        margin: const EdgeInsets.only(top: 8),
                         child: Column(
                             children: [
                                 Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            // topRight: Radius.circular(8),
-                                            // topLeft: Radius.circular(8)
-                                        )
-                                    ),
+                                    color: Colors.white,
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                             Container(
-                                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                                margin: const EdgeInsets.symmetric(horizontal: 8),
                                                 child: Text(
                                                     "Group ${index + 1}",
-                                                    style: GlobalVar.blackTextStyle.copyWith(fontSize: 14),
+                                                    style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold),
                                                     overflow: TextOverflow.clip
                                                 )
                                             )
@@ -50,10 +44,10 @@ class ItemDecreaseTemperature extends StatelessWidget {
                                     )
                                 ),
                                 Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
                                     decoration: BoxDecoration(
                                         border: Border(
-                                            bottom: BorderSide(color: GlobalVar.outlineColor, width: 1),
+                                            bottom: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                             left: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                             right: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                             top: BorderSide(color: GlobalVar.outlineColor, width: 0),
@@ -75,17 +69,15 @@ class ItemDecreaseTemperature extends StatelessWidget {
                                                     margin: const EdgeInsets.only(left: 4),
                                                     child: controller.efDecreaseTemp.value[index]
                                                 )
-                                            ),
-                                            const SizedBox(height: 16),
-                                        ],
-                                    ),
+                                            )
+                                        ]
+                                    )
                                 )
-                            ],
-                        ),
+                            ]
+                        )
                     );
-                }).toList(),
-            )
-            : Container()
+                }).toList()
+            ) : Container()
         );
     }
 }

@@ -1,8 +1,6 @@
 
 // ignore_for_file: slash_for_doc_comments
 
-import 'dart:async';
-
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +15,7 @@ import 'item_take_picture_controller.dart';
  * @create date 14/09/2023
  */
 
-class ItemTakePictureCamera extends StatelessWidget{
+class ItemTakePictureCamera extends StatelessWidget {
     final ItemTakePictureCameraController controller;
     const ItemTakePictureCamera({super.key, required this.recordCamera, required this.onOptionTap, required this.controller, required this.index});
 
@@ -28,53 +26,22 @@ class ItemTakePictureCamera extends StatelessWidget{
     @override
     Widget build(BuildContext context) {
         final DateTime takePictureDate = Convert.getDatetime(recordCamera!.createdAt!);
-        controller.loadUrlImage(recordCamera!.link!);
-        // final uri = Uri.parse(recordCamera!.link!);
-        // controller.isValidUrl(uri);
+        controller.loadImage(recordCamera!.link!);
+
         return Column(
             children: [
                 const SizedBox(height: 16),
                 Stack(
                     children: [
-                        // if(controller.isImageLoaded.isFalse)...[
-                    Obx(() =>
-                    ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(8),
-                            topLeft: Radius.circular(8)
+                        Obx(() =>
+                            ClipRRect(
+                                borderRadius: const BorderRadius.only(topRight: Radius.circular(8), topLeft: Radius.circular(8)),
+                                child: Container(
+                                    color: GlobalVar.gray,
+                                    child: controller.image.value,
+                                )
+                            )
                         ),
-                        child: Container(
-                            color: GlobalVar.gray,
-                            child: controller.image.value,
-                            // Image.network(
-                            //     recordCamera!.link!,
-                            //     fit: BoxFit.fill,
-                            //     loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                            //         controller.isImageLoaded.value = true;
-                            //         if (loadingProgress == null) return child;
-                            //         return Center(
-                            //             child: CircularProgressIndicator(
-                            //                 color: GlobalVar.primaryOrange,
-                            //                 value: loadingProgress.expectedTotalBytes != null
-                            //                     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                            //                     : null,
-                            //             )
-                            //         );
-                            //     },
-                            //     errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                            //         controller.isImageLoaded.value = false;
-                            //         // print("HUHUHUU ${recordCamera!.link!}");
-                            //         return const SizedBox(
-                            //         width: double.infinity,
-                            //         height: 210
-                            //     );
-                            //     },
-                            // )
-                        )
-                    )
-                    )
-                        // ]
-                        ,
                         GestureDetector(
                             onTap: () {
                                 if (controller.isShow.value) {
@@ -84,21 +51,18 @@ class ItemTakePictureCamera extends StatelessWidget{
                                 }
                                 // _showButtonDialog(context);
                             },
-                          child: Align(
-                              alignment: Alignment.topRight,
-                              child: Container()
-                          ),
-                        ),
-                    ],
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container()
+                            )
+                        )
+                    ]
                 ),
                 Container(
                     padding: const EdgeInsets.only(top: 8, bottom: 16, right: 16, left: 16),
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: GlobalVar.outlineColor),
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(8),
-                            bottomLeft: Radius.circular(8)
-                        )
+                        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(8), bottomLeft: Radius.circular(8))
                     ),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

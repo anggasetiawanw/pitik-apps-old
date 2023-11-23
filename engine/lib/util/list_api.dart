@@ -31,11 +31,13 @@ class ListApi {
     static const String getSensorPosition = "sensorPosition";
     
     // api SMART CAMERA
+    static const String getSmartCameraListDay = "getSmartCameraListDay";
     static const String getRecordImages = "getRecordImages";
     static const String getListDataCamera = "getListDataCamera";
     static const String takePictureSmartCamera = "takePictureSmartCamera";
     
     // api SMART CONTROLLER
+    static const String getFloorList = "getFloor";
     static const String getDetailSmartController = "getDetailSmartController";
     static const String getDataGrowthDay = "getDataGrowthDay";
     static const String setController = "setController";
@@ -44,10 +46,11 @@ class ListApi {
     static const String getCoolerData = "getCoolerData";
 
     // api SMART SCALE
-    static const String getListSmartScale = "getListSmartScale";
+    static const String getListHistoryScale = "getListHistoryScale";
     static const String getSmartScaleDetail = "getSmartScaleDetail";
     static const String saveSmartScale = "saveSmartScale";
     static const String updateSmartScale = "updateSmartScale";
+    static const String getListSmartScale = "getListSmartScale";
     
     // api PRODUCT REPORT
     static const String getSapronak = "getSapronak";
@@ -76,6 +79,9 @@ class ListApi {
     static const String getTransferDetail = "getTransferDetail";
     static const String getStocks = "getStocks";
     static const String getStocksSummary = "getStocksSummary";
+    static const String getDetailReceived = "getDetailReceived";
+    static const String createReceiptOrder = "createReceiptOrder";
+    static const String createReceiptTransfer = "createReceiptTransfer";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
@@ -85,6 +91,13 @@ class ListApi {
     static const String getDetailMonitoring = "getDetailMonitoring";
     static const String getListHarvestRealization = "getListHarvestRealization";
     static const String updateRequestChickin = "updateRequestChickin";
+    
+    // api HARVEST
+    static const String getSubmitsHarvest = "getSubmitsHarvest";
+    static const String getDealsHarvest = "getDealsHarvest";
+    static const String getRealizationHarvest = "getRealizationHarvest";
+    static const String getDetailHarvest = "getDetailHarvest";
+    static const String approveOrRejectHarvest = "approveOrRejectHarvest";
 
     static String pathChangePassword(){
         return "v2/auth/reset-password";
@@ -126,8 +139,8 @@ class ListApi {
         return "v2/b2b/iot-devices/$deviceType/register";
     }
 
-    static String pathCameraImages(String coopId, String cameraId, String roomId){
-        return "v2/b2b/iot-devices/smart-camera/$coopId/records/$cameraId?roomId=$roomId";
+    static String pathCameraImages(String coopId, String cameraId){
+        return "v2/b2b/iot-devices/smart-camera/$coopId/records/$cameraId";
     }
 
     static String pathListCamera(String coopId, String roomId){
@@ -138,24 +151,24 @@ class ListApi {
         return "v2/b2b/iot-devices/smart-camera/jobs/$coopId";
     }
 
-    static String pathdetailSmartController(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/summary?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDetailSmartController(String basePath, String coopCodeId, String deviceId) {
+        return "$basePath?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
-    static String pathdetailGrowthDay(String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/growth-day?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDeviceData(String basePath, String device, String coopCodeId, String deviceId){
+        return "$basePath$device?coopId=$coopCodeId&deviceId=$deviceId";
     }
 
-    static String pathDeviceData(String device, String coopCodeId, String deviceId){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device?coopId=$coopCodeId&deviceId=$deviceId";
+    static String pathDetailFanData(String basePath, String device, String coopCodeId, String deviceId, String id) {
+        return "$basePath$device/detail?coopId=$coopCodeId&deviceId=$deviceId&id=$id";
     }
 
-    static String pathDetailFanData(String device, String coopCodeId, String deviceId, String id){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device/detail?coopId=$coopCodeId&deviceId=$deviceId&id=$id";
-    }
-
-    static String pathSetController(String device, String coopCodeId){
-        return "v2/b2b/iot-devices/smart-controller/coop/$device/$coopCodeId";
+    static String pathSetController(String basePath, String device, String coopCodeId, {bool forPitikConnect = true, String idForNonPitikConnect = ''}) {
+        if (forPitikConnect) {
+            return "$basePath$device/$coopCodeId";
+        } else {
+            return '$basePath$device/$idForNonPitikConnect';
+        }
     }
 
     static String pathSmartScaleForDetailAndUpdate(String weighingId) {

@@ -131,8 +131,7 @@ class LampSetupController extends GetxController {
                         GlobalVar.auth!.token,
                         GlobalVar.auth!.id,
                         GlobalVar.xAppId,
-                        ListApi.pathSetController(
-                            "lamp", device.deviceSummary!.coopCodeId!),
+                        ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "lamp", device.deviceSummary!.coopCodeId!),
                         Mapper.asJsonString(payload)
                     ],
                     listener: ResponseListener(

@@ -1,3 +1,4 @@
+import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
-import 'package:pitik_ppl_app/widget/common/custom_appbar.dart';
 
 class DocInActivity extends StatelessWidget {
     const DocInActivity({super.key});
@@ -73,90 +73,91 @@ class DocInActivity extends StatelessWidget {
             );
         }
 
-        return Obx(() => Scaffold(
-            backgroundColor: Colors.white,
-            appBar: PreferredSize(
-                preferredSize:const Size.fromHeight(40),
-                child: CustomAppbar(
-                    title: "Data DOC In",
-                    onBack: () => Get.back()
-                )
-            ),
-            body:  controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
-                children: [
-                    SingleChildScrollView(
-                        child: Container(
-                            margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                            child: Column(
-                                children: [
-                                    header(),
-                                    controller.dtTanggal,
-                                    controller.efReceiveDoc,
-                                    controller.efMoreDOC,
-                                    Row(
+        return Obx(() =>
+            SafeArea(
+                child: Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: PreferredSize(
+                        preferredSize:const Size.fromHeight(110),
+                        child: AppBarFormForCoop(title: 'Data DOC In', coop: controller.coop)
+                    ),
+                    body:  controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
+                        children: [
+                            SingleChildScrollView(
+                                child: Container(
+                                    margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                                    child: Column(
                                         children: [
-                                            Expanded(child: controller.efBw),
-                                            const SizedBox(width: 8),
-                                            Expanded(child: controller.efUniform)
-                                        ]
-                                    ),
-                                    Row(
-                                        children: [
-                                            Expanded(
-                                                child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                        controller.dtTruckGo,
-                                                        Text("Dari Hatchery", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
-                                                    ],
-                                                ),
+                                            header(),
+                                            controller.dtTanggal,
+                                            controller.efReceiveDoc,
+                                            controller.efMoreDOC,
+                                            Row(
+                                                children: [
+                                                    Expanded(child: controller.efBw),
+                                                    const SizedBox(width: 8),
+                                                    Expanded(child: controller.efUniform)
+                                                ]
                                             ),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                                child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                            Row(
+                                                children: [
+                                                    Expanded(
+                                                        child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                                controller.dtTruckGo,
+                                                                Text("Dari Hatchery", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
+                                                            ],
+                                                        ),
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Expanded(
+                                                        child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                                controller.dtTruckCome,
+                                                                Text("Kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
+                                                            ]
+                                                        )
+                                                    )
+                                                ]
+                                            ),
+                                            controller.dtFinishDoc,
+                                            controller.showRecord.isTrue ?  Container(
+                                                height: 40,
+                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                                decoration: BoxDecoration(
+                                                    color: GlobalVar.primaryLight2,
+                                                    borderRadius: BorderRadius.circular(8)
+                                                ),
+                                                child: Row(
                                                     children: [
-                                                        controller.dtTruckCome,
-                                                        Text("Kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
+                                                        SvgPicture.asset("images/calendar-line.svg"),
+                                                        const SizedBox(width: 8),
+                                                        Text("Awal Recoding ${controller.dateDoc}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500))
                                                     ]
                                                 )
-                                            )
-                                        ]
+                                            ): const SizedBox(),
+                                            controller.efDesc,
+                                            controller.mfSuratJalan,
+                                            controller.mfFormDOC,
+                                            controller.mfAnotherDoc,
+                                            const SizedBox(height: 100),
+                                            MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120) : const SizedBox()
+                                        ],
                                     ),
-                                    controller.dtFinishDoc,
-                                    controller.showRecord.isTrue ?  Container(
-                                        height: 40,
-                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                        decoration: BoxDecoration(
-                                            color: GlobalVar.primaryLight2,
-                                            borderRadius: BorderRadius.circular(8)
-                                        ),
-                                        child: Row(
-                                            children: [
-                                                SvgPicture.asset("images/calendar-line.svg"),
-                                                const SizedBox(width: 8),
-                                                Text("Awal Recoding ${controller.dateDoc}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500))
-                                            ]
-                                        )
-                                    ): const SizedBox(),
-                                    controller.efDesc,
-                                    controller.mfSuratJalan,
-                                    controller.mfFormDOC,
-                                    controller.mfAnotherDoc,
-                                    const SizedBox(height: 100),
-                                    MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120) : const SizedBox()
-                                ],
+                                ),
                             ),
-                        ),
+                            bottomNavbar(),
+                            controller.isLoadingPicture.isTrue ? SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
+                                child: const Center(child: ProgressLoading())
+                            ) : const SizedBox()
+                        ],
                     ),
-                    bottomNavbar(),
-                    controller.isLoadingPicture.isTrue ? SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: const Center(child: ProgressLoading())
-                    ) : const SizedBox()
-                ],
-            ),
-        ));
+                )
+            )
+        );
     }
 }
