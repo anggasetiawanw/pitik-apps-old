@@ -34,7 +34,7 @@ class NewDataSalesOrder extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Penjualan",
+          "Penjualan ${controller.isInbound.isTrue ? "Inbound" : "Outbound"}",
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );

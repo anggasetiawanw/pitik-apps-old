@@ -330,6 +330,32 @@ class TransferDetailActivity extends StatelessWidget {
                               ],
                             ),
                           ),
+                          if (controller.transferModel.driverRemarks != null) ...[
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: AppColors.outlineColor, width: 1),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Catatan",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    controller.transferModel.driverRemarks ?? "-",
+                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ]
                         ],
                       ),
                     ),

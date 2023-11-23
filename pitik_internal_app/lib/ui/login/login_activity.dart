@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:get/get.dart";
@@ -22,7 +23,7 @@ class LoginPage extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: SvgPicture.asset("images/logo_welcome.svg"),
           ),
-          controller.isDemo.isTrue && Platform.isIOS
+          (controller.isDemo.isTrue && Platform.isIOS) || kDebugMode
               ? Positioned(top: -150, child: SvgPicture.asset("images/welcome_sales.svg", width: MediaQuery.of(context).size.width))
               : Align(
                   alignment: Alignment.topCenter,
@@ -32,11 +33,11 @@ class LoginPage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Container(
               width: double.infinity,
-              height: controller.isDemo.isTrue && Platform.isIOS ? 520 : 210,
+              height: (controller.isDemo.isTrue && Platform.isIOS) || kDebugMode ? 550 : 210,
               margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32),
               child: Column(
                 children: [
-                  if (controller.isDemo.isTrue && Platform.isIOS) ...[
+                  if ((controller.isDemo.isTrue && Platform.isIOS) || kDebugMode) ...[
                     controller.efUsername,
                     controller.efPassword,
                     controller.bfLogin,

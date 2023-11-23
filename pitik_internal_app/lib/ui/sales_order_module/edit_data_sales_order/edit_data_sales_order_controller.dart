@@ -68,7 +68,7 @@ class EditDataSalesOrderController extends GetxController {
 
   late SpinnerSearch spinnerCustomer = SpinnerSearch(
     controller: GetXCreator.putSpinnerSearchController("customer"),
-    label: "Customer*",
+    label: isInbound.isTrue ? "Customer(Optional)" : "Customer*",
     hint: "Pilih salah satu",
     alertText: "Customer harus dipilih!",
     items: const {},
@@ -153,7 +153,6 @@ class EditDataSalesOrderController extends GetxController {
         editFieldHarga.controller.enable();
         refreshtotalPurchase();
       });
-
 
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
@@ -255,14 +254,15 @@ class EditDataSalesOrderController extends GetxController {
   Future<void> loadData(Order order) async {
     isLoadData.value = true;
     produkType.value = orderDetail.type! == "LB" ? "LB" : "Non-LB";
-    spinnerCustomer.controller.setTextSelected(order.customer!.businessName!);
+    spinnerCustomer.controller.setTextSelected(order.customer?.businessName ?? "");
     spinnerOrderType.controller.setTextSelected(order.type! == "LB" ? "LB" : "Non-LB");
-    if (order.withDeliveryFee == true) {
-      deliveryPrice.controller.isSwitchOn();
+    if (order.deliveryFee != null && order.deliveryFee! > 0) {
+      deliveryPrice.controller.isSwitchOn.value = true;
       isDeliveryPrice.value = true;
+      priceDelivery.value = order.deliveryFee!;
     }
     if (isInbound.isTrue) {
-      spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName ?? "");
+      spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName!);
     }
     efRemark.setInput(order.remarks ?? "");
 
@@ -290,6 +290,12 @@ class EditDataSalesOrderController extends GetxController {
             editFieldJumlahAyam.setInput(orderDetail.products![j]!.quantity!.toString());
             editFieldHarga.setInput(orderDetail.products![j]!.price!.toString());
             refreshtotalPurchase();
+
+            skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
+            skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
+            skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
+            skuCardRemark.controller.spinnerTypePotongan.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak");
+            skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
           }
         });
         isLoadData.value = false;
@@ -504,7 +510,7 @@ class EditDataSalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -519,7 +525,6 @@ class EditDataSalesOrderController extends GetxController {
               }
               spSumber.controller
                 ..enable()
-                ..setTextSelected("")
                 ..hideLoading();
             },
             onResponseFail: (code, message, body, id, packet) {
@@ -601,7 +606,7 @@ class EditDataSalesOrderController extends GetxController {
     }
 
     return Order(
-      customerId: customerSelected?.id ?? "", // Ganti dengan nilai default jika tidak ada customer terpilih
+      customerId: customerSelected?.id, // Ganti dengan nilai default jika tidak ada customer terpilih
       operationUnitId: sourceSelected?.id,
       products: produkType.value == "LB" ? lbProductList : productList,
       productNotes: produkType.value == "LB" ? remarkProductList : null,
@@ -655,23 +660,22 @@ class EditDataSalesOrderController extends GetxController {
   List<Products?> _generateRemarkProductList() {
     List<Products?> remarkProductList = [];
 
-    // for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
-    //   int whichItem = skuCardRemark.controller.index.value[i];
-    //   var listProductTemp = skuCardRemark.controller.listSku.value.values.toList();
-    //   Products? productSelected = listProductTemp[whichItem].firstWhereOrNull(
-    //     (element) => element!.name! == skuCardRemark.controller.spinnerSku.value[whichItem].controller.textSelected.value,
-    //     orElse: () => null,
-    //   );
+    for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+      int whichItem = skuCardRemark.controller.index.value[i];
+      CategoryModel? productSelected = listCategoriesRemark.value.firstWhereOrNull(
+        (element) => element!.name! == skuCardRemark.controller.spinnerCategories.value[whichItem].controller.textSelected.value,
+      );
 
-    //   if (productSelected != null) {
-    //     remarkProductList.add(Products(
-    //       productItemId: productSelected.id,
-    //       quantity: _getQuantity(productSelected.category, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
-    //       numberOfCuts: _getNumberOfCuts(productSelected.category, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-    //       weight: skuCardRemark.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
-    //     ));
-    //   }
-    // }
+      if (productSelected != null) {
+        remarkProductList.add(Products(
+          productCategoryId: productSelected.id,
+          quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
+          numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
+          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa" ? "REGULAR" : "BEKAKAK",
+          weight: null,
+        ));
+      }
+    }
 
     return remarkProductList;
   }
@@ -692,9 +696,13 @@ class EditDataSalesOrderController extends GetxController {
 
   List validationNonLb() {
     List ret = [true, ""];
-    if (spinnerCustomer.controller.textSelected.value.isEmpty) {
+    if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
       spinnerCustomer.controller.showAlert();
-      spinnerCustomer.controller.focusNode.requestFocus();
+      Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
+      return ret = [false, ""];
+    } else if (spSumber.controller.textSelected.value.isEmpty && isInbound.isTrue) {
+      spSumber.controller.showAlert();
+      Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
 
@@ -704,25 +712,25 @@ class EditDataSalesOrderController extends GetxController {
 
   List validationLb() {
     List ret = [true, ""];
-    if (spinnerCustomer.controller.textSelected.value.isEmpty) {
+    if (spinnerCustomer.controller.textSelected.value.isEmpty && isInbound.isFalse) {
       spinnerCustomer.controller.showAlert();
-      spinnerCustomer.controller.focusNode.requestFocus();
+      Scrollable.ensureVisible(spinnerCustomer.controller.formKey.currentContext!);
+      return ret = [false, ""];
+    } else if (spSumber.controller.textSelected.value.isEmpty && isInbound.isTrue) {
+      spSumber.controller.showAlert();
+      Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
     } else if (spinnerCategories.controller.textSelected.value.isEmpty) {
       spinnerCategories.controller.showAlert();
-      spinnerCategories.controller.focusNode.requestFocus();
+      Scrollable.ensureVisible(spinnerCategories.controller.formKey.currentContext!);
       return ret = [false, ""];
     } else if (spinnerSku.controller.textSelected.value.isEmpty) {
       spinnerSku.controller.showAlert();
-      spinnerSku.controller.focusNode.requestFocus();
+      Scrollable.ensureVisible(spinnerSku.controller.formKey.currentContext!);
       return ret = [false, ""];
     } else if (editFieldJumlahAyam.getInput().isEmpty) {
       editFieldJumlahAyam.controller.showAlert();
-      editFieldJumlahAyam.controller.focusNode.requestFocus();
-      return ret = [false, ""];
-    }  else if (editFieldHarga.getInput().isEmpty) {
-      editFieldHarga.controller.showAlert();
-      editFieldHarga.controller.focusNode.requestFocus();
+      Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
 

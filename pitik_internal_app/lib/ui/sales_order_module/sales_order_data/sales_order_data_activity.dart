@@ -85,7 +85,7 @@ class SalesOrderPage extends StatelessWidget {
             }
             return Container(
               height: 32,
-              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8, left: 8),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.bgAbu),
               child: Row(
@@ -136,10 +136,7 @@ class SalesOrderPage extends StatelessWidget {
                             order: controller.orderListOutbound[index]!,
                             onTap: () {
                               Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListOutbound[index])!.then((value) {
-                                controller.isLoadData.value = true;
-                                controller.orderListOutbound.clear();
-                                controller.pageOutbound.value = 1;
-                                Timer(const Duration(milliseconds: 500), () {
+                                Timer(const Duration(milliseconds: 100), () {
                                   if (controller.isFilter.isTrue) {
                                     controller.orderListOutbound.clear();
                                     controller.pageOutbound.value = 1;
@@ -151,6 +148,9 @@ class SalesOrderPage extends StatelessWidget {
                                     controller.isLoadData.value = true;
                                     controller.searchOrderOutbound();
                                   } else {
+                                    controller.orderListOutbound.clear();
+                                    controller.pageOutbound.value = 1;
+                                    controller.isLoadData.value = true;
                                     controller.getListOutboundGeneral();
                                   }
                                 });
@@ -195,10 +195,7 @@ class SalesOrderPage extends StatelessWidget {
                             order: controller.orderListInbound[index]!,
                             onTap: () {
                               Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListInbound[index])!.then((value) {
-                                controller.isLoadData.value = true;
-                                controller.orderListOutbound.clear();
-                                controller.pageInbound.value = 1;
-                                Timer(const Duration(milliseconds: 500), () {
+                                Timer(const Duration(milliseconds: 100), () {
                                   if (controller.isFilter.isTrue) {
                                     controller.orderListInbound.clear();
                                     controller.pageInbound.value = 1;
@@ -210,6 +207,9 @@ class SalesOrderPage extends StatelessWidget {
                                     controller.isLoadData.value = true;
                                     controller.searchOrderInbound();
                                   } else {
+                                    controller.isLoadData.value = true;
+                                    controller.orderListInbound.clear();
+                                    controller.pageInbound.value = 1;
                                     controller.getListInboundGeneral();
                                   }
                                 });
@@ -227,7 +227,7 @@ class SalesOrderPage extends StatelessWidget {
       () => Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
+            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 210 : 160),
             child: Column(
               children: [
                 CustomAppbar(
@@ -257,25 +257,22 @@ class SalesOrderPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                tabBar(),
                 Obx(
                   () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
-                )
+                ),
               ],
             )),
         body: Stack(
           children: [
             Column(
               children: [
-                tabBar(),
-                const SizedBox(
-                  height: 10,
-                ),
                 Expanded(
                   child: TabBarView(
                     controller: controller.tabController,
                     children: [
                       Obx(
-                        () => controller.isLoadingOutbond.isTrue
+                        () => controller.isLoadingOutbond.isTrue || controller.isLoadData.isTrue
                             ? const Center(
                                 child: ProgressLoading(),
                               )
@@ -292,7 +289,7 @@ class SalesOrderPage extends StatelessWidget {
                                   )
                                 : tabViewOutbound(),
                       ),
-                      Obx(() => controller.isLoadingInbound.isTrue
+                      Obx(() => controller.isLoadingInbound.isTrue || controller.isLoadData.isTrue
                           ? const Center(
                               child: ProgressLoading(),
                             )
@@ -313,7 +310,7 @@ class SalesOrderPage extends StatelessWidget {
                 ),
               ],
             ),
-            if(Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
+            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
           ],
         ),
       ),

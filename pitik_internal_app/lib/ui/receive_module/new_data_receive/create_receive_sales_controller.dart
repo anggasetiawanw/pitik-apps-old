@@ -18,33 +18,55 @@ import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
 import 'package:pitik_internal_app/widget/sku_card_gr/sku_card_gr.dart';
-import 'package:pitik_internal_app/widget/sku_card_gr/sku_card_gr_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
 ///@create date 15/05/23
 
-class CreateGrOrderController extends GetxController{
+class CreateGrOrderController extends GetxController {
   BuildContext context;
 
   CreateGrOrderController({required this.context});
 
-  late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendGrSOButton"), label: "Ya", onClick: (){
-    saveGrOrder();
-    Get.back();
-  });
-  ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("noSendGrSOButton"), label: "Tidak", onClick: (){
-    Get.back();
-  });
+  late ButtonFill yesSendButton = ButtonFill(
+      controller: GetXCreator.putButtonFillController("yesSendGrSOButton"),
+      label: "Ya",
+      onClick: () {
+        saveGrOrder();
+        Get.back();
+      });
+  ButtonOutline noSendButton = ButtonOutline(
+      controller: GetXCreator.putButtonOutlineController("noSendGrSOButton"),
+      label: "Tidak",
+      onClick: () {
+        Get.back();
+      });
 
-  EditField efChickReceived = EditField(controller: GetXCreator.putEditFieldController("sumChickReceived"), label: "Jumlah Ekor Diterima*", hint: "Ketik disini", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
-  EditField efWeightReceived = EditField(controller: GetXCreator.putEditFieldController("totalWeightReceived"), label: "Jumlah Kg Diterima*", hint: "Ketik disini", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
+  EditField efChickReceived = EditField(
+    controller: GetXCreator.putEditFieldController("sumChickReceived"),
+    label: "Jumlah Ekor Diterima*",
+    hint: "Ketik disini",
+    alertText: "Jumlah Ekor harus diisi!",
+    textUnit: "Ekor",
+    maxInput: 20,
+    onTyping: (value, controller) {},
+    inputType: TextInputType.number,
+  );
+  EditField efWeightReceived = EditField(
+    controller: GetXCreator.putEditFieldController("totalWeightReceived"),
+    label: "Jumlah Kg Diterima*",
+    hint: "Ketik disini",
+    alertText: "Total Kg harus diisi!",
+    textUnit: "Kg",
+    maxInput: 20,
+    onTyping: (value, controller) {},
+    inputType: TextInputType.number,
+  );
 
   var isLoading = false.obs;
   late Order orderDetail;
   late DateTime createdDate;
   late SkuCardGr skuCardGr;
-
 
   @override
   void onInit() {
@@ -52,59 +74,39 @@ class CreateGrOrderController extends GetxController{
     orderDetail = Get.arguments;
     createdDate = Convert.getDatetime(orderDetail.createdDate!);
     skuCardGr = SkuCardGr(
-      controller: InternalControllerCreator.putSkuCardGrOrder("skuGr",orderDetail.products!),
+      controller: InternalControllerCreator.putSkuCardGrOrder("skuGr", orderDetail.products!),
     );
-    loadData(orderDetail);
   }
+
   @override
   void onReady() {
     super.onReady();
-    Get.find<SkuCardGrController>(tag: "skuGr").itemCount.listen((p0) {
-    });
+    loadData(orderDetail);
   }
 
   void saveGrOrder() {
-      isLoading.value = true;
-      PurchaseRequest grPayload = generatePayload();
-      Service.push(
-        service: ListApi.createGoodReceived,
-        context: context,
-        body: [
-          Constant.auth!.token,
-          Constant.auth!.id,
-          Constant.xAppId,
-          Mapper.asJsonString(grPayload)
-        ],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-                isLoading.value = false;
-                Get.back();
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              isLoading.value = false;
-              Get.snackbar(
-                  "Alert", (body as ErrorResponse).error!.message!,
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              isLoading.value = false;
-              Get.snackbar("Alert","Terjadi kesalahan internal",
-                  snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
-            },
-            onTokenInvalid: () {
-              Constant.invalidResponse();
-            }
-        ),
-      );
+    isLoading.value = true;
+    PurchaseRequest grPayload = generatePayload();
+    Service.push(
+      service: ListApi.createGoodReceived,
+      context: context,
+      body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, Mapper.asJsonString(grPayload)],
+      listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
+        isLoading.value = false;
+        Get.back();
+      }, onResponseFail: (code, message, body, id, packet) {
+        isLoading.value = false;
+        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+      }, onResponseError: (exception, stacktrace, id, packet) {
+        isLoading.value = false;
+        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+      }, onTokenInvalid: () {
+        Constant.invalidResponse();
+      }),
+    );
   }
 
-  bool isValid(){
+  bool isValid() {
     try {
       List ret = skuCardGr.controller.validation();
       if (ret[0]) {
@@ -112,7 +114,7 @@ class CreateGrOrderController extends GetxController{
       } else {
         return false;
       }
-    }on Exception{
+    } on Exception {
       return true;
     }
   }
@@ -136,15 +138,15 @@ class CreateGrOrderController extends GetxController{
 
   void loadData(Order order) {
     if (order.products!.isNotEmpty && order.products != null) {
-      Timer(const Duration(milliseconds: 500), (){
+      Timer(const Duration(milliseconds: 500), () {
         for (int i = 0; i < order.products!.length - 1; i++) {
           skuCardGr.controller.addCard();
         }
       });
     }
   }
-
 }
+
 class CreateGrOrderBindings extends Bindings {
   BuildContext context;
   CreateGrOrderBindings({required this.context});

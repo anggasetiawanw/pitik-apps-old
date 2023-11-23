@@ -119,9 +119,12 @@ class SpinnerField extends StatelessWidget {
                                                 padding: const EdgeInsets.only(right: 8),
                                                 child: SvgPicture.asset("images/error_icon.svg")
                                             ),
-                                            Text(
-                                                controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12)
+                                            Expanded(
+                                              child: Text(
+                                                  controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
+                                                  style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                  overflow: TextOverflow.clip,
+                                              ),
                                             )
                                         ]
                                     )

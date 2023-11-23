@@ -440,7 +440,7 @@ class NewDataSalesOrderController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -618,10 +618,10 @@ class NewDataSalesOrderController extends GetxController {
 
       if (productSelected != null) {
         remarkProductList.add(Products(
-          productItemId: productSelected.id,
+          productCategoryId: productSelected.id,
           quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value,
+          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa" ? "REGULAR" : "BEKAKAK",
           weight: null,
         ));
       }
@@ -683,11 +683,6 @@ class NewDataSalesOrderController extends GetxController {
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
-    // else if (editFieldKebutuhan.getInput().isEmpty) {
-    //   editFieldKebutuhan.controller.showAlert();
-    //   Scrollable.ensureVisible(editFieldKebutuhan.controller.formKey.currentContext!);
-    //   return ret = [false, ""];
-    // }
     else if (editFieldHarga.getInput().isEmpty) {
       editFieldHarga.controller.showAlert();
       Scrollable.ensureVisible(editFieldHarga.controller.formKey.currentContext!);

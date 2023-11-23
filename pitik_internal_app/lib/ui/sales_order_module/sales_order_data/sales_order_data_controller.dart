@@ -109,6 +109,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   RxString selectedValue = "Nomor SO".obs;
   RxBool isShowList = false.obs;
   RxBool isOutbondTab = true.obs;
+  RxInt tabIndex = 0.obs;
   Timer? debounce;
   ScrollController scrollControllerOutbound = ScrollController();
   ScrollController scrollControllerInbound = ScrollController();
@@ -224,34 +225,33 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         decoration: InputDecoration(
           filled: true,
           fillColor: const Color(0xFFFFF9ED),
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-          hintText: "cari ${selectedValue.value}",
-          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          //   isDense: true,
+          contentPadding: const EdgeInsets.only(left: 4.0),
+          hintText: "Cari ${selectedValue.value}",
+          hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
           suffixIcon: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
             child: SvgPicture.asset("images/search_icon.svg"),
           ),
           prefixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SizedBox(
-              height: double.infinity,
-              width: 86,
+              width: 100,
               child: Column(
                 children: [
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 1),
                   DropdownButtonHideUnderline(
                     child: DropdownButton2<String>(
                       isExpanded: true,
                       customButton: Container(
                         padding: const EdgeInsets.only(top: 10),
                         height: 32,
-                        width: 86,
+                        width: 90,
                         child: Obx(() => Row(
                               children: [
                                 Text(
                                   "$selectedValue",
-                                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  style: const TextStyle(fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(
                                   width: 4,
@@ -263,7 +263,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                       items: items
                           .map((item) => DropdownMenuItem(
                                 value: item,
-                                child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 12)),
+                                child: Text(item, style: AppTextStyle.subTextStyle.copyWith(fontSize: 14)),
                               ))
                           .toList(),
                       value: selectedValue.value,
@@ -312,55 +312,68 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   void onInit() {
     super.onInit();
     initializeDateFormatting();
-    tabController = TabController(vsync: this, length: 2);
+    tabController = TabController(vsync: this, length: 2)
+      ..addListener(() {
+        tabIndex.value = tabController.index;
+      });
     scrollListenerOutbound();
     scrollListenerInbound();
-    tabControllerListener();
   }
 
   @override
   void onReady() {
     super.onReady();
-    isLoading.value = true;
+    isLoadingOutbond.value = true;
+    tabIndex.listen((value) {
+      tabControllerListener(value);
+    });
     getListOutboundGeneral();
   }
 
-  tabControllerListener() {
-    tabController.addListener(() {
-      if (tabController.index == 0) {
-        searchController.clear();
-        isSearch.value = true;
-        isFilter.value = false;
-        listFilter.value.clear();
-        focusNode.unfocus();
-        isOutbondTab.value = true;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        getListOutboundGeneral();
-      } else {
-        searchController.clear();
-        isSearch.value = true;
-        isFilter.value = false;
-        listFilter.value.clear();
-        focusNode.unfocus();
-        isOutbondTab.value = false;
-        orderListInbound.clear();
-        pageInbound.value = 1;
-        getListInboundGeneral();
-      }
-    });
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+    scrollControllerOutbound.dispose();
+    scrollControllerInbound.dispose();
+  }
+
+  tabControllerListener(int tab) {
+    if (tab == 0) {
+      searchController.clear();
+      isSearch.value = false;
+      isFilter.value = false;
+      listFilter.value.clear();
+      focusNode.unfocus();
+      isOutbondTab.value = true;
+      orderListOutbound.clear();
+      pageOutbound.value = 1;
+      isLoadingOutbond.value = true;
+      getListOutboundGeneral();
+    } else {
+      searchController.clear();
+      isSearch.value = false;
+      isFilter.value = false;
+      listFilter.value.clear();
+      focusNode.unfocus();
+      isOutbondTab.value = false;
+      orderListInbound.clear();
+      pageInbound.value = 1;
+      isLoadingInbound.value = true;
+      getListInboundGeneral();
+    }
   }
 
   scrollListenerOutbound() async {
     scrollControllerOutbound.addListener(() {
       if (scrollControllerOutbound.position.maxScrollExtent == scrollControllerOutbound.position.pixels) {
         isLoadMore.value = true;
+        pageOutbound++;
         if (isSearch.isTrue) {
-          pageOutbound++;
           searchOrderOutbound();
         } else if (isFilter.isTrue) {
+          getFilterOutbound();
         } else {
-          pageOutbound++;
           getListOutboundGeneral();
         }
       }
@@ -371,20 +384,19 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     scrollControllerInbound.addListener(() {
       if (scrollControllerInbound.position.maxScrollExtent == scrollControllerInbound.position.pixels) {
         isLoadMore.value = true;
+        pageInbound++;
         if (isSearch.isTrue) {
-          pageInbound++;
           searchOrderInbound();
         } else if (isFilter.isTrue) {
+          getFilterInbound();
         } else {
-          pageInbound++;
           getListInboundGeneral();
         }
       }
     });
   }
 
-  void fetchOrder(RxBool loading, List<dynamic> body, ResponseListener listener) {
-    loading.value = true;
+  void fetchOrder(List<dynamic> body, ResponseListener listener) {
     Service.push(service: ListApi.getListOrdersFilter, context: context, body: body, listener: listener);
   }
 
@@ -419,7 +431,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (Constant.isScRelation.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
-    fetchOrder(isLoadingOutbond, bodyGeneralOutbound, responOutbound());
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void shopkeeperBodyGeneralOutbound(List<dynamic> bodyGeneral) {
@@ -514,7 +526,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralInbound(bodyGeneralInbound);
     }
-    fetchOrder(isLoadingInbound, bodyGeneralInbound, responInbound());
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   void salesBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -533,6 +545,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
   }
 
   void opsLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -541,6 +554,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
   }
 
   void salesLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
@@ -656,6 +670,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+      shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
+    } else if (Constant.isScRelation.isTrue) {
+      scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralOutbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -663,7 +683,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       bodyGeneralOutbound[BodyQuerySales.code.index] = searchValue.value;
     }
 
-    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void searchOrderInbound() {
@@ -671,6 +691,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isShopKepper.isTrue) {
+      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isOpsLead.isTrue) {
+      opsLeadBodyGeneralInbound(bodyGeneralInbound);
+    } else if (Constant.isSalesLead.isTrue) {
+      salesLeadBodyGeneralInbound(bodyGeneralInbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralInbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -678,10 +704,11 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       bodyGeneralInbound[BodyQuerySales.code.index] = searchValue.value;
     }
 
-    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   void backFromForm(bool isInbound) {
+    Get.back();
     Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
       if (isFilter.isTrue) {
         if (isOutbondTab.isFalse) {
@@ -708,15 +735,33 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           searchOrderOutbound();
         }
       } else {
-        Get.back();
-        tabController.index = 0;
-        isOutbondTab.value = true;
-        isLoadData.value = true;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        orderListOutbound.clear();
-        pageOutbound.value = 1;
-        getListOutboundGeneral();
+        if (isInbound) {
+          if (tabController.index == 0) {
+            tabController.index = 1;
+            isOutbondTab.value = false;
+            isLoadData.value = true;
+          } else {
+            isLoadData.value = true;
+            isOutbondTab.value = false;
+            orderListInbound.clear();
+            pageInbound.value = 1;
+            isLoadingInbound.value = true;
+            getListInboundGeneral();
+          }
+        } else {
+          if (tabController.index == 1) {
+            tabController.index = 0;
+            isOutbondTab.value = true;
+            isLoadData.value = true;
+          } else {
+            isLoadData.value = true;
+            isOutbondTab.value = true;
+            orderListOutbound.clear();
+            pageOutbound.value = 1;
+            isLoadingOutbond.value = true;
+            getListOutboundGeneral();
+          }
+        }
       }
     });
   }
@@ -769,11 +814,10 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       if (spSource.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Sumber"] = spSource.controller.textSelected.value;
       }
-
+      listFilter.refresh();
       Get.back();
       isFilter.value = true;
       isSearch.value = false;
-      isLoadData.value = true;
       if (isOutbondTab.isFalse) {
         orderListInbound.clear();
         pageInbound.value = 1;
@@ -788,6 +832,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else {
       if (efMax.getInput().isEmpty && efMin.getInput().isEmpty) {
         Get.back();
+        isFilter.value = false;
+        isFilter.value = false;
         if (isOutbondTab.isFalse) {
           orderListInbound.clear();
           pageInbound.value = 1;
@@ -882,20 +928,38 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     resetAllBodyValue(bodyGeneralOutbound);
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
     if (Constant.isSales.isTrue) {
-      bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      if (status == null) {
+        salesBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      }
+    } else if ((Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) {
+      if (status == null) {
+        shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
+      }
+      bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = "true";
+    } else if (Constant.isSalesLead.isTrue) {
+      if (status == null ) {
+        salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
     }
     bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
     bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
     bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
     bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
-    bodyGeneralInbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
-    bodyGeneralInbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
-    bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
+    bodyGeneralOutbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralOutbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralOutbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
-
-    fetchOrder(isLoadData, bodyGeneralOutbound, responOutbound());
+    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect == null
+        ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue
+            ? null
+            : Constant.profileUser?.id
+        : salesSelect.id; // createdBy
+    fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
   void getFilterInbound() {
@@ -977,8 +1041,22 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     resetAllBodyValue(bodyGeneralInbound);
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
-      //   salesBodyGeneralOutbound(bodyGeneralOutbound);
-      bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      if (status == null) {
+        salesBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      }
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+      if (status == null) {
+        shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+      }
+      bodyGeneralInbound[BodyQuerySales.withinProductionTeam.index] = "true";
+    } else if (Constant.isSalesLead.isTrue) {
+      if (status == null) {
+        salesLeadBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
     }
     bodyGeneralInbound[BodyQuerySales.status.index] = status; // status
     bodyGeneralInbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
@@ -990,8 +1068,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
-
-    fetchOrder(isLoadData, bodyGeneralInbound, responInbound());
+    fetchOrder(bodyGeneralInbound, responInbound());
   }
 
   bool validationFilter() {
@@ -1079,6 +1156,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         break;
       case "Kategori":
         spCategory.controller.setTextSelected("");
+        spSku.controller.setTextSelected("");
+        listFilter.value.remove("SKU");
         break;
       case "SKU":
         spSku.controller.setTextSelected("");
@@ -1158,7 +1237,17 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     } else if (isSearch.isFalse && isFilter.isFalse) {
       page.value = 1;
       isLoadData.value = true;
-      //   getListOrders();
+      if (isOutbondTab.isFalse) {
+        orderListInbound.clear();
+        pageInbound.value = 1;
+        isLoadData.value = true;
+        getListInboundGeneral();
+      } else {
+        orderListOutbound.clear();
+        pageOutbound.value = 1;
+        isLoadData.value = true;
+        getListOutboundGeneral();
+      }
     }
   }
 
@@ -1202,7 +1291,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         },
         onResponseError: (exception, stacktrace, id, packet) {
-          print(stacktrace);
           (packet[1] as SpinnerSearch).controller
             ..enable()
             ..hideLoading();
@@ -1281,7 +1369,11 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
               mapList[product!.name!] = false;
             }
             spCategory.controller.enable();
-            spCategory.controller.setTextSelected("");
+            if (listFilter.value["Kategori"] != null) {
+              spCategory.controller.setTextSelected(listFilter.value["Kategori"]!);
+            } else {
+              spCategory.controller.setTextSelected("");
+            }
             spCategory.controller.hideLoading();
             spCategory.controller.generateItems(mapList);
           },
@@ -1324,7 +1416,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, null, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -1390,9 +1482,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                 spSku.controller.generateItems(mapList);
                 spSku.controller.enable();
               } else {
-                spSku.controller
-                  ..textSelected.value = body.data[0]!.name!
-                  ..disable();
+                spSku.controller.disable();
               }
             },
             onResponseFail: (code, message, body, id, packet) {
@@ -1440,28 +1530,34 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                         ),
                       ),
                       Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 24),
-                              dtTanggalPenjualan,
-                              spCreatedBy,
-                              spCategory,
-                              spSku,
-                              spSource,
-                              spProvince,
-                              spCity,
-                              Row(
-                                children: [
-                                  Expanded(child: efMin),
-                                  const SizedBox(width: 8),
-                                  Expanded(child: efMax),
-                                ],
-                              ),
-                              spStatus,
-                              const SizedBox(height: 120),
-                            ],
+                        child: RawScrollbar(
+                          //   controller: controller.scrollControllerInbound,
+                          // thumbVisibility: true,
+                          // trackVisibility: true,
+                          thumbColor: AppColors.primaryOrange,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 24),
+                                dtTanggalPenjualan,
+                                spCreatedBy,
+                                spCategory,
+                                spSku,
+                                spSource,
+                                spProvince,
+                                spCity,
+                                Row(
+                                  children: [
+                                    Expanded(child: efMin),
+                                    const SizedBox(width: 8),
+                                    Expanded(child: efMax),
+                                  ],
+                                ),
+                                spStatus,
+                                const SizedBox(height: 120),
+                              ],
+                            ),
                           ),
                         ),
                       ),

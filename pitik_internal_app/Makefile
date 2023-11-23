@@ -33,16 +33,16 @@ model-generator: ##Running Model Generator
 lints:
 	flutter analyze --no-fatal-warnings --no-fatal-infos
 
-sb-build-dev: ## Build Shorebird Dev
+sb-build-dev-and: ## Build Shorebird Dev
 	shorebird release android --flavor dev -t lib/main_dev.dart
 
-sb-build-prod: ## Build Shorebird Production
+sb-build-prod-and: ## Build Shorebird Production
 	shorebird release android --flavor prod	-t lib/main_prod.dart	
 	
-sb-patch-dev: ## Push Patch Shorebird Dev
+sb-patch-dev-and: ## Push Patch Shorebird Dev
 	shorebird patch android --flavor dev -t lib/main_dev.dart
 
-sb-patch-prod: ## Push Patch Shorebird Production
+sb-patch-prod-and: ## Push Patch Shorebird Production
 	shorebird patch android --flavor prod -t lib/main_prod.dart	
 
 build-dev-ios: ## Build aab file with debug configuration
@@ -50,3 +50,16 @@ build-dev-ios: ## Build aab file with debug configuration
 
 build-prod-ios: ## Build aab file with production configuration
 	flutter build ipa --flavor prod -t lib/main_prod.dart
+
+sb-build-dev-ios: ## Build Shorebird Dev
+	shorebird release ios-alpha --flavor dev -t lib/main_dev.dart
+
+sb-build-prod-ios: ## Build Shorebird Production
+	shorebird release ios-alpha --flavor prod	-t lib/main_prod.dart	
+	
+sb-patch-dev-ios: ## Push Patch Shorebird Dev
+	shorebird patch ios-alpha --flavor dev -t lib/main_dev.dart
+
+sb-patch-prod-ios: ## Push Patch Shorebird Production
+	shorebird patch ios-alpha --flavor prod -t lib/main_prod.dart	
+

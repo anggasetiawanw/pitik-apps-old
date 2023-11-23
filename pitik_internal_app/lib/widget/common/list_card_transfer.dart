@@ -119,7 +119,6 @@ class CardListTransfer extends StatelessWidget {
                 )
               ],
             ),
-            
           ],
         ),
       ),

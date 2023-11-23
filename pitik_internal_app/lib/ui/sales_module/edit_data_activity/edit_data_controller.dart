@@ -223,10 +223,12 @@ class EditDataController extends GetxController {
             .itemCount
             .listen((p0) => generateListProduct(p0)
         );
-        isLoading.value = true;
-        getProvince();
-        getProduct();
-        getBranch();
+        isLoading.value = true;    
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            getProduct();
+            getProvince();
+            getBranch();
+        });
         loadData(customer);
         for(var role in Constant.profileUser!.roles!){
             if(role!.name == AppStrings.sales_lead){

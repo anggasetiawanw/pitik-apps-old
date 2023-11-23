@@ -68,7 +68,7 @@ class CardListStock extends StatelessWidget {
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                 ),
                 Text(
-                  opnameModel.products!.length > 1 ? "${opnameModel.products![0]!.name} and ${opnameModel.products!.length - 1} lainnya" : "${opnameModel.products![0]!.name}",
+                  opnameModel.products!.isNotEmpty ? opnameModel.products!.length > 1 ? "${opnameModel.products![0]?.name} and ${opnameModel.products!.length - 1} lainnya" : "${opnameModel.products?[0]?.name}" : "-",
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
                 )
               ],

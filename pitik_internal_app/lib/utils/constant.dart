@@ -88,13 +88,14 @@ class Constant {
     ///   A `VoidCallback` is being returned.
     static VoidCallback invalidResponse() {
         return () async{
+
+            Get.offAllNamed(RoutePage.loginPage);
             AuthImpl().delete(null, []);
             UserGoogleImpl().delete(null, []);
             ProfileImpl().delete(null, []);
             // XAppIdImpl().delete(null, []);
-            await GoogleSignIn().disconnect(); 
-            await FirebaseAuth.instance.signOut();
-            Get.offAllNamed(RoutePage.loginPage);
+             GoogleSignIn().disconnect(); 
+             FirebaseAuth.instance.signOut();
         };
     }
 }

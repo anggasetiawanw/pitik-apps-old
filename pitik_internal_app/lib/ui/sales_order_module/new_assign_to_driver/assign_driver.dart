@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/ui/sales_order_module/new_assign_to_driver/assign_driver_controller.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/lead_status.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -44,35 +43,20 @@ class AssignDriverPage extends StatelessWidget {
       );
     }
 
-    Widget listDetail(String label, String value, bool isLeadStatus) {
+Widget infoDetailSku(String title, String name) {
       return Container(
-        margin: const EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 8),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              flex: 2,
-              child: Text(
-                label,
-                style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                overflow: TextOverflow.clip,
-              ),
+            Text(
+              title,
+              style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            isLeadStatus
-                ? LeadStatus(leadStatus: controller.orderDetail.value!.status != null ? controller.orderDetail.value!.status! : null)
-                : Expanded(
-                    flex: 2,
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.right,
-                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
-                      overflow: TextOverflow.clip,
-                    ),
-                  ),
+            Text(
+              name,
+              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+            )
           ],
         ),
       );
@@ -82,16 +66,17 @@ class AssignDriverPage extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController(products.id!),
-            headerText: products.name!,
+            controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
+            headerText: "${products.name}",
             child: Column(
               children: [
-                listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                listDetail("SKU", products.name ?? "-", false),
-                if (products.quantity != 0) listDetail("Jumlah Ekor", "${products.quantity ?? "-"} Ekor", false),
-                if (products.numberOfCuts != 0) listDetail("Potongan", "${products.numberOfCuts ?? "-"} Potongan", false),
-                listDetail("Kebutuhan", "${products.weight ?? "-"} Kg", false),
-                if (products.price != null) listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg", false),
+                if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             )),
       );
@@ -373,7 +358,7 @@ class AssignDriverPage extends StatelessWidget {
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value + controller.deliveryPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.deliveryPrice.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
@@ -409,38 +394,7 @@ class AssignDriverPage extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Biaya Pengiriman",
-                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                                  ),
-                                  controller.swDelivery,
-                                ],
-                              ),
-                              Obx(() => controller.isSwitchOn.isTrue
-                                  ? Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Biaya Pengiriman",
-                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                        ),
-                                        const SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                          NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumKg.value < 10 ? 10000 : 0),
-                                          style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                        )
-                                      ],
-                                    )
-                                  : const SizedBox()),
-                            ],
-                          ),
+
                           controller.spinnerDriver,
                           controller.dtWaktuPengiriman,
                           const SizedBox(

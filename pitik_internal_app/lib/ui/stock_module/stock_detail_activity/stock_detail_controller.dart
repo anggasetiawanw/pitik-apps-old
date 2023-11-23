@@ -166,7 +166,6 @@ class StockDetailController extends GetxController {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
     Directory('${appDocDirectory.path}/dir').create(recursive: true).then((Directory directory) async {
-      print('Path of New Dir: ${directory.path}');
       final pdf = pw.Document();
       pdf.addPage(
         pw.Page(
@@ -182,19 +181,24 @@ class StockDetailController extends GetxController {
       File pdfFile = await output.writeAsBytes(await pdf.save());
       final result = await Share.shareXFiles([XFile(pdfFile.path)], text: "Berita Acara Opname ${opnameModel.operationUnit!.operationUnitName} - ${Convert.getDatetime(opnameModel.confirmedDate!)}");
 
-      if (result.status == ShareResultStatus.success) {
-        print('Thank you for sharing my website!');
-      }
+      if (result.status == ShareResultStatus.success) {}
     });
   }
 
   OpnameModel generatePayload(String status) {
     List<Products?> products = [];
 
-    for (var element in opnameModel.products!) {
-      products.add(Products(productCategoryId: element!.id, quantity: element.quantity, weight: element.weight));
+    for (var product in opnameModel.products!) {
+      for (var item in product!.productItems!) {
+        products.add(Products(productItemId: item!.id, quantity: item.quantity, weight: item.weight));
+      }
     }
-    return OpnameModel(operationUnitId: opnameModel.operationUnit!.id, status: status, products: products);
+    return OpnameModel(
+      operationUnitId: opnameModel.operationUnit!.id,
+      status: status,
+      products: products,
+      totalWeight: opnameModel.totalWeight,
+    );
   }
 }
 

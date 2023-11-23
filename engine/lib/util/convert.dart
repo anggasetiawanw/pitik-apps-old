@@ -286,4 +286,11 @@ class Convert {
             return '${dateTime.second}';
         }
     }
+
+    static int roundPrice(double price) {
+        if(price % 1000 < 500) {
+            return (price / 1000).floor() * 1000;
+        }
+        return (price / 1000).ceil() * 1000;
+    }
 }

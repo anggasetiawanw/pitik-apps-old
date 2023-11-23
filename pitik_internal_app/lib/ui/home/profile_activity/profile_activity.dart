@@ -52,7 +52,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
     Widget nameInfo() {
       return Container(
         margin: const EdgeInsets.only(top: 14),
-        padding:  EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -94,7 +94,6 @@ class _ProfileActivityState extends State<ProfileActivity> {
       );
     }
 
-
     Widget listComponent(Function() onTap, String imagePath, String title) {
       return GestureDetector(
         onTap: onTap,
@@ -128,17 +127,21 @@ class _ProfileActivityState extends State<ProfileActivity> {
         children: [
           //   header(),
           Image.asset("images/header_ios.png"),
-        //   Flexible(
-        //     child: ListView(
-        //       children: [
-                Center(child: nameInfo()),
-                Container(
-                  margin: const EdgeInsets.only(top: 32, left: 39, right: 39),
-                  child: const Divider(
-                    color: AppColors.outlineColor,
-                    thickness: 1.6,
-                  ),
-                ),
+          //   Flexible(
+          //     child: ListView(
+          //       children: [
+          Center(child: nameInfo()),
+          Container(
+            margin: const EdgeInsets.only(top: 32, left: 39, right: 39),
+            child: const Divider(
+              color: AppColors.outlineColor,
+              thickness: 1.6,
+            ),
+          ),
+          Expanded(
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
                 Obx(() => Constant.isDeveloper.isTrue ? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
                 Obx(() => Constant.isChangeBranch.isTrue ? listComponent(() => Get.toNamed(RoutePage.changeBranch), "images/branch_icon.svg", "Ganti Branch") : const SizedBox()),
                 listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
@@ -147,19 +150,20 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
                 listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
                 listComponent(Constant.invalidResponse(), "images/logout_icon.svg", "Logout"),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Text(
-                      "V $_version",
-                      style: AppTextStyle.grayTextStyle,
-                    ),
-                  ),
-                ),
-                // const SizedBox(
-                //   height: 80,
-                // )
               ],
+            ),
+          )),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "V $_version",
+              style: AppTextStyle.grayTextStyle,
+            ),
+          ),
+          // const SizedBox(
+          //   height: 80,
+          // )
+        ],
         //     ),
         //   )
         // ],

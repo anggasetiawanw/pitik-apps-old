@@ -106,7 +106,7 @@ class StockOpnameController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -296,59 +296,6 @@ class StockOpnameController extends GetxController {
         Scrollable.ensureVisible(efTotal.controller.formKey.currentContext!);
         return false;
     }
-
-    // for(var stock in listStockField.value){
-    //     for(var item in stock.controller.efSku.value){
-    //         if(item.getInput().isEmpty){
-    //             item.controller.showAlert();
-    //                 if(item.controller.formKey.currentContext != null ) {
-    //                     if(stock.controller.exp.controller.expanded.value == false){
-    //                         stock.controller.exp.controller.expand();
-    //                     } else {
-    //                         Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-    //                     }
-    //                 }
-    //             ret = false;
-    //             break;
-    //         }
-    //     }
-    // }
-    // for(var stock in listStockTwoField.value){
-    //     for(var item in stock.controller.efSku.value){
-    //         if(item.getInput1().isEmpty){
-    //             item.controller.showAlert();
-    //             if(stock.controller.exp.controller.expanded.value == false){
-    //                 Get.snackbar(
-    //                     "Pesan",
-    //                     "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}",
-    //                 duration: const Duration(seconds: 5),
-    //                     snackPosition: SnackPosition.TOP,
-    //                     colorText: Colors.white,
-    //                 backgroundColor: Colors.red,);
-    //             } else {
-    //                 Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-    //             }
-    //             ret = false;
-    //             break;
-    //         }
-    //         if(item.getInput2().isEmpty){
-    //             item.controller.showAlert();
-    //             if(stock.controller.exp.controller.expanded.value == false){
-    //                 Get.snackbar(
-    //                     "Pesan",
-    //                     "Stok harus diisi semua, silahkan cek kembali pada stock ${stock.title}}",
-    //                 duration: const Duration(seconds: 5),
-    //                     snackPosition: SnackPosition.TOP,
-    //                     colorText: Colors.white,
-    //                 backgroundColor: Colors.red,);
-    //             }else {
-    //                 Scrollable.ensureVisible(item.controller.formKey.currentContext!);
-    //             }
-    //             ret = false;
-    //             break;
-    //         }
-    //     }
-    // }
     return ret;
   }
 

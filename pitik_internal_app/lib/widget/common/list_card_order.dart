@@ -148,7 +148,7 @@ class CardListOrder extends StatelessWidget {
                 children: [
                   Text("Dibuat Oleh : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
-                    order.userCreator?.fullName == null ? "-" : "${order.userCreator?.fullName}",
+                    order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
