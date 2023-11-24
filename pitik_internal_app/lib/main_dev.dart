@@ -13,6 +13,7 @@ import 'app.dart';
 
 void main() async{
     F.appFlavor = Flavor.DEV;
+    ChuckerFlutter.showNotification = true;
     ChuckerFlutter.showOnRelease = true;
     initializeReflectable();
     await initPlatformState();

@@ -90,10 +90,14 @@ class SpinnerField extends StatelessWidget {
                                     child: controller.items.isNotEmpty ?
                                     createDropdown() :
                                     GestureDetector(
-                                        onTap: () => Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
-                                                        duration: const Duration(seconds: 5),
-                                                        colorText: Colors.white,
-                                                        backgroundColor: Colors.red),
+                                        onTap: () {
+                                            if(controller.activeField.isTrue) {
+                                            Get.snackbar("Informasi", "$label data kosong",snackPosition: SnackPosition.TOP,
+                                                duration: const Duration(seconds: 5),
+                                                colorText: Colors.white,
+                                                backgroundColor: Colors.red);
+                                            }
+                                        },
                                         child: createDropdown()
                                     )
                                 ),
@@ -106,9 +110,12 @@ class SpinnerField extends StatelessWidget {
                                                 padding: const EdgeInsets.only(right: 8),
                                                 child: SvgPicture.asset("images/error_icon.svg")
                                             ),
-                                            Text(
-                                                controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                style: const TextStyle(color: GlobalVar.red, fontSize: 12)
+                                            Expanded(
+                                              child: Text(
+                                                  controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
+                                                  style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                  overflow: TextOverflow.clip,
+                                              ),
                                             )
                                         ]
                                     )

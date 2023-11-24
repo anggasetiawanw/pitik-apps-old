@@ -57,7 +57,7 @@ class HomePageCustomer extends StatelessWidget {
                                         Get.toNamed(RoutePage.newDataCustomer)!.then((value) {
                                             controller.isLoading.value =true;
                                             controller.listCustomer.value.clear();
-                                            controller.page.value = 0;
+                                            controller.page.value = 1;
                                             Timer(const Duration(milliseconds: 500), () {
                                                 controller.getListCustomer();
                                             });
@@ -169,7 +169,7 @@ class HomePageCustomer extends StatelessWidget {
                                                         )!.then((value) {
                                                             controller.isLoading.value =true;
                                                             controller.listCustomer.value.clear();
-                                                            controller.page.value = 0;
+                                                            controller.page.value = 1;
                                                             Timer(const Duration(milliseconds: 500), () {
                                                                 controller.getListCustomer();
                                                             });

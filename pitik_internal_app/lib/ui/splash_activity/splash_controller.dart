@@ -54,7 +54,6 @@ class SplashController extends GetxController {
                             Get.offNamed(RoutePage.loginPage);
                         } else {
                             Constant.auth = auth;
-                            Constant.userGoogle = userGoogle;
                             Constant.profileUser = userProfile;
                             String appId = FirebaseRemoteConfig.instance.getString("appId");
                             if(xAppId != null && (appId.isNotEmpty && xAppId.appId != appId) ){
@@ -79,7 +78,7 @@ class SplashController extends GetxController {
         Get.dialog(
             Center(
             child: Container(
-                width: 300,
+                width: 350,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
                 child: Column(
@@ -108,7 +107,7 @@ class SplashController extends GetxController {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 SizedBox(
-                                    width: 100,
+                                    width: 120,
                                     child: ButtonOutline(
                                         controller:
                                         GetXCreator.putButtonOutlineController("ButtonOutlineDialog"),
@@ -118,7 +117,7 @@ class SplashController extends GetxController {
                                     ),
                                 ),
                                 SizedBox(
-                                    width: 100,
+                                    width: 120,
                                     child: ButtonFill(
                                         controller:
                                         GetXCreator.putButtonFillController("Dialog"),

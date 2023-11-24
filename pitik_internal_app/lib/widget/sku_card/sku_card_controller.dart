@@ -76,7 +76,7 @@ class SkuCardController extends GetxController {
                 onSpinnerSelected: (value) {
                     try {
                         if (listCategories.value.isNotEmpty) {
-                            CategoryModel? selectCategory = listCategories.value.firstWhere((element) => element!.name! == value);
+                            CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value);
                             if (selectCategory != null) {
                                 getUOM(selectCategory, idx);
                             }

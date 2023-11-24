@@ -23,7 +23,6 @@ class DetailPurchaseController extends GetxController {
   BuildContext context;
   DetailPurchaseController({required this.context});
 
-  Rxn<Purchase> purchase = Rxn<Purchase>();
   Rxn<Purchase> purchaseDetail = Rxn<Purchase>();
   ScrollController scrollController = ScrollController();
 
@@ -55,7 +54,7 @@ class DetailPurchaseController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    purchase.value = Get.arguments as Purchase;
+    purchaseDetail.value = Get.arguments as Purchase;
     getDetailPurchase();
     boNoCancel = ButtonOutline(
       controller: GetXCreator.putButtonOutlineController("tidakVisit"),
@@ -85,7 +84,7 @@ class DetailPurchaseController extends GetxController {
     Service.push(
         service: ListApi.detailPurchaseById,
         context: context,
-        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDetailPurchaseById(purchase.value!.id!)],
+        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDetailPurchaseById(purchaseDetail.value!.id!)],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet){
               purchaseDetail.value = (body as PurchaseResponse).data;

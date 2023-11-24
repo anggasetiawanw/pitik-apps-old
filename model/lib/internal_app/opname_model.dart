@@ -1,41 +1,79 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/operation_unit_model.dart';
 import 'package:model/internal_app/product_model.dart';
+import 'package:model/internal_app/sales_person_model.dart';
 
 @SetupModel
 class OpnameModel {
-    String? id;
+  String? id;
 
-    @IsChild()
-    OperationUnitModel? operationUnit;
-    String? code;
-    String? operationUnitId;
-    String? status;
-    String? confirmedDate;
+  @IsChild()
+  OperationUnitModel? operationUnit;
+  String? code;
+  String? operationUnitId;
+  String? status;
+  String? confirmedDate;
+  String? reviewerId;
+  double? totalWeight;
+  int? totalQuantity;
+  double? previousWeight;
+  int? previousQuantity;
+  @IsChild()
+  SalesPerson? reviewer;
 
-    @IsChildren()
-    List<Products?>? products;
+  @IsChildren()
+  List<Products?>? products;
 
-    String? createdDate;
-    String? createdBy;
-    String? modifiedDate;
-    String? modifiedBy;
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
 
-    OpnameModel({this.id,this.code, this.operationUnit,this.confirmedDate, this.createdDate, this.createdBy, this.modifiedBy, this.modifiedDate, this.status, this.operationUnitId, this.products});
+  OpnameModel({
+    this.id,
+    this.code,
+    this.operationUnit,
+    this.confirmedDate,
+    this.createdDate,
+    this.createdBy,
+    this.modifiedBy,
+    this.modifiedDate,
+    this.status,
+    this.operationUnitId,
+    this.products,
+    this.totalWeight,
+    this.totalQuantity,
+    this.reviewerId,
+    this.reviewer,
+    this.previousWeight,
+    this.previousQuantity,
+  });
 
-    static OpnameModel toResponseModel(Map<String, dynamic> map) {
-        return OpnameModel(
-            id: map['id'],
-            code : map['code'],
-            operationUnit: Mapper.child<OperationUnitModel>(map['operationUnit']),
-            confirmedDate: map['confirmedDate'],
-            createdDate: map['createdDate'],
-            createdBy: map['createdcreatedBy_by'],
-            modifiedDate: map['modifiedDate'],
-            modifiedBy: map['modifiedBy'],
-            status: map['status'],
-            operationUnitId: map['operationUnitId'],
-            products: Mapper.children<Products>(map['products']),
-        );
+  static OpnameModel toResponseModel(Map<String, dynamic> map) {
+    if (map['totalWeight'] is int) {
+      map['totalWeight'] = map['totalWeight'].toDouble();
     }
+    if (map['previousWeight'] is int) {
+      map['previousWeight'] = map['previousWeight'].toDouble();
+    }
+    return OpnameModel(
+      id: map['id'],
+      code: map['code'],
+      operationUnit: Mapper.child<OperationUnitModel>(map['operationUnit']),
+      confirmedDate: map['confirmedDate'],
+      createdDate: map['createdDate'],
+      createdBy: map['createdBy'],
+      modifiedDate: map['modifiedDate'],
+      modifiedBy: map['modifiedBy'],
+      status: map['status'],
+      operationUnitId: map['operationUnitId'],
+      products: Mapper.children<Products>(map['products']),
+      totalWeight: map['totalWeight'],
+      totalQuantity: map['totalQuantity'],
+      reviewerId: map['reviewerId'],
+      reviewer: Mapper.child<SalesPerson>(map['reviewer']),
+      previousWeight: map['previousWeight'],
+      previousQuantity: map['previousQuantity'],
+    );
+  }
 }
