@@ -45,4 +45,13 @@ class TaskApi {
     @POST(value : POST.PATH_PARAMETER, as : ReportResponse, error : ErrorResponse)
     @JSON(isPlaint: true)
     void addReport(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data){}
+
+    /// A POST request that takes in a path parameter and returns an AddReportResponse object.
+    ///
+    /// @param authorization The authorization token.
+    /// @param xId The unique identifier of the report.
+    /// @param path The path to the report.
+    @POST(value : POST.PATH_PARAMETER, as : ReportResponse, error : ErrorResponse)
+    @JSON(isPlaint: true)
+    void reviewReport(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
 }

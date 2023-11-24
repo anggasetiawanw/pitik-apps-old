@@ -24,9 +24,9 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
       return GestureDetector(
         onTap: () {
           if (report.status == EnumDailyReport.FILL_SOON) {
-            Get.toNamed(RoutePage.dailyReportForm, arguments: [controller.coop!, report]);
+            Get.toNamed(RoutePage.dailyReportForm, arguments: [controller.coop!, report])!.then((value) => controller.getDailyReport());
           } else {
-            Get.toNamed(RoutePage.dailyReportDetail, arguments: [controller.coop!, report]);
+            Get.toNamed(RoutePage.dailyReportDetail, arguments: [controller.coop!, report])!.then((value) => controller.getDailyReport());
           }
         },
         child: Container(

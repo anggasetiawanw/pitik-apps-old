@@ -12,6 +12,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/report.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import 'package:pitik_ppl_app/route.dart';
 
 class DailyReportDetailController extends GetxController {
   BuildContext context;
@@ -22,9 +23,9 @@ class DailyReportDetailController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () {});
-  ButtonFill btDataBenar = ButtonFill(controller: GetXCreator.putButtonFillController("Data BenarDailyReportDetail"), label: "Data Benar", onClick: () {});
-  ButtonOutline btEditOutline = ButtonOutline(controller: GetXCreator.putButtonOutlineController("editDailyReportDetailOutline "), label: "Edit", onClick: () {});
+  late ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true]));
+  late ButtonFill btDataBenar = ButtonFill(controller: GetXCreator.putButtonFillController("Data BenarDailyReportDetail"), label: "Data Benar", onClick: () => reviewReport());
+  late ButtonOutline btEditOutline = ButtonOutline(controller: GetXCreator.putButtonOutlineController("editDailyReportDetailOutline "), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true]));
   @override
   void onInit() {
     super.onInit();
@@ -56,6 +57,48 @@ class DailyReportDetailController extends GetxController {
                       onResponseDone: (code, message, body, id, packet) {
                         reportDetail = body.data as Report;
                         isLoading.value = false;
+                      },
+                      onResponseFail: (code, message, body, id, packet) {
+                        Get.snackbar(
+                          "Pesan",
+                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          snackPosition: SnackPosition.TOP,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                        isLoading.value = false;
+                      },
+                      onResponseError: (exception, stacktrace, id, packet) {
+                        Get.snackbar(
+                          "Pesan",
+                          "Terjadi Kesalahan Internal",
+                          snackPosition: SnackPosition.TOP,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                        isLoading.value = false;
+                      },
+                      onTokenInvalid: () => GlobalVar.invalidResponse()))
+            }
+          else
+            {GlobalVar.invalidResponse()}
+        });
+  }
+
+  void reviewReport(){
+    AuthImpl().get().then((auth) => {
+          if (auth != null)
+            {
+              Service.push(
+                  apiKey: ApiMapping.taskApi,
+                  service: ListApi.reviewReport,
+                  context: context,
+                  body: ['Bearer ${auth.token}', auth.id, ListApi.pathReviewReport(coop!.farmingCycleId!, report!.taskTicketId!)],
+                  listener: ResponseListener(
+                      onResponseDone: (code, message, body, id, packet) {
+                        reportDetail = body.data as Report;
+                        isLoading.value = false;
+                        Get.back();
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
