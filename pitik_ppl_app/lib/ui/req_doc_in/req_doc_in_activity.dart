@@ -1,5 +1,4 @@
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

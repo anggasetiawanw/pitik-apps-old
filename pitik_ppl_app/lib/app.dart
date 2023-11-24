@@ -14,6 +14,7 @@ class App extends StatelessWidget {
         StreamInternetConnection.init();
         GlobalVar.setContext(context);
         return GetMaterialApp(
+            
             debugShowCheckedModeBanner: false,
             theme: ThemeData(fontFamily: 'Montserrat_Medium'),
             navigatorObservers: [ChuckerFlutter.navigatorObserver],
