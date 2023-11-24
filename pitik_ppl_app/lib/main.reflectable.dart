@@ -17788,8 +17788,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             9,
             const prefix8.BaseApi(),
-            const <int>[79, 80, 81],
-            const <int>[3, 4, 5, 6, 7, 79, 80],
+            const <int>[79, 80, 81, 82],
+            const <int>[3, 4, 5, 6, 7, 79, 80, 81],
             const <int>[],
             -1,
             {},
@@ -17806,8 +17806,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             10,
             const prefix8.BaseApi(),
-            const <int>[82, 83, 84, 85],
-            const <int>[3, 4, 5, 6, 7, 82, 83, 84],
+            const <int>[83, 84, 85, 86],
+            const <int>[3, 4, 5, 6, 7, 83, 84, 85],
             const <int>[],
             -1,
             {},
@@ -17824,8 +17824,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             11,
             const prefix8.BaseApi(),
-            const <int>[86, 87, 88, 89],
-            const <int>[3, 4, 5, 6, 7, 86, 87, 88],
+            const <int>[87, 88, 89, 90],
+            const <int>[3, 4, 5, 6, 7, 87, 88, 89],
             const <int>[],
             -1,
             {},
@@ -18909,6 +18909,23 @@ final _data = <r.Reflectable, r.ReflectorData>{
                   as: prefix59.ReportResponse,
                   error: prefix28.ErrorResponse)
             ]),
+        r.MethodMirrorImpl(
+            r'addReport',
+            1310722,
+            9,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[271, 272, 273, 274],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix111.POST(
+                  value: prefix111.POST.PATH_PARAMETER,
+                  as: prefix59.ReportResponse,
+                  error: prefix28.ErrorResponse),
+              const prefix110.JSON(isPlaint: true)
+            ]),
         r.MethodMirrorImpl(r'', 64, 9, -1, -1, -1, null, const <int>[],
             const prefix8.BaseApi(), const []),
         r.MethodMirrorImpl(
@@ -18919,7 +18936,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[271, 272, 273, 274, 275],
+            const <int>[275, 276, 277, 278, 279],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix110.JSON(isPlaint: true),
@@ -18936,7 +18953,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[276, 277, 278, 279],
+            const <int>[280, 281, 282, 283],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix111.POST(
@@ -18953,7 +18970,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[280, 281, 282],
+            const <int>[284, 285, 286],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix108.GET(
@@ -18971,7 +18988,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[283, 284],
+            const <int>[287, 288],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix110.JSON(),
@@ -18988,7 +19005,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[285, 286],
+            const <int>[289, 290],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix108.GET(
@@ -19004,7 +19021,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1,
             -1,
             null,
-            const <int>[287, 288, 289, 290, 291],
+            const <int>[291, 292, 293, 294, 295],
             const prefix8.BaseApi(),
             const <Object>[
               const prefix110.JSON(isPlaint: true),
@@ -22242,7 +22259,55 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            82,
+            81,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix114.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            81,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix114.Header("X-ID")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'path',
+            134348806,
+            81,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix115.Path()],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'data',
+            134348806,
+            81,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix117.Parameter("data")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            83,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22254,7 +22319,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xid',
             134348806,
-            82,
+            83,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22266,7 +22331,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xAppId',
             134348806,
-            82,
+            83,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22278,7 +22343,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'path',
             134348806,
-            82,
+            83,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22290,7 +22355,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'params',
             134348806,
-            82,
+            83,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22302,7 +22367,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            83,
+            84,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22314,7 +22379,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            83,
+            84,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22326,7 +22391,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'folder',
             134348806,
-            83,
+            84,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22338,7 +22403,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'file',
             134348806,
-            83,
+            84,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22350,7 +22415,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            84,
+            85,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22362,7 +22427,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            84,
+            85,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22374,7 +22439,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'name',
             134348806,
-            84,
+            85,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22386,7 +22451,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'username',
             134348806,
-            86,
+            87,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22398,7 +22463,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'password',
             134348806,
-            86,
+            87,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22410,7 +22475,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            87,
+            88,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22422,7 +22487,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xId',
             134348806,
-            87,
+            88,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22434,7 +22499,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'authorization',
             134348806,
-            88,
+            89,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22446,7 +22511,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xid',
             134348806,
-            88,
+            89,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22458,7 +22523,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'xAppId',
             134348806,
-            88,
+            89,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22470,7 +22535,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'path',
             134348806,
-            88,
+            89,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22482,7 +22547,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(
             r'params',
             134348806,
-            88,
+            89,
             const prefix8.BaseApi(),
             -1,
             -1,
@@ -22609,6 +22674,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'getDailyReport': (dynamic instance) => instance.getDailyReport,
         r'getDetailDailyReport': (dynamic instance) =>
             instance.getDetailDailyReport,
+        r'addReport': (dynamic instance) => instance.addReport,
         r'changePassword': (dynamic instance) => instance.changePassword,
         r'uploadImage': (dynamic instance) => instance.uploadImage,
         r'getApproval': (dynamic instance) => instance.getApproval,

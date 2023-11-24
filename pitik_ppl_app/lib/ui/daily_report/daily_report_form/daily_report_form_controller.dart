@@ -1,5 +1,6 @@
 import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
+import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/expandable/expandable.dart';
 import 'package:components/get_x_creator.dart';
@@ -11,6 +12,7 @@ import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -20,6 +22,7 @@ import 'package:model/product_model.dart';
 import 'package:model/report.dart';
 import 'package:model/response/products_response.dart';
 import 'package:model/response/stock_summary_response.dart';
+import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 
 class DailyReportFormController extends GetxController with GetSingleTickerProviderStateMixin {
@@ -31,6 +34,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   var isLoadingPicture = false.obs;
   var countLoading = 0.obs;
 
+  late bool isEdit = false;
   var isFeed = true.obs;
   late TabController tabController = TabController(length: 2, vsync: this);
 
@@ -204,7 +208,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         ],
       ));
 
-  ButtonFill bfSimpan = ButtonFill(controller: GetXCreator.putButtonFillController("btSimpan"), label: "Simpan", onClick: () {});
+  late ButtonFill bfSimpan = ButtonFill(controller: GetXCreator.putButtonFillController("btSimpan"), label: "Simpan", onClick: () => addReport());
 
   late Coop coop;
   late Report report;
@@ -306,48 +310,12 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
       isPass = false;
     }
 
-    // if (isFeed.isTrue) {
-    //   if (transferCoopTargetField.getController().selectedIndex == -1) {
-    //     transferCoopTargetField.getController().showAlert();
-    //     isPass = false;
-    //   }
-    //   if (feedMultipleFormField.getController().listObjectAdded.isEmpty) {
-    //     Get.snackbar(
-    //       "Pesan",
-    //       "Merek Pakan masih kosong, silahkan isi terlebih dahulu..!",
-    //       snackPosition: SnackPosition.TOP,
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //     );
-    //     isPass = false;
-    //   }
-    // } else {
-    //   if (transferPurposeField.getController().selectedIndex == -1) {
-    //     transferPurposeField.getController().showAlert();
-    //     isPass = false;
-    //   }
-    //   if (isPurposeCoop.isTrue && transferCoopTargetField.getController().selectedIndex == -1) {
-    //     transferCoopTargetField.getController().showAlert();
-    //     isPass = false;
-    //   }
-    //   if (mffKonsumsiOVK.getController().listObjectAdded.isEmpty) {
-    //     Get.snackbar(
-    //       "Pesan",
-    //       "Merek OVK masih kosong, silahkan isi terlebih dahulu..!",
-    //       snackPosition: SnackPosition.TOP,
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //     );
-    //     isPass = false;
-    //   }
-    // }
-
     return isPass;
   }
 
-  void sendTransfer() {
+  void addReport() {
     if (_validation()) {
-      _showFeedSummary(isFeed: isFeed.value);
+      _showReportSummary();
     }
   }
 
@@ -452,7 +420,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                     ])))));
   }
 
-  void _showFeedSummary({bool isFeed = true}) {
+  void _showReportSummary() {
     showModalBottomSheet(
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
@@ -464,140 +432,132 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
       context: Get.context!,
       builder: (context) => Container(
         color: Colors.transparent,
-        child: const Padding(
-          padding: EdgeInsets.all(20),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Center(child: Container(width: 60, height: 4, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: GlobalVar.outlineColor))),
-                // const SizedBox(height: 16),
-                // Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
-                // const SizedBox(height: 16),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [Text('Tanggal Pengiriman', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(transferDateField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                // ),
-                // const SizedBox(height: 8),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [Text('Jenis Transfer', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(isFeed ? 'Pakan' : 'OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                // ),
-                // if (isFeed) ...[
-                //   const SizedBox(height: 8),
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [Text('Kandang Tujuan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(transferCoopTargetField.getController().textSelected.value, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                //   ),
-                //   const SizedBox(height: 8),
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [Text('Metode Pemesanan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(transferMethodField.getController().textSelected.value, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                //   ),
-                //   const SizedBox(height: 16),
-                //   Text('Total Pakan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
-                //   Padding(
-                //     padding: const EdgeInsets.only(left: 12),
-                //     child: Column(
-                //         children: mffKonsumsiPakan.getController().listAdded.entries.map((entry) {
-                //       return Padding(
-                //           padding: const EdgeInsets.only(top: 8),
-                //           child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               crossAxisAlignment: CrossAxisAlignment.start,
-                //               children: [Expanded(child: Text(getFeedProductName(product: mffKonsumsiPakan.getController().listObjectAdded[entry.key]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))), Text(getFeedQuantity(product: feedMultipleFormField.getController().listObjectAdded[entry.key]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))]));
-                //     }).toList()),
-                //   )
-                // ] else ...[
-                //   const SizedBox(height: 8),
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [Text('Tujuan Transfer', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(isPurposeCoop.isTrue ? 'Kandang' : 'Unit', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                //   ),
-                //   isPurposeCoop.isTrue
-                //       ? Column(
-                //           children: [
-                //             const SizedBox(height: 8),
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [Text('Kandang Tujuan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(transferCoopTargetField.getController().textSelected.value, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                //             )
-                //           ],
-                //         )
-                //       : const SizedBox(),
-                //   const SizedBox(height: 8),
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [Text('Metode Pemesanan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(transferMethodField.getController().textSelected.value, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
-                //   ),
-                //   const SizedBox(height: 16),
-                //   Text('Total OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
-                //   Padding(
-                //     padding: const EdgeInsets.only(left: 12),
-                //     child: Column(
-                //         children: mffKonsumsiOVK.getController().listAdded.entries.map((entry) {
-                //       return Padding(
-                //           padding: const EdgeInsets.only(top: 8),
-                //           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Expanded(child: Text(getOvkProductName(product: mffKonsumsiOVK.getController().listObjectAdded[entry.key]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))), Text(getOvkQuantity(product: mffKonsumsiOVK.getController().listObjectAdded[entry.key]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))]));
-                //     }).toList()),
-                //   )
-                // ],
-                // const SizedBox(height: 50),
-                // SizedBox(
-                //   width: MediaQuery.of(Get.context!).size.width - 32,
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Expanded(
-                //           child: ButtonFill(
-                //               controller: GetXCreator.putButtonFillController("btnAgreeTransferRequest"),
-                //               label: "Yakin",
-                //               onClick: () {
-                //                 Get.back();
-                //                 isLoading.value = true;
-                //                 AuthImpl().get().then((auth) {
-                //                   if (auth != null) {
-                //                     //   String requestedDate = '${Convert.getYear(transferDateField.getLastTimeSelected())}-${Convert.getMonthNumber(transferDateField.getLastTimeSelected())}-${Convert.getDay(transferDateField.getLastTimeSelected())}';
-                //                     //   String? coopId = isFeed || transferPurposeField.getController().selectedIndex == 0 ? (transferCoopTargetField.getController().getSelectedObject() as Coop).id! : null;
-                //                     //   String route = "COOP-TO-COOP";
-                //                     //   if (coop.isOwnFarm != null && coop.isOwnFarm! && transferPurposeField.getController().textSelected.value == "Unit") {
-                //                     //     route = "COOP-TO-BRANCH";
-                //                     //   }
+                Center(child: Container(width: 60, height: 4, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: GlobalVar.outlineColor))),
+                const SizedBox(height: 16),
+                Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('Tanggal Pengiriman', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text(report.date!, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('Bobot', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text("${efBobot.getInputNumber()} gr", style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('Kematian', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text("${efKematian.getInputNumber()} ekor", style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('Culling', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)), Text("${efCulling.getInputNumber()} Ekor", style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))],
+                ),
+                const SizedBox(height: 16),
+                Text('Komsumsi Pakan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Column(
+                      children: mffKonsumsiPakan.getController().listAdded.entries.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              getFeedProductName(product: mffKonsumsiPakan.getController().listObjectAdded[entry.key]),
+                              style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
+                            ),
+                          ),
+                          Text(
+                            getFeedQuantity(product: mffKonsumsiPakan.getController().listObjectAdded[entry.key]),
+                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList()),
+                ),
+                const SizedBox(height: 16),
+                Text('Komsumsi OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Column(
+                      children: mffKonsumsiOVK.getController().listAdded.entries.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              getOvkProductName(product: mffKonsumsiOVK.getController().listObjectAdded[entry.key]),
+                              style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
+                            ),
+                          ),
+                          Text(
+                            getOvkQuantity(product: mffKonsumsiOVK.getController().listObjectAdded[entry.key]),
+                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList()),
+                ),
+                const SizedBox(height: 50),
+                SizedBox(
+                  width: MediaQuery.of(Get.context!).size.width - 32,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: ButtonFill(
+                              controller: GetXCreator.putButtonFillController("btnAgreeDailyRepor"),
+                              label: "Yakin",
+                              onClick: () {
+                                Get.back();
+                                isLoading.value = true;
+                                AuthImpl().get().then((auth) {
+                                  if (auth != null) {
+                                    Report requestBody = Report(
+                                      averageWeight: efBobot.getInputNumber(),
+                                      mortality: (efKematian.getInputNumber() ?? 0).toInt(),
+                                      culling: (efCulling.getInputNumber() ?? 0).toInt(),
+                                      images: reportPhotoList,
+                                      feedConsumptions: mffKonsumsiPakan.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
+                                      ovkConsumptions: mffKonsumsiOVK.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
+                                      feedTypeCode: "",
+                                      feedQuantity: 0,
+                                    );
 
-                //                     //   Procurement requestBody = Procurement(
-                //                     //       coopSourceId: coop.id,
-                //                     //       coopTargetId: coopId,
-                //                     //       farmingCycleId: coop.farmingCycleId,
-                //                     //       datePlanned: requestedDate,
-                //                     //       logisticOption: transferMethodField.getController().textSelected.value.replaceAll(" ", ""),
-                //                     //       notes: "",
-                //                     //       route: route,
-                //                     //       photos: transferPhotoList,
-                //                     //       type: isFeed ? "pakan" : "ovk",
-                //                     //       details: isFeed ? feedMultipleFormField.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>() : mffKonsumsiOVK.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
-                //                     //       subcategoryCode: "",
-                //                     //       subcategoryName: "",
-                //                     //       quantity: 1,
-                //                     //       uom: "",
-                //                     //       productName: "");
-
-                //                     //   if (isEdit) {
-                //                     //     _pushTransferRequestToServer(ListApi.updateOrderOrTransferRequest, ['Bearer ${auth.token}', auth.id, 'v2/transfer-requests/${procurement.id}', Mapper.asJsonString(requestBody)]);
-                //                     //   } else {
-                //                     //     _pushTransferRequestToServer(ListApi.saveTransferRequest, ['Bearer ${auth.token}', auth.id, Mapper.asJsonString(requestBody)]);
-                //                     //   }
-                //                   } else {
-                //                     GlobalVar.invalidResponse();
-                //                   }
-                //                 });
-                //               })),
-                //       const SizedBox(width: 16),
-                //       Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreeTransferRequest"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
-                //     ],
-                //   ),
-                // ),
-                // const SizedBox(height: 32),
+                                    if (isEdit) {
+                                      _pushDailyReportToServer(['Bearer ${auth.token}', auth.id, ListApi.pathAddReport(coop.farmingCycleId!, report.taskTicketId!), Mapper.asJsonString(requestBody)]);
+                                    } else {
+                                      _pushDailyReportToServer(['Bearer ${auth.token}', auth.id, ListApi.pathAddReport(coop.farmingCycleId!, report.taskTicketId!), Mapper.asJsonString(requestBody)]);
+                                    }
+                                  } else {
+                                    GlobalVar.invalidResponse();
+                                  }
+                                });
+                              })),
+                      const SizedBox(width: 16),
+                      Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreeDailyRepo"), label: "Tidak Yakin", onClick: () => Get.back()))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -606,16 +566,16 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     );
   }
 
-  void _pushTransferRequestToServer(String route, List<dynamic> body) {
+  void _pushDailyReportToServer(List<dynamic> body) {
     Service.push(
-        apiKey: 'productReportApi',
-        service: route,
+        apiKey: ApiMapping.taskApi,
+        service: ListApi.addReport,
         context: Get.context!,
         body: body,
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               isLoading.value = false;
-              Get.off(TransactionSuccessActivity(keyPage: "transferSaved", message: "Kamu telah berhasil melakukan permintaan transfer pakan ke kandang lain", showButtonHome: false, onTapClose: () => Get.toNamed(RoutePage.dailyReport, arguments: coop), onTapHome: () {}));
+              Get.off(TransactionSuccessActivity(keyPage: "Add Report Succes", message: "Kamu telah berhasil melakukan laporan harian", showButtonHome: false, onTapClose: () => Get.toNamed(RoutePage.dailyReport, arguments: coop), onTapHome: () {}));
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
@@ -681,7 +641,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                       ovkStockSummaryList.value = body.data;
-                        _setupSpinnerBrand(field: sfJenisOvk, productList: (body as ProductsResponse).data, isFeed: false);
+                      _setupSpinnerBrand(field: sfJenisOvk, productList: (body as ProductsResponse).data, isFeed: false);
                       _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
@@ -763,7 +723,11 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   void _setupSpinnerBrand({required SpinnerField field, required List<Product?> productList, bool isFeed = true}) {
     field.getController().setupObjects(productList);
     for (var product in productList) {
-      String key = isFeed ? '${product == null || product.subcategoryCode == null ? '' : product.subcategoryCode} - ${product == null || product.productName == null ? '' : product.productName}' : product == null || product.productName == null ? '' : "${product.productName}(${product.remainingQuantity} ${product.uom ?? product.purchaseUom ?? ''})";
+      String key = isFeed
+          ? '${product == null || product.subcategoryCode == null ? '' : product.subcategoryCode} - ${product == null || product.productName == null ? '' : product.productName}'
+          : product == null || product.productName == null
+              ? ''
+              : "${product.productName}(${product.remainingQuantity} ${product.uom ?? product.purchaseUom ?? ''})";
 
       field.getController().addItems(value: key, isActive: false);
     }
