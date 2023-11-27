@@ -294,6 +294,13 @@ class Convert {
         }
     }
 
+    static int roundPrice(double price) {
+        if(price % 1000 < 500) {
+            return (price / 1000).floor() * 1000;
+        }
+        return (price / 1000).ceil() * 1000;
+    }
+    
     static String getDate(String? dateString) {
         if (dateString != null) {
             DateTime dateTime = getDatetime(dateString);

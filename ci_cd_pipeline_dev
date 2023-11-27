@@ -1,0 +1,119 @@
+pipeline {
+    options {
+        ansiColor('xterm')
+    }
+
+    agent {
+        label 'jenkins-agent-staging'
+    }
+
+    environment {
+        PATH = "$PATH:/home/ubuntu/flutter/bin:/home/ubuntu/android-sdk/platform-tools"
+        WORKSPACE_DIR_CONNECT = "/home/ubuntu/workspace/service-mobile/pitik_connect/"
+        WORKSPACE_DIR_INTERNAL_APP = "/home/ubuntu/workspace/service-mobile/pitik_internal_app/"
+        APP_ID_CONNECT = "1:750861342043:android:2fa037571eb4088842367e"
+        APP_ID_INTERNAL_APP = "1:98893830821:android:b291df0e7b0189d52bcb4c"
+        GROUPS_CONNECT = "pitik"
+        GROUPS_INTERNAL_APP = "pitik"
+    }
+
+    stages {
+        stage("Checkout scm") {
+            steps {
+                git branch: 'development',
+                credentialsId: 'github-new',
+                url: 'https://github.com/Pitik-Digital-Indonesia/Pitik-Mobile.git'
+            }
+        }
+
+        stage("Deploy Pitik Connect to Firebase App Distribution") {
+            when {
+                changeset "**/pitik_connect/**" 
+            }
+
+            steps {
+                echo "Install packages and run linter test"
+                dir(WORKSPACE_DIR_CONNECT) {
+                    sh '''
+                    flutter clean
+                    flutter pub get
+                    flutter analyze
+                    '''
+                }
+
+                echo "Decrypt keystore for Connect"
+                withCredentials([string(credentialsId: 'KEY_DEC_JKS_PASSPHRASE_CONNECT', variable: 'KEY_DEC_JKS_PASSPHRASE_CONNECT')]) {
+                    sh 'gpg -d --passphrase "$KEY_DEC_JKS_PASSPHRASE_CONNECT" --batch pitik_connect/android/app/pitikconnect-keystore.jks.asc > pitik_connect/android/app/pitikconnect-keystore.jks'
+                }
+
+                echo "Install packages and compile AAB for Connect"
+                dir(WORKSPACE_DIR_CONNECT) {
+                    sh '''
+                    flutter build appbundle --flavor dev -t lib/main_dev.dart
+                    '''
+                }
+
+                echo "Upload artifact to Firebase App Distribution for Connect"
+                dir(WORKSPACE_DIR_CONNECT) {
+                    sh '''
+                    firebase appdistribution:distribute build/app/outputs/bundle/devRelease/app-dev-release.aab --app {{ APP_ID_CONNECT }} --groups {{ GROUPS_CONNECT }} --release-notes "Test Release from Jenkins changeset"
+                    '''
+                }
+            }
+        }
+
+        stage("Deploy Pitik Internal App to Firebase App Distribution") {
+            when {
+                changeset "**/pitik_internal_app/**" 
+            }
+
+            steps {
+                echo "Install packages and run linter test"
+                dir(WORKSPACE_DIR_INTERNAL_APP) {
+                    sh '''
+                    flutter pub get
+                    flutter analyze
+                    '''
+                }
+
+                echo "Decrypt keystore for Internal App"
+                withCredentials([string(credentialsId: 'KEY_DEC_JKS_PASSPHRASE_INTERNAL_APP', variable: 'KEY_DEC_JKS_PASSPHRASE_INTERNAL_APP')]) {
+                    sh 'gpg -d --passphrase "$KEY_DEC_JKS_PASSPHRASE_INTERNAL_APP" --batch pitik_internal_app/android/app/upload-keystore.jks.asc > pitik_internal_app/android/app/upload-keystore.jks'
+                }
+
+                echo "Install packages and compile AAB for Internal App"
+                dir(WORKSPACE_DIR_INTERNAL_APP) {
+                    sh '''
+                    flutter build appbundle --flavor dev -t lib/main_dev.dart
+                    '''
+                }
+
+                echo "Upload artifact to Firebase App Distribution for Internal App"
+                dir(WORKSPACE_DIR_INTERNAL_APP) {
+                    sh '''
+                    export GOOGLE_APPLICATION_CREDENTIALS="key/pitik-d2c21-3485c6d608b4.json"
+                    firebase appdistribution:distribute build/app/outputs/bundle/devRelease/app-dev-release.aab --app {{ APP_ID_INTERNAL_APP }} --groups {{ GROUPS_INTERNAL_APP }} --release-notes "Test Release from Jenkins changeset"
+                    '''
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                echo "Cleanup Internal App"
+                dir(WORKSPACE_DIR_INTERNAL_APP){
+                    sh '''
+                    flutter clean
+                    '''
+                }
+
+                echo "Cleanup Connect"
+                dir(WORKSPACE_DIR_CONNECT){
+                    sh '''
+                    flutter clean
+                    '''
+                }
+            }
+        }
+    }
+}

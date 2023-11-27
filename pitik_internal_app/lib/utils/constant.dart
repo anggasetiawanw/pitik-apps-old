@@ -1,7 +1,9 @@
 import 'package:components/library/dao_impl_library.dart';
 import 'package:dao_impl/user_google_impl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/user_google_model.dart';
@@ -23,6 +25,11 @@ class Constant {
     static String? xAppId;
     static var isChangeBranch = false.obs;
     static var isDeveloper = false.obs;
+    static var isShopKepper = false.obs;
+    static var isScRelation = false.obs;
+    static var isOpsLead = false.obs;
+    static var isSales = false.obs;
+    static var isSalesLead = false.obs;
     static const double bottomSheetMargin = 24;
 
     static set deviceId(String deviceId) {
@@ -80,12 +87,15 @@ class Constant {
     /// Returns:
     ///   A `VoidCallback` is being returned.
     static VoidCallback invalidResponse() {
-        return () {
+        return () async{
+
+            Get.offAllNamed(RoutePage.loginPage);
             AuthImpl().delete(null, []);
             UserGoogleImpl().delete(null, []);
             ProfileImpl().delete(null, []);
             // XAppIdImpl().delete(null, []);
-            Get.offAllNamed(RoutePage.loginPage);
+             GoogleSignIn().disconnect(); 
+             FirebaseAuth.instance.signOut();
         };
     }
 }

@@ -10,7 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase_controller.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture_controller.dart';
 
 
 class SkuCardManufacture extends StatelessWidget {
@@ -107,6 +107,7 @@ class SkuCardManufacture extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

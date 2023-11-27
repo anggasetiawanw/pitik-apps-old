@@ -101,13 +101,13 @@ class ManufactureHomeController extends GetxController {
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
                         "Pesan",
-                        "Terjadi Kesalahan, $stacktrace",
+                        "Terjadi Kesalahan",
                         snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,
                     );
-                    
+                    print(stacktrace);
                     isLoading.value = false;  
                 },
                 onTokenInvalid: Constant.invalidResponse()));

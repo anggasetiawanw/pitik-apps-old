@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
+import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
@@ -20,8 +21,8 @@ import 'package:model/response/internal_app/manufacture_output_list_response.dar
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase_controller.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture_controller.dart';
 class ManufactureOutputController extends GetxController {
     BuildContext context;
     ManufactureOutputController({required this.context});
@@ -45,14 +46,18 @@ class ManufactureOutputController extends GetxController {
         List<String> items = value.split(" , ");
         Map<String, bool> mapList = {};
         for (var item in items) {
-           CategoryModel? selected = listCategories.value.firstWhere((element) => element!.name! == item);
+           CategoryModel? selected = listCategories.value.firstWhereOrNull((element) => element!.name! == item);
             listCategoriesSelected.value.add(selected);
              mapList[item] = false;
         }
-        Timer(const Duration(milliseconds: 500), () {
-            skuCard.controller.spinnerCategories.value[0].controller
-            ..generateItems(mapList)
-            ..items.refresh();        
+        Timer(const Duration(milliseconds: 100), () {
+            for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
+                skuCard.controller.spinnerCategories.value[i].controller.generateItems(mapList);     
+                skuCard.controller.spinnerCategories.value[i].controller.textSelected.value ="";
+                skuCard.controller.spinnerSku.value[i].controller..textSelected.value =""..disable();
+                skuCard.controller.editFieldJumlahAyam.value[i]..setInput("")..controller.disable()..controller.visibleField();
+                skuCard.controller.editFieldJumlahKg.value[i]..setInput("")..controller.disable()..controller.invisibleField();
+            }
             skuCard.controller.setMaplist(listCategoriesSelected.value);
             this.mapList.value = mapList; 
         });
@@ -61,6 +66,8 @@ class ManufactureOutputController extends GetxController {
     late ManufactureModel manufactureModel;
     var isEdit = false.obs;
     late DateTime createdDate;
+    EditField efTotalKG = EditField(controller: GetXCreator.putEditFieldController("efTotalKGPOGR"), label: "Total/Global(Kg)*", hint: "Ketik di sini", alertText: "Total Kg harus diisi", textUnit: "Kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+
     @override
     void onInit() {
         super.onInit();
@@ -77,6 +84,7 @@ class ManufactureOutputController extends GetxController {
             typeOutput.controller.setTextSelected(manufactureModel.output!.map((e) =>  e!.name.toString()).reduce((a, b) =>'$a , $b'));
             isLoadData.value= true;
             loadSku(manufactureModel.output);
+            efTotalKG.setInput(manufactureModel.outputTotalWeight.toString());
             showSKUCard.value = true;
             isLoadData.value = false;
         }
@@ -116,32 +124,38 @@ class ManufactureOutputController extends GetxController {
                 skuCard.controller.spinnerSku.value[idx].controller.setTextSelected(product[i]!.productItems![j]!.name!);
                 skuCard.controller.editFieldJumlahAyam.value[idx].setInput(product[i]!.productItems![j]!.quantity!.toString());
                 skuCard.controller.editFieldJumlahKg.value[idx].setInput(product[i]!.productItems![j]!.weight!.toString());
-                if(product[i]!.name! == AppStrings.AYAM_UTUH ||product[i]!.name! == AppStrings.BRANGKAS ||product[i]!.name! == AppStrings.LIVE_BIRD ){
+                if(product[i]!.name! == AppStrings.AYAM_UTUH ||product[i]!.name! == AppStrings.BRANGKAS ||product[i]!.name! == AppStrings.LIVE_BIRD || product[i]!.name! == AppStrings.KARKAS){
                     skuCard.controller.editFieldJumlahAyam.value[idx].controller.enable();
-                    skuCard.controller.getLoadSku(product[i]!.id!, idx);
-                }else if(product[i]!.name! == AppStrings.KARKAS){
                     skuCard.controller.getLoadSku(product[i]!.id!, idx);
                 }
                 skuCard.controller.editFieldJumlahKg.value[idx].controller.enable();
                 listSku.add(product[i]!.productItems![j]);
+                if (skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.LIVE_BIRD || skuCard.controller.spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
+                    skuCard.controller.editFieldJumlahAyam.value[idx].controller..visibleField()..enable();
+                    skuCard.controller.editFieldJumlahKg.value[idx].controller.invisibleField();
+                } else {
+                    skuCard.controller.editFieldJumlahKg.value[idx].controller..visibleField()..enable();
+                    skuCard.controller.editFieldJumlahAyam.value[idx].controller.invisibleField();
+                }
                 idx++;
+
             }
         }
-        Timer(const Duration(milliseconds: 500), () {
-            List<String> items = typeOutput.controller.textSelected.value.split(" , ");
-            for (var item in items) {
-            CategoryModel? selected = listCategories.value.firstWhere((element) => element!.name! == item);
-                listCategoriesSelected.value.add(selected);
-            }
-            for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
-                skuCard.controller.listSku.value[i] = listSku;
-                skuCard.controller.spinnerCategories.value[i].controller.generateItems(listKategori);      
-                skuCard.controller.setMaplist(listCategoriesSelected.value);
-                mapList.value = listKategori; 
-            }
-            mapList.value = listKategori;
-            skuCard.controller.removeCard(skuCard.controller.itemCount.value - 1);
-        });
+       
+        List<String> items = typeOutput.controller.textSelected.value.split(" , ");
+        for (var item in items) {
+        CategoryModel? selected = listCategories.value.firstWhereOrNull((element) => element!.name! == item);
+            listCategoriesSelected.value.add(selected);
+        }
+        for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
+            skuCard.controller.listSku.value[i] = listSku;
+            skuCard.controller.spinnerCategories.value[i].controller.generateItems(listKategori);      
+            skuCard.controller.setMaplist(listCategoriesSelected.value);
+            mapList.value = listKategori; 
+        }
+        mapList.value = listKategori;
+        skuCard.controller.removeCard(skuCard.controller.itemCount.value - 1);
+     
     }
 
     void getProductCategories(){
@@ -276,6 +290,12 @@ class ManufactureOutputController extends GetxController {
             return ret = [false, ""];
         }  
 
+        if(efTotalKG.getInput().isEmpty){
+            efTotalKG.controller.showAlert();
+            Scrollable.ensureVisible(efTotalKG.controller.formKey.currentContext!);
+            return ret = [false, ""];
+        }
+
         ret = skuCard.controller.validation();
         return ret;
     }
@@ -285,11 +305,11 @@ class ManufactureOutputController extends GetxController {
         for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
             int whichItem = skuCard.controller.index.value[i];
             var listProductTemp = skuCard.controller.listSku.value.values.toList();
-            Products? productSelected = listProductTemp[whichItem].firstWhere((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+            Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
             output.add(Products(
-                productItemId: productSelected!.id,
+                productItemId: productSelected?.id,
                 quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
-                weight: skuCard.controller.editFieldJumlahKg.value[whichItem].getInputNumber(),
+                weight: skuCard.controller.editFieldJumlahKg.value[whichItem].getInputNumber() ?? 0,
             ));
         }
         return ManufactureModel(
@@ -298,9 +318,10 @@ class ManufactureOutputController extends GetxController {
             input: Products(
                 productItemId: manufactureModel.input!.productItems![0]!.id,
                 quantity:  manufactureModel.input!.productItems![0]!.quantity,
-                weight:  manufactureModel.input!.productItems![0]!.weight,
+                weight:  manufactureModel.input!.productItems![0]!.weight??0,
             ),
-            output: output
+            output: output,
+            outputTotalWeight: efTotalKG.getInputNumber() ?? 0,
         );
     }
 }

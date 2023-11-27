@@ -49,12 +49,13 @@ class SkuBookSO extends StatelessWidget {
                     ),
                     child: Column(
                         children: [
-                            infoDetailSKU("Kategori SKU", "${controller.products[index]!.category!.name}"),
-                            infoDetailSKU("SKU", "${controller.products[index]!.name}"),
-                            if (controller.products[index]!.numberOfCuts != 0) infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
+                            infoDetailSKU("Kategori SKU", "${controller.isRemarks ?  controller.products[index]!.name: controller.products[index]!.category!.name}"),
+                            if(!controller.isRemarks) infoDetailSKU("SKU", "${controller.products[index]!.name}"),
+                            if(controller.products[index]!.cutType !=null )infoDetailSKU("Jenis Potongan",  controller.products[index]!.cutType == "REGULAR"? "Potong Biasa" :"Bekakak"),
+                            if (controller.products[index]!.cutType != "REGULAR") infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
                             if(controller.products[index]!.price !=null )infoDetailSKU("Harga", "${Convert.toCurrency("${controller.products[index]!.price}", "Rp. ", ".")}/kg"),
                             controller.jumlahEkor.value[index],
-                            controller.jumlahkg.value[index],
+                            if(!controller.isRemarks)controller.jumlahkg.value[index],
                             const SizedBox(height: 14,)
                         ],
                     ),

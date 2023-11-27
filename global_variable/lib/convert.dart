@@ -88,7 +88,17 @@ class Convert {
         return DateTime.parse(value);
     }
 
+    static String getDateFormat(String value) {
+        return DateFormat('dd MMM yyyy HH:mm','id').format(DateTime.parse(value));
+    }
+
     static String getStringIso(DateTime date) {
         return  DateFormat('yyyy-MM-ddTHH:mm:ssZ','en-US').format(date);
+    }
+        static int roundPrice(double price) {
+        if(price % 1000 < 500) {
+            return (price / 1000).floor() * 1000;
+        }
+        return (price / 1000).ceil() * 1000;
     }
 }
