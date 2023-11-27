@@ -163,7 +163,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                                 ),
                                                                 child: Padding(
                                                                     padding: const EdgeInsets.all(4),
-                                                                    child: Text('200', style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                                                    child: Text("${controller.countUnreadNotifications.value}", style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
                                                                 ),
                                                             )
                                                         ],

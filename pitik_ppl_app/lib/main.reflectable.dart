@@ -24,7 +24,7 @@ import 'package:engine/request/base_api.dart' as prefix8;
 import 'package:engine/util/mapper/annotation/is_child.dart' as prefix107;
 import 'package:engine/util/mapper/annotation/is_children.dart' as prefix106;
 import 'package:model/additional_request_realization_model.dart' as prefix93;
-import 'package:model/approval_request.dart' as prefix89;
+import 'package:model/approval_request.dart' as prefix88;
 import 'package:model/approve_coop.dart' as prefix90;
 import 'package:model/auth_model.dart' as prefix3;
 import 'package:model/branch.dart' as prefix21;
@@ -46,7 +46,7 @@ import 'package:model/good_receipt_model.dart' as prefix95;
 import 'package:model/graph_line.dart' as prefix84;
 import 'package:model/growth_day_model.dart' as prefix82;
 import 'package:model/harvest_model.dart' as prefix71;
-import 'package:model/internal_app/media_upload_model.dart' as prefix88;
+import 'package:model/internal_app/media_upload_model.dart' as prefix89;
 import 'package:model/internal_app/module_model.dart' as prefix22;
 import 'package:model/internal_app/role_model.dart' as prefix23;
 import 'package:model/monitoring.dart' as prefix67;
@@ -60,7 +60,7 @@ import 'package:model/realization_record_model.dart' as prefix94;
 import 'package:model/record_model.dart' as prefix96;
 import 'package:model/report.dart' as prefix87;
 import 'package:model/request_chickin.dart' as prefix73;
-import 'package:model/response/approval_doc_response.dart' as prefix62;
+import 'package:model/response/approval_doc_response.dart' as prefix60;
 import 'package:model/response/auth_response.dart' as prefix63;
 import 'package:model/response/building_response.dart' as prefix55;
 import 'package:model/response/camera_detail_response.dart' as prefix43;
@@ -78,7 +78,7 @@ import 'package:model/response/harvest_detail_response.dart' as prefix36;
 import 'package:model/response/harvest_list_response.dart' as prefix35;
 import 'package:model/response/historical_data_response.dart' as prefix53;
 import 'package:model/response/internal_app/media_upload_response.dart'
-    as prefix60;
+    as prefix61;
 import 'package:model/response/latest_condition_response.dart' as prefix54;
 import 'package:model/response/list_smart_scale_response.dart' as prefix56;
 import 'package:model/response/monitoring_detail_response.dart' as prefix33;
@@ -88,7 +88,7 @@ import 'package:model/response/monitoring_response.dart' as prefix31;
 import 'package:model/response/procurement_detail_response.dart' as prefix37;
 import 'package:model/response/procurement_list_response.dart' as prefix38;
 import 'package:model/response/products_response.dart' as prefix41;
-import 'package:model/response/profile_response.dart' as prefix61;
+import 'package:model/response/profile_response.dart' as prefix62;
 import 'package:model/response/realization_response.dart' as prefix34;
 import 'package:model/response/record_response.dart' as prefix59;
 import 'package:model/response/request_chickin_response.dart' as prefix39;
@@ -1523,8 +1523,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix0.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'MediaUploadResponse',
-            r'.MediaUploadResponse',
+            r'AprovalDocInResponse',
+            r'.AprovalDocInResponse',
             134217735,
             44,
             const prefix0.BaseModel(),
@@ -1534,12 +1534,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             85,
             {
               r'toResponseModel': () =>
-                  prefix60.MediaUploadResponse.toResponseModel
+                  prefix60.AprovalDocInResponse.toResponseModel
             },
             {},
             {
               r'': (bool b) => ({code, data}) => b
-                  ? prefix60.MediaUploadResponse(code: code, data: data)
+                  ? prefix60.AprovalDocInResponse(code: code, data: data)
                   : null
             },
             -1,
@@ -1548,8 +1548,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix0.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'ProfileResponse',
-            r'.ProfileResponse',
+            r'MediaUploadResponse',
+            r'.MediaUploadResponse',
             134217735,
             45,
             const prefix0.BaseModel(),
@@ -1558,12 +1558,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[865],
             85,
             {
-              r'toResponseModel': () => prefix61.ProfileResponse.toResponseModel
+              r'toResponseModel': () =>
+                  prefix61.MediaUploadResponse.toResponseModel
             },
             {},
             {
-              r'': (bool b) => ({code, data}) =>
-                  b ? prefix61.ProfileResponse(code: code, data: data) : null
+              r'': (bool b) => ({code, data}) => b
+                  ? prefix61.MediaUploadResponse(code: code, data: data)
+                  : null
             },
             -1,
             45,
@@ -1571,8 +1573,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix0.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'AprovalDocInResponse',
-            r'.AprovalDocInResponse',
+            r'ProfileResponse',
+            r'.ProfileResponse',
             134217735,
             46,
             const prefix0.BaseModel(),
@@ -1581,14 +1583,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <int>[871],
             85,
             {
-              r'toResponseModel': () =>
-                  prefix62.AprovalDocInResponse.toResponseModel
+              r'toResponseModel': () => prefix62.ProfileResponse.toResponseModel
             },
             {},
             {
-              r'': (bool b) => ({code, data}) => b
-                  ? prefix62.AprovalDocInResponse(code: code, data: data)
-                  : null
+              r'': (bool b) => ({code, data}) =>
+                  b ? prefix62.ProfileResponse(code: code, data: data) : null
             },
             -1,
             46,
@@ -3853,8 +3853,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix0.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'MediaUploadModel',
-            r'.MediaUploadModel',
+            r'ApprovalRequestDocIn',
+            r'.ApprovalRequestDocIn',
             134217735,
             72,
             const prefix0.BaseModel(),
@@ -3864,12 +3864,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
             85,
             {
               r'toResponseModel': () =>
-                  prefix88.MediaUploadModel.toResponseModel
+                  prefix88.ApprovalRequestDocIn.toResponseModel
             },
             {},
             {
-              r'': (bool b) => ({id, url}) =>
-                  b ? prefix88.MediaUploadModel(id: id, url: url) : null
+              r'': (bool b) => ({id, isAllowed}) => b
+                  ? prefix88.ApprovalRequestDocIn(id: id, isAllowed: isAllowed)
+                  : null
             },
             -1,
             72,
@@ -3877,8 +3878,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[prefix0.SetupModel],
             null),
         r.NonGenericClassMirrorImpl(
-            r'ApprovalRequestDocIn',
-            r'.ApprovalRequestDocIn',
+            r'MediaUploadModel',
+            r'.MediaUploadModel',
             134217735,
             73,
             const prefix0.BaseModel(),
@@ -3888,13 +3889,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             85,
             {
               r'toResponseModel': () =>
-                  prefix89.ApprovalRequestDocIn.toResponseModel
+                  prefix89.MediaUploadModel.toResponseModel
             },
             {},
             {
-              r'': (bool b) => ({id, isAllowed}) => b
-                  ? prefix89.ApprovalRequestDocIn(id: id, isAllowed: isAllowed)
-                  : null
+              r'': (bool b) => ({id, url}) =>
+                  b ? prefix89.MediaUploadModel(id: id, url: url) : null
             },
             -1,
             73,
@@ -5122,14 +5122,14 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'data', 67239941, 44, const prefix0.BaseModel(),
             72, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'code', 134348805, 45, const prefix0.BaseModel(),
+        r.VariableMirrorImpl(r'code', 67239941, 45, const prefix0.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'data', 67239941, 45, const prefix0.BaseModel(),
-            3, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'code', 67239941, 46, const prefix0.BaseModel(),
+            73, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'code', 134348805, 46, const prefix0.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'data', 67239941, 46, const prefix0.BaseModel(),
-            73, -1, -1, null, const []),
+            3, -1, -1, null, const []),
         r.VariableMirrorImpl(r'code', 134348805, 47, const prefix0.BaseModel(),
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'data', 67239941, 47, const prefix0.BaseModel(),
@@ -6014,12 +6014,12 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[const prefix106.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 72, const prefix0.BaseModel(), -1,
             -1, -1, null, const []),
-        r.VariableMirrorImpl(r'url', 67239941, 72, const prefix0.BaseModel(),
-            -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'isAllowed', 67239941, 72,
+            const prefix0.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'id', 67239941, 73, const prefix0.BaseModel(), -1,
             -1, -1, null, const []),
-        r.VariableMirrorImpl(r'isAllowed', 67239941, 73,
-            const prefix0.BaseModel(), -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'url', 67239941, 73, const prefix0.BaseModel(),
+            -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'id', 67239941, 74, const prefix0.BaseModel(), -1,
             -1, -1, null, const []),
         r.VariableMirrorImpl(r'farmingCycleId', 67239941, 74,
@@ -9607,24 +9607,24 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.BaseModel(), 72, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 865, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'code', 134358022, 870,
-            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'code', 67253254, 870, const prefix0.BaseModel(),
+            -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(r'data', 67249158, 870, const prefix0.BaseModel(),
-            3, -1, -1, null, const [], null, #data),
-        r.ParameterMirrorImpl(r'_code', 134348902, 867,
+            73, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 67240038, 867,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_data', 67240038, 869,
-            const prefix0.BaseModel(), 3, -1, -1, null, const [], null, null),
+            const prefix0.BaseModel(), 73, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 871, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'code', 67253254, 876, const prefix0.BaseModel(),
-            -1, -1, -1, null, const [], null, #code),
+        r.ParameterMirrorImpl(r'code', 134358022, 876,
+            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, #code),
         r.ParameterMirrorImpl(r'data', 67249158, 876, const prefix0.BaseModel(),
-            73, -1, -1, null, const [], null, #data),
-        r.ParameterMirrorImpl(r'_code', 67240038, 873,
+            3, -1, -1, null, const [], null, #data),
+        r.ParameterMirrorImpl(r'_code', 134348902, 873,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_data', 67240038, 875,
-            const prefix0.BaseModel(), 73, -1, -1, null, const [], null, null),
+            const prefix0.BaseModel(), 3, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 877, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'code', 134358022, 882,
@@ -13713,20 +13713,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 1575, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
-        r.ParameterMirrorImpl(r'url', 67253254, 1575, const prefix0.BaseModel(),
-            -1, -1, -1, null, const [], null, #url),
-        r.ParameterMirrorImpl(r'_id', 67240038, 1572, const prefix0.BaseModel(),
-            -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_url', 67240038, 1574,
-            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'map', 151126022, 1576,
-            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'id', 67253254, 1581, const prefix0.BaseModel(),
-            -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
             r'isAllowed',
             67253254,
-            1581,
+            1575,
             const prefix0.BaseModel(),
             -1,
             -1,
@@ -13735,9 +13725,19 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const [],
             null,
             #isAllowed),
+        r.ParameterMirrorImpl(r'_id', 67240038, 1572, const prefix0.BaseModel(),
+            -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'_isAllowed', 67240038, 1574,
+            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'map', 151126022, 1576,
+            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
+        r.ParameterMirrorImpl(r'id', 67253254, 1581, const prefix0.BaseModel(),
+            -1, -1, -1, null, const [], null, #id),
+        r.ParameterMirrorImpl(r'url', 67253254, 1581, const prefix0.BaseModel(),
+            -1, -1, -1, null, const [], null, #url),
         r.ParameterMirrorImpl(r'_id', 67240038, 1578, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_isAllowed', 67240038, 1580,
+        r.ParameterMirrorImpl(r'_url', 67240038, 1580,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'map', 151126022, 1582,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
@@ -14757,9 +14757,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix57.SmartScaleResponse,
         prefix58.DailyReportResponse,
         prefix59.ReportResponse,
-        prefix60.MediaUploadResponse,
-        prefix61.ProfileResponse,
-        prefix62.AprovalDocInResponse,
+        prefix60.AprovalDocInResponse,
+        prefix61.MediaUploadResponse,
+        prefix62.ProfileResponse,
         prefix63.AuthResponse,
         prefix64.Coop,
         prefix65.Device,
@@ -14785,8 +14785,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix85.DeviceSummary,
         prefix86.Building,
         prefix87.Report,
-        prefix88.MediaUploadModel,
-        prefix89.ApprovalRequestDocIn,
+        prefix88.ApprovalRequestDocIn,
+        prefix89.MediaUploadModel,
         prefix90.ApproveCoop,
         prefix91.Consumption,
         prefix92.Population,
@@ -15094,8 +15094,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'images': (dynamic instance) => instance.images,
         r'feedConsumptions': (dynamic instance) => instance.feedConsumptions,
         r'ovkConsumptions': (dynamic instance) => instance.ovkConsumptions,
-        r'url': (dynamic instance) => instance.url,
         r'isAllowed': (dynamic instance) => instance.isAllowed,
+        r'url': (dynamic instance) => instance.url,
         r'estimation': (dynamic instance) => instance.estimation,
         r'stockoutDate': (dynamic instance) => instance.stockoutDate,
         r'consumption': (dynamic instance) => instance.consumption,
@@ -15518,8 +15518,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.feedConsumptions = value,
         r'ovkConsumptions=': (dynamic instance, value) =>
             instance.ovkConsumptions = value,
-        r'url=': (dynamic instance, value) => instance.url = value,
         r'isAllowed=': (dynamic instance, value) => instance.isAllowed = value,
+        r'url=': (dynamic instance, value) => instance.url = value,
         r'estimation=': (dynamic instance, value) =>
             instance.estimation = value,
         r'stockoutDate=': (dynamic instance, value) =>
@@ -17824,8 +17824,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             11,
             const prefix8.BaseApi(),
-            const <int>[88, 89, 90, 91],
-            const <int>[3, 4, 5, 6, 7, 88, 89, 90],
+            const <int>[88, 89, 90, 91, 92],
+            const <int>[3, 4, 5, 6, 7, 88, 89, 90, 91],
             const <int>[],
             -1,
             {},
@@ -18959,7 +18959,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               const prefix110.JSON(isPlaint: true),
               const prefix109.PATCH(
                   value: prefix109.PATCH.PATH_PARAMETER,
-                  as: prefix61.ProfileResponse,
+                  as: prefix62.ProfileResponse,
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -18975,7 +18975,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               const prefix111.POST(
                   value: "v2/upload",
-                  as: prefix60.MediaUploadResponse,
+                  as: prefix61.MediaUploadResponse,
                   error: prefix28.ErrorResponse),
               const prefix113.Multipart()
             ]),
@@ -18992,7 +18992,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               const prefix108.GET(
                   value: "v2/roles/acl/validate",
-                  as: prefix62.AprovalDocInResponse,
+                  as: prefix60.AprovalDocInResponse,
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 10, -1, -1, -1, null, const <int>[],
@@ -19027,7 +19027,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               const prefix108.GET(
                   value: "v2/fms-users/me",
-                  as: prefix61.ProfileResponse,
+                  as: prefix62.ProfileResponse,
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -19044,7 +19044,22 @@ final _data = <r.Reflectable, r.ReflectorData>{
               const prefix110.JSON(isPlaint: true),
               const prefix109.PATCH(
                   value: prefix109.PATCH.PATH_PARAMETER,
-                  as: prefix61.ProfileResponse,
+                  as: prefix62.ProfileResponse,
+                  error: prefix28.ErrorResponse)
+            ]),
+        r.MethodMirrorImpl(
+            r'countUnreadNotifications',
+            1310722,
+            11,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[299, 300],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix108.GET(
+                  value: "v2/notifications/unread/count",
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 11, -1, -1, -1, null, const <int>[],
@@ -22608,6 +22623,30 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             const <Object>[const prefix117.Parameter("params")],
             null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            91,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix114.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            91,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix114.Header("X-ID")],
+            null,
             null)
       ],
       <Type>[
@@ -22733,7 +22772,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'uploadImage': (dynamic instance) => instance.uploadImage,
         r'getApproval': (dynamic instance) => instance.getApproval,
         r'auth': (dynamic instance) => instance.auth,
-        r'profile': (dynamic instance) => instance.profile
+        r'profile': (dynamic instance) => instance.profile,
+        r'countUnreadNotifications': (dynamic instance) =>
+            instance.countUnreadNotifications
       },
       {},
       null,

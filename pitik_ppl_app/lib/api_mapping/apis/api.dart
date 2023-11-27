@@ -14,12 +14,12 @@ import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 // ignore: unused_import
+import 'package:model/password_model.dart';
+import 'package:model/response/approval_doc_response.dart';
+// ignore: unused_import
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/profile_response.dart';
-// ignore: unused_import
-import 'package:model/password_model.dart';
-import 'package:model/response/approval_doc_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -63,5 +63,4 @@ class API {
     /// @param name The name of the role to be validated.
     @GET(value : "v2/roles/acl/validate", as : AprovalDocInResponse, error : ErrorResponse)
     void getApproval(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("name") String name){}
-
 }

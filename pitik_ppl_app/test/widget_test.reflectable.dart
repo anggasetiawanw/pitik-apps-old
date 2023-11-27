@@ -18600,8 +18600,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             11,
             const prefix55.BaseApi(),
-            const <int>[88, 89, 90, 91],
-            const <int>[3, 4, 5, 6, 7, 88, 89, 90],
+            const <int>[88, 89, 90, 91, 92],
+            const <int>[3, 4, 5, 6, 7, 88, 89, 90, 91],
             const <int>[],
             -1,
             {},
@@ -19821,6 +19821,21 @@ final _data = <r.Reflectable, r.ReflectorData>{
               const prefix111.PATCH(
                   value: prefix111.PATCH.PATH_PARAMETER,
                   as: prefix43.ProfileResponse,
+                  error: prefix15.ErrorResponse)
+            ]),
+        r.MethodMirrorImpl(
+            r'countUnreadNotifications',
+            1310722,
+            11,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[299, 300],
+            const prefix55.BaseApi(),
+            const <Object>[
+              const prefix110.GET(
+                  value: "v2/notifications/unread/count",
                   error: prefix15.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 11, -1, -1, -1, null, const <int>[],
@@ -23384,6 +23399,30 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             const <Object>[const prefix119.Parameter("params")],
             null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            91,
+            const prefix55.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix116.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            91,
+            const prefix55.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix116.Header("X-ID")],
+            null,
             null)
       ],
       <Type>[
@@ -23509,7 +23548,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'uploadImage': (dynamic instance) => instance.uploadImage,
         r'getApproval': (dynamic instance) => instance.getApproval,
         r'auth': (dynamic instance) => instance.auth,
-        r'profile': (dynamic instance) => instance.profile
+        r'profile': (dynamic instance) => instance.profile,
+        r'countUnreadNotifications': (dynamic instance) =>
+            instance.countUnreadNotifications
       },
       {},
       null,

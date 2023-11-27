@@ -5,10 +5,10 @@ import 'package:common_page/history/history_controller.dart';
 import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
+import 'package:common_page/smart_scale/bundle/list_smart_scale_bundle.dart';
 import 'package:common_page/smart_scale/bundle/smart_scale_weighing_bundle.dart';
 import 'package:common_page/smart_scale/detail_smart_scale/detail_smart_scale_activity.dart';
 import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
-import 'package:common_page/smart_scale/bundle/list_smart_scale_bundle.dart';
 import 'package:common_page/smart_scale/weighing_smart_scale/smart_scale_weighing.dart';
 import 'package:components/global_var.dart';
 import 'package:components/item_smart_scale_day/item_smart_scale_day.dart';
@@ -27,12 +27,14 @@ import 'package:intl/intl.dart';
 import 'package:model/coop_active_standard.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/coop_performance.dart';
+import 'package:model/error/error.dart';
 import 'package:model/monitoring.dart';
 import 'package:model/population.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
+import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
@@ -64,6 +66,8 @@ class CoopDashboardController extends GetxController {
     var showSmartScaleAlert = false.obs;
     var showSmartControllerAlert = false.obs;
     var showSmartCameraAlert = false.obs;
+
+    RxInt countUnreadNotifications = 0.obs;
 
     Rx<Monitoring> monitoring = (Monitoring(
         day: -1,
@@ -114,6 +118,48 @@ class CoopDashboardController extends GetxController {
                 ),
             ),
         );
+
+        getUnreadNotifCount();
+    }
+
+    void getUnreadNotifCount(){
+        AuthImpl().get().then((auth) => {
+            if (auth != null){
+                print("CAAALONNGGG"),
+                Service.push(
+                    apiKey: ApiMapping.userApi,
+                    service: ListApi.countUnreadNotifications,
+                    context: context,
+                    body: [
+                        'Bearer ${auth.token}',
+                        auth.id,
+                    ],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            print("countUnreadNotifications=>>>>>>>>>>>>>>>>> ${body.data}");
+                            countUnreadNotifications.value = (body.data as int);
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                            onTokenInvalid: () => GlobalVar.invalidResponse()))
+                    }
+            else
+                {GlobalVar.invalidResponse()}
+        });
     }
 
     void getMonitoringPerformance(Coop coop) {
