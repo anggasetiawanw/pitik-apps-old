@@ -243,7 +243,7 @@ class TerminateApproveActivity extends StatelessWidget {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname diatas",
+                                        "Saya dengan teliti dan sadar sudah memeriksa hasil Pemusnahan diatas",
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                         overflow: TextOverflow.clip,
                                       ))
