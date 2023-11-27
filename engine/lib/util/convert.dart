@@ -76,6 +76,13 @@ class Convert {
         return '$symbol ${controller.text}';
     }
 
+    static String toCurrencyWithDecimalAndPrecision(String currency, String symbol, String grouping, String decimal, int precision) {
+        var controller = MoneyMaskedTextController(decimalSeparator: decimal, thousandSeparator: grouping, precision: precision);
+        controller.updateValue(double.parse(currency));
+
+        return '$symbol ${controller.text}';
+    }
+
     /// If the string can be converted to a double, then it is a number
     ///
     /// Args:

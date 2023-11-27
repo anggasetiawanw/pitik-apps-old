@@ -232,9 +232,9 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
-                                                // TO DAILY TASK
-                                            }),
+                                            // _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
+                                            //     // TO DAILY TASK
+                                            // }),
                                             _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () {  // FARM CLOSING
                                                 // TO FARM CLOSING
                                             }),
