@@ -18,7 +18,6 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/realization_model.dart';
 import 'package:model/realization_record_model.dart';
-import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_realization/bundle/harvest_realization_bundle.dart';
 
 ///@author DICKY
