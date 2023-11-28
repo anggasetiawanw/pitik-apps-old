@@ -163,7 +163,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
             );
         }
 
-        Widget listSmartCamera(){
+        Widget listSmartCamera() {
             return  Container(
                 padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
                 child: ListView.builder(

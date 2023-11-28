@@ -14,6 +14,7 @@ import 'package:model/response/procurement_list_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:model/response/sapronak_response.dart';
 import 'package:model/response/products_response.dart';
+import 'package:model/response/stock_summary_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -282,6 +283,9 @@ class ProductReportApi {
     @GET(value : GET.PATH_PARAMETER, as : ProcurementDetailResponse, error : ErrorResponse)
     void getDetailRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String purchaseRequestId){}
 
+    @GET(value : GET.PATH_PARAMETER, as : ProcurementDetailResponse, error : ErrorResponse)
+    void getDetailReceived(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String purchaseRequestId){}
+
     /// A GET request that returns a RequestChickinResponse object.
     ///
     /// @param authorization Authorization header
@@ -310,6 +314,26 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void purchaseRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
+    /// The function `transferRequest` sends a POST request to the
+    /// "v2/transfer-requests" endpoint with the provided authorization, xId, and
+    /// data parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity of the
+    /// user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// transfer request data. It could contain information such as the amount to be
+    /// transferred, the source and destination accounts, and any additional details
+    /// related to the transfer.
+    @POST(value: "v2/transfer-requests", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void transferRequest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
     /// The function `purchaseRequestForCoopRest` is a POST request that sends a
     /// purchase request to a specific endpoint with authorization and data
     /// parameters.
@@ -328,26 +352,25 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void purchaseRequestForCoopRest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
-    /// The function `purchaseRequestUpdate` is a PATCH request that updates a
-    /// purchase request with the provided authorization, X-ID, path, and data.
+    /// The function `purchaseOrTransferRequestUpdate` is used to update a purchase
+    /// or transfer request with the given authorization, X-ID, path, and data.
     ///
     /// Args:
-    ///   authorization (String): The "authorization" parameter is a header
-    /// parameter that is used to pass the authorization token for the request. It
-    /// is typically used to authenticate the user making the request.
-    ///   xId (String): The xId parameter is a header parameter that represents the
-    /// X-ID header value.
+    ///   authorization (String): The "Authorization" header is used to send a token
+    /// or credentials to authenticate the request. It is typically used to verify
+    /// the identity of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID value. It is used to provide additional identification or context
+    /// information for the request.
     ///   path (String): The `path` parameter is used to specify the path of the
-    /// resource that needs to be updated in the PATCH request. It is typically a
-    /// string value that represents the unique identifier or location of the
-    /// resource within the API.
-    ///   data (String): The "data" parameter is a string that represents the
-    /// payload or data that you want to send in the request body. It can contain
-    /// any information that you need to include in the request, such as purchase
-    /// details or any other relevant data.
+    /// resource that needs to be updated in the PATCH request. It is a string value
+    /// that represents the path of the resource.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// for the purchase or transfer request update. It is used to pass information
+    /// related to the update operation.
     @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
-    void purchaseRequestUpdate(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+    void purchaseOrTransferRequestUpdate(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
     /// The function `cancelOrder` is used to send a PATCH request to cancel an
     /// order with the provided authorization, X-ID, path, and data.
@@ -405,5 +428,143 @@ class ProductReportApi {
     @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void approvalOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("emptyBody") String emptyBody) {}
+
+    /// The function `getTransferSend` is a GET request that retrieves a list of
+    /// transfer requests for exiting a procurement, with various query parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the API endpoint. It
+    /// is typically used for authentication purposes.
+    ///   xId (String): The `xId` parameter is a unique identifier for the request.
+    /// It is typically used for tracking and logging purposes.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve transfer
+    /// requests.
+    ///   type (String): The "type" parameter is used to specify the type of
+    /// transfer request. It could be used to filter the transfer requests based on
+    /// their type, such as "exit" in this case.
+    ///   fromDate (String): The "fromDate" parameter is used to specify the
+    /// starting date for the transfer requests. It is a string that represents a
+    /// date in a specific format.
+    ///   untilDate (String): The "untilDate" parameter is used to specify the end
+    /// date for the transfer requests. It is a string that represents a date in a
+    /// specific format.
+    @GET(value:"v2/transfer-requests/exit", as:  ProcurementListResponse, error: ErrorResponse)
+    void getTransferSend(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("type") String type, @Query("fromDate") String fromDate,
+                         @Query("untilDate") String untilDate) {}
+
+    /// The function `getTransferReceived` is a GET request that retrieves transfer
+    /// requests for procurement, with various query parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the API endpoint. It
+    /// is typically used to verify the identity of the user making the request.
+    ///   xId (String): The `xId` parameter is a unique identifier for the request.
+    /// It is typically used for tracking and logging purposes.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve transfer
+    /// requests.
+    ///   type (String): The "type" parameter is used to specify the type of
+    /// transfer request. It could be used to filter the transfer requests based on
+    /// their type, such as "received" or "sent".
+    ///   fromDate (String): The "fromDate" parameter is used to specify the
+    /// starting date for the transfer requests. It is a string that represents a
+    /// date in a specific format, such as "yyyy-MM-dd".
+    ///   untilDate (String): The "untilDate" parameter is used to specify the end
+    /// date for the transfer requests. It is a string that represents a date in a
+    /// specific format.
+    @GET(value: "v2/transfer-requests/enter", as: ProcurementListResponse, error: ErrorResponse)
+    void getTransferReceived(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("type") String type, @Query("fromDate") String fromDate,
+                             @Query("untilDate") String untilDate) {}
+
+    /// The function "getTransferDetail" is a GET request that retrieves the details
+    /// of a transfer request using the provided authorization, X-ID, and
+    /// transferRequestId.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send
+    /// authentication credentials to the server. It typically contains a token or
+    /// other form of authentication that allows the client to access protected
+    /// resources.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   transferRequestId (String): The transferRequestId parameter is a path
+    /// parameter that represents the unique identifier of a transfer request. It is
+    /// used to retrieve the details of a specific transfer request.
+    @GET(value: GET.PATH_PARAMETER, as: ProcurementDetailResponse, error: ErrorResponse)
+    void getTransferDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String transferRequestId) {}
+
+    /// The function "getStocks" is a GET request that retrieves stock information
+    /// with authorization and ID headers, and a path parameter.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity and
+    /// permissions of the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   path (String): The `path` parameter is a placeholder for the specific path
+    /// or endpoint that you want to access in your API. It is typically used to
+    /// specify a dynamic value in the URL, such as an ID or a variable.
+    @GET(value: GET.PATH_PARAMETER, as: ProductsResponse, error: ErrorResponse)
+    void getStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `getStocksSummary` is a GET request that retrieves stock
+    /// summary information using the provided authorization, X-ID, and path
+    /// parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains a token or credentials to authenticate the request. It is
+    /// used to verify the identity of the user making the request and determine if
+    /// they have the necessary permissions to access the requested resource.
+    ///   xId (String): The "xId" parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used to track or identify
+    /// a specific request or user.
+    ///   path (String): The `path` parameter is used to specify the path of the API
+    /// endpoint that you want to access. It is typically a string value that
+    /// represents the specific resource or action you want to perform on the
+    /// server.
+    @GET(value: GET.PATH_PARAMETER, as: StockSummaryResponse, error: ErrorResponse)
+    void getStocksSummary(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `createReceiptOrder` is a POST request that creates a receipt
+    /// order for purchase orders.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// typically contains an authentication token or credentials to authorize the
+    /// request. It is used to authenticate the user making the request.
+    ///   xId (String): The xId parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// payload or body of the HTTP request. It contains the information needed to
+    /// create a receipt order for purchase orders.
+    @POST(value: "v2/goods-receipts/purchase-orders", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void createReceiptOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    /// The function creates a receipt transfer request with the given
+    /// authorization, X-ID, and data.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to provide
+    /// authentication credentials for the request. It typically contains a token or
+    /// other form of authentication information.
+    ///   xId (String): The xId parameter is a unique identifier that is used to
+    /// associate the request with a specific entity or transaction. It is typically
+    /// used for tracking or auditing purposes.
+    ///   data (String): The "data" parameter is a string that represents the
+    /// payload or body of the HTTP request. It contains the information needed to
+    /// create a receipt transfer.
+    @POST(value: "v2/goods-receipts/transfer-requests", error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void createReceiptTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
 }

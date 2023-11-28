@@ -281,7 +281,7 @@ class ManufactureDetailActivity extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 48,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           decoration: const BoxDecoration(
               color: AppColors.headerSku,
               borderRadius: BorderRadius.only(
@@ -337,11 +337,11 @@ class ManufactureDetailActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         Text(item!.name!, style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
-                        if(item.quantity !=0 )...[
+                        if(item.quantity !=0 &&item.quantity !=null  )...[
                             const SizedBox(height: 4,),
                             infoDetailSKU("Total Ekor", "${item.quantity} Ekor")
                         ],
-                        if(item.weight !=0 )...[
+                        if(item.weight !=null && item.weight !=0 )...[
                             const SizedBox(height: 4,),
                             infoDetailSKU("Total kg", "${item.weight} Kg")
                         ]
@@ -388,7 +388,35 @@ class ManufactureDetailActivity extends StatelessWidget {
                       ),
                     ),
                     Column(children : controller.manufactureModel.output!.map((e) => detailSKUOutput(e!)).toList()),
-                  ] else const SizedBox(),
+                  ],
+
+                  if(controller.manufactureModel.outputTotalWeight != null && controller.manufactureModel.outputTotalWeight != 0) ...[
+                    Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            padding: const EdgeInsets.all(16),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: AppColors.outlineColor, width: 1),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Total/Global(kg)",
+                                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Text(
+                                  "${(controller.manufactureModel.outputTotalWeight ?? 0)} Kg",
+                                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ],
                     const SizedBox(height: 100,)
                 ],
               ),
@@ -405,6 +433,7 @@ class ManufactureDetailActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(
@@ -470,6 +499,7 @@ class ManufactureDetailActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

@@ -7,60 +7,85 @@ import 'operation_unit_model.dart';
 
 @SetupModel
 class TransferModel {
-    String? id;
-    String? code;
-    String? targetOperationUnitId;
-    String? sourceOperationUnitId;
-    String? status;
-    String? driverId;
+  String? id;
+  String? code;
+  String? targetOperationUnitId;
+  String? sourceOperationUnitId;
+  String? status;
+  String? driverId;
 
-    @IsChild()
-    OperationUnitModel? targetOperationUnit;    
-    
-    @IsChild()
-    OperationUnitModel? sourceOperationUnit;
+  @IsChild()
+  OperationUnitModel? targetOperationUnit;
 
-    @IsChild()
-    Profile? userCreator;
+  @IsChild()
+  OperationUnitModel? sourceOperationUnit;
 
-    @IsChild()
-    Profile? userModifier;
+  @IsChild()
+  Profile? userCreator;
 
-    @IsChild()
-    Profile? driver;
-    
-    @IsChildren()
-    List<Products?>? products;
+  @IsChild()
+  Profile? userModifier;
 
-    @IsChild()
-    GoodsReceived? goodsReceived;
+  @IsChild()
+  Profile? driver;
 
-    String? createdDate;
-    String? createdBy;
-    String? modifiedDate;
-    String? modifiedBy;
+  @IsChildren()
+  List<Products?>? products;
 
-    TransferModel({this.id, this.code, this.createdBy, this.modifiedDate, this.modifiedBy, this.createdDate, this.driverId, this.sourceOperationUnit, this.sourceOperationUnitId, this.status,this.targetOperationUnit, this.targetOperationUnitId, this.userCreator, this.userModifier, this.products, this.driver, this.goodsReceived});
+  @IsChild()
+  GoodsReceived? goodsReceived;
 
-    static TransferModel toResponseModel(Map<String, dynamic> map) {
-        return TransferModel(
-            id: map['id'],
-            code: map['code'],
-            targetOperationUnitId: map['targetOperationUnitId'],
-            sourceOperationUnitId: map['sourceOperationUnitId'],
-            status: map['status'],
-            driverId: map['driverId'],
-            sourceOperationUnit: Mapper.child<OperationUnitModel>(map['sourceOperationUnit']),
-            targetOperationUnit: Mapper.child<OperationUnitModel>(map['targetOperationUnit']),
-            createdDate: map['createdDate'],
-            createdBy: map['createdBy'],
-            modifiedDate: map['modifiedDate'],
-            modifiedBy: map['modifiedBy'],
-            userCreator: Mapper.child<Profile>(map['userCreator']),
-            userModifier: Mapper.child<Profile>(map['userModifier']),
-            products: Mapper.children<Products>(map['products']),
-            driver: Mapper.child<Profile>(map['driver']),
-            goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
-        );
-    }
+  String? createdDate;
+  String? createdBy;
+  String? modifiedDate;
+  String? modifiedBy;
+
+  String? remarks;
+  String? driverRemarks;
+
+  TransferModel({
+    this.id,
+    this.code,
+    this.createdBy,
+    this.modifiedDate,
+    this.modifiedBy,
+    this.createdDate,
+    this.driverId,
+    this.sourceOperationUnit,
+    this.sourceOperationUnitId,
+    this.status,
+    this.targetOperationUnit,
+    this.targetOperationUnitId,
+    this.userCreator,
+    this.userModifier,
+    this.products,
+    this.driver,
+    this.goodsReceived,
+    this.remarks,
+    this.driverRemarks,
+  });
+
+  static TransferModel toResponseModel(Map<String, dynamic> map) {
+    return TransferModel(
+      id: map['id'],
+      code: map['code'],
+      targetOperationUnitId: map['targetOperationUnitId'],
+      sourceOperationUnitId: map['sourceOperationUnitId'],
+      status: map['status'],
+      driverId: map['driverId'],
+      sourceOperationUnit: Mapper.child<OperationUnitModel>(map['sourceOperationUnit']),
+      targetOperationUnit: Mapper.child<OperationUnitModel>(map['targetOperationUnit']),
+      createdDate: map['createdDate'],
+      createdBy: map['createdBy'],
+      modifiedDate: map['modifiedDate'],
+      modifiedBy: map['modifiedBy'],
+      userCreator: Mapper.child<Profile>(map['userCreator']),
+      userModifier: Mapper.child<Profile>(map['userModifier']),
+      products: Mapper.children<Products>(map['products']),
+      driver: Mapper.child<Profile>(map['driver']),
+      goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
+      remarks: map['remarks'],
+      driverRemarks: map['driverRemarks'],
+    );
+  }
 }

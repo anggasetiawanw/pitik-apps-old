@@ -221,7 +221,10 @@ class ManufactureOutputActivity extends StatelessWidget {
                   ),
                   ...detailSku(),
                   controller.typeOutput,
-                  Obx(() =>controller.showSKUCard.isTrue ? controller.skuCard:const SizedBox()),
+                  if(controller.showSKUCard.isTrue)...[
+                        controller.skuCard,
+                        controller.efTotalKG
+                  ],
                   const SizedBox(height: 100,)
                 ],
               ),
@@ -237,6 +240,7 @@ class ManufactureOutputActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

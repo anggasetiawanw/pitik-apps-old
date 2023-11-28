@@ -76,6 +76,13 @@ class Convert {
         return '$symbol ${controller.text}';
     }
 
+    static String toCurrencyWithDecimalAndPrecision(String currency, String symbol, String grouping, String decimal, int precision) {
+        var controller = MoneyMaskedTextController(decimalSeparator: decimal, thousandSeparator: grouping, precision: precision);
+        controller.updateValue(double.parse(currency));
+
+        return '$symbol ${controller.text}';
+    }
+
     /// If the string can be converted to a double, then it is a number
     ///
     /// Args:
@@ -284,6 +291,22 @@ class Convert {
             return '0${dateTime.second}';
         } else {
             return '${dateTime.second}';
+        }
+    }
+
+    static int roundPrice(double price) {
+        if(price % 1000 < 500) {
+            return (price / 1000).floor() * 1000;
+        }
+        return (price / 1000).ceil() * 1000;
+    }
+    
+    static String getDate(String? dateString) {
+        if (dateString != null) {
+            DateTime dateTime = getDatetime(dateString);
+            return '${getYear(dateTime)}-${getMonthNumber(dateTime)}-${getDay(dateTime)}';
+        } else {
+            return '-';
         }
     }
 }

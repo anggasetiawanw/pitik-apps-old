@@ -97,7 +97,8 @@ class TakePictureResult extends GetView<TakePictureResultController>{
                 child: appBar(),),
             body: Stack(
                 children: [
-                Obx(() => controller.isLoading.isTrue ?
+                Obx(() =>
+                controller.isLoading.isTrue ?
                 const Center(
                     child:
                     ProgressLoading(),) :

@@ -82,7 +82,7 @@ class ManufactureHomeActivity extends StatelessWidget {
                                         Get.toNamed(RoutePage.manufactureDetail, arguments: controller.listManufacture.value[index]!)!.then((value) {
                                             controller.isLoading.value =true;
                                             controller.listManufacture.value.clear();
-                                            controller.page.value = 0;
+                                            controller.page.value = 1;
                                             Timer(const Duration(milliseconds: 500), () {
                                                 controller.getListManufacture();
                                             });

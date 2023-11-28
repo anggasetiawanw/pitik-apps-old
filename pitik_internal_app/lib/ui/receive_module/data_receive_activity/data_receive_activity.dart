@@ -51,7 +51,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
 
     Widget tabBar() {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 26),
+        padding: const EdgeInsets.symmetric(horizontal: 36),
         child: Stack(
           fit: StackFit.passthrough,
           alignment: Alignment.bottomCenter,
@@ -66,6 +66,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
             TabBar(
                 isScrollable: true,
               controller: tabController.controller,
+              indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
                   text: "Pembelian",

@@ -23,9 +23,8 @@ import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
+import 'package:common_page/transaction_success_activity.dart';
 import 'package:pitik_ppl_app/route.dart';
-
-import '../../transaction_success_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -89,20 +88,18 @@ class OrderRequestController extends GetxController {
             onSpinnerSelected: (text) => isMerge.value = orderMultipleLogisticField.getController().selectedIndex != -1 && orderMultipleLogisticField.getController().selectedIndex == 0
         );
 
-        orderCoopTargetLogisticField = (
-            SuggestField(
-                controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
-                childPrefix: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.asset('images/search_icon.svg'),
-                ),
-                label: "Nama Kandang",
-                hint: "Cari Kandang",
-                alertText: "Oops Nama kandang tidak ditemukan..!",
-                suggestList: const [],
-                onTyping: (text) {},
-                onSubmitted: (text) {},
-            )
+        orderCoopTargetLogisticField = SuggestField(
+            controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
+            childPrefix: Padding(
+                padding: const EdgeInsets.all(10),
+                child: SvgPicture.asset('images/search_icon.svg'),
+            ),
+            label: "Nama Kandang",
+            hint: "Cari Kandang",
+            alertText: "Oops Nama kandang tidak ditemukan..!",
+            suggestList: const [],
+            onTyping: (text) {},
+            onSubmitted: (text) {},
         );
 
         // SETUP FEED WIDGET
@@ -111,20 +108,18 @@ class OrderRequestController extends GetxController {
             onSpinnerSelected: (text) {}
         );
 
-        feedSuggestField = (
-            SuggestField(
-                controller: GetXCreator.putSuggestFieldController<Product>("orderFeedSuggest"),
-                childPrefix: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.asset('images/search_icon.svg'),
-                ),
-                label: "Merek Pakan",
-                hint: "Cari merek pakan",
-                alertText: "Merek Pakan masih kosong..!",
-                suggestList: const [],
-                onTyping: (text) => getFeedBrand(keyword: text),
-                onSubmitted: (text) => feedQuantityField.getController().changeTextUnit(_getLatestFeedTextUnit()),
-            )
+        feedSuggestField = SuggestField(
+            controller: GetXCreator.putSuggestFieldController<Product>("orderFeedSuggest"),
+            childPrefix: Padding(
+                padding: const EdgeInsets.all(10),
+                child: SvgPicture.asset('images/search_icon.svg'),
+            ),
+            label: "Merek Pakan",
+            hint: "Cari merek pakan",
+            alertText: "Merek Pakan masih kosong..!",
+            suggestList: const [],
+            onTyping: (text) => getFeedBrand(keyword: text),
+            onSubmitted: (text) => feedQuantityField.getController().changeTextUnit(_getLatestFeedTextUnit()),
         );
 
         feedQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderFeedQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
@@ -168,20 +163,18 @@ class OrderRequestController extends GetxController {
         );
 
         // SETUP OVK WIDGET
-        ovkSuggestField = (
-            SuggestField(
-                controller: GetXCreator.putSuggestFieldController<Product>("orderOvkSuggest"),
-                childPrefix: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.asset('images/search_icon.svg'),
-                ),
-                label: "Jenis OVK",
-                hint: "Cari merek OVK",
-                alertText: "Jenis OVK masih kosong..!",
-                suggestList: const [],
-                onTyping: (text) => getOvkBrand(keyword: text),
-                onSubmitted: (text) => ovkQuantityField.getController().changeTextUnit(_getLatestOvkTextUnit()),
-            )
+        ovkSuggestField = SuggestField(
+            controller: GetXCreator.putSuggestFieldController<Product>("orderOvkSuggest"),
+            childPrefix: Padding(
+                padding: const EdgeInsets.all(10),
+                child: SvgPicture.asset('images/search_icon.svg'),
+            ),
+            label: "Jenis OVK",
+            hint: "Cari merek OVK",
+            alertText: "Jenis OVK masih kosong..!",
+            suggestList: const [],
+            onTyping: (text) => getOvkBrand(keyword: text),
+            onSubmitted: (text) => ovkQuantityField.getController().changeTextUnit(_getLatestOvkTextUnit()),
         );
 
         ovkQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderOvkQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
@@ -220,20 +213,18 @@ class OrderRequestController extends GetxController {
         );
 
         // SETUP OVK OWN FARM WIDGET
-        ovkUnitSuggestField = (
-            SuggestField(
-                controller: GetXCreator.putSuggestFieldController<Product>("orderOvkUnitSuggest"),
-                childPrefix: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SvgPicture.asset('images/search_icon.svg'),
-                ),
-                label: "Jenis OVK",
-                hint: "Cari merek OVK",
-                alertText: "Jenis OVK masih kosong..!",
-                suggestList: const [],
-                onTyping: (text) => getOvkUnitBrand(keyword: text),
-                onSubmitted: (text) => ovkUnitQuantityField.getController().changeTextUnit(_getLatestOvkUnitTextUnit()),
-            )
+        ovkUnitSuggestField = SuggestField(
+            controller: GetXCreator.putSuggestFieldController<Product>("orderOvkUnitSuggest"),
+            childPrefix: Padding(
+                padding: const EdgeInsets.all(10),
+                child: SvgPicture.asset('images/search_icon.svg'),
+            ),
+            label: "Jenis OVK",
+            hint: "Cari merek OVK",
+            alertText: "Jenis OVK masih kosong..!",
+            suggestList: const [],
+            onTyping: (text) => getOvkUnitBrand(keyword: text),
+            onSubmitted: (text) => ovkUnitQuantityField.getController().changeTextUnit(_getLatestOvkUnitTextUnit()),
         );
 
         ovkUnitQuantityField = EditField(controller: GetXCreator.putEditFieldController("orderOvkUnitQuantity"), label: "Total", hint: "Ketik di sini", alertText: "Total belum diisi..!", textUnit: "", maxInput: 20, inputType: TextInputType.number,
@@ -699,7 +690,7 @@ class OrderRequestController extends GetxController {
                                                             }
 
                                                             if (isEdit) {
-                                                                _pushPurchaseRequestToServer(ListApi.updateOrderRequest, [
+                                                                _pushPurchaseRequestToServer(ListApi.updateOrderOrTransferRequest, [
                                                                     'Bearer ${auth.token}',
                                                                     auth.id,
                                                                     '${fromCoopRest ? "v2/purchase-requests/sapronak-doc-in/" : "v2/purchase-requests/"}${procurement.id}',
@@ -788,20 +779,18 @@ class OrderRequestController extends GetxController {
                                 data.add('${coop == null || coop.coopName == null ? '' : coop.coopName}');
                             }
 
-                            orderCoopTargetLogisticField = (
-                                SuggestField(
-                                    controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
-                                    childPrefix: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: SvgPicture.asset('images/search_icon.svg'),
-                                    ),
-                                    label: "Nama Kandang",
-                                    hint: "Cari Kandang",
-                                    alertText: "Oops Nama kandang tidak ditemukan..!",
-                                    suggestList: data,
-                                    onTyping: (text) {},
-                                    onSubmitted: (text) {},
-                                )
+                            orderCoopTargetLogisticField = SuggestField(
+                                controller: GetXCreator.putSuggestFieldController<Coop>("orderCoopTargetLogisticField"),
+                                childPrefix: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: SvgPicture.asset('images/search_icon.svg'),
+                                ),
+                                label: "Nama Kandang",
+                                hint: "Cari Kandang",
+                                alertText: "Oops Nama kandang tidak ditemukan..!",
+                                suggestList: data,
+                                onTyping: (text) {},
+                                onSubmitted: (text) {},
                             );
                             orderCoopTargetLogisticField.getController().setupObjects((body as CoopListResponse).data);
 

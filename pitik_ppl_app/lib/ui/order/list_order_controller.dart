@@ -160,15 +160,20 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         if (procurement != null) {
             bool isReceivedApproved = typePosition == 2;
             String title = 'N/A';
+            String type = 'N/A';
             if (procurement.type != null) {
                 if (isReceivedApproved && procurement.type == 'pakan') {
                     title = 'Pakan Masuk';
+                    type = 'Merek Pakan';
                 } else if (isReceivedApproved && procurement.type == 'ovk') {
                     title = 'OVK Masuk';
+                    type = 'Merek OVK';
                 } else if (procurement.type == 'pakan') {
                     title = 'Order Pakan';
+                    type = 'Merek Pakan';
                 } else {
                     title = 'Order OVK';
+                    type = 'Merek OVK';
                 }
             }
 
@@ -179,7 +184,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                         if (typePosition == 0) {
                             Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         } else {
-                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
+                            Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, false, fromCoopRest])!.then((value) => refreshOrderList());
                         }
                     },
                     child: Container(
@@ -213,7 +218,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text('Merek Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                        Text(type, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                         const SizedBox(width: 16),
                                         Expanded(child: Text(procurement.description == null ? '-' : procurement.description!, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.right))
                                     ],

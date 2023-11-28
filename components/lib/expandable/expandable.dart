@@ -49,7 +49,7 @@ class Expandable extends StatelessWidget {
                 expandedIcon: SvgPicture.asset("images/arrow_up.svg"),
                 titleBorder: Border.all(color: const Color(0xFFFDDAA5),),
                 titleBorderRadius: controller.expanded.isTrue ? const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
-                contentBorder: Border(
+                contentBorder: const Border(
                   bottom: BorderSide(color:GlobalVar.outlineColor, width: 1),
                   left: BorderSide(color: GlobalVar.outlineColor, width: 1),
                   right: BorderSide(color: GlobalVar.outlineColor, width: 1),

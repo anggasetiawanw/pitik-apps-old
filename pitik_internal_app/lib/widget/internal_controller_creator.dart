@@ -4,7 +4,7 @@ import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/widget/sku_book_so/sku_book_so_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card/sku_card_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card_gr/sku_card_gr_controller.dart';
-import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_purchase_controller.dart';
+import 'package:pitik_internal_app/widget/sku_card_manufacture/sku_card_manufacture_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card_purchase/sku_card_purchase_controller.dart';
 import 'package:pitik_internal_app/widget/sku_card_purchase_internal/sku_card_purchase_internal_controller.dart';
@@ -36,8 +36,8 @@ class InternalControllerCreator {
         return Get.put(SkuCardGrController(tag: tag, products: products), tag: tag,);
     }
 
-    static SkuBookSOController putSkuBookSOController(String tag, List<Products?> products) {
-        return Get.put(SkuBookSOController(tag: tag, products: products), tag: tag,);
+    static SkuBookSOController putSkuBookSOController(String tag, List<Products?> products, bool isRemarks) {
+        return Get.put(SkuBookSOController(tag: tag, products: products, isRemarks: isRemarks), tag: tag,);
     }
     static SkuCardManufactureController putSkuCardManufactureController(String tag,BuildContext context) {
         return Get.put(SkuCardManufactureController(tag: tag,context: context), tag: tag,);

@@ -80,9 +80,9 @@ class BerandaActivity extends StatelessWidget {
                                         child: Container(
                                             width: 36,
                                             height: 36,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color:GlobalVar.iconHomeBg,
-                                                borderRadius: const BorderRadius.only(
+                                                borderRadius: BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
                                                     bottomRight: Radius.circular(4),
@@ -139,9 +139,9 @@ class BerandaActivity extends StatelessWidget {
                                         Container(
                                             width: 40,
                                             height: 40,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color:GlobalVar.iconHomeBg,
-                                                borderRadius: const BorderRadius.only(
+                                                borderRadius: BorderRadius.only(
                                                     topLeft: Radius.circular(4),
                                                     topRight: Radius.circular(4),
                                                     bottomRight: Radius.circular(4),
@@ -209,14 +209,14 @@ class BerandaActivity extends StatelessWidget {
                                     Container(
                                         padding: const EdgeInsets.all(12),
                                         margin: const EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             border: Border(
                                                 bottom: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                                 left: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                                 right: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                                 top: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                             ),
-                                            borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8), topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8), topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                                         ),
                                         child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,

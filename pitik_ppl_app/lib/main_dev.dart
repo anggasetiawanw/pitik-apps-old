@@ -5,6 +5,7 @@ import 'package:engine/request/service.dart';
 import 'package:engine/util/firebase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'api_mapping/api_mapping.dart';
 import 'app.dart';
@@ -17,6 +18,7 @@ void main() async {
     initializeReflectable();
     await initPlatformState();
     Service.setApiMapping(ApiMapping());
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: GlobalVar.primaryOrange));
     runApp(const App());
 }
 

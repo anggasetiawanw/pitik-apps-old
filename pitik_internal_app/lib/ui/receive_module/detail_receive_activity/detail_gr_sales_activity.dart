@@ -6,7 +6,6 @@ import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:pitik_internal_app/ui/receive_module/detail_receive_activity/detail_gr_sales_controller.dart';
-import 'package:pitik_internal_app/widget/common/lead_status.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -41,10 +40,13 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  controller.orderDetail.value!.grStatus =="RECEIVED"  ? "Informasi Penerimaan" : "Informasi Pengembalian" ,
-                  style: AppTextStyle.blackTextStyle
-                      .copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                Expanded(
+                  child: Text(
+                    controller.orderDetail.value!.grStatus =="RECEIVED"  ? "Informasi Penerimaan" : "Informasi Pengembalian" ,
+                    style: AppTextStyle.blackTextStyle
+                        .copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                        overflow: TextOverflow.clip,
+                  ),
                 ),
                 OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "",grStatus: controller.orderDetail.value!.grStatus),
               ],
@@ -118,45 +120,6 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
       );
     }
 
-    Widget listDetail(String label, String value, bool isLeadStatus) {
-      return Container(
-        margin: const EdgeInsets.only(top: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Text(
-                label,
-                style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            isLeadStatus
-                ? LeadStatus(
-                leadStatus:
-                controller.orderDetail.value!.status != null
-                    ? controller
-                    .orderDetail.value!.status!
-                    : null)
-                : Expanded(
-              flex: 2,
-              child: Text(
-                value,
-                textAlign: TextAlign.right,
-                style: AppTextStyle.blackTextStyle
-                    .copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
-                overflow: TextOverflow.clip,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
 
     Widget appBar() {
       return AppBar(
@@ -179,21 +142,42 @@ class DetailGrOrder extends GetView<DetailGrOrderController>{
         ),
       );
     }
+    Widget infoDetailSku(String title, String name) {
+      return Container(
+        margin: const EdgeInsets.only(top: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+            ),
+            Text(
+              name,
+              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+            )
+          ],
+        ),
+      );
+    }
 
 
     Widget customExpandalbe(Products products) {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController(products.id!),
+            controller: GetXCreator.putAccordionController("skuNote${products.name}${products.id}"),
             headerText: products.name!,
             child: Column(
               children: [
-                listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                listDetail("SKU",products.name != null ? products.name! : "-", false),
-               products.returnQuantity !=null || products.returnQuantity != 0? listDetail("Jumlah Ekor","${products.returnQuantity} Ekor", false) :const SizedBox(),
-                listDetail("Kebutuhan","${ products.returnWeight ?? "-"} Kg", false),
-                controller.orderDetail.value!.type == "LB" ? const SizedBox(): listDetail("Harga ", "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} /Kg",false),
+                 if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                      if (products.returnQuantity != 0) infoDetailSku("Jumlah Ekor", "${products.returnQuantity ?? products.quantity} Ekor"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.returnWeight != 0) infoDetailSku("Kebutuhan", "${products.returnWeight ?? products.quantity} Kg"),
+                      if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+               
               ],
             )),
 

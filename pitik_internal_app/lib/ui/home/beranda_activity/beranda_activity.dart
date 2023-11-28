@@ -10,15 +10,13 @@ class BerandaActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BerandaController controller =
-        Get.put(BerandaController(context: context));
+    final BerandaController controller = Get.put(BerandaController(context: context));
 
     @override
     Widget header() {
       return Stack(
         children: [
-          SizedBox(
-              width: Get.width, child: Image.asset("images/header_bg.png")),
+          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
           Container(
             margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
             child: Row(
@@ -26,8 +24,7 @@ class BerandaActivity extends StatelessWidget {
               children: [
                 Text(
                   "Selamat Datang\nDi Internal App!",
-                  style: AppTextStyle.whiteTextStyle
-                      .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+                  style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                 ),
               ],
             ),
@@ -44,8 +41,7 @@ class BerandaActivity extends StatelessWidget {
           children: [
             Text(
               "Fitur Produksi",
-              style:
-                  AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
+              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
             ),
             SizedBox(
               width: 68,
@@ -62,17 +58,9 @@ class BerandaActivity extends StatelessWidget {
                         () => Container(
                           width: 34,
                           height: 26,
-                          decoration: BoxDecoration(
-                              color: controller.isList.isTrue
-                                  ? const Color(0xFFFEEFD2)
-                                  : const Color(0xFFFAFAFA),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4),
-                                  bottomLeft: Radius.circular(4))),
+                          decoration: BoxDecoration(color: controller.isList.isTrue ? const Color(0xFFFEEFD2) : const Color(0xFFFAFAFA), borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
                           child: Center(
-                            child: SvgPicture.asset(controller.isList.isTrue
-                                ? "images/list_on_icon.svg"
-                                : "images/list_off_icon.svg"),
+                            child: SvgPicture.asset(controller.isList.isTrue ? "images/list_on_icon.svg" : "images/list_off_icon.svg"),
                           ),
                         ),
                       )),
@@ -86,17 +74,9 @@ class BerandaActivity extends StatelessWidget {
                       () => Container(
                         width: 34,
                         height: 26,
-                        decoration: BoxDecoration(
-                            color: controller.isList.isTrue
-                                ? const Color(0xFFFAFAFA)
-                                : const Color(0xFFFEEFD2),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4),
-                                bottomLeft: Radius.circular(4))),
+                        decoration: BoxDecoration(color: controller.isList.isTrue ? const Color(0xFFFAFAFA) : const Color(0xFFFEEFD2), borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
                         child: Center(
-                          child: SvgPicture.asset(controller.isList.isTrue
-                              ? "images/grid_off_icon.svg"
-                              : "images/grid_on_icon.svg"),
+                          child: SvgPicture.asset(controller.isList.isTrue ? "images/grid_off_icon.svg" : "images/grid_on_icon.svg"),
                         ),
                       ),
                     ),
@@ -118,41 +98,30 @@ class BerandaActivity extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(
-                            controller.module.value[index]
-                                ['homeRoute']);
+                        Get.toNamed(controller.module.value[index]['homeRoute']);
                       },
                       child: Container(
                         width: double.infinity,
                         height: 64,
                         padding: const EdgeInsets.all(12),
                         margin: const EdgeInsets.only(bottom: 12),
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 1, color: AppColors.outlineColor),
-                            borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.outlineColor), borderRadius: BorderRadius.circular(8)),
                         child: Row(
                           children: [
                             Container(
                               height: 40,
                               width: 40,
-                              decoration: BoxDecoration(
-                                  color: AppColors.iconHomeBg,
-                                  borderRadius: BorderRadius.circular(6)),
+                              decoration: BoxDecoration(color: AppColors.iconHomeBg, borderRadius: BorderRadius.circular(6)),
                               child: Center(
-                                child: SvgPicture.asset(controller
-                                        .module.value[index]
-                                    ['iconPath']),
+                                child: SvgPicture.asset(controller.module.value[index]['iconPath']),
                               ),
                             ),
                             const SizedBox(
                               width: 16,
                             ),
                             Text(
-                              controller.module.value[index]
-                                  ['nameIcon'],
-                              style: AppTextStyle.blackTextStyle
-                                  .copyWith(fontWeight: AppTextStyle.medium),
+                              controller.module.value[index]['nameIcon'],
+                              style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                             )
                           ],
                         ),
@@ -163,25 +132,19 @@ class BerandaActivity extends StatelessWidget {
           : Expanded(
               child: GridView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: controller.module.value.length,
                   itemBuilder: (_, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(
-                            controller.module.value[index]
-                                ['homeRoute']);
+                        Get.toNamed(controller.module.value[index]['homeRoute']);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Container(
                           height: 104,
                           width: 104,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 1, color: AppColors.outlineColor),
-                              borderRadius: BorderRadius.circular(8)),
+                          decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.outlineColor), borderRadius: BorderRadius.circular(8)),
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -189,12 +152,9 @@ class BerandaActivity extends StatelessWidget {
                                 Container(
                                   height: 40,
                                   width: 40,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.iconHomeBg,
-                                      borderRadius: BorderRadius.circular(6)),
+                                  decoration: BoxDecoration(color: AppColors.iconHomeBg, borderRadius: BorderRadius.circular(6)),
                                   child: Center(
-                                    child: SvgPicture.asset(controller.module.value[index]
-                                        ['iconPath']),
+                                    child: SvgPicture.asset(controller.module.value[index]['iconPath']),
                                   ),
                                 ),
                                 const SizedBox(
@@ -202,8 +162,7 @@ class BerandaActivity extends StatelessWidget {
                                 ),
                                 Text(
                                   controller.module.value[index]['nameIcon'],
-                                  style: AppTextStyle.blackTextStyle
-                                      .copyWith(fontWeight: AppTextStyle.medium),
+                                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                                 )
                               ],
                             ),
@@ -216,41 +175,49 @@ class BerandaActivity extends StatelessWidget {
     }
 
     return Scaffold(
-        
       backgroundColor: Colors.white,
-      body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),)
-      :Column(
-            children: [
-            //   header(),
-            Image.asset("images/header_ios.png"),
-            // SvgPicture.asset("images/header_ios.svg"),
-              const SizedBox(
-                height: 16,
-              ),
-              if(controller.module.value.isEmpty)...[
-                Expanded(child: Center(
-                    child: Column(
+      body: Obx(() => controller.isLoading.isTrue
+          ? const Center(
+              child: ProgressLoading(),
+            )
+          : Column(
+              children: [
+                //   header(),
+                Image.asset("images/header_ios.png"),
+                // SvgPicture.asset("images/header_ios.svg"),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (controller.module.value.isEmpty) ...[
+                  Expanded(
+                    child: Center(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                            SvgPicture.asset("images/akses_disable.svg"),
-                            const SizedBox(height: 16,),
-                            Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 32),
-                                child: Text("Oops.. maaf kamu tidak memiliki akses untuk masuk ke halaman ini", style: AppTextStyle.greyTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),textAlign: TextAlign.center,))
+                          SvgPicture.asset("images/akses_disable.svg"),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 32),
+                              child: Text(
+                                "Oops.. maaf kamu tidak memiliki akses untuk masuk ke halaman ini",
+                                style: AppTextStyle.greyTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.center,
+                              ))
                         ],
+                      ),
                     ),
-                ),)
-              ]
-              else ...[
-                toolTab(),
-                const SizedBox(
+                  )
+                ] else ...[
+                  toolTab(),
+                  const SizedBox(
                     height: 14,
-                ),
-                menuWidget()
-              ]
-
-            ],
-          )),
+                  ),
+                  menuWidget()
+                ]
+              ],
+            )),
     );
   }
 }

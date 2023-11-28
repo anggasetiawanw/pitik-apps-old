@@ -1,5 +1,5 @@
 
-import 'package:model/scale_value_model.dart';
+import 'package:model/smart_scale/smart_scale_record_model.dart';
 import 'engine_library.dart';
 
 /*
@@ -17,7 +17,7 @@ class RealizationRecord {
     String? image;
 
     @IsChildren()
-    List<ScaleValue?> details;
+    List<SmartScaleRecord?> details;
 
     RealizationRecord({this.weighingNumber, this.tonnage, this.quantity, this.page, this.averageWeight, this.image, this.details = const []});
 
@@ -29,7 +29,7 @@ class RealizationRecord {
             page: map['page'],
             averageWeight: map['averageWeight'] != null ? map['averageWeight'].toDouble() : map['averageWeight'],
             image: map['image'],
-            details: Mapper.children<ScaleValue>(map['details'])
+            details: Mapper.children<SmartScaleRecord>(map['details'])
         );
     }
 }

@@ -5,26 +5,29 @@ import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/terminate_model.dart';
 import 'package:pitik_internal_app/widget/common/transfer_terminate.dart';
+
 class CardListTerminate extends StatelessWidget {
   const CardListTerminate({
-    super.key, required this.onTap, required this.terminateModel,
+    super.key,
+    required this.onTap,
+    required this.terminateModel, required this.isApproved,
   });
   final Function() onTap;
   final TerminateModel terminateModel;
 
+  final bool isApproved;
+
   @override
   Widget build(BuildContext context) {
     final DateTime created = Convert.getDatetime(terminateModel.createdDate!);
-    final DateTime modified = Convert.getDatetime(terminateModel.modifiedDate!);
+    // final DateTime modified = Convert.getDatetime(terminateModel.modifiedDate!);
     return GestureDetector(
-        onTap: onTap,
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.only(top: 16),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-            border: Border.all(color: AppColors.outlineColor, width: 1),
-            borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(border: Border.all(color: AppColors.outlineColor, width: 1), borderRadius: BorderRadius.circular(8)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,8 +41,7 @@ class CardListTerminate extends StatelessWidget {
                     children: [
                       Text(
                         "${terminateModel.product!.productItem!.name}",
-                        style: AppTextStyle.blackTextStyle
-                            .copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                        style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
@@ -52,8 +54,10 @@ class CardListTerminate extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 16,),
-                TerminateStatus(terminateStatus: terminateModel.status),
+                const SizedBox(
+                  width: 16,
+                ),
+                TerminateStatus(terminateStatus: terminateModel.status, isApproved: isApproved,),
               ],
             ),
             const SizedBox(
@@ -63,12 +67,11 @@ class CardListTerminate extends StatelessWidget {
               children: [
                 Text(
                   "Sumber: ",
-                  style: AppTextStyle.greyTextStyle,
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
                   "${terminateModel.operationUnit!.operationUnitName}",
-                  style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
                 )
               ],
             ),
@@ -79,39 +82,44 @@ class CardListTerminate extends StatelessWidget {
               children: [
                 Text(
                   "Jumlah Ekor: ",
-                  style: AppTextStyle.greyTextStyle,
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
                   "${terminateModel.product!.productItem!.quantity} Ekor",
-                  style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
                 )
               ],
-            ),            
+            ),
             const SizedBox(
               height: 6,
             ),
             Row(
               children: [
                 Text(
-                  "Totak Kg: ",
-                  style: AppTextStyle.greyTextStyle,
+                  "Total Kg: ",
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
                   "${terminateModel.product!.productItem!.weight} Kg",
-                  style: AppTextStyle.blackTextStyle
-                      .copyWith(fontWeight: AppTextStyle.medium),
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
                 )
               ],
             ),
             const SizedBox(
-              height: 16,
+              height: 6,
             ),
-            Text(
-              "${terminateModel.modifiedBy} - (${modified.day} ${DateFormat.MMM().format(modified)} ${modified.year})",
-              style: AppTextStyle.greyTextStyle
-                  .copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
-            )
+            Row(
+              children: [
+                Text(
+                  "Dibuat: ",
+                  style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                ),
+                Text(
+                  "${terminateModel.createdBy}",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                )
+              ],
+            ),
           ],
         ),
       ),

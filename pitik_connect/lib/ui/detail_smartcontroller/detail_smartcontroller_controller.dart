@@ -86,7 +86,7 @@ class DetailSmartControllerController extends GetxController {
             service: ListApi.getDetailSmartController,
             context: context,
             body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathdetailSmartController(device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
+                ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', 'summary', device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
                     if((body as DetailControllerResponse).data != null) {

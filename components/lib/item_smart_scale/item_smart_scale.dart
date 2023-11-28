@@ -65,7 +65,7 @@ class ItemSmartScale extends StatelessWidget {
                                                                 children: [
                                                                     Text("Berat rata-rata:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
                                                                     const SizedBox(width: 4),
-                                                                    Flexible(child: Text("${smartScale!.averageWeight!.toStringAsFixed(2)} kg", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)))
+                                                                    Flexible(child: Text("${smartScale!.averageWeight == null ? '-' : smartScale!.averageWeight!.toStringAsFixed(2)} kg", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)))
                                                                 ]
                                                             )
                                                         )

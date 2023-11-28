@@ -24,12 +24,11 @@ class SpinnerFieldController<T> extends GetxController {
     var hideLabel = false.obs;
     var textSelected = "".obs;
     var selectedIndex = -1.obs;
-    Rx<Map<String,bool>> items =Rx<Map<String,bool>>({});
+    RxMap<String, bool> items = RxMap<String, bool>({});
     var amountItems = {}.obs;
     var weightItems = {}.obs;
     var showSpinner = true.obs;
-    var isloading =false.obs;
-
+    var isLoading =false.obs;
     var alertText = "".obs;
 
     void visibleSpinner() => showSpinner.value = true;
@@ -37,8 +36,8 @@ class SpinnerFieldController<T> extends GetxController {
     void setAlertText(String text) => alertText.value = text;
     void showAlert() => showTooltip.value = true;
     void hideAlert() => showTooltip.value = false;
-    void showLoading() => isloading.value = true;
-    void hideLoading() => isloading.value = false;
+    void showLoading() => isLoading.value = true;
+    void hideLoading() => isLoading.value = false;
     void enable() => activeField.value = true;
     void disable() => activeField.value = false;
     void expand() => isShowList.value = true;
@@ -48,63 +47,55 @@ class SpinnerFieldController<T> extends GetxController {
     void setTextSelected(String text) => textSelected.value = text;
     void setupObjects(List<T?> data) => listObject.value = data;
     void rejuvenateObjects() {
-        items.value.forEach((key, value) {
+        int index = 0;
+        items.forEach((key, value) {
             if (value) {
                 setTextSelected(key);
+                selectedIndex = index;
 
-                int index = 0;
-                items.value.forEach((label, value) {
-                    if (key == label) {
-                        selectedIndex = index;
-
-                        // for selected object
-                        if (listObject.isNotEmpty) {
-                            selectedObject = listObject[selectedIndex];
-                        }
-                    }
-                    index++;
-                });
+                // for selected object
+                if (listObject.isNotEmpty) {
+                    selectedObject = listObject[selectedIndex];
+                }
             }
+
+            index++;
         });
     }
     void generateItems(Map<String, bool> data) {
-        items.value.clear();
-        items.value.addAll(data);
+        items.clear();
+        items.addAll(data);
         items.refresh();
     } 
     void generateAmount(Map<String, int> data) => amountItems.value = data;
     void generateWeight(Map<String, double> data) => weightItems.value = data;
-    void addItems(String value, bool isActive) => items.value.putIfAbsent(value, () => isActive);
+    void addItems({required String value, required bool isActive, int milisecondsDelayed = 200}) => Future.delayed(Duration(milliseconds: milisecondsDelayed), () => items[value] = isActive);
     T? getSelectedObject() => selectedObject;
-    void setSelected(String textSelected) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-            int index = 0;
-            items.value.forEach((key, value) {
-                if (key == textSelected) {
-                    setTextSelected(key);
-                    selectedIndex = index;
-                    items.value[key] = true;
+    void setSelected(String textSelected) => Future.delayed(const Duration(milliseconds: 500), () {
+        int index = 0;
+        items.forEach((key, value) {
+            if (key == textSelected) {
+                setTextSelected(key);
+                selectedIndex = index;
+                items[key] = true;
 
-                    // for selected object
-                    if (listObject.isNotEmpty) {
-                        selectedObject = listObject[selectedIndex];
-                    }
-                } else {
-                    items.value[key] = false;
+                // for selected object
+                if (listObject.isNotEmpty) {
+                    selectedObject = listObject[selectedIndex];
                 }
+            } else {
+                items[key] = false;
+            }
 
-                index++;
-            });
+            index++;
         });
-    }
+    });
 
     @override
     void onClose() {
         super.onClose();
         focusNode.dispose();
     }
-
-
 }
 
 class SpinnerFieldBinding extends Bindings {

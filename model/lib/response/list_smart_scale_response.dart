@@ -12,16 +12,13 @@ import '../engine_library.dart';
 @SetupModel
 class ListSmartScaleResponse {
 
-    int code;
-
     @IsChildren()
     List<SmartScale?> data;
 
-    ListSmartScaleResponse({required this.code, this.data = const []});
+    ListSmartScaleResponse({this.data = const []});
 
     static ListSmartScaleResponse toResponseModel(Map<String, dynamic> map) {
         return ListSmartScaleResponse(
-            code: map['code'],
             data: Mapper.children<SmartScale>(map['data'])
         );
     }

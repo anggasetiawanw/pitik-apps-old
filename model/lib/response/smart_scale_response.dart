@@ -12,16 +12,13 @@ import '../smart_scale/smart_scale_model.dart';
 @SetupModel
 class SmartScaleResponse {
 
-    int code;
-
     @IsChild()
     SmartScale? data;
 
-    SmartScaleResponse({required this.code, this.data});
+    SmartScaleResponse({this.data});
 
     static SmartScaleResponse toResponseModel(Map<String, dynamic> map) {
         return SmartScaleResponse(
-            code: map['code'],
             data: Mapper.child<SmartScale>(map['data'])
         );
     }

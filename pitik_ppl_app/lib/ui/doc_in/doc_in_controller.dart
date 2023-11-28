@@ -312,10 +312,10 @@ class DocInController extends GetxController {
         try {
             DateFormat formatDate = DateFormat("dd/MM/yyyy");
             DateFormat formatTime = DateFormat("HH:mm");
-            DateTime newStartDate =DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.startDate ?? "");
+            DateTime newStartDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.startDate ?? "");
             startDate = formatDate.format(newStartDate);
 
-            DateTime newTruckGo =DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.truckLeaving ?? "");
+            DateTime newTruckGo = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.truckLeaving ?? "");
             truckGo = formatTime.format(newTruckGo);
 
             DateTime newTruckCome = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.truckArrival ?? "");
@@ -326,22 +326,28 @@ class DocInController extends GetxController {
         } catch (_) {}
 
         dtTanggal.controller.setTextSelected(startDate);
-        dtTanggal.controller.enable();
+        dtTanggal.controller.disable();
         dtTruckGo.controller.setTextSelected(truckGo);
-        dtTruckGo.controller.enable();
+        dtTruckGo.controller.disable();
         dtTruckCome.controller.setTextSelected(truckCome);
-        dtTruckCome.controller.enable();
+        dtTruckCome.controller.disable();
         dtFinishDoc.controller.setTextSelected(doneDocIn);
-        dtFinishDoc.controller.enable();
+        dtFinishDoc.controller.disable();
 
         efReceiveDoc.setInput(request.initialPopulation.toString());
-        efReceiveDoc.controller.enable();
+        efReceiveDoc.controller.disable();
         efMoreDOC.setInput((request.additionalPopulation ?? 0).toString());
-        efMoreDOC.controller.enable();
+        efMoreDOC.controller.disable();
         efBw.setInput((request.bw ?? 0).toString());
-        efBw.controller.enable();
+        efBw.controller.disable();
         efUniform.setInput((request.uniformity ?? 0).toString());
-        efUniform.controller.enable();
+        efUniform.controller.disable();
+        efDesc.setInput(request.notes ?? '');
+        efDesc.controller.disable();
+
+        mfAnotherDoc.controller.disable();
+        mfFormDOC.controller.disable();
+        mfSuratJalan.controller.disable();
     }
 
     void uploadFile(File? file, String mediaField) {

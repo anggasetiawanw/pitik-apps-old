@@ -71,4 +71,7 @@ class UserApi {
     @JSON(isPlaint: true)
     @PATCH(value: PATCH.PATH_PARAMETER, as: ProfileResponse, error: ErrorResponse)
     void changePassword(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+
+    @GET(value: "v2/notifications/unread/count", error: ErrorResponse)
+    void countUnreadNotifications(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
 }

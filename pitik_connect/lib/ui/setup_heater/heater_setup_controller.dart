@@ -87,7 +87,7 @@ class HeaterSetupController extends GetxController {
                     service: ListApi.setController,
                     context: context,
                     body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId,
-                        ListApi.pathSetController("heater", device.deviceSummary!.coopCodeId!),
+                        ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "heater", device.deviceSummary!.coopCodeId!),
                         Mapper.asJsonString(payload)],
                     listener:ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {

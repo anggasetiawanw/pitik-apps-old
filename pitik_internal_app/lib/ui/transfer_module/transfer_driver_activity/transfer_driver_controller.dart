@@ -142,7 +142,7 @@ class TransferDriverController extends GetxController {
     }
 
     TransferModel generatePayload(){
-        Profile? selectDriver = listDriver.value.firstWhere((element) => element!.fullName == assignDriver.controller.textSelected.value);
+        Profile? selectDriver = listDriver.value.firstWhereOrNull((element) => element!.fullName == assignDriver.controller.textSelected.value);
         
         return TransferModel(
             driverId: selectDriver!.id,
