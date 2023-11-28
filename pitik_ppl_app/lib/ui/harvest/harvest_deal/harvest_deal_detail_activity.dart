@@ -49,10 +49,10 @@ class HarvestDealDetailActivity extends GetView<HarvestDealDetailController> {
                                             child: ButtonFill(
                                                 controller: GetXCreator.putButtonFillController("btnHarvestRealization"),
                                                 label: "Realisasi Panen",
-                                                onClick: () => Get.offNamed(RoutePage.harvestRealizationForm, arguments: HarvestRealizationBundle(
+                                                onClick: () => Get.toNamed(RoutePage.harvestRealizationForm, arguments: HarvestRealizationBundle(
                                                     getCoop: controller.coop,
                                                     getHarvest: controller.harvest.value
-                                                ))
+                                                ))!.then((value) => Get.back(result: true))
                                             )
                                         ),
                                         const SizedBox(width: 16),

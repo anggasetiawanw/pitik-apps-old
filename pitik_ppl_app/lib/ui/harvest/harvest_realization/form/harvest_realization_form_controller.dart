@@ -18,6 +18,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/realization_model.dart';
 import 'package:model/realization_record_model.dart';
+import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_realization/bundle/harvest_realization_bundle.dart';
 
 ///@author DICKY
@@ -388,13 +389,13 @@ class HarvestRealizationFormController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
-                    Get.off(TransactionSuccessActivity(
+                    Get.to(TransactionSuccessActivity(
                         keyPage: "harvestRealizationSubmitSuccess",
                         message: bundle.getRealization == null ? "Kamu telah berhasil melakukan realisasi panen" : "Kamu telah berhasil mengubah data realisasi panen",
                         showButtonHome: false,
                         onTapClose: () => Get.back(),
                         onTapHome: () {}
-                    ));
+                    ))!.then((value) => Get.back());
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

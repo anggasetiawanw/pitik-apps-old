@@ -150,7 +150,7 @@ class HarvestDealDetailController extends GetxController {
                                                             listener: ResponseListener(
                                                                 onResponseDone: (code, message, body, id, packet) {
                                                                     isLoading.value = false;
-                                                                    Get.back();
+                                                                    Get.back(result: true);
                                                                     Get.snackbar("Pesan", 'Pembatalan Deal telah Berhasil..!', snackPosition: SnackPosition.TOP, colorText: Colors.black, backgroundColor: Colors.white);
                                                                 },
                                                                 onResponseFail: (code, message, body, id, packet) {

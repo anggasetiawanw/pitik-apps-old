@@ -182,7 +182,11 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePage.harvestDealDetail, arguments: [coop, harvest])!.then((value) => refreshHarvestList()),
+                    onTap: () => Get.toNamed(RoutePage.harvestDealDetail, arguments: [coop, harvest])!.then((result) {
+                        if (result != null && result) {
+                            refreshHarvestList();
+                        }
+                    }),
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(

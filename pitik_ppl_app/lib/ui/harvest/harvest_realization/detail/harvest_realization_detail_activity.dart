@@ -235,7 +235,7 @@ class HarvestRealizationDetailActivity extends GetView<HarvestRealizationDetailC
                                                 ),
                                             ),
                                         );
-                                    }),
+                                    })
                                 )
                             ]
                         )
