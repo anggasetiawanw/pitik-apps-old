@@ -34,6 +34,8 @@ class EditDataController extends GetxController {
 
     EditDataController({required this.context});
 
+    int countFetch = 0;
+
     final EditField editNamaPemilik = EditField(
         controller: GetXCreator.putEditFieldController("namaPemilikBaru"),
         label: "Nama Pemilik*",
@@ -163,8 +165,7 @@ class EditDataController extends GetxController {
         },
     );
 
-    late SkuCard skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
-
+    late SkuCard skuCard;
     late ButtonFill simpanButton;
 
     int page = 1;
@@ -187,6 +188,8 @@ class EditDataController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+
+        skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
         spinnerPicSales.controller.disable();
         spinnerSupplier = SpinnerField(
             controller: GetXCreator.putSpinnerFieldController("supplierBaru"),
@@ -212,29 +215,40 @@ class EditDataController extends GetxController {
             label: "Simpan",
             onClick: () => saveCustomer()
         );
-
-        isLoading.value = false;
     }
 
     @override
     void onReady() {
-        super.onReady();       
-        Get.find<SkuCardController>(tag: "editCardController")
-            .itemCount
-            .listen((p0) => generateListProduct(p0)
-        );
-        isLoading.value = true;    
+        super.onReady();    
+        isLoading.value = true;   
         WidgetsBinding.instance.addPostFrameCallback((_) {
-            getProduct();
+            Get.find<SkuCardController>(tag: "editCardController")
+                .itemCount
+                .listen((p0) => generateListProduct(p0)
+            );
             getProvince();
             getBranch();
+            getProduct();
+            getSalesList(); 
         });
-        loadData(customer);
+        
+    }
+
+    bool checkRole(){
         for(var role in Constant.profileUser!.roles!){
             if(role!.name == AppStrings.sales_lead){
-                getSalesList();
                 isSalesLead.value = true;
+                return true;
             }
+        }
+        return false;
+    }
+
+    void countFetchAPI(){
+        countFetch++;
+        if(countFetch == 4){
+            loadData(customer);
+            isLoading.value = false;
         }
     }
     
@@ -263,6 +277,7 @@ class EditDataController extends GetxController {
                             }
                             spBranch.controller.generateItems(mapList);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar(
@@ -272,6 +287,7 @@ class EditDataController extends GetxController {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar(
@@ -281,6 +297,7 @@ class EditDataController extends GetxController {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                             onTokenInvalid: () => Constant.invalidResponse()))
                     }
@@ -379,7 +396,6 @@ class EditDataController extends GetxController {
     }
 
     void getProduct() {
-        isLoading.value = true;
         Service.push(
             service: ListApi.getCategories,
             context: context,
@@ -403,7 +419,7 @@ class EditDataController extends GetxController {
 
                     skuCard.controller.setMaplist(listCategories.value);
                     this.mapList.value = mapList;
-                    isLoading.value = false;
+                    countFetchAPI();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;
@@ -412,6 +428,7 @@ class EditDataController extends GetxController {
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
+                    countFetchAPI();
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
@@ -420,6 +437,7 @@ class EditDataController extends GetxController {
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
+                    countFetchAPI();
                 },
                 onTokenInvalid: Constant.invalidResponse()
             ),
@@ -723,7 +741,7 @@ class EditDataController extends GetxController {
         );
     }
 
-    final _getListLocationListener = ResponseListener(
+    late final _getListLocationListener = ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
             if (id == 1) {
                 Map<String, bool> mapList = {};
@@ -735,6 +753,8 @@ class EditDataController extends GetxController {
                 for (var result in body.data) {
                     (packet[1] as Rx<List<Location?>>).value.add(result);
                 }
+
+                countFetchAPI();
             }
 
             if (id == 2) {
@@ -766,6 +786,9 @@ class EditDataController extends GetxController {
         },
         onResponseFail: (code, message, body, id, packet) {
             packet[0].value = false;
+            if(id == 1) {
+                countFetchAPI();
+            }
             Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                 snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
@@ -784,58 +807,66 @@ class EditDataController extends GetxController {
     );
 
     void getSalesList(){
-        AuthImpl().get().then((auth) => {
-            if (auth != null){
-                spinnerPicSales.controller.showLoading(),
-                Service.push(
-                    apiKey: "api",
-                    service: ListApi.getSalesList,
-                    context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        Constant.xAppId!,
-                        "sales,sales lead",
-                        1,
-                        0
-                    ],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            for (var result in (body as SalespersonListResponse).data) {
-                                listSalesperson.value.add(result);
-                            }
+        if (checkRole()) {
+                AuthImpl().get().then((auth) => {
+                if (auth != null){
+                    spinnerPicSales.controller.showLoading(),
+                    Service.push(
+                        apiKey: "api",
+                        service: ListApi.getSalesList,
+                        context: context,
+                        body: [
+                            'Bearer ${auth.token}',
+                            auth.id,
+                            Constant.xAppId!,
+                            "sales,sales lead",
+                            1,
+                            0
+                        ],
+                        listener: ResponseListener(
+                            onResponseDone: (code, message, body, id, packet) {
+                                for (var result in (body as SalespersonListResponse).data) {
+                                    listSalesperson.value.add(result);
+                                }
 
-                            Map<String, bool> mapList = {};
-                            for (var product in body.data) {
-                            mapList[product!.email!] = false;
-                            }
-                            spinnerPicSales.controller.generateItems(mapList);
-                            spinnerPicSales.controller.enable();
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                            onTokenInvalid: () => Constant.invalidResponse()))
-                    }
-            else
-                {Constant.invalidResponse()}
-        });
+                                Map<String, bool> mapList = {};
+                                for (var product in body.data) {
+                                mapList[product!.email!] = false;
+                                }
+                                spinnerPicSales.controller.generateItems(mapList);
+                                spinnerPicSales.controller.enable();
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                            onResponseFail: (code, message, body, id, packet) {
+                                Get.snackbar(
+                                    "Pesan",
+                                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                    snackPosition: SnackPosition.TOP,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red,);
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                            onResponseError: (exception, stacktrace, id, packet) {
+                                Get.snackbar(
+                                    "Pesan",
+                                    "Terjadi Kesalahan Internal",
+                                    snackPosition: SnackPosition.TOP,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red,);
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                                onTokenInvalid: () => Constant.invalidResponse()))
+                        }
+                else
+                    {Constant.invalidResponse()}
+            });
+        } else {
+            countFetchAPI();
+        }
+
     }
 }
 
