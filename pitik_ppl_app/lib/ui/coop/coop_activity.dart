@@ -17,65 +17,65 @@ class CoopActivity extends GetView<CoopController> {
     Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: Colors.white,
-            body: Obx(() =>
-                Column(
-                    children: [
-                        Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Flexible(
-                                        flex: 9,
-                                        child: controller.searchCoopField,
-                                    ),
-                                    Flexible(
-                                        flex: 1,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(top: 25),
-                                            child: PopupMenuButton<String>(
-                                                icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.all(Radius.circular(8))
-                                                ),
-                                                itemBuilder: (BuildContext context) {
-                                                    return {'Logout'}.map((String choice) {
-                                                        return PopupMenuItem<String>(
-                                                            value: choice,
-                                                            height: 28,
-                                                            child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                children: [
-                                                                    const SizedBox(),
-                                                                    Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
-                                                                    const SizedBox()
-                                                                ],
-                                                            ),
-                                                            onTap: () => GlobalVar.invalidResponse(),
-                                                        );
-                                                    }).toList();
-                                                },
-                                            )
+            body: Column(
+                children: [
+                    Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Flexible(
+                                    flex: 9,
+                                    child: controller.searchCoopField,
+                                ),
+                                Flexible(
+                                    flex: 1,
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(top: 25),
+                                        child: PopupMenuButton<String>(
+                                            icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(8))
+                                            ),
+                                            itemBuilder: (BuildContext context) {
+                                                return {'Logout'}.map((String choice) {
+                                                    return PopupMenuItem<String>(
+                                                        value: choice,
+                                                        height: 28,
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                const SizedBox(),
+                                                                Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                const SizedBox()
+                                                            ],
+                                                        ),
+                                                        onTap: () => GlobalVar.invalidResponse(),
+                                                    );
+                                                }).toList();
+                                            },
                                         )
                                     )
-                                ]
-                            )
+                                )
+                            ]
+                        )
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: TabBar(
+                            controller: controller.tabController,
+                            indicatorColor: GlobalVar.primaryOrange,
+                            labelColor: GlobalVar.primaryOrange,
+                            unselectedLabelColor: GlobalVar.gray,
+                            labelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
+                            unselectedLabelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
+                            tabs: const [
+                                Tab(text: "Kandang Aktif"),
+                                Tab(text: "Kandang Rehat")
+                            ]
                         ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            child: TabBar(
-                                controller: controller.tabController,
-                                indicatorColor: GlobalVar.primaryOrange,
-                                labelColor: GlobalVar.primaryOrange,
-                                unselectedLabelColor: GlobalVar.gray,
-                                labelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
-                                unselectedLabelStyle: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
-                                tabs: const [
-                                    Tab(text: "Kandang Aktif"),
-                                    Tab(text: "Kandang Rehat")
-                                ]
-                            ),
-                        ),
+                    ),
+                    Obx(() =>
                         controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
                         Expanded(
                             child: TabBarView(
@@ -102,9 +102,9 @@ class CoopActivity extends GetView<CoopController> {
                                 ]
                             )
                         )
-                    ],
-                )
-            ),
+                    )
+                ]
+            )
         );
     }
 }

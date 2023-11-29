@@ -34,6 +34,8 @@ import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:pitik_ppl_app/route.dart';
+import 'package:engine/util/deeplink.dart';
+import 'package:pitik_ppl_app/utils/deeplink_mapping_arguments.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -44,6 +46,7 @@ class CoopDashboardController extends GetxController {
     CoopDashboardController({required this.context});
 
     late Coop coop;
+    late Map<String, dynamic> payloadForPushNotification;
     late Profile? profile;
     late DetailSmartMonitor detailSmartMonitor;
     late HistoryActivity historyActivity;
@@ -114,6 +117,28 @@ class CoopDashboardController extends GetxController {
                 ),
             ),
         );
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (Get.arguments.length > 1) {
+                payloadForPushNotification = Get.arguments[1];
+                if (payloadForPushNotification['target'] == '{navigation}[PROFILE_NAVIGATION]') {
+                    toProfile();
+                } else if (payloadForPushNotification['target'] == '{navigation}[MONITOR_NAVIGATION]') {
+                    toMonitor();
+                } else if (payloadForPushNotification['target'] == '{navigation}[HISTORY_NAVIGATION]') {
+                    toHistory();
+                } else {
+                    Deeplink.toTarget(target: payloadForPushNotification['target'], arguments: DeeplinkMappingArguments.createArguments(
+                        target: payloadForPushNotification['target'],
+                        additionalParameters: payloadForPushNotification['additionalParameters']
+                    ));
+                }
+            }
+        });
     }
 
     void getMonitoringPerformance(Coop coop) {
@@ -220,7 +245,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
+                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
                                             _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: coop)),
                                         ],

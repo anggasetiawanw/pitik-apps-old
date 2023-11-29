@@ -30,6 +30,11 @@ class UserApi {
     @POST(value: "v2/auth", as: AuthResponse, error: ErrorResponse)
     void auth(@Parameter("username") String username, @Parameter("password") String password) {}
 
+    @POST(value: "v2/devices", error: ErrorResponse)
+    @JSON()
+    void addDevice(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("token") String token, @Parameter("type") String type, @Parameter("os") String os,
+                   @Parameter("model") String model) {}
+
     /// The function "profile" is a GET request that retrieves member information
     /// with the specified headers and parameters.
     ///

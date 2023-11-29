@@ -29,8 +29,14 @@ class SplashScreenController extends GetxController {
     var isUpdated = false.obs;
 
     late Future<bool> isFirstRun;
-
     late Future<bool> isFirstLogin;
+    late String pushNotificationPayload;
+
+    @override
+    void onInit() {
+        super.onInit();
+        pushNotificationPayload = Get.arguments ?? '';
+    }
 
     @override
     void onReady() async {
@@ -66,9 +72,9 @@ class SplashScreenController extends GetxController {
 
                 isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
                 if (await isFirstLogin) {
-                    Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList]);
+                    Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList, pushNotificationPayload]);
                 } else {
-                    Get.offNamed(RoutePage.coopList);
+                    Get.offNamed(RoutePage.coopList, arguments: pushNotificationPayload);
                 }
             }
         }

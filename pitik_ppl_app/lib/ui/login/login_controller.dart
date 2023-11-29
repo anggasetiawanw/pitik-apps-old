@@ -1,10 +1,13 @@
 
+import 'dart:io';
+
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/password_field/password_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
@@ -14,6 +17,7 @@ import 'package:model/auth_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../route.dart';
@@ -75,7 +79,10 @@ class LoginController extends GetxController {
                 context: Get.context!,
                 body: [phoneNumberField.getInput(), passwordField.getInput()],
                 listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) => _getProfile((body as AuthResponse).data!, body.data!.action),
+                    onResponseDone: (code, message, body, id, packet) {
+                        _getProfile((body as AuthResponse).data!, body.data!.action);
+                        _sendFirebaseTokenToServer(body.data!);
+                    },
                     onResponseFail: (code, message, body, id, packet) {
                         Navigator.pop(Get.context!);
                         Get.snackbar(
@@ -100,6 +107,43 @@ class LoginController extends GetxController {
                 )
             );
         }
+    }
+
+    void _sendFirebaseTokenToServer(Auth auth) async {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        Map deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        Service.push(
+            apiKey: 'userApi',
+            service: ListApi.addDevice,
+            context: Get.context!,
+            body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', packageInfo.version, deviceInfo['model'] ?? '-'],
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) async {},
+                onResponseFail: (code, message, body, id, packet) {
+                    Navigator.pop(Get.context!);
+                    Get.snackbar(
+                        "Pesan",
+                        "${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    Navigator.pop(Get.context!);
+                    Get.snackbar(
+                        "Pesan",
+                        "Terjadi kesalahan internal",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onTokenInvalid: () => GlobalVar.invalidResponse()
+            )
+        );
     }
 
     void _getProfile(Auth auth, String? action) {
@@ -152,7 +196,6 @@ class LoginController extends GetxController {
                 onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
-
     }
 }
 
