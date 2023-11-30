@@ -296,7 +296,7 @@ class CoopDashboardController extends GetxController {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () => Get.toNamed(RoutePage.listSmartScale, arguments: _getListSmartScaleBundle())),
-                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: coop)),
+                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: [coop])),
                                             _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
                                         ]
                                     )

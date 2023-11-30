@@ -95,7 +95,9 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
             payload = jsonDecode(payload['request']);
 
             Coop? coopDeeplink = Mapper.child<Coop>(payload['additionalParameters']["coop"]);
-            if (payload['target'] == 'id.pitik.mobile.ListOrderActivity' && !payload['additionalParameters']['isToDashboard']) {
+            if (payload['target'] == 'id.pitik.mobile.ui.activity.LoginActivity') {
+                GlobalVar.invalidResponse();
+            } else if (payload['target'] == 'id.pitik.mobile.ListOrderActivity' && !payload['additionalParameters']['isToDashboard']) {
                 Get.toNamed(RoutePage.listOrderPage, arguments: [coopDeeplink, !payload['additionalParameters']['isToDashboard']])!.then((value) => _refreshCoopList());
             } else if (payload['target'] == 'id.pitik.mobile.RequestDocIn') {
                 Get.toNamed(RoutePage.reqDocInPage, arguments: coopDeeplink)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());

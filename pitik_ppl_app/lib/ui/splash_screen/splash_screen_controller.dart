@@ -53,32 +53,30 @@ class SplashScreenController extends GetxController {
         );
     }
 
-    void runSplash() => Timer(
-        const Duration(seconds: 2), () async {
-            Auth? auth = await AuthImpl().get();
-            Profile? userProfile = await ProfileImpl().get();
+    void runSplash() async {
+        Auth? auth = await AuthImpl().get();
+        Profile? userProfile = await ProfileImpl().get();
 
-            if (auth == null || userProfile == null ) {
-                isFirstRun = _prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstRun') ?? true);
-                if (await isFirstRun) {
-                    Get.offNamed(RoutePage.boardingPage);
-                } else {
-                    Get.offNamed(RoutePage.loginPage);
-                }
-
+        if (auth == null || userProfile == null ) {
+            isFirstRun = _prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstRun') ?? true);
+            if (await isFirstRun) {
+                Get.offNamed(RoutePage.boardingPage);
             } else {
-                GlobalVar.auth = auth;
-                GlobalVar.profileUser = userProfile;
+                Get.offNamed(RoutePage.loginPage);
+            }
 
-                isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
-                if (await isFirstLogin) {
-                    Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList, pushNotificationPayload]);
-                } else {
-                    Get.offNamed(RoutePage.coopList, arguments: pushNotificationPayload);
-                }
+        } else {
+            GlobalVar.auth = auth;
+            GlobalVar.profileUser = userProfile;
+
+            isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
+            if (await isFirstLogin) {
+                Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList, pushNotificationPayload]);
+            } else {
+                Get.offNamed(RoutePage.coopList, arguments: pushNotificationPayload);
             }
         }
-    );
+    }
 
     void showInformation() => Get.dialog(
         Center(
@@ -105,7 +103,7 @@ class SplashScreenController extends GetxController {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                            "Update aplikasi berhasil, silahkan restart aplikasi" ,
+                            "Pembaruan aplikasi berhasil, silahkan restart aplikasi" ,
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                         ),
                         Row(
@@ -119,7 +117,7 @@ class SplashScreenController extends GetxController {
                                         label: "Tutup",
                                         onClick: () => Get.back()
 
-                                    ),
+                                    )
                                 ),
                                 SizedBox(
                                     width: 100,
@@ -128,13 +126,13 @@ class SplashScreenController extends GetxController {
                                         GetXCreator.putButtonFillController("btnFillDialogCodeMagicRestart"),
                                         label: "Restart",
                                         onClick: () => Restart.restartApp()
-                                    ),
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-            ),
+                                    )
+                                )
+                            ]
+                        )
+                    ]
+                )
+            )
         ),
         barrierDismissible: false
     );
