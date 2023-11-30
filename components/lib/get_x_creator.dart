@@ -8,6 +8,7 @@ import 'package:components/stock_opname_two_field/stock_opname_two_field_control
 import 'package:components/switch_button/switch_button_controller.dart';
 import 'package:components/switch_linear/switch_linar_controller.dart';
 import 'package:components/table_field/table_field_controller.dart';
+import 'package:components/check_box/check_box_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -162,6 +163,10 @@ class GetXCreator {
 
     static MultipleDynamicFormFieldController putMultipleDynamicFormFieldController<T>(String tag) {
         return Get.put(MultipleDynamicFormFieldController<T>(tag: tag), tag: tag);
+    }
+
+    static CheckBoxController putCheckBoxFieldController<T>(String tag) {
+        return Get.put(CheckBoxController(tag: tag), tag: tag);
     }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {
