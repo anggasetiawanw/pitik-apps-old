@@ -212,7 +212,7 @@ class DocInController extends GetxController {
     void onInit() {
         super.onInit();
         isLoading.value = true;
-        coop = Get.arguments;
+        coop = Get.arguments[0];
     }
 
     @override

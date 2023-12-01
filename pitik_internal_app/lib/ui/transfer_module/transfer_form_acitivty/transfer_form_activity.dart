@@ -106,6 +106,10 @@ class TransferFormActivity extends StatelessWidget {
                       controller.skuField,
                       controller.amountField,
                       controller.totalField,
+                      controller.efRemark,
+                      const SizedBox(
+                              height: 120,
+                            ),
                       MediaQuery.of(context).viewInsets.bottom > 0.0
                           ? const SizedBox(
                               height: 120,
@@ -125,6 +129,7 @@ class TransferFormActivity extends StatelessWidget {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
+        isScrollControlled: true,
         builder: (context) {
           return Container(
             decoration: const BoxDecoration(

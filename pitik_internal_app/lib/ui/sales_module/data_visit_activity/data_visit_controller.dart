@@ -183,7 +183,7 @@ class VisitController extends GetxController {
         onSpinnerSelected: (text) {
             if (province.value.isNotEmpty) {
                 provinceSelect = province.value
-                    .firstWhere((element) => element!.provinceName! == text);
+                    .firstWhereOrNull((element) => element!.provinceName! == text);
                 if (provinceSelect != null) {
                 getCity(provinceSelect!);
                 }
@@ -199,7 +199,7 @@ class VisitController extends GetxController {
         onSpinnerSelected: (text) {
         
             if (city.value.isNotEmpty) {
-                citySelect = city.value.firstWhere((element) => element!.cityName! == text);
+                citySelect = city.value.firstWhereOrNull((element) => element!.cityName! == text);
                 if (citySelect != null) {
                     getDistrict(citySelect!);
                 }
@@ -214,7 +214,7 @@ class VisitController extends GetxController {
         items: const {},
         onSpinnerSelected: (text) {
             if (district.value.isNotEmpty) {
-                districtSelect = district.value.firstWhere((element) => element!.districtName! == text);
+                districtSelect = district.value.firstWhereOrNull((element) => element!.districtName! == text);
                 if (districtSelect != null) {
                     getListCustomer();
                 }
@@ -229,7 +229,7 @@ class VisitController extends GetxController {
         items: const {},
         onSpinnerSelected: (value) {
             if (listCustomer.value.isNotEmpty) {
-                customerSelect = listCustomer.value.firstWhere((element) => element.businessName! == value);
+                customerSelect = listCustomer.value.firstWhereOrNull((element) => element.businessName! == value);
                 if (customerSelect != null) {
                     buttonIsiKunjungan.controller.enable();
                 }
@@ -837,24 +837,24 @@ class VisitController extends GetxController {
                 CategoryModel? selectCategory;
                 int whichItem = skuCard.controller.index.value[i];
                 if (listCategories.value.isNotEmpty) {
-                    selectCategory= listCategories.value.firstWhere((element) => element!.name! ==  skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
+                    selectCategory= listCategories.value.firstWhereOrNull((element) => element!.name! ==  skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
                     if(selectCategory == null) {
-                        Products? selectTemp = customer.value!.products!.firstWhere((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
+                        Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                         selectCategory = selectTemp!.category;
                     }
                 } else {                    
-                    Products? selectTemp = customer.value!.products!.firstWhere((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
+                    Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                     selectCategory = selectTemp!.category; 
                 }
 
                 Products? selectProduct;
                 if (skuCard.controller.listProduct.value.isNotEmpty) {
                     for(int j =0 ; j < listProductTemp.length; j++){
-                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value, );
+                        selectProduct = listProductTemp[j].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value, );
                     }
-                    selectProduct ??= customer.value!.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
+                    selectProduct ??= customer.value!.products!.firstWhereOrNull((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 } else {
-                    selectProduct = customer.value!.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
+                    selectProduct = customer.value!.products!.firstWhereOrNull((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 }
                 selectProduct?.category = selectCategory;
                 selectProduct?.dailyQuantity = skuCard.controller.editFieldJenis.value[whichItem].getInputNumber()!.toInt();
@@ -868,7 +868,7 @@ class VisitController extends GetxController {
         List<OrderIssueCategories?>? categories =[];
 
         for (var spinner in spinnerMulti.controller.selectedValue.value) {
-            OrderIssueCategories? select = orderIssueCategories.value.firstWhere((list) => list!.title! == spinner);
+            OrderIssueCategories? select = orderIssueCategories.value.firstWhereOrNull((list) => list!.title! == spinner);
             categories.add(select);
         }
 

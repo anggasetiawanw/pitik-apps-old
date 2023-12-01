@@ -36,6 +36,8 @@ import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
+import 'package:engine/util/deeplink.dart';
+import 'package:pitik_ppl_app/utils/deeplink_mapping_arguments.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -46,6 +48,7 @@ class CoopDashboardController extends GetxController {
     CoopDashboardController({required this.context});
 
     late Coop coop;
+    late Map<String, dynamic> payloadForPushNotification;
     late Profile? profile;
     late DetailSmartMonitor detailSmartMonitor;
     late HistoryActivity historyActivity;
@@ -162,6 +165,28 @@ class CoopDashboardController extends GetxController {
         });
     }
 
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (Get.arguments.length > 1) {
+                payloadForPushNotification = Get.arguments[1];
+                if (payloadForPushNotification['target'] == '{navigation}[PROFILE_NAVIGATION]') {
+                    toProfile();
+                } else if (payloadForPushNotification['target'] == '{navigation}[MONITOR_NAVIGATION]') {
+                    toMonitor();
+                } else if (payloadForPushNotification['target'] == '{navigation}[HISTORY_NAVIGATION]') {
+                    toHistory();
+                } else {
+                    Deeplink.toTarget(target: payloadForPushNotification['target'], arguments: DeeplinkMappingArguments.createArguments(
+                        target: payloadForPushNotification['target'],
+                        additionalParameters: payloadForPushNotification['additionalParameters']
+                    ));
+                }
+            }
+        });
+    }
+
     void getMonitoringPerformance(Coop coop) {
         isLoading.value = true;
         AuthImpl().get().then((auth) => {
@@ -266,7 +291,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: coop)),
+                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
                                             _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
                                             _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: coop)),
                                         ],
@@ -278,9 +303,9 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
-                                                // TO DAILY TASK
-                                            }),
+                                            // _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
+                                            //     // TO DAILY TASK
+                                            // }),
                                             _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () {  // FARM CLOSING
                                                 // TO FARM CLOSING
                                             }),
@@ -317,7 +342,7 @@ class CoopDashboardController extends GetxController {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () => Get.toNamed(RoutePage.listSmartScale, arguments: _getListSmartScaleBundle())),
-                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: coop)),
+                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: [coop])),
                                             _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
                                         ]
                                     )

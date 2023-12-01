@@ -10,6 +10,7 @@ import 'package:model/response/monitoring_response.dart';
 import 'package:model/response/date_monitoring_response.dart';
 import 'package:model/response/monitoring_detail_response.dart';
 import 'package:model/response/realization_response.dart';
+import 'package:model/response/left_over_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -120,4 +121,6 @@ class FarmMonitoringApi {
     @GET(value: 'v2/harvest-realizations', as: RealizationResponse, error: ErrorResponse)
     void getListHarvestRealization(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
 
+    @GET(value: GET.PATH_PARAMETER, as: LeftOverResponse, error: ErrorResponse)
+    void getLeftOver(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 }

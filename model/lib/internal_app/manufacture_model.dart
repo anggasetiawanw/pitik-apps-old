@@ -13,6 +13,7 @@ class ManufactureModel {
     String? createdBy;
     String? modifiedDate;
     String? modifiedBy;
+    double? outputTotalWeight;
     
     @IsChild()
     OperationUnitModel? operationUnit;
@@ -22,9 +23,10 @@ class ManufactureModel {
     @IsChildren()
     List<Products?>? output;
 
-    ManufactureModel({this.id, this.status, this.createdDate, this.createdBy, this.modifiedBy, this.modifiedDate, this.operationUnit, this.input, this.output, this.operationUnitId, this.code});
+    ManufactureModel({this.id, this.status, this.createdDate, this.createdBy, this.modifiedBy, this.modifiedDate, this.operationUnit, this.input, this.output, this.operationUnitId, this.code, this.outputTotalWeight});
 
     static ManufactureModel toResponseModel(Map<String, dynamic> map) {
+        if(map['outputTotalWeight'] is int)  map['outputTotalWeight'] = map['outputTotalWeight'].toDouble();
         return ManufactureModel(
             id: map['id'],
             status : map['status'],
@@ -36,7 +38,8 @@ class ManufactureModel {
             input: Mapper.child<Products>(map['input']), 
             output: Mapper.children<Products>(map['output']),  
             operationUnitId: map['operationUnitId'],
-            code: map['code']
+            code: map['code'],
+            outputTotalWeight: map['outputTotalWeight'],
         );
     }
 }

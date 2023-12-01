@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:components/button_fill/button_fill.dart';
@@ -14,6 +15,7 @@ import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -33,12 +35,12 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     BuildContext context;
     CoopController({required this.context});
 
-    late TabController tabController;
-
     var isLoading = false.obs;
     RxList<Coop?> coopList = <Coop?>[].obs;
     RxList<Coop?> coopFilteredList = <Coop?>[].obs;
 
+    late TabController tabController;
+    late String pushNotificationPayload;
     late EditField searchCoopField;
 
     @override
@@ -78,6 +80,39 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         );
 
         generateCoopList(true);
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) => _launchDeeplink());
+    }
+
+    void _launchDeeplink() {
+        pushNotificationPayload = Get.arguments ?? '';
+        if (pushNotificationPayload.isNotEmpty) {
+            Map<String, dynamic> payload = jsonDecode(pushNotificationPayload);
+            payload = jsonDecode(payload['request']);
+
+            Coop? coopDeeplink = Mapper.child<Coop>(payload['additionalParameters']["coop"]);
+            if (payload['target'] == 'id.pitik.mobile.ui.activity.LoginActivity') {
+                GlobalVar.invalidResponse();
+            } else if (payload['target'] == 'id.pitik.mobile.ListOrderActivity' && !payload['additionalParameters']['isToDashboard']) {
+                Get.toNamed(RoutePage.listOrderPage, arguments: [coopDeeplink, !payload['additionalParameters']['isToDashboard']])!.then((value) => _refreshCoopList());
+            } else if (payload['target'] == 'id.pitik.mobile.RequestDocIn') {
+                Get.toNamed(RoutePage.reqDocInPage, arguments: coopDeeplink)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+            } else if (payload['target'] == 'id.pitik.mobile.DocInActivity' && !payload['additionalParameters']['isToDashboard']) {
+                Get.toNamed(RoutePage.docInPage, arguments: [coopDeeplink])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
+            } else if (payload['target'] == '{navigation}[COOP_ACTIVE]') {
+                tabController.index = 0;
+                _refreshCoopList();
+            } else if (payload['target'] == '{navigation}[COOP_IDLE]') {
+                tabController.index = 1;
+                _refreshCoopList();
+            } else {
+                Get.toNamed(RoutePage.coopDashboard, arguments: [coopDeeplink, payload])!.then((value) => _refreshCoopList());
+            }
+        }
     }
 
     void _initMixpanel() async {

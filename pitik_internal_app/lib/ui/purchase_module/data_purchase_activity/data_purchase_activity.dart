@@ -75,7 +75,7 @@ class _PurchasePageState extends State<PurchasePage>{
                     Get.toNamed(RoutePage.newDataPurchase)!.then((value) {
                       controller.isLoading.value =true;
                       controller.purchaseList.value.clear();
-                        controller.page.value = 0;
+                        controller.page.value = 1;
                       Timer(const Duration(milliseconds: 100), () {
                         controller.getListPurchase();
                       });
@@ -139,7 +139,7 @@ class _PurchasePageState extends State<PurchasePage>{
                         Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
                           controller.isLoading.value =true;
                           controller.purchaseList.value.clear();
-                            controller.page.value = 0;
+                            controller.page.value = 1;
                           Timer(const Duration(milliseconds: 100), () {
                             controller.getListPurchase();
                           });

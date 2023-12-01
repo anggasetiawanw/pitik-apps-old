@@ -34,6 +34,8 @@ class EditDataController extends GetxController {
 
     EditDataController({required this.context});
 
+    int countFetch = 0;
+
     final EditField editNamaPemilik = EditField(
         controller: GetXCreator.putEditFieldController("namaPemilikBaru"),
         label: "Nama Pemilik*",
@@ -109,7 +111,7 @@ class EditDataController extends GetxController {
         items: const {},
         onSpinnerSelected: (text) {
             if (province.value.isNotEmpty) {
-                Location? selectLocation = province.value.firstWhere((element) => element!.provinceName! == text);
+                Location? selectLocation = province.value.firstWhereOrNull((element) => element!.provinceName! == text);
                 if (selectLocation != null) {
                     getCity(selectLocation);
                 }
@@ -125,7 +127,7 @@ class EditDataController extends GetxController {
         items: const {"Rumah Makan": false, "Rumah Tuang": false},
         onSpinnerSelected: (text) {
             if (city.value.isNotEmpty) {
-                Location? selectLocation = city.value.firstWhere((element) => element!.cityName! == text);
+                Location? selectLocation = city.value.firstWhereOrNull((element) => element!.cityName! == text);
                 if (selectLocation != null) {
                     getDistrict(selectLocation);
                 }
@@ -163,8 +165,7 @@ class EditDataController extends GetxController {
         },
     );
 
-    late SkuCard skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
-
+    late SkuCard skuCard;
     late ButtonFill simpanButton;
 
     int page = 1;
@@ -187,6 +188,8 @@ class EditDataController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+
+        skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("editCardController", context));
         spinnerPicSales.controller.disable();
         spinnerSupplier = SpinnerField(
             controller: GetXCreator.putSpinnerFieldController("supplierBaru"),
@@ -212,27 +215,40 @@ class EditDataController extends GetxController {
             label: "Simpan",
             onClick: () => saveCustomer()
         );
-
-        isLoading.value = false;
     }
 
     @override
     void onReady() {
-        super.onReady();       
-        Get.find<SkuCardController>(tag: "editCardController")
-            .itemCount
-            .listen((p0) => generateListProduct(p0)
-        );
-        isLoading.value = true;
-        getProvince();
-        getProduct();
-        getBranch();
-        loadData(customer);
+        super.onReady();    
+        isLoading.value = true;   
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.find<SkuCardController>(tag: "editCardController")
+                .itemCount
+                .listen((p0) => generateListProduct(p0)
+            );
+            getProvince();
+            getBranch();
+            getProduct();
+            getSalesList(); 
+        });
+        
+    }
+
+    bool checkRole(){
         for(var role in Constant.profileUser!.roles!){
             if(role!.name == AppStrings.sales_lead){
-                getSalesList();
                 isSalesLead.value = true;
+                return true;
             }
+        }
+        return false;
+    }
+
+    void countFetchAPI(){
+        countFetch++;
+        if(countFetch == 4){
+            loadData(customer);
+            isLoading.value = false;
         }
     }
     
@@ -261,6 +277,7 @@ class EditDataController extends GetxController {
                             }
                             spBranch.controller.generateItems(mapList);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar(
@@ -270,6 +287,7 @@ class EditDataController extends GetxController {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar(
@@ -279,6 +297,7 @@ class EditDataController extends GetxController {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                             onTokenInvalid: () => Constant.invalidResponse()))
                     }
@@ -377,7 +396,6 @@ class EditDataController extends GetxController {
     }
 
     void getProduct() {
-        isLoading.value = true;
         Service.push(
             service: ListApi.getCategories,
             context: context,
@@ -401,7 +419,7 @@ class EditDataController extends GetxController {
 
                     skuCard.controller.setMaplist(listCategories.value);
                     this.mapList.value = mapList;
-                    isLoading.value = false;
+                    countFetchAPI();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;
@@ -410,6 +428,7 @@ class EditDataController extends GetxController {
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
+                    countFetchAPI();
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
@@ -418,6 +437,7 @@ class EditDataController extends GetxController {
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
+                    countFetchAPI();
                 },
                 onTokenInvalid: Constant.invalidResponse()
             ),
@@ -645,24 +665,24 @@ class EditDataController extends GetxController {
                 CategoryModel? selectCategory;
                 int whichItem = skuCard.controller.index.value[i];
                 if (listCategories.value.isNotEmpty) {
-                    selectCategory= listCategories.value.firstWhere((element) => element!.name! ==  skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
+                    selectCategory= listCategories.value.firstWhereOrNull((element) => element!.name! ==  skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value);
                     if(selectCategory == null) {
-                        Products? selectTemp = customer.products!.firstWhere((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
+                        Products? selectTemp = customer.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                         selectCategory = selectTemp!.category;
                     }
                 } else {                    
-                    Products? selectTemp = customer.products!.firstWhere((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
+                    Products? selectTemp = customer.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                     selectCategory = selectTemp!.category; 
                 }
 
                 Products? selectProduct;
                 if(skuCard.controller.listProduct.value.isNotEmpty){
                     for(int j =0 ; j < listProductTemp.length; j++){
-                        selectProduct = listProductTemp[j].firstWhere((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value);
+                        selectProduct = listProductTemp[j].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value);
                     }
-                    selectProduct ??= customer.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
+                    selectProduct ??= customer.products!.firstWhereOrNull((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 } else {
-                    selectProduct = customer.products!.firstWhere((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
+                    selectProduct = customer.products!.firstWhereOrNull((element) => element!.name == skuCard.controller.spinnerSize.value[whichItem].controller.textSelected.value );
                 }
 
                 selectProduct?.category = selectCategory;
@@ -672,11 +692,11 @@ class EditDataController extends GetxController {
             }
 
         Location? provinceSelect;
-        Branch? branchSelected = listBranch.value.firstWhere((element) => element!.name == spBranch.controller.textSelected.value);
+        Branch? branchSelected = listBranch.value.firstWhereOrNull((element) => element!.name == spBranch.controller.textSelected.value);
 
 
         if (customer.province!.name != spinnerProvince.controller.textSelected.value) {
-            provinceSelect = province.value.firstWhere((element) =>
+            provinceSelect = province.value.firstWhereOrNull((element) =>
                 element!.provinceName ==
                 spinnerProvince.controller.textSelected.value,
             );
@@ -684,14 +704,14 @@ class EditDataController extends GetxController {
 
         Location? citySelect;
         if (customer.city!.name != spinnerKota.controller.textSelected.value) {
-            citySelect = city.value.firstWhere((element) =>
+            citySelect = city.value.firstWhereOrNull((element) =>
                 element!.cityName == spinnerKota.controller.textSelected.value,
             );
         }
 
         Location? districSelect;
         if (customer.district!.name != spinnerKecamatan.controller.textSelected.value) {
-            districSelect = district.value.firstWhere((element) =>
+            districSelect = district.value.firstWhereOrNull((element) =>
                 element!.districtName ==
                 spinnerKecamatan.controller.textSelected.value,
             );
@@ -700,7 +720,7 @@ class EditDataController extends GetxController {
         
         SalesPerson? salesSelect;
         if(isSalesLead.isTrue){
-            salesSelect = listSalesperson.value.firstWhere((element) =>element!.email == spinnerPicSales.controller.textSelected.value,);
+            salesSelect = listSalesperson.value.firstWhereOrNull((element) =>element!.email == spinnerPicSales.controller.textSelected.value,);
         }
 
         return Customer(
@@ -721,7 +741,7 @@ class EditDataController extends GetxController {
         );
     }
 
-    final _getListLocationListener = ResponseListener(
+    late final _getListLocationListener = ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
             if (id == 1) {
                 Map<String, bool> mapList = {};
@@ -733,6 +753,8 @@ class EditDataController extends GetxController {
                 for (var result in body.data) {
                     (packet[1] as Rx<List<Location?>>).value.add(result);
                 }
+
+                countFetchAPI();
             }
 
             if (id == 2) {
@@ -764,6 +786,9 @@ class EditDataController extends GetxController {
         },
         onResponseFail: (code, message, body, id, packet) {
             packet[0].value = false;
+            if(id == 1) {
+                countFetchAPI();
+            }
             Get.snackbar("Alert", (body as ErrorResponse).error!.message!,
                 snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
@@ -782,58 +807,66 @@ class EditDataController extends GetxController {
     );
 
     void getSalesList(){
-        AuthImpl().get().then((auth) => {
-            if (auth != null){
-                spinnerPicSales.controller.showLoading(),
-                Service.push(
-                    apiKey: "api",
-                    service: ListApi.getSalesList,
-                    context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        Constant.xAppId!,
-                        "sales,sales lead",
-                        1,
-                        0
-                    ],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            for (var result in (body as SalespersonListResponse).data) {
-                                listSalesperson.value.add(result);
-                            }
+        if (checkRole()) {
+                AuthImpl().get().then((auth) => {
+                if (auth != null){
+                    spinnerPicSales.controller.showLoading(),
+                    Service.push(
+                        apiKey: "api",
+                        service: ListApi.getSalesList,
+                        context: context,
+                        body: [
+                            'Bearer ${auth.token}',
+                            auth.id,
+                            Constant.xAppId!,
+                            "sales,sales lead",
+                            1,
+                            0
+                        ],
+                        listener: ResponseListener(
+                            onResponseDone: (code, message, body, id, packet) {
+                                for (var result in (body as SalespersonListResponse).data) {
+                                    listSalesperson.value.add(result);
+                                }
 
-                            Map<String, bool> mapList = {};
-                            for (var product in body.data) {
-                            mapList[product!.email!] = false;
-                            }
-                            spinnerPicSales.controller.generateItems(mapList);
-                            spinnerPicSales.controller.enable();
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                            spinnerPicSales.controller.hideLoading();
-                        },
-                            onTokenInvalid: () => Constant.invalidResponse()))
-                    }
-            else
-                {Constant.invalidResponse()}
-        });
+                                Map<String, bool> mapList = {};
+                                for (var product in body.data) {
+                                mapList[product!.email!] = false;
+                                }
+                                spinnerPicSales.controller.generateItems(mapList);
+                                spinnerPicSales.controller.enable();
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                            onResponseFail: (code, message, body, id, packet) {
+                                Get.snackbar(
+                                    "Pesan",
+                                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                    snackPosition: SnackPosition.TOP,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red,);
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                            onResponseError: (exception, stacktrace, id, packet) {
+                                Get.snackbar(
+                                    "Pesan",
+                                    "Terjadi Kesalahan Internal",
+                                    snackPosition: SnackPosition.TOP,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red,);
+                                spinnerPicSales.controller.hideLoading();
+                                countFetchAPI();
+                            },
+                                onTokenInvalid: () => Constant.invalidResponse()))
+                        }
+                else
+                    {Constant.invalidResponse()}
+            });
+        } else {
+            countFetchAPI();
+        }
+
     }
 }
 

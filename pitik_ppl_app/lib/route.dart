@@ -28,8 +28,16 @@ import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_activity.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_deal/harvest_deal_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_deal/harvest_deal_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/detail/harvest_realization_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/detail/harvest_realization_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/form/harvest_realization_form_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/form/harvest_realization_form_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitted_form_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitted_form_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_activity.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
@@ -117,6 +125,10 @@ class AppRoutes {
         // Harvest
         GetPage(name: RoutePage.listHarvest, page: () => const HarvestListActivity(), binding: HarvestListBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.harvestSubmittedDetail, page: () => const HarvestSubmittedDetailActivity(), binding: HarvestSubmittedDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestSubmittedForm, page: () => const HarvestSubmittedFormActivity(), binding: HarvestSubmittedFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestDealDetail, page: () => const HarvestDealDetailActivity(), binding: HarvestDealDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestRealizationForm, page: () => const HarvestRealizationFormActivity(), binding: HarvestRealizationFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestRealizationDetail, page: () => const HarvestRealizationDetailActivity(), binding: HarvestRealizationDetailBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -153,4 +165,8 @@ class RoutePage {
     static const String listSmartCameraHistory = "/listSmartCameraHistory";
     static const String listHarvest = "/listHarvest";
     static const String harvestSubmittedDetail = "/harvestSubmittedDetail";
+    static const String harvestSubmittedForm = "/harvestSubmittedForm";
+    static const String harvestDealDetail = "/harvestDealDetail";
+    static const String harvestRealizationForm = "/harvestRealizationForm";
+    static const String harvestRealizationDetail = "/harvestRealizationDetail";
 }

@@ -76,6 +76,7 @@ class EditField extends StatelessWidget {
         }
         return Convert.toDouble(editFieldController.text);
     }
+
     @override
     Widget build(BuildContext context) {
         if(Platform.isIOS){
@@ -86,6 +87,7 @@ class EditField extends StatelessWidget {
         Future.delayed(const Duration(milliseconds: 200), () {
             if (onInit) {
                 controller.textUnit.value = textUnit;
+                controller.hideLabel.value = hideLabel;
                 onInit = false;
             }
         });
@@ -116,33 +118,37 @@ class EditField extends StatelessWidget {
                                             width: width,
                                             height: height,
                                             child: TextFormField(
-                                                expands: inputType == TextInputType.multiline ? true : false,
-                                                maxLines: inputType == TextInputType.multiline ? null : 1,
+                                                expands: inputType == TextInputType.multiline ? false : false,
+                                                maxLines: inputType == TextInputType.multiline ? 5 : 1,
                                                 // focusNode: controller.focusNode,
                                                 controller: editFieldController,
                                                 enabled: controller.activeField.isTrue,
                                                 maxLength: maxInput,
                                                 textInputAction: action,
                                                 keyboardType: inputType,
-                                                inputFormatters: inputType == TextInputType.number ? textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter]: [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
+                                                inputFormatters:  textPrefix == AppStrings.PREFIX_CURRENCY_IDR || isNumberFormatter? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9.,]')), _formatter] : inputType == TextInputType.number? [FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))] :   [],
                                                 onChanged: (text) {
                                                     controller.hideAlert();
                                                     onTyping(text, this);
                                                 },
                                                 decoration: InputDecoration(
-                                                    contentPadding: const EdgeInsets.only(left: 8),
+                                                    
+                                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                     counterText: "",
                                                     hintText: hint,
                                                     hintStyle: const TextStyle(fontSize: 14, color: Color(0xFF9E9D9D)),
-                                                    prefixIcon: childPrefix ?? (textPrefix != null ? Padding(
-                                                      padding: const EdgeInsets.all(16.0),
-                                                      child: Text(
-                                                          "$textPrefix",
-                                                          style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
+                                                    prefixIcon: childPrefix ?? (textPrefix != null ? SizedBox(
+                                                        width: 24,
+                                                        height: 24,
+                                                      child: Center(
+                                                        child: Text(
+                                                            "$textPrefix",
+                                                            style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)
+                                                        ),
                                                       ),
                                                     ): null),
-                                                    suffixIcon: Padding(
-                                                        padding: const EdgeInsets.all(16),
+                                                    suffixIcon: Container(
+                                                        padding: const EdgeInsets.fromLTRB(16,16,16,0),
                                                         child: Text(
                                                             controller.textUnit.value,
                                                             style: TextStyle(color: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.black, fontSize: 14)

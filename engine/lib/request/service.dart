@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
+
 import '../util/mirror_feature.dart';
 import 'annotation/mediatype/form_encoded.dart';
 import 'annotation/mediatype/json.dart';
@@ -36,6 +37,8 @@ class Service {
     static ApiMappingList? apiMappingInstance;
     static setApiMapping<T extends ApiMappingList>(T persistance) => apiMappingInstance = persistance;
 
+    static Map<String, Transporter> requestMap = {};
+
     /// It pushes a message to the server.
     ///
     /// Args:
@@ -44,8 +47,8 @@ class Service {
     ///   listener (ResponseListener): The listener that will be called when the
     /// response is received.
     ///   body (List<dynamic>): The body of the request.
-    static void push({String apiKey= "api", required String service, required BuildContext context, required List<dynamic> body, required ResponseListener listener}) {
-        pushWithIdAndPacket(apiKey: apiKey, service: service, context: context, id: -1, packet: null, body: body, listener: listener);
+    static void push({String apiKey = "api", String requestKey = "", required String service, required BuildContext context, required List<dynamic> body, required ResponseListener listener}) {
+        pushWithIdAndPacket(apiKey: apiKey, requestKey: requestKey, service: service, context: context, id: -1, packet: null, body: body, listener: listener);
     }
 
     /// Push a message to the Dart side of the Flutter app, with an ID and a body.
@@ -57,8 +60,8 @@ class Service {
     /// response is received.
     ///   id (int): The id of the request.
     ///   body (List<dynamic>): The body of the request.
-    static void pushWithId({String apiKey= "api", required String service, required BuildContext context, required int id, required List<dynamic> body, required ResponseListener listener}) {
-        pushWithIdAndPacket(apiKey: apiKey, service: service, context: context, id: id, packet: null, body: body, listener: listener);
+    static void pushWithId({String apiKey= "api", String requestKey = "", required String service, required BuildContext context, required int id, required List<dynamic> body, required ResponseListener listener}) {
+        pushWithIdAndPacket(apiKey: apiKey, requestKey: requestKey, service: service, context: context, id: id, packet: null, body: body, listener: listener);
     }
 
     /// It pushes a new screen with a packet and a body.
@@ -70,8 +73,8 @@ class Service {
     /// response is received.
     ///   packet (dynamic): This is the packet that will be sent to the server.
     ///   body (List<dynamic>): The body of the request.
-    static void pushWithPacket({String apiKey= "api", required String service, required BuildContext context, required dynamic packet, required List<dynamic> body, required ResponseListener listener}) {
-        pushWithIdAndPacket(apiKey: apiKey, service: service, context: context, id: -1, packet: packet, body: body, listener: listener);
+    static void pushWithPacket({String apiKey= "api", String requestKey = "", required String service, required BuildContext context, required dynamic packet, required List<dynamic> body, required ResponseListener listener}) {
+        pushWithIdAndPacket(apiKey: apiKey, requestKey: requestKey, service: service, context: context, id: -1, packet: packet, body: body, listener: listener);
     }
 
     /// The above function is a function that is used to send a request to the
@@ -85,20 +88,30 @@ class Service {
     ///   packet (dynamic): is a dynamic object that can be used to store data that
     /// will be used in the response listener.
     ///   body (List<dynamic>): The body of the request.
-    static void pushWithIdAndPacket({String apiKey= "api", required String service, required BuildContext context, required int id, required dynamic packet, required List<dynamic> body, required ResponseListener listener}) {
+    static void pushWithIdAndPacket({String apiKey= "api", String requestKey = "", required String service, required BuildContext context, required int id, required dynamic packet, required List<dynamic> body, required ResponseListener listener}) {
         Transporter transporter = Transporter().id(id)
             .context(context)
             .packet(packet)
             .listener(listener)
             .url(apiMappingInstance!.getBaseUrl());
 
-        _generateRequest(apiKey, service, transporter, body);
+        _generateRequest(apiKey, requestKey, service, transporter, body);
     }
 
-    static void _generateRequest(String apiKey, String service, Transporter transporter, List<dynamic> body) {
-        try {
-            var classMirror = Rest.reflectType(apiMappingInstance!.getApiMapping(apiKey)) as ClassMirror;
+    static void stopRequest({required String requestKey}) {
+        if (requestMap[requestKey] != null) {
+            requestMap[requestKey]!.stopRequest();
+            requestMap.remove(requestKey);
+        }
+    }
 
+    static void _generateRequest(String apiKey, String requestKey, String service, Transporter transporter, List<dynamic> body) {
+        try {
+            if (requestKey != "") {
+                requestMap[requestKey] = transporter;
+            }
+
+            var classMirror = Rest.reflectType(apiMappingInstance!.getApiMapping(apiKey)) as ClassMirror;
             for (var v in classMirror.declarations.values) {
                 if (v is MethodMirror) {
                     if (v.simpleName == service) {
@@ -241,6 +254,9 @@ class Service {
                             // not support
                         }
 
+                        // set listener when request already done
+                        transporter.requestFinishedListener(() => requestMap.remove(requestKey));
+
                         // Setup METHOD Request
                         if (MirrorFeature.isAnnotationPresent(v, POST)) {
                             POST request = MirrorFeature.getAnnotation(v, POST);
@@ -313,11 +329,12 @@ class Service {
 
 class ServicePeripheral {
     final String keyMap;
+    final String requestKey;
     final ServiceBody requestBody;
     final String baseUrl;
     final List<dynamic> extras;
 
-    ServicePeripheral({this.keyMap = "api", required this.requestBody, required this.baseUrl, this.extras = const []});
+    ServicePeripheral({this.keyMap = "api", this.requestKey = "", required this.requestBody, required this.baseUrl, this.extras = const []});
 
     ServiceBody getRequestBody() {
         return requestBody;
@@ -334,6 +351,6 @@ class ServicePeripheral {
             .listener(listener)
             .url(baseUrl);
 
-        Service._generateRequest(keyMap, service, transporter, body);
+        Service._generateRequest(keyMap, requestKey, service, transporter, body);
     }
 }

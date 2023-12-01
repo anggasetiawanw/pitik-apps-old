@@ -157,6 +157,7 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                     children: [
                                         const SizedBox(height: 8),
                                         controller.isAlreadyReturned() ? Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                                 Container(
                                                     width: MediaQuery.of(context).size.width - 32,
@@ -165,14 +166,16 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                                         color: GlobalVar.blueBackground,
                                                         borderRadius: BorderRadius.all(Radius.circular(10))
                                                     ),
-                                                    child: Column(
+                                                    child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                             SvgPicture.asset('images/information_blue_icon.svg'),
-                                                            Text(
+                                                            const SizedBox(width: 8),
+                                                            Expanded(child: Text(
                                                                 'Ada pengurangan jumlah ${controller.procurement.type == 'pakan' ? 'Pakan' : 'OVK'} pada proses Retur',
                                                                 style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.blue)
-                                                            )
-                                                        ],
+                                                            ))
+                                                        ]
                                                     )
                                                 ),
                                                 const SizedBox(height: 16),
@@ -180,11 +183,11 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                                     '${controller.procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diretur',
                                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                                 ),
-                                                const SizedBox(height: 16),
+                                                const SizedBox(height: 8),
                                                 controller.createProductForReturnedCards(goodReceipt: controller.procurement.goodsReceipts, isFeed: controller.procurement.type == 'pakan')
                                             ],
                                         ) : const SizedBox(),
-                                        controller.procurement.goodsReceipts.isNotEmpty ? Column(
+                                        controller.procurement.goodsReceipts.isNotEmpty && controller.isGrNotAllReturned() ? Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                                 Text(

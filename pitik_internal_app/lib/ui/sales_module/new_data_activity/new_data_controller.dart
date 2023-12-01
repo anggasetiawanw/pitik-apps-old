@@ -37,6 +37,7 @@ class NewDataController extends GetxController {
     NewDataController({required this.context});
 
     Customer? customer;
+    int countFetch = 0;
 
     final EditField editNamaPemilik = EditField(
         controller: GetXCreator.putEditFieldController("namaPemilikBaru"),
@@ -201,7 +202,6 @@ class NewDataController extends GetxController {
         skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("cardController",context));           
         editSalesPIC.setInput(Constant.userGoogle!.email!);
         editSalesPIC.controller.disable();
-        isLoading.value = true;
         editNamaSupplier.controller.invisibleField();
 
         spinnerSupplier = SpinnerField(
@@ -236,24 +236,33 @@ class NewDataController extends GetxController {
                 saveCustomer(true);
             },
         );
+
     }
 
     @override
     void onReady() {
         super.onReady();
-        Get.find<SkuCardController>(tag: "cardController").numberList.listen((p0) {
-            generateListProduct(p0);
-        });
-        Timer(const Duration(milliseconds: 500), () {
-        getProduct(); });
+       
+        isLoading.value = true;
         spinnerKota.controller.disable();
         spinnerKecamatan.controller.disable();
-         WidgetsBinding.instance.addPostFrameCallback((_) {
-            Timer(const Duration(milliseconds: 500), () {
-                getProvince();
-                getBranch();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.find<SkuCardController>(tag: "cardController").numberList.listen((p0) {
+                generateListProduct(p0);
             });
-         });
+            getProvince();
+            getBranch();
+            getProduct();
+        });
+    }
+
+    void countFetchAPI(){
+        countFetch++;
+        if(countFetch == 3){
+            isLoading.value = false;
+             skuCard.controller.spinnerProduct.value[0].controller
+                            .generateItems(mapList.value);
+        }
     }
 
     void getBranch(){
@@ -281,12 +290,14 @@ class NewDataController extends GetxController {
                             }
                             spBranch.controller.generateItems(mapList);
                             spBranch.controller.hideLoading();
+                            countFetchAPI();
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar(
                                 "Pesan",
                                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 5),
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
@@ -295,7 +306,8 @@ class NewDataController extends GetxController {
                             Get.snackbar(
                                 "Pesan",
                                 "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 5),
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
                             spBranch.controller.hideLoading();
@@ -352,7 +364,6 @@ class NewDataController extends GetxController {
     }
 
     void getProduct() {
-        // isLoading.value = true;
         Service.push(
             service: ListApi.getCategories,
             context: context,
@@ -367,24 +378,26 @@ class NewDataController extends GetxController {
                     for (var product in body.data) {
                       mapList[product!.name!] = false;
                     }
-                    Timer(const Duration(milliseconds: 500), () { skuCard.controller.spinnerProduct.value[0].controller.generateItems(mapList);});
+                    
+                    Timer(const Duration(milliseconds: 100), () {
+                    skuCard.controller.spinnerProduct.value[0].controller
+                        .generateItems(mapList);
+                        countFetchAPI(); 
+                    });
 
                     skuCard.controller.setMaplist(listCategories.value);
                     this.mapList.value = mapList;
-                    // isLoading.value = false;
                 },
                 onResponseFail: (code, message, body, id, packet) {
-                    isLoading.value = false;
                     Get.snackbar("Alert", body.error!.message!,
-                        snackPosition: SnackPosition.TOP,
+                        snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
-                    // isLoading.value = false;
                     Get.snackbar("Alert","Terjadi kesalahan internal",
-                        snackPosition: SnackPosition.TOP,
+                        snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,
                         colorText: Colors.white);
@@ -592,7 +605,7 @@ class NewDataController extends GetxController {
         );
     }
 
-    final _getListLocationListener = ResponseListener(
+    late final _getListLocationListener = ResponseListener(
         onResponseDone: (code, message, body, id, packet) async{
             if (id == 1) {
                 Map<String, bool> mapList = {};
@@ -609,7 +622,7 @@ class NewDataController extends GetxController {
                 }
 
                 packet[0].value = false;
-                packet[3].value = false;
+                countFetchAPI();
             }
 
             if (id == 2) {
@@ -642,19 +655,17 @@ class NewDataController extends GetxController {
         },
         onResponseFail: (code, message, body, id, packet) {
             packet[0].value = false;
-            packet[3].value = false;
             Get.snackbar("Alert", body.error!.message!,
-                snackPosition: SnackPosition.TOP,
+                snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5),
                 backgroundColor: Colors.red,
                 colorText: Colors.white);
         },
         onResponseError: (exception, stacktrace, id, packet) {
             packet[0].value = false;
-            packet[3].value = false;
             Get.snackbar("Alert","Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 5),
                 backgroundColor: Colors.red,
                 colorText: Colors.white);
         },

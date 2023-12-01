@@ -20,18 +20,15 @@ class DeliveryConfirmSO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DeliveryConfirmSOController controller =
-        Get.put(DeliveryConfirmSOController(
-            context: context,
-        )
-    );
+    final DeliveryConfirmSOController controller = Get.put(DeliveryConfirmSOController(
+      context: context,
+    ));
 
     Widget detailInformation() {
       return Container(
         margin: const EdgeInsets.only(top: 16, bottom: 6),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-            color: const Color(0xFFFAFAFA), borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(color: const Color(0xFFFAFAFA), borderRadius: BorderRadius.circular(8)),
         child: Column(
           children: [
             Row(
@@ -43,8 +40,7 @@ class DeliveryConfirmSO extends StatelessWidget {
                   children: [
                     Text(
                       "Informasi Pengiriman",
-                      style: AppTextStyle.blackTextStyle
-                          .copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 4,
@@ -55,10 +51,7 @@ class DeliveryConfirmSO extends StatelessWidget {
                     )
                   ],
                 ),
-                OrderStatus(
-                  orderStatus: controller.order.status,
-                  returnStatus: controller.order.returnStatus,grStatus: controller.order.grStatus
-                )
+                OrderStatus(orderStatus: controller.order.status, returnStatus: controller.order.returnStatus, grStatus: controller.order.grStatus)
               ],
             ),
             const SizedBox(
@@ -90,8 +83,7 @@ class DeliveryConfirmSO extends StatelessWidget {
             ),
             Text(
               name,
-              style: AppTextStyle.blackTextStyle
-                  .copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
             )
           ],
         ),
@@ -99,53 +91,43 @@ class DeliveryConfirmSO extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      return (products.returnWeight ==null || products.returnWeight ==0) &&(products.returnQuantity ==null || products.returnQuantity ==0) ?  Container(
-        margin: const EdgeInsets.only(top: 16),
-        child: Expandable(
-            controller:
-                GetXCreator.putAccordionController("sku${products.name}"),
-            headerText: "${products.name}",
-            child: Column(
-              children: [
-                infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                infoDetailSku("SKU", "${products.name}"),
-                products.quantity != 0
-                    ? infoDetailSku(
-                        "Jumlah Ekor", "${products.quantity} Ekor")
-                    : const SizedBox(),
-                products.numberOfCuts != 0
-                    ? infoDetailSku(
-                        "Potongan", "${products.numberOfCuts} Potong")
-                    : const SizedBox(),
-                infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
-                infoDetailSku("Harga",
-                    "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-              ],
-            )),
-      ) : Container(
-        margin: const EdgeInsets.only(top: 16),
-        child: Expandable(
-            controller:
-                GetXCreator.putAccordionController("sku${products.name}"),
-            headerText: "${products.name}",
-            child: Column(
-              children: [
-                infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                infoDetailSku("SKU", "${products.name}"),
-                products.quantity != 0
-                    ? infoDetailSku(
-                        "Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor")
-                    : const SizedBox(),
-                products.numberOfCuts != 0
-                    ? infoDetailSku(
-                        "Potongan", "${products.numberOfCuts} Potong")
-                    : const SizedBox(),
-                infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                infoDetailSku("Harga",
-                    "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-              ],
-            )),
-      );
+      if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      }
     }
 
     Widget bottomNvabar() {
@@ -155,14 +137,8 @@ class DeliveryConfirmSO extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromARGB(20, 158, 157, 157),
-                      blurRadius: 5,
-                      offset: Offset(0.75, 0.0))
-                ],
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
               ),
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: controller.confirButton));
@@ -181,68 +157,89 @@ class DeliveryConfirmSO extends StatelessWidget {
         child: Column(
           children: [
             Row(
-                children: [
+              children: [
                 Expanded(
-                    child: Text(
+                  child: Text(
                     "Total Penjualan",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                ],
+              ],
             ),
             const SizedBox(
-                height: 20,
+              height: 20,
             ),
             Row(
-                children: [
+              children: [
                 Expanded(
-                    child: Text(
+                  child: Text(
                     "Total Kg",
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                Text("${controller.sumKg.value.toStringAsFixed(2)}kg",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                    overflow: TextOverflow.clip,),
-                ],
+                Text(
+                  "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                  overflow: TextOverflow.clip,
+                ),
+              ],
             ),
             const SizedBox(
-                height: 8,
+              height: 8,
             ),
-            if(controller.sumChick.value !=0)...[
-                    Row(
-                    children: [
-                    Expanded(
-                        child: Text(
-                        "Total Ekor",
-                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                        overflow: TextOverflow.clip,
-                        ),
-                    ),
-                    Obx(() => Text("${controller.sumChick.value} Ekor",
-                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                        overflow: TextOverflow.clip,)),
-                    ],
-                ),
-                const SizedBox(
-                    height: 8,
-                ),
-            ],
-            Row(
+            if (controller.sumChick.value != 0) ...[
+              Row(
                 children: [
-                Expanded(
+                  Expanded(
                     child: Text(
+                      "Total Ekor",
+                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                  Obx(() => Text(
+                        "${controller.sumChick.value} Ekor",
+                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                        overflow: TextOverflow.clip,
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+            ],
+            if (controller.order.deliveryFee! > 0) ...[
+
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Biaya Pengiriman",
+                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.order.deliveryFee), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                ],
+              )
+            ],
+
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
                     "Total Rp",
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits:2).format(controller.sumPrice.value),
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                    overflow: TextOverflow.clip),
-                ],
+                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + (controller.order.deliveryFee ?? 0))), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+              ],
             )
           ],
         ),
@@ -253,93 +250,83 @@ class DeliveryConfirmSO extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
-        child: CustomAppbar(title: "Detail Pengiriman", onBack: (){
-            Get.back();
-        }),
+        child: CustomAppbar(
+            title: "Detail Pengiriman",
+            onBack: () {
+              Get.back();
+            }),
       ),
-      body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),)
-        : Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      detailInformation(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                        "Detail SKU",
-                        style: AppTextStyle.blackTextStyle
-                            .copyWith(fontWeight: AppTextStyle.bold),
-                      ),
-                      Column(
-                        children: controller.order.products!
-                            .map((e) => customExpandalbe(e!))
-                            .toList(),
-                      ),
-                      totalPembelian(),
-                      controller.paymentMethod,
-                      controller.nominalMoney,
-                      controller.checkinButton,
-                      Obx(
-                        () => controller.showErrorCheckin.isTrue
-                            ? Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: controller.isSuccessCheckin.isTrue
-                                        ? const Color(0xFFECFDF3)
-                                        : const Color(0xFFFEF3F2),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Row(
-                                  children: [
-                              SvgPicture.asset(controller.isSuccessCheckin.isTrue ? "images/success_checkin.svg" : "images/failed_checkin.svg", height: 14),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        controller.isSuccessCheckin.isTrue
-                                            ? "Selamat kamu berhasil melakukan Check in"
-                                            : "Checkin Gagal ${controller.error.value}, coba Kembali",
-                                        style: TextStyle(
-                                            color:
-                                                controller.isSuccessCheckin.isTrue
-                                                    ? const Color(0xFF12B76A)
-                                                    : const Color(0xFFF04438),
-                                            fontSize: 10),
-                                            overflow: TextOverflow.clip,
+      body: Obx(() => controller.isLoading.isTrue
+          ? const Center(
+              child: ProgressLoading(),
+            )
+          : Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        detailInformation(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "Detail SKU",
+                          style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
+                        ),
+                        Column(
+                          children: controller.order.products!.map((e) => customExpandalbe(e!)).toList(),
+                        ),
+                        totalPembelian(),
+                        controller.paymentMethod,
+                        controller.nominalMoney,
+                        controller.checkinButton,
+                        Obx(
+                          () => controller.showErrorCheckin.isTrue
+                              ? Container(
+                                  margin: const EdgeInsets.only(top: 16),
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(color: controller.isSuccessCheckin.isTrue ? const Color(0xFFECFDF3) : const Color(0xFFFEF3F2), borderRadius: BorderRadius.circular(6)),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(controller.isSuccessCheckin.isTrue ? "images/success_checkin.svg" : "images/failed_checkin.svg", height: 14),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                      ),
-                      const SizedBox(
-                        height: 140,
-                      ),
-                    ],
+                                      Expanded(
+                                        child: Text(
+                                          controller.isSuccessCheckin.isTrue ? "Selamat kamu berhasil melakukan Check in" : "Checkin Gagal ${controller.error.value}, coba Kembali",
+                                          style: TextStyle(color: controller.isSuccessCheckin.isTrue ? const Color(0xFF12B76A) : const Color(0xFFF04438), fontSize: 10),
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ),
+                        const SizedBox(
+                          height: 140,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              bottomNvabar(),
-              Obx(() => controller.isLoadCheckin.isTrue
-                  ? Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.grey.withOpacity(0.5),
-                      child: const Center(
-                        child: ProgressLoading(),
-                      ),
-                    )
-                  : const SizedBox())
-            ],
-          )),
+                bottomNvabar(),
+                Obx(() => controller.isLoadCheckin.isTrue
+                    ? Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.grey.withOpacity(0.5),
+                        child: const Center(
+                          child: ProgressLoading(),
+                        ),
+                      )
+                    : const SizedBox())
+              ],
+            )),
     );
   }
 }
-

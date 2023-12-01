@@ -21,13 +21,7 @@ class PrivacyScreenController extends GetxController {
     var showBtnApprove = false.obs;
 
     late String homePageRoute;
-    late ButtonFill bfAgree = ButtonFill(
-        controller: GetXCreator.putButtonFillController("bfAgree"),
-        label: "Saya Setuju", onClick: () async {
-            final SharedPreferences pref = await prefs;
-            isFirstLogin = pref.setBool('isFirstLogin', false);
-            Get.offAllNamed(homePageRoute);
-    });
+    late ButtonFill bfAgree;
     
     scrollListener() async {
         scrollController.addListener(() {
@@ -41,6 +35,14 @@ class PrivacyScreenController extends GetxController {
     Future<void> onInit() async {
         super.onInit();
         isLoading.value = true;
+        
+        bfAgree = ButtonFill(
+            controller: GetXCreator.putButtonFillController("bfAgree"),
+            label: "Saya Setuju", onClick: () async {
+            final SharedPreferences pref = await prefs;
+            isFirstLogin = pref.setBool('isFirstLogin', false);
+            Get.offAllNamed(homePageRoute, arguments: Get.arguments[2]);
+        });
 
         if (Get.arguments != null) {
             showBtnApprove.value = Get.arguments[0];

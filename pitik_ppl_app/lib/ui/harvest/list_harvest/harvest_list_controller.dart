@@ -116,7 +116,7 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePage.harvestSubmittedDetail, arguments: [coop, harvest]),
+                    onTap: () => Get.toNamed(RoutePage.harvestSubmittedDetail, arguments: [coop, harvest])!.then((value) => refreshHarvestList()),
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
@@ -182,13 +182,11 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () {
-                        // if (typePosition == 0) {
-                        //     Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, harvest])!.then((value) => refreshOrderList());
-                        // } else {
-                        //     Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, harvest, false, fromCoopRest])!.then((value) => refreshOrderList());
-                        // }
-                    },
+                    onTap: () => Get.toNamed(RoutePage.harvestDealDetail, arguments: [coop, harvest])!.then((result) {
+                        if (result != null && result) {
+                            refreshHarvestList();
+                        }
+                    }),
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
@@ -267,13 +265,7 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () {
-                        // if (typePosition == 0) {
-                        //     Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, harvest])!.then((value) => refreshOrderList());
-                        // } else {
-                        //     Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, harvest, false, fromCoopRest])!.then((value) => refreshOrderList());
-                        // }
-                    },
+                    onTap: () => Get.toNamed(RoutePage.harvestRealizationDetail, arguments: [coop, realization])!.then((value) => refreshHarvestList()),
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
@@ -356,16 +348,16 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
     }
 
     Widget _getStatusWidget({required String statusText}) {
-        Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryLight2 :
+        Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED || statusText == GlobalVar.NEED_APPROVAL ? GlobalVar.primaryLight2 :
                            statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.redBackground :
                            statusText == GlobalVar.DIPROSES || statusText == GlobalVar.SELESAI ? GlobalVar.greenBackground:
-                           statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI ? GlobalVar.blueBackground :
+                           statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI || statusText == GlobalVar.AVAILABLE ? GlobalVar.blueBackground :
                            Colors.white;
 
-        Color textColor = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryOrange :
+        Color textColor = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED || statusText == GlobalVar.NEED_APPROVAL ? GlobalVar.primaryOrange :
                           statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.red :
                           statusText == GlobalVar.DIPROSES || statusText == GlobalVar.SELESAI ? GlobalVar.green:
-                          statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI ? GlobalVar.blue :
+                          statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI || statusText == GlobalVar.AVAILABLE ? GlobalVar.blue :
                           Colors.white;
 
         return Container(

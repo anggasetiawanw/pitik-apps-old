@@ -44,6 +44,12 @@ class Transporter {
 
     String log = "";
 
+    Function()? onRequestFinished;
+    Transporter requestFinishedListener(onRequestFinished) {
+        this.onRequestFinished = onRequestFinished;
+        return this;
+    }
+
     /// It sets the context of the transporter to the build context of the widget.
     ///
     /// Args:
@@ -268,12 +274,19 @@ class Transporter {
         }
     }
 
+    void _callRequestFinished() {
+        if (onRequestFinished != null) {
+            onRequestFinished!();
+        }
+    }
+
     /// A function that is called when the user clicks on a button.
     void execute() async {
         validate();
 
         processing().then((transporterResponse) {
             _postLog(transporterResponse);
+            _callRequestFinished();
 
             if (transporterResponse.statusCode >= 200 && transporterResponse.statusCode < 300) {
                 if (persistanceClass == StringModel) {
@@ -298,6 +311,7 @@ class Transporter {
             }
         }).catchError((exception, stacktrace) {
             _postLogException(stacktrace);
+            _callRequestFinished();
             transportListener.onResponseError(exception.toString(), stacktrace, code, arrPacket);
         });
     }
@@ -321,6 +335,8 @@ class Transporter {
         FirebaseCrashlytics.instance.recordError(log, stacktrace, fatal: false);
         FirebaseCrashlytics.instance.log(log);
     }
+
+    void stopRequest() => _chuckerHttpClient.close();
 
     /// It takes the request parameters and sends the request to the server
     ///
