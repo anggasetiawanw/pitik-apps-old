@@ -260,9 +260,7 @@ class CoopDashboardController extends GetxController {
                                             // _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
                                             //     // TO DAILY TASK
                                             // }),
-                                            _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () {  // FARM CLOSING
-                                                // TO FARM CLOSING
-                                            }),
+                                            _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () => Get.toNamed(RoutePage.farmClosing, arguments: [coop])),
                                             const SizedBox(width: 60)
                                         ],
                                     ),

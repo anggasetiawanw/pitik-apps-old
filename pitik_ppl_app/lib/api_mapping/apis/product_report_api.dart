@@ -126,7 +126,7 @@ class ProductReportApi {
     /// such as "pending", "approved", "rejected", etc.
     @GET(value: "v2/purchase-orders", as: ProcurementListResponse, error: ErrorResponse)
     void getListPurchaseOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isBeforeDoc") bool isBeforeDoc,
-                              @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status) {}
+                              @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status, @Query("isFulfilled") bool isFulfilled) {}
 
     /// This function is a GET request to retrieve a list of purchase orders for a
     /// cooperative.

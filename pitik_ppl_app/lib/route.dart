@@ -26,6 +26,8 @@ import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_hom
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_activity.dart';
+import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_controller.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_activity.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_deal/harvest_deal_detail_activity.dart';
@@ -129,6 +131,9 @@ class AppRoutes {
         GetPage(name: RoutePage.harvestDealDetail, page: () => const HarvestDealDetailActivity(), binding: HarvestDealDetailBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.harvestRealizationForm, page: () => const HarvestRealizationFormActivity(), binding: HarvestRealizationFormBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.harvestRealizationDetail, page: () => const HarvestRealizationDetailActivity(), binding: HarvestRealizationDetailBinding(context: GlobalVar.getContext())),
+
+        // Farm Closing
+        GetPage(name: RoutePage.farmClosing, page: () => const FarmClosingActivity(), binding: FarmClosingBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -169,4 +174,5 @@ class RoutePage {
     static const String harvestDealDetail = "/harvestDealDetail";
     static const String harvestRealizationForm = "/harvestRealizationForm";
     static const String harvestRealizationDetail = "/harvestRealizationDetail";
+    static const String farmClosing = "/farmClosing";
 }

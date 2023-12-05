@@ -11,6 +11,7 @@ import 'package:model/response/date_monitoring_response.dart';
 import 'package:model/response/monitoring_detail_response.dart';
 import 'package:model/response/realization_response.dart';
 import 'package:model/response/left_over_response.dart';
+import 'package:model/response/adjusment_mortality_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -121,6 +122,38 @@ class FarmMonitoringApi {
     @GET(value: 'v2/harvest-realizations', as: RealizationResponse, error: ErrorResponse)
     void getListHarvestRealization(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
 
+    /// The function "getLeftOver" is a GET request that retrieves leftover data
+    /// using the provided authorization, X-ID, and path parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// the request. It is typically used to authenticate and authorize the user
+    /// making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header in the HTTP request. It is used to pass additional
+    /// identification information in the request.
+    ///   path (String): The `path` parameter is a placeholder for a dynamic value
+    /// that will be included in the URL path of the GET request. It is typically
+    /// used to specify a specific resource or endpoint that the client wants to
+    /// retrieve.
     @GET(value: GET.PATH_PARAMETER, as: LeftOverResponse, error: ErrorResponse)
     void getLeftOver(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function is a GET request that retrieves adjustment mortality data using
+    /// the provided authorization, X-ID, and path parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity and
+    /// permissions of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used to track or identify
+    /// a specific user or session.
+    ///   path (String): The `path` parameter is a placeholder for the actual value
+    /// that will be passed in the URL path when making the GET request. It is used
+    /// to specify a specific resource or endpoint that the request is targeting.
+    @GET(value: GET.PATH_PARAMETER, as: AdjustmentMortalityResponse, error: ErrorResponse)
+    void getAdjustment(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 }

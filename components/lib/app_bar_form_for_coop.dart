@@ -10,7 +10,8 @@ class AppBarFormForCoop extends StatelessWidget {
     String title;
     Coop coop;
     bool hideCoopDetail;
-    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false});
+    Function()? onBackPressed;
+    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false, this.onBackPressed});
 
     @override
     Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class AppBarFormForCoop extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                             GestureDetector(
-                                onTap: () => Get.back(),
+                                onTap: () => onBackPressed != null ? onBackPressed!() : Get.back(),
                                 child: const Icon(Icons.arrow_back, color: Colors.white),
                             ),
                             Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),

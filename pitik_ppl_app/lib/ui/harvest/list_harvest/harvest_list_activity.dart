@@ -5,6 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/route.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_common.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
 
 ///@author DICKY
@@ -65,14 +66,16 @@ class HarvestListActivity extends GetView<HarvestListController> {
                                             radius: const Radius.circular(8),
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
-                                                    const Duration(milliseconds: 200), () => controller.getSubmittedList()
+                                                    const Duration(milliseconds: 200), () => HarvestCommon.getSubmittedList(isLoading: controller.isLoading, coop: controller.coop, harvestList: controller.harvestList)
                                                 ),
                                                 child: ListView.builder(
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.harvestList.length,
-                                                    itemBuilder: (context, index) => controller.createSubmittedHarvestCard(
+                                                    itemBuilder: (context, index) => HarvestCommon.createSubmittedHarvestCard(
                                                         index: index,
-                                                        harvest: controller.harvestList[index]
+                                                        coop: controller.coop,
+                                                        harvest: controller.harvestList[index],
+                                                        onRefreshData: () => controller.refreshHarvestList()
                                                     )
                                                 ),
                                             )
@@ -82,14 +85,15 @@ class HarvestListActivity extends GetView<HarvestListController> {
                                             radius: const Radius.circular(8),
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
-                                                    const Duration(milliseconds: 200), () => controller.getDealList()
+                                                    const Duration(milliseconds: 200), () => HarvestCommon.getDealList(isLoading: controller.isLoading, coop: controller.coop, harvestList: controller.harvestList)
                                                 ),
                                                 child: ListView.builder(
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.harvestList.length,
-                                                    itemBuilder: (context, index) => controller.createDealHarvestCard(
-                                                        harvest: controller.harvestList[index]
-                                                    )
+                                                    itemBuilder: (context, index) => HarvestCommon.createDealHarvestCard(
+                                                        coop: controller.coop,
+                                                        harvest: controller.harvestList[index],
+                                                        onRefreshData: () => controller.refreshHarvestList())
                                                 ),
                                             )
                                         ),
@@ -98,13 +102,15 @@ class HarvestListActivity extends GetView<HarvestListController> {
                                             radius: const Radius.circular(8),
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
-                                                    const Duration(milliseconds: 200), () => controller.getRealizationList()
+                                                    const Duration(milliseconds: 200), () => HarvestCommon.getRealizationList(isLoading: controller.isLoading, coop: controller.coop, realizationList: controller.realizationList)
                                                 ),
                                                 child: ListView.builder(
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.realizationList.length,
-                                                    itemBuilder: (context, index) => controller.createRealizationHarvestCard(
-                                                        realization: controller.realizationList[index]
+                                                    itemBuilder: (context, index) => HarvestCommon.createRealizationHarvestCard(
+                                                        coop: controller.coop,
+                                                        realization: controller.realizationList[index],
+                                                        onRefreshData: () => controller.refreshHarvestList()
                                                     )
                                                 )
                                             )
