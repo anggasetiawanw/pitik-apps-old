@@ -14,12 +14,13 @@ import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 // ignore: unused_import
-import 'package:model/response/coop_list_response.dart';
-import 'package:model/response/internal_app/media_upload_response.dart';
-import 'package:model/response/profile_response.dart';
-// ignore: unused_import
 import 'package:model/password_model.dart';
 import 'package:model/response/approval_doc_response.dart';
+// ignore: unused_import
+import 'package:model/response/coop_list_response.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
+import 'package:model/response/notification_response.dart';
+import 'package:model/response/profile_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -64,4 +65,43 @@ class API {
     @GET(value : "v2/roles/acl/validate", as : AprovalDocInResponse, error : ErrorResponse)
     void getApproval(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("name") String name){}
 
+        /// It counts the number of unread notifications.
+    ///
+    /// @param authorization The authorization token.
+    /// @param xId The unique ID of the user.
+    @GET(value : "v2/notifications/unread/count", error : ErrorResponse)
+    void countUnreadNotifications(@Header("Authorization") String authorization, @Header("X-ID") String xId){}
+
+     /// `readAllNotifications` is a `PATCH` request to `v2/notifications/read` that returns an
+     /// `ErrorResponse` if it fails
+     ///
+     /// @param authorization The authorization token.
+     /// @param xId The X-ID header is a unique identifier for the request. It is used to identify the
+     /// request in the logs.
+     /// @param nobody This is a dummy parameter. It is required to make the request body empty.
+    @PATCH(value : "v2/notifications/read", error : ErrorResponse)
+    void readAllNotifications(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("nobody") String nobody){}
+    /// "Get a list of notifications for the current user."
+    ///
+    /// The @GET annotation tells the compiler that this is a GET request. The value parameter is the
+    /// URL of the request. The as parameter is the class that the response will be parsed into. The
+    /// error parameter is the class that the error response will be parsed into
+    ///
+    /// @param authorization The authorization token.
+    /// @param xId The unique identifier for the user.
+    /// @param page The page number of the results to return.
+    /// @param limit The number of items to return per page.
+    @GET(value : "v2/notifications", as : NotificationResponse, error : ErrorResponse)
+    void notifications(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("\$page") int page, @Query("\$limit") int limit){}
+
+    /// This function will send a PATCH request to the server, and will return an error response if the
+    /// request fails.
+    ///
+    /// @param authorization The authorization header
+    /// @param xId The X-ID header is a unique identifier for the request. It is used to correlate the
+    /// request and response.
+    /// @param path The path of the request.
+    /// @param nobody The body of the request.
+    @PATCH(value : PATCH.PATH_PARAMETER, error : ErrorResponse)
+    void updateNotification(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("nobody") String nobody){}
 }

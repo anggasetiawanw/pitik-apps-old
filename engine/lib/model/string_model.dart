@@ -10,7 +10,7 @@ import 'base_model.dart';
 
 @SetupModel
 class StringModel {
-    String? data;
+    dynamic data;
     StringModel({this.data});
 
     static StringModel toResponseModel(Map<String, dynamic> map) {
