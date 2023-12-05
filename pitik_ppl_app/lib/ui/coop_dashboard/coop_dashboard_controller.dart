@@ -125,48 +125,40 @@ class CoopDashboardController extends GetxController {
                 ),
             ),
         );
-        getUnreadNotifCount();
+
+        _getUnreadNotificationCount();
     }
 
-    void getUnreadNotifCount(){
-
-        AuthImpl().get().then((auth) => {
-            if (auth != null){
-                Service.push(
-                    apiKey: ApiMapping.api,
-                    service: ListApi.countUnreadNotifications,
-                    context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                    ],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            countUnreadNotifications.value = (body.data);
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                                print(stacktrace);
-                        },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
-        });
-    }
+    void _getUnreadNotificationCount() => AuthImpl().get().then((auth) => {
+        if (auth != null){
+            Service.push(
+                apiKey: ApiMapping.api,
+                service: ListApi.countUnreadNotifications,
+                context: context,
+                body: ['Bearer ${auth.token}', auth.id],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) => countUnreadNotifications.value = (body.data),
+                    onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                    ),
+                    onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan Internal",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                    ),
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                )
+            )
+        } else {
+            GlobalVar.invalidResponse()
+        }
+    });
 
     @override
     void onReady() {
