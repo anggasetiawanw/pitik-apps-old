@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
 
 ///@author DICKY
@@ -146,27 +147,30 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                         )
                                                     ),
                                                 ),
-                                                SizedBox(
-                                                    width: 50,
-                                                    height: 34,
-                                                    child: Stack(
-                                                        children: [
-                                                            Positioned(
-                                                                left: 16,
-                                                                top: 5,
-                                                                child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)
-                                                            ),
-                                                            Container(
-                                                                decoration: const BoxDecoration(
-                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                    color: GlobalVar.red
+                                                GestureDetector(
+                                                    onTap: () =>  Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
+                                                    child: SizedBox(
+                                                        width: 50,
+                                                        height: 34,
+                                                        child: Stack(
+                                                            children: [
+                                                                Positioned(
+                                                                    left: 16,
+                                                                    top: 5,
+                                                                    child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)
                                                                 ),
-                                                                child: Padding(
-                                                                    padding: const EdgeInsets.all(4),
-                                                                    child: Text("${controller.countUnreadNotifications.value}", style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                                                ),
-                                                            )
-                                                        ],
+                                                                Container(
+                                                                    decoration: const BoxDecoration(
+                                                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                        color: GlobalVar.red
+                                                                    ),
+                                                                    child: Padding(
+                                                                        padding: const EdgeInsets.all(4),
+                                                                        child: Obx(() => Text("${controller.countUnreadNotifications.value}", style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white))),
+                                                                    ),
+                                                                )
+                                                            ],
+                                                        ),
                                                     ),
                                                 )
                                             ]

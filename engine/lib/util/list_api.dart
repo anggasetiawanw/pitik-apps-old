@@ -21,6 +21,9 @@ class ListApi {
     static const String uploadImage = "uploadImage";
     static const String getApproval = "getApproval";
     static const String countUnreadNotifications = "countUnreadNotifications";
+    static const String readAllNotifications = "readAllNotifications";
+    static const String notifications = "notifications";
+    static const String updateNotification = "updateNotification";
 
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";

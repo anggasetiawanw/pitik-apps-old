@@ -10,8 +10,9 @@ class CustomAppbar extends StatelessWidget {
     final String title;
     final Function() onBack;
     final bool isFlat;
+    final List<Widget>? actions;
     const CustomAppbar({
-        super.key, required this.title, required this.onBack, this.isFlat = false
+        super.key, required this.title, required this.onBack, this.isFlat = false, this.actions = const []
     });
 
     @override
@@ -33,6 +34,7 @@ class CustomAppbar extends StatelessWidget {
                 style: GlobalVar.whiteTextStyle
                     .copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
             ),
+            actions: actions,
         );
     }
 }

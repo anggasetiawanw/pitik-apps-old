@@ -18,6 +18,7 @@ import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
+import 'package:engine/util/deeplink.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,6 @@ import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
-import 'package:engine/util/deeplink.dart';
 import 'package:pitik_ppl_app/utils/deeplink_mapping_arguments.dart';
 
 ///@author DICKY
@@ -92,10 +92,14 @@ class CoopDashboardController extends GetxController {
     )).obs;
 
     @override
-    void onInit() async {
+    void onInit() async{
         super.onInit();
         coop = Get.arguments[0];
 
+        refreshData();
+    }
+
+    void refreshData()async{
         getMonitoringPerformance(coop);
         profile = await ProfileImpl().get();
 
@@ -121,16 +125,15 @@ class CoopDashboardController extends GetxController {
                 ),
             ),
         );
-
         getUnreadNotifCount();
     }
 
     void getUnreadNotifCount(){
+
         AuthImpl().get().then((auth) => {
             if (auth != null){
-                print("CAAALONNGGG"),
                 Service.push(
-                    apiKey: ApiMapping.userApi,
+                    apiKey: ApiMapping.api,
                     service: ListApi.countUnreadNotifications,
                     context: context,
                     body: [
@@ -139,8 +142,7 @@ class CoopDashboardController extends GetxController {
                     ],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            print("countUnreadNotifications=>>>>>>>>>>>>>>>>> ${body.data}");
-                            countUnreadNotifications.value = (body.data as int);
+                            countUnreadNotifications.value = (body.data);
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar(
@@ -157,6 +159,7 @@ class CoopDashboardController extends GetxController {
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
+                                print(stacktrace);
                         },
                             onTokenInvalid: () => GlobalVar.invalidResponse()))
                     }
