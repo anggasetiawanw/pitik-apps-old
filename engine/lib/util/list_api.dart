@@ -20,6 +20,7 @@ class ListApi {
     static const String registerDevice = "registerDevice";
     static const String uploadImage = "uploadImage";
     static const String getApproval = "getApproval";
+    static const String countUnreadNotifications = "countUnreadNotifications";
 
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
