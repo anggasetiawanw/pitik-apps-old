@@ -11,11 +11,10 @@ import 'package:http/http.dart' as http;
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
 
-import '../../model/base_model.dart';
-import '../../model/string_model.dart';
-import '../../util/mapper/mapper.dart';
 import './body/body_builder.dart';
 import './interface/response_listener.dart';
+import '../../model/base_model.dart';
+import '../../util/mapper/mapper.dart';
 import 'transporter_response.dart';
 
 /**
@@ -289,14 +288,8 @@ class Transporter {
             _callRequestFinished();
 
             if (transporterResponse.statusCode >= 200 && transporterResponse.statusCode < 300) {
-                if (persistanceClass == StringModel) {
-                    StringModel stringModel = StringModel();
-                    stringModel.data = transporterResponse.body as String;
-                    transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, stringModel, code, arrPacket);
-                } else {
                     persistanceClass = Mapper.childPersistance(transporterResponse.body, persistanceClass);
                     transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, persistanceClass, code, arrPacket);
-                }
             } else {
                 if (transporterResponse.statusCode == 401) {
                     transportListener.onTokenInvalid();

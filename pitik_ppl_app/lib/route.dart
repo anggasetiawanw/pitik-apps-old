@@ -8,9 +8,14 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
@@ -42,6 +47,8 @@ import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_activity.dart
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
+import 'package:pitik_ppl_app/ui/notification/notification_activity.dart';
+import 'package:pitik_ppl_app/ui/notification/notification_controller.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
 import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
@@ -62,11 +69,6 @@ import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_activi
 import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_activity.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
-import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
-import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
-import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
-import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
-import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -81,6 +83,7 @@ class AppRoutes {
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.notification, page: () => const NotificationActivity(), binding: NotificationBindings(context: GlobalVar.getContext())),
 
         // Profile Page
         GetPage(name: RoutePage.privacyPage, page: ()=> const PrivacyScreen(), binding: PrivacyScreenBindings(context: GlobalVar.getContext())),
@@ -169,4 +172,5 @@ class RoutePage {
     static const String harvestDealDetail = "/harvestDealDetail";
     static const String harvestRealizationForm = "/harvestRealizationForm";
     static const String harvestRealizationDetail = "/harvestRealizationDetail";
+    static const String notification = "/notificationList";
 }
