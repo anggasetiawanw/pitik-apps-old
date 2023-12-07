@@ -73,9 +73,12 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                           fontSize: 10,
                         ),
                       ),
-                      Text(
-                        controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
-                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                      Expanded(
+                        child: Text(
+                          controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
+                          style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   )
@@ -92,10 +95,15 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                     fontSize: 10,
                   ),
                 ),
-                Text(
-                  controller.orderDetail.value!.customer?.businessName ?? "-",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                  overflow: TextOverflow.clip,
+                const SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: Text(
+                    controller.orderDetail.value!.customer?.businessName ?? "-",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -174,7 +182,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                     ),
                   ),
                   Text(
-                    controller.orderDetail.value!.deliveryTime!=null? Convert.getDateFormat(controller.orderDetail.value!.deliveryTime!):"-",
+                    controller.orderDetail.value!.deliveryTime != null ? Convert.getDateFormat(controller.orderDetail.value!.deliveryTime!) : "-",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -329,23 +337,23 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.allocated) ...[
-                      if (Constant.isShopKepper.isTrue) ...[
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
                         Expanded(
                           child: controller.bookStockButton,
                         ),
                         const SizedBox(
                           width: 16,
                         ),
-                        Expanded(
-                          child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                            label: "Batal",
-                            onClick: () {
-                              showBottomDialog(context, controller);
-                            },
-                          ),
-                        )
-                      ]
+                      ],
+                      Expanded(
+                        child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
+                          label: "Batal",
+                          onClick: () {
+                            showBottomDialog(context, controller);
+                          },
+                        ),
+                      )
                     ] else if (controller.orderDetail.value!.status == EnumSO.booked && controller.orderDetail.value!.category == EnumSO.outbound) ...[
                       Expanded(
                         child: controller.sendButton,
