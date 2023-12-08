@@ -1,8 +1,11 @@
 
+import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/property/header.dart';
+import 'package:engine/request/annotation/property/parameter.dart';
 import 'package:engine/request/annotation/property/path.dart';
 import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
+import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/monitoring_performance_response.dart';
@@ -156,4 +159,23 @@ class FarmMonitoringApi {
     /// to specify a specific resource or endpoint that the request is targeting.
     @GET(value: GET.PATH_PARAMETER, as: AdjustmentMortalityResponse, error: ErrorResponse)
     void getAdjustment(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `adjustClosing` is a PATCH request that adjusts the closing
+    /// with the given authorization, X-ID, path, and data.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// the request. It is typically used to authenticate the user or client making
+    /// the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header value.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be adjusted or modified. It is typically used in
+    /// RESTful APIs to identify a specific resource or endpoint.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// that needs to be adjusted for closing.
+    @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void adjustClosing(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 }

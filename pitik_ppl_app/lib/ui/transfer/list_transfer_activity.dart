@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:components/app_bar_form_for_coop.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_controller.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_common.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -86,16 +87,17 @@ class ListTransferActivity extends GetView<ListTransferController> {
                                             radius: const Radius.circular(8),
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
-                                                    const Duration(milliseconds: 200), () => controller.getListSend()
+                                                    const Duration(milliseconds: 200), () => TransferCommon.getListSend(coop: controller.coop, isLoading: controller.isLoading, destinationTransferList: controller.transferList)
                                                 ),
                                                 child: ListView.builder(
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.transferList.length,
-                                                    itemBuilder: (context, index) => controller.createTransferCard(
-                                                        typePosition: 0,
-                                                        procurement: controller.transferList[index]
+                                                    itemBuilder: (context, index) => TransferCommon.createTransferCard(
+                                                        coop: controller.coop,
+                                                        procurement: controller.transferList[index],
+                                                        onRefreshData: () => controller.refreshTransferList()
                                                     )
-                                                ),
+                                                )
                                             )
                                         ),
                                         RawScrollbar(
@@ -103,14 +105,16 @@ class ListTransferActivity extends GetView<ListTransferController> {
                                             radius: const Radius.circular(8),
                                             child: RefreshIndicator(
                                                 onRefresh: () => Future.delayed(
-                                                    const Duration(milliseconds: 200), () => controller.getListReceived()
+                                                    const Duration(milliseconds: 200), () => TransferCommon.getListReceived(coop: controller.coop, isLoading: controller.isLoading, destinationTransferList: controller.transferList)
                                                 ),
                                                 child: ListView.builder(
                                                     physics: const AlwaysScrollableScrollPhysics(),
                                                     itemCount: controller.transferList.length,
-                                                    itemBuilder: (context, index) => controller.createTransferCard(
-                                                        typePosition: 2,
-                                                        procurement: controller.transferList[index]
+                                                    itemBuilder: (context, index) => TransferCommon.createTransferCard(
+                                                        isGrTransfer: true,
+                                                        coop: controller.coop,
+                                                        procurement: controller.transferList[index],
+                                                        onRefreshData: () => controller.refreshTransferList()
                                                     )
                                                 ),
                                             )

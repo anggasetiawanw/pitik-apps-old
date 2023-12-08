@@ -98,6 +98,7 @@ class ListApi {
     static const String updateRequestChickin = "updateRequestChickin";
     static const String getLeftOver = "getLeftOver";
     static const String getAdjustment = "getAdjustment";
+    static const String adjustClosing = "adjustClosing";
     
     // api HARVEST
     static const String getSubmitsHarvest = "getSubmitsHarvest";

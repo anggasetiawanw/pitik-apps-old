@@ -1,7 +1,5 @@
 
 import 'package:components/app_bar_form_for_coop.dart';
-import 'package:components/button_fill/button_fill.dart';
-import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_common.dart';
+import 'package:pitik_ppl_app/ui/transfer/transfer_common.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -180,7 +179,273 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                 controller.eaRemarks
                                             ]
                                         )
-                                    ): const SizedBox()
+                                    ) : controller.state.value == 2 ? controller.isLoading.isTrue ? const Padding(padding: EdgeInsets.only(top: 100), child: Center(child: ProgressLoading())) : RawScrollbar(
+                                        thumbColor: GlobalVar.primaryOrange,
+                                        radius: const Radius.circular(8),
+                                        child: RefreshIndicator(
+                                            onRefresh: () => Future.delayed(
+                                                const Duration(milliseconds: 200), () => controller.toCheckFeed()
+                                            ),
+                                            child: ListView(
+                                                children: [
+                                                    Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                        child: GestureDetector(
+                                                            onTap: () => controller.showAdjustmentDialog(isFeed: true),
+                                                            child: Container(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                                                decoration: const BoxDecoration(
+                                                                    color: GlobalVar.grayBackground,
+                                                                    border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                                                    borderRadius: BorderRadius.all(Radius.circular(10))
+                                                                ),
+                                                                child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Detail Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                const Icon(Icons.arrow_forward, color: GlobalVar.primaryOrange, size: 24)
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Pakan Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalFeedReceived.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Konsumsi Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalFeedConsumption.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Text('Total Pakan Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 8),
+                                                                        Padding(
+                                                                            padding: const EdgeInsets.only(left: 8),
+                                                                            child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                    Text('Terkonfirmasi', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                    Text(controller.feedConfirmed.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                                ]
+                                                                            )
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Sisa Pakan Dikandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                Text(controller.feedOutstandingOnCoop.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 16),
+                                                                        Text('Total Pakan Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 8),
+                                                                        Padding(
+                                                                            padding: const EdgeInsets.only(left: 8),
+                                                                            child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                    Text('Belum Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                    Text(controller.totalFeedNotReceived.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                                ]
+                                                                            )
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Pakan Disesuaikan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalFeedCustomize.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 16),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Sisa Pakan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                Text(controller.totalFeedOutstanding.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            )
+                                                        ),
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    const Divider(height: 2, color: GlobalVar.gray),
+                                                    const SizedBox(height: 16),
+                                                    Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                        child: Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                                            decoration: const BoxDecoration(
+                                                                color: GlobalVar.blueBackground,
+                                                                borderRadius: BorderRadius.all(Radius.circular(10))
+                                                            ),
+                                                            child: Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                    SvgPicture.asset('images/information_blue_icon.svg'),
+                                                                    const SizedBox(width: 12),
+                                                                    Text('Transfer pakan belum diterima oleh kandang tujuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue)),
+                                                                ]
+                                                            )
+                                                        ),
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    Column(
+                                                        children: List.generate(controller.feedTransferList.length, (index) => TransferCommon.createTransferCard(
+                                                            coop: controller.coop,
+                                                            procurement: controller.feedTransferList[index],
+                                                            onRefreshData: () => controller.toCheckFeed()
+                                                        ))
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ) : controller.state.value == 3 ? controller.isLoading.isTrue ? const Padding(padding: EdgeInsets.only(top: 100), child: Center(child: ProgressLoading())) : RawScrollbar(
+                                        thumbColor: GlobalVar.primaryOrange,
+                                        radius: const Radius.circular(8),
+                                        child: RefreshIndicator(
+                                            onRefresh: () => Future.delayed(
+                                                const Duration(milliseconds: 200), () => controller.toCheckOvk()
+                                            ),
+                                            child: ListView(
+                                                children: [
+                                                    Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                        child: GestureDetector(
+                                                            onTap: () => controller.showAdjustmentDialog(),
+                                                            child: Container(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                                                decoration: const BoxDecoration(
+                                                                    color: GlobalVar.grayBackground,
+                                                                    border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                                                    borderRadius: BorderRadius.all(Radius.circular(10))
+                                                                ),
+                                                                child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Detail OVK', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                const Icon(Icons.arrow_forward, color: GlobalVar.primaryOrange, size: 24)
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total OVK Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalOvkReceived.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Konsumsi OVK', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalOvkConsumption.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Text('Total OVK Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 8),
+                                                                        Padding(
+                                                                            padding: const EdgeInsets.only(left: 8),
+                                                                            child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                    Text('Terkonfirmasi', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                    Text(controller.ovkConfirmed.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                                ]
+                                                                            )
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Sisa OVK Dikandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                Text(controller.ovkOutstandingOnCoop.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 16),
+                                                                        Text('Total OVK Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 8),
+                                                                        Padding(
+                                                                            padding: const EdgeInsets.only(left: 8),
+                                                                            child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                    Text('Belum Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                    Text(controller.totalOvkNotReceived.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                                ]
+                                                                            )
+                                                                        ),
+                                                                        const SizedBox(height: 8),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total OVK Disesuaikan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                                Text(controller.totalOvkCustomize.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        ),
+                                                                        const SizedBox(height: 16),
+                                                                        Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                                Text('Total Sisa OVK', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                                Text(controller.totalOvkOutstanding.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                            ]
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    const Divider(height: 2, color: GlobalVar.gray),
+                                                    const SizedBox(height: 16),
+                                                    Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                        child: Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                                            decoration: const BoxDecoration(
+                                                                color: GlobalVar.blueBackground,
+                                                                borderRadius: BorderRadius.all(Radius.circular(10))
+                                                            ),
+                                                            child: Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                    SvgPicture.asset('images/information_blue_icon.svg'),
+                                                                    const SizedBox(width: 12),
+                                                                    Text('Transfer OVK belum diterima oleh kandang tujuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue)),
+                                                                ],
+                                                            )
+                                                        ),
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    Column(
+                                                        children: List.generate(controller.ovkTransferList.length, (index) => TransferCommon.createTransferCard(
+                                                            coop: controller.coop,
+                                                            procurement: controller.ovkTransferList[index],
+                                                            onRefreshData: () => controller.toCheckOvk()
+                                                        ))
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                    ) : const SizedBox()
                                 )
                             ]
                         )
