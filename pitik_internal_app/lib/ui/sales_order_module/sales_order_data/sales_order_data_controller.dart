@@ -428,7 +428,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
-    } else if (Constant.isScRelation.isTrue) {
+    }
+    if (Constant.isScRelation.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
     fetchOrder(bodyGeneralOutbound, responOutbound());
@@ -476,6 +477,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   void scRelationdBodyGeneralOutbound(List<dynamic> bodyGeneral) {
     bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
     bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
   }
 
   ResponseListener responOutbound() {
@@ -674,7 +676,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
-    } else if (Constant.isScRelation.isTrue) {
+    }
+    if (Constant.isScRelation.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
     }
     if (selectedValue.value == "Customer") {
@@ -939,10 +942,14 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       }
       bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = "true";
     } else if (Constant.isSalesLead.isTrue) {
-      if (status == null ) {
+      if (status == null) {
         salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
-      } else {
-        bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
+      bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
+    }
+    if (Constant.isScRelation.isTrue) {
+      if (status == null) {
+        scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
       }
     }
     bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
@@ -954,11 +961,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralOutbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect == null
-        ? Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue
-            ? null
-            : Constant.profileUser?.id
-        : salesSelect.id; // createdBy
+    bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id; // createdBy
     fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
@@ -1067,7 +1070,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
-    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id ?? Constant.profileUser?.id; // createdBy
+    bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id; //createdBy
     fetchOrder(bodyGeneralInbound, responInbound());
   }
 
@@ -1402,7 +1405,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
             spCategory.controller.disable();
             spCategory.controller.setTextSelected("");
             spCategory.controller.hideLoading();
-            print(stacktrace);
           },
           onTokenInvalid: Constant.invalidResponse()),
     );

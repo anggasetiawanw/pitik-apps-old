@@ -106,7 +106,7 @@ class StockOpnameController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Map<String, bool> mapList = {};
@@ -291,10 +291,10 @@ class StockOpnameController extends GetxController {
       return false;
     }
 
-    if(efTotal.getInput().isEmpty){
-        efTotal.controller.showAlert();
-        Scrollable.ensureVisible(efTotal.controller.formKey.currentContext!);
-        return false;
+    if (efTotal.getInput().isEmpty) {
+      efTotal.controller.showAlert();
+      Scrollable.ensureVisible(efTotal.controller.formKey.currentContext!);
+      return false;
     }
     return ret;
   }
@@ -308,7 +308,13 @@ class StockOpnameController extends GetxController {
       Products? purchaseProduct = selectSource!.purchasableProducts!.firstWhereOrNull((element) => element!.name == stock.title);
       for (var item in stock.controller.efSku.value) {
         Products? productItem = purchaseProduct!.productItems!.firstWhereOrNull((element) => element!.name == item.controller.tag);
-        products.add(Products(productItemId: productItem!.id, quantity: (item.getInputNumber() ?? 0).toInt(), weight: item.getInputNumber() ?? 0));
+        products.add(
+          Products(
+            productItemId: productItem!.id,
+            quantity: purchaseProduct.name == AppStrings.LIVE_BIRD || purchaseProduct.name == AppStrings.AYAM_UTUH || purchaseProduct.name == AppStrings.BRANGKAS || purchaseProduct.name == AppStrings.KARKAS ? (item.getInputNumber() ?? 0).toInt() : 0,
+            weight: purchaseProduct.name == AppStrings.LIVE_BIRD || purchaseProduct.name == AppStrings.AYAM_UTUH || purchaseProduct.name == AppStrings.BRANGKAS || purchaseProduct.name == AppStrings.KARKAS ? 0 : item.getInputNumber() ?? 0,
+          ),
+        );
       }
     }
 

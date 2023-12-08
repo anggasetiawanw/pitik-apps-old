@@ -177,6 +177,8 @@ class DetailSalesOrderController extends GetxController {
               ? ListApi.pathCancelBookedOrder(orderId)
               : orderDetail.value!.status! == EnumSO.readyToDeliver
                   ? ListApi.pathCancelDeliveryOrder(orderId)
+              : orderDetail.value!.status! == EnumSO.allocated
+                  ? ListApi.pathCancelAllocated(orderId)
                   : ListApi.pathCancelOrder(orderId),
           ""
         ],

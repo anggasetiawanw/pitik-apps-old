@@ -200,7 +200,7 @@ class NewDataController extends GetxController {
     void onInit() {
         super.onInit();     
         skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("cardController",context));           
-        editSalesPIC.setInput(Constant.userGoogle!.email!);
+        editSalesPIC.setInput(Constant.profileUser!.email!);
         editSalesPIC.controller.disable();
         editNamaSupplier.controller.invisibleField();
 
