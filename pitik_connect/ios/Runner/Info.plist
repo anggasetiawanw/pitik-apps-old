@@ -47,18 +47,14 @@
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Need BLE permission</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>Need BLE permission</string>
+    <string>Need BLE permission For using our devices IoT Smart Scale</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Need Location permission</string>
+    <string>Need Location permission to know the location of device troubleshooting and IT support checkin</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>Need Location permission</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Need Location permission</string>
+    <string>Need Location permission to know the location of device troubleshooting and IT support checkin</string>
     <key>NSCameraUsageDescription</key>
-    <string>Upload image from camera for screen background</string>
+    <string>For Scan Barcode and Register the IoT Devices</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Upload images for screen background</string>
   </dict>
