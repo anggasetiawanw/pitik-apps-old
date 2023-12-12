@@ -41,35 +41,33 @@ class RequestDocIn extends StatelessWidget {
                 );
         }
 
-        return SafeArea(
-            child: Scaffold(
-                appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(60),
-                    child: AppBarFormForCoop(
-                        title: 'Request Doc In',
-                        coop: controller.coop,
-                        hideCoopDetail: true,
-                    )
-                ),
-                body: Obx(() =>
-                    controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-                    Stack(
-                        children: [
-                            SingleChildScrollView(
-                                child: Container(
-                                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                                    child: Column(
-                                        children: [
-                                            controller.dtTanggal,
-                                            controller.efPopulasi
-                                        ]
-                                    )
-                                )
-                            ),
-                            bottomNavbar()
-                        ]
-                    )
+        return Scaffold(
+            appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(60),
+                child: AppBarFormForCoop(
+                    title: 'Request Doc In',
+                    coop: controller.coop,
+                    hideCoopDetail: true,
                 )
+            ),
+            body: Obx(() =>
+            controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
+            Stack(
+                children: [
+                    SingleChildScrollView(
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                                children: [
+                                    controller.dtTanggal,
+                                    controller.efPopulasi
+                                ]
+                            )
+                        )
+                    ),
+                    bottomNavbar()
+                ]
+            )
             )
         );
     }

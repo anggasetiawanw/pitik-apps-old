@@ -30,7 +30,7 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
     return Obx(() => SafeArea(
             child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: PreferredSize(preferredSize: const Size.fromHeight(110), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop)),
+          appBar: PreferredSize(preferredSize: const Size.fromHeight(95), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop)),
           bottomNavigationBar: controller.isLoading.isTrue
               ? const SizedBox()
               : Container(

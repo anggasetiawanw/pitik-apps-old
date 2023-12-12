@@ -89,34 +89,32 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
       );
     }
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(preferredSize: const Size.fromHeight(110), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
-        body: Column(
-          children: [
-            Obx(() => controller.isLoading.isTrue
-                ? const Center(
-                    child: ProgressLoading(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(95), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
+      body: Column(
+        children: [
+          Obx(() => controller.isLoading.isTrue
+              ? const Center(
+            child: ProgressLoading(),
+          )
+              : Expanded(
+            child: RawScrollbar(
+              // thumbVisibility: true,
+              thumbColor: GlobalVar.primaryOrange,
+              radius: const Radius.circular(8),
+              child: RefreshIndicator(
+                  onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () { controller.getDailyReport();} //GENERATE DATA
+                  ),
+                  child: controller.isLoadingList.isTrue
+                      ? Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16),
+                    child: Image.asset('images/card_height_450_lazy.gif'),
                   )
-                : Expanded(
-                    child: RawScrollbar(
-                      // thumbVisibility: true,
-                      thumbColor: GlobalVar.primaryOrange,
-                      radius: const Radius.circular(8),
-                      child: RefreshIndicator(
-                          onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () { controller.getDailyReport();} //GENERATE DATA
-                              ),
-                          child: controller.isLoadingList.isTrue
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 16, top: 16),
-                                  child: Image.asset('images/card_height_450_lazy.gif'),
-                                )
-                              : Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: ListView.builder(physics: const AlwaysScrollableScrollPhysics(), itemCount: controller.reportList.length, itemBuilder: (context, index) => listCard(controller.reportList[index])))),
-                    ),
-                  ))
-          ],
-        ),
+                      : Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: ListView.builder(physics: const AlwaysScrollableScrollPhysics(), itemCount: controller.reportList.length, itemBuilder: (context, index) => listCard(controller.reportList[index])))),
+            ),
+          ))
+        ],
       ),
     );
   }

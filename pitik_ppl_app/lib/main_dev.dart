@@ -36,5 +36,4 @@ Future<void> initPlatformState() async {
     String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('firebaseToken', token ?? '-');
-    print('TOKEN FIREBASE -> $token');
 }

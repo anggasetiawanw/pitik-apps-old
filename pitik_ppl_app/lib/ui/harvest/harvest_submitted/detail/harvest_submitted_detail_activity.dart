@@ -16,95 +16,93 @@ class HarvestSubmittedDetailActivity extends GetView<HarvestSubmittedDetailContr
 
     @override
     Widget build(BuildContext context) {
-        return SafeArea(
-            child: Obx(() =>
-                Scaffold(
-                    backgroundColor: Colors.white,
-                    appBar: PreferredSize(
-                        preferredSize: const Size.fromHeight(110),
-                        child: AppBarFormForCoop(
-                            title: 'Pengajuan Panen',
-                            coop: controller.coop,
-                        ),
+        return Obx(() =>
+            Scaffold(
+                backgroundColor: Colors.white,
+                appBar: PreferredSize(
+                    preferredSize: const Size.fromHeight(95),
+                    child: AppBarFormForCoop(
+                        title: 'Pengajuan Panen',
+                        coop: controller.coop,
                     ),
-                    bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : controller.containerButtonBottom.value,
-                    body: Container(
-                        padding: const EdgeInsets.all(16),
-                        child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : ListView(
-                            children: [
-                                Container(
-                                    padding: const EdgeInsets.all(16),
-                                    decoration: const BoxDecoration(
-                                        color: GlobalVar.grayBackground,
-                                        border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
-                                        borderRadius: BorderRadius.all(Radius.circular(10))
-                                    ),
-                                    child: Column(
-                                        children: [
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text('Informasi Pengajuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
-                                                    controller.getStatusWidget()
-                                                ]
-                                            ),
-                                            const SizedBox(height: 12),
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text('Tanggal Pengajuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(Convert.getDate(controller.harvest.value != null ? controller.harvest.value!.datePlanned : null), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                ]
-                                            )
-                                        ]
-                                    )
+                ),
+                bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : controller.containerButtonBottom.value,
+                body: Container(
+                    padding: const EdgeInsets.all(16),
+                    child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : ListView(
+                        children: [
+                            Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: const BoxDecoration(
+                                    color: GlobalVar.grayBackground,
+                                    border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
-                                const SizedBox(height: 16),
-                                Text('Pengajuan Panen', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
-                                const SizedBox(height: 8),
-                                Container(
-                                    padding: const EdgeInsets.all(16),
-                                    margin: const EdgeInsets.only(bottom: 12),
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
-                                        borderRadius: BorderRadius.all(Radius.circular(10))
-                                    ),
-                                    child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(controller.getBwText(), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                ]
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text('Jumlah Ayam', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(
-                                                        controller.getQuantityText(),
-                                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                    )
-                                                ],
-                                            ),
-                                            const SizedBox(height: 8),
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Text('Alasan Panen', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(controller.harvest.value == null ? '-' : controller.harvest.value!.reason ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                ]
-                                            )
-                                        ],
-                                    ),
+                                child: Column(
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Informasi Pengajuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                                controller.getStatusWidget()
+                                            ]
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Tanggal Pengajuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(Convert.getDate(controller.harvest.value != null ? controller.harvest.value!.datePlanned : null), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                            ]
+                                        )
+                                    ]
+                                )
+                            ),
+                            const SizedBox(height: 16),
+                            Text('Pengajuan Panen', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                            const SizedBox(height: 8),
+                            Container(
+                                padding: const EdgeInsets.all(16),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
-                                controller.isCancel.isTrue ? controller.rejectReasonAreaField : const SizedBox()
-                            ]
-                        )
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(controller.getBwText(), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jumlah Ayam', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(
+                                                    controller.getQuantityText(),
+                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                )
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Alasan Panen', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(controller.harvest.value == null ? '-' : controller.harvest.value!.reason ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                            ]
+                                        )
+                                    ],
+                                ),
+                            ),
+                            controller.isCancel.isTrue ? controller.rejectReasonAreaField : const SizedBox()
+                        ]
                     )
                 )
             )

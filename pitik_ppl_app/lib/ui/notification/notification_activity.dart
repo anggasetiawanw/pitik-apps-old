@@ -16,6 +16,7 @@ class NotificationActivity extends StatelessWidget {
     NotificationController controller = Get.put(NotificationController(context: context));
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: CustomAppbar(title: "Notification", onBack: () => Get.back(), actions: [
@@ -83,43 +84,46 @@ class NotificationActivity extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 40,
-                                        width: 40,
-                                        child: Center(
-                                          child: SvgPicture.asset(controller.notificationList[index].isRead! ? "images/notification_off_icon.svg" : "images/notification_icon.svg"),
-                                        ),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 12, left: 8, right: 8),
+                                      child: Row(
+                                          children: [
+                                              SizedBox(
+                                                  height: 40,
+                                                  width: 40,
+                                                  child: Center(
+                                                      child: SvgPicture.asset(controller.notificationList[index].isRead! ? "images/notification_off_icon.svg" : "images/notification_icon.svg"),
+                                                  ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                  child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                          Text(
+                                                              controller.notificationList[index].headline ?? "",
+                                                              style: GlobalVar.blackTextStyle.copyWith(
+                                                                  fontSize: 14,
+                                                                  fontWeight: GlobalVar.medium,
+                                                              ),
+                                                          ),
+                                                          const SizedBox(height: 8),
+                                                          Text(
+                                                              controller.notificationList[index].subHeadline ?? "",
+                                                              style: GlobalVar.greyTextStyle.copyWith(
+                                                                  fontSize: 10,
+                                                                  fontWeight: GlobalVar.regular,
+                                                              ),
+                                                          ),
+                                                          const SizedBox(height: 16),
+                                                          Text(
+                                                              DateFormat("dd MMMM yyyy - HH:mm").format(Convert.getDatetime(controller.notificationList[index].isRead! ? controller.notificationList[index].createdDate! : controller.notificationList[index].modifiedDate!)),
+                                                              style: GlobalVar.greyTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.regular),
+                                                          ),
+                                                      ],
+                                                  )),
+                                          ],
                                       ),
-                                      const SizedBox(width: 8),
-                                      Expanded(
-                                          child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            controller.notificationList[index].headline ?? "",
-                                            style: GlobalVar.blackTextStyle.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: GlobalVar.medium,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                            controller.notificationList[index].subHeadline ?? "",
-                                            style: GlobalVar.greyTextStyle.copyWith(
-                                              fontSize: 10,
-                                              fontWeight: GlobalVar.regular,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 16),
-                                          Text(
-                                            DateFormat("dd MMMM yyyy - HH:mm").format(Convert.getDatetime(controller.notificationList[index].isRead! ? controller.notificationList[index].createdDate! : controller.notificationList[index].modifiedDate!)),
-                                            style: GlobalVar.greyTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.regular),
-                                          ),
-                                        ],
-                                      )),
-                                    ],
                                   ),
                                   const SizedBox(height: 8),
                                   if (!controller.notificationList[index].isRead!) ...[

@@ -17,34 +17,32 @@ class AdjustmentProductActivity extends GetView<AdjustmentProductController> {
     @override
     Widget build(BuildContext context) {
         return Obx(() =>
-            SafeArea(
-                child: Scaffold(
-                    backgroundColor: Colors.white,
-                    appBar: PreferredSize(
-                        preferredSize: const Size.fromHeight(135),
-                        child: AppBarFormForCoop(
-                            title: 'Penyesuaian Pakan',
-                            coop: controller.coop
-                        )
+            Scaffold(
+                backgroundColor: Colors.white,
+                appBar: PreferredSize(
+                    preferredSize: const Size.fromHeight(135),
+                    child: AppBarFormForCoop(
+                        title: 'Penyesuaian Pakan',
+                        coop: controller.coop
+                    )
+                ),
+                bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : Container(
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]
                     ),
-                    bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : Container(
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]
-                        ),
-                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAdjustmentProductSave"), label: "Simpan", onClick: () => controller.saveAdjustment()),
-                    ),
-                    body: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ListView(
-                            children: [
-                                const SizedBox(height: 12),
-                                controller.adjustmentTypeField,
-                                const SizedBox(height: 12),
-                                controller.isFeed ? controller.feedMultipleFormField : controller.ovkMultipleFormField
-                            ]
-                        )
+                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAdjustmentProductSave"), label: "Simpan", onClick: () => controller.saveAdjustment()),
+                ),
+                body: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: ListView(
+                        children: [
+                            const SizedBox(height: 12),
+                            controller.adjustmentTypeField,
+                            const SizedBox(height: 12),
+                            controller.isFeed ? controller.feedMultipleFormField : controller.ovkMultipleFormField
+                        ]
                     )
                 )
             )

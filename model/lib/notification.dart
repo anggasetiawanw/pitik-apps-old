@@ -81,7 +81,7 @@ class Notifications extends BaseEntity {
         subHeadline: map['subHeadline'],
         icon: map['icon'],
         iconPath: map['iconPath'],
-        isRead: map['isRead'] == 1,
+        isRead: map['isRead'],
         createdDate: map['createdDate'],
         modifiedDate: map['modifiedDate'],
         target: map['target'],
