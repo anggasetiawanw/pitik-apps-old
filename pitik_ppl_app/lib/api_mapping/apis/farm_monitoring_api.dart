@@ -178,4 +178,8 @@ class FarmMonitoringApi {
     @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void adjustClosing(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
+    @PATCH(value: PATCH.PATH_PARAMETER,  error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void closeFarm(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 }

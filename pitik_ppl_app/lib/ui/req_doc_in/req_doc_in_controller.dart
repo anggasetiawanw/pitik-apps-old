@@ -110,7 +110,7 @@ class RequestDocInController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments as Coop;
+        coop = Get.arguments[0];
     }
 
     @override

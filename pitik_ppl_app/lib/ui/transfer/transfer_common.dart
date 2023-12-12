@@ -18,7 +18,7 @@ import 'package:pitik_ppl_app/route.dart';
 
 class TransferCommon {
 
-    static void getListSend({required Coop coop, required RxBool isLoading, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate}) => _requestTransferDataToServer(
+    static void getListSend({required Coop coop, required RxBool isLoading, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate, Function()? onDone}) => _requestTransferDataToServer(
         route: ListApi.getListTransferSend,
         isLoading: isLoading,
         coop: coop,
@@ -26,20 +26,22 @@ class TransferCommon {
         type: type,
         fromDate: fromDate,
         untilDate: untilDate,
-        status: '-'
+        status: '-',
+        onDone: onDone
     );
 
-    static void getListReceived({required Coop coop, required RxBool isLoading, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate}) => _requestTransferDataToServer(
+    static void getListReceived({required Coop coop, required RxBool isLoading, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate, Function()? onDone}) => _requestTransferDataToServer(
         route: ListApi.getListTransferReceived,
         isLoading: isLoading,
         coop: coop,
         destinationTransferList: destinationTransferList,
         fromDate: fromDate,
         untilDate: untilDate,
-        status: "approved"
+        status: "approved",
+        onDone: onDone
     );
 
-    static void _requestTransferDataToServer({required Coop coop, required RxBool isLoading, required String route, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate, required String status}) {
+    static void _requestTransferDataToServer({required Coop coop, required RxBool isLoading, required String route, required RxList<Procurement?> destinationTransferList, String? type, String? fromDate, String? untilDate, required String status, Function()? onDone}) {
         isLoading.value = true;
         AuthImpl().get().then((auth) {
             if (auth != null) {
@@ -56,6 +58,10 @@ class TransferCommon {
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             destinationTransferList.value = (body as ProcurementListResponse).data;
+
+                            if (onDone != null) {
+                                onDone();
+                            }
                             isLoading.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) {

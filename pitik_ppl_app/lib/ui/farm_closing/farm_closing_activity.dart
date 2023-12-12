@@ -283,7 +283,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                     const SizedBox(height: 16),
                                                     const Divider(height: 2, color: GlobalVar.gray),
                                                     const SizedBox(height: 16),
-                                                    Padding(
+                                                    controller.showFeedInformationBanner.isTrue ? Padding(
                                                         padding: const EdgeInsets.symmetric(horizontal: 16),
                                                         child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -300,7 +300,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                                 ]
                                                             )
                                                         ),
-                                                    ),
+                                                    ) : const SizedBox(),
                                                     const SizedBox(height: 16),
                                                     Column(
                                                         children: List.generate(controller.feedTransferList.length, (index) => TransferCommon.createTransferCard(
@@ -416,7 +416,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                     const SizedBox(height: 16),
                                                     const Divider(height: 2, color: GlobalVar.gray),
                                                     const SizedBox(height: 16),
-                                                    Padding(
+                                                    controller.showOvkInformationBanner.isTrue ? Padding(
                                                         padding: const EdgeInsets.symmetric(horizontal: 16),
                                                         child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -433,7 +433,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                                 ],
                                                             )
                                                         ),
-                                                    ),
+                                                    ) : const SizedBox(),
                                                     const SizedBox(height: 16),
                                                     Column(
                                                         children: List.generate(controller.ovkTransferList.length, (index) => TransferCommon.createTransferCard(

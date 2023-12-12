@@ -567,4 +567,8 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void createReceiptTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
+    @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void saveStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
 }

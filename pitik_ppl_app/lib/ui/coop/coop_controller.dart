@@ -100,7 +100,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
             } else if (payload['target'] == 'id.pitik.mobile.ListOrderActivity' && !payload['additionalParameters']['isToDashboard']) {
                 Get.toNamed(RoutePage.listOrderPage, arguments: [coopDeeplink, !payload['additionalParameters']['isToDashboard']])!.then((value) => _refreshCoopList());
             } else if (payload['target'] == 'id.pitik.mobile.RequestDocIn') {
-                Get.toNamed(RoutePage.reqDocInPage, arguments: coopDeeplink)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+                Get.toNamed(RoutePage.reqDocInPage, arguments: [coopDeeplink])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
             } else if (payload['target'] == 'id.pitik.mobile.DocInActivity' && !payload['additionalParameters']['isToDashboard']) {
                 Get.toNamed(RoutePage.docInPage, arguments: [coopDeeplink])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
             } else if (payload['target'] == '{navigation}[COOP_ACTIVE]') {
@@ -261,9 +261,9 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 onClick: () {
                                     Get.back();
                                     if(isRestCoop){
-                                        Get.toNamed(RoutePage.reqDocInPage, arguments: coop)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+                                        Get.toNamed(RoutePage.reqDocInPage, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
                                     } else {
-                                        Get.toNamed(RoutePage.docInPage, arguments: coop)!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
+                                        Get.toNamed(RoutePage.docInPage, arguments: [coop])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
                                     }
                                 }
                             ),
@@ -303,7 +303,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Expanded(child: Text(coop.coopName ?? '-', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black),overflow: TextOverflow.clip,)),
+                                        Expanded(child: Text(coop.coopName ?? '-', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black), overflow: TextOverflow.clip)),
                                         _isCoopNew(coop) ? const SizedBox() : Text("Hari ${coop.day}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                     ],
                                 ),
@@ -391,9 +391,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 ),
                                 coop.isActionNeeded != null && coop.isActionNeeded! ?
                                 ButtonFill(controller: GetXCreator.putButtonFillController("btnCoopActionNeeded"), label: 'Cek Laporan Harian',
-                                    onClick: () {
-                                        // TO DAILY REPORT
-                                    }
+                                    onClick: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])!.then((value) => _refreshCoopList())
                                 ) : const SizedBox()
                             ]
                         ),

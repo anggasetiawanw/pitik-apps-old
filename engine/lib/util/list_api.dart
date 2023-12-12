@@ -87,6 +87,7 @@ class ListApi {
     static const String getDetailReceived = "getDetailReceived";
     static const String createReceiptOrder = "createReceiptOrder";
     static const String createReceiptTransfer = "createReceiptTransfer";
+    static const String saveStocks = "saveStocks";
 
     // api FARMING PERFORMANCE
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
@@ -99,6 +100,7 @@ class ListApi {
     static const String getLeftOver = "getLeftOver";
     static const String getAdjustment = "getAdjustment";
     static const String adjustClosing = "adjustClosing";
+    static const String closeFarm = "closeFarm";
     
     // api HARVEST
     static const String getSubmitsHarvest = "getSubmitsHarvest";

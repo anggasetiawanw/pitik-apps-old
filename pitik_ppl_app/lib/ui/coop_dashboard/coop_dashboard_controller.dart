@@ -92,14 +92,14 @@ class CoopDashboardController extends GetxController {
     )).obs;
 
     @override
-    void onInit() async{
+    void onInit() {
         super.onInit();
         coop = Get.arguments[0];
 
         refreshData();
     }
 
-    void refreshData()async{
+    void refreshData() async {
         getMonitoringPerformance(coop);
         profile = await ProfileImpl().get();
 
@@ -121,9 +121,9 @@ class CoopDashboardController extends GetxController {
                         Image.asset("images/card_lazy.gif", width: MediaQuery.of(Get.context!).size.width - 32),
                         const SizedBox(height: 24),
                         Image.asset("images/card_lazy.gif", width: MediaQuery.of(Get.context!).size.width - 32),
-                    ],
-                ),
-            ),
+                    ]
+                )
+            )
         );
 
         _getUnreadNotificationCount();
@@ -287,8 +287,8 @@ class CoopDashboardController extends GetxController {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                             _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
-                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: coop)),
-                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: coop)),
+                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])),
+                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: [coop])),
                                         ],
                                     ),
                                 ),
@@ -298,9 +298,6 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            // _createMenu("Tugas\nHarian", 'images/report_check_icon.svg', showDailyTaskAlert.value, () {  // DAILY TASK
-                                            //     // TO DAILY TASK
-                                            // }),
                                             _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () => Get.toNamed(RoutePage.farmClosing, arguments: [coop])),
                                             const SizedBox(width: 60)
                                         ],
@@ -538,6 +535,14 @@ class CoopDashboardController extends GetxController {
             ),
         );
     }
+
+    String _getTemperatureText() {
+        if (detailSmartMonitor.controller.deviceSummary.value != null && detailSmartMonitor.controller.deviceSummary.value!.temperature != null) {
+            return '${detailSmartMonitor.controller.deviceSummary.value!.temperature!.value}${detailSmartMonitor.controller.deviceSummary.value!.temperature!.uom}';
+        } else {
+            return 'N/A';
+        }
+    }
     
     /// The function `generateHomeWidget()` returns a widget that displays various
     /// information related to a coop's monitoring performance and population
@@ -576,7 +581,7 @@ class CoopDashboardController extends GetxController {
                                         Row(
                                             children: [
                                                 SvgPicture.asset('images/temperature_white_icon.svg', width: 16, height: 16),
-                                                Text('N/A', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white))
+                                                Text(_getTemperatureText(), style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white))
                                             ],
                                         )
                                     ],

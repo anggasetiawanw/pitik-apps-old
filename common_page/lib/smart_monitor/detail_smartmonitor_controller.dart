@@ -14,6 +14,7 @@ import 'package:model/device_summary_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/graph_line.dart';
 import 'package:model/response/building_response.dart';
+import 'package:model/response/latest_condition_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -153,7 +154,9 @@ class DetailSmartMonitorController extends GetxController {
                 body: request,
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        deviceSummary.value = (body).data;
+                        if ((body as LatestConditionResponse).data != null) {
+                            deviceSummary.value = body.data;
+                        }
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {

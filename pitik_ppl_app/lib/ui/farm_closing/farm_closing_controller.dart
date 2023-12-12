@@ -1,4 +1,5 @@
 
+import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/custom_dialog.dart';
@@ -70,6 +71,8 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     var totalFeedNotReceived = '- Karung'.obs;
     var totalFeedCustomize = '- Karung'.obs;
     var totalFeedOutstanding = '- Karung'.obs;
+    double? feedLeftOverTotal;
+    var showFeedInformationBanner = true.obs;
 
     // for OVK
     RxList<Procurement?> ovkTransferList = <Procurement?>[].obs;
@@ -80,6 +83,8 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     var totalOvkNotReceived = '- Karung'.obs;
     var totalOvkCustomize = '- Karung'.obs;
     var totalOvkOutstanding = '- Karung'.obs;
+    double? ovkLeftOverTotal;
+    var showOvkInformationBanner = true.obs;
 
     @override
     void onInit() {
@@ -132,7 +137,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
 
         _toCheckHarvest();
         _getInitialPopulation();
-        // _checkStatusFullFiled();
+        _checkStatusFullFiled();
     }
 
     void _checkingMortality() {
@@ -240,7 +245,6 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
 
         _feedLeftOver();
         _adjustMortalityClosing();
-        getFeedTransferList();
     }
 
     void toCheckOvk() {
@@ -255,7 +259,6 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         textPointLabelList.insert(3, Text("Periksa\nOVK", style: GlobalVar.subTextStyle.copyWith(fontSize: 11, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange), textAlign: TextAlign.center));
 
         _ovkLeftOver();
-        getOvkTransferList();
     }
 
     Row getLabelPoint() {
@@ -307,7 +310,105 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
 
     void closeFarming() => AuthImpl().get().then((auth) {
         if (auth != null) {
+            showModalBottomSheet(
+                useSafeArea: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                    )
+                ),
+                isScrollControlled: true,
+                context: Get.context!,
+                builder: (context) => Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                    Center(
+                                        child: Container(
+                                            width: 60,
+                                            height: 4,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                color: GlobalVar.outlineColor
+                                            )
+                                        )
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                    const SizedBox(height: 16),
+                                    Text('Pastikan data yang kamu isi sudah benar untuk melanjutkan ke proses berikutnya', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.medium)),
+                                    const SizedBox(height: 50),
+                                    SizedBox(
+                                        width: MediaQuery.of(Get.context!).size.width - 32,
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Expanded(
+                                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeFarmClosing"), label: "Yakin", onClick: () {
+                                                        Navigator.pop(Get.context!);
+                                                        isLoading.value = true;
 
+                                                        Service.push(
+                                                            apiKey: 'productReportApi',
+                                                            service: ListApi.closeFarm,
+                                                            context: context,
+                                                            body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/closing'],
+                                                            listener: ResponseListener(
+                                                                onResponseDone: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.off(TransactionSuccessActivity(
+                                                                        keyPage: "farmClosingSuccessPage",
+                                                                        message: "Kamu telah berhasil melakukan\npenutupan siklus produksi",
+                                                                        showButtonHome: false,
+                                                                        onTapClose: () => Get.back(),
+                                                                        onTapHome: () {}
+                                                                    ));
+                                                                },
+                                                                onResponseFail: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red,
+                                                                    );
+                                                                },
+                                                                onResponseError: (exception, stacktrace, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan, $exception",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red,
+                                                                    );
+                                                                },
+                                                                onTokenInvalid: () => GlobalVar.invalidResponse()
+                                                            )
+                                                        );
+                                                    })
+                                                ),
+                                                const SizedBox(width: 16),
+                                                Expanded(
+                                                    child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotFarmClosing"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                                                )
+                                            ]
+                                        )
+                                    ),
+                                    const SizedBox(height: 32)
+                                ]
+                            )
+                        )
+                    )
+                )
+            );
         } else {
             GlobalVar.invalidResponse();
         }
@@ -383,6 +484,8 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                             efTotalMortality.setInput(body.data!.value == null ? '' : body.data!.value!.toStringAsFixed(0));
                             eaRemarks.setValue(body.data!.remarks ?? '');
                         }
+
+                        _checkingMortality();
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -413,8 +516,37 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         }
     });
 
-    void getFeedTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: feedTransferList, type: 'pakan');
-    void getOvkTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: ovkTransferList, type: 'ovk');
+    void getFeedTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: feedTransferList, type: 'pakan', onDone: () {
+        if (feedTransferList.isEmpty && feedLeftOverTotal == 0.0) {
+            showFeedInformationBanner.value = false;
+            bfNext.controller.enable();
+            bfCloseFarm.controller.enable();
+        } else if (feedTransferList.isEmpty && feedLeftOverTotal != 0) {
+            showFeedInformationBanner.value = false;
+            bfNext.controller.disable();
+            bfCloseFarm.controller.disable();
+        } else {
+            showFeedInformationBanner.value = true;
+            bfNext.controller.disable();
+            bfCloseFarm.controller.disable();
+        }
+    });
+
+    void getOvkTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: ovkTransferList, type: 'ovk', onDone: () {
+        if (ovkTransferList.isEmpty && ovkLeftOverTotal == 0.0) {
+            showOvkInformationBanner.value = false;
+            bfNext.controller.enable();
+            bfCloseFarm.controller.enable();
+        } else if (ovkTransferList.isEmpty && ovkLeftOverTotal != 0) {
+            showOvkInformationBanner.value = false;
+            bfNext.controller.disable();
+            bfCloseFarm.controller.disable();
+        } else {
+            showOvkInformationBanner.value = true;
+            bfNext.controller.disable();
+            bfCloseFarm.controller.disable();
+        }
+    });
 
     void _feedLeftOver() => AuthImpl().get().then((auth) {
         if (auth != null) {
@@ -434,7 +566,11 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                             totalFeedNotReceived.value = '${body.data!.transfer == null || body.data!.transfer!.notDeliveredYet == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.transfer!.notDeliveredYet!.toStringAsFixed(0), '', '.')}  Karung';
                             totalFeedCustomize.value = '${body.data!.adjusted == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.adjusted!.toStringAsFixed(0), '', '.')}  Karung';
                             totalFeedOutstanding.value = '${body.data!.leftoverTotal == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.leftoverTotal!.toStringAsFixed(0), '', '.')}  Karung';
+
+                            feedLeftOverTotal = body.data!.leftoverTotal;
                         }
+
+                        getFeedTransferList();
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -448,7 +584,6 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                         );
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
-                        print('$exception -> $stacktrace');
                         isLoading.value = false;
                         Get.snackbar(
                             "Pesan",
@@ -484,7 +619,11 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                             totalOvkNotReceived.value = '${body.data!.transfer == null || body.data!.transfer!.notDeliveredYet == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.transfer!.notDeliveredYet!.toStringAsFixed(0), '', '.')}  Karung';
                             totalOvkCustomize.value = '${body.data!.adjusted == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.adjusted!.toStringAsFixed(0), '', '.')}  Karung';
                             totalOvkOutstanding.value = '${body.data!.leftoverTotal == null ? "-" : Convert.toCurrencyWithoutDecimal(body.data!.leftoverTotal!.toStringAsFixed(0), '', '.')}  Karung';
+
+                            ovkLeftOverTotal = body.data!.leftoverTotal;
                         }
+
+                        getOvkTransferList();
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -576,7 +715,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         }
     });
 
-    void showAdjustmentDialog({bool isFeed = true}) {
+    void showAdjustmentDialog({bool isFeed = false}) {
         showModalBottomSheet(
             isScrollControlled: true,
             context: Get.context!,
@@ -610,7 +749,9 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                             ),
                             Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Silahkan lakukan Pencatatan atau Transfer pakan yang tersisa dalam kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
+                                child: Expanded(
+                                    child: Text("Silahkan lakukan Pencatatan atau Transfer pakan yang tersisa dalam kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
+                                )
                             ),
                             Padding(
                                 padding: const EdgeInsets.only(top: 24),
@@ -620,8 +761,8 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                     isHaveIcon: true,
                                     imageAsset: 'images/transfer_icon.svg',
                                     onClick: () {
-                                        Get.back();
-                                        Get.toNamed(RoutePage.transferRequestPage, arguments: [coop, false])!.then((value) => _feedLeftOver());
+                                        Navigator.pop(Get.context!);
+                                        Get.toNamed(RoutePage.transferRequestPage, arguments: [coop, false])!.then((value) => isFeed ? toCheckFeed() : toCheckOvk());
                                     }
                                 )
                             ),
@@ -631,8 +772,12 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                 isHaveIcon: true,
                                 imageAsset: 'images/pen_icon.svg',
                                 onClick: () {
-                                    Get.back();
-                                    // Get.toNamed(RoutePage.reqDocInPage, arguments: coop)!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+                                    Navigator.pop(Get.context!);
+                                    if (isFeed) {
+                                        Get.toNamed(RoutePage.adjustmentFeed, arguments: [coop])!.then((value) => toCheckFeed());
+                                    } else {
+                                        Get.toNamed(RoutePage.adjustmentOvk, arguments: [coop, ovkLeftOverTotal])!.then((value) => toCheckOvk());
+                                    }
                                 }
                             ),
                             const SizedBox(height: 24)

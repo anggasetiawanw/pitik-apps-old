@@ -18,6 +18,12 @@ import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activi
 import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/adjustment_product_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/adjustment_product_controller.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/feed/adjustment_feed_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/feed/adjustment_feed_controller.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/ovk/adjustment_ovk_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/ovk/adjustment_ovk_controller.dart';
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
@@ -137,6 +143,11 @@ class AppRoutes {
 
         // Farm Closing
         GetPage(name: RoutePage.farmClosing, page: () => const FarmClosingActivity(), binding: FarmClosingBinding(context: GlobalVar.getContext())),
+
+        // Adjustment Product
+        GetPage(name: RoutePage.adjustmentFeed, page: () => const AdjustmentFeedActivity(), binding: AdjustmentFeedBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.adjustmentOvk, page: () => const AdjustmentOvkActivity(), binding: AdjustmentOvkBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.adjustmentProduct, page: () => const AdjustmentProductActivity(), binding: AdjustmentProductBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -179,4 +190,7 @@ class RoutePage {
     static const String harvestRealizationDetail = "/harvestRealizationDetail";
     static const String farmClosing = "/farmClosing";
     static const String notification = "/notificationList";
+    static const String adjustmentFeed = "/adjustmentFeed";
+    static const String adjustmentOvk = "/adjustmentOvk";
+    static const String adjustmentProduct = "/adjustmentProduct";
 }

@@ -11,7 +11,8 @@ class AppBarFormForCoop extends StatelessWidget {
     Coop coop;
     bool hideCoopDetail;
     Function()? onBackPressed;
-    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false, this.onBackPressed});
+    List<PopupMenuEntry<String>>? actionBars;
+    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false, this.onBackPressed, this.actionBars});
 
     @override
     Widget build(BuildContext context) {
@@ -33,7 +34,11 @@ class AppBarFormForCoop extends StatelessWidget {
                                 child: const Icon(Icons.arrow_back, color: Colors.white),
                             ),
                             Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
-                            const SizedBox()
+                            actionBars != null ? PopupMenuButton<String>(
+                                icon: const Icon(Icons.more_vert, color: Colors.white),
+                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                itemBuilder: (BuildContext context) => actionBars!,
+                            ) : const SizedBox()
                         ],
                     ),
                     hideCoopDetail ? const SizedBox() : Column(
@@ -46,10 +51,10 @@ class AppBarFormForCoop extends StatelessWidget {
                                 'DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
                                 style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)
                             )
-                        ],
+                        ]
                     )
-                ],
-            ),
+                ]
+            )
         );
     }
 }

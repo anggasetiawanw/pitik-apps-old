@@ -33,7 +33,7 @@ class DailyReportHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    coop = Get.arguments;
+    coop = Get.arguments[0];
   }
 
   @override

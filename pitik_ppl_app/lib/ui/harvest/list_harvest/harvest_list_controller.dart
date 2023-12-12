@@ -24,7 +24,7 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments;
+        coop = Get.arguments[0];
 
         tabController = TabController(vsync: this, length: 3);
         tabController.addListener(() {
