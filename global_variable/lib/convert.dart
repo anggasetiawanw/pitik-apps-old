@@ -95,8 +95,12 @@ class Convert {
     static String getStringIso(DateTime date) {
         return  DateFormat('yyyy-MM-ddTHH:mm:ssZ','en-US').format(date);
     }
-        static int roundPrice(double price) {
-        if(price % 1000 < 500) {
+    
+    static int roundPrice(double price) {
+        if(price % 1000 == 500) {
+            return price.toInt();
+        }
+        else if(price % 1000 < 500) {
             return (price / 1000).floor() * 1000;
         }
         return (price / 1000).ceil() * 1000;

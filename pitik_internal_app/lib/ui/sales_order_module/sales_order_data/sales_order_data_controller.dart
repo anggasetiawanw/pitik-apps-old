@@ -475,6 +475,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   }
 
   void scRelationdBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = null;
     bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
     bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
@@ -950,6 +951,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     if (Constant.isScRelation.isTrue) {
       if (status == null) {
         scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = null;
       }
     }
     bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status

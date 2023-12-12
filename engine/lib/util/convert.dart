@@ -302,7 +302,10 @@ class Convert {
     /// Returns:
     ///   The code is returning the rounded price as an integer.
     static int roundPrice(double price) {
-        if(price % 1000 < 500) {
+        if(price % 1000 == 500) {
+            return price.toInt();
+        }
+        else if(price % 1000 < 500) {
             return (price / 1000).floor() * 1000;
         }
         return (price / 1000).ceil() * 1000;
