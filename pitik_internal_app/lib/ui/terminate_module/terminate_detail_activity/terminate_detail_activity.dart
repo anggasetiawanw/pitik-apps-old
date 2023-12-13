@@ -100,7 +100,7 @@ class TerminateDetailActivity extends StatelessWidget {
                               _showBottomDialogCancel(context, controller);
                             }))
                   ] else if (controller.terminateModel.status == EnumTerminateStatus.booked) ...[
-                    if (Constant.isOpsLead.isTrue) ...[
+                    if (Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                       Expanded(child: controller.btSetujui),
                       const SizedBox(
                         width: 16,

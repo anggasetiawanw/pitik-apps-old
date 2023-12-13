@@ -63,29 +63,27 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
             const SizedBox(
               height: 16,
             ),
-            controller.orderDetail.value!.status == EnumSO.readyToDeliver || controller.orderDetail.value!.status == EnumSO.booked
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Sumber",
-                        style: AppTextStyle.subTextStyle.copyWith(
-                          fontSize: 10,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
-                          style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  )
-                : const SizedBox(),
-            const SizedBox(
-              height: 8,
-            ),
+            if (controller.orderDetail.value!.operationUnit != null || (controller.orderDetail.value!.status == EnumSO.readyToDeliver || controller.orderDetail.value!.status == EnumSO.booked)) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sumber",
+                    style: AppTextStyle.subTextStyle.copyWith(
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    controller.orderDetail.value!.operationUnit?.operationUnitName ?? "-",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -98,39 +96,16 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 const SizedBox(
                   width: 16,
                 ),
-                Expanded(
-                  child: Text(
-                    controller.orderDetail.value!.customer?.businessName ?? "-",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  controller.orderDetail.value!.customer?.businessName ?? "-",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
             const SizedBox(
               height: 8,
             ),
-            if (controller.orderDetail.value!.operationUnit != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Sumber",
-                    style: AppTextStyle.subTextStyle.copyWith(
-                      fontSize: 10,
-                    ),
-                  ),
-                  Text(
-                    controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-            ],
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -245,9 +220,9 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
                       if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.cutType != null && controller.orderDetail.value?.type != "NON_LB") infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                       if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                      if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                      if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),
@@ -337,7 +312,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.allocated) ...[
-                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                         Expanded(
                           child: controller.bookStockButton,
                         ),
@@ -355,12 +330,14 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.booked && controller.orderDetail.value!.category == EnumSO.outbound) ...[
-                      Expanded(
-                        child: controller.sendButton,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
+                        Expanded(
+                          child: controller.sendButton,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                      ],
                       Expanded(
                         child: ButtonOutline(
                           controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
@@ -375,12 +352,14 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         child: controller.bookStockButton,
                       ),
                     ] else if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
-                      Expanded(
-                        child: controller.editDriver,
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
+                        Expanded(
+                          child: controller.editDriver,
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                      ],
                       Expanded(
                         child: ButtonOutline(
                           controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
@@ -448,7 +427,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                             ),
                             child: Column(
                               children: [
-                                if (controller.orderDetail.value!.status == EnumSO.booked || controller.orderDetail.value!.status == EnumSO.readyToDeliver || controller.orderDetail.value!.status == EnumSO.onDelivery || controller.orderDetail.value!.status == EnumSO.delivered) ...[
+                                if (controller.orderDetail.value!.status == EnumSO.booked || controller.orderDetail.value!.status == EnumSO.readyToDeliver || controller.orderDetail.value!.status == EnumSO.onDelivery || controller.orderDetail.value!.status == EnumSO.delivered || controller.orderDetail.value!.status == EnumSO.received || controller.orderDetail.value!.status == EnumSO.rejected) ...[
                                   Row(
                                     children: [
                                       Expanded(

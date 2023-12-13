@@ -204,7 +204,11 @@ class Service {
                                     transporter.header("Content-type", "application/json; charset=utf-8");
 
                                     if (json.isPlaint) {
-                                        transporter.body(BodyBuilder(BodyBuilder.JSON).toJsonFromText(body[index]));
+                                        if(body[index] != null) {
+                                             transporter.body(BodyBuilder(BodyBuilder.JSON).toJsonFromText(body[index]));
+                                        } else {
+                                            transporter.body(BodyBuilder(BodyBuilder.JSON).toJson({}));
+                                        }
                                     } else if (isJsonObject) {
                                         bodyJsonObject[param.value] = body[index];
                                     }

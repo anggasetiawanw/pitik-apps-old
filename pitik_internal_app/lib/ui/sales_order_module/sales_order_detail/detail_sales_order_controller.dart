@@ -214,7 +214,7 @@ class DetailSalesOrderController extends GetxController {
     sumPrice.value = 0;
     isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
     priceDelivery.value = data.deliveryFee?? 0;
-    if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER" ||orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery|| orderDetail.value!.status == EnumSO.delivered) {
+    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered|| orderDetail.value!.status == EnumSO.received|| orderDetail.value!.status == EnumSO.rejected) {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
