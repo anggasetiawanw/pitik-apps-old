@@ -96,6 +96,13 @@ class Constant {
             // XAppIdImpl().delete(null, []);
              GoogleSignIn().disconnect(); 
              FirebaseAuth.instance.signOut();
+            isChangeBranch.value = false;
+            isDeveloper.value = false;
+            isShopKepper.value = false;
+            isScRelation.value = false;
+            isOpsLead.value = false;
+            isSales.value = false;
+            isSalesLead.value= false;
         };
     }
 }
