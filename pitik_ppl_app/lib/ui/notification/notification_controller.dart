@@ -55,7 +55,51 @@ class NotificationController extends GetxController {
     });
   }
 
-  void onTapNotif(int index) {
+  void onReadAllNotification(){
+    isLoading.value = true;
+    AuthImpl().get().then((auth) => {
+        if (auth != null){
+            Service.push(
+                apiKey: ApiMapping.api,
+                service: ListApi.readAllNotifications,
+                context: context,
+                body: [
+                    'Bearer ${auth.token}',
+                    auth.id,
+                    "",
+                ],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) {
+                        notificationList.clear();
+                        page = 1;
+                        getListNotification();
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,);
+                        isLoading.value = true;
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,);
+                        isLoading.value = true;
+                    },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()))
+                }
+        else
+            {GlobalVar.invalidResponse()}
+    });
+  }
+
+  void onTapNotification(int index) {
     isLoading.value = true;
     if (notificationList[index].isRead == false) {
       AuthImpl().get().then((auth) => {
