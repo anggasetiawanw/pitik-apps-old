@@ -293,7 +293,7 @@ class SalesOrderPage extends StatelessWidget {
                           ? const Center(
                               child: ProgressLoading(),
                             )
-                          : controller.orderListInbound.isEmpty || Constant.isScRelation.isTrue
+                          : controller.orderListInbound.isEmpty 
                               ? Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 16),
                                   child: Center(
@@ -310,7 +310,7 @@ class SalesOrderPage extends StatelessWidget {
                 ),
               ],
             ),
-            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
+            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue) bottomNavbar(),
           ],
         ),
       ),

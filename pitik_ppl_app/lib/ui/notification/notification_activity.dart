@@ -38,6 +38,7 @@ class NotificationActivity extends StatelessWidget {
                   onSelected: (index) async {
                     switch (index) {
                       case 'Baca Semua':
+                        controller.onReadAllNotification();
                         break;
                     }
                   })
@@ -77,7 +78,7 @@ class NotificationActivity extends StatelessWidget {
                                     );
                                   }
                           return GestureDetector(
-                            onTap: () => controller.onTapNotif(index),
+                            onTap: () => controller.onTapNotification(index),
                             child: Container(
                               margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: controller.notificationList[index].isRead! ? Colors.white : GlobalVar.primaryLight, border: Border.all(color: controller.notificationList[index].isRead! ? GlobalVar.gray : GlobalVar.primaryLight)),

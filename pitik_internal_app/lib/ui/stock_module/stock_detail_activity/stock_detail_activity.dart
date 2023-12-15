@@ -82,7 +82,7 @@ class StockDetailActivity extends StatelessWidget {
                           _showBottomDialog(context, controller);
                         })),
               ] else if (controller.opnameModel.status == EnumStock.confirmed) ...[
-                if (Constant.isOpsLead.isTrue) ...[
+                if (Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                   Expanded(child: controller.btSetujui),
                   const SizedBox(
                     width: 16,

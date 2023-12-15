@@ -59,6 +59,7 @@ class StockHomeController extends GetxController {
             // isLoadingStock.value = true;
             // pieData.value.clear();
             // getLatestStock(selectSource.id!);
+            categoryStock.controller.setTextSelected("");
             sourceStock = selectSource;
             Map<String, bool> mapStock = {};
             for (var units in selectSource.purchasableProducts!) {

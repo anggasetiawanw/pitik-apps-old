@@ -522,12 +522,17 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralInbound(bodyGeneralInbound);
-    } else if (Constant.isShopKepper.isTrue) {
-      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
-    } else if (Constant.isOpsLead.isTrue) {
-      opsLeadBodyGeneralInbound(bodyGeneralInbound);
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isScRelation.isTrue) {
+      scRelationBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isOpsLead.isTrue) {
+      opsLeadBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isShopKepper.isTrue) {
+      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
     }
     fetchOrder(bodyGeneralInbound, responInbound());
   }
@@ -551,8 +556,16 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
   }
 
+  void scRelationBodyGeneralInbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
+  }
+
   void opsLeadBodyGeneralInbound(List<dynamic> bodyGeneral) {
-    bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
     bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.cancelled;
@@ -695,12 +708,17 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
     if (Constant.isSales.isTrue) {
       salesBodyGeneralInbound(bodyGeneralInbound);
-    } else if (Constant.isShopKepper.isTrue) {
-      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
-    } else if (Constant.isOpsLead.isTrue) {
-      opsLeadBodyGeneralInbound(bodyGeneralInbound);
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isScRelation.isTrue) {
+      scRelationBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isOpsLead.isTrue) {
+      opsLeadBodyGeneralInbound(bodyGeneralInbound);
+    }
+    if (Constant.isShopKepper.isTrue) {
+      shopkeeperBodyGeneralInbound(bodyGeneralInbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralInbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -931,6 +949,16 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
     resetAllBodyValue(bodyGeneralOutbound);
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
+    
+    bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
+    bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
+    bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
+    bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
+    bodyGeneralOutbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
+    bodyGeneralOutbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
+    bodyGeneralOutbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
+    bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
+    bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     if (Constant.isSales.isTrue) {
       if (status == null) {
         salesBodyGeneralOutbound(bodyGeneralOutbound);
@@ -955,15 +983,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = null;
       }
     }
-    bodyGeneralOutbound[BodyQuerySales.status.index] = status; // status
-    bodyGeneralOutbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
-    bodyGeneralOutbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
-    bodyGeneralOutbound[BodyQuerySales.date.index] = date; // date
-    bodyGeneralOutbound[BodyQuerySales.operationUnitId.index] = operationUnitSelect?.id; // operationUnitId
-    bodyGeneralOutbound[BodyQuerySales.productCategoryId.index] = categorySelect?.id; // categoryId
-    bodyGeneralOutbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
-    bodyGeneralOutbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
-    bodyGeneralOutbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
     bodyGeneralOutbound[BodyQuerySales.createdBy.index] = salesSelect?.id; // createdBy
     fetchOrder(bodyGeneralOutbound, responOutbound());
   }
@@ -1046,24 +1065,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
     resetAllBodyValue(bodyGeneralInbound);
     setGeneralheader(pageInbound.value, limit.value, EnumSO.inbound, bodyGeneralInbound);
-    if (Constant.isSales.isTrue) {
-      if (status == null) {
-        salesBodyGeneralInbound(bodyGeneralInbound);
-      } else {
-        bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
-      }
-    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
-      if (status == null) {
-        shopkeeperBodyGeneralInbound(bodyGeneralInbound);
-      }
-      bodyGeneralInbound[BodyQuerySales.withinProductionTeam.index] = "true";
-    } else if (Constant.isSalesLead.isTrue) {
-      if (status == null) {
-        salesLeadBodyGeneralInbound(bodyGeneralInbound);
-      } else {
-        bodyGeneralInbound[BodyQuerySales.withSalesTeam.index] = "true";
-      }
-    }
     bodyGeneralInbound[BodyQuerySales.status.index] = status; // status
     bodyGeneralInbound[BodyQuerySales.customerCityId.index] = citySelect?.id; // customerCityId
     bodyGeneralInbound[BodyQuerySales.customerProvinceId.index] = provinceSelect?.id; // customerProvinceId
@@ -1073,6 +1074,34 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     bodyGeneralInbound[BodyQuerySales.productItemId.index] = productSelect?.id; // productId
     bodyGeneralInbound[BodyQuerySales.minQuantityRange.index] = efMin.getInputNumber() != null ? (efMin.getInputNumber() ?? 0).toInt() : null; // minQuantityRange
     bodyGeneralInbound[BodyQuerySales.maxRangeQuantity.index] = efMax.getInputNumber() != null ? (efMax.getInputNumber() ?? 0).toInt() : null; // maxRangeQuantity
+
+    if (Constant.isSales.isTrue) {
+      if (status == null) {
+        salesBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
+      }
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) {
+      if (status == null) {
+        if (Constant.isScRelation.isTrue) {
+          scRelationBodyGeneralInbound(bodyGeneralInbound);
+        }
+        if (Constant.isOpsLead.isTrue) {
+          opsLeadBodyGeneralInbound(bodyGeneralInbound);
+        }
+        if (Constant.isShopKepper.isTrue) {
+          shopkeeperBodyGeneralInbound(bodyGeneralInbound);
+        }
+      }
+      bodyGeneralInbound[BodyQuerySales.withinProductionTeam.index] = "true";
+    } else if (Constant.isSalesLead.isTrue) {
+      if (status == null) {
+        salesLeadBodyGeneralInbound(bodyGeneralInbound);
+      } else {
+        bodyGeneralInbound[BodyQuerySales.withSalesTeam.index] = "true";
+      }
+    }
+
     bodyGeneralInbound[BodyQuerySales.createdBy.index] = salesSelect?.id; //createdBy
     fetchOrder(bodyGeneralInbound, responInbound());
   }
@@ -1464,7 +1493,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
               spSource.controller
                 ..setTextSelected("")
                 ..hideLoading();
-              print(stacktrace);
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
@@ -1651,18 +1679,18 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
-                  onTap: () => Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? null : backFromForm(false),
+                  onTap: () => Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue ? null : backFromForm(false),
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: AppColors.outlineColor),
-                      color: Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? const Color(0xFFF0F0F0) : Colors.white,
+                      color: Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue ? const Color(0xFFF0F0F0) : Colors.white,
                     ),
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue ? "images/outbound_off.svg" : "images/icon_outbound.svg",
+                          Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue ? "images/outbound_off.svg" : "images/icon_outbound.svg",
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -1670,7 +1698,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Penjualan Outbond",
+                                "Penjualan Outbound",
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                               ),
                               const SizedBox(height: 4),
