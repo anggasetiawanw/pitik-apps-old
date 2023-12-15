@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 2.0.0+475
 
 environment:
   sdk: ">=3.1.2 <4.0.0"
@@ -80,7 +80,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   getwidget: ^4.0.0
   lottie: ^2.3.2
-  syncfusion_flutter_charts: ^23.1.36
+  syncfusion_flutter_charts: ^23.2.7
   dropdown_button2: ^2.1.2
   flutter_picker: ^2.1.0
   image_picker: ^1.0.2
@@ -107,16 +107,16 @@ flavorizr:
   flavors:
     prod:
       app:
-        name: "Pitik PPL App"
+        name: "Pitik - Smart Broiler Farming"
 
       android:
-        applicationId: "id.pitik.mobile.ppl"
+        applicationId: "id.pitik.mobile"
         icon: "images/pitik_launcher.png"
         firebase:
           config: "android/app/src/prod/google-services.json"
 
       ios:
-        bundleId: "id.pitik.mobile.ppl"
+        bundleId: "id.pitik.mobile"
         icon: "images/pitik_launcher.png"
         firebase:
           config: "ios/config/prod/GoogleService-Info.plist"
@@ -126,12 +126,12 @@ flavorizr:
         name: "Pitik PPL App Staging"
 
       android:
-        applicationId: "id.pitik.mobile.ppl.staging"
+        applicationId: "id.pitik.mobilestaging"
         icon: "images/pitik_launcher.png"
         firebase:
           config: "android/app/src/dev/google-services.json"
       ios:
-        bundleId: "id.pitik.mobile.ppl.staging"
+        bundleId: "id.pitik.mobilestaging"
         icon: "images/pitik_launcher.png"
         firebase:
           config: "ios/config/dev/GoogleService-Info.plist"

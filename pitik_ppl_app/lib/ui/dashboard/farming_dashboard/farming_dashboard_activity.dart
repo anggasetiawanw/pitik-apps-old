@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_ppl_app/route.dart';
-import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
+import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
-///@create date 06/10/2023
+///@create date 13/12/2023
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-class CoopDashboardActivity extends GetView<CoopDashboardController> {
-    const CoopDashboardActivity({super.key});
+class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
+    const FarmingDashboardActivity({super.key});
 
     @override
     Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                     child: GestureDetector(
                         onTap: () => controller.showMenuBottomSheet(),
                         child: Container(
-                            height: 65,
-                            width: 65,
+                            height: MediaQuery.of(context).size.width / 6.5,
+                            width: MediaQuery.of(context).size.width / 6.5,
                             decoration: const BoxDecoration(
                                 color: GlobalVar.primaryOrange,
                                 shape: BoxShape.circle
@@ -63,9 +63,9 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                     label: 'Beranda',
                                 ),
                                 BottomNavigationBarItem(
-                                    activeIcon: SvgPicture.asset('images/history_active_icon.svg'),
-                                    icon: SvgPicture.asset('images/history_inactive_icon.svg'),
-                                    label: 'Riwayat',
+                                    activeIcon: SvgPicture.asset('images/perform_active_icon.svg'),
+                                    icon: SvgPicture.asset('images/perform_inactive_icon.svg'),
+                                    label: 'Performa',
                                 ),
                                 const BottomNavigationBarItem(
                                     activeIcon: SizedBox(),
@@ -83,7 +83,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                     label: 'Profile',
                                 ),
                             ],
-                            currentIndex: controller.homeTab.isTrue ? 0 : controller.historyTab.isTrue ? 1 : controller.monitorTab.isTrue ? 3 : controller.profileTab.isTrue ? 4 : -1,
+                            currentIndex: controller.homeTab.isTrue ? 0 : controller.performTab.isTrue ? 1 : controller.monitorTab.isTrue ? 3 : controller.profileTab.isTrue ? 4 : -1,
                             selectedItemColor: GlobalVar.primaryOrange,
                             unselectedItemColor: GlobalVar.gray,
                             showUnselectedLabels: true,
@@ -91,7 +91,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                 if (position == 0) {
                                     controller.toHome(context);
                                 } else if (position == 1) {
-                                    controller.toHistory();
+                                    controller.toPerform();
                                 } else if (position == 3) {
                                     controller.toMonitor();
                                 } else if (position == 4) {
@@ -102,9 +102,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                     )
                 ),
                 body: AnnotatedRegion<SystemUiOverlayStyle>(
-                    value: SystemUiOverlayStyle.light.copyWith(
-                        statusBarColor: GlobalVar.primaryLight
-                    ),
+                    value: SystemUiOverlayStyle.light.copyWith(statusBarColor: GlobalVar.primaryLight),
                     child: SafeArea(
                         child: Stack(
                             children: <Widget>[
@@ -117,7 +115,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
                                             color: GlobalVar.primaryLight
-                                        ),
+                                        )
                                     )
                                 ),
                                 Positioned(
@@ -130,8 +128,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                                GestureDetector(
-                                                    onTap: () => Get.back(),
+                                                controller.isLoadingFarmList.isTrue ? Image.asset("images/coop_lazy_loading.gif") : GestureDetector(
+                                                    onTap: () => controller.showCoopList(),
                                                     child: Container(
                                                         padding: const EdgeInsets.all(8),
                                                         decoration: const BoxDecoration(
@@ -140,7 +138,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                         ),
                                                         child: Row(
                                                             children: [
-                                                                Text('${controller.coop.coopName} (Hari ${controller.coop.day})', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
+                                                                Text('${controller.coopList[controller.coopSelected.value]!.coopName ?? '- '} (Hari ${controller.coopList[controller.coopSelected.value]!.day ?? '-'})', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
                                                                 const SizedBox(width: 16),
                                                                 SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
                                                             ],
@@ -148,7 +146,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                     ),
                                                 ),
                                                 GestureDetector(
-                                                    onTap: () =>  Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
+                                                    onTap: () {},
                                                     child: SizedBox(
                                                         width: 50,
                                                         height: 34,
@@ -185,8 +183,8 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                 ),
                                 Positioned.fill(
                                     top: 90,
-                                    left: controller.historyTab.isFalse ? 16 : 0,
-                                    right: controller.historyTab.isFalse ? 16 : 0,
+                                    left: controller.performTab.isFalse ? 16 : 0,
+                                    right: controller.performTab.isFalse ? 16 : 0,
                                     child: controller.isLoading.isTrue ? Image.asset(
                                         "images/card_height_450_lazy.gif",
                                         height: 400,
@@ -194,9 +192,9 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                     ) :
                                     (
                                         controller.homeTab.isTrue ? controller.generateHomeWidget() : // to home
-                                        controller.historyTab.isTrue ? controller.generateHistoryWidget() : // to history
+                                        controller.performTab.isTrue ? controller.generatePerformWidget() : // to history
                                         controller.monitorTab.isTrue ? controller.generateMonitorWidget() : // to monitor
-                                        controller.generateProfileWidget() // to profile
+                                        DashboardCommon.generateProfileWidget() // to profile
                                     )
                                 )
                             ]

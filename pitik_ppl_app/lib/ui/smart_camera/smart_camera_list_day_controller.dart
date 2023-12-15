@@ -44,7 +44,7 @@ class SmartCameraListDayController extends GetxController {
                 apiKey: 'smartCameraApi',
                 service: ListApi.getSmartCameraListDay,
                 context: context,
-                body: ['Bearer ${auth.token}', auth.id, 'v2/smart-camera/${coop.id}/records'],
+                body: ['Bearer ${auth.token}', auth.id, 'v2/smart-camera/${coop.id ?? coop.coopId}/records'],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if ((body as SmartCameraDayListResponse).data.isNotEmpty) {
@@ -93,7 +93,7 @@ class SmartCameraListDayController extends GetxController {
                     apiKey: 'smartCameraApi',
                     service: ListApi.getListDataCamera,
                     context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', 'v2/smart-camera/${coop.id}/cameras/$day'],
+                    body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', 'v2/smart-camera/${coop.id ?? coop.coopId}/cameras/$day'],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             if ((body as SensorPositionResponse).data.isNotEmpty) {

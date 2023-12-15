@@ -6,6 +6,7 @@ import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/updater_code_magic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -64,16 +65,15 @@ class SplashScreenController extends GetxController {
             } else {
                 Get.offNamed(RoutePage.loginPage);
             }
-
         } else {
             GlobalVar.auth = auth;
             GlobalVar.profileUser = userProfile;
 
             isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
             if (await isFirstLogin) {
-                Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList, pushNotificationPayload]);
+                Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, pushNotificationPayload]);
             } else {
-                Get.offNamed(RoutePage.coopList, arguments: pushNotificationPayload);
+                Get.offNamed(Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, arguments: pushNotificationPayload);
             }
         }
     }

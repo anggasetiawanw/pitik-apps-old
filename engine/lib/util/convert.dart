@@ -319,4 +319,8 @@ class Convert {
             return '-';
         }
     }
+
+    static bool isUsePplApps(String userType) {
+        return userType == "ppl" || userType == "pembantu umum" || userType == "mitra manager" || userType == "area manager" || userType == "vice president" || userType == "c level";
+    }
 }

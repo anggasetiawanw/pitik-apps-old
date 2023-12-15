@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>783810949423-ajq3kfduob4fq5fvhvdg4tja8p7rp444.apps.googleusercontent.com</string>
+	<string>783810949423-iag1l5sbsgtfmer9kkhvcfqkeg3m4mpc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.783810949423-ajq3kfduob4fq5fvhvdg4tja8p7rp444</string>
+	<string>com.googleusercontent.apps.783810949423-iag1l5sbsgtfmer9kkhvcfqkeg3m4mpc</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>783810949423-986uf2g4jimiokanhh76bjb9ue3dbb4o.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>id.pitik.mobile.ppl.staging</string>
+	<string>id.pitik.mobilestaging</string>
 	<key>PROJECT_ID</key>
 	<string>pitik-cms-staging</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:783810949423:ios:377a42380c94a23b3d71da</string>
+	<string>1:783810949423:ios:d24185f72fc09ae83d71da</string>
 	<key>DATABASE_URL</key>
 	<string>https://pitik-cms-staging-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>

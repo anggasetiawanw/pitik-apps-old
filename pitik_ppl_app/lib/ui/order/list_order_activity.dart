@@ -21,7 +21,7 @@ class ListOrderActivity extends GetView<ListOrderController> {
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(95),
+                    preferredSize: const Size.fromHeight(105),
                     child: AppBarFormForCoop(
                         title: 'Order',
                         coop: controller.coop,

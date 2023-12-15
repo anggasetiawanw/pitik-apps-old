@@ -88,7 +88,7 @@ class SmartCameraListHistoryController extends GetxController {
                 apiKey: 'smartCameraApi',
                 service: ListApi.takePictureSmartCamera,
                 context: context,
-                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', '${bundle.basePath}jobs/${bundle.getCoop.id}', Mapper.asJsonString(Coop(coopId: bundle.getCoop.id))],
+                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '-', '${bundle.basePath}jobs/${bundle.getCoop.id ?? bundle.getCoop.coopId}', Mapper.asJsonString(Coop(coopId: bundle.getCoop.id ?? bundle.getCoop.coopId))],
                 listener:ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         List<RecordCamera> recordImages = [];

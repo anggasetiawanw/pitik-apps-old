@@ -41,7 +41,11 @@ class PrivacyScreenController extends GetxController {
             label: "Saya Setuju", onClick: () async {
             final SharedPreferences pref = await prefs;
             isFirstLogin = pref.setBool('isFirstLogin', false);
-            Get.offAllNamed(homePageRoute, arguments: Get.arguments[2]);
+            if (Get.arguments.length > 2) {
+                Get.offAllNamed(homePageRoute, arguments: Get.arguments[2]);
+            } else {
+                Get.offAllNamed(homePageRoute);
+            }
         });
 
         if (Get.arguments != null) {

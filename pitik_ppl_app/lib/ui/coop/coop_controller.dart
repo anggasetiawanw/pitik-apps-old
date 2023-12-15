@@ -317,7 +317,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                         ) : const SizedBox()
                                     ],
                                 ),
-                                const SizedBox(height: 8),
+                                const SizedBox(height: 16),
                                 _isCoopNew(coop) ? Container(
                                     decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(10)),

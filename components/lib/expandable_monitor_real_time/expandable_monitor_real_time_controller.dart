@@ -68,7 +68,7 @@ class ExpandableMonitorRealTimeController extends GetxController {
     void getRealTimeHistoricalData({required String sensorType, required int day, required Coop coop, required String roomId}) => AuthImpl().get().then((auth) {
         if (auth != null) {
             isLoading.value = true;
-            List<dynamic> bodyRequest = ['Bearer ${auth.token}', auth.id, sensorType, coop.farmingCycleId, day, coop.farmId, coop.id, roomId];
+            List<dynamic> bodyRequest = ['Bearer ${auth.token}', auth.id, sensorType, coop.farmingCycleId, day, coop.farmId, coop.id ?? coop.coopId, roomId];
             _pushToServerForHistoricalData(
                 sensorType: sensorType,
                 route: ListApi.getRealTimeHistorical,

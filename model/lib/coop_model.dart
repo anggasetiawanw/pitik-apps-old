@@ -16,13 +16,16 @@ import 'room_model.dart';
 class Coop {
 
     String? id;
+    String? phoneNumber;
     String? name;
     dynamic status;
     String? coopId;
+    String? coopCode;
     String? coopName;
     String? coopType;
     String? coopStatus;
     String? farmId;
+    String? farmCode;
     String? chickInRequestId;
     String? farmingCycleId;
     String? farmName;
@@ -59,20 +62,23 @@ class Coop {
     @IsChildren()
     List<Room?>? rooms;
 
-    Coop({this.id, this.name, this.coopName, this.coopType, this.farmId, this.status, this.coopStatus, this.room, this.rooms, this.coopId, this.chickInRequestId, this.farmName, this.coopDistrict, this.coopCity,
-          this.farmingCycleId, this.period, this.isNew, this.startDate, this.closedDate, this.hasChickInRequest, this.day, this.statusText, this.isActionNeeded, this.isOwnFarm, this.bw, this.ip, this.chickInRequest,
-          this.purchaseRequestOvk, this.branch});
+    Coop({this.id, this.phoneNumber, this.name, this.coopName, this.coopType, this.farmId, this.farmCode, this.status, this.coopStatus, this.room, this.rooms, this.coopId, this.coopCode, this.chickInRequestId, 
+          this.farmName, this.coopDistrict, this.coopCity, this.farmingCycleId, this.period, this.isNew, this.startDate, this.closedDate, this.hasChickInRequest, this.day, this.statusText, this.isActionNeeded, 
+          this.isOwnFarm, this.bw, this.ip, this.chickInRequest, this.purchaseRequestOvk, this.branch});
 
     static Coop toResponseModel(Map<String, dynamic> map) {
         return Coop(
             id: map['id'],
+            phoneNumber: map['phoneNumber'],
             name: map['name'],
             status: map['status'],
             coopName: map['coopName'],
             coopType: map['coopType'],
             coopStatus: map['coopStatus'],
             farmId: map['farmId'],
+            farmCode: map['farmCode'],
             coopId: map['coopId'],
+            coopCode: map['coopCode'],
             room: Mapper.child<Room>(map['room']),
             rooms: Mapper.children<Room>(map['rooms']),
             chickInRequestId: map['chickInRequestId'],

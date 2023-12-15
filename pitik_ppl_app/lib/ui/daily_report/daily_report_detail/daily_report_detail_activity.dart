@@ -110,7 +110,7 @@ class DailyReportDetailActivity extends StatelessWidget {
 
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(95),
+            preferredSize: const Size.fromHeight(105),
                 child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
         body: Obx(
           () => controller.isLoading.isTrue

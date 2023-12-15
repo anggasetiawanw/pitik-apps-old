@@ -8,6 +8,7 @@ import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
+import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
 import 'package:model/response/monitoring_response.dart';
 import 'package:model/response/date_monitoring_response.dart';
@@ -15,6 +16,7 @@ import 'package:model/response/monitoring_detail_response.dart';
 import 'package:model/response/realization_response.dart';
 import 'package:model/response/left_over_response.dart';
 import 'package:model/response/adjusment_mortality_response.dart';
+import 'package:model/response/farm_info_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -22,6 +24,36 @@ import 'package:model/response/adjusment_mortality_response.dart';
 
 @Rest
 class FarmMonitoringApi {
+
+    /// The function "farmList" makes a GET request to retrieve a list of active
+    /// farming cycles.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the API. It is
+    /// typically used to authenticate the user making the request.
+    ///   xId (String): The "X-ID" header parameter is typically used to pass a
+    /// unique identifier for the request. It can be any string value that helps
+    /// identify the request or the user making the request.
+    @GET(value: "v2/farms/active-farming-cycle", as: CoopListResponse, error: ErrorResponse)
+    void farmList(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+
+    /// The function "farmInfo" is a GET request that retrieves farm information
+    /// using the provided authorization, X-ID, and path parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token or credentials for
+    /// authentication purposes. It is typically used to verify the identity and
+    /// permissions of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   path (String): The `path` parameter is a placeholder for the specific path
+    /// or identifier of the farm that you want to retrieve information for. It is
+    /// typically used in the URL of the API endpoint.
+    @GET(value: GET.PATH_PARAMETER, as: FarmInfoResponse, error: ErrorResponse)
+    void farmInfo(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 
     /// The function `getPerformanceMonitoring` is a GET request that retrieves
     /// performance monitoring data with authorization, X-ID, and a path parameter.
@@ -179,6 +211,21 @@ class FarmMonitoringApi {
     @JSON(isPlaint: true)
     void adjustClosing(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
+    /// The function `closeFarm` is used to send a PATCH request to a specified path
+    /// with authorization and ID headers, and a data parameter.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send
+    /// authentication credentials to the server. It typically contains a token or
+    /// other form of identification to verify the user's identity.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header value.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that needs to be closed. It is a string value that represents the
+    /// path of the resource.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// to be passed in the request body. It is used to provide additional
+    /// information or payload for the "closeFarm" operation.
     @PATCH(value: PATCH.PATH_PARAMETER,  error: ErrorResponse)
     @JSON(isPlaint: true)
     void closeFarm(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}

@@ -10,7 +10,7 @@ import 'package:lottie/lottie.dart';
  */
 
 class ProgressLoading extends StatelessWidget {
-    const ProgressLoading({super.key, this.height = 124, this.width = 124});
+    const ProgressLoading({super.key, this.height = 80, this.width = 80});
     final double height;
     final double width;
     @override

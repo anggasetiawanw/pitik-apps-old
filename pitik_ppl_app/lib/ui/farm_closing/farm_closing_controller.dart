@@ -747,12 +747,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                     child: Text("Perhatian!", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange))
                                 )
                             ),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Expanded(
-                                    child: Text("Silahkan lakukan Pencatatan atau Transfer pakan yang tersisa dalam kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
-                                )
-                            ),
+                            Text("Silahkan lakukan Pencatatan atau Transfer pakan yang tersisa dalam kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D))),
                             Padding(
                                 padding: const EdgeInsets.only(top: 24),
                                 child: ButtonOutline(

@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
@@ -10,8 +11,10 @@ import 'package:dao_impl/profile_impl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/error/error.dart';
@@ -164,12 +167,12 @@ class LoginController extends GetxController {
                     Navigator.pop(Get.context!);
 
                     if (await isFirstLogin) {
-                        Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList]);
+                        Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard]);
                     } else {
                         // if (action == "DEFAULT_PASSWORD") {
-                        //     // showInformation();
+                        //     showInformation();
                         // } else {
-                            Get.offAllNamed(RoutePage.coopList);
+                            Get.offAllNamed(Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard);
                         // }
                     }
                 },
@@ -195,6 +198,49 @@ class LoginController extends GetxController {
                 },
                 onTokenInvalid: () => GlobalVar.invalidResponse()
             )
+        );
+    }
+
+    void showInformation() {
+        Get.dialog(
+            Center(
+                child: Container(
+                    width: 300,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Row(
+                                children: [
+                                    SvgPicture.asset("images/error_icon.svg", height: 24, width: 24),
+                                    const SizedBox(width: 10),
+                                    Text("Perhatian!", style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none))
+                                ]
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Kata Sandi bawaan harus segera ganti", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    Container(height: 32, width: 100, color: Colors.transparent,),
+                                    SizedBox(
+                                        width: 100,
+                                        child: ButtonFill(
+                                            controller:
+                                            GetXCreator.putButtonFillController("Dialog"),
+                                            label: "OK",
+                                            onClick: () => Get.offAllNamed(RoutePage.changePasswordPage, arguments: true)
+                                        )
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                )
+            ),
+            barrierDismissible: false
         );
     }
 }

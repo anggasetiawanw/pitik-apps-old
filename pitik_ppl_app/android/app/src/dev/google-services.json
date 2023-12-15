@@ -30,6 +30,13 @@
             {
               "client_id": "783810949423-48el2g84sn6tfcq4r95v5pjk33banfi4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "783810949423-ajq3kfduob4fq5fvhvdg4tja8p7rp444.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "id.pitik.mobile.ppl.staging"
+              }
             }
           ]
         }
@@ -67,6 +74,13 @@
             {
               "client_id": "783810949423-48el2g84sn6tfcq4r95v5pjk33banfi4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "783810949423-ajq3kfduob4fq5fvhvdg4tja8p7rp444.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "id.pitik.mobile.ppl.staging"
+              }
             }
           ]
         }

@@ -71,6 +71,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 margin: const EdgeInsets.only(top: 14, left: 32),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         SvgPicture.asset("images/pitik_avatar.svg", width: 64, height: 64),
                         const SizedBox(width: 8),
@@ -118,7 +119,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                               nameInfo(),
                               Container(
                                   margin: const EdgeInsets.only(top: 32,left: 39, right: 39),
-                                  child: Divider(
+                                  child: const Divider(
                                       color: GlobalVar.outlineColor,
                                       thickness: 1.6,
                                   ),

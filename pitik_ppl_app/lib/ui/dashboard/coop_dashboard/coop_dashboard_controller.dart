@@ -2,41 +2,28 @@ import 'dart:async';
 
 import 'package:common_page/history/history_activity.dart';
 import 'package:common_page/history/history_controller.dart';
-import 'package:common_page/profile/profile_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
-import 'package:common_page/smart_scale/bundle/list_smart_scale_bundle.dart';
-import 'package:common_page/smart_scale/bundle/smart_scale_weighing_bundle.dart';
-import 'package:common_page/smart_scale/detail_smart_scale/detail_smart_scale_activity.dart';
-import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
-import 'package:common_page/smart_scale/weighing_smart_scale/smart_scale_weighing.dart';
 import 'package:components/global_var.dart';
-import 'package:components/item_smart_scale_day/item_smart_scale_day.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
-import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/deeplink.dart';
 import 'package:engine/util/list_api.dart';
-import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:model/coop_active_standard.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/coop_performance.dart';
-import 'package:model/error/error.dart';
 import 'package:model/monitoring.dart';
 import 'package:model/population.dart';
 import 'package:model/profile.dart';
-import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/response/monitoring_performance_response.dart';
-import 'package:model/smart_scale/smart_scale_model.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
+import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
 import 'package:pitik_ppl_app/utils/deeplink_mapping_arguments.dart';
 
 ///@author DICKY
@@ -126,39 +113,8 @@ class CoopDashboardController extends GetxController {
             )
         );
 
-        _getUnreadNotificationCount();
+        DashboardCommon.getUnreadNotificationCount(countUnreadNotifications: countUnreadNotifications);
     }
-
-    void _getUnreadNotificationCount() => AuthImpl().get().then((auth) => {
-        if (auth != null){
-            Service.push(
-                apiKey: ApiMapping.api,
-                service: ListApi.countUnreadNotifications,
-                context: context,
-                body: ['Bearer ${auth.token}', auth.id],
-                listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) => countUnreadNotifications.value = (body.data),
-                    onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red
-                    ),
-                    onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan Internal",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red
-                    ),
-                    onTokenInvalid: () => GlobalVar.invalidResponse()
-                )
-            )
-        } else {
-            GlobalVar.invalidResponse()
-        }
-    });
 
     @override
     void onReady() {
@@ -286,9 +242,9 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("DOC in", 'images/calendar_check_icon.svg', showDocInAlert.value, () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
-                                            _createMenu("Laporan\nHarian", 'images/report_icon.svg', showDailyReportAlert.value, () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])),
-                                            _createMenu("Panen", 'images/harvest_icon.svg', showHarvestAlert.value, () => Get.toNamed(RoutePage.listHarvest, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "DOC in", imagePath: 'images/calendar_check_icon.svg', status: showDocInAlert.value, function: () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "Laporan\nHarian", imagePath: 'images/report_icon.svg', status: showDailyReportAlert.value, function: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "Panen", imagePath: 'images/harvest_icon.svg', status: showHarvestAlert.value, function: () => Get.toNamed(RoutePage.listHarvest, arguments: [coop])),
                                         ],
                                     ),
                                 ),
@@ -298,7 +254,7 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Farm\nClosing", 'images/empty_document_icon.svg', showFarmClosingAlert.value, () => Get.toNamed(RoutePage.farmClosing, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "Farm\nClosing", imagePath: 'images/empty_document_icon.svg', status: showFarmClosingAlert.value, function: () => Get.toNamed(RoutePage.farmClosing, arguments: [coop])),
                                             const SizedBox(width: 60)
                                         ],
                                     ),
@@ -314,8 +270,8 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Order", 'images/document_icon.svg', showOrderAlert.value, () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
-                                            _createMenu("Transfer", 'images/transfer_icon.svg', showTransferAlert.value, () => Get.toNamed(RoutePage.listTransferPage, arguments: coop)),
+                                            DashboardCommon.createMenu(title: "Order", imagePath: 'images/document_icon.svg', status: showOrderAlert.value, function: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
+                                            DashboardCommon.createMenu(title: "Transfer", imagePath: 'images/transfer_icon.svg', status: showTransferAlert.value, function: () => Get.toNamed(RoutePage.listTransferPage, arguments: coop)),
                                             const SizedBox(width: 60)
                                         ],
                                     ),
@@ -331,9 +287,9 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            _createMenu("Smart\nScale", 'images/smart_scale_icon.svg', showSmartScaleAlert.value, () => Get.toNamed(RoutePage.listSmartScale, arguments: _getListSmartScaleBundle())),
-                                            _createMenu("Smart\nController", 'images/smart_controller_icon.svg', showSmartControllerAlert.value, () => Get.toNamed(RoutePage.smartControllerList, arguments: [coop])),
-                                            _createMenu("Smart\nCamera", 'images/record_icon.svg', showSmartCameraAlert.value, () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
+                                            DashboardCommon.createMenu(title: "Smart\nScale", imagePath: 'images/smart_scale_icon.svg', status: showSmartScaleAlert.value, function: () => Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coop))),
+                                            DashboardCommon.createMenu(title: "Smart\nController", imagePath: 'images/smart_controller_icon.svg', status: showSmartControllerAlert.value, function: () => Get.toNamed(RoutePage.smartControllerList, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "Smart\nCamera", imagePath: 'images/record_icon.svg', status: showSmartCameraAlert.value, function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
                                         ]
                                     )
                                 )
@@ -342,197 +298,6 @@ class CoopDashboardController extends GetxController {
                     )
                 )
             )
-        );
-    }
-
-    SmartScaleWeighingBundle _getSmartScaleWeighingBundle() => SmartScaleWeighingBundle(
-        routeSave: () => ListApi.saveSmartScale,
-        routeEdit: () => ListApi.saveSmartScale,
-        routeDetail: () => ListApi.getSmartScaleDetail,
-        getBodyRequest: (controller, auth, isEdit) async {
-            if (isEdit) {
-                await SmartScaleImpl().getById(controller.smartScaleData.value!.id!).then((record) async {
-                    if (record != null) {
-                        record.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
-                        record.date = Convert.getStringIso(DateTime.now());
-                        record.farmingCycleId = coop.farmingCycleId;
-
-                        controller.smartScaleData.value = record;
-                    } else {
-                        // setting body
-                        controller.smartScaleData.value!.id = controller.smartScaleData.value!.id;
-                        controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
-                        controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
-                        controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
-                        controller.smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
-                    }
-                });
-            } else {
-                // setting body
-                controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
-                controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map( (entry) => entry.value).toList();
-                controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
-                controller.smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
-            }
-
-            ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: [controller.smartScaleData.value!]);
-            return ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}', Mapper.asJsonString(bodyRequest)];
-        },
-        getBodyDetail: (controller, auth) => ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}/dates/${controller.id}']
-    );
-
-    ListSmartScaleBundle _getListSmartScaleBundle() => ListSmartScaleBundle(
-        getCoop: () => coop,
-        isShowWeighingButton: () => false,
-        getWeighingBundle: () => _getSmartScaleWeighingBundle(),
-        onGetSmartScaleListData: (controller) => AuthImpl().get().then((auth) {
-            if (auth != null) {
-                Service.push(
-                    apiKey: "smartScaleApi",
-                    service: ListApi.getListHistoryScale,
-                    context: context,
-                    body: [auth.token, auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}', controller.pageSmartScale.value, controller.limit.value, controller.dateFilter.value == '' ? null : controller.dateFilter.value],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            controller.smartScaleList.value = body.data;
-                            _ascendingHistory(controller);
-
-                            controller.isLoadMore.value = false;
-                            controller.isLoading.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            controller.isLoadMore.value = false;
-                            controller.isLoading.value = false;
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            controller.isLoadMore.value = false;
-                            controller.isLoading.value = false;
-                        },
-                        onTokenInvalid: () => GlobalVar.invalidResponse()
-                    )
-                );
-            } else {
-                GlobalVar.invalidResponse();
-            }
-        }),
-        onCreateCard: (controller, index) => ItemSmartScaleDay(
-            smartScale: controller.smartScaleList[index]!,
-            isRedChild: index == 0,
-            onTap: () async {
-                if (controller.smartScaleList[index]!.totalCount == null) {
-                    GlobalVar.track("Click_card_smart_scale_weighing");
-                    await Get.to(SmartScaleWeighingActivity(), arguments: [controller.bundle.getCoop(), controller.bundle.getWeighingBundle()]);
-
-                    controller.isLoading.value = true;
-                    controller.smartScaleList.clear();
-                    controller.pageSmartScale.value = 1;
-                    Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
-                } else {
-                    GlobalVar.track("Click_card_smart_scale_detail");
-                    if (controller.smartScaleList[index]!.id != null) {
-                        await Get.to(DetailSmartScaleActivity(), arguments: [controller.bundle.getCoop(), controller.smartScaleList[index]!.date, controller.bundle.getWeighingBundle()]);
-
-                        controller.isLoading.value = true;
-                        controller.smartScaleList.clear();
-                        controller.pageSmartScale.value = 1;
-                        Timer(const Duration(milliseconds: 500), () => controller.getSmartScaleListData());
-                    } else {
-                        controller.showWeighingNotFound();
-                    }
-                }
-            }
-        )
-    );
-
-    void _ascendingHistory(ListSmartScaleController controller) {
-        List<SmartScale?> scalesAscending = [];
-
-        for (int i = coop.day ?? 0; i >= 1; i--) {
-            bool isInsert = false;
-            bool isLast = false;
-
-            if (controller.smartScaleList.isNotEmpty) {
-                for (var model in controller.smartScaleList) {
-                    if (model!.day == i) {
-                        scalesAscending.add(model);
-                        isInsert = true;
-                    } else if (i == coop.day) {
-                        isLast = true;
-                    }
-                }
-            } else {
-                if (i == coop.day) {
-                    isLast = true;
-                }
-            }
-
-            DateTime dateTime = Convert.getDatetime(coop.startDate!).add(Duration(days: i));
-            if (!isInsert && !isLast) {
-                SmartScale historyScaleTemp = SmartScale(
-                    date: '${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}',
-                    executionDate: '${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}',
-                    day: i,
-                    averageWeight: 0.00,
-                    totalCount: 0,
-                );
-
-                scalesAscending.add(historyScaleTemp);
-            } else if (isLast && !isInsert) {
-                SmartScale historyScaleTemp = SmartScale(
-                    date: '${Convert.getYear(DateTime.now())}-${Convert.getMonthNumber(DateTime.now())}-${Convert.getDay(DateTime.now())}',
-                    executionDate: '${Convert.getYear(DateTime.now())}-${Convert.getMonthNumber(DateTime.now())}-${Convert.getDay(DateTime.now())}',
-                    day: coop.day,
-                    averageWeight: null,
-                    totalCount: null,
-                );
-
-                scalesAscending.add(historyScaleTemp);
-            }
-        }
-
-        controller.smartScaleList.value = scalesAscending;
-    }
-
-    Widget _createMenu(String title, String imagePath, bool status, Function() function) {
-        return GestureDetector(
-            onTap: () {
-                Navigator.pop(Get.context!);
-                function();
-            },
-            child: Column(
-                children: [
-                    SizedBox(
-                        width: 60,
-                        height: 50,
-                        child: Stack(
-                            children: [
-                                Positioned(
-                                    right: 10,
-                                    top: 10,
-                                    child: Container(
-                                        width: 40,
-                                        height: 40,
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                                            color: GlobalVar.primaryLight2
-                                        ),
-                                        child: SvgPicture.asset(imagePath),
-                                    )
-                                ),
-                                !status ? const SizedBox() :
-                                Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: Image.asset('images/alert_red_icon.png')
-                                )
-                            ]
-                        )
-                    ),
-                    const SizedBox(height: 2),
-                    Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black), textAlign: TextAlign.center)
-                ],
-            ),
         );
     }
 
@@ -592,7 +357,7 @@ class CoopDashboardController extends GetxController {
                                     children: [
                                         Padding(
                                             padding: const EdgeInsets.only(top: 12),
-                                            child: Text('DOC-In ${startDate == null ? '-' : '${Convert.getDay(startDate)}/${Convert.getMonthNumber(startDate)}/${Convert.getYear(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                            child: Text('DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
                                         ),
                                         SvgPicture.asset(
                                             coop.day! > 0 && coop.day! <= 3 ?
@@ -608,8 +373,8 @@ class CoopDashboardController extends GetxController {
                                             coop.day! > 23 && coop.day! <= 28 ?
                                             'images/twentyfour_to_twentyeight_day_icon.svg' :
                                             'images/more_twentyeight_day_icon.svg',
-                                            width: 112,
-                                            height: 96,
+                                            width: MediaQuery.of(Get.context!).size.width * 0.25,
+                                            height: MediaQuery.of(Get.context!).size.width * 0.20,
                                         )
                                     ],
                                 )
@@ -913,23 +678,6 @@ class CoopDashboardController extends GetxController {
 
     /// The function generates a widget for a smart monitor.
     Widget generateMonitorWidget() => detailSmartMonitor;
-
-    /// The function generates a profile widget with various routes for different
-    /// pages.
-    ///
-    /// Returns:
-    ///   a ProfileActivity widget.
-    Widget generateProfileWidget() {
-        return ProfileActivity(
-            homeRoute: RoutePage.coopDashboard,
-            changePassRoute: RoutePage.changePasswordPage,
-            privacyRoute: RoutePage.privacyPage,
-            termRoute: RoutePage.termPage,
-            aboutUsRoute: RoutePage.aboutPage,
-            helpRoute: RoutePage.helpPage,
-            licenseRoute: RoutePage.licencePage
-        );
-    }
 }
 
 class CoopDashboardBinding extends Bindings {

@@ -19,7 +19,7 @@ class TransferDetailActivity extends GetView<TransferDetailController> {
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(95),
+                    preferredSize: const Size.fromHeight(105),
                     child: AppBarFormForCoop(
                         title: 'Transfer ${controller.procurement.value.type == null ? '-' :  controller.procurement.value.type == 'pakan' ? 'Pakan' : 'OVK'}',
                         coop: controller.coop

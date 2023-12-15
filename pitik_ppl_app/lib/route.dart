@@ -27,14 +27,15 @@ import 'package:pitik_ppl_app/ui/adjustment_product/ovk/adjustment_ovk_controlle
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
-import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_activity.dart';
-import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/coop_dashboard/coop_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_activity.dart';
+import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_activity.dart';
@@ -78,6 +79,8 @@ import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_contro
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_activity.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
 
+import 'ui/dashboard/coop_dashboard/coop_dashboard_activity.dart';
+
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 06/10/2023
@@ -89,6 +92,7 @@ class AppRoutes {
         GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity(), binding: SplashScreenBindings()),
         GetPage(name: RoutePage.boardingPage, page: () => const BoardingActivity()),
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.farmingDashboard, page: () => const FarmingDashboardActivity(), binding: FarmingDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.notification, page: () => const NotificationActivity(), binding: NotificationBindings(context: GlobalVar.getContext())),
@@ -156,6 +160,7 @@ class RoutePage {
     static const String splashPage = "/";
     static const String boardingPage = "/boarding";
     static const String loginPage = "/login";
+    static const String farmingDashboard = "/farmingDashboard";
     static const String coopList = "/coopList";
     static const String coopDashboard = "/coopDashboard";
     static const String privacyPage = "/privacy";
