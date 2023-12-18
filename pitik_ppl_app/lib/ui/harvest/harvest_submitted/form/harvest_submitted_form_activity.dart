@@ -16,7 +16,7 @@ class HarvestSubmittedFormActivity extends GetView<HarvestSubmittedFormControlle
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(105),
+                    preferredSize: const Size.fromHeight(120),
                     child: AppBarFormForCoop(
                         title: 'Pengajuan Panen',
                         coop: controller.coop,

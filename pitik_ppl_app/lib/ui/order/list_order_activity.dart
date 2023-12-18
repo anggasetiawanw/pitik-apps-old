@@ -21,7 +21,7 @@ class ListOrderActivity extends GetView<ListOrderController> {
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(105),
+                    preferredSize: const Size.fromHeight(120),
                     child: AppBarFormForCoop(
                         title: 'Order',
                         coop: controller.coop,
@@ -42,6 +42,7 @@ class ListOrderActivity extends GetView<ListOrderController> {
                             padding: const EdgeInsets.only(left: 16, right: 16),
                             child: TabBar(
                                 controller: controller.tabController,
+                                dividerColor: Colors.white,
                                 indicatorColor: GlobalVar.primaryOrange,
                                 labelColor: GlobalVar.primaryOrange,
                                 unselectedLabelColor: GlobalVar.gray,

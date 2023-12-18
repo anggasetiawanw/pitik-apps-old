@@ -120,6 +120,7 @@ class ListApi {
     static const String getDetailDailyReport = "getDetailDailyReport";
     static const String addReport = "addReport";
     static const String reviewReport = "reviewReport";
+    static const String getTaskTicketList = "getTaskTicketList";
 
     static String pathChangePassword() {
         return "v2/auth/reset-password";

@@ -27,7 +27,7 @@ class AppBarFormForCoop extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -40,7 +40,7 @@ class AppBarFormForCoop extends StatelessWidget {
                                     icon: const Icon(Icons.more_vert, color: Colors.white),
                                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                                     itemBuilder: (BuildContext context) => actionBars!,
-                                ) : const SizedBox()
+                                ) : const SizedBox(width: 16)
                             ],
                         ),
                         hideCoopDetail ? const SizedBox() : Column(

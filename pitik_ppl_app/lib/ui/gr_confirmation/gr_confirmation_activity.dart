@@ -22,7 +22,7 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(105),
+                    preferredSize: const Size.fromHeight(120),
                     child: AppBarFormForCoop(
                         title: 'Konfirmasi Penerimaan',
                         coop: controller.coop,

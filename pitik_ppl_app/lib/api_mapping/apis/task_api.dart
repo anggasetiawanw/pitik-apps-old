@@ -2,12 +2,14 @@ import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/property/header.dart';
 import 'package:engine/request/annotation/property/parameter.dart';
 import 'package:engine/request/annotation/property/path.dart';
+import 'package:engine/request/annotation/property/query.dart';
 import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/dailly_report_response.dart';
 import 'package:model/response/record_response.dart';
+import 'package:model/response/task_ticket_response.dart';
 
 @Rest
 class TaskApi {
@@ -54,4 +56,9 @@ class TaskApi {
     @POST(value : POST.PATH_PARAMETER, as : ReportResponse, error : ErrorResponse)
     @JSON(isPlaint: true)
     void reviewReport(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
+
+    @GET(value: GET.PATH_PARAMETER, as: TaskTicketResponse, error: ErrorResponse)
+    void getTaskTicketList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit,
+                           @Query("\$order") String order) {}
+
 }

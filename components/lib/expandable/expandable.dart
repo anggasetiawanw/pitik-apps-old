@@ -53,7 +53,7 @@ class Expandable extends StatelessWidget {
                   bottom: BorderSide(color:GlobalVar.outlineColor, width: 1),
                   left: BorderSide(color: GlobalVar.outlineColor, width: 1),
                   right: BorderSide(color: GlobalVar.outlineColor, width: 1),
-                  top: BorderSide(color: GlobalVar.outlineColor, width: 0),
+                  top: BorderSide(color: GlobalVar.outlineColor, width: 0.1),
                 ),
                 contentBorderRadius: controller.expanded.isTrue ? const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
                 contentChild: child,

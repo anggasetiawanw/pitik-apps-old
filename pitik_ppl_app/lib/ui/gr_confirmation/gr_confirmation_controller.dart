@@ -604,6 +604,11 @@ class GrConfirmationController extends GetxController {
 
         efProductReceivedMap.forEach((key, value) {
             if (key.controller.showField.isTrue && key.getInput().isEmpty) {
+                key.getController().alertText.value = 'Harus diisi..!';
+                key.getController().showAlert();
+                isPass  = false;
+            } else if (key.getInputNumber()!.toInt() > value.remaining!) {
+                key.getController().alertText.value = 'Jumlah penerimaan lebih dari permintaan';
                 key.getController().showAlert();
                 isPass  = false;
             }

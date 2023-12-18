@@ -91,7 +91,7 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(preferredSize: const Size.fromHeight(105), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(120), child: AppBarFormForCoop(title: 'Laporan Harian', coop: controller.coop!)),
       body: Column(
         children: [
           Obx(() => controller.isLoading.isTrue

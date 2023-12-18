@@ -24,7 +24,7 @@ class HarvestRealizationDetailActivity extends GetView<HarvestRealizationDetailC
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(105),
+                    preferredSize: const Size.fromHeight(120),
                     child: AppBarFormForCoop(
                         title: 'Realisasi Panen',
                         coop: controller.coop,

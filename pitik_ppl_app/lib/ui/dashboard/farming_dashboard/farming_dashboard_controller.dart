@@ -11,14 +11,18 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/profile.dart';
+import 'package:model/report.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/farm_info_response.dart';
+import 'package:model/response/task_ticket_response.dart';
+import 'package:model/task_ticket_model.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
@@ -37,15 +41,19 @@ class FarmingDashboardController extends GetxController {
     var isLoading = false.obs;
     var isLoadingFarmList = false.obs;
     var isLoadingFarmInfo = false.obs;
+    var isLoadingTaskTicketList = false.obs;
+    var isLoadMore = false.obs;
     var coopSelected = 0.obs;
     var homeTab = true.obs;
     var performTab = false.obs;
     var monitorTab = false.obs;
     var profileTab = false.obs;
     var expanded = false.obs;
+    var page = 1.obs;
 
     RxList<Coop?> coopList = <Coop?>[Coop()].obs;
     RxInt countUnreadNotifications = 0.obs;
+    RxList<TaskTicket?> taskTicketList = <TaskTicket?>[].obs;
 
     var showSmartScaleAlert = false.obs;
     var showSmartControllerAlert = false.obs;
@@ -61,6 +69,12 @@ class FarmingDashboardController extends GetxController {
     var deadChick = '- Ekor'.obs;
     var totalCulled = '- Ekor'.obs;
     var totalHarvested = '- Ekor'.obs;
+
+    // for task ticket list
+    var isAlertTicket = true.obs;
+    var isCurrentTicket = false.obs;
+    var isLateTicket = false.obs;
+    var isDoneTicket = false.obs;
 
     @override
     void onInit() {
@@ -88,6 +102,60 @@ class FarmingDashboardController extends GetxController {
         refreshData();
     }
 
+    void _getTaskTicketList({int page = 1}) => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            String url = isAlertTicket.isTrue ? 'v2/alerts/summary/${coopList[coopSelected.value]!.farmingCycleId}' :
+                         isCurrentTicket.isTrue ? 'v2/tasks/current/${coopList[coopSelected.value]!.farmingCycleId}' :
+                         isLateTicket.isTrue ? 'v2/tasks/late/${coopList[coopSelected.value]!.farmingCycleId}' :
+                         'v2/tasks/done/${coopList[coopSelected.value]!.farmingCycleId}';
+
+            Service.push(
+                apiKey: ApiMapping.taskApi,
+                service: ListApi.getTaskTicketList,
+                context: Get.context!,
+                body: ['Bearer ${auth.token}', auth.id, url, page, 10, 'DESC'],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) {
+                        if ((body as TaskTicketResponse).data.isNotEmpty) {
+                            if (page == 1) {
+                                taskTicketList.clear();
+                                taskTicketList.value = body.data;
+                            } else {
+                                taskTicketList.addAll(body.data);
+                            }
+                        }
+
+                        isLoadMore.value = false;
+                        isLoadingTaskTicketList.value = false;
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
+                        isLoadMore.value = false;
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        );
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
+                        isLoadMore.value = false;
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        );
+                    },
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                )
+            );
+        } else {
+            GlobalVar.invalidResponse();
+        }
+    });
+
     void refreshData() async {
         profile = await ProfileImpl().get();
         _getFarmList();
@@ -95,8 +163,11 @@ class FarmingDashboardController extends GetxController {
     }
 
     void _refreshCoop() {
-        isLoadingFarmInfo.value = true;
+        page.value = 1;
+        isLoadingTaskTicketList.value = true;
+
         _getFarmInfo();
+        _getTaskTicketList();
         _initCoopAndLatestConditionSmartMonitor();
     }
 
@@ -109,6 +180,7 @@ class FarmingDashboardController extends GetxController {
         if (auth != null) {
             isLoadingFarmList.value = true;
             isLoadingFarmInfo.value = true;
+            isLoadingTaskTicketList.value = true;
 
             Service.push(
                 apiKey: ApiMapping.farmMonitoringApi,
@@ -325,146 +397,340 @@ class FarmingDashboardController extends GetxController {
     Widget generateHomeWidget() {
         DateTime? startDate = farmingCycleStartDate.value == '' ? null : Convert.getDatetime(farmingCycleStartDate.value);
         return RefreshIndicator(
+            color: GlobalVar.primaryOrange,
             onRefresh: () => Future.delayed(
                 const Duration(milliseconds: 200), () => refreshData()
             ),
-            child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                children: [
-                    isLoadingFarmInfo.isTrue ? Image.asset("images/banner_lazy_load.gif") : Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: GlobalVar.primaryOrange
+            child: NotificationListener<ScrollEndNotification>(
+                onNotification: (scrollEnd) {
+                    final metrics = scrollEnd.metrics;
+                    if (metrics.atEdge && metrics.pixels != 0) {
+                        isLoadMore.value = true;
+                        page.value++;
+                        _getTaskTicketList(page: page.value);
+                    }
+                    return true;
+                },
+                child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                        isLoadingFarmInfo.isTrue ? Image.asset("images/banner_lazy_load.gif") : Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                color: GlobalVar.primaryOrange
+                            ),
+                            child: Column(
+                                children: [
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text(startDate == null ? '-' : '${Convert.getDay(startDate)} ${Convert.getMonth(startDate)} ${Convert.getYear(startDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                            Row(
+                                                children: [
+                                                    SvgPicture.asset('images/temperature_white_icon.svg', width: 16, height: 16),
+                                                    Text(_getTemperatureText(), style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white))
+                                                ],
+                                            )
+                                        ],
+                                    ),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                    Text('Hari ${coopList[coopSelected.value]!.day ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                                    const SizedBox(height: 8),
+                                                    Text('Populasi hari ini', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                                    const SizedBox(height: 8),
+                                                    Container(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                                                            color: Colors.white
+                                                        ),
+                                                        child: Text(estimationPopulation.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange))
+                                                    )
+                                                ]
+                                            ),
+                                            coopList[coopSelected.value]!.day != null ? SvgPicture.asset(
+                                                coopList[coopSelected.value]!.day! > 0 && coopList[coopSelected.value]!.day! <= 3 ?
+                                                'images/one_to_three_day_icon.svg' :
+                                                coopList[coopSelected.value]!.day! > 3 && coopList[coopSelected.value]!.day! <= 7 ?
+                                                'images/four_to_seven_day_icon.svg' :
+                                                coopList[coopSelected.value]!.day! > 7 && coopList[coopSelected.value]!.day! <= 13 ?
+                                                'images/eight_to_thirteen_day_icon.svg' :
+                                                coopList[coopSelected.value]!.day! > 13 && coopList[coopSelected.value]!.day! <= 18 ?
+                                                'images/fourteen_to_eighteen_day_icon.svg' :
+                                                coopList[coopSelected.value]!.day! > 18 && coopList[coopSelected.value]!.day! <= 23 ?
+                                                'images/nineteen_to_twentythree_day_icon.svg' :
+                                                coopList[coopSelected.value]!.day! > 23 && coopList[coopSelected.value]!.day! <= 28 ?
+                                                'images/twentyfour_to_twentyeight_day_icon.svg' :
+                                                'images/more_twentyeight_day_icon.svg',
+                                                width: MediaQuery.of(Get.context!).size.width * 0.25,
+                                                height: MediaQuery.of(Get.context!).size.width * 0.20,
+                                            ) : const SizedBox()
+                                        ]
+                                    )
+                                ]
+                            )
                         ),
-                        child: Column(
-                            children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text(startDate == null ? '-' : '${Convert.getDay(startDate)} ${Convert.getMonth(startDate)} ${Convert.getYear(startDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                        Row(
+                        const SizedBox(height: 16),
+                        isLoadingFarmInfo.isTrue ? Image.asset("images/banner_lazy_load.gif") : GFAccordion(
+                            margin: EdgeInsets.zero,
+                            title: 'Detail Populasi',
+                            textStyle: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 14),
+                            onToggleCollapsed: (isExpand) {
+                                if (isExpand) {
+                                    expanded.value = true;
+                                } else {
+                                    expanded.value = false;
+                                }
+                            },
+                            collapsedTitleBackgroundColor: GlobalVar.primaryLight,
+                            expandedTitleBackgroundColor: GlobalVar.primaryLight,
+                            showAccordion: expanded.value,
+                            collapsedIcon: SvgPicture.asset("images/arrow_down.svg"),
+                            expandedIcon: SvgPicture.asset("images/arrow_up.svg"),
+                            titleBorderRadius: expanded.isTrue ? const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
+                            contentBorder: const Border(
+                                bottom: BorderSide(color:GlobalVar.primaryLight, width: 1),
+                                left: BorderSide(color: GlobalVar.primaryLight, width: 1),
+                                right: BorderSide(color: GlobalVar.primaryLight, width: 1),
+                                top: BorderSide(color: GlobalVar.primaryLight, width: 1),
+                            ),
+                            contentBorderRadius: expanded.isTrue ? const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
+                            contentBackgroundColor: GlobalVar.primaryLight,
+                            contentChild: Column(
+                                children: [
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Populasi Awal', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            Text(initialPopulation.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                        ]
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Total Mortalitas', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            Text(totalMortality.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                        ]
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Ayam Mati', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            Text(deadChick.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                        ]
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Dimusnahkan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            Text(totalCulled.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                        ]
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Dipanen', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            Text(totalHarvested.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                        ]
+                                    )
+                                ]
+                            )
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                            width: MediaQuery.of(Get.context!).size.width - 36,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                            isAlertTicket.value = true;
+                                            isCurrentTicket.value = false;
+                                            isLateTicket.value = false;
+                                            isDoneTicket.value = false;
+
+                                            page.value = 1;
+                                            isLoadingTaskTicketList.value = true;
+                                            _getTaskTicketList();
+                                        },
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                                SvgPicture.asset('images/temperature_white_icon.svg', width: 16, height: 16),
-                                                Text(_getTemperatureText(), style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: Colors.white))
-                                            ],
+                                                Text('Peringatan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: isAlertTicket.isTrue ? GlobalVar.red : GlobalVar.gray)),
+                                                const SizedBox(height: 6),
+                                                SizedBox(
+                                                    width: (MediaQuery.of(Get.context!).size.width - 36) / 4.5,
+                                                    height: 3,
+                                                    child: Divider(color: isAlertTicket.isTrue ? GlobalVar.red : Colors.white, thickness: 3),
+                                                )
+                                            ]
                                         )
-                                    ],
-                                ),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                        Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                    ),
+                                    const SizedBox(width: 16),
+                                    GestureDetector(
+                                        onTap: () {
+                                            isAlertTicket.value = false;
+                                            isCurrentTicket.value = true;
+                                            isLateTicket.value = false;
+                                            isDoneTicket.value = false;
+
+                                            page.value = 1;
+                                            isLoadingTaskTicketList.value = true;
+                                            _getTaskTicketList();
+                                        },
+                                        child: Column(
                                             children: [
-                                                Text('Hari ${coopList[coopSelected.value]!.day ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                                const SizedBox(height: 8),
-                                                Text('Populasi hari ini', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                                const SizedBox(height: 8),
-                                                Container(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                                                    decoration: const BoxDecoration(
-                                                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                                                        color: Colors.white
-                                                    ),
-                                                    child: Text(estimationPopulation.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange))
+                                                Text('Berlangsung', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: isCurrentTicket.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray)),
+                                                const SizedBox(height: 6),
+                                                SizedBox(
+                                                    width: (MediaQuery.of(Get.context!).size.width - 36) / 4,
+                                                    height: 3,
+                                                    child: Divider(color: isCurrentTicket.isTrue ? GlobalVar.primaryOrange : Colors.white, thickness: 3),
                                                 )
                                             ]
                                         ),
-                                        coopList[coopSelected.value]!.day != null ? SvgPicture.asset(
-                                            coopList[coopSelected.value]!.day! > 0 && coopList[coopSelected.value]!.day! <= 3 ?
-                                            'images/one_to_three_day_icon.svg' :
-                                            coopList[coopSelected.value]!.day! > 3 && coopList[coopSelected.value]!.day! <= 7 ?
-                                            'images/four_to_seven_day_icon.svg' :
-                                            coopList[coopSelected.value]!.day! > 7 && coopList[coopSelected.value]!.day! <= 13 ?
-                                            'images/eight_to_thirteen_day_icon.svg' :
-                                            coopList[coopSelected.value]!.day! > 13 && coopList[coopSelected.value]!.day! <= 18 ?
-                                            'images/fourteen_to_eighteen_day_icon.svg' :
-                                            coopList[coopSelected.value]!.day! > 18 && coopList[coopSelected.value]!.day! <= 23 ?
-                                            'images/nineteen_to_twentythree_day_icon.svg' :
-                                            coopList[coopSelected.value]!.day! > 23 && coopList[coopSelected.value]!.day! <= 28 ?
-                                            'images/twentyfour_to_twentyeight_day_icon.svg' :
-                                            'images/more_twentyeight_day_icon.svg',
-                                            width: MediaQuery.of(Get.context!).size.width * 0.25,
-                                            height: MediaQuery.of(Get.context!).size.width * 0.20,
-                                        ) : const SizedBox()
-                                    ]
-                                )
-                            ]
-                        )
-                    ),
-                    const SizedBox(height: 16),
-                    isLoadingFarmInfo.isTrue ? Image.asset("images/banner_lazy_load.gif") : GFAccordion(
-                        margin: EdgeInsets.zero,
-                        title: 'Detail Populasi',
-                        textStyle: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 14),
-                        onToggleCollapsed: (isExpand) {
-                            if (isExpand) {
-                                expanded.value = true;
-                            } else {
-                                expanded.value = false;
-                            }
-                        },
-                        collapsedTitleBackgroundColor: GlobalVar.primaryLight,
-                        expandedTitleBackgroundColor: GlobalVar.primaryLight,
-                        showAccordion: expanded.value,
-                        collapsedIcon: SvgPicture.asset("images/arrow_down.svg"),
-                        expandedIcon: SvgPicture.asset("images/arrow_up.svg"),
-                        titleBorderRadius: expanded.isTrue ? const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
-                        contentBorder: const Border(
-                            bottom: BorderSide(color:GlobalVar.primaryLight, width: 1),
-                            left: BorderSide(color: GlobalVar.primaryLight, width: 1),
-                            right: BorderSide(color: GlobalVar.primaryLight, width: 1),
-                            top: BorderSide(color: GlobalVar.primaryLight, width: 1),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    GestureDetector(
+                                        onTap: () {
+                                            isAlertTicket.value = false;
+                                            isCurrentTicket.value = false;
+                                            isLateTicket.value = true;
+                                            isDoneTicket.value = false;
+
+                                            page.value = 1;
+                                            isLoadingTaskTicketList.value = true;
+                                            _getTaskTicketList();
+                                        },
+                                        child: Column(
+                                            children: [
+                                                Text('Telat', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: isLateTicket.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray)),
+                                                const SizedBox(height: 6),
+                                                SizedBox(
+                                                    width: (MediaQuery.of(Get.context!).size.width - 36) / 7,
+                                                    height: 3,
+                                                    child: Divider(color: isLateTicket.isTrue ? GlobalVar.primaryOrange : Colors.white, thickness: 3),
+                                                )
+                                            ]
+                                        ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    GestureDetector(
+                                        onTap: () {
+                                            isAlertTicket.value = false;
+                                            isCurrentTicket.value = false;
+                                            isLateTicket.value = false;
+                                            isDoneTicket.value = true;
+
+                                            page.value = 1;
+                                            isLoadingTaskTicketList.value = true;
+                                            _getTaskTicketList();
+                                        },
+                                        child: Column(
+                                            children: [
+                                                Text('Selesai', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: isDoneTicket.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray)),
+                                                const SizedBox(height: 6),
+                                                SizedBox(
+                                                    width: (MediaQuery.of(Get.context!).size.width - 36) / 6,
+                                                    height: 3,
+                                                    child: Divider(color: isDoneTicket.isTrue ? GlobalVar.primaryOrange : Colors.white, thickness: 3),
+                                                )
+                                            ]
+                                        )
+                                    )
+                                ]
+                            )
                         ),
-                        contentBorderRadius: expanded.isTrue ? const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)) : const BorderRadius.all(Radius.circular(10)),
-                        contentBackgroundColor: GlobalVar.primaryLight,
-                        contentChild: Column(
-                            children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text('Populasi Awal', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(initialPopulation.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
-                                    ]
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text('Total Mortalitas', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(totalMortality.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
-                                    ]
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text('Ayam Mati', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(deadChick.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
-                                    ]
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text('Dimusnahkan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(totalCulled.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
-                                    ]
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text('Dipanen', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                        Text(totalHarvested.value, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
-                                    ]
+                        const SizedBox(height: 16),
+                        isLoadingTaskTicketList.isTrue ? Image.asset("images/card_height_450_lazy.gif") : Column(
+                            children: List.generate(taskTicketList.length, (index) => Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: GestureDetector(
+                                    onTap: () {
+                                        if (taskTicketList[index]!.isDailyReport != null && taskTicketList[index]!.isDailyReport!) {
+                                            Report report = Report(
+                                                taskTicketId: taskTicketList[index]!.id,
+                                                date: taskTicketList[index]!.date,
+                                                status: isCurrentTicket.isTrue ? 'Berlangsung' : isLateTicket.isTrue ? 'Telat' : 'Selesai'
+                                            );
+
+                                            coopList[coopSelected.value]!.startDate = farmingCycleStartDate.value;
+                                            if (isDoneTicket.isTrue) {
+                                                Get.toNamed(RoutePage.dailyReportDetail, arguments: [coopList[coopSelected.value], report])!.then((value) => _getTaskTicketList());
+                                            } else {
+                                                Get.toNamed(RoutePage.dailyReportForm, arguments: [coopList[coopSelected.value], report])!.then((value) => _getTaskTicketList());
+                                            }
+                                        } else {
+                                            Get.snackbar(
+                                                "Pesan",
+                                                "Fitur belum tersedia...!",
+                                                snackPosition: SnackPosition.TOP,
+                                                colorText: Colors.white,
+                                                backgroundColor: Colors.red
+                                            );
+                                        }
+                                    },
+                                    child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                            color: isAlertTicket.isTrue ? GlobalVar.redBackground : GlobalVar.primaryLight
+                                        ),
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Flexible(child: SvgPicture.asset(isAlertTicket.isTrue ? 'images/alert_icon.svg' : isDoneTicket.isTrue ? 'images/checkbox_circle_green.svg' : 'images/error_icon.svg', width: 24, height: 24)),
+                                                const SizedBox(width: 8),
+                                                Flexible(
+                                                    flex: 8,
+                                                    child: Column(
+                                                        children: [
+                                                            Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                    Expanded(child: Text(taskTicketList[index]!.title ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black), overflow: TextOverflow.clip)),
+                                                                    Text(taskTicketList[index]!.date == null ? '-' : Convert.getDate(taskTicketList[index]!.date), style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                                ]
+                                                            ),
+                                                            const SizedBox(height: 4),
+                                                            Html(
+                                                                data: taskTicketList[index]!.instruction,
+                                                                style: {
+                                                                    "body": Style(
+                                                                        fontSize: FontSize(10),
+                                                                        fontWeight: GlobalVar.medium,
+                                                                        color: GlobalVar.grayText,
+                                                                        margin: Margins.all(0)
+                                                                    )
+                                                                }
+                                                            )
+                                                        ]
+                                                    )
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Flexible(child: Icon(Icons.arrow_forward_ios, color: isAlertTicket.isTrue ? GlobalVar.red : GlobalVar.primaryOrange))
+                                            ]
+                                        )
+                                    ),
                                 )
-                            ]
-                        )
-                    )
-                ]
+                            ))
+                        ),
+                        isLoadMore.isTrue ? const Center(child: CircularProgressIndicator(color: GlobalVar.primaryOrange)) : const SizedBox(),
+                        const SizedBox(height: 60)
+                    ]
+                )
             )
         );
     }
