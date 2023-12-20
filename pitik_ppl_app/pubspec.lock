@@ -209,6 +209,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  common_page:
+    dependency: "direct main"
+    description:
+      path: "../common_page"
+      relative: true
+    source: path
+    version: "0.0.1"
   components:
     dependency: "direct main"
     description:
@@ -1248,6 +1255,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.5"
+  restart_app:
+    dependency: "direct main"
+    description:
+      name: restart_app
+      sha256: b37daeb1c02fcab30e19d9e30b6fdd215bd53577efd927042eb77cf6f09daadb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   share_plus:
     dependency: "direct main"
     description:
@@ -1337,7 +1352,7 @@ packages:
     source: hosted
     version: "1.0.4"
   shorebird_code_push:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shorebird_code_push
       sha256: "872839ac1e9b86f97db99c6456c4886620246f15e1cff9d29d4101e2beb991eb"

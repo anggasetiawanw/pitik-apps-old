@@ -65,7 +65,11 @@ class Profile extends BaseEntity {
     @IsChild()
     Branch? branch;
 
-    Profile({this.id, this.userCode, this.userName, this.fullName, this.email, this.phoneNumber, this.userType, this.status = 1, this.refOwnerId, this.createdDate, this.cmsId, this.roles, this.modules, this.name, this.waNumber, this.role, this.organizationId, this.organizationName, this.branch});
+    String? farmingCycleId;
+    String? ownerId;
+    String? password;
+
+    Profile({this.id, this.userCode, this.userName, this.fullName, this.email, this.phoneNumber, this.userType, this.status = 1, this.refOwnerId, this.createdDate, this.cmsId, this.roles, this.modules, this.name, this.waNumber, this.role, this.organizationId, this.organizationName, this.branch, this.farmingCycleId, this.ownerId, this.password});
 
     @override
     Profile toModelEntity(Map<String, dynamic> map) {
@@ -109,6 +113,9 @@ class Profile extends BaseEntity {
             organizationId: map['organizationId'],
             organizationName: map['organizationName'],
             branch: Mapper.child<Branch>(map['branch']),
+            farmingCycleId: map['farmingCycleId'],
+            ownerId: map['ownerId'],
+            password: map['password'],
         );
     }
 }

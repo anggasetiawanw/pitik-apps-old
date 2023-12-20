@@ -66,6 +66,12 @@ import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/tasl_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
@@ -152,6 +158,11 @@ class AppRoutes {
         GetPage(name: RoutePage.adjustmentFeed, page: () => const AdjustmentFeedActivity(), binding: AdjustmentFeedBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.adjustmentOvk, page: () => const AdjustmentOvkActivity(), binding: AdjustmentOvkBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.adjustmentProduct, page: () => const AdjustmentProductActivity(), binding: AdjustmentProductBinding(context: GlobalVar.getContext())),
+
+        // Self Registration
+        GetPage(name: RoutePage.dashboardSelfRegistration, page: () => const DashboardSelfRegistration(), binding: DashboardSelfRegistrationBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.addOperatorSelfRegistration, page: () => const AddOperatorSelfRegistration(), binding: AddOperatorSelfRegistrationBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.addTaskSelfRegistration, page: () => const TaskSelfRegistration(), binding: TaskSelfRegistrationBindings(context: GlobalVar.getContext())),
     ];
 }
 
@@ -198,4 +209,7 @@ class RoutePage {
     static const String adjustmentFeed = "/adjustmentFeed";
     static const String adjustmentOvk = "/adjustmentOvk";
     static const String adjustmentProduct = "/adjustmentProduct";
+    static const String dashboardSelfRegistration = "/dashboardSelfRegistration";
+    static const String addOperatorSelfRegistration = "/addOperatorSelfRegistration";
+    static const String addTaskSelfRegistration = "/addTaskSelfRegistration";
 }
