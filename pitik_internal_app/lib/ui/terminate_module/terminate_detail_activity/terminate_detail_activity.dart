@@ -261,7 +261,7 @@ class TerminateDetailActivity extends StatelessWidget {
                                           ),
                                           Expanded(
                                               child: Text(
-                                            "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname",
+                                            "Saya dengan teliti dan sadar sudah memeriksa hasil Pemusnahan",
                                             style: AppTextStyle.blackTextStyle,
                                             overflow: TextOverflow.clip,
                                           )),

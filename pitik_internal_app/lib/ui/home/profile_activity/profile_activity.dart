@@ -81,7 +81,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                     style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,
                   ),
-                  Text(
+                  if(Constant.profileUser != null && Constant.profileUser!.roles != null && Constant.profileUser!.roles!.isNotEmpty) Text(
                     Constant.profileUser!.roles!.map((element) => element!.name).toList().join(", "),
                     style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,

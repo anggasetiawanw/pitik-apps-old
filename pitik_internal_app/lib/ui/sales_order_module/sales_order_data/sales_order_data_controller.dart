@@ -274,7 +274,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                         isShowList.value = isOpen;
                       },
                       dropdownStyleData: const DropdownStyleData(
-                        width: 100,
+                        width: 120,
                       ),
                     ),
                   ),
