@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:common_page/farm_performance/farm_performance_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
@@ -37,6 +38,7 @@ class FarmingDashboardController extends GetxController {
 
     late Profile? profile;
     late DetailSmartMonitor detailSmartMonitor;
+    late FarmPerformanceActivity farmPerformanceActivity;
 
     var isLoading = false.obs;
     var isLoadingFarmList = false.obs;
@@ -99,6 +101,7 @@ class FarmingDashboardController extends GetxController {
             hideBuildings: true,
         );
 
+        farmPerformanceActivity = const FarmPerformanceActivity();
         refreshData();
     }
 
@@ -166,6 +169,11 @@ class FarmingDashboardController extends GetxController {
         page.value = 1;
         isLoadingTaskTicketList.value = true;
 
+        // set coop on farm performance page
+        farmPerformanceActivity.controller.coop.value = coopList[coopSelected.value];
+        farmPerformanceActivity.controller.coop.value!.startDate = farmingCycleStartDate.value;
+
+        // fill data dashboard
         _getFarmInfo();
         _getTaskTicketList();
         _initCoopAndLatestConditionSmartMonitor();
@@ -735,7 +743,10 @@ class FarmingDashboardController extends GetxController {
         );
     }
 
-    Widget generatePerformWidget() => Container();
+    Widget generatePerformWidget() {
+        Future.delayed(const Duration(milliseconds: 300), () => farmPerformanceActivity.controller.toActual());
+        return Padding(padding: const EdgeInsets.all(16), child: farmPerformanceActivity);
+    }
 
     /// The function generates a widget for a smart monitor.
     Widget generateMonitorWidget() => detailSmartMonitor;

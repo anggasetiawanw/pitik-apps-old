@@ -17,6 +17,9 @@ import 'package:model/response/realization_response.dart';
 import 'package:model/response/left_over_response.dart';
 import 'package:model/response/adjusment_mortality_response.dart';
 import 'package:model/response/farm_info_response.dart';
+import 'package:model/response/farm_day_history_response.dart';
+import 'package:model/response/farm_actual_response.dart';
+import 'package:model/response/farm_projection_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -54,6 +57,65 @@ class FarmMonitoringApi {
     /// typically used in the URL of the API endpoint.
     @GET(value: GET.PATH_PARAMETER, as: FarmInfoResponse, error: ErrorResponse)
     void farmInfo(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+
+    /// The function `getPerformHistory` is a GET request that retrieves the
+    /// performance history for a farming cycle with the specified parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header that
+    /// contains the authorization token for the API request. This token is used to
+    /// authenticate the user and ensure that they have the necessary permissions to
+    /// access the requested resource.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID value. It is used for authentication or identification purposes in
+    /// the API request.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve performance
+    /// history.
+    ///   page (int): The "page" parameter is used to specify the page number of the
+    /// results you want to retrieve. It is typically used for pagination purposes,
+    /// allowing you to retrieve a specific subset of results from a larger set of
+    /// data.
+    ///   limit (int): The "limit" parameter is used to specify the maximum number
+    /// of items to be returned in the response. It determines the number of items
+    /// per page in the pagination.
+    ///   order (String): The "order" parameter is used to specify the order in
+    /// which the results should be returned. It can have the following values:
+    @GET(value: "v2/performance/history", as: FarmDayHistoryResponse, error: ErrorResponse)
+    void getPerformHistory(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("\$page") int page,
+                           @Query("\$limit") int limit, @Query("\$order") String order) {}
+
+    /// The function `getFarmActual` is a GET request that retrieves actual farm
+    /// performance data using the provided authorization, X-ID, and farmingCycleId.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the API. It is
+    /// typically used to authenticate the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents a
+    /// unique identifier for the request. It is typically used for tracking or
+    /// logging purposes.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve the actual
+    /// performance data.
+    @GET(value: "v2/performance/actual", as: FarmActualResponse, error: ErrorResponse)
+    void getFarmActual(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
+
+    /// The function `getFarmProjection` is a GET request that retrieves farm
+    /// projections based on the provided authorization, X-ID, and farmingCycleId.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send the
+    /// authentication token or credentials required to access the API. It is
+    /// typically used to verify the identity of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID value. It is used to identify a specific entity or resource in the
+    /// API request.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve the farm
+    /// projection data.
+    @GET(value: "v2/performance/projection", as: FarmProjectionResponse, error: ErrorResponse)
+    void getFarmProjection(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
 
     /// The function `getPerformanceMonitoring` is a GET request that retrieves
     /// performance monitoring data with authorization, X-ID, and a path parameter.

@@ -92,6 +92,9 @@ class ListApi {
     // api FARMING PERFORMANCE
     static const String farmList = "farmList";
     static const String farmInfo = "farmInfo";
+    static const String getPerformHistory = "getPerformHistory";
+    static const String getFarmActual = "getFarmActual";
+    static const String getFarmProjection = "getFarmProjection";
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
     static const String getMonitoringByVariable = "getMonitoringByVariable";
     static const String getAllDataMonitoring = "getAllDataMonitoring";
