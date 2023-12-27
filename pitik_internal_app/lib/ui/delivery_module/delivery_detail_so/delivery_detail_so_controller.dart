@@ -156,7 +156,7 @@ class DeliveryDetailSOController extends GetxController {
     Service.push(
         service: ListApi.deliveryPickupSO,
         context: context,
-        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDeliverySOPickup(order.id!), isSendItem.isTrue ? Mapper.asJsonString(Order(driverRemarks: efRemark.getInput())):""],
+        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDeliverySOPickup(order.id!), isSendItem.isTrue ? Mapper.asJsonString(Order(driverRemarks: Uri.encodeFull(efRemark.getInput()))) : ""],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Get.back();

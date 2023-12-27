@@ -486,7 +486,6 @@ class NewDataSalesOrderController extends GetxController {
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
-
   void saveOrder() {
     List ret = produkType.value == "LB" ? validationLb() : validationNonLb();
     if (ret[0]) {
@@ -530,7 +529,6 @@ class NewDataSalesOrderController extends GetxController {
       );
     }
   }
-
   Order generatePayload() {
     List<Products?> productList = [];
     List<Products?> lbProductList = [];
@@ -552,7 +550,6 @@ class NewDataSalesOrderController extends GetxController {
     if (spSumber.controller.textSelected.value.isNotEmpty && isInbound.isTrue) {
       sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
     }
-
     return Order(
       customerId: customerSelected?.id, // Ganti dengan nilai default jika tidak ada customer terpilih
       operationUnitId: sourceSelected?.id,
@@ -561,7 +558,7 @@ class NewDataSalesOrderController extends GetxController {
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       withDeliveryFee: isDeliveryPrice.value,
     );
   }

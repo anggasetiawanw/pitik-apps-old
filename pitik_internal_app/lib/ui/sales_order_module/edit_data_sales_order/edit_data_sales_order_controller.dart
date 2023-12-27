@@ -264,7 +264,7 @@ class EditDataSalesOrderController extends GetxController {
     if (isInbound.isTrue) {
       spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName!);
     }
-    efRemark.setInput(order.remarks ?? "");
+    efRemark.setInput(order.remarks != null ? Uri.decodeFull(order.remarks!) : "");
 
     if (order.type! == "LB") {
       getSku(orderDetail.products![0]!.category!.id!);
@@ -613,7 +613,7 @@ class EditDataSalesOrderController extends GetxController {
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: orderDetail.category,
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       withDeliveryFee: isDeliveryPrice.value,
     );
   }

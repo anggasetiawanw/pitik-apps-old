@@ -416,7 +416,7 @@ class DetailGrPurchase extends GetView<DetailGrPurchaseController> {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.purchaseDetail.value!.remarks ?? "-",
+                                  controller.purchaseDetail.value!.remarks != null ? Uri.decodeFull(controller.purchaseDetail.value!.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -442,7 +442,7 @@ class DetailGrPurchase extends GetView<DetailGrPurchaseController> {
                                       height: 16,
                                     ),
                                     Text(
-                                      controller.goodReceiptDetail.value!.remarks ?? "-",
+                                      controller.goodReceiptDetail.value!.remarks != null ? Uri.decodeFull(controller.goodReceiptDetail.value!.remarks!) : "-",
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                     )
                                   ],

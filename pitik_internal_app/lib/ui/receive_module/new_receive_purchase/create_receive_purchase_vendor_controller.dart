@@ -228,6 +228,8 @@ class CreateGrPurchaseController extends GetxController {
       body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, Mapper.asJsonString(purchasePayload)],
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
         isLoading.value = false;
+        Get.back();
+        Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
@@ -288,7 +290,7 @@ class CreateGrPurchaseController extends GetxController {
     return Purchase(
       products: listProductPayload,
       purchaseOrderId: purchaseDetail.value!.id,
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       totalWeight: efTotalKG.getInputNumber(),
     );
   }

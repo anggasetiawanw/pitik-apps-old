@@ -885,7 +885,7 @@ class VisitController extends GetxController {
                     ? categories
                     : [],
             leadStatus: spinnerLead.controller.textSelected.value,
-            remarks: editAlasan.getInput(),
+            remarks: Uri.encodeFull(editAlasan.getInput()),
             prospect: spinnerProspek.controller.textSelected.value,
             products: spinnerMulti.controller.selectedValue.value.contains("Harga")
                 ? listProductPayload

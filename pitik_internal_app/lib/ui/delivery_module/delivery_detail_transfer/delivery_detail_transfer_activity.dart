@@ -236,7 +236,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks ?? "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -265,7 +265,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks ?? "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],

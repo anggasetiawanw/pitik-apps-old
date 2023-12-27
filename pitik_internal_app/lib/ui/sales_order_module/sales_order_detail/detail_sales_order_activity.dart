@@ -625,7 +625,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.orderDetail.value!.remarks ?? "-",
+                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],

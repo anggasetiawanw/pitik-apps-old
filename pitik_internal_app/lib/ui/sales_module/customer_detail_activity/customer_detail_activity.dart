@@ -293,7 +293,7 @@ class CustomerDetail extends GetView<CustomerDetailController> {
                 controller.customerDetail.value!.latestVisit != null &&
                         controller.customerDetail.value!.latestVisit!.remarks !=
                             null
-                    ? "${controller.customerDetail.value!.latestVisit!.remarks}"
+                    ? Uri.decodeFull(controller.customerDetail.value!.latestVisit!.remarks!)
                     : "-",
                 false),
             listDetail(
