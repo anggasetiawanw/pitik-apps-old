@@ -245,6 +245,7 @@ class CoopDashboardController extends GetxController {
                                             DashboardCommon.createMenu(title: "DOC in", imagePath: 'images/calendar_check_icon.svg', status: showDocInAlert.value, function: () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
                                             DashboardCommon.createMenu(title: "Laporan\nHarian", imagePath: 'images/report_icon.svg', status: showDailyReportAlert.value, function: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])),
                                             DashboardCommon.createMenu(title: "Panen", imagePath: 'images/harvest_icon.svg', status: showHarvestAlert.value, function: () => Get.toNamed(RoutePage.listHarvest, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "DEV\nSELF\nREGIST", imagePath: 'images/report_icon.svg', status: showDailyReportAlert.value, function: () => Get.toNamed(RoutePage.dashboardSelfRegistration, arguments: [coop])),
                                         ],
                                     ),
                                 ),

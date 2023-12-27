@@ -24,6 +24,13 @@ class ListApi {
     static const String readAllNotifications = "readAllNotifications";
     static const String notifications = "notifications";
     static const String updateNotification = "updateNotification";
+    static const String issueList = "issueList";
+    static const String issueTypes = "issueTypes";
+    static const String addIssue = "addIssue";
+    static const String getListOperator = "getListOperator";
+    static const String getAssignableOperators = "getAssignableOperators";
+    static const String assignOperator = "assignOperator";
+    static const String addOperator = "addOperator";
 
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
@@ -259,5 +266,9 @@ class ListApi {
     
     static String pathReviewReport(String coopId, String ticketId) {
         return "v2/farming-cycles/$coopId/daily-reports/$ticketId/mark-as-reviewed";
+    }
+
+    static String pathGetListOperatir(String farmingCycleId) {
+        return "v2/farming-cycles/$farmingCycleId/operators";
     }
 }
