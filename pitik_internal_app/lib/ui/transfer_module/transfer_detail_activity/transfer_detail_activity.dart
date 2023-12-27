@@ -263,7 +263,7 @@ class TransferDetailActivity extends StatelessWidget {
                                   bottom: BorderSide(color: AppColors.outlineColor, width: 1),
                                   left: BorderSide(color: AppColors.outlineColor, width: 1),
                                   right: BorderSide(color: AppColors.outlineColor, width: 1),
-                                  top: BorderSide(color: AppColors.outlineColor, width: 0),
+                                  top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                                 ),
                                 // border: Border.all(color: AppColors.grey, width: 1),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
@@ -307,7 +307,7 @@ class TransferDetailActivity extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks ?? "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -332,7 +332,7 @@ class TransferDetailActivity extends StatelessWidget {
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks ?? "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],

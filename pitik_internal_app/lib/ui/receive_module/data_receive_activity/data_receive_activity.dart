@@ -64,7 +64,8 @@ class ReceiveActivity extends GetView<ReceiveController> {
               ),
             ),
             TabBar(
-                isScrollable: true,
+              isScrollable: true,
+              tabAlignment: TabAlignment.center,
               controller: tabController.controller,
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [

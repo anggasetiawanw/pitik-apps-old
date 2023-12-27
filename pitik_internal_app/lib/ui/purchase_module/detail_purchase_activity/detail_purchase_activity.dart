@@ -424,7 +424,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.purchaseDetail.value!.remarks ?? "-",
+                                  controller.purchaseDetail.value!.remarks != null ? Uri.decodeFull(controller.purchaseDetail.value!.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],

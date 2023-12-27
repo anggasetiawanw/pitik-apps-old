@@ -90,7 +90,7 @@ class DeliveryDetailTransferController extends GetxController {
         Service.push(
             service: ListApi.transferEditStatus,
             context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, isSendItem.isTrue ? Mapper.asJsonString(TransferModel(driverRemarks: efRemark.getInput())):""],
+            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, isSendItem.isTrue ? Mapper.asJsonString(TransferModel(driverRemarks: Uri.decodeFull(efRemark.getInput()))):""],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     Get.back();

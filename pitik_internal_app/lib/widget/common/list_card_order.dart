@@ -147,10 +147,12 @@ class CardListOrder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Dibuat Oleh : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
-                  Text(
-                    order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Text(
+                      order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                      overflow: TextOverflow.clip,
+                    ),
                   ),
                 ],
               ),

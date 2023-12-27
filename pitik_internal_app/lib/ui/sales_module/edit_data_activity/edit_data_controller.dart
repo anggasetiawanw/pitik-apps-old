@@ -235,6 +235,9 @@ class EditDataController extends GetxController {
     }
 
     bool checkRole(){
+        if (Constant.profileUser == null ||  Constant.profileUser!.roles == null || Constant.profileUser!.roles!.isEmpty) {
+            return false;
+        }
         for(var role in Constant.profileUser!.roles!){
             if(role!.name == AppStrings.sales_lead){
                 isSalesLead.value = true;

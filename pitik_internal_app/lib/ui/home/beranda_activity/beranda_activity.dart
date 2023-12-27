@@ -12,26 +12,26 @@ class BerandaActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     final BerandaController controller = Get.put(BerandaController(context: context));
 
-    @override
-    Widget header() {
-      return Stack(
-        children: [
-          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
-          Container(
-            margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Selamat Datang\nDi Internal App!",
-                  style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-                ),
-              ],
-            ),
-          )
-        ],
-      );
-    }
+    // @override
+    // Widget header() {
+    //   return Stack(
+    //     children: [
+    //       SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
+    //       Container(
+    //         margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //           children: [
+    //             Text(
+    //               "Selamat Datang\nDi Internal App!",
+    //               style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+    //             ),
+    //           ],
+    //         ),
+    //       )
+    //     ],
+    //   );
+    // }
 
     Widget toolTab() {
       return Container(
@@ -98,7 +98,7 @@ class BerandaActivity extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(controller.module.value[index]['homeRoute']);
+                        Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
                       },
                       child: Container(
                         width: double.infinity,
@@ -137,7 +137,7 @@ class BerandaActivity extends StatelessWidget {
                   itemBuilder: (_, index) {
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(controller.module.value[index]['homeRoute']);
+                        Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),

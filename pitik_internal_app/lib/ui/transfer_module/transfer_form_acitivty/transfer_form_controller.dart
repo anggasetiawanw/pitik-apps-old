@@ -133,7 +133,7 @@ class TransferFormController extends GetxController {
             }
             totalField.controller.enable();
             totalField.setInput(transferModel!.products![0]!.productItems![0]!.weight!.toString());
-            efRemark.setInput(transferModel!.remarks??"");
+            efRemark.setInput(transferModel!.remarks != null ? Uri.decodeFull(transferModel!.remarks!) : "");
         }
     }
 
@@ -353,7 +353,7 @@ class TransferFormController extends GetxController {
             sourceOperationUnitId: selectSource!.id,
             targetOperationUnitId: selectDestination!.id,
             status: status,
-            remarks: efRemark.getInput(),
+            remarks: Uri.encodeFull(efRemark.getInput()),
             products: [Products(
                 productItemId: selectItem!.id,
                 quantity: selectProduct.name == AppStrings.AYAM_UTUH || selectProduct.name == AppStrings.BRANGKAS || selectProduct.name == AppStrings.LIVE_BIRD || selectProduct.name == AppStrings.KARKAS? amountField.getInputNumber()!.toInt() : null,

@@ -462,7 +462,7 @@ class NewDataPurchaseController extends GetxController {
       operationUnitId: destinationPurchaseSelected!.id!,
       products: listProductPayload,
       status: status.value,
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       totalWeight: efTotalKG.getInputNumber() ?? 0,
     );
   }

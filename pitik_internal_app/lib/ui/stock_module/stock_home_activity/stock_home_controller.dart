@@ -245,7 +245,6 @@ class StockHomeController extends GetxController {
               isLoadingOpname.value = false;
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              print(stacktrace);
               Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
@@ -267,10 +266,9 @@ class StockHomeController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Random random = Random();
-
               chartData.value.clear();
               for (var units in (body as ListStockAggregateResponse).data[0]!.productItems!) {
-                if (body.data[0]!.productCategoryName == AppStrings.LIVE_BIRD || body.data[0]!.productCategoryName == AppStrings.AYAM_UTUH || body.data[0]!.productCategoryName == AppStrings.BRANGKAS) {
+                if (body.data[0]!.productCategoryName == AppStrings.LIVE_BIRD || body.data[0]!.productCategoryName == AppStrings.AYAM_UTUH || body.data[0]!.productCategoryName == AppStrings.BRANGKAS || body.data[0]!.productCategoryName == AppStrings.KARKAS) {
                   units!.name!.replaceAll("${body.data[0]!.productCategoryName}", "");
                   units.name!.replaceAll("kg}", "");
                   chartData.value.add(ChartData(body.data[0]!.productCategoryName!, units.name!, units.availableQuantity!, units.availableWeight!, Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1)));

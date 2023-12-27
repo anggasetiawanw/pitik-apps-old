@@ -456,7 +456,7 @@ class DeliveryDetailSO extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.order.remarks ?? "-",
+                                  controller.order.remarks != null ? Uri.decodeFull(controller.order.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -485,7 +485,7 @@ class DeliveryDetailSO extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.order.remarks ?? "-",
+                                  controller.order.driverRemarks != null ? Uri.decodeFull(controller.order.driverRemarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],

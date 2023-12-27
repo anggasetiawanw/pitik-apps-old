@@ -192,7 +192,7 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
                         listDetail(
                             "Keterangan",
                             controller.customer.value!.remarks != null
-                                ? controller.customer.value!.remarks!
+                                ? Uri.decodeFull(controller.customer.value!.remarks!)
                                 : "-",
                             false),
                         listDetail(
