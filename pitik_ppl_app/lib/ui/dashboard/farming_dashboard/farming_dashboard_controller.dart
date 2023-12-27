@@ -23,11 +23,13 @@ import 'package:model/profile.dart';
 import 'package:model/report.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/farm_info_response.dart';
+import 'package:model/response/profile_list_response.dart';
 import 'package:model/response/task_ticket_response.dart';
 import 'package:model/task_ticket_model.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -404,8 +406,8 @@ class FarmingDashboardController extends GetxController {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                         // DashboardCommon.createMenu(title: "Smart\nConventron", imagePath: 'images/smart_conventron_icon.svg', status: showSmartConventronAlert.value, function: () {}),
-                                        DashboardCommon.createMenu(title: "Lapor\nIsu", imagePath: 'images/issue_report_icon.svg', status: showIssueReportAlert.value, customBackground: GlobalVar.redBackground, function: () {}),
-                                        DashboardCommon.createMenu(title: "Chat", imagePath: 'images/chat_icon.svg', status: showIssueReportAlert.value, function: () {}),
+                                        DashboardCommon.createMenu(title: "Lapor\nIsu", imagePath: 'images/issue_report_icon.svg', status: showIssueReportAlert.value, customBackground: GlobalVar.redBackground, function: () =>  Get.toNamed(RoutePage.issueReport, arguments: [coopList[coopSelected.value]!])),
+                                        DashboardCommon.createMenu(title: "Chat", imagePath: 'images/chat_icon.svg', status: showIssueReportAlert.value, function: () => chatToPPl()),
                                         const SizedBox(width: 60)
                                     ]
                                 )
@@ -822,6 +824,63 @@ class FarmingDashboardController extends GetxController {
         coopSelected.value = indexSelected ?? 0;
         _refreshCoop();
     });
+
+    void chatToPPl(){
+        AuthImpl().get().then((auth) => {
+            if (auth != null){
+                isLoading.value = true,
+                Service.push(
+                    apiKey: ApiMapping.userApi,
+                    service: ListApi.pplInfo,
+                    context: context,
+                    body: [
+                        'Bearer ${auth.token}',
+                        auth.id,
+                        "v2/farming-cycles/${coopList[coopSelected.value]?.farmingCycleId}/ppl-info"
+                    ],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) async {
+                            if((body as ProfileListResponse).data.isNotEmpty) {
+                                final String getUrl = "https://api.whatsapp.com/send?phone=62${(body).data[0]!.waNumber!.substring(1)}&text=Hallo PPL, Saya ";
+                                final Uri url = Uri.parse(Uri.encodeFull(getUrl));
+                                if (!await launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                )) {
+                                    throw Exception('Could not launch $url');
+                                }
+                            } else {
+                                Get.snackbar(
+                                    "Pesan",
+                                    "Tidak ada PPL yang terdaftar",
+                                    snackPosition: SnackPosition.TOP,
+                                    colorText: Colors.white,
+                                    backgroundColor: Colors.red,);
+                            }
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,);
+                        },
+                            onTokenInvalid: () => GlobalVar.invalidResponse()))
+                    }
+            else
+                {GlobalVar.invalidResponse()}
+        });
+    }
 }
 
 class FarmingDashboardBinding extends Bindings {

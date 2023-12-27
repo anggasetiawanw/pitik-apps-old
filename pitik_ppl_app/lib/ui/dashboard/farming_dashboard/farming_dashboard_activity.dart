@@ -195,7 +195,14 @@ class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
                                         controller.homeTab.isTrue ? controller.generateHomeWidget() : // to home
                                         controller.performTab.isTrue ? controller.generatePerformWidget() : // to history
                                         controller.monitorTab.isTrue ? controller.generateMonitorWidget() : // to monitor
-                                        DashboardCommon.generateProfileWidget() // to profile
+                                        DashboardCommon.generateProfileWidget(addMenu: [
+                                            {
+                                                'title': 'Operator Kandang',
+                                                'image': 'images/user-add-line.svg',
+                                                'status': false,
+                                                'function': () => Get.toNamed(RoutePage.dashboardSelfRegistration, arguments: [controller.coopList[controller.coopSelected.value]])
+                                            },]
+                                        ) // to profile
                                     )
                                 )
                             ]

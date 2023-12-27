@@ -1,10 +1,3 @@
-/// @author [Angga Setiawan Wahyudin]
-/// @email [anggasetiaw@gmail.com]
-/// @create date 2023-11-15 11:45:06
-/// @modify date 2023-11-15 11:45:06
-/// @desc [description]
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
@@ -14,54 +7,75 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
-import 'package:model/report.dart';
-import 'package:model/response/dailly_report_response.dart';
+import 'package:model/issue.dart';
+import 'package:model/response/issue_list_response.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 
-class DailyReportHomeController extends GetxController {
+class IssueReportDataController extends GetxController {
   BuildContext context;
-  DailyReportHomeController({required this.context});
+  IssueReportDataController({required this.context});
 
-  var isLoadingList = false.obs;
-  ScrollController scrollController = ScrollController();
-
-  Coop? coop;
   RxBool isLoading = false.obs;
-  RxList<Report?> reportList = <Report?>[].obs;
-  @override
-  void onInit() {
-    super.onInit();
-    coop = Get.arguments[0];
-  }
+  RxBool isLoadMore = false.obs;
+  Coop coop = Get.arguments[0] as Coop;
+  RxList<Issue?> issueList = <Issue?>[].obs;
+  int limit = 10;
+  int page = 1;
+  ScrollController scrollController = ScrollController();
 
   @override
   void onReady() {
     super.onReady();
-    getDailyReport();
+    isLoading.value = true;
+    scrollListener();
+    getIssueList();
   }
-  // @override
-  // void onClose() {
-  //     super.onClose();
-  // }
 
-  void getDailyReport() {
+  scrollListener() {
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
+        isLoadMore.value = true;
+        page++;
+        getIssueList();
+      }
+    });
+  }
+
+  void refreshList() {
+    isLoading.value = true;
+    page = 1;
+    getIssueList();
+  }
+
+  void getIssueList() {
     AuthImpl().get().then((auth) => {
           if (auth != null)
             {
               Service.push(
-                  apiKey: ApiMapping.taskApi,
-                  service: ListApi.getDailyReport,
+                  apiKey: ApiMapping.api,
+                  service: ListApi.issueList,
                   context: context,
                   body: [
                     'Bearer ${auth.token}',
                     auth.id,
-                    ListApi.pathDailyReport(coop!.farmingCycleId!)
+                    "v2/issues/list/${coop.farmingCycleId}",
+                    page,
+                    limit,
+                    "DESC",
                   ],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
-                        reportList.clear();
-                        reportList.addAll((body as DailyReportResponse).data);
-                        isLoadingList.value = false;
+                        if ((body as IssueListResponse).data.isNotEmpty) {
+                          if (page == 1) {
+                            issueList.clear();
+                            issueList.value = body.data;
+                          } else {
+                            issueList.addAll(body.data);
+                          }
+                        }
+
+                        isLoadMore.value = false;
+                        isLoading.value = false;
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
@@ -71,6 +85,7 @@ class DailyReportHomeController extends GetxController {
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
                         );
+                        isLoadMore.value = false;
                         isLoading.value = false;
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
@@ -81,8 +96,8 @@ class DailyReportHomeController extends GetxController {
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
                         );
+                        isLoadMore.value = false;
                         isLoading.value = false;
-                        print(stacktrace);
                       },
                       onTokenInvalid: () => GlobalVar.invalidResponse()))
             }
@@ -92,11 +107,11 @@ class DailyReportHomeController extends GetxController {
   }
 }
 
-class DailyReportHomeBindings extends Bindings {
+class IssueReportDataBindings extends Bindings {
   BuildContext context;
-  DailyReportHomeBindings({required this.context});
+  IssueReportDataBindings({required this.context});
   @override
   void dependencies() {
-    Get.lazyPut(() => DailyReportHomeController(context: context));
+    Get.lazyPut(() => IssueReportDataController(context: context));
   }
 }

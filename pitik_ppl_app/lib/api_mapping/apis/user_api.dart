@@ -10,6 +10,7 @@ import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
+import 'package:model/response/profile_list_response.dart';
 import 'package:model/response/profile_response.dart';
 
 ///@author DICKY
@@ -77,5 +78,13 @@ class UserApi {
     @PATCH(value: PATCH.PATH_PARAMETER, as: ProfileResponse, error: ErrorResponse)
     void changePassword(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 
+    /// A GET request with a path parameter. The response is of type PPLInfoReponse and the error
+    /// response is of type ErrorResponse.
+    ///
+    /// @param authorization The authorization header
+    /// @param xId The unique identifier for the request.
+    /// @param path The path of the API.
+    @GET(value : GET.PATH_PARAMETER, as : ProfileListResponse, error : ErrorResponse)
+    void pplInfo(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
 
 }

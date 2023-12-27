@@ -221,7 +221,7 @@ class DashboardCommon {
     ///
     /// Returns:
     ///   a ProfileActivity widget.
-    static Widget generateProfileWidget() {
+    static Widget generateProfileWidget({List<Map<dynamic, dynamic>>? addMenu}) {
         return ProfileActivity(
             homeRoute: RoutePage.coopDashboard,
             changePassRoute: RoutePage.changePasswordPage,
@@ -229,7 +229,8 @@ class DashboardCommon {
             termRoute: RoutePage.termPage,
             aboutUsRoute: RoutePage.aboutPage,
             helpRoute: RoutePage.helpPage,
-            licenseRoute: RoutePage.licencePage
+            licenseRoute: RoutePage.licencePage,
+            listMenu: addMenu ?? [],
         );
     }
 

@@ -4716,7 +4716,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {
               r'': (bool b) => (
                       {id,
-                      farmCycleId,
+                      farmingCycleId,
                       date,
                       description,
                       issueTypeId,
@@ -4731,7 +4731,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
                           date: date,
                           dayNum: dayNum,
                           description: description,
-                          farmCycleId: farmCycleId,
+                          farmingCycleId: farmingCycleId,
                           id: id,
                           issueTypeId: issueTypeId,
                           issueTypeName: issueTypeName,
@@ -7502,7 +7502,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'id', 67239941, 94, const prefix0.BaseModel(), -1,
             -1, -1, null, const []),
-        r.VariableMirrorImpl(r'farmCycleId', 67239941, 94,
+        r.VariableMirrorImpl(r'farmingCycleId', 67239941, 94,
             const prefix0.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'date', 67239941, 94, const prefix0.BaseModel(),
             -1, -1, -1, null, const []),
@@ -16686,7 +16686,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r.ParameterMirrorImpl(r'id', 67253254, 1900, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
         r.ParameterMirrorImpl(
-            r'farmCycleId',
+            r'farmingCycleId',
             67253254,
             1900,
             const prefix0.BaseModel(),
@@ -16696,7 +16696,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             const [],
             null,
-            #farmCycleId),
+            #farmingCycleId),
         r.ParameterMirrorImpl(r'date', 67253254, 1900,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, #date),
         r.ParameterMirrorImpl(
@@ -16787,7 +16787,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, #text),
         r.ParameterMirrorImpl(r'_id', 67240038, 1879, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_farmCycleId', 67240038, 1881,
+        r.ParameterMirrorImpl(r'_farmingCycleId', 67240038, 1881,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_date', 67240038, 1883,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
@@ -18750,7 +18750,6 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'dataFarmCycleIds': (dynamic instance) => instance.dataFarmCycleIds,
         r'isAllowed': (dynamic instance) => instance.isAllowed,
         r'url': (dynamic instance) => instance.url,
-        r'farmCycleId': (dynamic instance) => instance.farmCycleId,
         r'issueTypeId': (dynamic instance) => instance.issueTypeId,
         r'issueTypeName': (dynamic instance) => instance.issueTypeName,
         r'remark': (dynamic instance) => instance.remark,
@@ -19246,8 +19245,6 @@ final _data = <r.Reflectable, r.ReflectorData>{
             instance.dataFarmCycleIds = value,
         r'isAllowed=': (dynamic instance, value) => instance.isAllowed = value,
         r'url=': (dynamic instance, value) => instance.url = value,
-        r'farmCycleId=': (dynamic instance, value) =>
-            instance.farmCycleId = value,
         r'issueTypeId=': (dynamic instance, value) =>
             instance.issueTypeId = value,
         r'issueTypeName=': (dynamic instance, value) =>
@@ -22258,8 +22255,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             134217735,
             11,
             const prefix8.BaseApi(),
-            const <int>[114, 115, 116, 117, 118],
-            const <int>[3, 4, 5, 6, 7, 114, 115, 116, 117],
+            const <int>[114, 115, 116, 117, 118, 119],
+            const <int>[3, 4, 5, 6, 7, 114, 115, 116, 117, 118],
             const <int>[],
             -1,
             {},
@@ -23757,7 +23754,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[
               const prefix140.GET(
                   value: prefix140.GET.PATH_PARAMETER,
-                  as: prefix71.IssueResponse,
+                  as: prefix70.IssueListResponse,
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(
@@ -23906,6 +23903,22 @@ final _data = <r.Reflectable, r.ReflectorData>{
               const prefix141.PATCH(
                   value: prefix141.PATCH.PATH_PARAMETER,
                   as: prefix74.ProfileResponse,
+                  error: prefix28.ErrorResponse)
+            ]),
+        r.MethodMirrorImpl(
+            r'pplInfo',
+            1310722,
+            11,
+            -1,
+            -1,
+            -1,
+            null,
+            const <int>[400, 401, 402],
+            const prefix8.BaseApi(),
+            const <Object>[
+              const prefix140.GET(
+                  value: prefix140.GET.PATH_PARAMETER,
+                  as: prefix73.ProfileListResponse,
                   error: prefix28.ErrorResponse)
             ]),
         r.MethodMirrorImpl(r'', 64, 11, -1, -1, -1, null, const <int>[],
@@ -28681,6 +28694,42 @@ final _data = <r.Reflectable, r.ReflectorData>{
             null,
             const <Object>[const prefix149.Parameter("params")],
             null,
+            null),
+        r.ParameterMirrorImpl(
+            r'authorization',
+            134348806,
+            118,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix146.Header("Authorization")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'xId',
+            134348806,
+            118,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix146.Header("X-ID")],
+            null,
+            null),
+        r.ParameterMirrorImpl(
+            r'path',
+            134348806,
+            118,
+            const prefix8.BaseApi(),
+            -1,
+            -1,
+            -1,
+            null,
+            const <Object>[const prefix147.Path()],
+            null,
             null)
       ],
       <Type>[
@@ -28840,7 +28889,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'addOperator': (dynamic instance) => instance.addOperator,
         r'auth': (dynamic instance) => instance.auth,
         r'addDevice': (dynamic instance) => instance.addDevice,
-        r'profile': (dynamic instance) => instance.profile
+        r'profile': (dynamic instance) => instance.profile,
+        r'pplInfo': (dynamic instance) => instance.pplInfo
       },
       {},
       null,

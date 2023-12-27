@@ -36,7 +36,7 @@ class DashboardSelfRegistrationController extends GetxController {
             isLoading.value = true;
             getListOperators();
           }));
-          
+
   @override
   void onInit() {
     super.onInit();
@@ -71,6 +71,8 @@ class DashboardSelfRegistrationController extends GetxController {
                           }
                           isLoading.value = false;
                         }
+
+                        isLoading.value = false;
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
@@ -80,6 +82,7 @@ class DashboardSelfRegistrationController extends GetxController {
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
                         );
+                        isLoading.value = false;
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
@@ -89,6 +92,7 @@ class DashboardSelfRegistrationController extends GetxController {
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
                         );
+                        isLoading.value = false;
                       },
                       onTokenInvalid: () => GlobalVar.invalidResponse()))
             }
