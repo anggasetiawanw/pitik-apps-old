@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:common_page/farm_performance/farm_performance_activity.dart';
+import 'package:common_page/farm_performance/farm_performance_controller.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
@@ -101,10 +102,22 @@ class FarmingDashboardController extends GetxController {
             hideBuildings: true,
         );
 
-        farmPerformanceActivity = const FarmPerformanceActivity();
+        farmPerformanceActivity = FarmPerformanceActivity(
+            controller: FarmPerformanceController(
+                context: Get.context!,
+                tag: 'farmPerformance'
+            )
+        );
         refreshData();
     }
 
+    /// The function `_getTaskTicketList` retrieves a list of task tickets based on
+    /// certain conditions and updates the `taskTicketList` variable.
+    ///
+    /// Args:
+    ///   page (int): The `page` parameter is an optional parameter that specifies
+    /// the page number of the task ticket list to retrieve. By default, it is set
+    /// to 1. Defaults to 1
     void _getTaskTicketList({int page = 1}) => AuthImpl().get().then((auth) {
         if (auth != null) {
             String url = isAlertTicket.isTrue ? 'v2/alerts/summary/${coopList[coopSelected.value]!.farmingCycleId}' :
@@ -179,11 +192,15 @@ class FarmingDashboardController extends GetxController {
         _initCoopAndLatestConditionSmartMonitor();
     }
 
+    /// The function initializes a smart monitor by rejuvenating the coop and
+    /// getting the initial latest data.
     void _initCoopAndLatestConditionSmartMonitor() {
         detailSmartMonitor.controller.rejuvenateCoop(newCoop: coopList[coopSelected.value]!);
         detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
     }
 
+    /// The function `_getFarmList` retrieves a list of farms from an API and
+    /// updates the corresponding variables and states.
     void _getFarmList() => AuthImpl().get().then((auth) {
         if (auth != null) {
             isLoadingFarmList.value = true;
@@ -227,6 +244,8 @@ class FarmingDashboardController extends GetxController {
         }
     });
 
+    /// The `_getFarmInfo` function retrieves farm information from an API and
+    /// updates the corresponding variables.
     void _getFarmInfo() => AuthImpl().get().then((auth) {
         if (auth != null) {
             Service.push(
@@ -270,24 +289,32 @@ class FarmingDashboardController extends GetxController {
         }
     });
 
+    /// The function sets the value of different tabs to control the active tab in a
+    /// Flutter app.
+    ///
+    /// Args:
+    ///   context (BuildContext): The context parameter is an object that provides
+    /// access to various resources and services in the Flutter framework. It is
+    /// typically used to navigate between screens, access theme data, and retrieve
+    /// localized strings.
     void toHome(BuildContext context) {
         homeTab.value = true;
         performTab.value = false;
         monitorTab.value = false;
         profileTab.value = false;
-
-        // getMonitoringPerformance(coop);
     }
 
+    /// The function sets the value of the performTab variable to true and the
+    /// values of the other variables to false.
     void toPerform() {
         homeTab.value = false;
         performTab.value = true;
         monitorTab.value = false;
         profileTab.value = false;
-
-        // historyActivity.controller.refreshData();
     }
 
+    /// The function "toMonitor" sets the monitorTab value to true and calls a
+    /// method to get initial latest data for a smart monitor.
     void toMonitor() {
         homeTab.value = false;
         performTab.value = false;
@@ -297,6 +324,9 @@ class FarmingDashboardController extends GetxController {
         detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
     }
 
+    /// The function "toProfile" sets the value of the "profileTab" variable to true
+    /// and the values of the "homeTab", "performTab", and "monitorTab" variables to
+    /// false.
     void toProfile() {
         homeTab.value = false;
         performTab.value = false;
@@ -304,90 +334,94 @@ class FarmingDashboardController extends GetxController {
         profileTab.value = true;
     }
 
-    void showMenuBottomSheet() {
-        showModalBottomSheet(
-            useSafeArea: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                )
-            ),
-            isScrollControlled: true,
-            context: Get.context!,
-            backgroundColor: Colors.white,
-            builder: (context) => Container(
-                color: Colors.transparent,
-                child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Wrap(
-                            children: [
-                                Center(
-                                    child: Container(
-                                        width: 60,
-                                        height: 4,
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                                            color: GlobalVar.outlineColor
+    void showMenuBottomSheet() => showModalBottomSheet(
+        useSafeArea: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+            )
+        ),
+        isScrollControlled: true,
+        context: Get.context!,
+        backgroundColor: Colors.white,
+        builder: (context) => Container(
+            color: Colors.transparent,
+            child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                        children: [
+                            Center(
+                                child: Container(
+                                    width: 60,
+                                    height: 4,
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                                        color: GlobalVar.outlineColor
+                                    )
+                                )
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(
+                                padding: const EdgeInsets.only(left: 20, top: 16),
+                                child: Text("Fitur", style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(    // ROW 1 IoT
+                                padding: const EdgeInsets.all(16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        DashboardCommon.createMenu(
+                                            title: "Smart\nScale",
+                                            imagePath: 'images/smart_scale_icon.svg',
+                                            status: showSmartScaleAlert.value,
+                                            function: () => Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coopList[coopSelected.value]!, startDateCustom: farmingCycleStartDate.value))
+                                        ),
+                                        DashboardCommon.createMenu(
+                                            title: "Smart\nController",
+                                            imagePath: 'images/smart_controller_icon.svg',
+                                            status: showSmartControllerAlert.value,
+                                            function: () => Get.toNamed(RoutePage.smartControllerList, arguments: [coopList[coopSelected.value]!])
+                                        ),
+                                        DashboardCommon.createMenu(
+                                            title: "Smart\nCamera",
+                                            imagePath: 'images/record_icon.svg',
+                                            status: showSmartCameraAlert.value,
+                                            function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coopList[coopSelected.value]!)
                                         )
-                                    )
-                                ),
-                                const SizedBox(height: 16),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 20, top: 16),
-                                    child: Text("Fitur", style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                                ),
-                                const SizedBox(height: 16),
-                                Padding(    // ROW 1 IoT
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                            DashboardCommon.createMenu(
-                                                title: "Smart\nScale",
-                                                imagePath: 'images/smart_scale_icon.svg',
-                                                status: showSmartScaleAlert.value,
-                                                function: () => Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coopList[coopSelected.value]!))
-                                            ),
-                                            DashboardCommon.createMenu(
-                                                title: "Smart\nController",
-                                                imagePath: 'images/smart_controller_icon.svg',
-                                                status: showSmartControllerAlert.value,
-                                                function: () => Get.toNamed(RoutePage.smartControllerList, arguments: [coopList[coopSelected.value]!])
-                                            ),
-                                            DashboardCommon.createMenu(
-                                                title: "Smart\nCamera",
-                                                imagePath: 'images/record_icon.svg',
-                                                status: showSmartCameraAlert.value,
-                                                function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coopList[coopSelected.value]!)
-                                            )
-                                        ]
-                                    )
-                                ),
-                                const SizedBox(height: 16),
-                                Padding(    // ROW 1 PROCUREMENT
-                                    padding: const EdgeInsets.all(16),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                            DashboardCommon.createMenu(title: "Smart\nConventron", imagePath: 'images/smart_conventron_icon.svg', status: showSmartConventronAlert.value, function: () {}),
-                                            DashboardCommon.createMenu(title: "Lapor\nIsu", imagePath: 'images/issue_report_icon.svg', status: showIssueReportAlert.value, customBackground: GlobalVar.redBackground, function: () {}),
-                                            DashboardCommon.createMenu(title: "Chat", imagePath: 'images/chat_icon.svg', status: showIssueReportAlert.value, function: () {}),
-                                        ],
-                                    ),
-                                ),
-                            ]
-                        )
+                                    ]
+                                )
+                            ),
+                            const SizedBox(height: 16),
+                            Padding(    // ROW 1 PROCUREMENT
+                                padding: const EdgeInsets.all(16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        // DashboardCommon.createMenu(title: "Smart\nConventron", imagePath: 'images/smart_conventron_icon.svg', status: showSmartConventronAlert.value, function: () {}),
+                                        DashboardCommon.createMenu(title: "Lapor\nIsu", imagePath: 'images/issue_report_icon.svg', status: showIssueReportAlert.value, customBackground: GlobalVar.redBackground, function: () {}),
+                                        DashboardCommon.createMenu(title: "Chat", imagePath: 'images/chat_icon.svg', status: showIssueReportAlert.value, function: () {}),
+                                        const SizedBox(width: 60)
+                                    ]
+                                )
+                            )
+                        ]
                     )
                 )
             )
-        );
-    }
+        )
+    );
 
+    /// The function `_getTemperatureText()` returns the temperature value and unit
+    /// of measurement if available, otherwise it returns 'N/A'.
+    ///
+    /// Returns:
+    ///   The method `_getTemperatureText()` returns a string value.
     String _getTemperatureText() {
         if (detailSmartMonitor.controller.deviceSummary.value != null && detailSmartMonitor.controller.deviceSummary.value!.temperature != null) {
             return '${detailSmartMonitor.controller.deviceSummary.value!.temperature!.value}${detailSmartMonitor.controller.deviceSummary.value!.temperature!.uom}';
@@ -743,6 +777,11 @@ class FarmingDashboardController extends GetxController {
         );
     }
 
+    /// The function generates a widget that delays for 300 milliseconds before
+    /// updating the farm performance activity.
+    ///
+    /// Returns:
+    ///   a Padding widget with the child being the farmPerformanceActivity widget.
     Widget generatePerformWidget() {
         Future.delayed(const Duration(milliseconds: 300), () => farmPerformanceActivity.controller.toActual());
         return Padding(padding: const EdgeInsets.all(16), child: farmPerformanceActivity);
@@ -751,6 +790,9 @@ class FarmingDashboardController extends GetxController {
     /// The function generates a widget for a smart monitor.
     Widget generateMonitorWidget() => detailSmartMonitor;
 
+    /// The function `showCoopList()` displays a menu with a list of coops, allowing
+    /// the user to select one, and then updates the selected coop and refreshes the
+    /// coop data.
     void showCoopList() => showMenu(
         context: Get.context!,
         shape: const RoundedRectangleBorder(

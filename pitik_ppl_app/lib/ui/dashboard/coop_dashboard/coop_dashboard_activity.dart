@@ -149,7 +149,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                                                     ),
                                                 ),
                                                 GestureDetector(
-                                                    onTap: () =>  Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
+                                                    onTap: () => Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
                                                     child: SizedBox(
                                                         width: 50,
                                                         height: 34,

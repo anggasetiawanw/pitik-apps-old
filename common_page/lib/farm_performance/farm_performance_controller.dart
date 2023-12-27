@@ -7,13 +7,13 @@ import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
-import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/farm_day_history_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/farm_projection/farm_projection_detail_model.dart';
 import 'package:model/farm_projection/farm_projection_model.dart';
 import 'package:model/response/farm_actual_response.dart';
 import 'package:model/response/farm_day_history_response.dart';
@@ -24,8 +24,9 @@ import 'package:model/response/farm_projection_response.dart';
 ///@create date 18/12/2023
 
 class FarmPerformanceController extends GetxController {
+    String tag;
     BuildContext context;
-    FarmPerformanceController({required this.context});
+    FarmPerformanceController({required this.tag, required this.context});
 
     late FarmPerformanceActualActivity performanceActualActivity;
     late FarmPerformanceProjectionActivity performanceProjectionActivity;
@@ -34,6 +35,7 @@ class FarmPerformanceController extends GetxController {
     var isLoadMore = false.obs;
     var isActual = true.obs;
     var page = 1.obs;
+    var tabProjectionSelected = 0.obs;
 
     Rx<Coop?> coop = (Coop()).obs;
     Rx<FarmProjection?> projectionData = (FarmProjection()).obs;
@@ -110,7 +112,7 @@ class FarmPerformanceController extends GetxController {
                                 targetConsumption.value = body.data!.feedConsumption != null && body.data!.feedConsumption!.target != null ? '${body.data!.feedConsumption!.target!.min!.toStringAsFixed(2)} Gram' : '- Gram';
 
                                 // cycle
-                                cycleDate.value = Convert.getDate(body.data!.date);
+                                cycleDate.value = body.data!.date ?? '-';
                                 fcr.value = body.data!.cycle != null && body.data!.cycle!.fcr != null ? body.data!.cycle!.fcr!.toStringAsFixed(2) : '-';
                                 mortality.value = body.data!.cycle != null && body.data!.cycle!.mortality != null ? '${body.data!.cycle!.mortality!.toStringAsFixed(2)}%' : '- %';
                                 ipProjection.value = body.data!.cycle != null && body.data!.cycle!.ipProjection != null ? body.data!.cycle!.ipProjection!.toStringAsFixed(2) : '-';
@@ -266,14 +268,35 @@ class FarmPerformanceController extends GetxController {
             GlobalVar.invalidResponse();
         }
     });
+
+    String getDayNum({FarmProjectionDetail? data, bool isCurrent = true}) {
+        if (data != null) {
+            if (isCurrent) {
+                return data.topGraph!.current == null ? '-' : '${data.topGraph!.current!.dayNum}';
+            } else {
+                return data.topGraph!.current == null ? '-' : '${data.topGraph!.projected!.dayNum}';
+            }
+        } else {
+            return '-';
+        }
+    }
+
+    String getWeek(FarmProjectionDetail? data) {
+        if (data != null) {
+            return data.topGraph!.current == null ? 'Minggu -' : 'Minggu ${data.topGraph!.current!.dayNum! ~/ 7}';
+        } else {
+            return 'Minggu -';
+        }
+    }
 }
 
 class FarmPerformanceBinding extends Bindings {
+    String tag;
     BuildContext context;
-    FarmPerformanceBinding({required this.context});
+    FarmPerformanceBinding({required this.tag, required this.context});
 
     @override
     void dependencies() {
-        Get.lazyPut<FarmPerformanceController>(() => FarmPerformanceController(context: context));
+        Get.lazyPut<FarmPerformanceController>(() => FarmPerformanceController(tag: tag, context: context));
     }
 }
