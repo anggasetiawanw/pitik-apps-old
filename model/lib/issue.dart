@@ -4,7 +4,7 @@ import 'package:model/internal_app/media_upload_model.dart';
 @SetupModel
 class Issue {
     String? id;
-    String? farmCycleId;
+    String? farmingCycleId;
     String? date;
     String? description;
     String? issueTypeId;
@@ -17,12 +17,12 @@ class Issue {
     @IsChildren()
     List<MediaUploadModel?>? photoValue;
 
-    Issue({this.id, this.farmCycleId, this.date, this.description, this.issueTypeId, this.issueTypeName, this.status, this.remark, this.dayNum, this.photoValue, this.text});
+    Issue({this.id, this.farmingCycleId, this.date, this.description, this.issueTypeId, this.issueTypeName, this.status, this.remark, this.dayNum, this.photoValue, this.text});
 
     static Issue toResponseModel(Map<String, dynamic> map) {
         return Issue(
         id: map['id'],
-        farmCycleId: map['farmCycleId'],
+        farmingCycleId: map['farmingCycleId'],
         date: map['date'],
         description: map['description'],
         issueTypeId: map['issueTypeId'],

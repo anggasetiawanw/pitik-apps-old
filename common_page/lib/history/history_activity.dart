@@ -35,11 +35,9 @@ class HistoryActivity extends GetView<HistoryController> {
                                 alignment: Alignment.bottomCenter,
                                 children: <Widget>[
                                     Container(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(color: GlobalVar.outlineColor, width: 2.0),
-                                            ),
-                                        ),
+                                        decoration: const BoxDecoration(
+                                            border: Border(bottom: BorderSide(color: GlobalVar.outlineColor, width: 2.0))
+                                        )
                                     ),
                                     TabBar(
                                         controller: historyController.tabController,

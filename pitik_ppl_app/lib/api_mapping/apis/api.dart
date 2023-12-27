@@ -123,7 +123,7 @@ class API {
     /// @param authorization The authorization header.
     /// @param xId The unique identifier for the request.
     /// @param path The path to the resource.
-    @GET(value: GET.PATH_PARAMETER, as: IssueResponse, error: ErrorResponse)
+    @GET(value: GET.PATH_PARAMETER, as: IssueListResponse, error: ErrorResponse)
     void issueTypes(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 
     /// This function will make a POST request to the endpoint `v2/issues` with the headers

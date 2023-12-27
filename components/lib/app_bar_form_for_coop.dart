@@ -16,7 +16,7 @@ class AppBarFormForCoop extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        DateTime? startDate = coop.startDate == null ? null : Convert.getDatetime(coop.startDate!);
+        DateTime? startDate = coop.startDate == null || coop.startDate!.isEmpty ? null : Convert.getDatetime(coop.startDate!);
         return Container(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             decoration: const BoxDecoration(

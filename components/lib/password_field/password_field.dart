@@ -155,7 +155,7 @@ class PasswordField extends StatelessWidget {
                                                         child: SvgPicture.asset("images/error_icon.svg")
                                                     ),
                                                     Text(
-                                                        alertText,
+                                                        controller.alertText.isEmpty ? alertText : controller.alertText.value,
                                                         style: TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ],

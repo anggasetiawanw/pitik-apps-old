@@ -1,8 +1,8 @@
+import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
 
 class DashboardSelfRegistration extends StatelessWidget {
   const DashboardSelfRegistration({super.key});
@@ -11,15 +11,18 @@ class DashboardSelfRegistration extends StatelessWidget {
   Widget build(BuildContext context) {
     DashboardSelfRegistrationController controller = Get.put(DashboardSelfRegistrationController(context: context));
     return Scaffold(
-      appBar: PreferredSize(preferredSize: const Size.fromHeight(40), child: CustomAppbar(title: "Operator Kandang", onBack: () => Get.back())),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(120), child: AppBarFormForCoop(title: "Operator Kandang", coop: controller.coop)),
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+        ),
+        padding: const EdgeInsets.only(left: 16, bottom: 24, right: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-           controller.btAddOperator,
-            controller.btAddTask
-          ],
+          children: [controller.btAddOperator, controller.btAddTask],
         ),
       ),
       body: Obx(() => controller.isLoading.value

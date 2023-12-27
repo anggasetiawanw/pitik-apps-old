@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
 
@@ -146,7 +147,7 @@ class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
                                                     ),
                                                 ),
                                                 GestureDetector(
-                                                    onTap: () {},
+                                                    onTap: () =>  Get.toNamed(RoutePage.notification),
                                                     child: SizedBox(
                                                         width: 50,
                                                         height: 34,
@@ -157,19 +158,19 @@ class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
                                                                     top: 5,
                                                                     child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)
                                                                 ),
-                                                                Container(
+                                                                controller.countUnreadNotifications.value > 0 ? Container(
                                                                     decoration: const BoxDecoration(
                                                                         borderRadius: BorderRadius.all(Radius.circular(10)),
                                                                         color: GlobalVar.red
                                                                     ),
                                                                     child: Padding(
                                                                         padding: const EdgeInsets.all(4),
-                                                                        child: Obx(() => Text("${controller.countUnreadNotifications.value}", style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white))),
+                                                                        child: Text("${controller.countUnreadNotifications.value}", style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
                                                                     ),
-                                                                )
-                                                            ],
-                                                        ),
-                                                    ),
+                                                                ) : const SizedBox()
+                                                            ]
+                                                        )
+                                                    )
                                                 )
                                             ]
                                         )
@@ -194,7 +195,14 @@ class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
                                         controller.homeTab.isTrue ? controller.generateHomeWidget() : // to home
                                         controller.performTab.isTrue ? controller.generatePerformWidget() : // to history
                                         controller.monitorTab.isTrue ? controller.generateMonitorWidget() : // to monitor
-                                        DashboardCommon.generateProfileWidget() // to profile
+                                        DashboardCommon.generateProfileWidget(addMenu: [
+                                            {
+                                                'title': 'Operator Kandang',
+                                                'image': 'images/user-add-line.svg',
+                                                'status': false,
+                                                'function': () => Get.toNamed(RoutePage.dashboardSelfRegistration, arguments: [controller.coopList[controller.coopSelected.value]])
+                                            },]
+                                        ) // to profile
                                     )
                                 )
                             ]

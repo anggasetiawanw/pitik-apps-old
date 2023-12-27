@@ -64,7 +64,7 @@ class DashboardCommon {
         }
     });
 
-    static ListSmartScaleBundle getListSmartScaleBundle({required Coop coop}) => ListSmartScaleBundle(
+    static ListSmartScaleBundle getListSmartScaleBundle({required Coop coop, String? startDateCustom}) => ListSmartScaleBundle(
         getCoop: () => coop,
         isShowWeighingButton: () => false,
         getWeighingBundle: () => _getSmartScaleWeighingBundle(coop: coop),
@@ -79,7 +79,7 @@ class DashboardCommon {
                         onResponseDone: (code, message, body, id, packet) {
                             controller.smartScaleList.value = body.data;
                             try {
-                                _ascendingHistory(controller, coop);
+                                _ascendingHistory(controller, coop, startDateCustom);
                             } catch (e, s) {
                                 print('$e -> $s');
                             }
@@ -167,7 +167,7 @@ class DashboardCommon {
         getBodyDetail: (controller, auth) => ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${coop.farmingCycleId}/dates/${controller.id}']
     );
 
-    static void _ascendingHistory(ListSmartScaleController controller, Coop coop) {
+    static void _ascendingHistory(ListSmartScaleController controller, Coop coop, String? startDateCustom) {
         List<SmartScale?> scalesAscending = [];
 
         for (int i = coop.day ?? 0; i >= 1; i--) {
@@ -189,7 +189,7 @@ class DashboardCommon {
                 }
             }
 
-            DateTime dateTime = Convert.getDatetime(coop.startDate!).add(Duration(days: i));
+            DateTime dateTime = Convert.getDatetime(startDateCustom ?? coop.startDate!).add(Duration(days: i));
             if (!isInsert && !isLast) {
                 SmartScale historyScaleTemp = SmartScale(
                     date: '${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}',
@@ -221,7 +221,7 @@ class DashboardCommon {
     ///
     /// Returns:
     ///   a ProfileActivity widget.
-    static Widget generateProfileWidget() {
+    static Widget generateProfileWidget({List<Map<dynamic, dynamic>>? addMenu}) {
         return ProfileActivity(
             homeRoute: RoutePage.coopDashboard,
             changePassRoute: RoutePage.changePasswordPage,
@@ -229,7 +229,8 @@ class DashboardCommon {
             termRoute: RoutePage.termPage,
             aboutUsRoute: RoutePage.aboutPage,
             helpRoute: RoutePage.helpPage,
-            licenseRoute: RoutePage.licencePage
+            licenseRoute: RoutePage.licencePage,
+            listMenu: addMenu ?? [],
         );
     }
 

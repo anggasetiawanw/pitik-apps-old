@@ -54,6 +54,10 @@ import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitte
 import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitted_form_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_activity.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_data/issue_report_data.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_data/issue_report_data_controller.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_form/issue_report_form.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_form/issue_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
 import 'package:pitik_ppl_app/ui/notification/notification_activity.dart';
@@ -71,7 +75,7 @@ import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registratio
 import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration.dart';
 import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration.dart';
-import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/tasl_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
@@ -163,6 +167,10 @@ class AppRoutes {
         GetPage(name: RoutePage.dashboardSelfRegistration, page: () => const DashboardSelfRegistration(), binding: DashboardSelfRegistrationBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.addOperatorSelfRegistration, page: () => const AddOperatorSelfRegistration(), binding: AddOperatorSelfRegistrationBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.addTaskSelfRegistration, page: () => const TaskSelfRegistration(), binding: TaskSelfRegistrationBindings(context: GlobalVar.getContext())),
+
+        // Issue Report
+        GetPage(name: RoutePage.issueReport, page: () => const IssueReportActivity(), binding: IssueReportDataBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.issueReportForm, page: () => const IssueReportForm(), binding: IssueReportFormBindings(context: GlobalVar.getContext())),
     ];
 }
 
@@ -212,4 +220,6 @@ class RoutePage {
     static const String dashboardSelfRegistration = "/dashboardSelfRegistration";
     static const String addOperatorSelfRegistration = "/addOperatorSelfRegistration";
     static const String addTaskSelfRegistration = "/addTaskSelfRegistration";
+    static const String issueReport = "/issueReport";
+    static const String issueReportForm = "/issueReportForm";
 }

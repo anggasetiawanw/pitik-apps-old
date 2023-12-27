@@ -31,6 +31,7 @@ class ListApi {
     static const String getAssignableOperators = "getAssignableOperators";
     static const String assignOperator = "assignOperator";
     static const String addOperator = "addOperator";
+    static const String pplInfo ="pplInfo";
 
     // api SMART MONITOR
     static const String getDetailSmartMonitoring = "getDetailSmartMonitoring";
@@ -99,6 +100,9 @@ class ListApi {
     // api FARMING PERFORMANCE
     static const String farmList = "farmList";
     static const String farmInfo = "farmInfo";
+    static const String getPerformHistory = "getPerformHistory";
+    static const String getFarmActual = "getFarmActual";
+    static const String getFarmProjection = "getFarmProjection";
     static const String getPerformanceMonitoring = "getPerformanceMonitoring";
     static const String getMonitoringByVariable = "getMonitoringByVariable";
     static const String getAllDataMonitoring = "getAllDataMonitoring";
@@ -110,7 +114,7 @@ class ListApi {
     static const String getAdjustment = "getAdjustment";
     static const String adjustClosing = "adjustClosing";
     static const String closeFarm = "closeFarm";
-    
+
     // api HARVEST
     static const String getSubmitsHarvest = "getSubmitsHarvest";
     static const String getDealsHarvest = "getDealsHarvest";
@@ -260,7 +264,7 @@ class ListApi {
     static String pathAddReport(String coopId, String ticketId) {
         return "v2/farming-cycles/$coopId/daily-reports/$ticketId";
     }
-    
+
     static String pathReviewReport(String coopId, String ticketId) {
         return "v2/farming-cycles/$coopId/daily-reports/$ticketId/mark-as-reviewed";
     }

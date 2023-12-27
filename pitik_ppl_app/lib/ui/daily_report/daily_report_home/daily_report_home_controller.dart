@@ -25,8 +25,6 @@ class DailyReportHomeController extends GetxController {
   var isLoadingList = false.obs;
   ScrollController scrollController = ScrollController();
 
-
-
   Coop? coop;
   RxBool isLoading = false.obs;
   RxList<Report?> reportList = <Report?>[].obs;

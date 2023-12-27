@@ -11,13 +11,15 @@ import '../engine_library.dart';
 @SetupModel
 class ErrorDetail {
     String? message;
+    String? name;
     String? stack;
 
-    ErrorDetail({required this.message, required this.stack});
+    ErrorDetail({required this.message, required this.stack, this.name});
 
     static ErrorDetail toResponseModel(Map<String, dynamic> map) {
         return ErrorDetail(
             message: map['message'],
-            stack: map['stack']);
+            stack: map['stack'],
+            name: map['name']);
     }
 }

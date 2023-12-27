@@ -19,38 +19,38 @@ class ProfileActivity extends StatefulWidget {
     String aboutUsRoute;
     String helpRoute;
     String licenseRoute;
-
-    ProfileActivity({super.key, required this.homeRoute, required this.changePassRoute, required this.privacyRoute, required this.termRoute, required this.aboutUsRoute, required this.helpRoute, required this.licenseRoute});
+    List<Map<dynamic, dynamic>> listMenu;
+    ProfileActivity({super.key, required this.homeRoute, required this.changePassRoute, required this.privacyRoute, required this.termRoute, required this.aboutUsRoute, required this.helpRoute, required this.licenseRoute, this.listMenu=const []});
 
     @override
     State<ProfileActivity> createState() => _ProfileActivityState();
 }
 
-class _ProfileActivityState extends State<ProfileActivity> {  
+class _ProfileActivityState extends State<ProfileActivity> {
     String? _version;
     // String? _buildNumber;
     // String? _buildSignature;
     // String? _appName;
     // String? _packageName;
     // String? _installerStore;
-  
-  
+
+
     @override
     void initState() {
         super.initState();
         _getAppVersion();
     }
-  
+
     void _getAppVersion() async {
         final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  
+
         final version = packageInfo.version;
     //   final buildNumber = packageInfo.buildNumber;
     //   final buildSignature = packageInfo.buildSignature;
     //   final appName = packageInfo.appName;
     //   final packageName = packageInfo.packageName;
     //   final installerStore = packageInfo.installerStore;
-  
+
         setState(() {
             _version = version;
         // _buildNumber = buildNumber;
@@ -124,6 +124,11 @@ class _ProfileActivityState extends State<ProfileActivity> {
                                       thickness: 1.6,
                                   ),
                               ),
+                              if(widget.listMenu.isNotEmpty)...[
+                                  for(int i = 0; i < widget.listMenu.length; i++)...[
+                                      listComponent(widget.listMenu[i]["function"], widget.listMenu[i]["image"], widget.listMenu[i]["title"])
+                                  ]
+                              ],
                               listComponent(() => Get.toNamed(widget.changePassRoute, arguments: [false, widget.homeRoute]), "images/key_icon.svg", "Ubah Kata Sandi"),
                               listComponent(() => Get.toNamed(widget.privacyRoute, arguments: [false, widget.homeRoute]), "images/privacy.svg", "Kebijakan Privasi"),
                               listComponent(() => Get.toNamed(widget.termRoute), "images/term.svg", "Syarat & Ketentuan"),
