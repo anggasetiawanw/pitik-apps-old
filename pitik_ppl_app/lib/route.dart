@@ -71,7 +71,7 @@ import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registratio
 import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration.dart';
 import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration.dart';
-import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/tasl_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';

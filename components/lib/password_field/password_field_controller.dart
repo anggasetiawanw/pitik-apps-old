@@ -23,6 +23,7 @@ class PasswordFieldController extends GetxController {
     var hideLabel = false.obs;
     var obscure = false.obs;
     var formKey = GlobalKey<FormState>();
+    var alertText = "".obs;
 
 
     void beGoodLength() => goodLength.value = true;
