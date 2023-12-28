@@ -32,7 +32,7 @@ import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///@author DICKY
-///@email <dicky.maulana@pitik.idd>
+///@email <dicky.maulana@pitik.id>
 ///@create date 13/12/2023
 
 class FarmingDashboardController extends GetxController {
@@ -825,62 +825,55 @@ class FarmingDashboardController extends GetxController {
         _refreshCoop();
     });
 
-    void chatToPPl(){
-        AuthImpl().get().then((auth) => {
-            if (auth != null){
-                isLoading.value = true,
-                Service.push(
-                    apiKey: ApiMapping.userApi,
-                    service: ListApi.pplInfo,
-                    context: context,
-                    body: [
-                        'Bearer ${auth.token}',
-                        auth.id,
-                        "v2/farming-cycles/${coopList[coopSelected.value]?.farmingCycleId}/ppl-info"
-                    ],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) async {
-                            if((body as ProfileListResponse).data.isNotEmpty) {
-                                final String getUrl = "https://api.whatsapp.com/send?phone=62${(body).data[0]!.waNumber!.substring(1)}&text=Hallo PPL, Saya ";
-                                final Uri url = Uri.parse(Uri.encodeFull(getUrl));
-                                if (!await launchUrl(
-                                    url,
-                                    mode: LaunchMode.externalApplication,
-                                )) {
-                                    throw Exception('Could not launch $url');
-                                }
-                            } else {
-                                Get.snackbar(
-                                    "Pesan",
-                                    "Tidak ada PPL yang terdaftar",
-                                    snackPosition: SnackPosition.TOP,
-                                    colorText: Colors.white,
-                                    backgroundColor: Colors.red,);
+    void chatToPPl() => AuthImpl().get().then((auth) => {
+        if (auth != null) {
+            isLoading.value = true,
+            Service.push(
+                apiKey: ApiMapping.userApi,
+                service: ListApi.pplInfo,
+                context: context,
+                body: [
+                    'Bearer ${auth.token}',
+                    auth.id,
+                    "v2/farming-cycles/${coopList[coopSelected.value]?.farmingCycleId}/ppl-info"
+                ],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) async {
+                        if((body as ProfileListResponse).data.isNotEmpty) {
+                            final String getUrl = "https://api.whatsapp.com/send?phone=62${(body).data[0]!.waNumber!.substring(1)}&text=Hallo PPL, Saya ";
+                            final Uri url = Uri.parse(Uri.encodeFull(getUrl));
+                            if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                                throw Exception('Could not launch $url');
                             }
-                            isLoading.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
+                        } else {
                             Get.snackbar(
                                 "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                "Tidak ada PPL yang terdaftar",
                                 snackPosition: SnackPosition.TOP,
                                 colorText: Colors.white,
                                 backgroundColor: Colors.red,);
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan Internal",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,);
-                        },
-                            onTokenInvalid: () => GlobalVar.invalidResponse()))
-                    }
-            else
-                {GlobalVar.invalidResponse()}
-        });
-    }
+                        }
+                        isLoading.value = false;
+                    },
+                    onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                    ),
+                    onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan Internal",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red
+                    ),
+                    onTokenInvalid: () => GlobalVar.invalidResponse()))
+        } else {
+            GlobalVar.invalidResponse()
+        }
+    });
 }
 
 class FarmingDashboardBinding extends Bindings {

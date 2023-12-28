@@ -58,7 +58,7 @@ class TaskSelfRegistration extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("${controller.coop.coopName}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium)),
-                                Text("Chickin ${Convert.getDate(controller.coop.startDate)}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 10)),
+                                Text("Chickin ${controller.coop.startDate == null || controller.coop.startDate!.isEmpty  ? null : Convert.getDate(controller.coop.startDate)}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 10)),
                               ],
                             ),
                           ],
