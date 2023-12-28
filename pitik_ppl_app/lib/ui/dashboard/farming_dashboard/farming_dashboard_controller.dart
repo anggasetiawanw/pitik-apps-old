@@ -1,5 +1,7 @@
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:common_page/farm_performance/farm_performance_activity.dart';
 import 'package:common_page/farm_performance/farm_performance_controller.dart';
@@ -8,9 +10,11 @@ import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
+import 'package:engine/util/deeplink.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -27,8 +31,10 @@ import 'package:model/response/profile_list_response.dart';
 import 'package:model/response/task_ticket_response.dart';
 import 'package:model/task_ticket_model.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import 'package:pitik_ppl_app/flavors.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/dashboard/dashboard_common.dart';
+import 'package:pitik_ppl_app/utils/deeplink_mapping_arguments.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///@author DICKY
@@ -42,6 +48,7 @@ class FarmingDashboardController extends GetxController {
     late Profile? profile;
     late DetailSmartMonitor detailSmartMonitor;
     late FarmPerformanceActivity farmPerformanceActivity;
+    late String pushNotificationPayload;
 
     var isLoading = false.obs;
     var isLoadingFarmList = false.obs;
@@ -84,6 +91,8 @@ class FarmingDashboardController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        _initMixpanel();
+
         detailSmartMonitor = DetailSmartMonitor(
             controller: Get.put(DetailSmartMonitorController(
                 tag: "smartMonitorForOwnerAppDashboard",
@@ -111,6 +120,57 @@ class FarmingDashboardController extends GetxController {
             )
         );
         refreshData();
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (Get.arguments != null) {
+                pushNotificationPayload = Get.arguments;
+                Map<String, dynamic> payload = jsonDecode(pushNotificationPayload);
+                payload = jsonDecode(payload['request']);
+
+                if (payload['target'] == '{navigation}[PROFILE_NAVIGATION]') {
+                    toProfile();
+                } else if (payload['target'] == '{navigation}[MONITOR_NAVIGATION]') {
+                    toMonitor();
+                } else if (payload['target'] == '{navigation}[PERFORM_NAVIGATION]') {
+                    toPerform();
+                } else {
+                    Deeplink.toTarget(target: payload['target'], arguments: DeeplinkMappingArguments.createArguments(
+                        target: payload['target'],
+                        additionalParameters: payload['additionalParameters'],
+                        isPplApp: false
+                    ));
+                }
+            }
+        });
+    }
+
+    void _initMixpanel() async {
+        String? deviceTracking = "";
+        String? osVersion = "";
+
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        if (Platform.isAndroid) {
+            AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+            deviceTracking = androidInfo.model;
+            osVersion = Platform.operatingSystemVersion;
+        } else {
+            IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            deviceTracking = iosInfo.model;
+            osVersion = Platform.operatingSystem;
+        }
+
+        GlobalVar.initMixpanel(F.tokenMixpanel, {
+            "Phone_Number": GlobalVar.profileUser!.phoneNumber,
+            "Username": GlobalVar.profileUser!.phoneNumber,
+            // "Location": "$latitude,$longitude",
+            "Device": deviceTracking,
+            "Phone_Carrier": 'NO SIMCARD',
+            "OS": osVersion,
+        });
     }
 
     /// The function `_getTaskTicketList` retrieves a list of task tickets based on

@@ -13,7 +13,7 @@ import 'package:pitik_ppl_app/route.dart';
 
 class DeeplinkMappingArguments {
 
-    static List<dynamic> createArguments({required String target, required Map<String, dynamic> additionalParameters}) {
+    static List<dynamic> createArguments({required String target, required Map<String, dynamic> additionalParameters, bool isPplApp = true}) {
         Coop? coop;
         if (additionalParameters.containsKey('coop')) {
             coop = Mapper.child<Coop>(additionalParameters["coop"]);
@@ -48,7 +48,7 @@ class DeeplinkMappingArguments {
                 ControllerData? controllerLamp = Mapper.child<ControllerData>(additionalParameters["lamp"]);
                 return [device, controllerLamp, 'v2/controller/coop/', false];
             case "id.pitik.mobile.ui.activity.ChangePasswordActivity":
-                return [false, RoutePage.coopDashboard];
+                return [false, isPplApp ? RoutePage.coopDashboard : RoutePage.farmingDashboard];
             case "id.pitik.mobile.ListOrderActivity":
                 return [coop, false];
             default:
