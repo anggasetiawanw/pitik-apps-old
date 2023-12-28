@@ -528,6 +528,18 @@ class GrConfirmationController extends GetxController {
                         editField.getController().disable();
                     }
 
+                    // checking is can returned
+                    bool isCanReturned = true;
+                    stop:
+                    for (var goodReceipts in procurement.goodsReceipts) {
+                        for (var p in goodReceipts!.details) {
+                            if (p!.productCode == product.productCode && (p.quantity != null && p.quantity! > 0.0)) {
+                                isCanReturned = false;
+                                break stop;
+                            }
+                        }
+                    }
+
                     efProductReceivedMap[editField] = product;
                     return Container(
                         width: MediaQuery.of(Get.context!).size.width,
@@ -541,7 +553,7 @@ class GrConfirmationController extends GetxController {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                checkBoxField,
+                                isCanReturned ? checkBoxField : const SizedBox(),
                                 const SizedBox(height: 16),
                                 Text(
                                     '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
@@ -603,14 +615,16 @@ class GrConfirmationController extends GetxController {
         }
 
         efProductReceivedMap.forEach((key, value) {
-            if (key.controller.showField.isTrue && key.getInput().isEmpty) {
-                key.getController().alertText.value = 'Harus diisi..!';
-                key.getController().showAlert();
-                isPass  = false;
-            } else if (key.getInputNumber()!.toInt() > value.remaining!) {
-                key.getController().alertText.value = 'Jumlah penerimaan lebih dari permintaan';
-                key.getController().showAlert();
-                isPass  = false;
+            if (value.isReturned == null || !value.isReturned!) {
+                if (key.controller.showField.isTrue && key.getInput().isEmpty) {
+                    key.getController().alertText.value = 'Harus diisi..!';
+                    key.getController().showAlert();
+                    isPass  = false;
+                } else if (key.getInputNumber()!.toInt() > value.remaining!) {
+                    key.getController().alertText.value = 'Jumlah penerimaan lebih dari permintaan';
+                    key.getController().showAlert();
+                    isPass  = false;
+                }
             }
         });
 
