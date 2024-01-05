@@ -23,9 +23,9 @@ class DailyReportDetailController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  late ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true]));
+  late ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true, reportDetail])!.then((value) => getDetailReport()));
   late ButtonFill btDataBenar = ButtonFill(controller: GetXCreator.putButtonFillController("Data BenarDailyReportDetail"), label: "Data Benar", onClick: () => reviewReport());
-  late ButtonOutline btEditOutline = ButtonOutline(controller: GetXCreator.putButtonOutlineController("editDailyReportDetailOutline "), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true]));
+  late ButtonOutline btEditOutline = ButtonOutline(controller: GetXCreator.putButtonOutlineController("editDailyReportDetailOutline "), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true, reportDetail])!.then((value) => getDetailReport()));
   @override
   void onInit() {
     super.onInit();
@@ -36,7 +36,6 @@ class DailyReportDetailController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    isLoading.value = true;
     getDetailReport();
   }
   // @override
@@ -48,6 +47,7 @@ class DailyReportDetailController extends GetxController {
     AuthImpl().get().then((auth) => {
           if (auth != null)
             {
+              isLoading.value = true,
               Service.push(
                   apiKey: ApiMapping.taskApi,
                   service: ListApi.getDetailDailyReport,
@@ -85,7 +85,7 @@ class DailyReportDetailController extends GetxController {
         });
   }
 
-  void reviewReport(){
+  void reviewReport() {
     AuthImpl().get().then((auth) => {
           if (auth != null)
             {

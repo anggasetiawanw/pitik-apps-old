@@ -11,6 +11,7 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
 
   @override
   Widget build(BuildContext context) {
+    DailyReportFormController controller = Get.put(DailyReportFormController(context: context));
     Widget tileInfoHeader(String title, String value) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +39,7 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
                   decoration: const BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]),
                   child: controller.bfSimpan,
                 ),
-          body: Stack(
+          body: controller.isLoading.isTrue ? const Center(child: CircularProgressIndicator(color: GlobalVar.primaryOrange,),): Stack(
             children: [
               SingleChildScrollView(
                 child: Container(
@@ -151,7 +152,7 @@ class DailyReportFormActivity extends GetView<DailyReportFormController> {
                               )
                             ],
                           ),
-                          controller.isFeed.isTrue ? controller.mffKonsumsiPakan : controller.mffKonsumsiOVK
+                          Obx(() => controller.isFeed.isTrue ? controller.mffKonsumsiPakan : controller.mffKonsumsiOVK)
                         ],
                       ),
                     ],

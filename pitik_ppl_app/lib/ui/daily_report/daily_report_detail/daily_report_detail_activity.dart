@@ -92,7 +92,7 @@ class DailyReportDetailActivity extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (controller.report?.status == EnumDailyReport.FILLED || controller.report?.status == EnumDailyReport.REVIEWED) ...[
-                    controller.btEdit
+                    Expanded(child: controller.btEdit)
                   ] else if (controller.report?.status == EnumDailyReport.REVIEW_SOON) ...[
                     Expanded(child: controller.btDataBenar),
                     const SizedBox(

@@ -37,6 +37,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   late bool isEdit = false;
   var isFeed = true.obs;
   late TabController tabController = TabController(length: 2, vsync: this);
+  Report reportDetail = Report();
 
   EditField efBobot = EditField(
     controller: GetXCreator.putEditFieldController("efBobot"),
@@ -109,7 +110,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
       alertText: "Kartu Recording harus dikirim");
 
   late SpinnerField sfMerkPakan = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("sfMerkPakan"),
+    controller: GetXCreator.putSpinnerFieldController("sfMerkPakanDailyReport"),
     label: "Merk Pakan",
     hint: "Pilih Salah Satu",
     alertText: "Merk Pakan Harus Dipilih",
@@ -118,7 +119,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   );
 
   late EditField efTotalPakan = EditField(
-    controller: GetXCreator.putEditFieldController("efTotalPakan"),
+    controller: GetXCreator.putEditFieldController("efTotalPakanDailyReport"),
     label: "Total",
     hint: "Ketik disini",
     alertText: "Total harus di isi ",
@@ -148,65 +149,8 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     onTyping: (value, edit) {},
   );
 
-  late MultipleFormField<Product> mffKonsumsiPakan = MultipleFormField<Product>(
-      controller: GetXCreator.putMultipleFormFieldController("mffKonsumsiPakan"),
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-      labelButtonAdd: 'Tambah Pakan',
-      initInstance: Product(),
-      childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(product: null)),
-      increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product: product)),
-      selectedObject: () => getFeedSelectedObject(),
-      selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
-      keyData: () => getFeedProductName(),
-      validationAdded: () {
-        bool isPass = true;
-        if (sfMerkPakan.getController().selectedIndex == -1) {
-          sfMerkPakan.getController().showAlert();
-          isPass = false;
-        }
-        if (efTotalPakan.getInputNumber() == null) {
-          efTotalPakan.getController().showAlert();
-          isPass = false;
-        }
-
-        return isPass;
-      },
-      child: Column(
-        children: [
-          sfMerkPakan,
-          efTotalPakan,
-        ],
-      ));
-
-  late MultipleFormField mffKonsumsiOVK = MultipleFormField(
-      controller: GetXCreator.putMultipleFormFieldController<Product>("transferMultipleOvk"),
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-      labelButtonAdd: 'Tambah OVK',
-      initInstance: Product(),
-      childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
-      increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
-      selectedObject: () => getOvkSelectedObject(),
-      selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
-      keyData: () => getOvkProductName(),
-      validationAdded: () {
-        bool isPass = true;
-        if (sfJenisOvk.getController().selectedIndex == -1) {
-          sfJenisOvk.getController().showAlert();
-          isPass = false;
-        }
-        if (efTotalOvk.getInputNumber() == null) {
-          efTotalOvk.getController().showAlert();
-          isPass = false;
-        }
-
-        return isPass;
-      },
-      child: Column(
-        children: [
-          sfJenisOvk,
-          efTotalOvk,
-        ],
-      ));
+  late MultipleFormField<Product> mffKonsumsiPakan;
+  late MultipleFormField mffKonsumsiOVK;
 
   late ButtonFill bfSimpan = ButtonFill(controller: GetXCreator.putButtonFillController("btSimpan"), label: "Simpan", onClick: () => addReport());
 
@@ -220,17 +164,83 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   var prestarterStockSummary = "-".obs;
   var starterStockSummary = "-".obs;
   var finisherStockSummary = "-".obs;
+
+  var countApi = 0;
   @override
   void onInit() {
     super.onInit();
     coop = Get.arguments[0];
     report = Get.arguments[1];
+    if (Get.arguments.length > 1) {
+      isEdit = Get.arguments[2];
+      reportDetail = Get.arguments[3];
+    }
+    mffKonsumsiPakan = MultipleFormField<Product>(
+        controller: GetXCreator.putMultipleFormFieldController("mffKonsumsiPakanDailyReport"),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        labelButtonAdd: 'Tambah Pakan',
+        initInstance: Product(),
+        childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(product: null)),
+        increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product: product)),
+        selectedObject: () => getFeedSelectedObject(),
+        selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
+        keyData: () => getFeedProductName(),
+        validationAdded: () {
+          bool isPass = true;
+          if (sfMerkPakan.getController().selectedIndex == -1) {
+            sfMerkPakan.getController().showAlert();
+            isPass = false;
+          }
+          if (efTotalPakan.getInputNumber() == null) {
+            efTotalPakan.getController().showAlert();
+            isPass = false;
+          }
+
+          return isPass;
+        },
+        child: Column(
+          children: [
+            sfMerkPakan,
+            efTotalPakan,
+          ],
+        ));
+
+    mffKonsumsiOVK = MultipleFormField(
+        controller: GetXCreator.putMultipleFormFieldController<Product>("MultipleOvkDailyReport"),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        labelButtonAdd: 'Tambah OVK',
+        initInstance: Product(),
+        childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
+        increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
+        selectedObject: () => getOvkSelectedObject(),
+        selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
+        keyData: () => getOvkProductName(),
+        validationAdded: () {
+          bool isPass = true;
+          if (sfJenisOvk.getController().selectedIndex == -1) {
+            sfJenisOvk.getController().showAlert();
+            isPass = false;
+          }
+          if (efTotalOvk.getInputNumber() == null) {
+            efTotalOvk.getController().showAlert();
+            isPass = false;
+          }
+
+          return isPass;
+        },
+        child: Column(
+          children: [
+            sfJenisOvk,
+            efTotalOvk,
+          ],
+        ));
   }
 
   @override
   void onReady() {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      isLoading.value = true;
       _getOvkStockSummary();
       _getFeedStockSummary();
       _getOvkBrand();
@@ -324,8 +334,8 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         useSafeArea: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
         )),
         isScrollControlled: true,
         context: Get.context!,
@@ -361,7 +371,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(getFeedProductName(product: feedStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Expanded(child: Text(getFeedProductName(product: feedStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),overflow: TextOverflow.clip,)),
                                         Text(
                                           feedStockSummaryList[index - 1] == null ? '-' : _getRemainingQuantity(feedStockSummaryList[index - 1]!),
                                           style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
@@ -403,7 +413,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(getOvkProductName(product: ovkStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Expanded(child: Text(getOvkProductName(product: ovkStockSummaryList[index - 1]), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),overflow: TextOverflow.clip,)),
                                         Text(
                                           ovkStockSummaryList[index - 1] == null ? '-' : _getRemainingQuantity(ovkStockSummaryList[index - 1]!),
                                           style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium),
@@ -603,9 +613,18 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
   void _checkCountLoading() {
     countLoading.value++;
     if (countLoading.value == 3) {
+      if (isEdit) {
+        fillEditForm();
+      }
       isLoading.value = false;
       countLoading.value = 0;
     }
+  }
+
+  void fillEditForm() {
+    efBobot.setInput(reportDetail.averageWeight?.toString() ?? '');
+    efKematian.setInput(reportDetail.mortality?.toString() ?? '');
+    efCulling.setInput(reportDetail.culling?.toString() ?? '');
   }
 
   void _getFeedBrand() => AuthImpl().get().then((auth) => {
@@ -619,8 +638,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                       feedStockSummaryList.value = body.data;
-                      _setupSpinnerBrand(field: sfMerkPakan, productList: (body as ProductsResponse).data);
-                      _checkCountLoading();
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        _setupSpinnerBrand(field: sfMerkPakan, productList: (body as ProductsResponse).data);
+                        _checkCountLoading();
+                      });
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
                     onResponseError: (exception, stacktrace, id, packet) => _checkCountLoading(),
@@ -641,8 +662,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                       ovkStockSummaryList.value = body.data;
-                      _setupSpinnerBrand(field: sfJenisOvk, productList: (body as ProductsResponse).data, isFeed: false);
-                      _checkCountLoading();
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        _setupSpinnerBrand(field: sfJenisOvk, productList: (body as ProductsResponse).data, isFeed: false);
+                        _checkCountLoading();
+                      });
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
                     onResponseError: (exception, stacktrace, id, packet) => _checkCountLoading(),
@@ -679,6 +702,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                           }
                         }
                       }
+                      _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) {},
                     onResponseError: (exception, stacktrace, id, packet) {},
@@ -711,6 +735,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
 
                         ovkStockSummary.value = '${ovkStock.toStringAsFixed(0)} $uom';
                       }
+                      _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) {},
                     onResponseError: (exception, stacktrace, id, packet) {},
