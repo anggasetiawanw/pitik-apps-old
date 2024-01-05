@@ -15,8 +15,8 @@ Future<bool> handleLocationPermission() async {
     if (!await FlLocation.isLocationServicesEnabled) {
       // Location services are disabled.
         Get.snackbar(
-            "Alert",
-            "Enable Location, Please",
+            "Peringatan!",
+            "Tolong Aktifkan layanan Lokasi (GPS)!",
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -29,8 +29,8 @@ Future<bool> handleLocationPermission() async {
     if (locationPermission == LocationPermission.deniedForever) {
       // Cannot request runtime permission because location permission is denied forever.
       Get.snackbar(
-            "Alert",
-            "Enable Location, Please!",
+            "Peringatan!",
+            "Tolong Aktifkan layanan Lokasi (GPS)!",
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -42,8 +42,8 @@ Future<bool> handleLocationPermission() async {
       locationPermission = await FlLocation.requestLocationPermission();
       if (locationPermission == LocationPermission.denied || locationPermission == LocationPermission.deniedForever) {
             Get.snackbar(
-                "Alert",
-                "Enable Location, Please!",
+                "Peringatan!",
+                "Tolong Aktifkan layanan Lokasi (GPS)!",
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

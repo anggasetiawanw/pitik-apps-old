@@ -11,6 +11,7 @@ import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -127,7 +128,7 @@ class VisitController extends GetxController {
                             );
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
-                            isLoading.value=false;                                
+                            isLoading.value=false;
                             Get.snackbar(
                                 "Pesan",
                                 "Terjadi kesalahan internal",
@@ -138,7 +139,7 @@ class VisitController extends GetxController {
                         onTokenInvalid: Constant.invalidResponse()
                     )
                 );
-                
+
             } else {
                 if (ret[1] != null) {
                     if ((ret[1] as String).isNotEmpty) {
@@ -197,7 +198,7 @@ class VisitController extends GetxController {
         alertText: "Kota harus dipilih!",
         items: const {"Rumah Makan": false, "Rumah Tuang": false},
         onSpinnerSelected: (text) {
-        
+
             if (city.value.isNotEmpty) {
                 citySelect = city.value.firstWhereOrNull((element) => element!.cityName! == text);
                 if (citySelect != null) {
@@ -244,8 +245,8 @@ class VisitController extends GetxController {
         onClick: () async {
             isLoadCheckin.value = true;
             final hasPermission = await handleLocationPermission();
-            if (hasPermission){            
-            const timeLimit = Duration(seconds: 10);
+            if (hasPermission){
+            const timeLimit = Duration(seconds: 15);
             await FlLocation.getLocation(timeLimit: timeLimit, accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
@@ -295,11 +296,13 @@ class VisitController extends GetxController {
             }).onError((errors, stackTrace) {
                 Get.snackbar(
                     "Pesan",
-                    "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi",
+                    "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi.",
                     snackPosition: SnackPosition.TOP,
                     duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                FirebaseCrashlytics.instance.recordError("Errors On GPS : $errors", stackTrace, fatal: false);
+                FirebaseCrashlytics.instance.log("Errors On GPS : $errors");
                 error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
                 GpsComponent.failedCheckin(error.value);
                 isLoadCheckin.value = false;
@@ -309,11 +312,11 @@ class VisitController extends GetxController {
         } else {
             error.value = "Data GPS tidak diizinkan";
             isLoading.value = false;
-            isLoadCheckin.value = false;            
+            isLoadCheckin.value = false;
         }
     }
     );
-    
+
     late SpinnerMultiField spinnerMulti = SpinnerMultiField(
         controller: GetXCreator.putSpinnerMultiFieldController("multiData Visit"),
         label: "Jenis Kendala*",
@@ -364,7 +367,7 @@ class VisitController extends GetxController {
         spinnerNamaBisnis.controller.disable();
         buttonIsiKunjungan.controller.disable();
         flagFrom = Get.arguments[0];
-        Timer(const Duration(milliseconds: 500), () { 
+        Timer(const Duration(milliseconds: 500), () {
             switch (flagFrom) {
             case RoutePage.fromHomePage:
                 WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -404,7 +407,7 @@ class VisitController extends GetxController {
         Get.find<SkuCardController>(tag: "skuLama").numberList.listen((p0) {
             generateListProduct(p0);
         });
-        spinnerMulti.getController().selectedValue.listen((p0) { 
+        spinnerMulti.getController().selectedValue.listen((p0) {
             if(p0.contains("Harga")){
                 skuCard.controller.visibleCard();
             }else {
@@ -494,7 +497,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                onResponseError: (exception, stacktrace, id, packet) {            
+                onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
                         "Pesan",
                         "Terjadi kesalahan internal",
@@ -523,7 +526,7 @@ class VisitController extends GetxController {
                          mapList[location!.cityName!] = false;
                          city.value.add(location);
                     });
-                
+
                     spinnerKota.controller.generateItems(mapList);
                     spinnerKota.controller.enable();
 
@@ -539,7 +542,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
@@ -623,7 +626,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
@@ -774,7 +777,7 @@ class VisitController extends GetxController {
                 for (int i = 0; i < customer.products!.length - 1; i++) {
                     skuCard.controller.addCard();
                 }
-                Timer(Duration.zero, () {                    
+                Timer(Duration.zero, () {
                     Map<String, bool> listKebutuhan = {};
                     for (var product in listCategories.value) {
                       listKebutuhan[product!.name!] = false;
@@ -786,10 +789,10 @@ class VisitController extends GetxController {
                         skuCard.controller.spinnerSize.value[j].controller.setTextSelected(customer.products![j]!.name!);
                         skuCard.controller.editFieldJenis.value[j].setInput(customer.products![j]!.dailyQuantity!.toString());
                         skuCard.controller.editFieldHarga.value[j].setInput(customer.products![j]!.price!.toString());
-                    } 
+                    }
                 });
 
-            } 
+            }
     }
 
     List validation() {
@@ -842,9 +845,9 @@ class VisitController extends GetxController {
                         Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                         selectCategory = selectTemp!.category;
                     }
-                } else {                    
+                } else {
                     Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
-                    selectCategory = selectTemp!.category; 
+                    selectCategory = selectTemp!.category;
                 }
 
                 Products? selectProduct;

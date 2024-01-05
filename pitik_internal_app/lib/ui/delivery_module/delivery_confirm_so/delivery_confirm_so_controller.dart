@@ -10,6 +10,7 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class DeliveryConfirmSOController extends GetxController {
     BuildContext context;
     DeliveryConfirmSOController({required this.context});
     double? latitude;
-    double? longitude;    
+    double? longitude;
     var isLoading = false.obs;
     var sumChick = 0.obs;
     var sumKg =0.0.obs;
@@ -71,7 +72,7 @@ class DeliveryConfirmSOController extends GetxController {
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
-            const timeLimit = Duration(seconds: 10);
+            const timeLimit = Duration(seconds: 15);
             await FlLocation.getLocation(timeLimit: timeLimit,accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
@@ -128,6 +129,8 @@ class DeliveryConfirmSOController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
+                    FirebaseCrashlytics.instance.recordError("Errors On GPS : $errors", stackTrace, fatal: false);
+                    FirebaseCrashlytics.instance.log("Errors On GPS : $errors");
                     error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
                     GpsComponent.failedCheckin(error.value);
                     isLoadCheckin.value = false;
@@ -144,7 +147,7 @@ class DeliveryConfirmSOController extends GetxController {
     @override
     void onInit() {
         isLoading.value = true;
-        super.onInit();       
+        super.onInit();
         order = Get.arguments;
         createdDate = Convert.getDatetime(order.createdDate!);
         confirButton.controller.disable();
@@ -156,9 +159,9 @@ class DeliveryConfirmSOController extends GetxController {
         WidgetsBinding.instance.addPostFrameCallback((_) {
            isLoading.value = false;
         });
-        
+
     }
-        
+
     void getTotalQuantity(Order? data){
         sumChick.value =0;
         sumKg.value =0;
