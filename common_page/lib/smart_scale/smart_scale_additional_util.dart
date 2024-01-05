@@ -61,18 +61,7 @@ class SmartScaleAdditionalUtil {
         return sumWeight / sumChicken;
     }
 
-    static String getDateWeighing(SmartScale data) {
-        DateTime dateWeighing = Convert.getDatetime(data.date!);
-        return "${Convert.getYear(dateWeighing)}/${Convert.getMonthNumber(dateWeighing)}/${Convert.getDay(dateWeighing)}";
-    }
-
-    static String getStartWeighing(SmartScale data) {
-        DateTime startWeighingTime = Convert.getDatetime(data.startDate!);
-        return "${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}";
-    }
-
-    static String getEndWeighing(SmartScale data) {
-        DateTime endWeighingTime = Convert.getDatetime(data.executionDate!);
-        return "${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}";
-    }
+    static String getDateWeighing(SmartScale data) => Convert.getDate(data.date);
+    static String getStartWeighing(SmartScale data) => Convert.getDate(data.startDate);
+    static String getEndWeighing(SmartScale data) => Convert.getDate(data.executionDate);
 }

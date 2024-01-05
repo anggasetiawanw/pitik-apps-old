@@ -18,6 +18,18 @@ class SmartScaleWeighingBundle {
     Function() routeDetail;
     Function(SmartScaleWeighingController controller, Auth auth, bool isEdit) getBodyRequest;
     Function(DetailSmartScaleController controller, Auth auth) getBodyDetail;
+    bool saveToDb;
+    String? weighingNumber;
+    Function(dynamic)? onGetSubmitResponse;
 
-    SmartScaleWeighingBundle({required this.routeSave, required this.routeEdit, required this.routeDetail, required this.getBodyRequest, required this.getBodyDetail});
+    SmartScaleWeighingBundle({
+        required this.routeSave,
+        required this.routeEdit,
+        required this.routeDetail,
+        required this.getBodyRequest,
+        required this.getBodyDetail,
+        this.saveToDb = true,
+        this.weighingNumber,
+        this.onGetSubmitResponse
+    });
 }

@@ -47,6 +47,7 @@ class SmartScaleWeighingController extends GetxController {
     var batteryStatus = "".obs;
     var isTimeout = true.obs;
     var numberList = 0.obs;
+    var pageSelected = 1.obs;
 
     RxList<int> index = RxList<int>([]);
     RxList<int> numberLabel = RxList<int>([]);
@@ -54,6 +55,8 @@ class SmartScaleWeighingController extends GetxController {
     RxMap<int, SmartScaleRecord> smartScaleRecords = <int, SmartScaleRecord>{}.obs;
     RxMap<int, Widget> smartScaleDataWidget = <int, Widget>{}.obs;
     RxMap<int, Widget> smartScaleDataWidgetNumber = <int, Widget>{}.obs;
+    Rx<Row> paginationNumber = (const Row()).obs;
+    RxList<List<Row>> paginationWidget = <List<Row>>[].obs;
     BluetoothLeService? bluetoothLeService;
 
     final EditField totalWeighingField = EditField(controller: GetXCreator.putEditFieldController("totalWeighingFieldSmartScale"), label: "Jumlah Ditimbang", hint: "Ketik disini..!", alertText: "Harus isi jumlah ditimbang..!",
@@ -101,6 +104,8 @@ class SmartScaleWeighingController extends GetxController {
         smartScaleDataWidget.refresh();
         smartScaleRecords.refresh();
         _generateNumberList();
+        generatePaginationNumber();
+        getSmartScaleDataWidget();
     }
 
     void addWeighing(SmartScaleRecord? dataParam) {
@@ -124,18 +129,15 @@ class SmartScaleWeighingController extends GetxController {
             }
             smartScaleRecords.putIfAbsent(idx, () => smartScaleRecord);
 
-            final EditField totalChick = EditField(controller: GetXCreator.putEditFieldController("totalChickenAdd$idx"), label: "", hint: "", alertText: "",
+            final EditField totalChick = EditField(controller: GetXCreator.putEditFieldController("totalChickenAdd$idx"), label: "", hint: "", alertText: "", hideLabel: true,
                 textUnit: "Ekor", inputType: TextInputType.number, maxInput: 10,
                 onTyping: (text, editField) {}
             );
 
-            final EditField totalWeight = EditField(controller: GetXCreator.putEditFieldController("totalWeighingAdd$idx"), label: "", hint: "", alertText: "",
+            final EditField totalWeight = EditField(controller: GetXCreator.putEditFieldController("totalWeighingAdd$idx"), label: "", hint: "", alertText: "", hideLabel: true,
                 textUnit: "kg", inputType: TextInputType.number, maxInput: 10,
                 onTyping: (text, editField) {}
             );
-
-            totalChick.controller.invisibleLabel();
-            totalWeight.controller.invisibleLabel();
 
             totalChick.setInput('${smartScaleRecord.count ?? smartScaleRecord.totalCount ?? ''}');
             totalWeight.setInput('${smartScaleRecord.weight ?? smartScaleRecord.totalWeight ?? ''}');
@@ -173,6 +175,8 @@ class SmartScaleWeighingController extends GetxController {
             smartScaleDataWidget.refresh();
             smartScaleRecords.refresh();
             _generateNumberList();
+            generatePaginationNumber();
+            getSmartScaleDataWidget();
         }
     }
 
@@ -213,7 +217,7 @@ class SmartScaleWeighingController extends GetxController {
         coop = Get.arguments[0];
         bundle = Get.arguments[1];
         outstandingTotalWeighingField.controller.disable();
-        totalWeighing.controller.disable();
+        // totalWeighing.controller.disable();
 
         bluetoothLeService = BluetoothLeService().timeout(true, 5).start(BluetoothLeConstant.TEXT_RESULT, ['PTK-SCL'], BluetoothLeCallback(
             onLeReceived: (data) {
@@ -261,8 +265,18 @@ class SmartScaleWeighingController extends GetxController {
         AuthImpl().get().then((auth) {
             if (auth != null) {
                 if (smartScaleRecords.isNotEmpty) {
+                    // count tonnage & quantity
+                    double tonnage  = 0;
+                    int quantity = 0;
+
+                    smartScaleRecords.forEach((key, value) {
+                        tonnage += value.weight ?? 0;
+                        quantity += value.count ?? 0;
+                    });
+
                     showModalBottomSheet(
                         isScrollControlled: true,
+                        useSafeArea: true,
                         context: Get.context!,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
@@ -276,6 +290,7 @@ class SmartScaleWeighingController extends GetxController {
                                 padding: const EdgeInsets.only(left: 16, right: 16),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                         Padding(
                                             padding: const EdgeInsets.only(top: 16),
@@ -295,14 +310,63 @@ class SmartScaleWeighingController extends GetxController {
                                                 child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange))
                                             )
                                         ),
-                                        Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
+                                        const SizedBox(height: 8),
+                                        Text("Timbang Ayam", style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Jumlah Ditimbang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                                const SizedBox(width: 8),
+                                                Text('$quantity Ekor', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                            ]
                                         ),
-                                        Padding(
-                                            padding: const EdgeInsets.only(top: 24),
-                                            child: SvgPicture.asset("images/ask_bottom_sheet_1.svg")
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Tonase", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                                const SizedBox(width: 8),
+                                                Text('${tonnage.toStringAsFixed(2)} Kg', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                            ]
                                         ),
+                                        const SizedBox(height: 8),
+                                        const Divider(color: GlobalVar.outlineColor),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Kolom", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                const SizedBox(width: 8),
+                                                Text("Jumlah Ayam", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                const SizedBox(width: 8),
+                                                Text("Tonase", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Expanded(
+                                            child: RawScrollbar(
+                                                thumbVisibility: true,
+                                                thumbColor: GlobalVar.primaryOrange,
+                                                radius: const Radius.circular(8),
+                                                child: Padding(
+                                                    padding: const EdgeInsets.only(right: 12),
+                                                    child: ListView(
+                                                        children: smartScaleRecords.entries.map((e) => Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Text('${e.key}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                                                const SizedBox(width: 8),
+                                                                Text('${e.value.count ?? e.value.totalCount}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                                                const SizedBox(width: 8),
+                                                                Text('${e.value.weight ?? e.value.totalWeight}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                            ]
+                                                        )).toList()
+                                                    ),
+                                                )
+                                            )
+                                        ),
+                                        const SizedBox(height: 16),
                                         Padding(
                                             padding: const EdgeInsets.only(top: 24, bottom: 32),
                                             child: Row(
@@ -366,8 +430,14 @@ class SmartScaleWeighingController extends GetxController {
                 body: await bundle.getBodyRequest(this, auth, isEdit),
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        _saveSmartScaleToDb(1);
+                        if (bundle.saveToDb) {
+                            _saveSmartScaleToDb(1);
+                        }
                         isLoading.value = false;
+
+                        if (bundle.onGetSubmitResponse != null) {
+                            bundle.onGetSubmitResponse!(body);
+                        }
                         Get.off(SmartScaleDoneSummary(data: smartScaleData.value!, coop: coop, startWeighingTime: startWeighingTime));
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -378,8 +448,15 @@ class SmartScaleWeighingController extends GetxController {
                             duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
                         );
-                        _saveSmartScaleToDb(0);
+
+                        if (bundle.saveToDb) {
+                            _saveSmartScaleToDb(0);
+                        }
                         isLoading.value = false;
+
+                        if (bundle.onGetSubmitResponse != null) {
+                            bundle.onGetSubmitResponse!(body);
+                        }
                         Get.off(SmartScaleDoneSummary(data: smartScaleData.value!, coop: coop, startWeighingTime: startWeighingTime));
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
@@ -391,7 +468,15 @@ class SmartScaleWeighingController extends GetxController {
                             duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
                         );
+
+                        if (bundle.saveToDb) {
+                            _saveSmartScaleToDb(0);
+                        }
                         isLoading.value = false;
+
+                        if (bundle.onGetSubmitResponse != null) {
+                            bundle.onGetSubmitResponse!([exception, stacktrace]);
+                        }
                         Get.off(SmartScaleDoneSummary(data: smartScaleData.value!, coop: coop, startWeighingTime: startWeighingTime));
                     },
                     onTokenInvalid: () => GlobalVar.invalidResponse()
@@ -401,6 +486,68 @@ class SmartScaleWeighingController extends GetxController {
             GlobalVar.invalidResponse();
         }
     });
+
+    void generatePaginationNumber() {
+        if (smartScaleRecords.isNotEmpty) {
+            paginationNumber.value = Row(
+                children: List.generate((smartScaleRecords.length / 10).ceil(), (index) {
+                    return GestureDetector(
+                        onTap: () {
+                            pageSelected.value = index + 1;
+                            generatePaginationNumber();
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text('${index + 1}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: pageSelected.value == index + 1 ? GlobalVar.primaryOrange : GlobalVar.gray))
+                        ),
+                    );
+                }),
+            );
+        }
+    }
+
+    void getSmartScaleDataWidget() {
+        if (smartScaleDataWidget.isNotEmpty) {
+            paginationWidget.clear();
+
+            int idx = 0;
+            int page = 0;
+            List<Row> data = [];
+            smartScaleDataWidget.forEach((key, value) {
+                if (idx == 10) {
+                    page++;
+                    paginationWidget.add([]);
+                    data = [];
+
+                    data.add(
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                smartScaleDataWidgetNumber[key]!,
+                                Expanded(child: smartScaleDataWidget[key]!)
+                            ],
+                        )
+                    );
+
+                    paginationWidget.insert(page, data);
+                    idx = 1;
+                } else {
+                    data.add(
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                smartScaleDataWidgetNumber[key]!,
+                                Expanded(child: smartScaleDataWidget[key]!)
+                            ],
+                        )
+                    );
+
+                    paginationWidget.insert(page, data);
+                    idx++;
+                }
+            });
+        }
+    }
 }
 
 class SmartScaleWeighingBinding extends Bindings {

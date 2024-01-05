@@ -80,6 +80,12 @@ import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dar
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/detail/smart_scale_harvest_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/detail/smart_scale_harvest_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/form/smart_scale_harvest_form_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/form/smart_scale_harvest_form_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/list/smart_scale_harvest_list_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/list/smart_scale_harvest_list_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_activity.dart';
@@ -146,6 +152,9 @@ class AppRoutes {
         // Smart Camera
         GetPage(name: RoutePage.listSmartCameraDay, page: () => const SmartCameraListDayActivity(), binding: SmartCameraListDayBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.listSmartCameraHistory, page: () => const SmartCameraListHistoryActivity(), binding: SmartCameraListHistoryBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.listSmartScaleHarvest, page: () => const SmartScaleHarvestListActivity(), binding: SmartScaleHarvestBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartScaleHarvestForm, page: () => const SmartScaleHarvestFormActivity(), binding: SmartScaleHarvestFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartScaleHarvestDetail, page: () => const SmartScaleHarvestDetailActivity(), binding: SmartScaleHarvestDetailBinding(context: GlobalVar.getContext())),
 
         // Harvest
         GetPage(name: RoutePage.listHarvest, page: () => const HarvestListActivity(), binding: HarvestListBinding(context: GlobalVar.getContext())),
@@ -207,6 +216,9 @@ class RoutePage {
     static const String listSmartCameraDay = "/listSmartCameraDay";
     static const String listSmartCameraHistory = "/listSmartCameraHistory";
     static const String listHarvest = "/listHarvest";
+    static const String listSmartScaleHarvest = "/listSmartScaleHarvest";
+    static const String smartScaleHarvestForm = "/smartScaleHarvestForm";
+    static const String smartScaleHarvestDetail = "/smartScaleHarvestDetail";
     static const String harvestSubmittedDetail = "/harvestSubmittedDetail";
     static const String harvestSubmittedForm = "/harvestSubmittedForm";
     static const String harvestDealDetail = "/harvestDealDetail";

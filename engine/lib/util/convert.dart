@@ -295,10 +295,10 @@ class Convert {
     }
 
     /// The function `roundPrice` rounds a given price to the nearest thousand.
-    /// 
+    ///
     /// Args:
     ///   price (double): The price is a decimal number representing the cost of an item.
-    /// 
+    ///
     /// Returns:
     ///   The code is returning the rounded price as an integer.
     static int roundPrice(double price) {
@@ -310,9 +310,9 @@ class Convert {
         }
         return (price / 1000).ceil() * 1000;
     }
-    
+
     static String getDate(String? dateString) {
-        if (dateString != null) {
+        if (dateString != null && dateString.isNotEmpty) {
             DateTime dateTime = getDatetime(dateString);
             return '${getYear(dateTime)}-${getMonthNumber(dateTime)}-${getDay(dateTime)}';
         } else {

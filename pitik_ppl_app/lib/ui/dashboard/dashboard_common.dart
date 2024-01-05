@@ -133,7 +133,7 @@ class DashboardCommon {
 
     static SmartScaleWeighingBundle _getSmartScaleWeighingBundle({required Coop coop}) => SmartScaleWeighingBundle(
         routeSave: () => ListApi.saveSmartScale,
-        routeEdit: () => ListApi.saveSmartScale,
+        routeEdit: () => ListApi.updateSmartScale,
         routeDetail: () => ListApi.getSmartScaleDetail,
         getBodyRequest: (controller, auth, isEdit) async {
             if (isEdit) {

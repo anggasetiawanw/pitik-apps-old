@@ -7,6 +7,8 @@ import 'package:common_page/farm_performance/farm_performance_activity.dart';
 import 'package:common_page/farm_performance/farm_performance_controller.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_activity.dart';
 import 'package:common_page/smart_monitor/detail_smartmonitor_controller.dart';
+import 'package:components/button_outline/button_outline.dart';
+import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
@@ -441,7 +443,10 @@ class FarmingDashboardController extends GetxController {
                                             title: "Smart\nScale",
                                             imagePath: 'images/smart_scale_icon.svg',
                                             status: showSmartScaleAlert.value,
-                                            function: () => Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coopList[coopSelected.value]!, startDateCustom: farmingCycleStartDate.value))
+                                            function: () {
+                                                Get.back();
+                                                _showSmartScaleBottomSheetMenu();
+                                            }
                                         ),
                                         DashboardCommon.createMenu(
                                             title: "Smart\nController",
@@ -478,6 +483,76 @@ class FarmingDashboardController extends GetxController {
             )
         )
     );
+
+    void _showSmartScaleBottomSheetMenu() {
+        showModalBottomSheet(
+            isScrollControlled: true,
+            context: Get.context!,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                )
+            ),
+            builder: (context) => Container(
+                color: Colors.transparent,
+                child: Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Container(
+                                    width: 60,
+                                    height: 4,
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                                        color: GlobalVar.outlineColor
+                                    )
+                                )
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Mau memulai siklus?", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange))
+                                )
+                            ),
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text("Silahkan lakukan Order DOC in lalu Order dan Penerimaan Pakan-OVK", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: ButtonOutline(
+                                    controller: GetXCreator.putButtonOutlineController("farmingSmartScaleDaily"),
+                                    label: "Timbangan Harian",
+                                    isHaveIcon: true,
+                                    imageAsset: 'images/document_icon.svg',
+                                    onClick: () {
+                                        Get.back();
+                                        Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coopList[coopSelected.value]!, startDateCustom: farmingCycleStartDate.value));
+                                    }
+                                )
+                            ),
+                            ButtonOutline(
+                                controller: GetXCreator.putButtonOutlineController("farmingSmartScaleHarvest"),
+                                label: "Timbangan Panen",
+                                isHaveIcon: true,
+                                imageAsset: 'images/calendar_check_icon.svg',
+                                onClick: () {
+                                    Get.back();
+                                    Get.toNamed(RoutePage.listSmartScaleHarvest, arguments: [coopList[coopSelected.value]!]);
+                                }
+                            ),
+                            const SizedBox(height: 24)
+                        ]
+                    )
+                )
+            )
+        );
+    }
 
     /// The function `_getTemperatureText()` returns the temperature value and unit
     /// of measurement if available, otherwise it returns 'N/A'.

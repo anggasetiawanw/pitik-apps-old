@@ -29,8 +29,7 @@ class SmartScaleDoneSummary extends StatelessWidget {
     Widget build(BuildContext context) {
         String executionDateTime = '';
         if (data.executionDate != null) {
-            final DateTime endWeighingTime = Convert.getDatetime(data.executionDate!);
-            executionDateTime = data.executionDate != null ? 'Waktu Selesai\t ${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}\n' : '';
+            executionDateTime = data.executionDate != null ? 'Waktu Selesai\t ${Convert.getDate(data.executionDate)}\n' : '';
         }
 
         return Scaffold(
@@ -144,9 +143,13 @@ class SmartScaleDoneSummary extends StatelessWidget {
                                 Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 32),
                                     child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSmartScaleSummaryClose"), label: "Tutup", onClick: () {
-                                        ListSmartScaleController controllerListSmartScale = Get.find<ListSmartScaleController>();
-                                        controllerListSmartScale.pageSmartScale.value = 1;
-                                        controllerListSmartScale.getSmartScaleListData(isPull: true);
+                                        try {
+                                            ListSmartScaleController controllerListSmartScale = Get.find<ListSmartScaleController>();
+                                            controllerListSmartScale.pageSmartScale.value = 1;
+                                            controllerListSmartScale.getSmartScaleListData(isPull: true);
+                                        // ignore: empty_catches
+                                        } catch (e) {}
+
                                         Get.back();
                                     })
                                 )

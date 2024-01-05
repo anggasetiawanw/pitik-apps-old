@@ -21,12 +21,13 @@ import 'package:pitik_ppl_app/route.dart';
 
 class HarvestCommon {
 
-    static void getSubmittedList({required RxBool isLoading, required Coop coop, required RxList<Harvest?> harvestList, Function()? onCallBack}) => _requestHarvestDataToServer(
+    static void getSubmittedList({required RxBool isLoading, required Coop coop, required RxList<Harvest?> harvestList, Function()? onCallBack, bool? isApproved}) => _requestHarvestDataToServer(
         route: ListApi.getSubmitsHarvest,
         isLoading: isLoading,
         coop: coop,
         harvestList: harvestList,
-        onCallBack: onCallBack
+        onCallBack: onCallBack,
+        isApproved: isApproved
     );
 
     static void getDealList({required RxBool isLoading, required Coop coop, required RxList<Harvest?> harvestList, Function()? onCallBack}) => _requestHarvestDataToServer(
@@ -37,16 +38,17 @@ class HarvestCommon {
         onCallBack: onCallBack
     );
 
-    static void getRealizationList({required RxBool isLoading, required Coop coop, required RxList<Realization?> realizationList, Function()? onCallBack}) => _requestHarvestDataToServer(
+    static void getRealizationList({required RxBool isLoading, required Coop coop, required RxList<Realization?> realizationList, Function()? onCallBack, bool? isApproved}) => _requestHarvestDataToServer(
         route: ListApi.getRealizationHarvest,
         isRealization: true,
         isLoading: isLoading,
         coop: coop,
         realizationList: realizationList,
-        onCallBack: onCallBack
+        onCallBack: onCallBack,
+        isApproved: isApproved
     );
 
-    static void _requestHarvestDataToServer({required String route, bool isRealization = false, required RxBool isLoading, required Coop coop, RxList<Harvest?>? harvestList, RxList<Realization?>? realizationList, Function()? onCallBack}) {
+    static void _requestHarvestDataToServer({required String route, bool isRealization = false, required RxBool isLoading, required Coop coop, RxList<Harvest?>? harvestList, RxList<Realization?>? realizationList, Function()? onCallBack, bool? isApproved}) {
         isLoading.value = true;
 
         if (realizationList != null) {
@@ -58,11 +60,16 @@ class HarvestCommon {
 
         AuthImpl().get().then((auth) {
             if (auth != null) {
+                List<dynamic> body = ['Bearer ${auth.token}', auth.id, coop.farmingCycleId];
+                if (route != ListApi.getDealsHarvest) {
+                    body.add(isApproved);
+                }
+
                 Service.push(
                     apiKey: 'harvestApi',
                     service: route,
                     context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, coop.farmingCycleId],
+                    body: body,
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             if (isRealization) {
@@ -93,12 +100,18 @@ class HarvestCommon {
         });
     }
 
-    static Widget createSubmittedHarvestCard({required int index, required Coop coop, Harvest? harvest, required Function() onRefreshData}) {
+    static Widget createSubmittedHarvestCard({required int index, required Coop coop, Harvest? harvest, required Function() onRefreshData, Function()? onNavigate}) {
         if (harvest != null) {
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePage.harvestSubmittedDetail, arguments: [coop, harvest])!.then((value) => onRefreshData()),
+                    onTap: () {
+                        if (onNavigate != null) {
+                            onNavigate();
+                        } else {
+                            Get.toNamed(RoutePage.harvestSubmittedDetail, arguments: [coop, harvest])!.then((value) => onRefreshData());
+                        }
+                    },
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
@@ -242,12 +255,18 @@ class HarvestCommon {
         }
     }
 
-    static Widget createRealizationHarvestCard({required Coop coop, Realization? realization, required Function() onRefreshData}) {
+    static Widget createRealizationHarvestCard({required Coop coop, Realization? realization, required Function() onRefreshData, Function()? onNavigate}) {
         if (realization != null) {
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePage.harvestRealizationDetail, arguments: [coop, realization])!.then((value) => onRefreshData()),
+                    onTap: () {
+                        if (onNavigate != null) {
+                            onNavigate();
+                        } else {
+                            Get.toNamed(RoutePage.harvestRealizationDetail, arguments: [coop, realization])!.then((value) => onRefreshData());
+                        }
+                    },
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(

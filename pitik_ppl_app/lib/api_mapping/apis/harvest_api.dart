@@ -34,7 +34,7 @@ class HarvestApi {
     ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
     /// the ID of the farming cycle for which you want to retrieve harvest requests.
     @GET(value: "v2/harvest-requests", as: HarvestListResponse, error: ErrorResponse)
-    void getSubmitsHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
+    void getSubmitsHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isApproved") bool isApproved) {}
 
     /// The function `getDealsHarvest` is a GET request that retrieves a list of
     /// harvest deals with the specified authorization, X-ID, and farmingCycleId.
@@ -67,7 +67,7 @@ class HarvestApi {
     /// the ID of the farming cycle for which you want to retrieve the realization
     /// harvest data.
     @GET(value: "v2/harvest-realizations", as: RealizationResponse, error: ErrorResponse)
-    void getRealizationHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId) {}
+    void getRealizationHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isUseSmartScale") bool isUseSmartScale) {}
 
     /// The function `getDetailHarvest` is a GET request that retrieves detailed
     /// information about a harvest, using the provided authorization, X-ID, and
