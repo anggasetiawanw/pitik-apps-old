@@ -175,12 +175,8 @@ class VisitActivity extends GetView<VisitController> {
                           detailBisnis(),
                           controller.spinnerLead,
                           controller.spinnerKendala,
-                          Obx(() => controller.isLoadKendala.isTrue? const Center(
-                            child: ProgressLoading()
-                          ): controller.spinnerMulti,),
-                          Obx(() => controller.isLoadApi.isTrue? const Center(
-                            child: ProgressLoading()
-                          ): controller.skuCard),
+                          controller.spinnerMulti,
+                          controller.skuCard,
                           controller.editAlasan,
                           controller.spinnerProspek,
                           const Divider(
@@ -201,7 +197,7 @@ class VisitActivity extends GetView<VisitController> {
                                       borderRadius: BorderRadius.circular(6)),
                                   child: Row(
                                     children: [
-                                      
+
                               SvgPicture.asset(controller.isSuccessCheckin.isTrue ? "images/success_checkin.svg" : "images/failed_checkin.svg", height: 14),
                                       const SizedBox(
                                         width: 10,
