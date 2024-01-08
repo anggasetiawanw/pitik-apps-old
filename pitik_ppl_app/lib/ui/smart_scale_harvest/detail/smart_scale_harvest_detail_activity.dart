@@ -29,7 +29,7 @@ class SmartScaleHarvestDetailActivity extends GetView<SmartScaleHarvestDetailCon
                 bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : controller.containerButtonEditAndPreview.value,
                 body: Container(
                     padding: const EdgeInsets.all(16),
-                    child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : ListView(
+                    child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : controller.isNext.isTrue ? ListView(
                         children: [
                             Container(
                                 padding: const EdgeInsets.all(16),
@@ -234,6 +234,73 @@ class SmartScaleHarvestDetailActivity extends GetView<SmartScaleHarvestDetailCon
                                                 Text(controller.realization.weigherName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                             ]
                                         )
+                                    ]
+                                )
+                            )
+                        ]
+                    ) : Column(
+                        children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                            controller.pageSelected.value = controller.pageSelected.value - 1 > 1 ? controller.pageSelected.value - 1 : 1;
+                                            controller.generatePaginationNumber();
+                                        },
+                                        child: const Icon(Icons.arrow_back_ios, color: GlobalVar.primaryOrange),
+                                    ),
+                                    Expanded(
+                                        child: Center(
+                                            child: SingleChildScrollView(
+                                                physics: const AlwaysScrollableScrollPhysics(),
+                                                scrollDirection: Axis.horizontal,
+                                                child: controller.paginationNumber.value
+                                            )
+                                        )
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                            controller.pageSelected.value = controller.pageSelected.value + 1 < controller.paginationNumber.value.children.length ? controller.pageSelected.value + 1 : controller.paginationNumber.value.children.length;
+                                            controller.generatePaginationNumber();
+                                        },
+                                        child: const Icon(Icons.arrow_forward_ios, color: GlobalVar.primaryOrange),
+                                    )
+                                ]
+                            ),
+                            const SizedBox(height: 16),
+                            Expanded(
+                                child: ListView(
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Halaman ${controller.pageSelected.value}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                Text("NO.${controller.realization.weighingNumber ?? '-'}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                            ]
+                                        ),
+                                        if (controller.realization.records.isNotEmpty && controller.realization.records[0]!.details.isNotEmpty) ...[
+                                            Padding(
+                                                padding: const EdgeInsets.only(top: 12),
+                                                child:
+                                                Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                        SizedBox(
+                                                            width: 40,
+                                                            child: Text("No", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                                        ),
+                                                        const SizedBox(width: 8),
+                                                        Expanded(child: Text("Jumlah Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
+                                                        const SizedBox(width: 8),
+                                                        Expanded(child: Text("Timbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
+                                                    ]
+                                                )
+                                            )
+                                        ] else ...[
+                                            const SizedBox()
+                                        ],
+                                        controller.paginationWidget.isNotEmpty ? Column(children: controller.paginationWidget[controller.pageSelected.value - 1]) : const SizedBox()
                                     ]
                                 )
                             )

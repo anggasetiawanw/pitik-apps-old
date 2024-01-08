@@ -38,7 +38,7 @@ class SmartScaleHarvestListController extends GetxController with GetSingleTicke
         if (tabController.index == 0) {
             HarvestCommon.getSubmittedList(isLoading: isLoading, coop: coop, harvestList: harvestList, isApproved: true);
         } else {
-            HarvestCommon.getRealizationList(isLoading: isLoading, coop: coop, realizationList: realizationList, isApproved: true);
+            HarvestCommon.getRealizationList(isLoading: isLoading, coop: coop, realizationList: realizationList);
         }
     }
 }
