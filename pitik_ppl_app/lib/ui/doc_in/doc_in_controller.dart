@@ -10,6 +10,7 @@ import 'package:components/media_field/media_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class DocInController extends GetxController {
     var showRecord = false.obs;
     var totalPopulation = 0.0.obs;
     var isLoadingPicture = false.obs;
+    var isAlreadySubmit = false.obs;
 
     late EditField efReceiveDoc = EditField(
         controller: GetXCreator.putEditFieldController("receiveDoc"),
@@ -304,28 +306,23 @@ class DocInController extends GetxController {
     }
 
     void setDetailForm(RequestChickin request) {
-        String startDate = "";
-        // String recordDate="";
         String truckGo = "";
         String truckCome = "";
         String doneDocIn = "";
         try {
-            DateFormat formatDate = DateFormat("dd/MM/yyyy");
             DateFormat formatTime = DateFormat("HH:mm");
-            DateTime newStartDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.startDate ?? "");
-            startDate = formatDate.format(newStartDate);
 
-            DateTime newTruckGo = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.truckLeaving ?? "");
+            DateTime newTruckGo = DateFormat("HH:mm:ss").parse(request.truckLeaving ?? "");
             truckGo = formatTime.format(newTruckGo);
 
-            DateTime newTruckCome = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.truckArrival ?? "");
+            DateTime newTruckCome = DateFormat("HH:mm:ss").parse(request.truckArrival ?? "");
             truckCome = formatTime.format(newTruckCome);
 
-            DateTime newDoneDocIn = DateFormat("yyyy-MM-dd HH:mm:ss").parse(request.finishChickIn ?? "");
-            doneDocIn = DateFormat("yyyy-MM-dd HH:mm").format(newDoneDocIn);
+            DateTime newDoneDocIn = DateFormat("HH:mm:ss").parse(request.finishChickIn ?? "");
+            doneDocIn = DateFormat("HH:mm").format(newDoneDocIn);
         } catch (_) {}
 
-        dtTanggal.controller.setTextSelected(startDate);
+        dtTanggal.controller.setTextSelected(Convert.getDate(request.startDate ?? ""));
         dtTanggal.controller.disable();
         dtTruckGo.controller.setTextSelected(truckGo);
         dtTruckGo.controller.disable();
@@ -348,6 +345,8 @@ class DocInController extends GetxController {
         mfAnotherDoc.controller.disable();
         mfFormDOC.controller.disable();
         mfSuratJalan.controller.disable();
+
+        isAlreadySubmit.value = true;
     }
 
     void uploadFile(File? file, String mediaField) {
@@ -422,7 +421,7 @@ class DocInController extends GetxController {
             }
         });
     }
-    
+
     bool isValid() {
         if (dtTanggal.controller.textSelected.value.isEmpty) {
             dtTanggal.controller.showAlert();

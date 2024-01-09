@@ -23,7 +23,7 @@ class DailyReportDetailController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-  late ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true, reportDetail])!.then((value) => getDetailReport()));
+  late ButtonFill btEdit = ButtonFill(controller: GetXCreator.putButtonFillController("editDailyReportDetail"), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true, reportDetail])!.then((value) => value != null ? Get.back() : getDetailReport()));
   late ButtonFill btDataBenar = ButtonFill(controller: GetXCreator.putButtonFillController("Data BenarDailyReportDetail"), label: "Data Benar", onClick: () => reviewReport());
   late ButtonOutline btEditOutline = ButtonOutline(controller: GetXCreator.putButtonOutlineController("editDailyReportDetailOutline "), label: "Edit", onClick: () => Get.toNamed(RoutePage.dailyReportForm, arguments: [coop!, report, true, reportDetail])!.then((value) => getDetailReport()));
   @override

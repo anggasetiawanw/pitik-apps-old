@@ -131,42 +131,22 @@ class DateTimeField extends StatelessWidget {
     }
 
     Future<void> _showPicker(BuildContext context) async {
-        if (flag == DATE_FLAG) {
-            DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: _lastDateTime,
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2200)
-            );
+        if (controller.activeField.isTrue) {
+            if (flag == DATE_FLAG) {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: _lastDateTime,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2200)
+                );
 
-            if (pickedDate != null ) {
-                _lastDateTime = pickedDate;
-                controller.hideAlert();
-                onDateTimeSelected(_lastDateTime, this);
-            }
-        } else if (flag == TIME_FLAG) {
-            TimeOfDay initTime = TimeOfDay.fromDateTime(_lastDateTime);
-            TimeOfDay? pickedTime = await showTimePicker(
-                context: context,
-                initialTime: initTime.replacing(hour: initTime.hourOfPeriod)
-            );
-
-            if (pickedTime != null ) {
-                _lastDateTime = DateTime(_lastDateTime.year, _lastDateTime.month, _lastDateTime.day, pickedTime.hour, pickedTime.minute);
-                controller.hideAlert();
-                onDateTimeSelected(_lastDateTime, this);
-            }
-        } else {
-            DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: _lastDateTime,
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2200)
-            );
-
-            if (pickedDate != null ) {
-                _lastDateTime = pickedDate;
-                TimeOfDay initTime = TimeOfDay.fromDateTime(pickedDate);
+                if (pickedDate != null ) {
+                    _lastDateTime = pickedDate;
+                    controller.hideAlert();
+                    onDateTimeSelected(_lastDateTime, this);
+                }
+            } else if (flag == TIME_FLAG) {
+                TimeOfDay initTime = TimeOfDay.fromDateTime(_lastDateTime);
                 TimeOfDay? pickedTime = await showTimePicker(
                     context: context,
                     initialTime: initTime.replacing(hour: initTime.hourOfPeriod)
@@ -176,6 +156,28 @@ class DateTimeField extends StatelessWidget {
                     _lastDateTime = DateTime(_lastDateTime.year, _lastDateTime.month, _lastDateTime.day, pickedTime.hour, pickedTime.minute);
                     controller.hideAlert();
                     onDateTimeSelected(_lastDateTime, this);
+                }
+            } else {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: _lastDateTime,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2200)
+                );
+
+                if (pickedDate != null ) {
+                    _lastDateTime = pickedDate;
+                    TimeOfDay initTime = TimeOfDay.fromDateTime(pickedDate);
+                    TimeOfDay? pickedTime = await showTimePicker(
+                        context: context,
+                        initialTime: initTime.replacing(hour: initTime.hourOfPeriod)
+                    );
+
+                    if (pickedTime != null ) {
+                        _lastDateTime = DateTime(_lastDateTime.year, _lastDateTime.month, _lastDateTime.day, pickedTime.hour, pickedTime.minute);
+                        controller.hideAlert();
+                        onDateTimeSelected(_lastDateTime, this);
+                    }
                 }
             }
         }

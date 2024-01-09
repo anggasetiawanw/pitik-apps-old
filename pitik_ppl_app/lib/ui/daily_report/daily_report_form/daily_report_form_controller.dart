@@ -55,7 +55,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     label: "Kematian",
     hint: "Ketik disini",
     alertText: "Kematian harus di isi ",
-    textUnit: "gr",
+    textUnit: "Ekor",
     maxInput: 20,
     inputType: TextInputType.number,
     onTyping: (value, edit) {},
@@ -66,91 +66,20 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     label: "Culling",
     hint: "Ketik disini",
     alertText: "Culling harus di isi ",
-    textUnit: "gr",
+    textUnit: "Ekor",
     maxInput: 20,
     inputType: TextInputType.number,
     onTyping: (value, edit) {},
   );
 
-  late MediaField mfPhoto = MediaField(
-      controller: GetXCreator.putMediaFieldController("mfPhoto"),
-      onMediaResult: (file) => AuthImpl().get().then((auth) {
-            if (auth != null) {
-              if (file != null) {
-                isLoadingPicture.value = true;
-                Service.push(
-                    service: ListApi.uploadImage,
-                    context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, "transfer-request", file],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                          reportPhotoList.add(body.data);
-                          mfPhoto.getController().setInformasiText("File telah terupload");
-                          mfPhoto.getController().showInformation();
-                          isLoadingPicture.value = false;
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                          Get.snackbar("Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
-
-                          isLoadingPicture.value = false;
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                          Get.snackbar("Pesan", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
-
-                          isLoadingPicture.value = false;
-                        },
-                        onTokenInvalid: () => GlobalVar.invalidResponse()));
-              }
-            } else {
-              GlobalVar.invalidResponse();
-            }
-          }),
-      label: "Upload Kartu Recording",
-      hint: "Upload Kartu Recording",
-      alertText: "Kartu Recording harus dikirim");
-
-  late SpinnerField sfMerkPakan = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("sfMerkPakanDailyReport"),
-    label: "Merk Pakan",
-    hint: "Pilih Salah Satu",
-    alertText: "Merk Pakan Harus Dipilih",
-    items: const {},
-    onSpinnerSelected: (text) => efTotalPakan.getController().changeTextUnit(_getLatestFeedTextUnit()),
-  );
-
-  late EditField efTotalPakan = EditField(
-    controller: GetXCreator.putEditFieldController("efTotalPakanDailyReport"),
-    label: "Total",
-    hint: "Ketik disini",
-    alertText: "Total harus di isi ",
-    textUnit: "gr",
-    maxInput: 20,
-    inputType: TextInputType.number,
-    onTyping: (value, edit) {},
-  );
-
-  late SpinnerField sfJenisOvk = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("sfJenisOvkDailyReport"),
-    label: "Jenis OVK",
-    hint: "Pilih Salah Satu",
-    alertText: "Jenis OVK Harus Dipilih",
-    items: const {},
-    onSpinnerSelected: (text) => efTotalOvk.getController().changeTextUnit(_getLatestOvkTextUnit()),
-  );
-
-  late EditField efTotalOvk = EditField(
-    controller: GetXCreator.putEditFieldController("efTotalOvk"),
-    label: "Total",
-    hint: "Ketik disini",
-    alertText: "Total harus di isi ",
-    textUnit: "gr",
-    maxInput: 20,
-    inputType: TextInputType.number,
-    onTyping: (value, edit) {},
-  );
+  late MediaField mfPhoto;
+  late EditField efTotalPakan;
+  late SpinnerField sfMerkPakan;
+  late SpinnerField sfJenisOvk;
+  late EditField efTotalOvk;
 
   late MultipleFormField<Product> mffKonsumsiPakan;
-  late MultipleFormField mffKonsumsiOVK;
+  late MultipleFormField<Product> mffKonsumsiOVK;
 
   late ButtonFill bfSimpan = ButtonFill(controller: GetXCreator.putButtonFillController("btSimpan"), label: "Simpan", onClick: () => addReport());
 
@@ -171,69 +100,153 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     super.onInit();
     coop = Get.arguments[0];
     report = Get.arguments[1];
-    if (Get.arguments.length > 1) {
-      isEdit = Get.arguments[2];
-      reportDetail = Get.arguments[3];
+
+    efTotalPakan = EditField(
+        controller: GetXCreator.putEditFieldController("efTotalPakanDailyReport"),
+        label: "Total",
+        hint: "Ketik disini",
+        alertText: "Total harus di isi ",
+        textUnit: "gr",
+        maxInput: 20,
+        inputType: TextInputType.number,
+        onTyping: (value, edit) {},
+    );
+
+    sfMerkPakan = SpinnerField(
+        controller: GetXCreator.putSpinnerFieldController<Product>("sfMerkPakanDailyReport"),
+        label: "Merk Pakan",
+        hint: "Pilih Salah Satu",
+        alertText: "Merk Pakan Harus Dipilih",
+        items: const {},
+        onSpinnerSelected: (text) => efTotalPakan.getController().changeTextUnit(_getLatestFeedTextUnit()),
+    );
+
+    efTotalOvk = EditField(
+        controller: GetXCreator.putEditFieldController("efTotalOvk"),
+        label: "Total",
+        hint: "Ketik disini",
+        alertText: "Total harus di isi ",
+        textUnit: "gr",
+        maxInput: 20,
+        inputType: TextInputType.number,
+        onTyping: (value, edit) {},
+    );
+
+    sfJenisOvk = SpinnerField(
+        controller: GetXCreator.putSpinnerFieldController<Product>("sfJenisOvkDailyReport"),
+        label: "Jenis OVK",
+        hint: "Pilih Salah Satu",
+        alertText: "Jenis OVK Harus Dipilih",
+        items: const {},
+        onSpinnerSelected: (text) => efTotalOvk.getController().changeTextUnit(_getLatestOvkTextUnit()),
+    );
+
+    mfPhoto = MediaField(
+        controller: GetXCreator.putMediaFieldController("mfPhoto"),
+        onMediaResult: (file) => AuthImpl().get().then((auth) {
+            if (auth != null) {
+                if (file != null) {
+                    isLoadingPicture.value = true;
+                    Service.push(
+                        service: ListApi.uploadImage,
+                        context: Get.context!,
+                        body: ['Bearer ${auth.token}', auth.id, "transfer-request", file],
+                        listener: ResponseListener(
+                            onResponseDone: (code, message, body, id, packet) {
+                                reportPhotoList.add(body.data);
+                                mfPhoto.getController().setInformasiText("File telah terupload");
+                                mfPhoto.getController().showInformation();
+                                isLoadingPicture.value = false;
+                            },
+                            onResponseFail: (code, message, body, id, packet) {
+                                Get.snackbar("Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
+
+                                isLoadingPicture.value = false;
+                            },
+                            onResponseError: (exception, stacktrace, id, packet) {
+                                Get.snackbar("Pesan", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
+
+                                isLoadingPicture.value = false;
+                            },
+                            onTokenInvalid: () => GlobalVar.invalidResponse()));
+                }
+            } else {
+                GlobalVar.invalidResponse();
+            }
+        }),
+        label: "Upload Kartu Recording",
+        hint: "Upload Kartu Recording",
+        alertText: "Kartu Recording harus dikirim",
+        type: MediaField.PHOTO,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+        mffKonsumsiPakan = MultipleFormField<Product>(
+            controller: GetXCreator.putMultipleFormFieldController("mffKonsumsiPakanDailyReport"),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            labelButtonAdd: 'Tambah Pakan',
+            initInstance: Product(),
+            childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product: product)),
+            selectedObject: () => getFeedSelectedObject(),
+            selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
+            keyData: () => getFeedProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (sfMerkPakan.getController().selectedIndex == -1) {
+                    sfMerkPakan.getController().showAlert();
+                    isPass = false;
+                }
+                if (efTotalPakan.getInputNumber() == null) {
+                    efTotalPakan.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
+            child: Column(
+                children: [
+                    sfMerkPakan,
+                    efTotalPakan,
+                ],
+            ));
+
+        mffKonsumsiOVK = MultipleFormField<Product>(
+            controller: GetXCreator.putMultipleFormFieldController<Product>("MultipleOvkDailyReport"),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            labelButtonAdd: 'Tambah OVK',
+            initInstance: Product(),
+            childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
+            increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
+            selectedObject: () => getOvkSelectedObject(),
+            selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
+            keyData: () => getOvkProductName(),
+            validationAdded: () {
+                bool isPass = true;
+                if (sfJenisOvk.getController().selectedIndex == -1) {
+                    sfJenisOvk.getController().showAlert();
+                    isPass = false;
+                }
+                if (efTotalOvk.getInputNumber() == null) {
+                    efTotalOvk.getController().showAlert();
+                    isPass = false;
+                }
+
+                return isPass;
+            },
+            child: Column(
+                children: [
+                    sfJenisOvk,
+                    efTotalOvk,
+                ],
+            )
+        );
+    });
+
+    if (Get.arguments.length > 2) {
+        isEdit = Get.arguments[2];
+        reportDetail = Get.arguments[3];
     }
-    mffKonsumsiPakan = MultipleFormField<Product>(
-        controller: GetXCreator.putMultipleFormFieldController("mffKonsumsiPakanDailyReport"),
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-        labelButtonAdd: 'Tambah Pakan',
-        initInstance: Product(),
-        childAdded: () => _createChildAdded(getFeedProductName(), getFeedQuantity(product: null)),
-        increaseWhenDuplicate: (product) => _createChildAdded(getFeedProductName(), getFeedQuantity(product: product)),
-        selectedObject: () => getFeedSelectedObject(),
-        selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
-        keyData: () => getFeedProductName(),
-        validationAdded: () {
-          bool isPass = true;
-          if (sfMerkPakan.getController().selectedIndex == -1) {
-            sfMerkPakan.getController().showAlert();
-            isPass = false;
-          }
-          if (efTotalPakan.getInputNumber() == null) {
-            efTotalPakan.getController().showAlert();
-            isPass = false;
-          }
-
-          return isPass;
-        },
-        child: Column(
-          children: [
-            sfMerkPakan,
-            efTotalPakan,
-          ],
-        ));
-
-    mffKonsumsiOVK = MultipleFormField(
-        controller: GetXCreator.putMultipleFormFieldController<Product>("MultipleOvkDailyReport"),
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-        labelButtonAdd: 'Tambah OVK',
-        initInstance: Product(),
-        childAdded: () => _createChildAdded(getOvkProductName(), getOvkQuantity(product: null)),
-        increaseWhenDuplicate: (product) => _createChildAdded(getOvkProductName(), getOvkQuantity(product: product)),
-        selectedObject: () => getOvkSelectedObject(),
-        selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
-        keyData: () => getOvkProductName(),
-        validationAdded: () {
-          bool isPass = true;
-          if (sfJenisOvk.getController().selectedIndex == -1) {
-            sfJenisOvk.getController().showAlert();
-            isPass = false;
-          }
-          if (efTotalOvk.getInputNumber() == null) {
-            efTotalOvk.getController().showAlert();
-            isPass = false;
-          }
-
-          return isPass;
-        },
-        child: Column(
-          children: [
-            sfJenisOvk,
-            efTotalOvk,
-          ],
-        ));
   }
 
   @override
@@ -546,8 +559,18 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                                       mortality: (efKematian.getInputNumber() ?? 0).toInt(),
                                       culling: (efCulling.getInputNumber() ?? 0).toInt(),
                                       images: reportPhotoList,
-                                      feedConsumptions: mffKonsumsiPakan.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
-                                      ovkConsumptions: mffKonsumsiOVK.getController().listObjectAdded.entries.map((entry) => entry.value).toList().cast<Product>(),
+                                      feedConsumptions: mffKonsumsiPakan.getController().listObjectAdded.entries.map((entry) {
+                                          if ((entry.value as Product).feedStockSummaryId == null) {
+                                              (entry.value as Product).feedStockSummaryId = (entry.value as Product).id;
+                                          }
+                                          return entry.value;
+                                      }).toList().cast<Product>(),
+                                      ovkConsumptions: mffKonsumsiOVK.getController().listObjectAdded.entries.map((entry) {
+                                          if ((entry.value as Product).ovkStockSummaryId == null) {
+                                              (entry.value as Product).ovkStockSummaryId = (entry.value as Product).id;
+                                          }
+                                          return entry.value;
+                                      }).toList().cast<Product>(),
                                       feedTypeCode: "",
                                       feedQuantity: 0,
                                     );
@@ -585,7 +608,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               isLoading.value = false;
-              Get.off(TransactionSuccessActivity(keyPage: "Add Report Succes", message: "Kamu telah berhasil melakukan laporan harian", showButtonHome: false, onTapClose: () => Get.toNamed(RoutePage.dailyReport, arguments: coop), onTapHome: () {}));
+              Get.to(TransactionSuccessActivity(keyPage: "Add Report Succes", message: "Kamu telah berhasil melakukan laporan harian", showButtonHome: false, onTapClose: () => Get.back(), onTapHome: () {}))!.then((value) => Get.back(result: true));
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
@@ -625,6 +648,36 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
     efBobot.setInput(reportDetail.averageWeight?.toString() ?? '');
     efKematian.setInput(reportDetail.mortality?.toString() ?? '');
     efCulling.setInput(reportDetail.culling?.toString() ?? '');
+
+    // fill photo
+    reportPhotoList.value = reportDetail.images ?? [];
+    if (reportPhotoList.isNotEmpty) {
+        mfPhoto.getController().setInformasiText("File telah terupload");
+        mfPhoto.getController().showInformation();
+        mfPhoto.getController().setFileName(reportPhotoList[0]!.id!);
+    }
+
+    // fill feed
+    if (reportDetail.feedConsumptions != null && reportDetail.feedConsumptions!.isNotEmpty) {
+        for (var product in reportDetail.feedConsumptions!) {
+            mffKonsumsiPakan.getController().addData(
+                child: _createChildAdded(getFeedProductName(product: product), getFeedQuantity(product: product)),
+                object: product,
+                key: getFeedProductName(product: product)
+            );
+        }
+    }
+
+    // fill ovk
+    if (reportDetail.ovkConsumptions != null && reportDetail.ovkConsumptions!.isNotEmpty) {
+        for (var product in reportDetail.ovkConsumptions!) {
+            mffKonsumsiOVK.getController().addData(
+                child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product)),
+                object: product,
+                key: getOvkProductName(product: product)
+            );
+        }
+    }
   }
 
   void _getFeedBrand() => AuthImpl().get().then((auth) => {
