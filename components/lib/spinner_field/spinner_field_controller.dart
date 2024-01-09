@@ -66,7 +66,7 @@ class SpinnerFieldController<T> extends GetxController {
         items.clear();
         items.addAll(data);
         items.refresh();
-    } 
+    }
     void generateAmount(Map<String, int> data) => amountItems.value = data;
     void generateWeight(Map<String, double> data) => weightItems.value = data;
     void addItems({required String value, required bool isActive, int milisecondsDelayed = 200}) => Future.delayed(Duration(milliseconds: milisecondsDelayed), () => items[value] = isActive);
@@ -91,11 +91,6 @@ class SpinnerFieldController<T> extends GetxController {
         });
     });
 
-    @override
-    void onClose() {
-        super.onClose();
-        focusNode.dispose();
-    }
 }
 
 class SpinnerFieldBinding extends Bindings {
