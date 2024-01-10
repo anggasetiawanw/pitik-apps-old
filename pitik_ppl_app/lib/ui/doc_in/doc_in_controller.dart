@@ -213,6 +213,7 @@ class DocInController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_DOCin_form_active');
         isLoading.value = true;
         coop = Get.arguments[0];
     }

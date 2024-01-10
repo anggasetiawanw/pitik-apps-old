@@ -323,4 +323,9 @@ class Convert {
     static bool isUsePplApps(String userType) {
         return userType == "ppl" || userType == "pembantu umum" || userType == "mitra manager" || userType == "area manager" || userType == "vice president" || userType == "c level";
     }
+
+    static String getRenderTime({required int startTime}) {
+        Duration totalTime = DateTime.now().difference(DateTime.fromMicrosecondsSinceEpoch(startTime * 1000));
+        return "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds";
+    }
 }

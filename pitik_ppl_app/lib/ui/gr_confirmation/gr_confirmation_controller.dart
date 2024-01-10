@@ -51,6 +51,7 @@ class GrConfirmationController extends GetxController {
 
     RxMap<EditField, Product> efProductReceivedMap = <EditField, Product>{}.obs;
     RxList<MediaUploadModel?> grPhotoList = <MediaUploadModel?>[].obs;
+    Rx<Column> outstandingGrInputWidget = (const Column()).obs;
 
     @override
     void onInit() {
@@ -147,6 +148,7 @@ class GrConfirmationController extends GetxController {
                             }
                         }
 
+                        _createProductReceivedCards(productList: procurement.details);
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -480,9 +482,9 @@ class GrConfirmationController extends GetxController {
         );
     }
 
-    Column createProductReceivedCards({required List<Product?> productList}) {
+    void _createProductReceivedCards({required List<Product?> productList}) {
         efProductReceivedMap.clear();
-        return Column(
+        outstandingGrInputWidget.value = Column(
             children: List.generate(procurement.details.length, (index) {
                 if (procurement.details[index] == null) {
                     return const SizedBox();

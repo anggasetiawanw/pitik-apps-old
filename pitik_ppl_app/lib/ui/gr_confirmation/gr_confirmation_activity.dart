@@ -207,7 +207,7 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                         children: [
                                             Text('Sisa Belum Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                             const SizedBox(height: 8),
-                                            controller.createProductReceivedCards(productList: controller.procurement.details),
+                                            controller.outstandingGrInputWidget.value,
                                             controller.grReceivedDateField,
                                             controller.grNotesField,
                                             controller.isLoadingPicture.isTrue ? SizedBox(

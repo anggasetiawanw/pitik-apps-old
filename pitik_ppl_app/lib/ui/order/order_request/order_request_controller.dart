@@ -136,6 +136,10 @@ class OrderRequestController extends GetxController {
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
+            onAfterAdded: () {
+                feedSuggestField.controller.reset();
+                feedQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (feedCategory.getController().selectedIndex == -1) {
@@ -191,6 +195,10 @@ class OrderRequestController extends GetxController {
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            onAfterAdded: () {
+                ovkSuggestField.controller.reset();
+                ovkQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (ovkSuggestField.getController().selectedObject == null) {
@@ -245,6 +253,10 @@ class OrderRequestController extends GetxController {
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            onAfterAdded: () {
+                ovkSuggestField.controller.reset();
+                ovkQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (ovkSuggestField.getController().selectedObject == null) {
@@ -280,6 +292,10 @@ class OrderRequestController extends GetxController {
             selectedObject: () => getOvkUnitSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkUnitSelectedObjectWhenIncreased(product),
             keyData: () => getOvkUnitProductName(),
+            onAfterAdded: () {
+                ovkUnitSuggestField.controller.reset();
+                ovkUnitQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (ovkUnitSuggestField.getController().selectedObject == null) {
@@ -525,6 +541,26 @@ class OrderRequestController extends GetxController {
                                     ],
                                 ),
                                 if (isFeed) ...[
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Digabung?', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(isMerge.isTrue ? 'Ya' : 'Tidak', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ],
+                                    )
+                                ],
+                                if (isFeed && isMerge.isTrue) ...[
+                                    const SizedBox(height: 8),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Nama Kandang', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(orderCoopTargetLogisticField.controller.textEditingController.value.text, style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ],
+                                    )
+                                ],
+                                if (isFeed) ...[
                                     const SizedBox(height: 16),
                                     Text('Total Pakan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
                                     Padding(
@@ -734,7 +770,7 @@ class OrderRequestController extends GetxController {
                         keyPage: "orderSaved",
                         message: "Kamu telah berhasil melakukan pengajuan permintaan sapronak",
                         showButtonHome: false,
-                        onTapClose: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, fromCoopRest]),
+                        onTapClose: () => Get.back(result: true),
                         onTapHome: () {}
                     ));
                 },

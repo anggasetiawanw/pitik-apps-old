@@ -27,6 +27,7 @@ class MultipleFormField<T> extends StatelessWidget {
     Function(T) selectedObjectWhenIncreased;
     Function() keyData;
     Function() validationAdded;
+    Function()? onAfterAdded;
     dynamic initInstance;
     EdgeInsetsGeometry padding;
     Decoration decoration;
@@ -36,7 +37,7 @@ class MultipleFormField<T> extends StatelessWidget {
                        required this.keyData, this.decoration = const BoxDecoration(
                            borderRadius: BorderRadius.all(Radius.circular(10)),
                            border: Border.fromBorderSide(BorderSide(color: GlobalVar.grayBackground, width: 3))
-                       ), this.padding = const EdgeInsets.all(16)});
+                       ), this.padding = const EdgeInsets.all(16), this.onAfterAdded});
 
     MultipleFormFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -61,15 +62,19 @@ class MultipleFormField<T> extends StatelessWidget {
                                                     .title(titleDialogWhenDuplicate)
                                                     .message(messageDialogWhenDuplicate == null ? '${keyData()} telah ditambah, silahkan pilih Ganti atau Tambah data lama..!' : messageDialogWhenDuplicate!())
                                                     .listener(CustomDialogListener(
-                                                    onDialogOk: (context, id, packet) => controller.addData(child: childAdded(), object: selectedObject(), key: keyData()),
+                                                    onDialogOk: (context, id, packet) {
+                                                        controller.addData(child: childAdded(), object: selectedObject(), key: keyData());
+                                                        afterAdded();
+                                                    },
                                                     onDialogCancel: (context, id, packet) {
                                                         T data = selectedObjectWhenIncreased(controller.getObject(keyData(), initInstance));
                                                         controller.addData(child: increaseWhenDuplicate(data), object: data, key: keyData());
+                                                        afterAdded();
                                                     }
-                                                ))
-                                                    .show();
+                                                )).show();
                                             } else {
                                                 controller.addData(child: childAdded(), object: selectedObject(), key: keyData());
+                                                afterAdded();
                                             }
                                         }
                                     }
@@ -82,5 +87,11 @@ class MultipleFormField<T> extends StatelessWidget {
                 ],
             )
         );
+    }
+
+    void afterAdded() {
+        if (onAfterAdded != null) {
+            Future.delayed(const Duration(milliseconds: 200), () => onAfterAdded!());
+        }
     }
 }

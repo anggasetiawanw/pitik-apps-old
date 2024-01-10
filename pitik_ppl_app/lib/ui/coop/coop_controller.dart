@@ -15,12 +15,15 @@ import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
+import 'package:engine/util/gps_util.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mobile_number/mobile_number.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/response/coop_list_response.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:pitik_ppl_app/route.dart';
 
@@ -42,6 +45,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     late TabController tabController;
     late String pushNotificationPayload;
     late EditField searchCoopField;
+
+    int startTime = DateTime.now().millisecondsSinceEpoch;
 
     @override
     void onInit() {
@@ -85,7 +90,12 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     @override
     void onReady() {
         super.onReady();
-        WidgetsBinding.instance.addPostFrameCallback((_) => _launchDeeplink());
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            _launchDeeplink();
+
+            // track render page time
+            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Coop_List'});
+        });
     }
 
     void _launchDeeplink() {
@@ -120,6 +130,17 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         String? osVersion = "";
 
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+        String phoneCarrier = 'N/A';
+        List<SimCard> simCard = [];
+        try {
+            simCard = await MobileNumber.getSimCards!;
+        } catch(_) {}
+        if (simCard.isNotEmpty) {
+            phoneCarrier = simCard[0].carrierName ?? 'N/A';
+        }
+
         if (Platform.isAndroid) {
             AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
             deviceTracking = androidInfo.model;
@@ -133,11 +154,12 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         GlobalVar.initMixpanel(F.tokenMixpanel, {
             "Phone_Number": GlobalVar.profileUser!.phoneNumber,
             "Username": GlobalVar.profileUser!.phoneNumber,
-            // "Location": "$latitude,$longitude",
+            "User_Type": GlobalVar.profileUser!.userType,
+            "Version": packageInfo.version,
+            "Location": "${GpsUtil.latitude()},${GpsUtil.longitude()}",
             "Device": deviceTracking,
-            "Phone_Carrier": 'NO SIMCARD',
+            "Phone_Carrier": phoneCarrier,
             "OS": osVersion,
-
         });
     }
 
@@ -156,6 +178,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
 
     void generateCoopList(bool isCoopActive) {
         isLoading.value = true;
+        GlobalVar.track('Open_kandang_list');
+        int startTime = DateTime.now().millisecondsSinceEpoch;
         _clearCoopList();
 
         AuthImpl().get().then((auth) => {
@@ -173,12 +197,15 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                             coopFilteredList.addAll(coopList);
 
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': isCoopActive ? 'getCoopActive' : 'getCoopIdle', 'Result': 'Success'});
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': isCoopActive ? 'getCoopActive' : 'getCoopIdle', 'Result': 'Fail'});
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': isCoopActive ? 'getCoopActive' : 'getCoopIdle', 'Result': 'Error'});
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
@@ -192,11 +219,14 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     void actionCoop(Coop coop) {
         if (tabController.index == 0) {
             if (coop.isNew != null && coop.isNew!) {
+                GlobalVar.trackWithMap('Click_card_kandang', {'Coop_Status': 'NEW'});
                 _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: false);
             } else {
+                GlobalVar.trackWithMap('Click_card_kandang', {'Coop_Status': 'ACTIVE'});
                 Get.toNamed(RoutePage.coopDashboard, arguments: [coop])!.then((value) => _refreshCoopList());
             }
         } else {
+            GlobalVar.trackWithMap('Click_card_kandang', {'Coop_Status': 'IDLE'});
             _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: true);
         }
     }
@@ -259,6 +289,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 isHaveIcon: true,
                                 imageAsset: 'images/calendar_check_icon.svg',
                                 onClick: () {
+                                    GlobalVar.track('Click_DOCin_form');
                                     Get.back();
                                     if(isRestCoop){
                                         Get.toNamed(RoutePage.reqDocInPage, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());

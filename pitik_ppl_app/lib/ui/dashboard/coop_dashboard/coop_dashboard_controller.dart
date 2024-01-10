@@ -34,6 +34,8 @@ class CoopDashboardController extends GetxController {
     BuildContext context;
     CoopDashboardController({required this.context});
 
+    int startTime = DateTime.now().millisecondsSinceEpoch;
+
     late Coop coop;
     late Map<String, dynamic> payloadForPushNotification;
     late Profile? profile;
@@ -81,6 +83,7 @@ class CoopDashboardController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_home_page');
         coop = Get.arguments[0];
 
         refreshData();
@@ -135,11 +138,16 @@ class CoopDashboardController extends GetxController {
                     ));
                 }
             }
+
+            // track render page time
+            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Purpose': 'Page'});
         });
     }
 
     void getMonitoringPerformance(Coop coop) {
         isLoading.value = true;
+        int startTime = DateTime.now().millisecondsSinceEpoch;
+
         AuthImpl().get().then((auth) => {
             if (auth != null) {
                 Service.push(
@@ -151,12 +159,15 @@ class CoopDashboardController extends GetxController {
                         onResponseDone: (code, message, body, id, packet) {
                             monitoring.value = (body as MonitoringPerformanceResponse).data!;
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Success'});
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Fail'});
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Error'});
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
@@ -202,6 +213,7 @@ class CoopDashboardController extends GetxController {
     }
 
     void showMenuBottomSheet() {
+        GlobalVar.track('Click_floating menu');
         showModalBottomSheet(
             useSafeArea: true,
             shape: const RoundedRectangleBorder(
@@ -242,9 +254,18 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            DashboardCommon.createMenu(title: "DOC in", imagePath: 'images/calendar_check_icon.svg', status: showDocInAlert.value, function: () => Get.toNamed(RoutePage.docInPage, arguments: [coop])),
-                                            DashboardCommon.createMenu(title: "Laporan\nHarian", imagePath: 'images/report_icon.svg', status: showDailyReportAlert.value, function: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])),
-                                            DashboardCommon.createMenu(title: "Panen", imagePath: 'images/harvest_icon.svg', status: showHarvestAlert.value, function: () => Get.toNamed(RoutePage.listHarvest, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "DOC in", imagePath: 'images/calendar_check_icon.svg', status: showDocInAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_DOCin');
+                                                Get.toNamed(RoutePage.docInPage, arguments: [coop]);
+                                            }),
+                                            DashboardCommon.createMenu(title: "Laporan\nHarian", imagePath: 'images/report_icon.svg', status: showDailyReportAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_Laporan_harian');
+                                                Get.toNamed(RoutePage.dailyReport, arguments: [coop]);
+                                            }),
+                                            DashboardCommon.createMenu(title: "Panen", imagePath: 'images/harvest_icon.svg', status: showHarvestAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_panen');
+                                                Get.toNamed(RoutePage.listHarvest, arguments: [coop]);
+                                            }),
                                         ],
                                     ),
                                 ),
@@ -254,7 +275,10 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            DashboardCommon.createMenu(title: "Farm\nClosing", imagePath: 'images/empty_document_icon.svg', status: showFarmClosingAlert.value, function: () => Get.toNamed(RoutePage.farmClosing, arguments: [coop])),
+                                            DashboardCommon.createMenu(title: "Farm\nClosing", imagePath: 'images/empty_document_icon.svg', status: showFarmClosingAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_farm_closing');
+                                                Get.toNamed(RoutePage.farmClosing, arguments: [coop]);
+                                            }),
                                             const SizedBox(width: 60)
                                         ],
                                     ),
@@ -270,8 +294,14 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            DashboardCommon.createMenu(title: "Order", imagePath: 'images/document_icon.svg', status: showOrderAlert.value, function: () => Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false])),
-                                            DashboardCommon.createMenu(title: "Transfer", imagePath: 'images/transfer_icon.svg', status: showTransferAlert.value, function: () => Get.toNamed(RoutePage.listTransferPage, arguments: coop)),
+                                            DashboardCommon.createMenu(title: "Order", imagePath: 'images/document_icon.svg', status: showOrderAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_order');
+                                                Get.toNamed(RoutePage.listOrderPage, arguments: [coop, false]);
+                                            }),
+                                            DashboardCommon.createMenu(title: "Transfer", imagePath: 'images/transfer_icon.svg', status: showTransferAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_transfer');
+                                                Get.toNamed(RoutePage.listTransferPage, arguments: coop);
+                                            }),
                                             const SizedBox(width: 60)
                                         ],
                                     ),
@@ -287,9 +317,18 @@ class CoopDashboardController extends GetxController {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                            DashboardCommon.createMenu(title: "Smart\nScale", imagePath: 'images/smart_scale_icon.svg', status: showSmartScaleAlert.value, function: () => Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coop))),
-                                            DashboardCommon.createMenu(title: "Smart\nController", imagePath: 'images/smart_controller_icon.svg', status: showSmartControllerAlert.value, function: () => Get.toNamed(RoutePage.smartControllerList, arguments: [coop])),
-                                            DashboardCommon.createMenu(title: "Smart\nCamera", imagePath: 'images/record_icon.svg', status: showSmartCameraAlert.value, function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop))
+                                            DashboardCommon.createMenu(title: "Smart\nScale", imagePath: 'images/smart_scale_icon.svg', status: showSmartScaleAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_iot_smart_scale');
+                                                Get.toNamed(RoutePage.listSmartScale, arguments: DashboardCommon.getListSmartScaleBundle(coop: coop));
+                                            }),
+                                            DashboardCommon.createMenu(title: "Smart\nController", imagePath: 'images/smart_controller_icon.svg', status: showSmartControllerAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_iot_smart_controller');
+                                                Get.toNamed(RoutePage.smartControllerList, arguments: [coop]);
+                                            }),
+                                            DashboardCommon.createMenu(title: "Smart\nCamera", imagePath: 'images/record_icon.svg', status: showSmartCameraAlert.value, function: () {
+                                                GlobalVar.track('Click_feature_iot_smart_camera');
+                                                Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop);
+                                            })
                                         ]
                                     )
                                 )
