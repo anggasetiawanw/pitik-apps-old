@@ -11,9 +11,11 @@ import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/checkin_model.dart';
@@ -127,7 +129,7 @@ class VisitController extends GetxController {
                             );
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
-                            isLoading.value=false;                                
+                            isLoading.value=false;
                             Get.snackbar(
                                 "Pesan",
                                 "Terjadi kesalahan internal",
@@ -138,7 +140,7 @@ class VisitController extends GetxController {
                         onTokenInvalid: Constant.invalidResponse()
                     )
                 );
-                
+
             } else {
                 if (ret[1] != null) {
                     if ((ret[1] as String).isNotEmpty) {
@@ -197,7 +199,7 @@ class VisitController extends GetxController {
         alertText: "Kota harus dipilih!",
         items: const {"Rumah Makan": false, "Rumah Tuang": false},
         onSpinnerSelected: (text) {
-        
+
             if (city.value.isNotEmpty) {
                 citySelect = city.value.firstWhereOrNull((element) => element!.cityName! == text);
                 if (citySelect != null) {
@@ -244,8 +246,8 @@ class VisitController extends GetxController {
         onClick: () async {
             isLoadCheckin.value = true;
             final hasPermission = await handleLocationPermission();
-            if (hasPermission){            
-            const timeLimit = Duration(seconds: 10);
+            if (hasPermission){
+            const timeLimit = Duration(seconds: 15);
             await FlLocation.getLocation(timeLimit: timeLimit, accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
@@ -295,11 +297,13 @@ class VisitController extends GetxController {
             }).onError((errors, stackTrace) {
                 Get.snackbar(
                     "Pesan",
-                    "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi",
+                    "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi.",
                     snackPosition: SnackPosition.TOP,
                     duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,);
+                FirebaseCrashlytics.instance.recordError("Errors On GPS : $errors", stackTrace, fatal: false);
+                FirebaseCrashlytics.instance.log("Errors On GPS : $errors");
                 error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
                 GpsComponent.failedCheckin(error.value);
                 isLoadCheckin.value = false;
@@ -309,11 +313,11 @@ class VisitController extends GetxController {
         } else {
             error.value = "Data GPS tidak diizinkan";
             isLoading.value = false;
-            isLoadCheckin.value = false;            
+            isLoadCheckin.value = false;
         }
     }
     );
-    
+
     late SpinnerMultiField spinnerMulti = SpinnerMultiField(
         controller: GetXCreator.putSpinnerMultiFieldController("multiData Visit"),
         label: "Jenis Kendala*",
@@ -351,11 +355,11 @@ class VisitController extends GetxController {
     var isSuccessCheckin = false.obs;
     var isLoadCheckin = false.obs;
     var error = "".obs;
+    int countLoading = 0;
 
     @override
     void onInit() {
         super.onInit();
-        isLoading.value = true;
         buttonFillSelesai.controller.disable();
         spinnerMulti.controller.invisibleSpinner();
         skuCard.controller.invisibleCard();
@@ -364,53 +368,59 @@ class VisitController extends GetxController {
         spinnerNamaBisnis.controller.disable();
         buttonIsiKunjungan.controller.disable();
         flagFrom = Get.arguments[0];
-        Timer(const Duration(milliseconds: 500), () { 
-            switch (flagFrom) {
-            case RoutePage.fromHomePage:
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                    getProvince();
-                    const VisitActivity().openModalBottom();
-                });
-                break;
-            case RoutePage.fromDetailCustomer:
-                customer.value = Get.arguments[1];
-                loadData(customer.value!, RoutePage.fromDetailCustomer);
-                isLoading.value = false;
-                break;
-
-            case RoutePage.fromNewCustomerYes:
-                customer.value = Get.arguments[1];
-                loadData(customer.value!, RoutePage.fromNewCustomerYes);
-                isLoading.value = false;
-                break;
-
-            case RoutePage.fromNewCustomerNot:
-                customer.value = Get.arguments[1];
-                loadData(customer.value!, RoutePage.fromNewCustomerNot);
-                isLoading.value = false;
-                break;
-
-            default:
-            }
-
-            isLoading.value = false;
-        });
     }
 
     @override
     void onReady() {
         super.onReady();
-        getProduct();
+        isLoading.value = true;
         Get.find<SkuCardController>(tag: "skuLama").numberList.listen((p0) {
             generateListProduct(p0);
         });
-        spinnerMulti.getController().selectedValue.listen((p0) { 
+        spinnerMulti.getController().selectedValue.listen((p0) {
             if(p0.contains("Harga")){
                 skuCard.controller.visibleCard();
+                for( int i =0;  i < skuCard.controller.itemCount.value ; i++) {
+                    skuCard
+                        .controller
+                        .spinnerProduct
+                        .value[i]
+                        .controller
+                        ..showLoading()..disable();
+                }
+                getProduct();
             }else {
                 skuCard.controller.invisibleCard();
             }
         });
+        switch (flagFrom) {
+        case RoutePage.fromHomePage:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+                getProvince();
+                const VisitActivity().openModalBottom();
+            });
+            break;
+        case RoutePage.fromDetailCustomer:
+            customer.value = Get.arguments[1];
+            loadData(customer.value!, RoutePage.fromDetailCustomer);
+            break;
+        case RoutePage.fromNewCustomerYes:
+            customer.value = Get.arguments[1];
+            loadData(customer.value!, RoutePage.fromNewCustomerYes);
+            break;
+        case RoutePage.fromNewCustomerNot:
+            customer.value = Get.arguments[1];
+            loadData(customer.value!, RoutePage.fromNewCustomerNot);
+            break;
+        default:
+        }
+    }
+
+    void countApiLoading(){
+        countLoading++;
+        if(countLoading == 1) {
+            isLoading.value = false;
+        }
     }
 
 
@@ -481,8 +491,7 @@ class VisitController extends GetxController {
                         province.value.add(location);
                     } );
                     spinnerProvince.controller.generateItems(mapList);
-
-                    isLoadApi.value = false;
+                    countApiLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -494,7 +503,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                onResponseError: (exception, stacktrace, id, packet) {            
+                onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
                         "Pesan",
                         "Terjadi kesalahan internal",
@@ -523,7 +532,7 @@ class VisitController extends GetxController {
                          mapList[location!.cityName!] = false;
                          city.value.add(location);
                     });
-                
+
                     spinnerKota.controller.generateItems(mapList);
                     spinnerKota.controller.enable();
 
@@ -539,7 +548,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
@@ -623,7 +632,7 @@ class VisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
@@ -660,31 +669,10 @@ class VisitController extends GetxController {
                         }
 
                         for (int j = 0; j < skuCard.controller.itemCount.value; j++) {
-                            skuCard
-                                .controller
-                                .spinnerProduct
-                                .value[j]
-                                .controller
-                                .generateItems(mapList.value);
-
-                            skuCard
-                                .controller
-                                .spinnerProduct
-                                .value[j]
-                                .controller
-                                .setTextSelected(body.data!.products![j]!.name!);
-
-                            skuCard
-                                .controller
-                                .editFieldJenis
-                                .value[j]
-                                .setInput(body.data!.products![j]!.dailyQuantity!.toString());
-
-                            skuCard
-                                .controller
-                                .editFieldHarga
-                                .value[j]
-                                .setInput(body.data!.products![j]!.price!.toString());
+                            skuCard.controller.spinnerProduct.value[j].controller.setTextSelected(body.data!.products![j]!.category!.name!);
+                            skuCard.controller.spinnerSize.value[j].controller.setTextSelected(body.data!.products![j]!.name!);
+                            skuCard.controller.editFieldJenis.value[j].setInput(body.data!.products![j]!.dailyQuantity!.toString());
+                            skuCard.controller.editFieldHarga.value[j].setInput(body.data!.products![j]!.price!.toString());
                         }
                     }
 
@@ -710,7 +698,6 @@ class VisitController extends GetxController {
     }
 
     void getProduct() {
-        isLoadApi.value = true;
         Service.push(
             service: ListApi.getCategories,
             context: context,
@@ -724,16 +711,20 @@ class VisitController extends GetxController {
                     for (var product in body.data) {
                       mapList[product!.name!] = false;
                     }
-                    skuCard
-                        .controller
-                        .spinnerProduct
-                        .value[0]
-                        .controller
-                        .generateItems(mapList);
+                    for( int i =0;  i < skuCard.controller.itemCount.value; i++) {
+                        skuCard
+                            .controller
+                            .spinnerProduct
+                            .value[i]
+                            .controller
+                            ..hideLoading()..enable()..generateItems(mapList);
+                    }
+
 
                     skuCard.controller.setMaplist(listCategories.value);
                     this.mapList.value = mapList;
-                    isLoadApi.value = false;
+                    countApiLoading();
+
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -770,26 +761,19 @@ class VisitController extends GetxController {
             break;
         default:
         }
-            if (customer.products!.isNotEmpty && customer.products != null) {
-                for (int i = 0; i < customer.products!.length - 1; i++) {
-                    skuCard.controller.addCard();
-                }
-                Timer(Duration.zero, () {                    
-                    Map<String, bool> listKebutuhan = {};
-                    for (var product in listCategories.value) {
-                      listKebutuhan[product!.name!] = false;
-                    }
 
-                    for (int j = 0; j < customer.products!.length; j++) {
-                        skuCard.controller.spinnerProduct.value[j].controller.setTextSelected(customer.products![j]!.category!.name!);
-                        skuCard.controller.spinnerProduct.value[j].controller.generateItems(listKebutuhan);
-                        skuCard.controller.spinnerSize.value[j].controller.setTextSelected(customer.products![j]!.name!);
-                        skuCard.controller.editFieldJenis.value[j].setInput(customer.products![j]!.dailyQuantity!.toString());
-                        skuCard.controller.editFieldHarga.value[j].setInput(customer.products![j]!.price!.toString());
-                    } 
-                });
-
-            } 
+        if (customer.products!.isNotEmpty && customer.products != null) {
+            for (int i = 0; i < customer.products!.length - 1; i++) {
+                skuCard.controller.addCard();
+            }
+            for (int j = 0; j < customer.products!.length; j++) {
+                skuCard.controller.spinnerProduct.value[j].controller.setTextSelected(customer.products![j]!.category!.name!);
+                skuCard.controller.spinnerSize.value[j].controller.setTextSelected(customer.products![j]!.name!);
+                skuCard.controller.editFieldJenis.value[j].setInput(customer.products![j]!.dailyQuantity!.toString());
+                skuCard.controller.editFieldHarga.value[j].setInput(customer.products![j]!.price!.toString());
+            }
+        }
+        countApiLoading();
     }
 
     List validation() {
@@ -842,9 +826,9 @@ class VisitController extends GetxController {
                         Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                         selectCategory = selectTemp!.category;
                     }
-                } else {                    
+                } else {
                     Products? selectTemp = customer.value!.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
-                    selectCategory = selectTemp!.category; 
+                    selectCategory = selectTemp!.category;
                 }
 
                 Products? selectProduct;
@@ -859,6 +843,8 @@ class VisitController extends GetxController {
                 selectProduct?.category = selectCategory;
                 selectProduct?.dailyQuantity = skuCard.controller.editFieldJenis.value[whichItem].getInputNumber()!.toInt();
                 selectProduct?.price = skuCard.controller.editFieldHarga.value[whichItem].getInputNumber();
+                selectProduct?.uom ??= selectCategory?.name == AppStrings.AYAM_UTUH  || selectCategory?.name == AppStrings.LIVE_BIRD || selectCategory?.name == AppStrings.BRANGKAS || selectCategory?.name == AppStrings.KARKAS? "ekor" : "kg" ;
+                selectProduct?.value ??= 1;
                 listProductPayload.add(selectProduct);
             }
         } else {

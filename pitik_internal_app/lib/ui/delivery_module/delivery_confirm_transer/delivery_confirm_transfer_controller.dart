@@ -7,6 +7,7 @@ import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,8 +30,8 @@ class DeliveryConfirmTransferController extends GetxController {
 
     double? latitude;
     double? longitude;
-    var isLoading = false.obs;   
-    var isLoadCheckin = false.obs; 
+    var isLoading = false.obs;
+    var isLoadCheckin = false.obs;
     var showErrorCheckin = false.obs;
     var isSuccessCheckin = false.obs;
     var error = "".obs;
@@ -46,7 +47,7 @@ class DeliveryConfirmTransferController extends GetxController {
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
-            const timeLimit = Duration(seconds:10);
+            const timeLimit = Duration(seconds:15);
             await FlLocation.getLocation(timeLimit: timeLimit,accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
@@ -102,6 +103,8 @@ class DeliveryConfirmTransferController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
+                    FirebaseCrashlytics.instance.recordError("Errors On GPS : $errors", stackTrace, fatal: false);
+                    FirebaseCrashlytics.instance.log("Errors On GPS : $errors");
                     error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
                     GpsComponent.failedCheckin(error.value);
                     isLoadCheckin.value = false;
@@ -109,7 +112,7 @@ class DeliveryConfirmTransferController extends GetxController {
                     showErrorCheckin.value = true;
                 });
         } else {
-            isLoadCheckin.value = false;            
+            isLoadCheckin.value = false;
         }
         }
     );

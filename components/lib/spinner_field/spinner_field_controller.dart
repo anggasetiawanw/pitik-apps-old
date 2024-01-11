@@ -96,11 +96,6 @@ class SpinnerFieldController<T> extends GetxController {
         });
     });
 
-    @override
-    void onClose() {
-        super.onClose();
-        focusNode.dispose();
-    }
 }
 
 class SpinnerFieldBinding extends Bindings {

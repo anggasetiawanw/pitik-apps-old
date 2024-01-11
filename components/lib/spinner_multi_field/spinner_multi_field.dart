@@ -34,11 +34,8 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
   @override
   Widget build(BuildContext context) {
     if (onInit) {
-      print("com ${controller.items.value}");
       controller.generateItems(items);
-      print("com ${controller.items.value}");
       onInit = false;
-      print("onInit");
     }
 
     final labelField = SizedBox(
