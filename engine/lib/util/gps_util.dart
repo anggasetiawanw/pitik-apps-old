@@ -25,12 +25,12 @@ class GpsUtil {
     }
 
     /// It gets the current location of the user.
-    static Future on() async {
+    static void on() {
         _locationMap = {};
         _location.changeSettings(accuracy: LocationAccuracy.high);
 
         try {
-            await _location.getLocation().then((data) {
+            _location.getLocation().then((data) {
               _locationMap!['longitude'] = data.longitude!;
               _locationMap!['latitude'] = data.latitude!;
               _locationMap!['accuracy'] = data.accuracy!;
