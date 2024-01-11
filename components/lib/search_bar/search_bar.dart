@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class MyWidget extends StatelessWidget {
+class SearchBarField extends StatelessWidget {
   final SearchBarController controller;
-  final String defaultSelected;
   final List<String> items;
   final Function(String) onCategorySelect;
-  MyWidget({super.key, required this.controller, required this.items, required this.defaultSelected, required this.onCategorySelect});
+  SearchBarField({super.key, required this.controller, required this.items, required this.onCategorySelect});
 
   SearchBarController getController() {
     return Get.find(tag: controller.tag);
@@ -23,7 +22,9 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (onInit) {
       controller.items = items;
-      controller.selectedValue.value = defaultSelected;
+      if (controller.items.isNotEmpty) {
+        controller.selectedValue.value = items[0];
+      }
       onInit = false;
     }
     return Obx(() => TextField(
@@ -45,7 +46,7 @@ class MyWidget extends StatelessWidget {
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: SizedBox(
-                width: 100,
+                width: 104,
                 child: Column(
                   children: [
                     const SizedBox(height: 1),
@@ -55,15 +56,18 @@ class MyWidget extends StatelessWidget {
                         customButton: Container(
                           padding: const EdgeInsets.only(top: 10),
                           height: 32,
-                          width: 90,
+                          width: 96,
                           child: Obx(() => Row(
                                 children: [
-                                  Text(
-                                    "${controller.selectedValue.value}}",
-                                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                  Expanded(
+                                    child: Text(
+                                      controller.selectedValue.value,
+                                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                   const SizedBox(
-                                    width: 4,
+                                    width: 8,
                                   ),
                                   controller.isShowList.isTrue ? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
                                 ],
@@ -77,7 +81,7 @@ class MyWidget extends StatelessWidget {
                             .toList(),
                         value: controller.selectedValue.value,
                         onChanged: (String? value) {
-                          controller.selectedValue.value = value ?? defaultSelected;
+                          controller.selectedValue.value = value ?? "";
                         },
                         onMenuStateChange: (isOpen) {
                           controller.isShowList.value = isOpen;

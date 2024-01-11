@@ -12,8 +12,23 @@ class SearchBarController extends GetxController {
 
   void clearText() => textSearch.clear();
   String getSearchText() => textSearch.text;
-  void setSearchText(String text) => textSearch.text = text;
-  void setSelectedValue(String value) => selectedValue.value = value;
+  void setDefaultSelected() {
+    if (items.isNotEmpty) {
+      selectedValue.value = items[0];
+    }
+  }
+
+  void setSelectedValue(String value) {
+    if (items.contains(value)) {
+      selectedValue.value = value;
+    } else {
+      if (items.isNotEmpty) {
+        selectedValue.value = items[0];
+      } else {
+        selectedValue.value = "";
+      }
+    }
+  }
 }
 
 class SearchBarBindings extends Bindings {
