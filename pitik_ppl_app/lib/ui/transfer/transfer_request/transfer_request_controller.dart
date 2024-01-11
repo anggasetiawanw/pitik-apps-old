@@ -190,6 +190,10 @@ class TransferRequestController extends GetxController {
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
+            onAfterAdded: () {
+                feedSpinnerField.controller.reset();
+                feedQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (feedSpinnerField.getController().selectedIndex == -1) {
@@ -235,6 +239,10 @@ class TransferRequestController extends GetxController {
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            onAfterAdded: () {
+                ovkSpinnerField.controller.reset();
+                ovkQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (ovkSpinnerField.getController().selectedIndex == -1) {
@@ -879,10 +887,7 @@ class TransferRequestController extends GetxController {
         }
     });
 
-    String _getRemainingQuantity(Product product) {
-        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
-    }
-
+    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? 'Karung'}';
     void _getFeedStockSummary() => AuthImpl().get().then((auth) => {
         if (auth != null) {
             Service.push(
@@ -935,7 +940,7 @@ class TransferRequestController extends GetxController {
 
                             for (var product in body.data!.summaries) {
                                 ovkStock += product == null ? 0.0 : product.remainingQuantity ?? 0.0;
-                                uom = product == null ? '' : product.uom ?? product.purchaseUom ?? '';
+                                uom = product == null ? 'Botol' : product.uom ?? product.purchaseUom ?? 'Botol';
                             }
 
                             ovkStockSummary.value = '${ovkStock.toStringAsFixed(0)} $uom';

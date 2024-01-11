@@ -292,6 +292,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                     GlobalVar.track('Click_DOCin_form');
                                     Get.back();
                                     if(isRestCoop){
+                                        GlobalVar.track('Click_DOCin_form_pengajuan');
                                         Get.toNamed(RoutePage.reqDocInPage, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
                                     } else {
                                         Get.toNamed(RoutePage.docInPage, arguments: [coop])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());

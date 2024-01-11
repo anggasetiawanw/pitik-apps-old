@@ -60,6 +60,7 @@ class HarvestCommon {
 
         AuthImpl().get().then((auth) {
             if (auth != null) {
+                int startTime = DateTime.now().millisecondsSinceEpoch;
                 List<dynamic> body = ['Bearer ${auth.token}', auth.id, coop.farmingCycleId];
                 if (route != ListApi.getDealsHarvest) {
                     body.add(isApproved);
@@ -82,14 +83,17 @@ class HarvestCommon {
                                 onCallBack();
                             }
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': route, 'Result': 'Success'});
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             Get.snackbar("Pesan", '${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': route, 'Result': 'Fail'});
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             Get.snackbar("Pesan", exception, snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
                             isLoading.value = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': route, 'Result': 'Error'});
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )

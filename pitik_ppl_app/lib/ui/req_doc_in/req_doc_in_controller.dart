@@ -9,6 +9,7 @@ import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class RequestDocInController extends GetxController {
     RequestDocInController({required this.context});
 
     var isLoading = false.obs;
+    int startTime = DateTime.now().millisecondsSinceEpoch;
 
     final String SUBMISSION_STATUS = "Perlu Pengajuan";
     final String SUBMITTED_DOC_IN = "DOC in Diajukan";
@@ -101,6 +103,7 @@ class RequestDocInController extends GetxController {
         });
 
     late ButtonFill btYakin = ButtonFill(controller: GetXCreator.putButtonFillController("byYakin"), label: "Yakin", onClick: () {
+        GlobalVar.track('Click_button_DOCin_simpan');
         Get.back();
         processRequest();
     });
@@ -110,6 +113,7 @@ class RequestDocInController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_DOCin_form_pengajuan');
         coop = Get.arguments[0];
     }
 
@@ -118,11 +122,14 @@ class RequestDocInController extends GetxController {
         super.onReady();
         isLoading.value = true;
         getApprovalByRole();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) => GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Req_DOCin'}));
     }
 
     void getApprovalByRole() {
-        AuthImpl().get().then((auth) => {
+        AuthImpl().get().then((auth) {
             if (auth != null) {
+                int startTime = DateTime.now().millisecondsSinceEpoch;
                 Service.push(
                     apiKey: ApiMapping.api,
                     service: ListApi.getApproval,
@@ -132,26 +139,33 @@ class RequestDocInController extends GetxController {
                         onResponseDone: (code, message, body, id, packet) {
                             allowApprove.value = (body as AprovalDocInResponse).data!.isAllowed ?? false;
                             getPermissionCreateByRole();
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Success'});
                         },
-                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
-                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
+                        onResponseFail: (code, message, body, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Fail'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Error'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
-                )
+                );
             } else {
-                GlobalVar.invalidResponse()
+                GlobalVar.invalidResponse();
             }
         });
     }
@@ -331,8 +345,9 @@ class RequestDocInController extends GetxController {
     }
 
     void getDetailDocRequest() {
-        AuthImpl().get().then((auth) => {
+        AuthImpl().get().then((auth) {
             if (auth != null) {
+                int startTime = DateTime.now().millisecondsSinceEpoch;
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.getRequestChickinDetail,
@@ -356,26 +371,33 @@ class RequestDocInController extends GetxController {
                                 disableField();
                             }
                             isLoading.value  = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Success'});
                         },
-                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
-                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
+                        onResponseFail: (code, message, body, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Fail'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Error'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
-                )
+                );
             } else {
-                GlobalVar.invalidResponse()
+                GlobalVar.invalidResponse();
             }
         });
     }
@@ -483,7 +505,7 @@ class RequestDocInController extends GetxController {
         doc.productCode = "";
         doc.purchaseUom = "";
         requestChickinBody.doc = doc;
-        
+
         if ((coop.statusText ?? "").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == REJECTED.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
         } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {

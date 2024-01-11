@@ -38,6 +38,8 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     BuildContext context;
     FarmClosingController({required this.context});
 
+    int startTime = DateTime.now().millisecondsSinceEpoch;
+
     late TabController harvestTabController;
     late Coop coop;
     late ButtonFill bfNext;
@@ -89,6 +91,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_panen_page_closing');
         coop = Get.arguments[0];
 
         bfNext = ButtonFill(controller: GetXCreator.putButtonFillController("btnFarmClosingNext"), label: "Selanjutnya", onClick: () => nextPage());
@@ -104,12 +107,12 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         });
 
         efTotalMortality = EditField(
-            controller: GetXCreator.putEditFieldController("farmClosingTotalMortality"), 
-            label: "Total Mortalitas", 
-            hint: "Ketik disini..!", 
-            alertText: "Harus diisi..!", 
-            textUnit: "Ekor", 
-            maxInput: 100, 
+            controller: GetXCreator.putEditFieldController("farmClosingTotalMortality"),
+            label: "Total Mortalitas",
+            hint: "Ketik disini..!",
+            alertText: "Harus diisi..!",
+            textUnit: "Ekor",
+            maxInput: 100,
             inputType: TextInputType.number,
             onTyping: (text, field) {
                 if (text.isNotEmpty) {
@@ -119,7 +122,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                 }
             }
         );
-        
+
         eaRemarks = EditAreaField(
             controller: GetXCreator.putEditAreaFieldController("farmClosingMortalityRemarks"),
             label: "Catatan",
@@ -138,6 +141,12 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         _toCheckHarvest();
         _getInitialPopulation();
         _checkStatusFullFiled();
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) => GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Purpose': 'Farm_Closing'}));
     }
 
     void _checkingMortality() {
@@ -172,6 +181,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     double _getBarWidth() => (MediaQuery.of(Get.context!).size.width - 80) / (isOwnFarm() ? 3 : 2);
 
     void _toCheckHarvest() {
+        GlobalVar.track('Open_page_panen_list_closing');
         state.value = 0;
         isClosingButton.value = false;
 
@@ -197,6 +207,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     }
 
     void _toCheckMortality() {
+        GlobalVar.track('Open_page_periksa_mortality_closing');
         state.value = 1;
         isClosingButton.value = false;
 
@@ -287,6 +298,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
     }
 
     void nextPage() {
+        GlobalVar.track('Click_selanjutnya_button');
         if (state.value == 0) {
             _toCheckMortality();
         } else if (state.value == 1) {
@@ -351,6 +363,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                             children: [
                                                 Expanded(
                                                     child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeFarmClosing"), label: "Yakin", onClick: () {
+                                                        GlobalVar.track('Click_tutup_farm_button');
                                                         Navigator.pop(Get.context!);
                                                         isLoading.value = true;
 
@@ -362,6 +375,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                                             listener: ResponseListener(
                                                                 onResponseDone: (code, message, body, id, packet) {
                                                                     isLoading.value = false;
+                                                                    GlobalVar.track('Open_success_closing_page');
                                                                     Get.off(TransactionSuccessActivity(
                                                                         keyPage: "farmClosingSuccessPage",
                                                                         message: "Kamu telah berhasil melakukan\npenutupan siklus produksi",

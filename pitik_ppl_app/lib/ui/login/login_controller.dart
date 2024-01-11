@@ -18,6 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/profile.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -169,11 +170,11 @@ class LoginController extends GetxController {
                     if (await isFirstLogin) {
                         Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard]);
                     } else {
-                        // if (action == "DEFAULT_PASSWORD") {
-                        //     showInformation();
-                        // } else {
+                        if (action == "DEFAULT_PASSWORD") {
+                            showInformation(body.data!);
+                        } else {
                             Get.offAllNamed(Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard);
-                        // }
+                        }
                     }
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -201,7 +202,7 @@ class LoginController extends GetxController {
         );
     }
 
-    void showInformation() {
+    void showInformation(Profile profile) {
         Get.dialog(
             Center(
                 child: Container(
@@ -231,7 +232,7 @@ class LoginController extends GetxController {
                                             controller:
                                             GetXCreator.putButtonFillController("Dialog"),
                                             label: "OK",
-                                            onClick: () => Get.offAllNamed(RoutePage.changePasswordPage, arguments: true)
+                                            onClick: () => Get.offAllNamed(RoutePage.changePasswordPage, arguments: [true, Convert.isUsePplApps(profile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard])
                                         )
                                     )
                                 ]
