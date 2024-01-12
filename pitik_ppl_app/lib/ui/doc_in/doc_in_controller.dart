@@ -490,127 +490,116 @@ class DocInController extends GetxController {
         return showModalBottomSheet(
             backgroundColor: Colors.transparent,
             context: Get.context!,
-            builder: (context) {
-              return Container(
+            builder: (context) => Container(
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                    ),
                 ),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 8),
-                      width: 60,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: GlobalVar.outlineColor,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                      child: Text(
-                        "Apakah kamu yakin data yang dimasukan sudah benar?",
-                        style: GlobalVar.primaryTextStyle
-                            .copyWith(fontSize: 14, fontWeight: GlobalVar.bold),
-                      ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(top: 16),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                            children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text("${efReceiveDoc.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Lebihan DOC", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text("${efMoreDOC.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text(DateFormat("HH:mm").format(dtTruckGo.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text(DateFormat("HH:mm").format(dtTruckCome.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Selesai DOC In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text(DateFormat("dd/MM/yyyy - HH:mm").format(dtFinishDoc.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-                                const SizedBox(height: 8,),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                        Text("Awal Recording", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                        Text(dateDoc.value, style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
-                                    ],
-                                ),
-
-                            ],
+                    children: [
+                        Container(
+                            margin: const EdgeInsets.only(top: 8),
+                            width: 60,
+                            height: 4,
+                            decoration: BoxDecoration(
+                                color: GlobalVar.outlineColor,
+                                borderRadius: BorderRadius.circular(2),
+                            ),
                         ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: btYakin),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Expanded(
-                            child: btTidakYakin
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: GlobalVar.bottomSheetMargin,)
-                  ],
-                ),
-              );
-            }
+                        Container(
+                            margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold))
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                                children: [
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text("${efReceiveDoc.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Lebihan DOC", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text("${efMoreDOC.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text(DateFormat("HH:mm").format(dtTruckGo.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text(DateFormat("HH:mm").format(dtTruckCome.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Selesai DOC In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text(DateFormat("dd/MM/yyyy - HH:mm").format(dtFinishDoc.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ],
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text("Awal Recording", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                            Text(dateDoc.value, style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold),)
+                                        ]
+                                    )
+                                ]
+                            )
+                        ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    Expanded(child: btYakin),
+                                    const SizedBox(width: 16),
+                                    Expanded(child: btTidakYakin)
+                                ]
+                            )
+                        ),
+                        const SizedBox(height: GlobalVar.bottomSheetMargin)
+                    ]
+                )
+            )
         );
     }
 
