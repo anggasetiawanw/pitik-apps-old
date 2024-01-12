@@ -28,6 +28,8 @@ class HarvestSubmittedFormController extends GetxController {
     BuildContext context;
     HarvestSubmittedFormController({required this.context});
 
+    final ScrollController scrollController = ScrollController();
+
     late Coop coop;
     late Harvest harvest;
     late DateTimeField submittedDateField;
@@ -183,6 +185,18 @@ class HarvestSubmittedFormController extends GetxController {
         maxWeightFieldList.insert(index, maxWeightField);
         totalChickenFieldList.insert(index, totalChickenField);
         reasonFieldList.insert(index, reasonField);
+
+        _scrollDown();
+    }
+
+    void _scrollDown() {
+        Future.delayed(const Duration(milliseconds: 200), () {
+            scrollController.animateTo(
+                scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.fastOutSlowIn,
+            );
+        });
     }
 
     void _getInitialPopulation() => AuthImpl().get().then((auth) {
@@ -220,8 +234,21 @@ class HarvestSubmittedFormController extends GetxController {
 
     void sendHarvestSubmitted() => AuthImpl().get().then((auth) {
         if (auth != null) {
-            if (submissionField.controller.listData.length > 1) {
-                _showBottomDialog(auth);
+            Harvest? tempHarvest;
+            int index = submissionField.controller.listData.length - 1;
+
+            if (minWeightFieldList[index].getInputNumber() != null && maxWeightFieldList[index].getInputNumber() != null && totalChickenFieldList[index].getInputNumber() != null && reasonFieldList[index].controller.selectedIndex != -1) {
+                tempHarvest = Harvest(
+                    farmingCycleId: coop.farmingCycleId,
+                    minWeight: minWeightFieldList[index].getInputNumber(),
+                    maxWeight: maxWeightFieldList[index].getInputNumber(),
+                    quantity: totalChickenFieldList[index].getInputNumber()!.toInt(),
+                    reason: reasonFieldList[index].getController().textSelected.value
+                );
+            }
+
+            if (submissionField.controller.listData.length > 1 || tempHarvest != null) {
+                _showBottomDialog(auth: auth, temptHarvest: tempHarvest);
             } else {
                 Get.snackbar(
                     "Pesan", "Pengajuan masih kosong, silahkan isi minimal satu pengajuan..!",
@@ -236,7 +263,7 @@ class HarvestSubmittedFormController extends GetxController {
         }
     });
 
-    _showBottomDialog(Auth auth) {
+    _showBottomDialog({required Auth auth, Harvest? temptHarvest}) {
         return showModalBottomSheet(
             useSafeArea: true,
             shape: const RoundedRectangleBorder(
@@ -303,6 +330,40 @@ class HarvestSubmittedFormController extends GetxController {
                                 })
                             ),
                         ),
+                        if (temptHarvest != null) ...[
+                            Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text("Pengajuan ${submissionField.controller.listData.length > 1 ? submissionField.controller.listData.length : 1}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, color: GlobalVar.black, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(
+                                                    '${temptHarvest.minWeight == null ? '-' : temptHarvest.minWeight!.toStringAsFixed(1)} Kg s.d ${temptHarvest.maxWeight == null ? '-' : temptHarvest.maxWeight!.toStringAsFixed(1)} Kg',
+                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                )
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jumlah Ayam', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(
+                                                    '${temptHarvest.quantity != null ? Convert.toCurrencyWithoutDecimal(temptHarvest.quantity.toString(), '', '.') : '-'} Ekor',
+                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                )
+                                            ],
+                                        ),
+                                        const SizedBox(height: 16)
+                                    ]
+                                )
+                            )
+                        ],
                         Container(
                             margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
                             child: Row(
@@ -315,6 +376,10 @@ class HarvestSubmittedFormController extends GetxController {
                                         List<Harvest> harvestList = [];
                                         for (int i = 0; i < submissionField.controller.listData.length - 1; i++) {
                                             harvestList.add(submissionField.controller.listData[i]);
+                                        }
+
+                                        if (temptHarvest != null) {
+                                            harvestList.add(temptHarvest);
                                         }
 
                                         Map<String, dynamic> bodyRequest = {

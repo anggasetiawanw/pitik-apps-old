@@ -33,6 +33,7 @@ class HarvestSubmittedFormActivity extends GetView<HarvestSubmittedFormControlle
                 body: Container(
                     padding: const EdgeInsets.all(16),
                     child: controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : ListView(
+                        controller: controller.scrollController,
                         children: [
                             Container(
                                 padding: const EdgeInsets.all(16),
