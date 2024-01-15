@@ -15,6 +15,7 @@ import 'package:model/internal_app/order_model.dart';
 import 'package:model/response/internal_app/order_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
 class DeliveryDetailSOController extends GetxController {
@@ -28,7 +29,7 @@ class DeliveryDetailSOController extends GetxController {
   var priceDelivery = 0.0.obs;
   var isSendItem = false.obs;
   late ButtonFill confirmButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("confirmButton"),
+      controller: GetXCreator.putButtonFillController("confirmButtonasd"),
       label: "Terkirim",
       onClick: () {
         Get.toNamed(RoutePage.deliveryConfirmSO, arguments: order)!.then((value) {
@@ -40,7 +41,7 @@ class DeliveryDetailSOController extends GetxController {
       });
 
   late ButtonFill yesSendItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendItem"),
+      controller: GetXCreator.putButtonFillController("yesSendItemasd"),
       label: "Ya",
       onClick: () {
         Get.back();
@@ -49,14 +50,14 @@ class DeliveryDetailSOController extends GetxController {
       });
 
   ButtonOutline noSendItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noSendItem"),
+      controller: GetXCreator.putButtonOutlineController("noSendItemasd"),
       label: "Tidak",
       onClick: () {
         Get.back();
       });
 
   late ButtonFill yesRejectItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesRejectItem"),
+      controller: GetXCreator.putButtonFillController("yesRejectItemasd"),
       label: "Ya",
       onClick: () {
         Get.back();
@@ -69,13 +70,13 @@ class DeliveryDetailSOController extends GetxController {
       });
 
   ButtonOutline noRejectItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noRejectItem"),
+      controller: GetXCreator.putButtonOutlineController("noRejectItemasd"),
       label: "Tidak",
       onClick: () {
         Get.back();
       });
 
-  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkDeliverySO"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkDeliverySOdds"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   late Order order;
   late DateTime createdDate;
@@ -88,6 +89,9 @@ class DeliveryDetailSOController extends GetxController {
       priceDelivery.value = 10000;
     } else {
       priceDelivery.value = 0;
+    }
+    if(order.status == EnumSO.readyToDeliver){
+      isSendItem.value = true;
     }
   }
 

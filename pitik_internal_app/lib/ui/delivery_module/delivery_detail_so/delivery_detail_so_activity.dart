@@ -1,5 +1,3 @@
-
-
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_fill/button_fill_controller.dart';
 import 'package:components/button_outline/button_outline.dart';
@@ -56,21 +54,23 @@ class DeliveryDetailSO extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Informasi Pengiriman",
-                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "${controller.order.code} - ${Convert.getDateFormat(controller.order.createdDate!)}",
-                      style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Informasi Pengiriman",
+                        style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "${controller.order.code} - ${Convert.getDateFormat(controller.order.createdDate!)}",
+                        style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
+                      )
+                    ],
+                  ),
                 ),
                 OrderStatus(
                   orderStatus: controller.order.status,
@@ -95,7 +95,11 @@ class DeliveryDetailSO extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Driver", controller.order.withDeliveryFee == true ? "Ya" : "Tidak"),
+            infoDetailHeader("Dibuat Oleh", controller.order.userCreator?.email ?? "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Sales Branch", controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
             const SizedBox(
               height: 8,
             ),
@@ -103,7 +107,18 @@ class DeliveryDetailSO extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Target Pengiriman", controller.order.deliveryTime == null ? "-" : Convert.getDateFormat(controller.order.deliveryTime!)),
+            infoDetailHeader("Target Pengiriman", controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader(
+              "Waktu Pengiriman",
+              controller.order.deliveryTime != null
+                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
+                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : "-"
+                  : "-",
+            ),
           ],
         ),
       );
@@ -129,7 +144,6 @@ class DeliveryDetailSO extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      
       if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)) {
         return Container(
           margin: const EdgeInsets.only(top: 16),

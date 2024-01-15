@@ -217,7 +217,7 @@ class SmartScaleWeighingController extends GetxController {
         coop = Get.arguments[0];
         bundle = Get.arguments[1];
         outstandingTotalWeighingField.controller.disable();
-        // totalWeighing.controller.disable();
+        totalWeighing.controller.disable();
 
         bluetoothLeService = BluetoothLeService().timeout(true, 5).start(BluetoothLeConstant.TEXT_RESULT, ['PTK-SCL'], BluetoothLeCallback(
             onLeReceived: (data) {
