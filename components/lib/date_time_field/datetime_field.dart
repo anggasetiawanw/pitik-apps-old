@@ -113,9 +113,12 @@ class DateTimeField extends StatelessWidget {
                                                         padding: const EdgeInsets.only(right: 8),
                                                         child: SvgPicture.asset("images/error_icon.svg")
                                                     ),
-                                                    Text(
-                                                        alertText,
-                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                    Expanded(
+                                                      child: Text(
+                                                          alertText,
+                                                          style: const TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                          overflow: TextOverflow.clip,
+                                                      ),
                                                     )
                                                 ],
                                             )

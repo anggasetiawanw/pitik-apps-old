@@ -147,6 +147,8 @@ class EditDataSalesOrder extends StatelessWidget {
                               () => controller.produkType.value == "Non-LB" ? const SizedBox() : controller.skuCardRemark,
                             ),
                             if (controller.isInbound.isFalse) ...[
+                              controller.dtDeliveryDate,
+                              controller.dtDeliveryTime,
                               const SizedBox(
                                 height: 16,
                               ),

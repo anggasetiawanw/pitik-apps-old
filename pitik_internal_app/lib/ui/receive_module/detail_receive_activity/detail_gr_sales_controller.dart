@@ -25,7 +25,7 @@ class DetailGrOrderController extends GetxController {
     BuildContext context;
     DetailGrOrderController({required this.context});
 
-    Rxn<Order> orderDetail = Rxn<Order>();  
+    Rxn<Order> orderDetail = Rxn<Order>();
     var sumChick = 0.obs;
     var sumKg =0.0.obs;
     var sumPrice = 0.0.obs;
@@ -122,7 +122,7 @@ class DetailGrOrderController extends GetxController {
                     sumKg.value += product.returnWeight!;
                     sumPrice.value += product.returnWeight! * product.price!;
                 }
-            } 
+            }
         }
     }
 

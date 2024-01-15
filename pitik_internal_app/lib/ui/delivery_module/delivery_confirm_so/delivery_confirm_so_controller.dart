@@ -37,7 +37,7 @@ class DeliveryConfirmSOController extends GetxController {
     var isSuccessCheckin = false.obs;
     var isLoadCheckin = false.obs;
     var error = "".obs;
-    late ButtonFill confirButton = ButtonFill(controller: GetXCreator.putButtonFillController("confirDelivery"), label: "Konfirmasi", onClick: (){
+    late ButtonFill confirButton = ButtonFill(controller: GetXCreator.putButtonFillController("confirDeliveryConfirm"), label: "Konfirmasi", onClick: (){
         _showBottomDialog();
     });
 
@@ -48,7 +48,7 @@ class DeliveryConfirmSOController extends GetxController {
           }});
 
     late ButtonFill yesSendItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendItem"),
+      controller: GetXCreator.putButtonFillController("yesSendItemadssd"),
       label: "Ya",
       onClick: (){
         Get.back();
@@ -57,7 +57,7 @@ class DeliveryConfirmSOController extends GetxController {
       }
     );
     ButtonOutline noSendItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noSendItem"),
+      controller: GetXCreator.putButtonOutlineController("noSendItemasdsd"),
       label: "Tidak",
       onClick: (){
         Get.back();
@@ -65,7 +65,7 @@ class DeliveryConfirmSOController extends GetxController {
     );
 
     late ButtonOutline checkinButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("ButtonCheckin"),
+    controller: GetXCreator.putButtonOutlineController("ButtonCheckindssd"),
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {

@@ -7,10 +7,11 @@ import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_variable/global_variable.dart';
+import 'package:global_variable/strings.dart';
 import 'package:intl/intl.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/operation_unit_model.dart';
@@ -48,22 +49,27 @@ class AssignDriverController extends GetxController {
     onSpinnerSelected: (text) {},
   );
 
-
   late ButtonFill bfYesAssign;
   late ButtonOutline boNoAssign;
 
   Rx<List<OperationUnitModel?>> listSource = Rx<List<OperationUnitModel>>([]);
   Rx<List<Profile?>> listDriver = Rx<List<Profile?>>([]);
 
-  late DateTimeField dtWaktuPengiriman = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("waktuPengiriman"),
-    label: "Pengiriman",
-    hint: "Pilih Waktu Pengiriman",
-    alertText: "Waktu Pengiriman harus diisi!",
-    onDateTimeSelected: (dateTime, dateField) {
-      String date = DateFormat("dd/MM/yyyy HH:mm").format(dateTime);
-      dateField.controller.setTextSelected(date);
-    },
+  DateTimeField dtDeliveryDate = DateTimeField(
+    controller: GetXCreator.putDateTimeFieldController("DeliveryDateSo"),
+    label: "Tanggal Pengiriman*",
+    hint: "dd/mm/yyyy",
+    alertText: "Tanggal Pengiriman harus dipilih!",
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
+    flag: 1,
+  );
+  DateTimeField dtDeliveryTime = DateTimeField(
+    controller: GetXCreator.putDateTimeFieldController("deliveryTimeSo"),
+    label: "Waktu Pengiriman",
+    hint: "hh:mm",
+    alertText: "Waktu Pengiriman harus dipilih!",
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
+    flag: 2,
   );
 
   @override
@@ -91,8 +97,11 @@ class AssignDriverController extends GetxController {
         assignToDriver();
       },
     );
-    if(orderDetail.value!.deliveryTime != null) {
-        dtWaktuPengiriman.controller.setTextSelected(DateFormat("dd/MM/yyyy HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)));
+    if (orderDetail.value!.deliveryTime != null) {
+      dtDeliveryDate.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)));
+      dtDeliveryDate.controller.disable();
+      String time = DateFormat("HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) != "00:00" ? DateFormat("HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) : "";
+      dtDeliveryTime.controller.setTextSelected(time);
     }
     getTotalQuantity(orderDetail.value);
   }
@@ -128,6 +137,7 @@ class AssignDriverController extends GetxController {
     sumChick.value = 0;
     sumKg.value = 0;
     sumPrice.value = 0;
+    deliveryPrice.value = data?.deliveryFee?.toDouble() ?? 0;
     for (var product in data!.products!) {
       if (product!.returnWeight == null) {
         if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
@@ -148,10 +158,6 @@ class AssignDriverController extends GetxController {
           sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
         }
       }
-    }
-    if (sumKg.value < 10) {
-      deliveryPrice.value = 10000;
-      isSwitchOn.value = true;
     }
   }
 
@@ -213,11 +219,17 @@ class AssignDriverController extends GetxController {
     Profile? driverSelected = listDriver.value.firstWhereOrNull(
       (element) => element!.fullName == spinnerDriver.controller.textSelected.value,
     );
+    DateTime? resultDate;
+    if (dtDeliveryTime.getLastTimeSelectedText() != "00:00") {
+      DateTime deliveryDate = DateFormat("dd/MM/yyyy").parse(dtDeliveryDate.getLastTimeSelectedText());
+      DateFormat deliveryTime = DateFormat("HH:mm");
+      resultDate = DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).hour, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).minute);
+    }
 
     Order orderRequest = Order(
       driverId: driverSelected!.id!,
-      deliveryTime: dtWaktuPengiriman.controller.textSelected.isNotEmpty ? Convert.getStringIso(dtWaktuPengiriman.getLastTimeSelected()) : null,
-      withDeliveryFee: isSwitchOn.value,
+      deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : orderDetail.value!.deliveryTime,
+      withDeliveryFee: orderDetail.value!.deliveryFee != null ? true : false,
     );
 
     Service.push(

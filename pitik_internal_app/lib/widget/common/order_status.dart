@@ -29,11 +29,13 @@ class OrderStatus extends StatelessWidget{
           orderStatus == EnumSO.cancelled ? const Color(0xFFFDDFD1) :
           orderStatus == EnumSO.booked ? const Color(0xFFFAEDCF) :
           orderStatus == EnumSO.pickedUp ? const Color(0xFFD0F5FD) :
-          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedFull? const Color(0xFFFDDFD1) :
           orderStatus == EnumSO.returned ? const Color(0xFFD0F5FD) :
           orderStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
           orderStatus == EnumSO.onDelivery ? const Color(0xFFEAECF5) :
           orderStatus == EnumSO.delivered && soPage! ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.rejected && soPage! ?  const Color(0xFFFDDFD1)  :
+          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedFull && grStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
+          orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedFull? const Color(0xFFFDDFD1) :
           orderStatus == EnumSO.rejected && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const Color(0xFFFEF6D2) :
           orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const Color(0xFFFEF6D2) :
           orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const Color(0xFFCEFCD8) :
@@ -54,6 +56,8 @@ class OrderStatus extends StatelessWidget{
             orderStatus == EnumSO.returned ? "Dikembalikan" :
             orderStatus== EnumSO.onDelivery ? "Perjalanan" :
             orderStatus == EnumSO.delivered && soPage!? "Terkirim" :
+            orderStatus == EnumSO.rejected && soPage!? "Ditolak" :
+             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull && grStatus == EnumSO.received ? "Diterima" :
             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull? "Ditolak" :
             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terima Sebagian" :
             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? "Diterima" :
@@ -69,11 +73,13 @@ class OrderStatus extends StatelessWidget{
             orderStatus== EnumSO.allocated ? const TextStyle(color: Color(0xFF6938EF)) :
             orderStatus == EnumSO.booked ? const TextStyle(color: Color(0xFFAB6116)) :
             orderStatus == EnumSO.pickedUp ? const TextStyle(color: Color(0xFF198BDB)) :
-            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull? const TextStyle(color: Color(0xFFDD1E25)) :
             orderStatus == EnumSO.returned ? const TextStyle(color: Color(0xFF198BDB)) :
             orderStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82)) :
             orderStatus== EnumSO.onDelivery ? const TextStyle(color: Color(0xFF6938EF)) :
             orderStatus == EnumSO.delivered && soPage! ? const TextStyle(color: Color(0xFF14CB82)) :
+            orderStatus == EnumSO.rejected && soPage! ? const TextStyle(color: Color(0xFFDD1E25)) :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull && grStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82))  :
+            orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedFull? const TextStyle(color: Color(0xFFDD1E25)) :
             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const TextStyle(color: Color(0xFFF4B420)) :
             orderStatus ==EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? const TextStyle(color: Color(0xFF14CB82))  :
             orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected ? const TextStyle(color: Color(0xFFF4B420)) :

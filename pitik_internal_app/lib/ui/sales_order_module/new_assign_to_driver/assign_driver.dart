@@ -43,7 +43,7 @@ class AssignDriverPage extends StatelessWidget {
       );
     }
 
-Widget infoDetailSku(String title, String name) {
+    Widget infoDetailSku(String title, String name) {
       return Container(
         margin: const EdgeInsets.only(top: 8),
         child: Row(
@@ -201,6 +201,44 @@ Widget infoDetailSku(String title, String name) {
                 ),
                 Text(
                   controller.orderDetail.value!.products!.isEmpty ? "-" : controller.orderDetail.value!.products!.map((e) => e!.category!.name.toString()).reduce((a, b) => '$a , $b'),
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Dibuat Oleh",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value?.userCreator?.email ?? "-",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sales Branch",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value!.salesperson == null ? "-" : "${controller.orderDetail.value!.salesperson?.branch?.name}",
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -394,9 +432,9 @@ Widget infoDetailSku(String title, String name) {
                           const SizedBox(
                             height: 16,
                           ),
-
+                          controller.dtDeliveryDate,
+                          controller.dtDeliveryTime,
                           controller.spinnerDriver,
-                          controller.dtWaktuPengiriman,
                           const SizedBox(
                             height: 120,
                           )

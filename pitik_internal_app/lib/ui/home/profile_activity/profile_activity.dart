@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
@@ -142,7 +143,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                Obx(() => Constant.isDeveloper.isTrue ? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
+                Obx(() => Constant.isDeveloper.isTrue || F.appFlavor == Flavor.DEV? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
                 Obx(() => Constant.isChangeBranch.isTrue ? listComponent(() => Get.toNamed(RoutePage.changeBranch), "images/branch_icon.svg", "Ganti Branch") : const SizedBox()),
                 listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
                 listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),

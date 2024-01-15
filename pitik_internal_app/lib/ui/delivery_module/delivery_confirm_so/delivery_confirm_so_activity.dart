@@ -35,21 +35,23 @@ class DeliveryConfirmSO extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Informasi Pengiriman",
-                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
-                      style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Informasi Pengiriman",
+                        style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
+                      )
+                    ],
+                  ),
                 ),
                 OrderStatus(orderStatus: controller.order.status, returnStatus: controller.order.returnStatus, grStatus: controller.order.grStatus)
               ],
@@ -65,7 +67,30 @@ class DeliveryConfirmSO extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Driver", name: controller.order.driver!.fullName!),
+            InfoDetailHeader(title:"Dibuat Oleh",name: controller.order.userCreator?.email ?? "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title :"Sales Branch", name :controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title :"Driver", name :"${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title :"Target Pengiriman", name :controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(
+              title :"Waktu Pengiriman",
+              name :controller.order.deliveryTime != null
+                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
+                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : "-"
+                  : "-",
+            ),
           ],
         ),
       );
@@ -95,7 +120,7 @@ class DeliveryConfirmSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asdasd"),
               headerText: "${products.name}",
               child: Column(
                 children: [
