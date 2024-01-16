@@ -1,6 +1,7 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -23,7 +24,7 @@ class DetailGRTransferController extends GetxController {
 
     DetailGRTransferController({required this.context});
     late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-
+        GlobalVar.track("Click_Cancel_Penerimaan_Transfer");
         Get.back();
         cancelGRTransfer(context);
     });
@@ -39,9 +40,12 @@ class DetailGRTransferController extends GetxController {
 
     Rxn<GoodsReceived> goodReceiptDetail = Rxn<GoodsReceived>();
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
     @override
     void onInit() {
         super.onInit();
+        timeStart = DateTime.now();
         transferModel = Get.arguments;
         transferModel.status == "DELIVERED" ? getDetailTransfer() : getDetailReceived();
         createdDate = Convert.getDatetime(transferModel.createdDate!);
@@ -61,6 +65,9 @@ class DetailGRTransferController extends GetxController {
                     else {
                         isLoading.value = false;
                     }
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    GlobalVar.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;
@@ -97,6 +104,10 @@ class DetailGRTransferController extends GetxController {
             onResponseDone: (code, message, body, id, packet){
               goodReceiptDetail.value = (body as GoodReceiveReponse).data;
               isLoading.value = false;
+
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
               isLoading.value = false;
@@ -107,7 +118,7 @@ class DetailGRTransferController extends GetxController {
                   colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              isLoading.value = false;                
+              isLoading.value = false;
               Get.snackbar("Alert","Terjadi kesalahan internal",
                   snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
@@ -140,7 +151,7 @@ class DetailGRTransferController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

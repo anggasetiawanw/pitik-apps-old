@@ -79,7 +79,7 @@ class BerandaActivity extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
-                        GlobalVar.track("Click Menu ${controller.module.value[index]['nameModule']}");
+                        GlobalVar.track("Click_Menu_${controller.module.value[index]['nameModule']}");
                       },
                       child: Container(
                         width: double.infinity,
@@ -119,7 +119,7 @@ class BerandaActivity extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
-                        GlobalVar.track("Click Menu ${controller.module.value[index]['nameModule']}");
+                        GlobalVar.track("Click_Menu_${controller.module.value[index]['nameModule']}");
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -82,6 +83,7 @@ class DetailGRTransfer extends StatelessWidget {
                                                 "createTransferReceive"),
                                             label: "Buat Penerimaan",
                                             onClick: () {
+                                                GlobalVar.track("Click_Buat_Penerimaan_Transfer");
                                               Get.toNamed(RoutePage.createGrTransferPage, arguments: controller.transferModel)!.then((value) {
                                                 controller.isLoading.value =true;
                                                 Timer(const Duration(milliseconds: 500), () {
@@ -191,7 +193,7 @@ class DetailGRTransfer extends StatelessWidget {
                                     color: AppColors.headerSku,
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                                 ),
-                                child: Text("${controller.transferModel.products![0]!.name}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),   
+                                child: Text("${controller.transferModel.products![0]!.name}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
                             ),
                             Container(
                                 width: double.infinity,
@@ -210,7 +212,7 @@ class DetailGRTransfer extends StatelessWidget {
                                 child: Column(
                                     children: [
                                         infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
-                                        if(controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[                                        
+                                        if(controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
                                         ],
@@ -234,7 +236,7 @@ class DetailGRTransfer extends StatelessWidget {
                                     color: AppColors.headerSku,
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                                 ),
-                                child: Text("SKU", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),   
+                                child: Text("SKU", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
                             ),
                             Container(
                                 width: double.infinity,
@@ -251,7 +253,7 @@ class DetailGRTransfer extends StatelessWidget {
                                 child: Column(
                                     children: [
                                         infoDetailSKU("Kategori SKU", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.productItem!.category!.name : "null" }"),
-                                        if((controller.goodReceiptDetail.value!.products != null && controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[                                        
+                                        if((controller.goodReceiptDetail.value!.products != null && controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.quantity : controller.transferModel.products![0]!.quantity } Ekor"),
                                         ],

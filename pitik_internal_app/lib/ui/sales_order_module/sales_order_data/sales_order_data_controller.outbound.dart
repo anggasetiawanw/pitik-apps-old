@@ -89,6 +89,12 @@ extension OutboundOrderController on SalesOrderController {
               isLoadData.value = false;
             }
           }
+          if(isInit){
+            isInit = false;
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("Penjualan", totalTime);
+          }
         },
         onResponseFail: (code, message, body, id, packet) {
           onResponseFail(body, isLoadingOutbond);

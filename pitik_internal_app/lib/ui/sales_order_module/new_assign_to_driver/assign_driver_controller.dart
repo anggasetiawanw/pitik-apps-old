@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -72,9 +73,12 @@ class AssignDriverController extends GetxController {
     flag: 2,
   );
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     orderDetail.value = Get.arguments as Order;
     isLoading.value = true;
     boNoAssign = ButtonOutline(
@@ -94,6 +98,7 @@ class AssignDriverController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesAssign"),
       label: "Ya",
       onClick: () {
+
         assignToDriver();
       },
     );
@@ -189,6 +194,9 @@ class AssignDriverController extends GetxController {
               spinnerDriver.controller
                 ..enable()
                 ..hideLoading();
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Assign_Driver_Penjualan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -238,8 +246,10 @@ class AssignDriverController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, ListApi.pathOrderSetDriver(orderDetail.value!.id!), Mapper.asJsonString(orderRequest)],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
+                GlobalVar.track("Click_Button_Kirim_Penjualan");
               Get.back();
               isLoading.value = false;
+
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -250,6 +260,7 @@ class AssignDriverController extends GetxController {
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
+              GlobalVar.trackWithMap("Click_Button_Kirim_Penjualan", {"error": (body).error!.message!});
               isLoading.value = false;
             },
             onResponseError: (exception, stacktrace, id, packet) {
@@ -261,6 +272,8 @@ class AssignDriverController extends GetxController {
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
+
+              GlobalVar.trackWithMap("Click_Button_Kirim_Penjualan", {"error": exception});
               isLoading.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));
