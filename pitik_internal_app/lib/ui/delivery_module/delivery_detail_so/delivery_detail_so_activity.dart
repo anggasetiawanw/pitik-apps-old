@@ -148,7 +148,7 @@ class DeliveryDetailSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asd"),
               headerText: "${products.name}",
               child: Column(
                 children: [
@@ -163,23 +163,27 @@ class DeliveryDetailSO extends StatelessWidget {
               )),
         );
       } else {
-        return Container(
+        if(controller.order.returnStatus == "FULL" ) {
+          return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabcasddz"),
               headerText: "${products.name}",
               child: Column(
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                  if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
                   if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                   if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                  if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
+        } else {
+          return const SizedBox();
+        }
       }
     }
 

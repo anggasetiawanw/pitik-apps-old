@@ -46,7 +46,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController> {
                     overflow: TextOverflow.clip,
                   ),
                 ),
-                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "", grStatus: controller.orderDetail.value!.grStatus),
+                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "", grStatus: controller.orderDetail.value!.grStatus,soPage: false,),
               ],
             ),
             Text(
