@@ -358,13 +358,7 @@ class RequestDocInController extends GetxController {
                             requestChickin.value = (body as RequestChickinResponse).data;
                             requestId.value =(body).data!.id!;
 
-                            try {
-                                DateFormat formatDate = DateFormat("dd/MM/yyyy");
-                                DateTime newStartDate =DateFormat("yyyy-MM-dd HH:mm:ss").parse(requestChickin.value!.chickInDate ?? "");
-                                String startDate = formatDate.format(newStartDate);
-                                dtTanggal.controller.setTextSelected(startDate);
-                            } catch (_) {}
-
+                            dtTanggal.controller.setTextSelected(Convert.getDate(requestChickin.value!.chickInDate));
                             efPopulasi.setInput(requestChickin.value!.initialPopulation.toString());
 
                             if (!((coop.statusText??"").toLowerCase() == SUBMISSION_STATUS.toLowerCase()) && !((coop.statusText??"").toLowerCase() == SUBMITTED_OVK.toLowerCase())) {

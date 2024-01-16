@@ -24,7 +24,6 @@ import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
 import 'package:common_page/transaction_success_activity.dart';
-import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -105,7 +104,11 @@ class OrderRequestController extends GetxController {
         // SETUP FEED WIDGET
         feedCategory = SpinnerField(controller: GetXCreator.putSpinnerFieldController("orderFeedCategory"), label: "Kategori Pakan", hint: "Pilih Merek Pakan", backgroundField: GlobalVar.primaryLight, alertText: "Kategori Pakan harus dipilih..!",
             items: const {"PRESTARTER": false, "STARTER": false, "FINISHER": false},
-            onSpinnerSelected: (text) {}
+            onSpinnerSelected: (text) {
+                feedSuggestField.controller.listObject.clear();
+                feedSuggestField.controller.suggestList.clear();
+                feedSuggestField.controller.textEditingController.value.text = '';
+            }
         );
 
         feedSuggestField = SuggestField(
@@ -523,8 +526,8 @@ class OrderRequestController extends GetxController {
                                     )
                                 ),
                                 const SizedBox(height: 16),
-                                Text('Order ${isFeed ? 'Pakan' : 'OVK'}', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
-                                const SizedBox(height: 8),
+                                Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                const SizedBox(height: 16),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -536,7 +539,7 @@ class OrderRequestController extends GetxController {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                        Text('Jenis Permintaan', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        Text('Jenis Order', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)),
                                         Text(isFeed ? 'Pakan' : 'OVK', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                     ],
                                 ),
@@ -571,10 +574,13 @@ class OrderRequestController extends GetxController {
                                                     padding: const EdgeInsets.only(top: 8),
                                                     child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                            Text(
-                                                                getFeedProductName(product: feedMultipleFormField.getController().listObjectAdded[entry.key]),
-                                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                            Expanded(
+                                                                child: Text(
+                                                                    getFeedProductName(product: feedMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                )
                                                             ),
                                                             Text(
                                                                 getFeedQuantity(product: feedMultipleFormField.getController().listObjectAdded[entry.key]),
@@ -599,10 +605,13 @@ class OrderRequestController extends GetxController {
                                                             padding: const EdgeInsets.only(top: 8),
                                                             child: Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
-                                                                    Text(
-                                                                        getOvkProductName(product: ovkVendorMultipleFormField.getController().listObjectAdded[entry.key]),
-                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    Expanded(
+                                                                        child: Text(
+                                                                            getOvkProductName(product: ovkVendorMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                        )
                                                                     ),
                                                                     Text(
                                                                         getOvkQuantity(product: ovkVendorMultipleFormField.getController().listObjectAdded[entry.key]),
@@ -626,10 +635,13 @@ class OrderRequestController extends GetxController {
                                                             padding: const EdgeInsets.only(top: 8),
                                                             child: Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
-                                                                    Text(
-                                                                        getOvkProductName(product: ovkUnitMultipleFormField.getController().listObjectAdded[entry.key]),
-                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    Expanded(
+                                                                        child: Text(
+                                                                            getOvkProductName(product: ovkUnitMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                        )
                                                                     ),
                                                                     Text(
                                                                         getOvkQuantity(product: ovkUnitMultipleFormField.getController().listObjectAdded[entry.key]),
@@ -653,10 +665,13 @@ class OrderRequestController extends GetxController {
                                                         padding: const EdgeInsets.only(top: 8),
                                                         child: Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                                Text(
-                                                                    getOvkProductName(product: ovkMultipleFormField.getController().listObjectAdded[entry.key]),
-                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                Expanded(
+                                                                    child: Text(
+                                                                        getOvkProductName(product: ovkMultipleFormField.getController().listObjectAdded[entry.key]),
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
                                                                 ),
                                                                 Text(
                                                                     getOvkQuantity(product: ovkMultipleFormField.getController().listObjectAdded[entry.key]),

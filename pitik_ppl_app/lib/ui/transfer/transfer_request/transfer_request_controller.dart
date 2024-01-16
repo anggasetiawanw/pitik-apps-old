@@ -971,6 +971,8 @@ class TransferRequestController extends GetxController {
         if (feedSpinnerField.getController().getSelectedObject() != null) {
             Product product = feedSpinnerField.getController().getSelectedObject();
             product.quantity = feedQuantityField.getInputNumber() ?? 0;
+            product.categoryCode = 'PAKAN';
+            product.categoryName = 'PAKAN';
 
             return product;
         } else {
@@ -982,6 +984,8 @@ class TransferRequestController extends GetxController {
         if (ovkSpinnerField.getController().getSelectedObject() != null) {
             Product product = ovkSpinnerField.getController().getSelectedObject();
             product.quantity = ovkQuantityField.getInputNumber() ?? 0;
+            product.categoryCode = 'OVK';
+            product.categoryName = 'OVK';
 
             return product;
         } else {
@@ -993,6 +997,8 @@ class TransferRequestController extends GetxController {
         if (feedSpinnerField.getController().getSelectedObject() != null) {
             Product product = feedSpinnerField.getController().getSelectedObject();
             product.quantity = (oldProduct.quantity ?? 0) + (feedQuantityField.getInputNumber() ?? 0);
+            product.categoryCode = 'PAKAN';
+            product.categoryName = 'PAKAN';
 
             return product;
         } else {
@@ -1004,6 +1010,8 @@ class TransferRequestController extends GetxController {
         if (ovkSpinnerField.getController().getSelectedObject() != null) {
             Product product = ovkSpinnerField.getController().getSelectedObject();
             product.quantity = (oldProduct.quantity ?? 0) + (ovkQuantityField.getInputNumber() ?? 0);
+            product.categoryCode = 'OVK';
+            product.categoryName = 'OVK';
 
             return product;
         } else {

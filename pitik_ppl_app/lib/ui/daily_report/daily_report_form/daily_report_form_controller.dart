@@ -23,7 +23,6 @@ import 'package:model/report.dart';
 import 'package:model/response/products_response.dart';
 import 'package:model/response/stock_summary_response.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
-import 'package:pitik_ppl_app/route.dart';
 
 class DailyReportFormController extends GetxController with GetSingleTickerProviderStateMixin {
   BuildContext context;
@@ -191,6 +190,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
+            onAfterAdded: () {
+                sfMerkPakan.controller.reset();
+                efTotalPakan.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (sfMerkPakan.getController().selectedIndex == -1) {
@@ -221,6 +224,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            onAfterAdded: () {
+                sfJenisOvk.controller.reset();
+                efTotalOvk.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (sfJenisOvk.getController().selectedIndex == -1) {
