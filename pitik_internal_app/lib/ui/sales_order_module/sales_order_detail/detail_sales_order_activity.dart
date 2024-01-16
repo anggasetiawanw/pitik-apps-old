@@ -280,10 +280,10 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                   if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                   if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
