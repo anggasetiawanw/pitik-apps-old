@@ -32,6 +32,7 @@ class HarvestSubmittedFormController extends GetxController {
 
     late Coop coop;
     late Harvest harvest;
+    late bool isEdit;
     late DateTimeField submittedDateField;
     late MultipleDynamicFormField<Harvest> submissionField;
 
@@ -98,6 +99,7 @@ class HarvestSubmittedFormController extends GetxController {
         Future.delayed(const Duration(milliseconds: 300), () {
             if (Get.arguments.length > 2) {
                 harvest = Get.arguments[1];
+                isEdit = true;
                 _fillData();
             }
         });
@@ -399,7 +401,12 @@ class HarvestSubmittedFormController extends GetxController {
                                                         keyPage: "harvestSubmitted",
                                                         message: "Pengajuan panen sudah terkirim\nSelanjutnya akan segera diproses",
                                                         showButtonHome: false,
-                                                        onTapClose: () => Get.back(),
+                                                        onTapClose: () {
+                                                            Get.back(result: true);
+                                                            if (isEdit) {
+                                                                Get.back(result: true);
+                                                            }
+                                                        },
                                                         onTapHome: () {}
                                                     ));
                                                 },

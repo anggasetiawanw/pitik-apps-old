@@ -58,7 +58,8 @@ class DocInController extends GetxController {
                 control.controller.setAlertText("Jumlah DOC Diterima belum disi");
                 control.controller.hideAlert();
             }
-        });
+        }
+    );
 
     EditField efMoreDOC = EditField(
         controller: GetXCreator.putEditFieldController("MoreDOC"),
@@ -340,7 +341,7 @@ class DocInController extends GetxController {
         efBw.controller.disable();
         efUniform.setInput((request.uniformity ?? 0).toString());
         efUniform.controller.disable();
-        efDesc.setInput(request.notes ?? '');
+        efDesc.setInput(request.remarks ?? '');
         efDesc.controller.disable();
 
         mfAnotherDoc.controller.disable();

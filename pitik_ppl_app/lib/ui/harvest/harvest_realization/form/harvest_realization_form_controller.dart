@@ -394,7 +394,7 @@ class HarvestRealizationFormController extends GetxController {
                         keyPage: "harvestRealizationSubmitSuccess",
                         message: bundle.getRealization == null ? "Kamu telah berhasil melakukan realisasi panen" : "Kamu telah berhasil mengubah data realisasi panen",
                         showButtonHome: false,
-                        onTapClose: () => Get.back(),
+                        onTapClose: () => Get.back(result: true),
                         onTapHome: () {}
                     ))!.then((value) => Get.back());
                 },
@@ -428,149 +428,151 @@ class HarvestRealizationFormController extends GetxController {
     }
 
     void saveOrUpdateHarvestRealization() => AuthImpl().get().then((auth) {
-        if (auth != null && _validation()) {
-            showModalBottomSheet(
-                useSafeArea: true,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                    )
-                ),
-                isScrollControlled: true,
-                context: Get.context!,
-                builder: (context) => Container(
-                    color: Colors.transparent,
-                    child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Center(
-                                        child: Container(
-                                            width: 60,
-                                            height: 4,
-                                            decoration: const BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                color: GlobalVar.outlineColor
+        if (auth != null) {
+            if (_validation()) {
+                showModalBottomSheet(
+                    useSafeArea: true,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                        )
+                    ),
+                    isScrollControlled: true,
+                    context: Get.context!,
+                    builder: (context) => Container(
+                        color: Colors.transparent,
+                        child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Center(
+                                            child: Container(
+                                                width: 60,
+                                                height: 4,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                    color: GlobalVar.outlineColor
+                                                )
                                             )
-                                        )
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
-                                    const SizedBox(height: 16),
-                                    Text('Data Timbang', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Tanggal Tangkap', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(harvestDateField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Jam Tangkap', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(harvestHourField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Jam Berangkat', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(ongoingHourField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Nama Sopir', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(driverNameField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Nopol Kendaraan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(truckPlateField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 16),
-                                    const Divider(height: 1.4, color: GlobalVar.outlineColor),
-                                    const SizedBox(height: 16),
-                                    Text('Kartu Timbang', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Nomor Data Timbang', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(weighingNumberField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Jumlah Ayam', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(
-                                                totalChickenField.getInputNumber() != null ? '${Convert.toCurrencyWithoutDecimal(totalChickenField.getInputNumber()!.toString(), '', '.')} Ekor' : '-',
-                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
-                                            )
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Total Tonase', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(
-                                                tonnageField.getInputNumber() != null ? '${Convert.toCurrencyWithDecimalAndPrecision(tonnageField.getInputNumber()!.toString(), '', '.', ',', 1)} Kg' : '-',
-                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
-                                            )
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text('Berat Rata-rata', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(
-                                                averageWeightField.getInputNumber() != null ? '${Convert.toCurrencyWithDecimalAndPrecision(averageWeightField.getInputNumber()!.toString(), '', '.', ',', 1)} Kg' : '-',
-                                                style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
-                                            )
-                                        ]
-                                    ),
-                                    const SizedBox(height: 32),
-                                    SizedBox(
-                                        width: MediaQuery.of(Get.context!).size.width - 32,
-                                        child: Row(
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text('Apakah yakin data yang kamu isi sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 16),
+                                        Text('Data Timbang', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 8),
+                                        Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                                Expanded(
-                                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitHarvestRealization"), label: "Yakin", onClick: () {
-                                                        Navigator.pop(Get.context!);
-                                                        _pushHarvestRealizationToServer(auth);
-                                                    })
-                                                ),
-                                                const SizedBox(width: 16),
-                                                Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnCancelHarvestRealization"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
+                                                Text('Tanggal Tangkap', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(harvestDateField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                             ]
-                                        )
-                                    ),
-                                    const SizedBox(height: 32)
-                                ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jam Tangkap', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(harvestHourField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jam Berangkat', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(ongoingHourField.getLastTimeSelectedText(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Nama Sopir', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(driverNameField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Nopol Kendaraan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(truckPlateField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 16),
+                                        const Divider(height: 1.4, color: GlobalVar.outlineColor),
+                                        const SizedBox(height: 16),
+                                        Text('Kartu Timbang', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Nomor Data Timbang', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(weighingNumberField.getInput(), style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jumlah Ayam', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(
+                                                    totalChickenField.getInputNumber() != null ? '${Convert.toCurrencyWithoutDecimal(totalChickenField.getInputNumber()!.toString(), '', '.')} Ekor' : '-',
+                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                )
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Total Tonase', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(
+                                                    tonnageField.getInputNumber() != null ? '${Convert.toCurrencyWithDecimalAndPrecision(tonnageField.getInputNumber()!.toString(), '', '.', ',', 1)} Kg' : '-',
+                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                )
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Berat Rata-rata', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(
+                                                    averageWeightField.getInputNumber() != null ? '${Convert.toCurrencyWithDecimalAndPrecision(averageWeightField.getInputNumber()!.toString(), '', '.', ',', 1)} Kg' : '-',
+                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                )
+                                            ]
+                                        ),
+                                        const SizedBox(height: 32),
+                                        SizedBox(
+                                            width: MediaQuery.of(Get.context!).size.width - 32,
+                                            child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                    Expanded(
+                                                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitHarvestRealization"), label: "Yakin", onClick: () {
+                                                            Navigator.pop(Get.context!);
+                                                            _pushHarvestRealizationToServer(auth);
+                                                        })
+                                                    ),
+                                                    const SizedBox(width: 16),
+                                                    Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnCancelHarvestRealization"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
+                                                ]
+                                            )
+                                        ),
+                                        const SizedBox(height: 32)
+                                    ]
+                                )
                             )
                         )
                     )
-                )
-            );
+                );
+            }
         } else {
             GlobalVar.invalidResponse();
         }

@@ -785,7 +785,12 @@ class OrderRequestController extends GetxController {
                         keyPage: "orderSaved",
                         message: "Kamu telah berhasil melakukan pengajuan permintaan sapronak",
                         showButtonHome: false,
-                        onTapClose: () => Get.back(result: true),
+                        onTapClose: () {
+                            Get.back(result: true);
+                            if (isEdit) {
+                                Get.back(result: true);
+                            }
+                        },
                         onTapHome: () {}
                     ));
                 },

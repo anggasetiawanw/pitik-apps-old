@@ -26,7 +26,6 @@ import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
 import 'package:model/response/stock_summary_response.dart';
-import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -771,7 +770,12 @@ class TransferRequestController extends GetxController {
                         keyPage: "transferSaved",
                         message: "Kamu telah berhasil melakukan permintaan transfer pakan ke kandang lain",
                         showButtonHome: false,
-                        onTapClose: () => Get.toNamed(RoutePage.listTransferPage, arguments: coop),
+                        onTapClose: () {
+                            Get.back(result: true);
+                            if (isEdit) {
+                                Get.back(result: true);
+                            }
+                        },
                         onTapHome: () {}
                     ));
                 },

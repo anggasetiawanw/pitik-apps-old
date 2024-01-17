@@ -208,7 +208,7 @@ class HarvestSubmittedDetailController extends GetxController {
                                 keyPage: "harvestSubmittedApprove${harvest.value!.id}",
                                 message: "Kamu telah menyetujui permintaan panen",
                                 showButtonHome: false,
-                                onTapClose: () => Get.back(),
+                                onTapClose: () => Get.back(result: true),
                                 onTapHome: () {}
                             ));
                         },
@@ -251,7 +251,7 @@ class HarvestSubmittedDetailController extends GetxController {
                                         height: 200,
                                         width: 200,
                                     ),
-                                    onTapClose: () => Get.back(),
+                                    onTapClose: () => Get.back(result: true),
                                     onTapHome: () {}
                                 ));
                             },

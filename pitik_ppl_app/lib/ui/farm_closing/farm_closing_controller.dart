@@ -380,7 +380,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                                                         keyPage: "farmClosingSuccessPage",
                                                                         message: "Kamu telah berhasil melakukan\npenutupan siklus produksi",
                                                                         showButtonHome: false,
-                                                                        onTapClose: () => Get.back(),
+                                                                        onTapClose: () => Get.back(result: true),
                                                                         onTapHome: () {}
                                                                     ));
                                                                 },

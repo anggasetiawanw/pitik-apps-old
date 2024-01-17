@@ -28,8 +28,6 @@ import 'package:model/response/procurement_detail_response.dart';
 import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/check_box/check_box_field.dart';
 
-import '../../route.dart';
-
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
 ///@create date 27/10/2023
@@ -828,10 +826,7 @@ class GrConfirmationController extends GetxController {
                                                                                 keyPage: "grConfirmationSaved",
                                                                                 message: "Kamu telah berhasil melakukan penerimaan sapronak",
                                                                                 showButtonHome: false,
-                                                                                onTapClose: () => Get.toNamed(
-                                                                                    isFromTransfer ? RoutePage.listTransferPage : RoutePage.listOrderPage,
-                                                                                    arguments: isFromTransfer ? coop : [coop, fromCoopRest]
-                                                                                ),
+                                                                                onTapClose: () => Get.back(result: true),
                                                                                 onTapHome: () {}
                                                                             ));
                                                                         },

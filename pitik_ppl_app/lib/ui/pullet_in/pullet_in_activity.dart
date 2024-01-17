@@ -59,41 +59,114 @@ class PulletInActivity extends GetView<PulletInController> {
                                                 const SizedBox(height: 16)
                                             ],
                                         ) : const SizedBox(),
-                                        // Container(
-                                        //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                                        //     decoration: BoxDecoration(
-                                        //         borderRadius: BorderRadius.circular(8),
-                                        //         color: GlobalVar.grayBackground,
-                                        //         border: const Border.fromBorderSide(BorderSide(width: 1.4, color: GlobalVar.outlineColor))
-                                        //     ),
-                                        //     child: Column(
-                                        //         children: [
-                                        //             Row(
-                                        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //                 children: [
-                                        //                     Text("Detail DOC", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.bold)),
-                                        //                     Text(controller.proc.value.deliveryDate != null ?DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.proc.value.deliveryDate ?? "")) : "", style: GlobalVar.blackTextStyle)
-                                        //                 ]
-                                        //             ),
-                                        //             const SizedBox(height: 8),
-                                        //             Row(
-                                        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //                 children: [
-                                        //                     Text("Merk DOC", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                        //                     Text(controller.proc.value.details.isNotEmpty ? controller.proc.value.details[0]!.productName! : "", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.w500))
-                                        //                 ]
-                                        //             ),
-                                        //             const SizedBox(height: 4),
-                                        //             Row(
-                                        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //                 children: [
-                                        //                     Text("Total Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                        //                     Text("${controller.proc.value.details.isNotEmpty? (controller.proc.value.details[0]!.quantity??0).toInt():""} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.w500))
-                                        //                 ]
-                                        //             )
-                                        //         ]
-                                        //     )
-                                        // )
+                                        Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: GlobalVar.grayBackground,
+                                                border: const Border.fromBorderSide(BorderSide(width: 1.4, color: GlobalVar.outlineColor))
+                                            ),
+                                            child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                    Text("Detail Pullet In", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    const SizedBox(height: 16),
+                                                    Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                            Text("Tanggal Mulai Siklus", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                            Text(controller.request.value!.startDate ?? '-', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                        ]
+                                                    ),
+                                                    const SizedBox(height: 8),
+                                                    Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                            Text("Tipe Pullet", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                            Text('-', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                        ]
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                            Text("Total Populasi", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                            Text('${controller.request.value!.initialPopulation ?? '-'} Ekor', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                        ]
+                                                    )
+                                                ]
+                                            )
+                                        ),
+                                        const SizedBox(height: 16),
+                                        controller.dtTanggal,
+                                        Row(
+                                            children: [
+                                                Expanded(child: controller.efPopulation),
+                                                const SizedBox(width: 8),
+                                                Expanded(child: controller.efAge)
+                                            ]
+                                        ),
+                                        Row(
+                                            children: [
+                                                Expanded(child: controller.efBw),
+                                                const SizedBox(width: 8),
+                                                Expanded(child: controller.efUniform)
+                                            ]
+                                        ),
+                                        Row(
+                                            children: [
+                                                Expanded(child: controller.dtTruckGo),
+                                                const SizedBox(width: 8),
+                                                Expanded(child: controller.dtTruckCome)
+                                            ]
+                                        ),
+                                        controller.dtFinishPulletIn,
+                                        controller.eaDesc,
+                                        controller.isLoadingSuratJalan.isTrue ? SizedBox(
+                                            height: 50,
+                                            width: MediaQuery.of(context).size.width - 32,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                        const SizedBox(width: 16),
+                                                        Text('Upload foto Surat Jalan...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                    ],
+                                                ),
+                                            )
+                                        ) : controller.mfSuratJalan,
+                                        controller.isLoadingFormPulletIn.isTrue ? SizedBox(
+                                            height: 50,
+                                            width: MediaQuery.of(context).size.width - 32,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                        const SizedBox(width: 16),
+                                                        Text('Upload foto Form Pullet In...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                    ],
+                                                ),
+                                            )
+                                        ) : controller.mfFormPullet,
+                                        controller.isLoadingAnotherPullet.isTrue ? SizedBox(
+                                            height: 50,
+                                            width: MediaQuery.of(context).size.width - 32,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 16),
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                        const SizedBox(width: 16),
+                                                        Text('Upload foto dokumen lainnya...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                    ],
+                                                ),
+                                            )
+                                        ) : controller.mfAnotherPullet
                                     ]
                                 )
                             )
