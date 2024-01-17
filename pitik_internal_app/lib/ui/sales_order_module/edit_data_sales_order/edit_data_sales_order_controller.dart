@@ -204,9 +204,13 @@ class EditDataSalesOrderController extends GetxController {
     flag: 2,
   );
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     isLoading.value = true;
     orderDetail = Get.arguments;
     if (orderDetail.category == "INBOUND") {

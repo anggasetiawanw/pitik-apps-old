@@ -251,6 +251,8 @@ class NewDataSalesOrderController extends GetxController {
     editFieldHarga.controller.disable();
     if (isInbound.isTrue) {
       getListSource();
+    } else {
+        countingApi();
     }
     getListCustomer();
     getCategorySku();
@@ -259,7 +261,7 @@ class NewDataSalesOrderController extends GetxController {
 
   void countingApi() {
     countApi++;
-    if (countApi == 2) {
+    if (countApi == 3) {
       timeEnd = DateTime.now();
       Duration totalTime = timeEnd.difference(timeStart);
       GlobalVar.trackRenderTime("Buat_Penjualan", totalTime);
@@ -484,6 +486,7 @@ class NewDataSalesOrderController extends GetxController {
                 ..enable()
                 ..setTextSelected("")
                 ..hideLoading();
+                countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
