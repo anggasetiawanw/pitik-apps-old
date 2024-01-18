@@ -117,9 +117,9 @@ class StockHomeActivity extends GetView<StockHomeController> {
             const SizedBox(
               height: 4,
             ),
-            listExpand("Total Kg", "${pieData.y == 0 ? "-" : pieData.y2} Kg"),
+            listExpand("Total Kg", "${pieData.y == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
           ] else
-            listExpand("Total Kg", "${pieData.y2 == 0 ? "-" : pieData.y2} Kg"),
+            listExpand("Total Kg", "${pieData.y2 == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
         ],
       );
     }

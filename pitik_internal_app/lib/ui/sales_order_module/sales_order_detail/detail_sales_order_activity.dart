@@ -125,24 +125,62 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
             const SizedBox(
               height: 8,
             ),
-            controller.orderDetail.value!.status == EnumSO.readyToDeliver
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Driver",
-                        style: AppTextStyle.subTextStyle.copyWith(
-                          fontSize: 10,
-                        ),
-                      ),
-                      Text(
-                        controller.orderDetail.value!.driver!.fullName ?? "-",
-                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  )
-                : const SizedBox(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Dibuat Oleh",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value?.userCreator?.email ?? "-",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sales Branch",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value!.salesperson == null ? "-" : "${controller.orderDetail.value!.salesperson?.branch?.name}",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Driver",
+                    style: AppTextStyle.subTextStyle.copyWith(
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    controller.orderDetail.value!.driver!.fullName ?? "-",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              )
+            ],
             if (controller.orderDetail.value!.deliveryTime != null) ...[
               const SizedBox(
                 height: 8,
@@ -157,12 +195,35 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                     ),
                   ),
                   Text(
-                    controller.orderDetail.value!.deliveryTime != null ? Convert.getDateFormat(controller.orderDetail.value!.deliveryTime!) : "-",
+                    controller.orderDetail.value!.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) : "-",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
-              )
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Waktu Pengiriman",
+                    style: AppTextStyle.subTextStyle.copyWith(
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    controller.orderDetail.value!.deliveryTime != null
+                        ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) != "00:00"
+                            ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!))
+                            : "-"
+                        : "-",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ]
           ],
         ),
@@ -209,25 +270,67 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
     }
 
     Widget customExpandalbe(Products products) {
-      return (products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)
-          ? Container(
+      if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else {
+        if (controller.orderDetail.value!.returnStatus == "FULL") {
+          return Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Expandable(
+                controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
+                headerText: "${products.name}",
+                child: Column(
+                  children: [
+                    if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                    if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                    if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
+                    if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                    if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                    if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
+                    if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  ],
+                )),
+          );
+        } else {
+          if (products.weight! - products.returnWeight! != 0 || products.quantity! - products.returnQuantity! != 0) {
+            return Container(
               margin: const EdgeInsets.only(top: 16),
               child: Expandable(
-                  controller: GetXCreator.putAccordionController("sku${products.name}${products.id}"),
+                  controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
                   headerText: "${products.name}",
                   child: Column(
                     children: [
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                      if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                      if (products.cutType != null && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                      if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                      if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),
-            )
-          : Container();
+            );
+          } else {
+            return const SizedBox();
+          }
+        }
+      }
     }
 
     Widget listExpandadle(List<Products?> products) {

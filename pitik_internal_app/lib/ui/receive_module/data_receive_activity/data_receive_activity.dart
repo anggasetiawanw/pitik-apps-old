@@ -207,6 +207,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
             return Column(
               children: [
                 CardListOrder(
+                    isSoPage: false,
                   order:controller.listReturn.value[index]!,
                   onTap: () {
                     Get.toNamed(

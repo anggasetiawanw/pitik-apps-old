@@ -423,6 +423,9 @@ class API {
     @Query("status") String statusRejected,
     @Query("status") String statusOnDelivery,
     @Query("status") String statusAllocated,
+    @Query("branchId") String branchId,
+    @Query("minDeliveryTime") String minDeliveryTime,
+    @Query("maxDeliveryTime") String maxDeliveryTime,
   ) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
