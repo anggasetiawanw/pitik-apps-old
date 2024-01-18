@@ -318,7 +318,7 @@ class CreateBookStockPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "${controller.skuBookSO.controller.sumKg.value}kg",
+                                      "${controller.skuBookSO.controller.sumKg.value.toStringAsFixed(2)}kg",
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       overflow: TextOverflow.clip,
                                     ),

@@ -1,5 +1,6 @@
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/customer_model.dart';
+import 'package:model/internal_app/goods_received_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
 import 'package:model/profile.dart';
@@ -39,6 +40,9 @@ class Order {
   String? deliveryTime;
   bool? withDeliveryFee;
   int? deliveryFee;
+
+  @IsChild()
+  GoodsReceived? goodsReceived;
 
   @IsChild()
   Customer? customer;
@@ -96,6 +100,7 @@ class Order {
     this.deliveryTime,
     this.withDeliveryFee,
     this.deliveryFee,
+    this.goodsReceived,
   });
 
   static Order toResponseModel(Map<String, dynamic> map) {
@@ -142,6 +147,7 @@ class Order {
       deliveryTime: map['deliveryTime'],
       withDeliveryFee: map['withDeliveryFee'],
         deliveryFee: map['deliveryFee'],
+        goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
     );
   }
 }
