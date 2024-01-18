@@ -10,6 +10,7 @@ import 'package:dao_impl/x_app_id_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,7 @@ class LoginActivityController extends GetxController {
       loginWithGmail(accessToken!);
     }
   });
-  
+
   late AppleSignInButton appleLoginButton = AppleSignInButton(onUserResult: (identityToken, error) {
     isLoading.value = true;
     if (identityToken == null && error != null) {
@@ -157,9 +158,11 @@ class LoginActivityController extends GetxController {
                 Get.snackbar("Pesan", "Error, $stacktrace", duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
               },
               onTokenInvalid: Constant.invalidResponse()));
-    } catch (err) {
+    } catch (err, st) {
       isLoading.value = false;
       Get.snackbar("Pesan", "Terjadi Kesalah Internal, $err", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      FirebaseCrashlytics.instance.recordError("Errors On Login Google : $err", st, fatal: false);
+      FirebaseCrashlytics.instance.log("Errors On Login Google : $err");
     }
   }
 
