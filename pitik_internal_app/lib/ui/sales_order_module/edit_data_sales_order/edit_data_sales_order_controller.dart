@@ -5,6 +5,7 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:components/switch_linear/switch_linear.dart';
@@ -206,6 +207,7 @@ class EditDataSalesOrderController extends GetxController {
 
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
+  int countApi =0;
 
   @override
   void onInit() {
@@ -222,6 +224,8 @@ class EditDataSalesOrderController extends GetxController {
     getCategorySku();
     if (isInbound.isTrue) {
       getListSource();
+    } else {
+        countingApi();
     }
     skuCard = SkuCardOrder(
       controller: InternalControllerCreator.putSkuCardOrderController("skuOrder", context),
@@ -262,6 +266,15 @@ class EditDataSalesOrderController extends GetxController {
     Timer(const Duration(milliseconds: 500), () async {
       await loadData(orderDetail);
     });
+  }
+
+  void countingApi(){
+    countApi++;
+    if(countApi == 4){
+      timeEnd = DateTime.now();
+      Duration totalTime = timeEnd.difference(timeStart);
+      GlobalVar.trackRenderTime("Edit_Penjualan", totalTime);
+    }
   }
 
   refreshtotalPurchase() {
@@ -371,6 +384,7 @@ class EditDataSalesOrderController extends GetxController {
         isLoadData.value = false;
       }
     }
+    countingApi();
   }
 
   void generateListProduct(int idx) {
@@ -410,6 +424,7 @@ class EditDataSalesOrderController extends GetxController {
               for (var result in body.data) {
                 listCustomer.value.add(result!);
               }
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -459,6 +474,7 @@ class EditDataSalesOrderController extends GetxController {
               this.mapListRemark.value = mapListRemark;
 
               spinnerCategories.controller.generateItems(mapListRemark);
+              countingApi();
             });
 
             for (var result in listCategories.value) {
