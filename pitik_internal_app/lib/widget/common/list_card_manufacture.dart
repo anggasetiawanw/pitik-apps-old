@@ -124,14 +124,18 @@ class CardListManufacture extends StatelessWidget {
               height: 6,
             ),
             Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dibuat: ",
+                  "Dibuat Oleh: ",
                   style: AppTextStyle.greyTextStyle,
                 ),
-                Text(
-                  "${manufacture.createdBy}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
+                Expanded(
+                  child: Text(
+                    "${manufacture.createdBy}",
+                    style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
+                    overflow: TextOverflow.clip,
+                  ),
                 )
               ],
             ),

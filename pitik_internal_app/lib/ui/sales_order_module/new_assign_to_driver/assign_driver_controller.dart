@@ -228,7 +228,7 @@ class AssignDriverController extends GetxController {
       (element) => element!.fullName == spinnerDriver.controller.textSelected.value,
     );
     DateTime? resultDate;
-    if (dtDeliveryTime.getLastTimeSelectedText() != "00:00") {
+    if (dtDeliveryTime.getLastTimeSelectedText() != "00:00" && dtDeliveryTime.getLastTimeSelectedText() != "") {
       DateTime deliveryDate = DateFormat("dd/MM/yyyy").parse(dtDeliveryDate.getLastTimeSelectedText());
       DateFormat deliveryTime = DateFormat("HH:mm");
       resultDate = DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).hour, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).minute);

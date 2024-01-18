@@ -23,6 +23,7 @@ import 'package:model/internal_app/checkin_model.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/widget/common/checkin_component.dart';
 class DeliveryConfirmSOController extends GetxController {
     BuildContext context;
@@ -177,13 +178,24 @@ class DeliveryConfirmSOController extends GetxController {
                     sumPrice.value += product.weight! * product.price!;
                 }
             } else {
-                if (product.category!.name! == AppStrings.LIVE_BIRD ||product.category!.name! == AppStrings.AYAM_UTUH ||product.category!.name! == AppStrings.BRANGKAS){
+                if(order.returnStatus == EnumSO.returnedPartial){
+                    if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
                     sumChick.value += product.quantity! - product.returnQuantity!;
                     sumKg.value += (product.weight! - product.returnWeight!);
                     sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
                     } else {
                     sumKg.value += (product.weight! - product.returnWeight!);
                     sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+                    }
+                } else {
+                    if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
+                        sumChick.value += product.returnQuantity!;
+                        sumKg.value += product.returnWeight!;
+                        sumPrice.value += product.returnWeight! * product.price!;
+                    } else {
+                        sumKg.value += product.returnWeight!;
+                        sumPrice.value += product.returnWeight! * product.price!;
+                    }
                 }
             }
         }

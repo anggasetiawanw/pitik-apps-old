@@ -148,38 +148,62 @@ class DeliveryDetailSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asd"),
               headerText: "${products.name}",
               child: Column(
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                   if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                   if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
       } else {
-        return Container(
-          margin: const EdgeInsets.only(top: 16),
-          child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
-              headerText: "${products.name}",
-              child: Column(
-                children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
-                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                ],
-              )),
-        );
+        if (controller.order.returnStatus == "FULL") {
+          return Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Expandable(
+                controller: GetXCreator.putAccordionController("sku${products.name}delivewaabcasddz"),
+                headerText: "${products.name}",
+                child: Column(
+                  children: [
+                    if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                    if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                    if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
+                    if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                    if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                    if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
+                    if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  ],
+                )),
+          );
+        } else {
+          if (products.weight! - products.returnWeight! != 0 || products.quantity! - products.returnQuantity! != 0) {
+            return Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: Expandable(
+                  controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
+                  headerText: "${products.name}",
+                  child: Column(
+                    children: [
+                      if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                      if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                      if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                    ],
+                  )),
+            );
+          } else {
+            return const SizedBox();
+          }
+        }
       }
     }
 
@@ -445,6 +469,19 @@ class DeliveryDetailSO extends StatelessWidget {
                         Column(
                           children: controller.order.products!.map((e) => customExpandalbe(e!)).toList(),
                         ),
+                        if (controller.order.type! == "LB") ...[
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            "Detail Catatan",
+                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
+                            overflow: TextOverflow.clip,
+                          ),
+                          Column(
+                            children: controller.order.productNotes!.map((e) => customExpandalbe(e!)).toList(),
+                          ),
+                        ],
                         totalPenjualan(),
                         if (controller.isSendItem.isTrue) controller.efRemark,
                         (controller.order.status == "DELIVERED" || controller.order.status == "RECEIVED") && controller.order.paymentMethod != null ? payment() : const SizedBox(),

@@ -225,7 +225,7 @@ class DetailSalesOrderController extends GetxController {
     sumPrice.value = 0;
     isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
     priceDelivery.value = data.deliveryFee?? 0;
-    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered|| orderDetail.value!.status == EnumSO.received|| orderDetail.value!.status == EnumSO.rejected) {
+    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered || orderDetail.value!.status == EnumSO.rejected) {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
@@ -237,14 +237,25 @@ class DetailSalesOrderController extends GetxController {
             sumPrice.value += product.weight! * product.price!;
           }
         } else {
-          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
-            sumChick.value += product.quantity! - product.returnQuantity!;
-            sumKg.value += (product.weight! - product.returnWeight!);
-            sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-          } else {
-            sumKg.value += (product.weight! - product.returnWeight!);
-            sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-          }
+            if(orderDetail.value!.returnStatus == EnumSO.returnedPartial){
+                if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+                sumChick.value += product.quantity! - product.returnQuantity!;
+                sumKg.value += (product.weight! - product.returnWeight!);
+                sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+                } else {
+                sumKg.value += (product.weight! - product.returnWeight!);
+                sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+                }
+            } else {
+                if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
+                    sumChick.value += product.returnQuantity!;
+                    sumKg.value += product.returnWeight!;
+                    sumPrice.value += product.returnWeight! * product.price!;
+                } else {
+                    sumKg.value += product.returnWeight!;
+                    sumPrice.value += product.returnWeight! * product.price!;
+                }
+            }
         }
       }
     } else {

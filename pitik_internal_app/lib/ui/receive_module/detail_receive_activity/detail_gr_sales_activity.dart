@@ -46,7 +46,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController> {
                     overflow: TextOverflow.clip,
                   ),
                 ),
-                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "", grStatus: controller.orderDetail.value!.grStatus),
+                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "", grStatus: controller.orderDetail.value!.grStatus,soPage: false,),
               ],
             ),
             Text(
@@ -250,7 +250,7 @@ class DetailGrOrder extends GetView<DetailGrOrderController> {
                 if (products.returnQuantity != 0) infoDetailSku("Jumlah Ekor", "${products.returnQuantity ?? products.quantity} Ekor"),
                 if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                 if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                if (products.returnWeight != 0) infoDetailSku("Kebutuhan", "${products.returnWeight ?? products.quantity} Kg"),
+                if (products.returnWeight != 0) infoDetailSku("Kebutuhan", "${products.returnWeight ?? products.weight} Kg"),
                 if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             )),
@@ -313,11 +313,11 @@ class DetailGrOrder extends GetView<DetailGrOrderController> {
                             height: 20,
                           ),
                           Text(
-                            controller.orderDetail.value!.status == "RECEIVED" ? "Detail SKU Penerimaan" : "Detail SKU Pengembalian",
+                            controller.orderDetail.value!.grStatus == "RECEIVED" ? "Detail SKU Penerimaan" : "Detail SKU Pengembalian",
                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                             overflow: TextOverflow.clip,
                           ),
-                          controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
+                          controller.orderDetail.value!.grStatus == "RECEIVED"  ?controller.orderDetail.value!.goodsReceived == null ? const SizedBox() : listExpandadle(controller.orderDetail.value!.goodsReceived?.products as List<Products?>) : controller.orderDetail.value!.products == null ? const SizedBox() : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
                           controller.orderDetail.value!.type! == "LB"
                               ? const SizedBox(
                                   height: 16,

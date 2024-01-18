@@ -343,7 +343,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                         ],
                         if(item.weight !=null && item.weight !=0 )...[
                             const SizedBox(height: 4,),
-                            infoDetailSKU("Total kg", "${item.weight} Kg")
+                            infoDetailSKU("Total kg", "${item.weight?.toStringAsFixed(2)} Kg")
                         ]
                     ],
                 ),
@@ -422,7 +422,7 @@ class ManufactureDetailActivity extends StatelessWidget {
               ),
             ),
           ),
-                controller.manufactureModel.status == "CANCELLED"  ? const SizedBox() : bottomNavbar() 
+                controller.manufactureModel.status == "CANCELLED"  ? const SizedBox() : bottomNavbar()
         ],
       ),
     ));

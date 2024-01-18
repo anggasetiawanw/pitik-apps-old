@@ -3,6 +3,7 @@ import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 import 'package:model/internal_app/product_model.dart';
 
 ///@author Robertus Mahardhi Kuncoro
@@ -98,11 +99,13 @@ class SkuCardGrController extends GetxController {
         String error = "";
         for (int i = 0; i < index.value.length; i++) {
             int whichItem = index.value[i];
-            if (efSumChickReceived.value[whichItem].getInput().isEmpty) {
-                efSumChickReceived.value[whichItem].controller.showAlert();
-                Scrollable.ensureVisible(efSumChickReceived.value[whichItem].controller.formKey.currentContext!);
-                isValid = false;
-                return [isValid, error];
+            if(products[whichItem]!.category!.name == AppStrings.AYAM_UTUH || products[whichItem]!.category!.name == AppStrings.KARKAS ||products[whichItem]!.category!.name == AppStrings.BRANGKAS || products[whichItem]!.category!.name == AppStrings.LIVE_BIRD){
+                if (efSumChickReceived.value[whichItem].getInput().isEmpty) {
+                    efSumChickReceived.value[whichItem].controller.showAlert();
+                    Scrollable.ensureVisible(efSumChickReceived.value[whichItem].controller.formKey.currentContext!);
+                    isValid = false;
+                    return [isValid, error];
+                }
             }
 
             if (efSumWeightReceived.value[whichItem].getInput().isEmpty) {

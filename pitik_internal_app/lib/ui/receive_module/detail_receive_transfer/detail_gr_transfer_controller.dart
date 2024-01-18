@@ -27,18 +27,21 @@ class DetailGRTransferController extends GetxController {
         GlobalVar.track("Click_Cancel_Penerimaan_Transfer");
         Get.back();
         cancelGRTransfer(context);
-    });
-    ButtonOutline noCancelButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("No Button"), label: "Tidak", onClick: (){
+      });
+  ButtonOutline noCancelButton = ButtonOutline(
+      controller: GetXCreator.putButtonOutlineController("No Button"),
+      label: "Tidak",
+      onClick: () {
         Get.back();
-    });
+      });
 
-    SpinnerField assignDriver = SpinnerField(controller: GetXCreator.putSpinnerFieldController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value){});
+  SpinnerField assignDriver = SpinnerField(controller: GetXCreator.putSpinnerFieldController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value) {});
 
-    var isLoading = false.obs;
-    late TransferModel transferModel;
-    late DateTime createdDate;
+  var isLoading = false.obs;
+  late TransferModel transferModel;
+  late DateTime createdDate;
 
-    Rxn<GoodsReceived> goodReceiptDetail = Rxn<GoodsReceived>();
+  Rxn<GoodsReceived> goodReceiptDetail = Rxn<GoodsReceived>();
 
     DateTime timeStart = DateTime.now();
     DateTime timeEnd = DateTime.now();
@@ -156,22 +159,21 @@ class DetailGRTransferController extends GetxController {
                 "Pesan",
                 "Terjadi kesalahan internal",
                 snackPosition: SnackPosition.TOP,
-                    duration: const Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
-                );
-                //  isLoading.value = false;
-                },
-                onTokenInvalid: Constant.invalidResponse()
-            )
-        );
-    }
+              );
+              isLoading.value = false;
+            },
+            onTokenInvalid: Constant.invalidResponse()));
+  }
 }
+
 class DetailGRTransferBindings extends Bindings {
-    BuildContext context;
-    DetailGRTransferBindings({required this.context});
-    @override
-    void dependencies() {
-        Get.lazyPut(() => DetailGRTransferController(context: context));
-    }
+  BuildContext context;
+  DetailGRTransferBindings({required this.context});
+  @override
+  void dependencies() {
+    Get.lazyPut(() => DetailGRTransferController(context: context));
+  }
 }
