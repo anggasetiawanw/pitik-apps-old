@@ -856,7 +856,11 @@ class TransferRequestController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, ListApi.pathFeedStocks(coop.farmingCycleId!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        _setupSpinnerBrand(field: feedSpinnerField, productList: (body as ProductsResponse).data);
+                        if ((body as ProductsResponse).data.isNotEmpty) {
+                            feedStockSummaryList.value = body.data;
+                        }
+
+                        _setupSpinnerBrand(field: feedSpinnerField, productList: body.data);
                         _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
@@ -878,7 +882,11 @@ class TransferRequestController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, ListApi.pathOvkStocks(coop.farmingCycleId!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        _setupSpinnerBrand(field: ovkSpinnerField, productList: (body as ProductsResponse).data, isFeed: false);
+                        if ((body as ProductsResponse).data.isNotEmpty) {
+                            feedStockSummaryList.value = body.data;
+                        }
+
+                        _setupSpinnerBrand(field: ovkSpinnerField, productList: body.data, isFeed: false);
                         _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
@@ -902,8 +910,6 @@ class TransferRequestController extends GetxController {
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if ((body as StockSummaryResponse).data != null && body.data!.summaries.isNotEmpty) {
-                            feedStockSummaryList.value = body.data!.summaries;
-
                             for (var product in body.data!.summaries) {
                                 if (product != null) {
                                     if (product.subcategoryCode != null && product.subcategoryCode == "PRESTARTER") {
