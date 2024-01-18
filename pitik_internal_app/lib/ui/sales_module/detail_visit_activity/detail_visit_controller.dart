@@ -1,3 +1,4 @@
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,9 @@ class DetailVisitController extends GetxController {
     String? salerPerson;
     Rxn<VisitCustomer> customer = Rxn<VisitCustomer>();
     Rxn<DateTime> dateCustomer = Rxn<DateTime>();
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
 
     @override
     void onInit() {
@@ -41,6 +45,9 @@ class DetailVisitController extends GetxController {
                 onResponseDone: (code, message, body, id, packet) {
                     customer.value = (body as VisitCustomerResponse).data;
                     isLoading.value = false;
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    GlobalVar.trackRenderTime("Detail_Visit_Customer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -52,7 +59,7 @@ class DetailVisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

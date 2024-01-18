@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -54,6 +55,7 @@ class HomePageCustomer extends StatelessWidget {
                                     controller: GetXCreator.putButtonFillController("dataBaruHome"),
                                     label: "Data Baru",
                                     onClick: () {
+                                        GlobalVar.track("Click_Data_Baru");
                                         Get.toNamed(RoutePage.newDataCustomer)!.then((value) {
                                             controller.isLoading.value =true;
                                             controller.listCustomer.value.clear();
@@ -97,7 +99,7 @@ class HomePageCustomer extends StatelessWidget {
                         controller.searchValue.value = text;
                         controller.getSearchCustomer();
                     });
-                 
+
                 } else if (text.length <= 1) {
                     if (debounce?.isActive ?? false) debounce?.cancel();
                     controller.isLoading.value = false;

@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -36,6 +37,7 @@ class ManufactureOutputController extends GetxController {
     var isLoadData = false.obs;
 
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
+        GlobalVar.track("Click_Konfirmasi_Output_Manufaktur");
         Get.back();
         updateManufacture("OUTPUT_CONFIRMED");
     });
@@ -52,14 +54,14 @@ class ManufactureOutputController extends GetxController {
         }
         Timer(const Duration(milliseconds: 100), () {
             for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
-                skuCard.controller.spinnerCategories.value[i].controller.generateItems(mapList);     
+                skuCard.controller.spinnerCategories.value[i].controller.generateItems(mapList);
                 skuCard.controller.spinnerCategories.value[i].controller.textSelected.value ="";
                 skuCard.controller.spinnerSku.value[i].controller..textSelected.value =""..disable();
                 skuCard.controller.editFieldJumlahAyam.value[i]..setInput("")..controller.disable()..controller.visibleField();
                 skuCard.controller.editFieldJumlahKg.value[i]..setInput("")..controller.disable()..controller.invisibleField();
             }
             skuCard.controller.setMaplist(listCategoriesSelected.value);
-            this.mapList.value = mapList; 
+            this.mapList.value = mapList;
         });
     });
 
@@ -67,6 +69,10 @@ class ManufactureOutputController extends GetxController {
     var isEdit = false.obs;
     late DateTime createdDate;
     EditField efTotalKG = EditField(controller: GetXCreator.putEditFieldController("efTotalKGPOGR"), label: "Total/Global(Kg)*", hint: "Ketik di sini", alertText: "Total Kg harus diisi", textUnit: "Kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+    int countApi = 0;
 
     @override
     void onInit() {
@@ -91,11 +97,20 @@ class ManufactureOutputController extends GetxController {
 
         isLoading.value = true;
         getManufactureOutput();
-        Timer(const Duration(milliseconds: 500), () { 
+        Timer(const Duration(milliseconds: 500), () {
             Get.find<SkuCardManufactureController>(tag: "SkuCardManufacure").idx.listen((p0) {
                 generateListProduct(p0);
             });
         });
+    }
+
+    void countingApi(){
+        countApi++;
+        if(countApi == 2){
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("Form Manufacture_Manufaktur", totalTime);
+        }
     }
 
     void generateListProduct(int idx) {
@@ -141,7 +156,7 @@ class ManufactureOutputController extends GetxController {
 
             }
         }
-       
+
         List<String> items = typeOutput.controller.textSelected.value.split(" , ");
         for (var item in items) {
         CategoryModel? selected = listCategories.value.firstWhereOrNull((element) => element!.name! == item);
@@ -149,13 +164,13 @@ class ManufactureOutputController extends GetxController {
         }
         for(int i =0 ; i < skuCard.controller.itemCount.value ; i++){
             skuCard.controller.listSku.value[i] = listSku;
-            skuCard.controller.spinnerCategories.value[i].controller.generateItems(listKategori);      
+            skuCard.controller.spinnerCategories.value[i].controller.generateItems(listKategori);
             skuCard.controller.setMaplist(listCategoriesSelected.value);
-            mapList.value = listKategori; 
+            mapList.value = listKategori;
         }
         mapList.value = listKategori;
         skuCard.controller.removeCard(skuCard.controller.itemCount.value - 1);
-     
+
     }
 
     void getProductCategories(){
@@ -168,6 +183,7 @@ class ManufactureOutputController extends GetxController {
                     for (var result in (body as CategoryListResponse).data) {
                         listCategories.value.add(result);
                     }
+                    countingApi();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -208,6 +224,7 @@ class ManufactureOutputController extends GetxController {
                         listManufactureOutput.value.add(result);
                     }
                     isLoading.value = false;
+                    countingApi();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -234,7 +251,7 @@ class ManufactureOutputController extends GetxController {
 
     void updateManufacture(String status){
         List ret = validation();
-        if(ret[0]){  
+        if(ret[0]){
             isLoading.value = true;
             Service.push(
                 service: ListApi.updateManufactureById,
@@ -247,7 +264,7 @@ class ManufactureOutputController extends GetxController {
                     },
                     onResponseFail: (code, message, body, id, packet) {
                         var stock = "Manufacture output's weight is greater than the input!";
-                        if ((body as ErrorResponse).error!.message!.contains(stock)) {                    
+                        if ((body as ErrorResponse).error!.message!.contains(stock)) {
                             Get.snackbar(
                             "Pesan",
                             "Gagal membuat output, total output lebih besar dari total input",
@@ -255,7 +272,7 @@ class ManufactureOutputController extends GetxController {
                         duration: const Duration(seconds: 5),
                             colorText: Colors.white,
                             backgroundColor: Colors.red,);
-                        } else {                    
+                        } else {
                             Get.snackbar(
                             "Pesan",
                             "Terjadi Kesalahan, ${(body).error!.message}",
@@ -288,7 +305,7 @@ class ManufactureOutputController extends GetxController {
             typeOutput.controller.showAlert();
             Scrollable.ensureVisible(typeOutput.controller.formKey.currentContext!);
             return ret = [false, ""];
-        }  
+        }
 
         if(efTotalKG.getInput().isEmpty){
             efTotalKG.controller.showAlert();

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class TransferHomeController extends GetxController {
       controller: GetXCreator.putButtonFillController("createTransfer"),
       label: "Buat Transfer",
       onClick: () {
+        GlobalVar.track("Click_Buat_Transfer");
         Get.toNamed(RoutePage.transferForm, arguments: [null, false])!.then((value) {
           isLoading.value = true;
           listTransfer.value.clear();
@@ -39,7 +41,8 @@ class TransferHomeController extends GetxController {
   Rx<List<TransferModel?>> listTransfer = Rx<List<TransferModel>>([]);
   var isLoading = false.obs;
   var isLoadMore = false.obs;
-
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
   @override
   void onReady() {
     super.onReady();
@@ -67,6 +70,7 @@ class TransferHomeController extends GetxController {
   }
 
   void getListTransfer() {
+    timeStart = DateTime.now();
     Service.push(
         service: ListApi.getListInternalTransfer,
         context: context,
@@ -89,6 +93,9 @@ class TransferHomeController extends GetxController {
                   isLoading.value = false;
                 }
               }
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                GlobalVar.trackRenderTime("Data_Transfer", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
