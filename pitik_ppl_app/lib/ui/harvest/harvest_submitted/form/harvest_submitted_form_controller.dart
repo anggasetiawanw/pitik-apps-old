@@ -32,7 +32,7 @@ class HarvestSubmittedFormController extends GetxController {
 
     late Coop coop;
     late Harvest harvest;
-    late bool isEdit;
+    late bool isEdit = false;
     late DateTimeField submittedDateField;
     late MultipleDynamicFormField<Harvest> submissionField;
 
@@ -106,28 +106,12 @@ class HarvestSubmittedFormController extends GetxController {
     }
 
     void _fillData() {
-        _increaseCard(index: 0, harvest: harvest);
+        minWeightFieldList[0].setInput(harvest.minWeight != null ? harvest.minWeight!.toStringAsFixed(2) : '');
+        maxWeightFieldList[0].setInput(harvest.maxWeight != null ? harvest.maxWeight!.toStringAsFixed(2) : '');
+        totalChickenFieldList[0].setInput(harvest.quantity != null ? harvest.quantity!.toStringAsFixed(2) : '');
+        reasonFieldList[0].controller.setSelected(harvest.reason ?? '');
+
         submittedDateField.controller.setTextSelected(harvest.datePlanned ?? '');
-        submissionField.controller.addData(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                            Expanded(child: minWeightFieldList[0]),
-                            Text('\ts/d\t', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                            Expanded(child: maxWeightFieldList[0])
-                        ]
-                    ),
-                    totalChickenFieldList[0],
-                    reasonFieldList[0]
-                ],
-            ),
-            object: harvest,
-            index: 0
-        );
     }
 
     void _increaseCard({required int index, Harvest? harvest}) {
@@ -141,7 +125,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "Kg",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.minWeight = text.isNotEmpty ? double.parse(text) : harvest.minWeight;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         EditField maxWeightField = EditField(
@@ -153,7 +141,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.maxWeight = text.isNotEmpty ? double.parse(text) : harvest.maxWeight;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         EditField totalChickenField = EditField(
@@ -164,7 +156,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "Kg",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.quantity = text.isNotEmpty ? int.parse(text) : harvest.quantity;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         SpinnerField reasonField = SpinnerField(
@@ -173,7 +169,11 @@ class HarvestSubmittedFormController extends GetxController {
             hint: "Alasan Panen",
             alertText: "Oops alasan panen belum dipilih",
             items: const {"Penjarangan": false, "Panen Normal/Panen Raya": false, "Panen Sakit": false, "Panen Penghabisan Kandang": false, "Afkir": false, "Mendesak": false, "Panen Bertahap": false},
-            onSpinnerSelected: (text) {}
+            onSpinnerSelected: (text) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.reason = text;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         if (harvest != null) {

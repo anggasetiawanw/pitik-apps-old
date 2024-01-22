@@ -422,10 +422,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 16),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Row(
@@ -451,10 +451,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Row(
@@ -486,10 +486,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Row(
@@ -521,10 +521,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Row(
@@ -556,10 +556,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Row(
@@ -591,10 +591,10 @@ class CoopDashboardController extends GetxController {
                     ),
                     const SizedBox(height: 16),
                     Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.gray)),
+                            border: Border.fromBorderSide(BorderSide(width: 1, color: GlobalVar.outlineColor)),
                             color: Colors.white
                         ),
                         child: Column(

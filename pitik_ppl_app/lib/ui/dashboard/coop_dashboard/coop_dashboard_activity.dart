@@ -47,7 +47,7 @@ class CoopDashboardActivity extends GetView<CoopDashboardController> {
                 bottomNavigationBar: Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                        boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 5)],
+                        boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 3)],
                     ),
                     child: ClipRRect(
                         borderRadius: const BorderRadius.only(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
@@ -22,6 +23,7 @@ import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/request_chickin.dart';
 import 'package:model/response/request_chickin_response.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DocInController extends GetxController {
     BuildContext context;
@@ -615,8 +617,28 @@ class DocInController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(generatePayload())],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            Get.back();
                             isLoading.value = false;
+                            Get.off(TransactionSuccessActivity(
+                                keyPage: "docInSaved",
+                                message: "Selamat kamu sudah selesai melakukan chickin",
+                                showButtonHome: false,
+                                showButtonShare: true,
+                                onTapClose: () => Get.back(result: true),
+                                onTapHome: () {},
+                                onTapShare: () async {
+                                    String text = 'DOC-in Kawan Pitik\n\n';
+                                    text += 'Cabang : ${coop.coopCity}\n';
+                                    text += 'Kandang : ${coop.coopName}\n';
+                                    text += 'Populasi : ${efReceiveDoc.getInputNumber() != null ? efReceiveDoc.getInputNumber()!.toInt() : '-'} Ekor\n';
+                                    text += 'BW : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} gr\n';
+                                    text += 'Uniformity : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} %\n';
+                                    text += 'Jam truk berangkat : ${dtTruckGo.getLastTimeSelectedText()}\n';
+                                    text += 'Jam truk tiba : ${dtTruckCome.getLastTimeSelectedText()}\n';
+                                    text += 'Selesai DOC In : ${dtFinishDoc.getLastTimeSelectedText()}\n';
+
+                                    Share.share(text);
+                                },
+                            ));
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;

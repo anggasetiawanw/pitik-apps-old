@@ -139,12 +139,12 @@ class GrConfirmationController extends GetxController {
                             procurement = body.data!;
 
                             // fill photo confirmation
-                            grPhotoList.value = body.data!.photos;
-                            if (grPhotoList.isNotEmpty) {
-                                grPhotoField.getController().setInformasiText("File telah terupload");
-                                grPhotoField.getController().showInformation();
-                                grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
-                            }
+                            // grPhotoList.value = body.data!.photos;
+                            // if (grPhotoList.isNotEmpty) {
+                            //     grPhotoField.getController().setInformasiText("File telah terupload");
+                            //     grPhotoField.getController().showInformation();
+                            //     grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
+                            // }
                         }
 
                         _createProductReceivedCards(productList: procurement.details);

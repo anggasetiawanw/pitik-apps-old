@@ -32,7 +32,7 @@ class RequestDocIn extends StatelessWidget {
                             children: [
                                 Expanded(child: controller.btNext),
                                 if(controller.boEdit.controller.activeField.isTrue)...[
-                                    const SizedBox(width: 8,),
+                                    const SizedBox(width: 8),
                                     Expanded(child: controller.boEdit)
                                 ]
                             ]

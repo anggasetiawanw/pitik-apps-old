@@ -82,7 +82,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
 
                 coopFilteredList.refresh();
             },
-            onCategorySelected: (text) {},
+            onCategorySelected: (text) => generateCoopList(tabController.index == 0),
         );
         searchCoopBarField.controller.setSelectedValue('Semua');
         generateCoopList(true);

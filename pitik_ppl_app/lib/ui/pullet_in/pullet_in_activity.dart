@@ -83,7 +83,10 @@ class PulletInActivity extends GetView<PulletInController> {
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                             Text("Tipe Pullet", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                            Text('-', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                            Text(
+                                                                controller.request.value!.chickType != null ? controller.request.value!.chickType!.name ?? '-' : '-',
+                                                                style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                            )
                                                         ]
                                                     ),
                                                     const SizedBox(height: 4),

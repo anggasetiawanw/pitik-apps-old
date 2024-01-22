@@ -8,6 +8,8 @@ class MultipleDynamicFormFieldController<T> extends GetxController {
     RxList<Widget> listChildAdded  = <Widget>[].obs;
     RxList<T> listData = <T>[].obs;
 
+    void updateData({required T object, required int index}) => listData[index] = object;
+
     void addData({required Widget child, required T object, required int index}) {
         listData.insert(index > 0 ? index - 1 : index, object);
         listChildAdded.insert(index, child);

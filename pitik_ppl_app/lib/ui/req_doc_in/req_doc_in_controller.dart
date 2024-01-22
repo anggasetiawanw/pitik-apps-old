@@ -55,10 +55,10 @@ class RequestDocInController extends GetxController {
     DateTimeField dtTanggal = DateTimeField(
         controller: GetXCreator.putDateTimeFieldController("dfTanggal"),
         label: "Tanggal*",
-        hint: "dd/MM/yyyy",
+        hint: "yyyy-MM-dd",
         alertText: "Oops tanggal DOC-In belum dipilih",
-        onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(dateTime)),
-        flag: 1,
+        onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}'),
+        flag: DateTimeField.DATE_FLAG,
     );
 
     EditField efPopulasi = EditField(
@@ -78,7 +78,7 @@ class RequestDocInController extends GetxController {
         onClick: () {
             switch (btNext.controller.label.value) {
                 case "Simpan":
-                    if(isValid()){
+                    if(isValid()) {
                         _showBottomDialog();
                     }
                     break;
@@ -186,7 +186,7 @@ class RequestDocInController extends GetxController {
                             }
 
                             coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
-                            if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+                            if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
                                 if (allowApprove.isTrue) {
                                     btNext.controller.changeLabel("Setujui");
                                 } else {
@@ -225,25 +225,25 @@ class RequestDocInController extends GetxController {
     void setFieldByStatus() {
         coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
         if ((coop.statusText ?? "").toLowerCase()== SUBMISSION_STATUS.toLowerCase()) {
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
 
             btNext.controller.changeLabel("Simpan");
             boEdit.controller.disable();
             isLoading.value =false;
-        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase()== SUBMITTED_STATUS.toLowerCase()) {
             getDetailDocRequest();
             disableField();
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== PROSESSING.toLowerCase()) {
             getDetailDocRequest();
             disableField();
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
             boEdit.controller.disable();
         } else if((coop.statusText ?? "").toLowerCase()== APPROVED.toLowerCase()) {
             getDetailDocRequest();
@@ -253,40 +253,40 @@ class RequestDocInController extends GetxController {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
-        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_OVK.toLowerCase()) {
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== OVK_REJECTED.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             }else{
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
         } else if ((coop.statusText ?? "").toLowerCase()== APPROVED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== REJECTED.toLowerCase()) {
-            isLoading.value =false;
+            isLoading.value = false;
         }
     }
 
@@ -297,7 +297,7 @@ class RequestDocInController extends GetxController {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
-        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN || (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
@@ -449,7 +449,7 @@ class RequestDocInController extends GetxController {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text("Tanggal", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                                Text(DateFormat("dd/MM/yyyy").format(dtTanggal.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                                Text(dtTanggal.controller.textSelected.value, style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
                                             ],
                                         ),
                                         const SizedBox(height: 8,),
@@ -457,7 +457,7 @@ class RequestDocInController extends GetxController {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                                Text("${efPopulasi.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                                Text("${efPopulasi.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
                                             ],
                                         ),
                                     ],
@@ -485,7 +485,7 @@ class RequestDocInController extends GetxController {
     void processRequest() {
         isLoading.value = true;
         RequestChickin requestChickinBody = RequestChickin();
-        requestChickinBody.chickInDate = DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+        requestChickinBody.chickInDate = dtTanggal.controller.textSelected.value;
         requestChickinBody.initialPopulation = (efPopulasi.getInputNumber()??0).toInt();
         requestChickinBody.coopId = coop.id;
 
@@ -502,11 +502,11 @@ class RequestDocInController extends GetxController {
 
         if ((coop.statusText ?? "").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == REJECTED.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
-        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             if (allowApprove.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
-                requestChickinApprove.chickInDate =  DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+                requestChickinApprove.chickInDate =  dtTanggal.controller.textSelected.value;
                 approveRequestChickin(requestChickinApprove);
             } else {
                 updateRequestChickin(requestChickinBody);
@@ -515,7 +515,7 @@ class RequestDocInController extends GetxController {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty && isEdit.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
-                requestChickinApprove.chickInDate = DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+                requestChickinApprove.chickInDate = dtTanggal.controller.textSelected.value;
                 approveRequestChickin(requestChickinApprove);
             } else if(isEdit.isTrue) {
                 updateRequestChickin(requestChickinBody);
