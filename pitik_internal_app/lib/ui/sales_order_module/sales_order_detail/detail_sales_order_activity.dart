@@ -433,7 +433,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.booked && controller.orderDetail.value!.category == EnumSO.outbound) ...[
-                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                         Expanded(
                           child: controller.sendButton,
                         ),
@@ -455,7 +455,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         child: controller.bookStockButton,
                       ),
                     ] else if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
-                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) ...[
+                      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                         Expanded(
                           child: controller.editDriver,
                         ),
