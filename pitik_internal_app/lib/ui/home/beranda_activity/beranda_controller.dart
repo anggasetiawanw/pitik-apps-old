@@ -64,11 +64,11 @@ class BerandaController extends GetxController {
   }
 
   @override
-  void onReady() {
+  void onReady() async{
     super.onReady();
     checkVersion(Get.context!);
     getRole();
-    // await initValueMixpanel();
+    await initValueMixpanel();
   }
 
   void refreshHome(BuildContext context) {
