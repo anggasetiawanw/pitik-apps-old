@@ -73,7 +73,7 @@ class SkuCardManufacture extends StatelessWidget {
                       bottom: BorderSide(color:AppColors.outlineColor, width: 1),
                       left: BorderSide(color: AppColors.outlineColor, width: 1),
                       right: BorderSide(color: AppColors.outlineColor, width: 1),
-                      top: BorderSide(color: AppColors.outlineColor, width: 0),
+                      top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                     ),
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                   ),

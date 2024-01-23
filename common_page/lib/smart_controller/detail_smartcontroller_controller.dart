@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:common_page/smart_controller/dashboard_fan/dashboard_fan_activity.dart';
 import 'package:common_page/smart_controller/dashboard_lamp/dashboard_lamp_activity.dart';
-import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
 import 'package:common_page/smart_controller/setup_alarm/alarm_setup_activity.dart';
 import 'package:common_page/smart_controller/setup_cooler/cooler_setup_activity.dart';
 import 'package:common_page/smart_controller/setup_growth/growth_setup_activity.dart';
@@ -169,7 +168,7 @@ class SmartControllerDashboardController extends GetxController {
                     apiKey: 'smartControllerApi',
                     service: ListApi.getFloorList,
                     context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, coop.id],
+                    body: ['Bearer ${auth.token}', auth.id, coop.id ?? coop.coopId],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             if ((body as FloorListResponse).data != null) {

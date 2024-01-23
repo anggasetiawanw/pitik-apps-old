@@ -35,23 +35,30 @@ class DeliveryConfirmSO extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Informasi Pengiriman",
-                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
-                      style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Informasi Pengiriman",
+                        style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
+                      )
+                    ],
+                  ),
                 ),
-                OrderStatus(orderStatus: controller.order.status, returnStatus: controller.order.returnStatus, grStatus: controller.order.grStatus)
+                OrderStatus(
+                  orderStatus: controller.order.status,
+                  returnStatus: controller.order.returnStatus,
+                  grStatus: controller.order.grStatus,
+                  soPage: true,
+                )
               ],
             ),
             const SizedBox(
@@ -65,7 +72,30 @@ class DeliveryConfirmSO extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Driver", name: controller.order.driver!.fullName!),
+            InfoDetailHeader(title: "Dibuat Oleh", name: controller.order.userCreator?.email ?? "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title: "Sales Branch", name: controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title: "Driver", name: "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(title: "Target Pengiriman", name: controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            InfoDetailHeader(
+              title: "Waktu Pengiriman",
+              name: controller.order.deliveryTime != null
+                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
+                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : "-"
+                  : "-",
+            ),
           ],
         ),
       );
@@ -95,38 +125,62 @@ class DeliveryConfirmSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;aasstf"),
               headerText: "${products.name}",
               child: Column(
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                   if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                   if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
       } else {
-        return Container(
-          margin: const EdgeInsets.only(top: 16),
-          child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc"),
-              headerText: "${products.name}",
-              child: Column(
-                children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
-                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-                ],
-              )),
-        );
+        if (controller.order.returnStatus == "FULL") {
+          return Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Expandable(
+                controller: GetXCreator.putAccordionController("sku${products.name}delivewaabccxzzc"),
+                headerText: "${products.name}",
+                child: Column(
+                  children: [
+                    if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                    if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                    if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
+                    if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                    if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                    if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
+                    if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  ],
+                )),
+          );
+        } else {
+          if (products.weight! - products.returnWeight! != 0 || products.quantity! - products.returnQuantity! != 0) {
+            return Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: Expandable(
+                  controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc123123"),
+                  headerText: "${products.name}",
+                  child: Column(
+                    children: [
+                      if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                      if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
+                      if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                    ],
+                  )),
+            );
+          } else {
+            return const SizedBox();
+          }
+        }
       }
     }
 
@@ -211,7 +265,6 @@ class DeliveryConfirmSO extends StatelessWidget {
               ),
             ],
             if (controller.order.deliveryFee! > 0) ...[
-
               Row(
                 children: [
                   Expanded(
@@ -225,7 +278,6 @@ class DeliveryConfirmSO extends StatelessWidget {
                 ],
               )
             ],
-
             const SizedBox(
               height: 8,
             ),
@@ -279,6 +331,19 @@ class DeliveryConfirmSO extends StatelessWidget {
                         Column(
                           children: controller.order.products!.map((e) => customExpandalbe(e!)).toList(),
                         ),
+                        if (controller.order.type! == "LB") ...[
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            "Detail Catatan",
+                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
+                            overflow: TextOverflow.clip,
+                          ),
+                          Column(
+                            children: controller.order.productNotes!.map((e) => customExpandalbe(e!)).toList(),
+                          ),
+                        ],
                         totalPembelian(),
                         controller.paymentMethod,
                         controller.nominalMoney,

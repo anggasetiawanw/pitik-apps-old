@@ -281,7 +281,7 @@ class SalesOrderPage extends StatelessWidget {
                                     margin: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Center(
                                       child: Text(
-                                        "Data Penjualan Outbound Belum Ada",
+                                        controller.isFilter.isTrue || controller.isSearch.isTrue ? "Data Penjualan Outbound Tidak Ada" : "Data Penjualan Outbound Belum Ada",
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                         textAlign: TextAlign.center,
                                       ),
@@ -293,12 +293,12 @@ class SalesOrderPage extends StatelessWidget {
                           ? const Center(
                               child: ProgressLoading(),
                             )
-                          : controller.orderListInbound.isEmpty || Constant.isScRelation.isTrue
+                          : controller.orderListInbound.isEmpty
                               ? Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 16),
                                   child: Center(
                                     child: Text(
-                                      "Data Penjualan Inbound Belum Ada",
+                                      controller.isFilter.isTrue || controller.isSearch.isTrue ? "Data Penjualan Outbound Tidak Ada" :  "Data Penjualan Inbound Belum Ada",
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                       textAlign: TextAlign.center,
                                     ),
@@ -310,7 +310,7 @@ class SalesOrderPage extends StatelessWidget {
                 ),
               ],
             ),
-            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue) bottomNavbar(),
+            if (Constant.isSales.isTrue || Constant.isSalesLead.isTrue || Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue) bottomNavbar(),
           ],
         ),
       ),

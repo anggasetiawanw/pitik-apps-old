@@ -76,6 +76,7 @@ class EditField extends StatelessWidget {
         }
         return Convert.toDouble(editFieldController.text);
     }
+
     @override
     Widget build(BuildContext context) {
         if(Platform.isIOS){
@@ -86,6 +87,7 @@ class EditField extends StatelessWidget {
         Future.delayed(const Duration(milliseconds: 200), () {
             if (onInit) {
                 controller.textUnit.value = textUnit;
+                controller.hideLabel.value = hideLabel;
                 onInit = false;
             }
         });

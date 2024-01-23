@@ -74,88 +74,143 @@ class DocInActivity extends StatelessWidget {
         }
 
         return Obx(() =>
-            SafeArea(
-                child: Scaffold(
-                    backgroundColor: Colors.white,
-                    appBar: PreferredSize(
-                        preferredSize:const Size.fromHeight(110),
-                        child: AppBarFormForCoop(title: 'Data DOC In', coop: controller.coop)
-                    ),
-                    body:  controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
-                        children: [
-                            SingleChildScrollView(
-                                child: Container(
-                                    margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
-                                    child: Column(
-                                        children: [
-                                            header(),
-                                            controller.dtTanggal,
-                                            controller.efReceiveDoc,
-                                            controller.efMoreDOC,
-                                            Row(
-                                                children: [
-                                                    Expanded(child: controller.efBw),
-                                                    const SizedBox(width: 8),
-                                                    Expanded(child: controller.efUniform)
-                                                ]
-                                            ),
-                                            Row(
-                                                children: [
-                                                    Expanded(
-                                                        child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                                controller.dtTruckGo,
-                                                                Text("Dari Hatchery", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
-                                                            ],
-                                                        ),
+            Scaffold(
+                backgroundColor: Colors.white,
+                appBar: PreferredSize(
+                    preferredSize:const Size.fromHeight(60),
+                    child: AppBarFormForCoop(title: 'Data DOC In', coop: controller.coop, hideCoopDetail: true)
+                ),
+                body:  controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
+                    children: [
+                        SingleChildScrollView(
+                            child: Container(
+                                margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                                child: Column(
+                                    children: [
+                                        controller.isAlreadySubmit.isTrue ? Column(
+                                            children: [
+                                                Container(
+                                                    decoration: const BoxDecoration(
+                                                        color: GlobalVar.greenBackground,
+                                                        borderRadius: BorderRadius.all(Radius.circular(8))
                                                     ),
-                                                    const SizedBox(width: 8),
-                                                    Expanded(
-                                                        child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                                controller.dtTruckCome,
-                                                                Text("Kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
-                                                            ]
-                                                        )
-                                                    )
-                                                ]
-                                            ),
-                                            controller.dtFinishDoc,
-                                            controller.showRecord.isTrue ?  Container(
-                                                height: 40,
-                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                                decoration: BoxDecoration(
-                                                    color: GlobalVar.primaryLight2,
-                                                    borderRadius: BorderRadius.circular(8)
+                                                    padding: const EdgeInsets.all(12),
+                                                    child: Row(
+                                                        children: [
+                                                            SvgPicture.asset('images/checkbox_circle_green.svg'),
+                                                            const SizedBox(width: 8),
+                                                            Text("Kamu sudah selesai melakukan DOC in", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.green))
+                                                        ],
+                                                    ),
                                                 ),
-                                                child: Row(
-                                                    children: [
-                                                        SvgPicture.asset("images/calendar-line.svg"),
-                                                        const SizedBox(width: 8),
-                                                        Text("Awal Recoding ${controller.dateDoc}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500))
-                                                    ]
+                                                const SizedBox(height: 16)
+                                            ],
+                                        ) : const SizedBox(),
+                                        header(),
+                                        controller.dtTanggal,
+                                        controller.efReceiveDoc,
+                                        controller.efMoreDOC,
+                                        Row(
+                                            children: [
+                                                Expanded(child: controller.efBw),
+                                                const SizedBox(width: 8),
+                                                Expanded(child: controller.efUniform)
+                                            ]
+                                        ),
+                                        Row(
+                                            children: [
+                                                Expanded(
+                                                    child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                            controller.dtTruckGo,
+                                                            Text("Dari Hatchery", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
+                                                        ],
+                                                    ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Expanded(
+                                                    child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                            controller.dtTruckCome,
+                                                            Text("Kandang", style: GlobalVar.subTextStyle.copyWith(fontSize: 12))
+                                                        ]
+                                                    )
                                                 )
-                                            ): const SizedBox(),
-                                            controller.efDesc,
-                                            controller.mfSuratJalan,
-                                            controller.mfFormDOC,
-                                            controller.mfAnotherDoc,
-                                            const SizedBox(height: 100),
-                                            MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120) : const SizedBox()
-                                        ],
-                                    ),
+                                            ]
+                                        ),
+                                        controller.dtFinishDoc,
+                                        controller.showRecord.isTrue ?  Container(
+                                            height: 40,
+                                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                            decoration: BoxDecoration(
+                                                color: GlobalVar.primaryLight2,
+                                                borderRadius: BorderRadius.circular(8)
+                                            ),
+                                            child: Row(
+                                                children: [
+                                                    SvgPicture.asset("images/calendar-line.svg"),
+                                                    const SizedBox(width: 8),
+                                                    Text("Awal Recoding ${controller.dateDoc}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500))
+                                                ]
+                                            )
+                                        ): const SizedBox(),
+                                        controller.efDesc,
+                                        controller.mfSuratJalan,
+                                        controller.mfFormDOC,
+                                        controller.mfAnotherDoc,
+                                        controller.isAlreadySubmit.isTrue ? Column(
+                                            children: [
+                                                const SizedBox(height: 16),
+                                                Column(
+                                                    children: List.generate(controller.request.value != null && controller.request.value!.suratJalanPhotos != null ? controller.request.value!.suratJalanPhotos!.length : 0, (index) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(bottom: 16),
+                                                            child: ClipRRect(
+                                                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                child: Image.network(
+                                                                    controller.request.value!.suratJalanPhotos![index] != null ? controller.request.value!.suratJalanPhotos![index]!.url! : '',
+                                                                    width: MediaQuery.of(context).size.width - 36,
+                                                                    height: MediaQuery.of(context).size.width /2,
+                                                                    fit: BoxFit.fill,
+                                                                ),
+                                                            ),
+                                                        );
+                                                    }),
+                                                ),
+                                                const SizedBox(height: 16),
+                                                Column(
+                                                    children: List.generate(controller.request.value != null && controller.request.value!.docInFormPhotos != null ? controller.request.value!.docInFormPhotos!.length : 0, (index) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(bottom: 16),
+                                                            child: ClipRRect(
+                                                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                child: Image.network(
+                                                                    controller.request.value!.docInFormPhotos![index] != null ? controller.request.value!.docInFormPhotos![index]!.url! : '',
+                                                                    width: MediaQuery.of(context).size.width - 36,
+                                                                    height: MediaQuery.of(context).size.width /2,
+                                                                    fit: BoxFit.fill,
+                                                                ),
+                                                            ),
+                                                        );
+                                                    }),
+                                                )
+                                            ],
+                                        ) : const SizedBox(),
+                                        const SizedBox(height: 100),
+                                        MediaQuery.of(context).viewInsets.bottom > 0.0 ? const SizedBox(height: 120) : const SizedBox()
+                                    ],
                                 ),
                             ),
-                            bottomNavbar(),
-                            controller.isLoadingPicture.isTrue ? SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                child: const Center(child: ProgressLoading())
-                            ) : const SizedBox()
-                        ],
-                    ),
+                        ),
+                        controller.isAlreadySubmit.isFalse ? bottomNavbar() : const SizedBox(),
+                        controller.isLoadingPicture.isTrue ? SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: const Center(child: ProgressLoading())
+                        ) : const SizedBox()
+                    ]
                 )
             )
         );

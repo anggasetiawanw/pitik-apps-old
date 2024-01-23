@@ -94,13 +94,13 @@ class HarvestSubmittedDetailController extends GetxController {
         Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryLight2 :
                            statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.redBackground :
                            statusText == GlobalVar.DIPROSES || statusText == GlobalVar.SELESAI ? GlobalVar.greenBackground:
-                           statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI ? GlobalVar.blueBackground :
+                           statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI || statusText == GlobalVar.AVAILABLE ? GlobalVar.blueBackground :
                            Colors.white;
 
         Color textColor = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryOrange :
                           statusText == GlobalVar.DITOLAK || statusText == GlobalVar.ABORT ? GlobalVar.red :
                           statusText == GlobalVar.DIPROSES || statusText == GlobalVar.SELESAI ? GlobalVar.green:
-                          statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI ? GlobalVar.blue :
+                          statusText == GlobalVar.DEAL || statusText == GlobalVar.TEREALISASI || statusText == GlobalVar.AVAILABLE ? GlobalVar.blue :
                           Colors.white;
 
         return Container(
@@ -152,7 +152,7 @@ class HarvestSubmittedDetailController extends GetxController {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                                 Expanded(
-                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnHarvestSubmittedEdit"), label: "Edit", onClick: () => Get.toNamed(RoutePage.harvestSubmittedDetail, arguments: [
+                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnHarvestSubmittedEdit"), label: "Edit", onClick: () => Get.toNamed(RoutePage.harvestSubmittedForm, arguments: [
                                         coop, harvest.value, true
                                     ])),
                                 )
@@ -208,7 +208,7 @@ class HarvestSubmittedDetailController extends GetxController {
                                 keyPage: "harvestSubmittedApprove${harvest.value!.id}",
                                 message: "Kamu telah menyetujui permintaan panen",
                                 showButtonHome: false,
-                                onTapClose: () => Get.back(),
+                                onTapClose: () => Get.back(result: true),
                                 onTapHome: () {}
                             ));
                         },
@@ -251,7 +251,7 @@ class HarvestSubmittedDetailController extends GetxController {
                                         height: 200,
                                         width: 200,
                                     ),
-                                    onTapClose: () => Get.back(),
+                                    onTapClose: () => Get.back(result: true),
                                     onTapHome: () {}
                                 ));
                             },

@@ -27,7 +27,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
             backgroundColor: Colors.white,
             appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(50),
-                child: appBar(),
+                child: appBar()
             ),
             body: Obx(() =>
                 Stack(
@@ -67,10 +67,10 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         const SizedBox(width: 8),
                                                         Text("Belum siap timbang!", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                     ]
-                                                ],
+                                                ]
                                             ),
                                             Text("Baterai: ${controller.batteryStatus.value}%", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange))
-                                        ],
+                                        ]
                                     ),
                                     Padding(
                                         padding: const EdgeInsets.only(top: 16, bottom: 8),
@@ -90,18 +90,18 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         Text(
                                                             "Mulai Timbang ${Convert.getYear(controller.startWeighingTime)}/${Convert.getMonthNumber(controller.startWeighingTime)}/${Convert.getDay(controller.startWeighingTime)} - ${Convert.getHour(controller.startWeighingTime)}.${Convert.getMinute(controller.startWeighingTime)}",
                                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                        ),
-                                                    ],
-                                                ),
-                                            ),
-                                        ),
+                                                        )
+                                                    ]
+                                                )
+                                            )
+                                        )
                                     ),
                                     Row(
                                         children: [
                                             Expanded(child: controller.totalWeighingField),
                                             const SizedBox(width: 8),
                                             Expanded(child: controller.outstandingTotalWeighingField)
-                                        ],
+                                        ]
                                     ),
                                     Padding(
                                         padding: const EdgeInsets.only(top: 8),
@@ -111,10 +111,40 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                             color: GlobalVar.outlineColor,
                                         )
                                     ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                            GestureDetector(
+                                                onTap: () {
+                                                    controller.pageSelected.value = controller.pageSelected.value - 1 > 1 ? controller.pageSelected.value - 1 : 1;
+                                                    controller.generatePaginationNumber();
+                                                },
+                                                child: const Icon(Icons.arrow_back_ios, color: GlobalVar.primaryOrange),
+                                            ),
+                                            Expanded(
+                                                child: Center(
+                                                    child: SingleChildScrollView(
+                                                        physics: const AlwaysScrollableScrollPhysics(),
+                                                        scrollDirection: Axis.horizontal,
+                                                        child: controller.paginationNumber.value
+                                                    )
+                                                )
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                    controller.pageSelected.value = controller.pageSelected.value + 1 < controller.paginationNumber.value.children.length ? controller.pageSelected.value + 1 : controller.paginationNumber.value.children.length;
+                                                    controller.generatePaginationNumber();
+                                                },
+                                                child: const Icon(Icons.arrow_forward_ios, color: GlobalVar.primaryOrange),
+                                            )
+                                        ]
+                                    ),
+                                    const SizedBox(height: 8),
                                     Expanded(
                                         child: ListView(
+                                            physics: const AlwaysScrollableScrollPhysics(),
                                             children: [
-                                                const SizedBox(height: 8),
                                                 Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
@@ -154,10 +184,19 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         )
                                                     ]
                                                 ),
+                                                const SizedBox(height: 8),
+                                                Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                        Text("Halaman ${controller.pageSelected.value}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                        Text("NO.${controller.bundle.weighingNumber ?? '-'}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                    ]
+                                                ),
                                                 if (controller.smartScaleDataWidget.isNotEmpty) ...[
                                                     Padding(
                                                         padding: const EdgeInsets.only(top: 12),
-                                                        child: Row(
+                                                        child:
+                                                        Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                                 SizedBox(
@@ -175,20 +214,12 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                 ] else ...[
                                                     const SizedBox()
                                                 ],
-                                                Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                        Column(children: controller.smartScaleDataWidgetNumber.entries.map( (entry) => entry.value).toList()),
-                                                        Expanded(
-                                                            child: Column(children: controller.smartScaleDataWidget.entries.map( (entry) => entry.value).toList())
-                                                        )
-                                                    ],
-                                                ),
-                                                const SizedBox(height: 120),
+                                                controller.paginationWidget.isNotEmpty ? Column(children: controller.paginationWidget[controller.pageSelected.value - 1]) : const SizedBox(),
+                                                const SizedBox(height: 120)
                                             ]
                                         )
                                     )
-                                ],
+                                ]
                             )
                         ),
                         if (controller.isLoading.isTrue) ...[
@@ -196,9 +227,9 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                         ] else ...[
                             bottomNavBar()
                         ]
-                    ],
+                    ]
                 )
-            ),
+            )
         );
     }
 
@@ -211,7 +242,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Text("Timbang Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
+        title: Text("Timbang Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium))
     );
 
     Widget bottomNavBar() => Align(
@@ -229,8 +260,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                 blurRadius: 5,
                                 offset: Offset(0.75, 0.0))
                         ],
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                     ),
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     child: Row(

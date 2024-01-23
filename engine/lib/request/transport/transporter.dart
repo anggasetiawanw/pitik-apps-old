@@ -11,11 +11,10 @@ import 'package:http/http.dart' as http;
 import 'package:reflectable/mirrors.dart';
 import 'package:reflectable/reflectable.dart';
 
-import '../../model/base_model.dart';
-import '../../model/string_model.dart';
-import '../../util/mapper/mapper.dart';
 import './body/body_builder.dart';
 import './interface/response_listener.dart';
+import '../../model/base_model.dart';
+import '../../util/mapper/mapper.dart';
 import 'transporter_response.dart';
 
 /**
@@ -43,6 +42,12 @@ class Transporter {
     dynamic persistanceClassError;
 
     String log = "";
+
+    Function()? onRequestFinished;
+    Transporter requestFinishedListener(onRequestFinished) {
+        this.onRequestFinished = onRequestFinished;
+        return this;
+    }
 
     /// It sets the context of the transporter to the build context of the widget.
     ///
@@ -268,22 +273,23 @@ class Transporter {
         }
     }
 
+    void _callRequestFinished() {
+        if (onRequestFinished != null) {
+            onRequestFinished!();
+        }
+    }
+
     /// A function that is called when the user clicks on a button.
     void execute() async {
         validate();
 
         processing().then((transporterResponse) {
             _postLog(transporterResponse);
+            _callRequestFinished();
 
             if (transporterResponse.statusCode >= 200 && transporterResponse.statusCode < 300) {
-                if (persistanceClass == StringModel) {
-                    StringModel stringModel = StringModel();
-                    stringModel.data = transporterResponse.body as String;
-                    transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, stringModel, code, arrPacket);
-                } else {
                     persistanceClass = Mapper.childPersistance(transporterResponse.body, persistanceClass);
                     transportListener.onResponseDone(transporterResponse.statusCode, transporterResponse.reasonPhrase, persistanceClass, code, arrPacket);
-                }
             } else {
                 if (transporterResponse.statusCode == 401) {
                     transportListener.onTokenInvalid();
@@ -298,6 +304,7 @@ class Transporter {
             }
         }).catchError((exception, stacktrace) {
             _postLogException(stacktrace);
+            _callRequestFinished();
             transportListener.onResponseError(exception.toString(), stacktrace, code, arrPacket);
         });
     }
@@ -321,6 +328,8 @@ class Transporter {
         FirebaseCrashlytics.instance.recordError(log, stacktrace, fatal: false);
         FirebaseCrashlytics.instance.log(log);
     }
+
+    void stopRequest() => _chuckerHttpClient.close();
 
     /// It takes the request parameters and sends the request to the server
     ///

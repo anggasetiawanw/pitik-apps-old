@@ -251,5 +251,8 @@ class ListApi {
 
     static String pathEditUser(String userId) {
         return "v2/fms-users/$userId/branch";
+    }    
+    static String pathCancelAllocated(String orderId) {
+        return "v2/sales/sales-orders/$orderId/allocated/cancel";
     }
 }

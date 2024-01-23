@@ -7,6 +7,8 @@ gen: ## Generate files Reflect
 
 gen2: ## Generate files Reflect
 	flutter clean && flutter pub get && flutter pub run build_runner build
+runner: ## Generate files Reflect
+	flutter pub run build_runner build --delete-conflicting-outputs
 
 gen-packages: ## Generate files Reflect with Packages
 	flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs

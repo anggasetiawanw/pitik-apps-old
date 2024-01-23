@@ -34,10 +34,11 @@ class Harvest {
     String? branchCode;
     int? seqNo;
     String? truckLicensePlate;
+    String? weighingNumber;
 
     Harvest({this.id, this.harvestRequestId, this.farmingCycleId, this.erpCode, this.datePlanned, this.requestDate, this.reason, this.isApproved, this.minWeight, this.maxWeight, this.rentangBw, this.quantity,
              this.quantityLeftOver, this.totalEstimate, this.dateHarvest, this.approvedDate, this.bakulName, this.status, this.statusText, this.approvalRemarks, this.deliveryOrder, this.addressName,
-             this.coopName, this.branchName, this.branchCode, this.seqNo, this.truckLicensePlate});
+             this.coopName, this.branchName, this.branchCode, this.seqNo, this.truckLicensePlate, this.weighingNumber});
 
     static Harvest toResponseModel(Map<String, dynamic> map) {
         return Harvest(
@@ -67,7 +68,8 @@ class Harvest {
             branchName: map['branchName'],
             branchCode: map['branchCode'],
             seqNo: map['seqNo'],
-            truckLicensePlate: map['truckLicensePlate']
+            truckLicensePlate: map['truckLicensePlate'],
+            weighingNumber: map['weighingNumber']
         );
     }
 }

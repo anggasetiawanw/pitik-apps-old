@@ -43,7 +43,7 @@ class AssignDriverPage extends StatelessWidget {
       );
     }
 
-Widget infoDetailSku(String title, String name) {
+    Widget infoDetailSku(String title, String name) {
       return Container(
         margin: const EdgeInsets.only(top: 8),
         child: Row(
@@ -72,10 +72,10 @@ Widget infoDetailSku(String title, String name) {
               children: [
                 if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                 if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
                 if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
                 if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                 if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             )),
@@ -209,6 +209,44 @@ Widget infoDetailSku(String title, String name) {
             const SizedBox(
               height: 8,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Dibuat Oleh",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value?.userCreator?.email ?? "-",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sales Branch",
+                  style: AppTextStyle.subTextStyle.copyWith(
+                    fontSize: 10,
+                  ),
+                ),
+                Text(
+                  controller.orderDetail.value!.salesperson == null ? "-" : "${controller.orderDetail.value!.salesperson?.branch?.name}",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
             controller.orderDetail.value!.status == "READY_TO_DELIVER"
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -265,6 +303,17 @@ Widget infoDetailSku(String title, String name) {
                             overflow: TextOverflow.clip,
                           ),
                           controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
+                          if (controller.orderDetail.value!.type! == "LB") ...[
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Detail Catatan",
+                              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
+                              overflow: TextOverflow.clip,
+                            ),
+                            listExpandadle(controller.orderDetail.value!.productNotes as List<Products?>)
+                          ],
                           Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.only(top: 16),
@@ -385,7 +434,7 @@ Widget infoDetailSku(String title, String name) {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.orderDetail.value!.remarks ?? "-",
+                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -394,9 +443,9 @@ Widget infoDetailSku(String title, String name) {
                           const SizedBox(
                             height: 16,
                           ),
-
+                          controller.dtDeliveryDate,
+                          controller.dtDeliveryTime,
                           controller.spinnerDriver,
-                          controller.dtWaktuPengiriman,
                           const SizedBox(
                             height: 120,
                           )

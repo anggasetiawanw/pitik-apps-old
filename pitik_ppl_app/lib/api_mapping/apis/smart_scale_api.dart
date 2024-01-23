@@ -79,4 +79,12 @@ class SmartScaleApi {
     @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void updateSmartScale(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("params") String params) {}
+
+    @POST(value: 'v2/harvest-realizations/with-deal', error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void saveSmartScaleHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void updateSmartScaleHarvest(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 }

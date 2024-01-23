@@ -100,7 +100,7 @@ class TerminateDetailActivity extends StatelessWidget {
                               _showBottomDialogCancel(context, controller);
                             }))
                   ] else if (controller.terminateModel.status == EnumTerminateStatus.booked) ...[
-                    if (Constant.isOpsLead.isTrue) ...[
+                    if (Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                       Expanded(child: controller.btSetujui),
                       const SizedBox(
                         width: 16,
@@ -296,7 +296,7 @@ class TerminateDetailActivity extends StatelessWidget {
                                   bottom: BorderSide(color: AppColors.outlineColor, width: 1),
                                   left: BorderSide(color: AppColors.outlineColor, width: 1),
                                   right: BorderSide(color: AppColors.outlineColor, width: 1),
-                                  top: BorderSide(color: AppColors.outlineColor, width: 0),
+                                  top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                                 ),
                                 // border: Border.all(color: AppColors.grey, width: 1),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),

@@ -17,8 +17,8 @@ class CoopActivity extends GetView<CoopController> {
     Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: Colors.white,
-            body: Obx(() =>
-                Column(
+            body: SafeArea(
+                child: Column(
                     children: [
                         Padding(
                             padding: const EdgeInsets.all(16),
@@ -27,35 +27,32 @@ class CoopActivity extends GetView<CoopController> {
                                 children: [
                                     Flexible(
                                         flex: 9,
-                                        child: controller.searchCoopField,
+                                        child: controller.searchCoopBarField,
                                     ),
                                     Flexible(
                                         flex: 1,
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(top: 25),
-                                            child: PopupMenuButton<String>(
-                                                icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.all(Radius.circular(8))
-                                                ),
-                                                itemBuilder: (BuildContext context) {
-                                                    return {'Logout'}.map((String choice) {
-                                                        return PopupMenuItem<String>(
-                                                            value: choice,
-                                                            height: 28,
-                                                            child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                children: [
-                                                                    const SizedBox(),
-                                                                    Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
-                                                                    const SizedBox()
-                                                                ],
-                                                            ),
-                                                            onTap: () => GlobalVar.invalidResponse(),
-                                                        );
-                                                    }).toList();
-                                                },
-                                            )
+                                        child: PopupMenuButton<String>(
+                                            icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(8))
+                                            ),
+                                            itemBuilder: (BuildContext context) {
+                                                return {'Logout'}.map((String choice) {
+                                                    return PopupMenuItem<String>(
+                                                        value: choice,
+                                                        height: 28,
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                const SizedBox(),
+                                                                Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                                                const SizedBox()
+                                                            ]
+                                                        ),
+                                                        onTap: () => GlobalVar.invalidResponse()
+                                                    );
+                                                }).toList();
+                                            }
                                         )
                                     )
                                 ]
@@ -76,35 +73,38 @@ class CoopActivity extends GetView<CoopController> {
                                 ]
                             ),
                         ),
-                        controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
-                        Expanded(
-                            child: TabBarView(
-                                controller: controller.tabController,
-                                children: [
-                                    RawScrollbar(
-                                        thumbVisibility: true,
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: ListView.builder(
-                                            itemCount: controller.coopFilteredList.length,
-                                            itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                        const SizedBox(height: 8),
+                        Obx(() =>
+                            controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
+                            Expanded(
+                                child: TabBarView(
+                                    controller: controller.tabController,
+                                    children: [
+                                        RawScrollbar(
+                                            thumbVisibility: true,
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            child: ListView.builder(
+                                                itemCount: controller.coopFilteredList.length,
+                                                itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                                            )
+                                        ),
+                                        RawScrollbar(
+                                            thumbVisibility: true,
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            child: ListView.builder(
+                                                itemCount: controller.coopFilteredList.length,
+                                                itemBuilder: (context, index) => controller.createCoopIdleCard(index)
+                                            )
                                         )
-                                    ),
-                                    RawScrollbar(
-                                        thumbVisibility: true,
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: ListView.builder(
-                                            itemCount: controller.coopFilteredList.length,
-                                            itemBuilder: (context, index) => controller.createCoopIdleCard(index)
-                                        )
-                                    )
-                                ]
+                                    ]
+                                )
                             )
                         )
-                    ],
+                    ]
                 )
-            ),
+            )
         );
     }
 }

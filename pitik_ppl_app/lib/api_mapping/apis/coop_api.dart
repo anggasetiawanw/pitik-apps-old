@@ -19,8 +19,8 @@ class CoopApi {
     ///   xId (String): The xId parameter is a unique identifier that is used to
     /// identify a specific user or entity in the system. It is typically used for
     /// authentication or authorization purposes.
-    @GET(value: 'v2/coops/active?ignoreCache=true', as: CoopListResponse, error: ErrorResponse)
-    void getCoopActive(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+    @GET(value: 'v2/coops/active', as: CoopListResponse, error: ErrorResponse)
+    void getCoopActive(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query('ignoreCache') bool ignoreCache, @Query('farmCategory') String farmCategory) {}
 
     /// The function `getCoopIdle` is a GET request that retrieves a list of idle
     /// coops, with the authorization and X-ID headers provided.
@@ -33,8 +33,8 @@ class CoopApi {
     ///   xId (String): The "X-ID" header is a custom header that is used to
     /// identify the user or client making the request. It can be any unique
     /// identifier that you want to associate with the request.
-    @GET(value: 'v2/coops/idle?ignoreCache=true', as: CoopListResponse, error: ErrorResponse)
-    void getCoopIdle(@Header("Authorization") String authorization, @Header("X-ID") String xId) {}
+    @GET(value: 'v2/coops/idle', as: CoopListResponse, error: ErrorResponse)
+    void getCoopIdle(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query('ignoreCache') bool ignoreCache, @Query('farmCategory') String farmCategory) {}
 
     @GET(value: GET.PATH_PARAMETER, as: CoopListResponse, error: ErrorResponse)
     void getCoopTarget(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Query("coopName") String coopName) {}

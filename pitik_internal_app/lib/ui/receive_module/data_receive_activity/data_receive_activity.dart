@@ -64,7 +64,8 @@ class ReceiveActivity extends GetView<ReceiveController> {
               ),
             ),
             TabBar(
-                isScrollable: true,
+              isScrollable: true,
+              tabAlignment: TabAlignment.center,
               controller: tabController.controller,
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
@@ -206,6 +207,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
             return Column(
               children: [
                 CardListOrder(
+                    isSoPage: false,
                   order:controller.listReturn.value[index]!,
                   onTap: () {
                     Get.toNamed(

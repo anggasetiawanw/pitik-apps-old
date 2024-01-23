@@ -186,12 +186,12 @@ class DetailGRTransfer extends StatelessWidget {
                             Container(
                                 width: double.infinity,
                                 height: 48,
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                                 decoration: const BoxDecoration(
                                     color: AppColors.headerSku,
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                                 ),
-                                child: Text("${controller.transferModel.products![0]!.name}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),   
+                                child: Text("${controller.transferModel.products![0]!.name}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
                             ),
                             Container(
                                 width: double.infinity,
@@ -202,7 +202,7 @@ class DetailGRTransfer extends StatelessWidget {
                                   bottom: BorderSide(color: AppColors.outlineColor, width: 1),
                                   left: BorderSide(color: AppColors.outlineColor, width: 1),
                                   right: BorderSide(color: AppColors.outlineColor, width: 1),
-                                  top: BorderSide(color: AppColors.outlineColor, width: 0),
+                                  top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                                 ),
                                 // border: Border.all(color: AppColors.grey, width: 1),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
@@ -210,7 +210,7 @@ class DetailGRTransfer extends StatelessWidget {
                                 child: Column(
                                     children: [
                                         infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
-                                        if(controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[                                        
+                                        if(controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
                                         ],
@@ -234,7 +234,7 @@ class DetailGRTransfer extends StatelessWidget {
                                     color: AppColors.headerSku,
                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))
                                 ),
-                                child: Text("SKU", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),   
+                                child: Text("SKU", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
                             ),
                             Container(
                                 width: double.infinity,
@@ -244,14 +244,14 @@ class DetailGRTransfer extends StatelessWidget {
                                   bottom: BorderSide(color:AppColors.outlineColor, width: 1),
                                   left: BorderSide(color: AppColors.outlineColor, width: 1),
                                   right: BorderSide(color: AppColors.outlineColor, width: 1),
-                                  top: BorderSide(color: AppColors.outlineColor, width: 0),
+                                  top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                                 ),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                               ),
                                 child: Column(
                                     children: [
                                         infoDetailSKU("Kategori SKU", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.productItem!.category!.name : "null" }"),
-                                        if((controller.goodReceiptDetail.value!.products != null && controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[                                        
+                                        if((controller.goodReceiptDetail.value!.products != null && controller.goodReceiptDetail.value!.products![0]!.quantity !=0)) ...[
                                             const SizedBox(height: 14,),
                                             infoDetailSKU("Jumlah Ekor", "${controller.goodReceiptDetail.value!.products != null ? controller.goodReceiptDetail.value!.products![0]!.quantity : controller.transferModel.products![0]!.quantity } Ekor"),
                                         ],

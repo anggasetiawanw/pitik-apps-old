@@ -91,7 +91,7 @@ class SmartCameraHistoryController extends GetxController {
                     'Bearer ${auth.token}',
                     auth.id,
                     GlobalVar.xAppId ?? '-',
-                    '${bundle.basePath}${bundle.getCoop.id}/records/${bundle.day != null ? '${bundle.day}/' : ''}${record.sensor!.id!}',
+                    '${bundle.basePath}${bundle.getCoop.id ?? bundle.getCoop.coopId}/records/${bundle.day != null ? '${bundle.day}/' : ''}${record.sensor!.id!}',
                     bundle.getCoop.room != null && bundle.getCoop.room!.id != null ? bundle.getCoop.room!.id : null,
                     pageSmartCamera.value,
                     limit.value

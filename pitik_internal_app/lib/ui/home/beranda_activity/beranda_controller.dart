@@ -47,6 +47,12 @@ class BerandaController extends GetxController {
     getRole();
   }
 
+  void refreshHome( BuildContext context){
+    isLoading.value = true;
+    checkVersion(context);
+    getRole();
+  }
+
   void checkRoleBranch() {
     String role = FirebaseRemoteConfig.instance.getString("role_change");
     List<String> roles = role.split(",");

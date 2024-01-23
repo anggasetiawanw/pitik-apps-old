@@ -14,6 +14,7 @@ import 'package:model/device_summary_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/graph_line.dart';
 import 'package:model/response/building_response.dart';
+import 'package:model/response/latest_condition_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -26,11 +27,9 @@ class DetailSmartMonitorController extends GetxController {
     Device? device;
     DeviceSummary? bundleLatestCondition;
     bool? useBundleLatestCondition;
-    bool? hideBuildings;
+    bool skipLoadBuildings;
 
-    DetailSmartMonitorController({required this.tag, required this.context, this.coop, this.device, this.bundleLatestCondition, this.useBundleLatestCondition, this.hideBuildings});
-
-    // late SpinnerField spBuilding;
+    DetailSmartMonitorController({required this.tag, required this.context, this.coop, this.device, this.bundleLatestCondition, this.useBundleLatestCondition, this.skipLoadBuildings = false});
 
     ScrollController scrollController = ScrollController();
     Rx<DeviceSummary?> deviceSummary = DeviceSummary().obs;
@@ -61,9 +60,10 @@ class DetailSmartMonitorController extends GetxController {
         getInitialLatestDataSmartMonitor();
     }
 
+    void rejuvenateCoop({required Coop newCoop}) => coop = newCoop;
     void getInitialLatestDataSmartMonitor() {
         if (useBundleLatestCondition == null || !useBundleLatestCondition!) {
-            if (hideBuildings != null && hideBuildings!) {
+            if (skipLoadBuildings) {
                 _getLatestDataSmartMonitor('');
             } else {
                 isLoading.value = true;
@@ -73,7 +73,7 @@ class DetailSmartMonitorController extends GetxController {
                             apiKey: 'smartMonitoringApi',
                             service: ListApi.getListBuilding,
                             context: context,
-                            body: ['Bearer ${auth.token}', auth.id, 'v2/buildings/coops/${coop!.id}'],
+                            body: ['Bearer ${auth.token}', auth.id, 'v2/buildings/coops/${coop!.id ?? coop!.coopId}'],
                             listener: ResponseListener(
                                 onResponseDone: (code, message, body, id, packet) {
                                     Map<String, bool> data = {};
@@ -125,7 +125,7 @@ class DetailSmartMonitorController extends GetxController {
 
     /// The function `getLatestDataSmartMonitor` retrieves the latest data from a
     /// smart monitor device and updates the device summary.
-    void _getLatestDataSmartMonitor(String roomId) => AuthImpl().get().then((auth) {
+    void _getLatestDataSmartMonitor(String? roomId) => AuthImpl().get().then((auth) {
         if (auth != null) {
             isLoading.value = true;
             List request = [];
@@ -153,7 +153,9 @@ class DetailSmartMonitorController extends GetxController {
                 body: request,
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        deviceSummary.value = (body).data;
+                        if ((body as LatestConditionResponse).data != null) {
+                            deviceSummary.value = body.data;
+                        }
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {

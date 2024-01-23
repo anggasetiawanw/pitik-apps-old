@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/building_model.dart';
-import 'package:model/coop_model.dart';
 import 'package:model/device_model.dart';
 import 'package:model/device_summary_model.dart';
 import 'package:model/sensor_data_model.dart';

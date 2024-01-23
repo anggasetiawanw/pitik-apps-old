@@ -377,7 +377,7 @@ class EditDataPurchaseController extends GetxController {
       spinnerSource.controller.setTextSelected(source);
     });
     spinnerDestination.controller.setTextSelected(purchase.operationUnit!.operationUnitName!);
-    efRemark.setInput(purchase.remarks ?? "");
+    efRemark.setInput(purchase.remarks != null ? Uri.decodeFull(purchase.remarks! ): "");
     efTotalKG.setInput((purchase.totalWeight ?? 0).toString());
     if (purchase.vendor != null) {
       getListSourceVendor();
@@ -516,7 +516,7 @@ class EditDataPurchaseController extends GetxController {
       products: listProductPayload,
       status: status.value,
       totalWeight: efTotalKG.getInputNumber(),
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
     );
   }
 

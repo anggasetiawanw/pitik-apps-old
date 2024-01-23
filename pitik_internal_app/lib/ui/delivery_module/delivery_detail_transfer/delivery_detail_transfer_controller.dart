@@ -14,6 +14,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/transfer_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 class DeliveryDetailTransferController extends GetxController {
     BuildContext context;
@@ -35,8 +36,8 @@ class DeliveryDetailTransferController extends GetxController {
         updateStatus(ListApi.pathTransferPickUp(transferModel.id!));
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
-        Get.back();        
-    }); 
+        Get.back();
+    });
     EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkDeliveryTransfer"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
 
@@ -49,6 +50,9 @@ class DeliveryDetailTransferController extends GetxController {
         super.onInit();
         transferModel = Get.arguments;
         createdDate = Convert.getDatetime(transferModel.createdDate!);
+        if(transferModel.status == EnumSO.readyToDeliver){
+            isSendItem.value = true;
+        }
     }
 
     void getDetailTransfer(){
@@ -90,7 +94,7 @@ class DeliveryDetailTransferController extends GetxController {
         Service.push(
             service: ListApi.transferEditStatus,
             context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, isSendItem.isTrue ? Mapper.asJsonString(TransferModel(driverRemarks: efRemark.getInput())):""],
+            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, isSendItem.isTrue ? Mapper.asJsonString(TransferModel(driverRemarks: Uri.decodeFull(efRemark.getInput()))):""],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     Get.back();

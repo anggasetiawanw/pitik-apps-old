@@ -47,5 +47,5 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupCrashlytics();
     FirebaseConfig.setupRemoteConfig();
 
-    // await FirebaseConfig.setupCloudMessaging();
+    await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert);
 }

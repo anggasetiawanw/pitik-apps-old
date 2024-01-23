@@ -1,5 +1,7 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
+import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -39,8 +41,8 @@ class FirebaseConfig {
     /// fetch interval to 10 seconds
     static void setupRemoteConfig() async {
         await FirebaseRemoteConfig.instance.setConfigSettings(RemoteConfigSettings(
-            fetchTimeout: const Duration(seconds: 5),
-            minimumFetchInterval: const Duration(seconds: 10),
+            fetchTimeout: const Duration(seconds: 10),
+            minimumFetchInterval: const Duration(seconds: 20),
         ));
 
         await FirebaseRemoteConfig.instance.fetchAndActivate();
@@ -61,9 +63,9 @@ class FirebaseConfig {
             sound: true,
         );
 
-        await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true,);
+        await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
 
-        const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('logo');
+        const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
         const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
             requestSoundPermission: true,
             requestBadgePermission: true,
@@ -71,9 +73,7 @@ class FirebaseConfig {
         );
 
         const InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-        await flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (payload) async {
-            Get.to(splashActivity);
-        });
+        await flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (payload) async => Get.offAllNamed(splashActivity, arguments: payload.payload));
 
         String? token = await FirebaseMessaging.instance.getToken(
             vapidKey: webCertificate,
@@ -85,9 +85,7 @@ class FirebaseConfig {
                 _showNotification(flutterLocalNotificationsPlugin, message);
             }
         });
-        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-            Get.to(splashActivity);
-        });
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async => Get.offAllNamed(splashActivity, arguments: jsonEncode(message.data)));
 
         return token;
     }
@@ -102,17 +100,18 @@ class FirebaseConfig {
     ///   remoteMessage (RemoteMessage): The message received from Firebase.
     static Future<void> _showNotification(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, RemoteMessage remoteMessage) async {
         AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-            // "pitik_notification_channel",
+            remoteMessage.messageId!,
             remoteMessage.notification!.title!,
-            remoteMessage.notification!.body!,
+            channelDescription: remoteMessage.notification!.body!,
             playSound: true,
             importance: Importance.max,
             priority: Priority.high
         );
 
-        await flutterLocalNotificationsPlugin.show(0, remoteMessage.notification!.title, remoteMessage.notification!.body, NotificationDetails(
+        await flutterLocalNotificationsPlugin.show(Random().nextInt(1000000), remoteMessage.notification!.title, remoteMessage.notification!.body, NotificationDetails(
             android: androidNotificationDetails,
             iOS: const DarwinNotificationDetails()),
+            payload: jsonEncode(remoteMessage.data)
         );
     }
 

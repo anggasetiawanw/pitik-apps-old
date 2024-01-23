@@ -10,6 +10,7 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,12 +23,13 @@ import 'package:model/internal_app/checkin_model.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/widget/common/checkin_component.dart';
 class DeliveryConfirmSOController extends GetxController {
     BuildContext context;
     DeliveryConfirmSOController({required this.context});
     double? latitude;
-    double? longitude;    
+    double? longitude;
     var isLoading = false.obs;
     var sumChick = 0.obs;
     var sumKg =0.0.obs;
@@ -36,7 +38,7 @@ class DeliveryConfirmSOController extends GetxController {
     var isSuccessCheckin = false.obs;
     var isLoadCheckin = false.obs;
     var error = "".obs;
-    late ButtonFill confirButton = ButtonFill(controller: GetXCreator.putButtonFillController("confirDelivery"), label: "Konfirmasi", onClick: (){
+    late ButtonFill confirButton = ButtonFill(controller: GetXCreator.putButtonFillController("confirDeliveryConfirm"), label: "Konfirmasi", onClick: (){
         _showBottomDialog();
     });
 
@@ -47,7 +49,7 @@ class DeliveryConfirmSOController extends GetxController {
           }});
 
     late ButtonFill yesSendItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendItem"),
+      controller: GetXCreator.putButtonFillController("yesSendItemadssd"),
       label: "Ya",
       onClick: (){
         Get.back();
@@ -56,7 +58,7 @@ class DeliveryConfirmSOController extends GetxController {
       }
     );
     ButtonOutline noSendItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noSendItem"),
+      controller: GetXCreator.putButtonOutlineController("noSendItemasdsd"),
       label: "Tidak",
       onClick: (){
         Get.back();
@@ -64,14 +66,14 @@ class DeliveryConfirmSOController extends GetxController {
     );
 
     late ButtonOutline checkinButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("ButtonCheckin"),
+    controller: GetXCreator.putButtonOutlineController("ButtonCheckindssd"),
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
-            const timeLimit = Duration(seconds: 10);
+            const timeLimit = Duration(seconds: 15);
             await FlLocation.getLocation(timeLimit: timeLimit,accuracy: LocationAccuracy.high).then((position) {
                 if(position.isMock) {
                     Get.snackbar(
@@ -128,6 +130,8 @@ class DeliveryConfirmSOController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
+                    FirebaseCrashlytics.instance.recordError("Errors On GPS : $errors", stackTrace, fatal: false);
+                    FirebaseCrashlytics.instance.log("Errors On GPS : $errors");
                     error.value = "Terjadi Kesalahan gps timeout, tidak bisa mendapatkan lokasi";
                     GpsComponent.failedCheckin(error.value);
                     isLoadCheckin.value = false;
@@ -144,7 +148,7 @@ class DeliveryConfirmSOController extends GetxController {
     @override
     void onInit() {
         isLoading.value = true;
-        super.onInit();       
+        super.onInit();
         order = Get.arguments;
         createdDate = Convert.getDatetime(order.createdDate!);
         confirButton.controller.disable();
@@ -156,9 +160,9 @@ class DeliveryConfirmSOController extends GetxController {
         WidgetsBinding.instance.addPostFrameCallback((_) {
            isLoading.value = false;
         });
-        
+
     }
-        
+
     void getTotalQuantity(Order? data){
         sumChick.value =0;
         sumKg.value =0;
@@ -174,13 +178,24 @@ class DeliveryConfirmSOController extends GetxController {
                     sumPrice.value += product.weight! * product.price!;
                 }
             } else {
-                if (product.category!.name! == AppStrings.LIVE_BIRD ||product.category!.name! == AppStrings.AYAM_UTUH ||product.category!.name! == AppStrings.BRANGKAS){
+                if(order.returnStatus == EnumSO.returnedPartial){
+                    if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
                     sumChick.value += product.quantity! - product.returnQuantity!;
                     sumKg.value += (product.weight! - product.returnWeight!);
                     sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
                     } else {
                     sumKg.value += (product.weight! - product.returnWeight!);
                     sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
+                    }
+                } else {
+                    if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
+                        sumChick.value += product.returnQuantity!;
+                        sumKg.value += product.returnWeight!;
+                        sumPrice.value += product.returnWeight! * product.price!;
+                    } else {
+                        sumKg.value += product.returnWeight!;
+                        sumPrice.value += product.returnWeight! * product.price!;
+                    }
                 }
             }
         }

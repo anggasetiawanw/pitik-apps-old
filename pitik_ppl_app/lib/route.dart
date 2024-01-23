@@ -8,44 +8,86 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
+import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller.dart';
 import 'package:common_page/smart_controller/monitoring/smart_monitor_controller_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
+import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
 import 'package:components/global_var.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/adjustment_product_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/adjustment_product_controller.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/feed/adjustment_feed_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/feed/adjustment_feed_controller.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/ovk/adjustment_ovk_activity.dart';
+import 'package:pitik_ppl_app/ui/adjustment_product/ovk/adjustment_ovk_controller.dart';
 import 'package:pitik_ppl_app/ui/boarding_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_activity.dart';
 import 'package:pitik_ppl_app/ui/coop/coop_controller.dart';
-import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_activity.dart';
-import 'package:pitik_ppl_app/ui/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/coop_dashboard/coop_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_activity.dart';
+import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_activity.dart';
+import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_controller.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_activity.dart';
 import 'package:pitik_ppl_app/ui/gr_confirmation/gr_confirmation_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_deal/harvest_deal_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_deal/harvest_deal_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/detail/harvest_realization_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/detail/harvest_realization_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/form/harvest_realization_form_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_realization/form/harvest_realization_form_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/detail/harvest_submitted_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitted_form_activity.dart';
+import 'package:pitik_ppl_app/ui/harvest/harvest_submitted/form/harvest_submitted_form_controller.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_activity.dart';
 import 'package:pitik_ppl_app/ui/harvest/list_harvest/harvest_list_controller.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_data/issue_report_data.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_data/issue_report_data_controller.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_form/issue_report_form.dart';
+import 'package:pitik_ppl_app/ui/issue_report/issue_report_form/issue_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/login/login_activity.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
+import 'package:pitik_ppl_app/ui/notification/notification_activity.dart';
+import 'package:pitik_ppl_app/ui/notification/notification_controller.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_activity.dart';
 import 'package:pitik_ppl_app/ui/order/list_order_controller.dart';
 import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
+import 'package:pitik_ppl_app/ui/pullet_in/pullet_in_activity.dart';
+import 'package:pitik_ppl_app/ui/pullet_in/pullet_in_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration.dart';
+import 'package:pitik_ppl_app/ui/self_registration/task_self_registration/task_self_registration_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_camera/smart_camera_list_day_controller.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_activity.dart';
 import 'package:pitik_ppl_app/ui/smart_controller/smart_controller_list_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/detail/smart_scale_harvest_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/detail/smart_scale_harvest_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/form/smart_scale_harvest_form_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/form/smart_scale_harvest_form_controller.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/list/smart_scale_harvest_list_activity.dart';
+import 'package:pitik_ppl_app/ui/smart_scale_harvest/list/smart_scale_harvest_list_controller.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen.dart';
 import 'package:pitik_ppl_app/ui/splash_screen/splash_screen_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/list_transfer_activity.dart';
@@ -54,11 +96,8 @@ import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_activi
 import 'package:pitik_ppl_app/ui/transfer/transfer_detail/transfer_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_activity.dart';
 import 'package:pitik_ppl_app/ui/transfer/transfer_request/transfer_request_controller.dart';
-import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
-import 'package:common_page/smart_controller/detail_smartcontroller_controller.dart';
-import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_activity.dart';
-import 'package:common_page/smart_scale/list_smart_scale/list_smart_scale_controller.dart';
-import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
+
+import 'ui/dashboard/coop_dashboard/coop_dashboard_activity.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -71,8 +110,10 @@ class AppRoutes {
         GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity(), binding: SplashScreenBindings()),
         GetPage(name: RoutePage.boardingPage, page: () => const BoardingActivity()),
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.farmingDashboard, page: () => const FarmingDashboardActivity(), binding: FarmingDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.notification, page: () => const NotificationActivity(), binding: NotificationBindings(context: GlobalVar.getContext())),
 
         // Profile Page
         GetPage(name: RoutePage.privacyPage, page: ()=> const PrivacyScreen(), binding: PrivacyScreenBindings(context: GlobalVar.getContext())),
@@ -113,10 +154,37 @@ class AppRoutes {
         // Smart Camera
         GetPage(name: RoutePage.listSmartCameraDay, page: () => const SmartCameraListDayActivity(), binding: SmartCameraListDayBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.listSmartCameraHistory, page: () => const SmartCameraListHistoryActivity(), binding: SmartCameraListHistoryBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.listSmartScaleHarvest, page: () => const SmartScaleHarvestListActivity(), binding: SmartScaleHarvestBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartScaleHarvestForm, page: () => const SmartScaleHarvestFormActivity(), binding: SmartScaleHarvestFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.smartScaleHarvestDetail, page: () => const SmartScaleHarvestDetailActivity(), binding: SmartScaleHarvestDetailBinding(context: GlobalVar.getContext())),
 
         // Harvest
         GetPage(name: RoutePage.listHarvest, page: () => const HarvestListActivity(), binding: HarvestListBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.harvestSubmittedDetail, page: () => const HarvestSubmittedDetailActivity(), binding: HarvestSubmittedDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestSubmittedForm, page: () => const HarvestSubmittedFormActivity(), binding: HarvestSubmittedFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestDealDetail, page: () => const HarvestDealDetailActivity(), binding: HarvestDealDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestRealizationForm, page: () => const HarvestRealizationFormActivity(), binding: HarvestRealizationFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.harvestRealizationDetail, page: () => const HarvestRealizationDetailActivity(), binding: HarvestRealizationDetailBinding(context: GlobalVar.getContext())),
+
+        // Farm Closing
+        GetPage(name: RoutePage.farmClosing, page: () => const FarmClosingActivity(), binding: FarmClosingBinding(context: GlobalVar.getContext())),
+
+        // Adjustment Product
+        GetPage(name: RoutePage.adjustmentFeed, page: () => const AdjustmentFeedActivity(), binding: AdjustmentFeedBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.adjustmentOvk, page: () => const AdjustmentOvkActivity(), binding: AdjustmentOvkBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.adjustmentProduct, page: () => const AdjustmentProductActivity(), binding: AdjustmentProductBinding(context: GlobalVar.getContext())),
+
+        // Self Registration
+        GetPage(name: RoutePage.dashboardSelfRegistration, page: () => const DashboardSelfRegistration(), binding: DashboardSelfRegistrationBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.addOperatorSelfRegistration, page: () => const AddOperatorSelfRegistration(), binding: AddOperatorSelfRegistrationBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.addTaskSelfRegistration, page: () => const TaskSelfRegistration(), binding: TaskSelfRegistrationBindings(context: GlobalVar.getContext())),
+
+        // Issue Report
+        GetPage(name: RoutePage.issueReport, page: () => const IssueReportActivity(), binding: IssueReportDataBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.issueReportForm, page: () => const IssueReportForm(), binding: IssueReportFormBindings(context: GlobalVar.getContext())),
+
+        // Pullet In
+        GetPage(name: RoutePage.pulletInForm, page: () => const PulletInActivity(), binding: PulletInBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -125,6 +193,7 @@ class RoutePage {
     static const String splashPage = "/";
     static const String boardingPage = "/boarding";
     static const String loginPage = "/login";
+    static const String farmingDashboard = "/farmingDashboard";
     static const String coopList = "/coopList";
     static const String coopDashboard = "/coopDashboard";
     static const String privacyPage = "/privacy";
@@ -152,5 +221,23 @@ class RoutePage {
     static const String listSmartCameraDay = "/listSmartCameraDay";
     static const String listSmartCameraHistory = "/listSmartCameraHistory";
     static const String listHarvest = "/listHarvest";
+    static const String listSmartScaleHarvest = "/listSmartScaleHarvest";
+    static const String smartScaleHarvestForm = "/smartScaleHarvestForm";
+    static const String smartScaleHarvestDetail = "/smartScaleHarvestDetail";
     static const String harvestSubmittedDetail = "/harvestSubmittedDetail";
+    static const String harvestSubmittedForm = "/harvestSubmittedForm";
+    static const String harvestDealDetail = "/harvestDealDetail";
+    static const String harvestRealizationForm = "/harvestRealizationForm";
+    static const String harvestRealizationDetail = "/harvestRealizationDetail";
+    static const String farmClosing = "/farmClosing";
+    static const String notification = "/notificationList";
+    static const String adjustmentFeed = "/adjustmentFeed";
+    static const String adjustmentOvk = "/adjustmentOvk";
+    static const String adjustmentProduct = "/adjustmentProduct";
+    static const String dashboardSelfRegistration = "/dashboardSelfRegistration";
+    static const String addOperatorSelfRegistration = "/addOperatorSelfRegistration";
+    static const String addTaskSelfRegistration = "/addTaskSelfRegistration";
+    static const String issueReport = "/issueReport";
+    static const String issueReportForm = "/issueReportForm";
+    static const String pulletInForm = "/pulletInForm";
 }

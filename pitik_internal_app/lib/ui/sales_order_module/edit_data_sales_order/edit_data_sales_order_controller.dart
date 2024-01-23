@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
+import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
@@ -9,10 +10,12 @@ import 'package:components/spinner_search/spinner_search.dart';
 import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_variable/global_variable.dart';
+import 'package:global_variable/strings.dart';
+import 'package:intl/intl.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
@@ -184,6 +187,23 @@ class EditDataSalesOrderController extends GetxController {
       },
       controller: GetXCreator.putSwitchLinearController("deliveryprice"));
 
+  DateTimeField dtDeliveryDate = DateTimeField(
+    controller: GetXCreator.putDateTimeFieldController("DeliveryDateSo"),
+    label: "Tanggal Pengiriman*",
+    hint: "dd/mm/yyyy",
+    alertText: "Tanggal Pengiriman harus dipilih!",
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
+    flag: 1,
+  );
+  DateTimeField dtDeliveryTime = DateTimeField(
+    controller: GetXCreator.putDateTimeFieldController("deliveryTimeSo"),
+    label: "Waktu Pengiriman",
+    hint: "hh:mm",
+    alertText: "Waktu Pengiriman harus dipilih!",
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
+    flag: 2,
+  );
+
   @override
   void onInit() {
     super.onInit();
@@ -264,7 +284,10 @@ class EditDataSalesOrderController extends GetxController {
     if (isInbound.isTrue) {
       spSumber.controller.setTextSelected(order.operationUnit!.operationUnitName!);
     }
-    efRemark.setInput(order.remarks ?? "");
+    efRemark.setInput(order.remarks != null ? Uri.decodeFull(order.remarks!) : "");
+
+    dtDeliveryDate.controller.setTextSelected("${Convert.getDay(Convert.getDatetime(order.deliveryTime!))}/${Convert.getMonthNumber(Convert.getDatetime(order.deliveryTime!))}/${Convert.getYear(Convert.getDatetime(order.deliveryTime!))}");
+    dtDeliveryTime.controller.setTextSelected("${Convert.getHour(Convert.getDatetime(order.deliveryTime!))}:${Convert.getMinute(Convert.getDatetime(order.deliveryTime!))}");
 
     if (order.type! == "LB") {
       getSku(orderDetail.products![0]!.category!.id!);
@@ -605,6 +628,13 @@ class EditDataSalesOrderController extends GetxController {
       sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
     }
 
+    DateTime? resultDate;
+    if (isInbound.isFalse) {
+      DateTime deliveryDate = DateFormat("dd/MM/yyyy").parse(dtDeliveryDate.getLastTimeSelectedText());
+      DateFormat deliveryTime = DateFormat("HH:mm");
+      resultDate = DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).hour, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).minute);
+    }
+
     return Order(
       customerId: customerSelected?.id, // Ganti dengan nilai default jika tidak ada customer terpilih
       operationUnitId: sourceSelected?.id,
@@ -613,8 +643,9 @@ class EditDataSalesOrderController extends GetxController {
       type: produkType.value == "LB" ? "LB" : "NON_LB",
       status: status.value,
       category: orderDetail.category,
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       withDeliveryFee: isDeliveryPrice.value,
+      deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : null,
     );
   }
 
@@ -705,6 +736,13 @@ class EditDataSalesOrderController extends GetxController {
       Scrollable.ensureVisible(spSumber.controller.formKey.currentContext!);
       return ret = [false, ""];
     }
+    if (isInbound.isFalse) {
+      if (dtDeliveryDate.controller.textSelected.value.isEmpty) {
+        dtDeliveryDate.controller.showAlert();
+        Scrollable.ensureVisible(dtDeliveryDate.controller.formKey.currentContext!);
+        return ret = [false, ""];
+      }
+    }
 
     ret = skuCard.controller.validation();
     return ret;
@@ -732,6 +770,13 @@ class EditDataSalesOrderController extends GetxController {
       editFieldJumlahAyam.controller.showAlert();
       Scrollable.ensureVisible(editFieldJumlahAyam.controller.formKey.currentContext!);
       return ret = [false, ""];
+    }
+    if (isInbound.isFalse) {
+      if (dtDeliveryDate.controller.textSelected.value.isEmpty) {
+        dtDeliveryDate.controller.showAlert();
+        Scrollable.ensureVisible(dtDeliveryDate.controller.formKey.currentContext!);
+        return ret = [false, ""];
+      }
     }
 
     ret = skuCardRemark.controller.validation();

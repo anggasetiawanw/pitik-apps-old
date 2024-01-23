@@ -126,7 +126,7 @@ class ProductReportApi {
     /// such as "pending", "approved", "rejected", etc.
     @GET(value: "v2/purchase-orders", as: ProcurementListResponse, error: ErrorResponse)
     void getListPurchaseOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("isBeforeDoc") bool isBeforeDoc,
-                              @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status) {}
+                              @Query("type") String type, @Query("fromDate") String fromDate, @Query("untilDate") String untilDate, @Query("status") String status, @Query("isFulfilled") bool isFulfilled) {}
 
     /// This function is a GET request to retrieve a list of purchase orders for a
     /// cooperative.
@@ -566,5 +566,9 @@ class ProductReportApi {
     @POST(value: "v2/goods-receipts/transfer-requests", error: ErrorResponse)
     @JSON(isPlaint: true)
     void createReceiptTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
+
+    @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void saveStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
 }

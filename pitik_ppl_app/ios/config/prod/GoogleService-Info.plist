@@ -11,7 +11,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>id.pitik.mobile.ppl</string>
+	<string>id.pitik.mobile</string>
 	<key>PROJECT_ID</key>
 	<string>pitik-cms-production</string>
 	<key>STORAGE_BUCKET</key>
@@ -27,6 +27,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:814245197671:ios:4afa1a08d80d79bf47e1c2</string>
+	<string>1:814245197671:ios:fd7cfb096c390f5447e1c2</string>
 </dict>
 </plist>

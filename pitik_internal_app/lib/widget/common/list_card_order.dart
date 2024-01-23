@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
+import 'package:intl/intl.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:pitik_internal_app/widget/common/order_status.dart';
 
@@ -147,10 +148,44 @@ class CardListOrder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Dibuat Oleh : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
-                  Text(
-                    order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Text(
+                      order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tanggal Pengiriman : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Expanded(
+                    child: Text(
+                     order.deliveryTime !=null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(order.deliveryTime!)) :"-",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Sales Branch : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Expanded(
+                    child: Text(
+                      order.salesperson == null ? "-" : "${order.salesperson?.branch?.name}",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
+                      overflow: TextOverflow.clip,
+                    ),
                   ),
                 ],
               ),

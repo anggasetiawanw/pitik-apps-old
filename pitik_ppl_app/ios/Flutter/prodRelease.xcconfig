@@ -2,5 +2,5 @@
 
 FLUTTER_TARGET=lib/main_prod.dart
 ASSET_PREFIX=prod
-BUNDLE_NAME=Pitik PPL App
-BUNDLE_DISPLAY_NAME=Pitik PPL App
+BUNDLE_NAME=Pitik - Smart Broiler Farming
+BUNDLE_DISPLAY_NAME=Pitik - Smart Broiler Farming

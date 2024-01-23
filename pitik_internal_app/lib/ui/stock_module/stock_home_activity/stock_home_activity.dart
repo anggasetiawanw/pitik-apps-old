@@ -112,14 +112,14 @@ class StockHomeActivity extends GetView<StockHomeController> {
               ),
             ],
           ),
-          if (pieData.y1 == AppStrings.LIVE_BIRD || pieData.y1 == AppStrings.AYAM_UTUH || pieData.y1 == AppStrings.BRANGKAS) ...[
+          if (pieData.y1 == AppStrings.LIVE_BIRD || pieData.y1 == AppStrings.AYAM_UTUH || pieData.y1 == AppStrings.BRANGKAS|| pieData.y1 == AppStrings.KARKAS) ...[
             listExpand("Total Ekor", "${pieData.y == 0 ? "-" : pieData.y} Ekor"),
             const SizedBox(
               height: 4,
             ),
-            listExpand("Total Kg", "${pieData.y == 0 ? "-" : pieData.y2} Kg"),
+            listExpand("Total Kg", "${pieData.y == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
           ] else
-            listExpand("Total Kg", "${pieData.y2 == 0 ? "-" : pieData.y2} Kg"),
+            listExpand("Total Kg", "${pieData.y2 == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
         ],
       );
     }
@@ -303,7 +303,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                                 BarSeries<ChartData, String>(
                                                                   dataSource: controller.chartData.value,
                                                                   xValueMapper: (ChartData data, _) => data.x,
-                                                                  yValueMapper: (ChartData data, _) => controller.categoryStock.controller.textSelected.value == AppStrings.LIVE_BIRD || controller.categoryStock.controller.textSelected.value == AppStrings.AYAM_UTUH || controller.categoryStock.controller.textSelected.value == AppStrings.BRANGKAS ? data.y : data.y2,
+                                                                  yValueMapper: (ChartData data, _) => controller.categoryStock.controller.textSelected.value == AppStrings.LIVE_BIRD || controller.categoryStock.controller.textSelected.value == AppStrings.AYAM_UTUH || controller.categoryStock.controller.textSelected.value == AppStrings.BRANGKAS  || controller.categoryStock.controller.textSelected.value == AppStrings.KARKAS? data.y : data.y2,
                                                                   pointColorMapper: (ChartData data, _) => data.color,
                                                                   dataLabelMapper: (ChartData data, _) => data.x,
                                                                   name: controller.chartData.value[0].y1, //         ),

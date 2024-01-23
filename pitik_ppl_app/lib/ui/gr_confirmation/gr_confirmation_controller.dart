@@ -16,6 +16,7 @@ import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
@@ -25,8 +26,7 @@ import 'package:model/procurement_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/response/procurement_detail_response.dart';
 import 'package:common_page/transaction_success_activity.dart';
-
-import '../../route.dart';
+import 'package:components/check_box/check_box_field.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -50,6 +50,7 @@ class GrConfirmationController extends GetxController {
 
     RxMap<EditField, Product> efProductReceivedMap = <EditField, Product>{}.obs;
     RxList<MediaUploadModel?> grPhotoList = <MediaUploadModel?>[].obs;
+    Rx<Column> outstandingGrInputWidget = (const Column()).obs;
 
     @override
     void onInit() {
@@ -138,14 +139,15 @@ class GrConfirmationController extends GetxController {
                             procurement = body.data!;
 
                             // fill photo confirmation
-                            grPhotoList.value = body.data!.photos;
-                            if (grPhotoList.isNotEmpty) {
-                                grPhotoField.getController().setInformasiText("File telah terupload");
-                                grPhotoField.getController().showInformation();
-                                grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
-                            }
+                            // grPhotoList.value = body.data!.photos;
+                            // if (grPhotoList.isNotEmpty) {
+                            //     grPhotoField.getController().setInformasiText("File telah terupload");
+                            //     grPhotoField.getController().showInformation();
+                            //     grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
+                            // }
                         }
 
+                        _createProductReceivedCards(productList: procurement.details);
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -164,6 +166,37 @@ class GrConfirmationController extends GetxController {
         }
     });
 
+    bool _isProductNotAllReturned(GoodReceipt goodReceipt) {
+        for (var product in goodReceipt.details) {
+            if (product!.isReturned == null || !product.isReturned!) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool isGrNotAllReturned() {
+        for (var goodReceipt in procurement.goodsReceipts) {
+            for (var product in goodReceipt!.details) {
+                if (product!.isReturned == null || !product.isReturned!) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool isGrNotAllReturnedField() {
+        for (var entry in efProductReceivedMap.entries) {
+            if (entry.value.isReturned == null || !entry.value.isReturned!) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool isAlreadyReturned() {
         bool isReturned = false;
         returned:
@@ -179,6 +212,16 @@ class GrConfirmationController extends GetxController {
         }
 
         return isReturned;
+    }
+
+    bool isAlreadyReturnedField() {
+        for (var entry in efProductReceivedMap.entries) {
+            if (entry.value.isReturned != null && entry.value.isReturned!) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     Column createProductCards({required List<Product?> productList, bool isFeed = false}) {
@@ -222,49 +265,63 @@ class GrConfirmationController extends GetxController {
     }
 
     Column createProductForReturnedCards({required List<GoodReceipt?> goodReceipt, bool isFeed = false}) {
-        List<Product?> returnedData = [];
-        for (var gr in goodReceipt) {
-            if (gr != null) {
-                for (var product in gr.details) {
-                    if (product != null && product.isReturned != null && product.isReturned!) {
-                        returnedData.add(product);
-                    }
-                }
-            }
-        }
-
         return Column(
-            children: List.generate(returnedData.length, (index) {
+            children: List.generate(goodReceipt.length, (index) {
                 if (goodReceipt[index] != null) {
-                    Product product = returnedData[index]!;
-                    return Container(
-                        width: MediaQuery.of(Get.context!).size.width,
-                        padding: const EdgeInsets.all(16),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: const BoxDecoration(
-                            color: GlobalVar.grayBackground,
-                            border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
-                        child: Column(
+                    GoodReceipt gr = goodReceipt[index]!;
+                    DateTime receivedDate = Convert.getDatetime(gr.receivedDate!);
+
+                    List<Product?> returnedData = [];
+                    for (var product in gr.details) {
+                        if (product != null && product.isReturned != null && product.isReturned!) {
+                            returnedData.add(product);
+                        }
+                    }
+
+                    if (returnedData.isNotEmpty) {
+                        return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                Text('Merek', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                const SizedBox(height: 4),
-                                Text(
-                                    isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? '',
-                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text('Tanggal Retur', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                        Text('${Convert.getYear(receivedDate)}-${Convert.getMonthNumber(receivedDate)}-${Convert.getDay(receivedDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                    ],
                                 ),
-                                const SizedBox(height: 12),
-                                Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                const SizedBox(height: 4),
-                                Text(
-                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
-                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
-                                ),
+                                const SizedBox(height: 8),
+                                Column(
+                                    children: List.generate(returnedData.length, (index) {
+                                        if (returnedData[index] != null) {
+                                            Product product = returnedData[index]!;
+                                            return Column(
+                                                children: [
+                                                    Container(
+                                                        width: MediaQuery.of(Get.context!).size.width,
+                                                        padding: const EdgeInsets.all(16),
+                                                        margin: const EdgeInsets.only(bottom: 12),
+                                                        decoration: const BoxDecoration(
+                                                            color: GlobalVar.redBackground,
+                                                            border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                                            borderRadius: BorderRadius.all(Radius.circular(10))
+                                                        ),
+                                                        child: Text(
+                                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                        )
+                                                    )
+                                                ],
+                                            );
+                                        } else {
+                                            return const SizedBox();
+                                        }
+                                    }),
+                                )
                             ],
-                        ),
-                    );
+                        );
+                    } else {
+                        return const SizedBox();
+                    }
                 } else {
                     return const SizedBox();
                 }
@@ -282,34 +339,44 @@ class GrConfirmationController extends GetxController {
                     return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            _isProductNotAllReturned(goodReceipt) ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                    Text('Tanggal Penerimaan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                                    Text('${Convert.getYear(receivedDate)}-${Convert.getMonthNumber(receivedDate)}-${Convert.getDay(receivedDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Text('Tanggal Penerimaan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            Text('${Convert.getYear(receivedDate)}-${Convert.getMonthNumber(receivedDate)}-${Convert.getDay(receivedDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                        ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text('Total Masuk', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                    const SizedBox(height: 8),
                                 ],
-                            ),
-                            const SizedBox(height: 4),
-                            Text('Total Masuk', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                            const SizedBox(height: 8),
+                            ) : const SizedBox(),
                             Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: List.generate(goodReceipt.details.length, (index) {
                                     Product product = goodReceipt.details[index]!;
-                                    return Container(
-                                        width: MediaQuery.of(Get.context!).size.width,
-                                        padding: const EdgeInsets.all(16),
-                                        margin: const EdgeInsets.only(bottom: 12),
-                                        decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-                                        child: Text(
-                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
-                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                        )
-                                    );
-                                }),
+                                    if (product.isReturned == null || !product.isReturned!) {
+                                        return Container(
+                                            width: MediaQuery.of(Get.context!).size.width,
+                                            padding: const EdgeInsets.all(16),
+                                            margin: const EdgeInsets.only(bottom: 12),
+                                            decoration: const BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.fromBorderSide(BorderSide(color: GlobalVar.outlineColor, width: 2)),
+                                                borderRadius: BorderRadius.all(Radius.circular(10))
+                                            ),
+                                            child: Text(
+                                                '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                            )
+                                        );
+                                    } else {
+                                        return const SizedBox();
+                                    }
+                                })
                             ),
                             procurement.statusText == GlobalVar.LENGKAP || procurement.statusText == GlobalVar.DITERIMA ?
                             Row(
@@ -350,14 +417,81 @@ class GrConfirmationController extends GetxController {
         );
     }
 
-    Column createProductReceivedCards({required List<Product?> productList}) {
+    void showReturnedConfirmation({required Function(bool) onResult}) {
+        showModalBottomSheet(
+            useSafeArea: true,
+            isDismissible: false,
+            enableDrag: false,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
+            ),
+            isScrollControlled: true,
+            context: Get.context!,
+            builder: (context) => Container(
+                color: Colors.transparent,
+                child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Center(
+                                    child: Container(
+                                        width: 60,
+                                        height: 4,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                                            color: GlobalVar.outlineColor
+                                        )
+                                    )
+                                ),
+                                const SizedBox(height: 16),
+                                Text('Apakah yakin kamu ingin melakukan retur?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                const SizedBox(height: 16),
+                                Text('Pastikan barang sudah sesuai dan benar sebelum melakukan penolakan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                const SizedBox(height: 16),
+                                Center(child: SvgPicture.asset('images/people_confirm_icon.svg')),
+                                const SizedBox(height: 32),
+                                SizedBox(
+                                    width: MediaQuery.of(Get.context!).size.width - 32,
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                            Expanded(
+                                                child: ButtonFill(controller: GetXCreator.putButtonFillController("btnReturnedYes"), label: "Yakin", onClick: () {
+                                                    Navigator.pop(Get.context!);
+                                                    onResult(true);
+                                                })
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Expanded(
+                                                child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnCancelGrConfirmation"), label: "Tidak Yakin", onClick: () {
+                                                    Navigator.pop(Get.context!);
+                                                    onResult(false);
+                                                })
+                                            )
+                                        ]
+                                    )
+                                ),
+                                const SizedBox(height: 32)
+                            ]
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    void _createProductReceivedCards({required List<Product?> productList}) {
         efProductReceivedMap.clear();
-        return Column(
+        outstandingGrInputWidget.value = Column(
             children: List.generate(procurement.details.length, (index) {
                 if (procurement.details[index] == null) {
                     return const SizedBox();
                 } else {
                     Product product = procurement.details[index]!;
+
                     EditField editField = EditField(
                         controller: GetXCreator.putEditFieldController('efProductReceived${product.id}'),
                         label: 'Total Diterima',
@@ -372,9 +506,41 @@ class GrConfirmationController extends GetxController {
                         }
                     );
 
+                    CheckBoxField checkBoxField = CheckBoxField(controller: GetXCreator.putCheckBoxFieldController("checkBoxReceived${product.id}"), title: 'Retur', onTap: (controller) {
+                        if (controller.isChecked.isFalse) {
+                            showReturnedConfirmation(onResult: (isAgree) {
+                                product.isReturned = isAgree;
+                                efProductReceivedMap.putIfAbsent(editField, () => product);
+                                if (isAgree) {
+                                    editField.getController().invisibleField();
+                                    controller.checked();
+                                } else {
+                                    editField.getController().visibleField();
+                                    controller.unchecked();
+                                }
+                            });
+                        } else {
+                            product.isReturned = false;
+                            efProductReceivedMap.putIfAbsent(editField, () => product);
+                            editField.getController().visibleField();
+                        }
+                    });
+
                     if (isFromTransfer) {
                         editField.setInput(product.remaining!.toStringAsFixed(0));
                         editField.getController().disable();
+                    }
+
+                    // checking is can returned
+                    bool isCanReturned = true;
+                    stop:
+                    for (var goodReceipts in procurement.goodsReceipts) {
+                        for (var p in goodReceipts!.details) {
+                            if (p!.productCode == product.productCode && (p.quantity != null && p.quantity! > 0.0)) {
+                                isCanReturned = false;
+                                break stop;
+                            }
+                        }
                     }
 
                     efProductReceivedMap[editField] = product;
@@ -390,13 +556,15 @@ class GrConfirmationController extends GetxController {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                                isCanReturned ? checkBoxField : const SizedBox(),
+                                const SizedBox(height: 16),
                                 Text(
                                     '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                                 editField
-                            ],
-                        ),
+                            ]
+                        )
                     );
                 }
             })
@@ -450,9 +618,16 @@ class GrConfirmationController extends GetxController {
         }
 
         efProductReceivedMap.forEach((key, value) {
-            if (key.getInput().isEmpty) {
-                key.getController().showAlert();
-                isPass  = false;
+            if (value.isReturned == null || !value.isReturned!) {
+                if (key.controller.showField.isTrue && key.getInput().isEmpty) {
+                    key.getController().alertText.value = 'Harus diisi..!';
+                    key.getController().showAlert();
+                    isPass  = false;
+                } else if (key.getInputNumber()!.toInt() > value.remaining!) {
+                    key.getController().alertText.value = 'Jumlah penerimaan lebih dari permintaan';
+                    key.getController().showAlert();
+                    isPass  = false;
+                }
             }
         });
 
@@ -502,13 +677,23 @@ class GrConfirmationController extends GetxController {
                                             Text(procurement.erpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                         ],
                                     ),
+                                    if (!isFromTransfer) ...[
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Kode Pembelian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(procurement.purchaseRequestErpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        )
+                                    ],
                                     const SizedBox(height: 8),
                                     Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                            Text('Kode Pembelian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(procurement.purchaseRequestErpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ],
+                                            Text('Tanggal Pengiriman', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(procurement.deliveryDate ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ]
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
@@ -521,15 +706,16 @@ class GrConfirmationController extends GetxController {
                                     const SizedBox(height: 16),
                                     const Divider(height: 2, color: GlobalVar.gray),
                                     const SizedBox(height: 16),
-                                    if (isAlreadyReturned()) ...[
+                                    if (isAlreadyReturnedField()) ...[
                                         Text('${procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diretur', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
                                         const SizedBox(height: 4),
                                         Padding(
                                             padding: const EdgeInsets.only(left: 12),
                                             child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: efProductReceivedMap.entries.map((entry) {
                                                     if (entry.value.isReturned != null && entry.value.isReturned!) {
-                                                        String quantity = efProductReceivedMap[entry.key]!.quantity == null ? '-' : efProductReceivedMap[entry.key]!.quantity!.toStringAsFixed(0);
+                                                        String quantity = efProductReceivedMap[entry.key]!.remaining == null ? '-' : efProductReceivedMap[entry.key]!.remaining!.toStringAsFixed(0);
                                                         return Padding(
                                                             padding: const EdgeInsets.only(top: 4),
                                                             child: Row(
@@ -553,42 +739,45 @@ class GrConfirmationController extends GetxController {
                                                         return const SizedBox();
                                                     }
                                                 }).toList()
+                                            )
+                                        )
+                                    ] else ...[const SizedBox()],
+                                    if (isGrNotAllReturnedField()) ...[
+                                        const SizedBox(height: 8),
+                                        Text('${procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diterima', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 4),
+                                        Padding(
+                                            padding: const EdgeInsets.only(left: 12),
+                                            child: Column(
+                                                children: efProductReceivedMap.entries.map((entry) {
+                                                    if (entry.value.isReturned == null || !entry.value.isReturned!) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(top: 4),
+                                                            child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                    Expanded(
+                                                                        child: Text(
+                                                                            getProductName(product: efProductReceivedMap[entry.key], isFeed: procurement.type == 'pakan'),
+                                                                            style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                        )
+                                                                    ),
+                                                                    Text(
+                                                                        '${Convert.toCurrencyWithoutDecimal(entry.key.getInput(), '', '.')} ${entry.key.getController().textUnit}',
+                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
+                                                                    )
+                                                                ]
+                                                            )
+                                                        );
+                                                    } else {
+                                                        return const SizedBox();
+                                                    }
+                                                }).toList()
                                             ),
                                         )
                                     ] else ...[const SizedBox()],
-                                    Text('${procurement.type == 'pakan' ? 'Pakan' : 'OVK'} Diterima', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.bold)),
-                                    const SizedBox(height: 4),
-                                    Padding(
-                                        padding: const EdgeInsets.only(left: 12),
-                                        child: Column(
-                                            children: efProductReceivedMap.entries.map((entry) {
-                                                if (entry.value.isReturned == null || !entry.value.isReturned!) {
-                                                    return Padding(
-                                                        padding: const EdgeInsets.only(top: 4),
-                                                        child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: [
-                                                                Expanded(
-                                                                    child: Text(
-                                                                        getProductName(product: efProductReceivedMap[entry.key], isFeed: procurement.type == 'pakan'),
-                                                                        style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
-                                                                    )
-                                                                ),
-                                                                Text(
-                                                                    '${Convert.toCurrencyWithoutDecimal(entry.key.getInput(), '', '.')} ${entry.key.getController().textUnit}',
-                                                                    style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium)
-                                                                )
-                                                            ]
-                                                        )
-                                                    );
-                                                } else {
-                                                    return const SizedBox();
-                                                }
-                                            }).toList()
-                                        ),
-                                    ),
-                                    const SizedBox(height: 16),
+                                    const SizedBox(height: 8),
                                     SizedBox(
                                         width: MediaQuery.of(Get.context!).size.width - 32,
                                         child: Row(
@@ -637,10 +826,7 @@ class GrConfirmationController extends GetxController {
                                                                                 keyPage: "grConfirmationSaved",
                                                                                 message: "Kamu telah berhasil melakukan penerimaan sapronak",
                                                                                 showButtonHome: false,
-                                                                                onTapClose: () => Get.toNamed(
-                                                                                    isFromTransfer ? RoutePage.listTransferPage : RoutePage.listOrderPage,
-                                                                                    arguments: isFromTransfer ? coop : [coop, fromCoopRest]
-                                                                                ),
+                                                                                onTapClose: () => Get.back(result: true),
                                                                                 onTapHome: () {}
                                                                             ));
                                                                         },

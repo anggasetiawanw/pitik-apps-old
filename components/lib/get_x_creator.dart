@@ -1,12 +1,15 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages
 
 import 'package:components/edit_field_two_row/edit_field_two_row_controller.dart';
+import 'package:components/multiple_dynamic_form_field/multiple_dynamic_form_field_controller.dart';
 import 'package:components/multiple_form_field/multiple_form_field_controller.dart';
+import 'package:components/search_bar/search_bar_controller.dart';
 import 'package:components/stock_opname_field/stock_opname_field_controller.dart';
 import 'package:components/stock_opname_two_field/stock_opname_two_field_controller.dart';
 import 'package:components/switch_button/switch_button_controller.dart';
 import 'package:components/switch_linear/switch_linar_controller.dart';
 import 'package:components/table_field/table_field_controller.dart';
+import 'package:components/check_box/check_box_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -154,9 +157,21 @@ class GetXCreator {
 
     static MultipleFormFieldController putMultipleFormFieldController<T>(String tag) {
         return Get.put(MultipleFormFieldController<T>(tag: tag), tag: tag);
-    }    
+    }
     static SwitchLinearController putSwitchLinearController(String tag) {
         return Get.put(SwitchLinearController(tag: tag), tag: tag);
+    }
+
+    static MultipleDynamicFormFieldController putMultipleDynamicFormFieldController<T>(String tag) {
+        return Get.put(MultipleDynamicFormFieldController<T>(tag: tag), tag: tag);
+    }
+
+    static CheckBoxController putCheckBoxFieldController<T>(String tag) {
+        return Get.put(CheckBoxController(tag: tag), tag: tag);
+    }
+
+    static SearchBarController putSearchBarController(String tag) {
+        return Get.put(SearchBarController(tag: tag), tag: tag);
     }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {

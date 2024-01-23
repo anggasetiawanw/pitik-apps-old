@@ -81,7 +81,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         isLoading.value = true;
         AuthImpl().get().then((auth) {
             if (auth != null) {
-                List<dynamic> body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate, status];
+                List<dynamic> body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate, status, null];
                 if (tabController.index == 0) {
                     body = ['Bearer ${auth.token}', auth.id, fromCoopRest ? coop.id : coop.farmingCycleId, fromCoopRest, type, fromDate, untilDate];
                 }

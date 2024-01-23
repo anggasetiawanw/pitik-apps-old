@@ -240,7 +240,7 @@ class TransferDetailController extends GetxController {
                                 keyPage: "transferApprove${procurement.value.id}",
                                 message: "Kamu telah menyetujui permintaan transfer pakan",
                                 showButtonHome: false,
-                                onTapClose: () => Get.back(),
+                                onTapClose: () => Get.back(result: true),
                                 onTapHome: () {}
                             ));
                         },
@@ -286,7 +286,7 @@ class TransferDetailController extends GetxController {
                                         height: 200,
                                         width: 200,
                                     ),
-                                    onTapClose: () => Get.back(),
+                                    onTapClose: () => Get.back(result: true),
                                     onTapHome: () {}
                                 ));
                             },

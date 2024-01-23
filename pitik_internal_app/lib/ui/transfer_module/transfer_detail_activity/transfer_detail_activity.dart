@@ -57,90 +57,73 @@ class TransferDetailActivity extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  controller.transferModel.status == "DRAFT"
-                      ? Expanded(
-                          child: ButtonFill(
-                              controller: GetXCreator.putButtonFillController("editTransferss"),
-                              label: "Edit",
-                              onClick: () {
-                                Get.toNamed(RoutePage.transferForm, arguments: [controller.transferModel, true])!.then((value) {
-                                  controller.isLoading.value = true;
-                                  Timer(const Duration(milliseconds: 500), () {
-                                    controller.getDetailTransfer();
-                                  });
+                  if (controller.transferModel.status == "DRAFT") ...[
+                    Expanded(
+                        child: ButtonFill(
+                            controller: GetXCreator.putButtonFillController("editTransferss"),
+                            label: "Edit",
+                            onClick: () {
+                              Get.toNamed(RoutePage.transferForm, arguments: [controller.transferModel, true])!.then((value) {
+                                controller.isLoading.value = true;
+                                Timer(const Duration(milliseconds: 500), () {
+                                  controller.getDetailTransfer();
                                 });
-                              }))
-                      : controller.transferModel.status == "CONFIRMED"
-                          ? Expanded(
-                              child: ButtonFill(
-                                  controller: GetXCreator.putButtonFillController("pesanStock"),
-                                  label: "Pesan Stock",
-                                  onClick: () {
-                                    _showBottomDialogSend(context, controller);
-                                  }))
-                          : controller.transferModel.status == "BOOKED"
-                              ? Expanded(
-                                  child: ButtonFill(
-                                      controller: GetXCreator.putButtonFillController("Kirim Transfer"),
-                                      label: "Kirim",
-                                      onClick: () {
-                                        Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, false])!.then((value) {
-                                          controller.isLoading.value = true;
-                                          Timer(const Duration(milliseconds: 500), () {
-                                            controller.getDetailTransfer();
-                                          });
-                                        });
-                                      }))
-                              : controller.transferModel.status == "READY_TO_DELIVER"
-                                  ? Expanded(
-                                      child: ButtonFill(
-                                          controller: GetXCreator.putButtonFillController("editTransfer"),
-                                          label: "Edit",
-                                          onClick: () {
-                                            Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, true])!.then((value) {
-                                              controller.isLoading.value = true;
-                                              Timer(const Duration(milliseconds: 500), () {
-                                                controller.getDetailTransfer();
-                                              });
-                                            });
-                                          }))
-                                  : const SizedBox(),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  controller.transferModel.status == "DRAFT"
-                      ? Expanded(
-                          child: ButtonOutline(
-                              controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
-                              label: "Batal",
-                              onClick: () {
-                                _showBottomDialogCancel(context, controller);
-                              }))
-                      : controller.transferModel.status == "CONFIRMED"
-                          ? Expanded(
-                              child: ButtonOutline(
-                                  controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
-                                  label: "Batal",
-                                  onClick: () {
-                                    _showBottomDialogCancel(context, controller);
-                                  }))
-                          : controller.transferModel.status == "READY_TO_DELIVER"
-                              ? Expanded(
-                                  child: ButtonOutline(
-                                      controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
-                                      label: "Batal",
-                                      onClick: () {
-                                        _showBottomDialogCancel(context, controller);
-                                      }))
-                              : controller.transferModel.status == "BOOKED"
-                                  ? Expanded(
-                                      child: ButtonOutline(
-                                          controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
-                                          label: "Batal",
-                                          onClick: () {
-                                            _showBottomDialogCancel(context, controller);
-                                          }))
-                                  : const SizedBox(),
+                              });
+                            })),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ] else if (controller.transferModel.status == "CONFIRMED") ...[
+                    Expanded(
+                        child: ButtonFill(
+                            controller: GetXCreator.putButtonFillController("pesanStock"),
+                            label: "Pesan Stock",
+                            onClick: () {
+                              _showBottomDialogSend(context, controller);
+                            })),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ] else if (controller.transferModel.status == "BOOKED" && (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) ...[
+                    Expanded(
+                        child: ButtonFill(
+                            controller: GetXCreator.putButtonFillController("Kirim Transfer"),
+                            label: "Kirim",
+                            onClick: () {
+                              Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, false])!.then((value) {
+                                controller.isLoading.value = true;
+                                Timer(const Duration(milliseconds: 500), () {
+                                  controller.getDetailTransfer();
+                                });
+                              });
+                            })),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ] else if (controller.transferModel.status == "READY_TO_DELIVER"&& (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) ...[
+                    Expanded(
+                        child: ButtonFill(
+                            controller: GetXCreator.putButtonFillController("editTransfer"),
+                            label: "Edit",
+                            onClick: () {
+                              Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, true])!.then((value) {
+                                controller.isLoading.value = true;
+                                Timer(const Duration(milliseconds: 500), () {
+                                  controller.getDetailTransfer();
+                                });
+                              });
+                            })),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ],
+                  Expanded(
+                      child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
+                          label: "Batal",
+                          onClick: () {
+                            _showBottomDialogCancel(context, controller);
+                          })),
                 ],
               ),
             ),
@@ -280,7 +263,7 @@ class TransferDetailActivity extends StatelessWidget {
                                   bottom: BorderSide(color: AppColors.outlineColor, width: 1),
                                   left: BorderSide(color: AppColors.outlineColor, width: 1),
                                   right: BorderSide(color: AppColors.outlineColor, width: 1),
-                                  top: BorderSide(color: AppColors.outlineColor, width: 0),
+                                  top: BorderSide(color: AppColors.outlineColor, width: 0.1),
                                 ),
                                 // border: Border.all(color: AppColors.grey, width: 1),
                                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
@@ -324,7 +307,7 @@ class TransferDetailActivity extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks ?? "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -349,7 +332,7 @@ class TransferDetailActivity extends StatelessWidget {
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks ?? "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],

@@ -1,19 +1,27 @@
 
+import 'dart:io';
+
+import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/password_field/password_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/error/error.dart';
+import 'package:model/profile.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/profile_response.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../route.dart';
@@ -75,7 +83,10 @@ class LoginController extends GetxController {
                 context: Get.context!,
                 body: [phoneNumberField.getInput(), passwordField.getInput()],
                 listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) => _getProfile((body as AuthResponse).data!, body.data!.action),
+                    onResponseDone: (code, message, body, id, packet) {
+                        _getProfile((body as AuthResponse).data!, body.data!.action);
+                        _sendFirebaseTokenToServer(body.data!);
+                    },
                     onResponseFail: (code, message, body, id, packet) {
                         Navigator.pop(Get.context!);
                         Get.snackbar(
@@ -102,6 +113,43 @@ class LoginController extends GetxController {
         }
     }
 
+    void _sendFirebaseTokenToServer(Auth auth) async {
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        Map deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        Service.push(
+            apiKey: 'userApi',
+            service: ListApi.addDevice,
+            context: Get.context!,
+            body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', packageInfo.version, deviceInfo['model'] ?? '-'],
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) async {},
+                onResponseFail: (code, message, body, id, packet) {
+                    Navigator.pop(Get.context!);
+                    Get.snackbar(
+                        "Pesan",
+                        "${(body as ErrorResponse).error!.message}",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    Navigator.pop(Get.context!);
+                    Get.snackbar(
+                        "Pesan",
+                        "Terjadi kesalahan internal",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                },
+                onTokenInvalid: () => GlobalVar.invalidResponse()
+            )
+        );
+    }
+
     void _getProfile(Auth auth, String? action) {
         Service.push(
             apiKey: 'userApi',
@@ -120,13 +168,13 @@ class LoginController extends GetxController {
                     Navigator.pop(Get.context!);
 
                     if (await isFirstLogin) {
-                        Get.toNamed(RoutePage.privacyPage, arguments: [true, RoutePage.coopList]);
+                        Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard]);
                     } else {
-                        // if (action == "DEFAULT_PASSWORD") {
-                        //     // showInformation();
-                        // } else {
-                            Get.offAllNamed(RoutePage.coopList);
-                        // }
+                        if (action == "DEFAULT_PASSWORD") {
+                            showInformation(body.data!);
+                        } else {
+                            Get.offAllNamed(Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard);
+                        }
                     }
                 },
                 onResponseFail: (code, message, body, id, packet) {
@@ -152,7 +200,49 @@ class LoginController extends GetxController {
                 onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
+    }
 
+    void showInformation(Profile profile) {
+        Get.dialog(
+            Center(
+                child: Container(
+                    width: 300,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Row(
+                                children: [
+                                    SvgPicture.asset("images/error_icon.svg", height: 24, width: 24),
+                                    const SizedBox(width: 10),
+                                    Text("Perhatian!", style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none))
+                                ]
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Kata Sandi bawaan harus segera ganti", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none)),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    Container(height: 32, width: 100, color: Colors.transparent,),
+                                    SizedBox(
+                                        width: 100,
+                                        child: ButtonFill(
+                                            controller:
+                                            GetXCreator.putButtonFillController("Dialog"),
+                                            label: "OK",
+                                            onClick: () => Get.offAllNamed(RoutePage.changePasswordPage, arguments: [true, Convert.isUsePplApps(profile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard])
+                                        )
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                )
+            ),
+            barrierDismissible: false
+        );
     }
 }
 

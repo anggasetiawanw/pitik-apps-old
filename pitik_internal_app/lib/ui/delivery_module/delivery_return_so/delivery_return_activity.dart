@@ -16,8 +16,7 @@ class DeliveryRejectSO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeliveryRejectSOController controller =
-        Get.put(DeliveryRejectSOController(context: context));
+    DeliveryRejectSOController controller = Get.put(DeliveryRejectSOController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -27,15 +26,13 @@ class DeliveryRejectSO extends StatelessWidget {
               Navigator.pop(context);
             }),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
           "Detail Pengiriman",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+          style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
     }
@@ -50,8 +47,7 @@ class DeliveryRejectSO extends StatelessWidget {
           ),
           Text(
             name,
-            style: AppTextStyle.blackTextStyle
-                .copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
+            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium),
           )
         ],
       );
@@ -61,8 +57,7 @@ class DeliveryRejectSO extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16, bottom: 6),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-            color: const Color(0xFFFAFAFA), borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(color: const Color(0xFFFAFAFA), borderRadius: BorderRadius.circular(8)),
         child: Column(
           children: [
             Row(
@@ -74,8 +69,7 @@ class DeliveryRejectSO extends StatelessWidget {
                   children: [
                     Text(
                       "Informasi Pengiriman",
-                      style: AppTextStyle.blackTextStyle
-                          .copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
+                      style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 4,
@@ -86,26 +80,44 @@ class DeliveryRejectSO extends StatelessWidget {
                     )
                   ],
                 ),
-                OrderStatus(
-                  orderStatus: controller.order.status,
-                  returnStatus: controller.order.returnStatus,grStatus: controller.order.grStatus
-                )
+                OrderStatus(orderStatus: controller.order.status, returnStatus: controller.order.returnStatus, grStatus: controller.order.grStatus)
               ],
             ),
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber",
-                "${controller.order.operationUnit!.operationUnitName}"),
+            infoDetailHeader("Sumber", "${controller.order.operationUnit!.operationUnitName}"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Tujuan", "${controller.order.customer!.businessName}"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Dibuat Oleh", controller.order.userCreator?.email ?? "-"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Sales Branch", controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Driver", "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
+            const SizedBox(
+              height: 8,
+            ),
+            infoDetailHeader("Target Pengiriman", controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
             const SizedBox(
               height: 8,
             ),
             infoDetailHeader(
-                "Tujuan", "${controller.order.customer!.businessName}"),
-            const SizedBox(
-              height: 8,
+              "Waktu Pengiriman",
+              controller.order.deliveryTime != null
+                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
+                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : "-"
+                  : "-",
             ),
-            infoDetailHeader("Driver", "${controller.order.driver!.fullName}"),
           ],
         ),
       );
@@ -124,68 +136,70 @@ class DeliveryRejectSO extends StatelessWidget {
         child: Column(
           children: [
             Row(
-                children: [
+              children: [
                 Expanded(
-                    child: Text(
+                  child: Text(
                     "Total Penjualan",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                ],
+              ],
             ),
             const SizedBox(
-                height: 20,
+              height: 20,
             ),
             Row(
-                children: [
+              children: [
                 Expanded(
-                    child: Text(
+                  child: Text(
                     "Total Kg",
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                Text("${controller.sumKg.value.toStringAsFixed(2)}kg",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                    overflow: TextOverflow.clip,),
-                ],
+                Text(
+                  "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                  overflow: TextOverflow.clip,
+                ),
+              ],
             ),
             const SizedBox(
-                height: 8,
+              height: 8,
             ),
-            if(controller.sumChick.value !=0)...[
-                    Row(
-                    children: [
-                    Expanded(
-                        child: Text(
-                        "Total Ekor",
-                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                        overflow: TextOverflow.clip,
-                        ),
+            if (controller.sumChick.value != 0) ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Total Ekor",
+                      style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                      overflow: TextOverflow.clip,
                     ),
-                    Obx(() => Text("${controller.sumChick.value} Ekor",
+                  ),
+                  Obx(() => Text(
+                        "${controller.sumChick.value} Ekor",
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                        overflow: TextOverflow.clip,)),
-                    ],
-                ),
-                const SizedBox(
-                    height: 8,
-                ),
+                        overflow: TextOverflow.clip,
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
             ],
             Row(
-                children: [
+              children: [
                 Expanded(
-                    child: Text(
+                  child: Text(
                     "Total Rp",
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
-                    ),
+                  ),
                 ),
-                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits:2).format(controller.sumPrice.value),
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
-                    overflow: TextOverflow.clip),
-                ],
+                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+              ],
             )
           ],
         ),
@@ -199,14 +213,8 @@ class DeliveryRejectSO extends StatelessWidget {
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Color.fromARGB(20, 158, 157, 157),
-                    blurRadius: 5,
-                    offset: Offset(0.75, 0.0))
-              ],
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+              boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
             ),
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: ButtonFill(
@@ -224,45 +232,46 @@ class DeliveryRejectSO extends StatelessWidget {
         preferredSize: const Size.fromHeight(60),
         child: appBar(),
       ),
-      body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),) :
-        Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      detailInformation(),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                        "Detail SKU",
-                        style: AppTextStyle.blackTextStyle
-                            .copyWith(fontWeight: AppTextStyle.bold),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      controller.skuReject,
-                      totalPembelian(),
-                      controller.remarkField,
-                      const SizedBox(
-                        height: 120,
-                      )
-                    ],
+      body: Obx(() => controller.isLoading.isTrue
+          ? const Center(
+              child: ProgressLoading(),
+            )
+          : Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        detailInformation(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          "Detail SKU",
+                          style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        controller.skuReject,
+                        totalPembelian(),
+                        controller.remarkField,
+                        const SizedBox(
+                          height: 120,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              bottomNvabar(),
-            ],
-          )),
+                bottomNvabar(),
+              ],
+            )),
     );
   }
 
-  _showBottomDialogSend(
-      BuildContext context, DeliveryRejectSOController controller) {
+  _showBottomDialogSend(BuildContext context, DeliveryRejectSOController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -277,7 +286,7 @@ class DeliveryRejectSO extends StatelessWidget {
               ),
             ),
             child: Column(
-                mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 8),
@@ -292,15 +301,12 @@ class DeliveryRejectSO extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
                     "Apakah kamu yakin data yang dimasukan sudah benar?",
-                    style: AppTextStyle.primaryTextStyle
-                        .copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                    style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text(
-                      "Pastikan semua data yang kamu masukan semua sudah benar",
-                      style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 24),
@@ -323,7 +329,9 @@ class DeliveryRejectSO extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: Constant.bottomSheetMargin,)
+                const SizedBox(
+                  height: Constant.bottomSheetMargin,
+                )
               ],
             ),
           );

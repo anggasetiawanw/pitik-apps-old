@@ -24,7 +24,7 @@ class CardListDelivery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime created = isPenjualan ? Convert.getDatetime(order!.createdDate!) : Convert.getDatetime(transferModel!.createdDate!);
-    final DateTime modified = isPenjualan ? Convert.getDatetime(order!.modifiedDate!) : Convert.getDatetime(transferModel!.modifiedDate!);
+    // final DateTime modified = isPenjualan ? Convert.getDatetime(order!.modifiedDate!) : Convert.getDatetime(transferModel!.modifiedDate!);
 
     return GestureDetector(
       onTap: onTap,

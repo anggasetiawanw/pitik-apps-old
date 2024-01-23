@@ -186,7 +186,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                             Container(
                               width: double.infinity,
                               height: 48,
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                               decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                               child: Text(
                                 "${controller.transferModel.products![0]!.productItems![0]!.name}",
@@ -236,7 +236,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks ?? "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -265,7 +265,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks ?? "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],

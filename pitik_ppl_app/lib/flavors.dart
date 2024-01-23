@@ -13,9 +13,9 @@ class F {
   static String get title {
     switch (appFlavor) {
       case Flavor.PROD:
-        return 'Pitik PPL App';
+        return 'Pitik - Smart Broiler Farming';
       case Flavor.DEV:
-        return 'Pitik PPL App Staging';
+        return 'Pitik - Smart Broiler Farming (Staging)';
       default:
         return 'title';
     }

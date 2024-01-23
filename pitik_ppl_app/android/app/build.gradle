@@ -38,13 +38,13 @@ android {
     productFlavors {
         prod {
             dimension "flavor-type"
-            applicationId "id.pitik.mobile.ppl"
-            resValue "string", "app_name", "Pitik PPL App"
+            applicationId "id.pitik.mobile"
+            resValue "string", "app_name", "Pitik - Smart Broiler Farming"
         }
         dev {
             dimension "flavor-type"
-            applicationId "id.pitik.mobile.ppl.staging"
-            resValue "string", "app_name", "Pitik PPL App Staging"
+            applicationId "id.pitik.mobilestaging"
+            resValue "string", "app_name", "Pitik - Smart Broiler Farming (Staging)"
         }
     }
 

@@ -4,6 +4,7 @@ import 'package:components/get_x_creator.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/convert.dart';
@@ -92,7 +93,7 @@ class TransferDetailController extends GetxController {
         Service.push(
             service: ListApi.transferEditStatus,
             context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, ""],
+            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, path, Mapper.asJsonString(null)],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     Get.back();

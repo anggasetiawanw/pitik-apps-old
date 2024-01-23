@@ -33,19 +33,17 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
-      if (onInit) {
-        controller.generateItems(items);
-        onInit = false;
-      }
-    });
+    if (onInit) {
+      controller.generateItems(items);
+      onInit = false;
+    }
 
     final labelField = SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Text(
         label,
         textAlign: TextAlign.left,
-        style: TextStyle(color: GlobalVar.black, fontSize: 14),
+        style: const TextStyle(color: GlobalVar.black, fontSize: 14),
       ),
     );
 
@@ -70,78 +68,96 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
                                         ? GlobalVar.red
                                         : Colors.transparent,
                                 width: 2)),
-                        child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Row(children: [
-                              Expanded(
-                                  flex: 8,
-                                  child: DropdownButton(
-                                    isExpanded: true,
-                                    icon: Align(
-                                      alignment: Alignment.center,
-                                      child: controller.activeField.isTrue ? SvgPicture.asset("images/arrow_down.svg") : SvgPicture.asset("images/disable.svg"),
-                                    ),
-                                    items: controller.items.value
-                                        .map((key) => DropdownMenuItem<String>(
-                                            value: key,
-                                            onTap: () {
-                                              if (controller.selectedValue.value.contains(key)) {
-                                                controller.selectedValue.value.remove(key);
-                                                controller.selectedValue.refresh();
-                                              } else {
-                                                controller.selectedValue.value.add(key);
-                                                controller.selectedValue.refresh();
-                                              }
-                                            },
-                                            child: InkWell(
-                                              onTap: () {
-                                                if (controller.selectedValue.value.contains(key)) {
-                                                  controller.selectedValue.value.remove(key);
-                                                  controller.selectedValue.refresh();
-                                                } else {
-                                                  controller.selectedValue.value.add(key);
-                                                  controller.selectedValue.refresh();
-                                                }
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Obx(() => Checkbox(
-                                                      value: controller.selectedValue.value.contains(key),
-                                                      activeColor: GlobalVar.primaryOrange,
-                                                      onChanged: (isSelect) {
-                                                        if (controller.selectedValue.value.contains(key)) {
-                                                          // for selected object
-                                                          if (controller.selectedObject.containsKey(key)) {
-                                                            controller.selectedObject.remove(key);
-                                                          }
-
-                                                          controller.selectedValue.value.remove(key);
-                                                          controller.selectedValue.refresh();
-                                                        } else {
-                                                          // for selected object
-                                                          if (controller.listObject.isNotEmpty) {
-                                                            controller.selectedObject.putIfAbsent(key, () => controller.listObject[key]);
-                                                          }
-
-                                                          controller.selectedValue.value.add(key);
-                                                          controller.selectedValue.refresh();
-                                                        }
-                                                      })),
-                                                  Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14))
-                                                ],
-                                              ),
-                                            )))
-                                        .toList(),
-                                    underline: Container(),
-                                    onTap: controller.activeField.isTrue ? () => controller.expand() : null,
-                                    hint: Text(controller.selectedValue.value.isNotEmpty ? controller.selectedValue.value.map((e) => e.toString()).reduce((a, b) => '$a , $b') : hint, style: TextStyle(color: controller.selectedValue.value.isNotEmpty ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)),
-                                    onChanged: controller.activeField.isTrue ? onSpinnerSelected : null,
-                                  ))
-                            ]))),
-                    Align(alignment: Alignment.topLeft, child: controller.showTooltip.isTrue ? Container(padding: const EdgeInsets.only(top: 4), child: Row(children: [Padding(padding: const EdgeInsets.only(right: 8), child: SvgPicture.asset("images/error_icon.svg")), Text(controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText, style: TextStyle(color: GlobalVar.red, fontSize: 12))])) : Container())
+                        child: controller.items.value.isNotEmpty
+                            ? createDropdown()
+                            : GestureDetector(
+                                onTap: () {
+                                  print("com ${controller.items.value}");
+                                  if (controller.activeField.isTrue) {
+                                    Get.snackbar("Informasi", "$label data kosong", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
+                                  }
+                                },
+                                child: createDropdown())),
+                    Align(alignment: Alignment.topLeft, child: controller.showTooltip.isTrue ? Container(padding: const EdgeInsets.only(top: 4), child: Row(children: [Padding(padding: const EdgeInsets.only(right: 8), child: SvgPicture.asset("images/error_icon.svg")), Text(controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText, style: const TextStyle(color: GlobalVar.red, fontSize: 12))])) : Container())
                   ]))
             ]),
           )
         : Container());
+  }
+
+  Widget createDropdown() {
+    return Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        child: Row(children: [
+          Expanded(
+              flex: 8,
+              child: DropdownButton(
+                isExpanded: true,
+                icon: Align(
+                  alignment: Alignment.center,
+                  child: controller.activeField.isTrue ? SvgPicture.asset("images/arrow_down.svg") : SvgPicture.asset("images/disable.svg"),
+                ),
+                items: controller.items.value
+                    .map((key) => DropdownMenuItem<String>(
+                        value: key,
+                        onTap: () {
+                          if (controller.selectedValue.value.contains(key)) {
+                            controller.selectedValue.value.remove(key);
+                            controller.selectedValue.refresh();
+                          } else {
+                            controller.selectedValue.value.add(key);
+                            controller.selectedValue.refresh();
+                          }
+                        },
+                        child: InkWell(
+                          onTap: () {
+                            if (controller.selectedValue.value.contains(key)) {
+                              controller.selectedValue.value.remove(key);
+                              controller.selectedValue.refresh();
+                            } else {
+                              controller.selectedValue.value.add(key);
+                              controller.selectedValue.refresh();
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Obx(() => Checkbox(
+                                  value: controller.selectedValue.value.contains(key),
+                                  activeColor: GlobalVar.primaryOrange,
+                                  onChanged: (isSelect) {
+                                    if (controller.selectedValue.value.contains(key)) {
+                                      // for selected object
+                                      if (controller.selectedObject.containsKey(key)) {
+                                        controller.selectedObject.remove(key);
+                                      }
+
+                                      controller.selectedValue.value.remove(key);
+                                      controller.selectedValue.refresh();
+                                    } else {
+                                      // for selected object
+                                      if (controller.listObject.isNotEmpty) {
+                                        controller.selectedObject.putIfAbsent(key, () => controller.listObject[key]);
+                                      }
+
+                                      controller.selectedValue.value.add(key);
+                                      controller.selectedValue.refresh();
+                                    }
+                                  })),
+                              controller.isSubtitle.isTrue
+                                  ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14)), Text(controller.subtitles[key]!, style: const TextStyle(color: GlobalVar.black, fontSize: 12))],
+                                    )
+                                  : Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14))
+                            ],
+                          ),
+                        )))
+                    .toList(),
+                underline: Container(),
+                onTap: controller.activeField.isTrue ? () => controller.expand() : null,
+                hint: Text(controller.selectedValue.value.isNotEmpty ? controller.selectedValue.value.map((e) => e.toString()).reduce((a, b) => '$a , $b') : hint, style: TextStyle(color: controller.selectedValue.value.isNotEmpty ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)),
+                onChanged: controller.activeField.isTrue ? onSpinnerSelected : null,
+              ))
+        ]));
   }
 }

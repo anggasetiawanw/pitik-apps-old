@@ -29,7 +29,7 @@ class SmartControllerListController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments;
+        coop = Get.arguments[0];
         getFloorList();
     }
 
@@ -40,7 +40,7 @@ class SmartControllerListController extends GetxController {
                 apiKey: ApiMapping.smartControllerApi,
                 service: ListApi.getFloorList,
                 context: Get.context!,
-                body: ['Bearer ${auth.token}', auth.id, coop.id],
+                body: ['Bearer ${auth.token}', auth.id, coop.id ?? coop.coopId],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         floorList.value = (body as FloorListResponse).data!.floor;

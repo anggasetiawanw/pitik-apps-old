@@ -11,6 +11,7 @@ import 'package:engine/request/transport/body/xml.dart';
 
 class BodyBuilder {
     Map<String, dynamic> parameters = {};
+    List<dynamic> parametersList = [];
     int _mediaType = PLAIN;
 
     static const FORM_ENCODED = 0;
@@ -20,6 +21,7 @@ class BodyBuilder {
     static const PLAIN = 4;
 
     String _bodyFormAndPlain = "";
+    bool isJsonObject = false;
 
     BodyBuilder(int mediaType) {
         _mediaType = mediaType;
@@ -93,6 +95,7 @@ class BodyBuilder {
     ///   The instance of the class.
     BodyBuilder toJson(Map<String, dynamic> jsonData) {
         parameters = jsonData;
+        isJsonObject = true;
         return this;
     }
 
@@ -118,7 +121,13 @@ class BodyBuilder {
     /// Returns:
     ///   The instance of the class.
     BodyBuilder toJsonFromText(String jsonData) {
-        parameters = json.decode(jsonData);
+        if (jsonDecode(jsonData) is List) {
+            parametersList = jsonDecode(jsonData);
+        } else {
+            parameters = jsonDecode(jsonData);
+            isJsonObject = true;
+        }
+
         return this;
     }
 
@@ -193,7 +202,11 @@ class BodyBuilder {
         if (_mediaType == FORM_ENCODED || _mediaType == PLAIN || _mediaType == XML) {
             return _bodyFormAndPlain;
         } else if (_mediaType == JSON) {
-            return json.encode(parameters);
+            if (isJsonObject) {
+                return json.encode(parameters);
+            } else {
+                return json.encode(parametersList);
+            }
         } else {
             return "not supported body";
         }

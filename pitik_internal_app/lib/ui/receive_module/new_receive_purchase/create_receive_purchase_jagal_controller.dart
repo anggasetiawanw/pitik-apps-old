@@ -139,6 +139,7 @@ class CreateGrPurchaseJagalController extends GetxController {
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
         isLoading.value = false;
         Get.back();
+        Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
@@ -165,7 +166,7 @@ class CreateGrPurchaseJagalController extends GetxController {
     return Purchase(
       products: listProductPayload,
       purchaseOrderId: purchaseDetail.value!.id!,
-      remarks: efRemark.getInput(),
+      remarks: Uri.encodeFull(efRemark.getInput()),
       totalWeight: efTotalKG.getInputNumber()
     );
   }

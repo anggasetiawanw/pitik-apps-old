@@ -63,23 +63,25 @@ class CreateBookStockPage extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      return Container(
-        margin: const EdgeInsets.only(top: 16),
-        child: Expandable(
-            controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
-            headerText: "${products.name}",
-            child: Column(
-              children: [
-                if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                if (products.weight != null) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-              ],
-            )),
-      );
+      return (products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)
+          ? Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: Expandable(
+                  controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
+                  headerText: "${products.name}",
+                  child: Column(
+                    children: [
+                      if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                      if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                      if (products.cutType != null && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                      if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                    ],
+                  )),
+            )
+          : Container();
     }
 
     Widget bottonNavBar() {
@@ -316,7 +318,7 @@ class CreateBookStockPage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "${controller.skuBookSO.controller.sumKg.value}kg",
+                                      "${controller.skuBookSO.controller.sumKg.value.toStringAsFixed(2)}kg",
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       overflow: TextOverflow.clip,
                                     ),
@@ -351,7 +353,7 @@ class CreateBookStockPage extends StatelessWidget {
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.skuBookSO.controller.sumPrice.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.skuBookSO.controller.sumPrice.value + controller.deliveryFee.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],

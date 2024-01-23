@@ -76,6 +76,13 @@ class Convert {
         return '$symbol ${controller.text}';
     }
 
+    static String toCurrencyWithDecimalAndPrecision(String currency, String symbol, String grouping, String decimal, int precision) {
+        var controller = MoneyMaskedTextController(decimalSeparator: decimal, thousandSeparator: grouping, precision: precision);
+        controller.updateValue(double.parse(currency));
+
+        return '$symbol ${controller.text}';
+    }
+
     /// If the string can be converted to a double, then it is a number
     ///
     /// Args:
@@ -287,19 +294,38 @@ class Convert {
         }
     }
 
+    /// The function `roundPrice` rounds a given price to the nearest thousand.
+    ///
+    /// Args:
+    ///   price (double): The price is a decimal number representing the cost of an item.
+    ///
+    /// Returns:
+    ///   The code is returning the rounded price as an integer.
     static int roundPrice(double price) {
-        if(price % 1000 < 500) {
+        if(price % 1000 == 500) {
+            return price.toInt();
+        }
+        else if(price % 1000 < 500) {
             return (price / 1000).floor() * 1000;
         }
         return (price / 1000).ceil() * 1000;
     }
-    
+
     static String getDate(String? dateString) {
-        if (dateString != null) {
+        if (dateString != null && dateString.isNotEmpty) {
             DateTime dateTime = getDatetime(dateString);
             return '${getYear(dateTime)}-${getMonthNumber(dateTime)}-${getDay(dateTime)}';
         } else {
             return '-';
         }
+    }
+
+    static bool isUsePplApps(String userType) {
+        return userType == "ppl" || userType == "pembantu umum" || userType == "mitra manager" || userType == "area manager" || userType == "vice president" || userType == "c level";
+    }
+
+    static String getRenderTime({required int startTime}) {
+        Duration totalTime = DateTime.now().difference(DateTime.fromMicrosecondsSinceEpoch(startTime * 1000));
+        return "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds";
     }
 }

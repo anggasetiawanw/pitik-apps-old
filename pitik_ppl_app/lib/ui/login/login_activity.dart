@@ -17,10 +17,10 @@ class LoginActivity extends GetView<LoginController> {
 
     @override
     Widget build(BuildContext context) {
-        return SafeArea(
-            child: Scaffold(
-                backgroundColor: Colors.white,
-                body: Padding(
+        return Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+                child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: ListView(
                         children: [
@@ -48,10 +48,10 @@ class LoginActivity extends GetView<LoginController> {
                             ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnRegister"), label: "Bergabung menjadi Kawan Pitik!", onClick: () {
 
                             })
-                        ],
-                    ),
-                ),
-            ),
+                        ]
+                    )
+                )
+            )
         );
     }
 }

@@ -82,7 +82,7 @@ class StockDetailActivity extends StatelessWidget {
                           _showBottomDialog(context, controller);
                         })),
               ] else if (controller.opnameModel.status == EnumStock.confirmed) ...[
-                if (Constant.isOpsLead.isTrue) ...[
+                if (Constant.isOpsLead.isTrue || Constant.isScRelation.isTrue) ...[
                   Expanded(child: controller.btSetujui),
                   const SizedBox(
                     width: 16,
@@ -176,128 +176,167 @@ class StockDetailActivity extends StatelessWidget {
             headerText: product.name!,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: product.productItems!
-                    .map((item) => Container(
-                          margin: const EdgeInsets.only(bottom: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item!.name!,
-                                style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Jumlah sebelum",
-                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(
-                                        item.previousQuantity == null && item.previousWeight == null ? "-" : "${item.previousQuantity ?? item.previousWeight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
-                                        style: item.previousQuantity == null && item.previousWeight == null
-                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                            : item.previousWeight == 0 || item.previousQuantity == 0
-                                                ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.quantity == item.previousQuantity
-                                                    ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : item.weight == item.previousWeight
-                                                        ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Jumlah Sesudah",
-                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(
-                                        "${item.quantity ?? item.weight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
-                                        style: item.quantity == null && item.weight == null
-                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                            : item.weight == 0 || item.quantity == 0
-                                                ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.quantity == item.previousQuantity
-                                                    ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : item.weight == item.previousWeight
-                                                        ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                children: product.productItems!.map((item) {
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item!.name!,
+                          style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Jumlah sebelum",
+                                  style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
                                   Text(
-                                    "Jumlah Selisih",
-                                    style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    item.previousQuantity == null && item.previousWeight == null
-                                        ? "-"
-                                        : item.quantity != null ? item.quantity! > item.previousQuantity! ? "> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.quantity! < item.previousQuantity! ? "< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.quantity! == 0 ? "-" : "-" : item.weight! > item.previousWeight! ? "> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.weight! < item.previousWeight! ? "< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.weight! == 0 ? "-" : "-",
-                                    style: item.previousQuantity == null && item.previousWeight == null
+                                    item.previousQuantity == null ? "-" : "${item.previousQuantity ?? 0} ${product.quantityUOM}",
+                                    style: item.previousQuantity == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                        : item.quantity != null
-                                            ? item.quantity! > item.previousQuantity!
-                                                ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.quantity! < item.previousQuantity!
-                                                    ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : item.previousQuantity! - item.quantity! == 0
-                                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                            : item.weight! > item.previousWeight!
-                                                ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                : item.weight! < item.previousWeight!
-                                                    ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                    : item.weight! - item.previousWeight! == 0
-                                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
-                                                        : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                        : item.previousQuantity == 0
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.quantity == item.previousQuantity
+                                                ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
                                   )
-                                ],
-                              ),
-                              if (product.productItems!.last != item && product.productItems!.length > 1) ...[
+                                ] else
+                                  Text(
+                                    item.previousWeight == null ? "-" : "${item.previousWeight ?? 0} ${product.weightUOM}",
+                                    style: item.previousWeight == null
+                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                        : item.previousWeight == 0
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.weight == item.previousWeight
+                                                ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                  )
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Jumlah Sesudah",
+                                  style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                                ),
                                 const SizedBox(
-                                  height: 24,
+                                  height: 4,
                                 ),
-                                const Divider(
-                                  color: AppColors.outlineColor,
-                                  thickness: 1,
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                              ]
-                            ],
+                                if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
+                                  Text(
+                                    "${item.quantity ?? 0} ${product.quantityUOM}",
+                                    style: item.quantity == null
+                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                        : item.quantity == 0
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.quantity == item.previousQuantity
+                                                ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                  )
+                                ] else
+                                  Text(
+                                    "${item.weight ?? 0} ${product.weightUOM}",
+                                    style: item.weight == null
+                                        ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                        : item.weight == 0
+                                            ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.weight == item.previousWeight
+                                                ? AppTextStyle.greenTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                                  )
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Jumlah Selisih",
+                              style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
+                            ),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
+                              Text(
+                                  item.previousQuantity == null && item.quantity == null
+                                      ? "-"
+                                      : item.quantity! > item.previousQuantity!
+                                          ? "> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM}"
+                                          : item.quantity! < item.previousQuantity!
+                                              ? "< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM}"
+                                              : item.previousQuantity! - item.quantity! == 0
+                                                  ? "-"
+                                                  : "-",
+                                  style: item.previousQuantity == null && item.quantity == null
+                                      ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                      : item.quantity! > item.previousQuantity!
+                                          ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                          : item.quantity! < item.previousQuantity!
+                                              ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                              : item.previousQuantity! - item.quantity! == 0
+                                                  ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                  : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium))
+                            ] else
+                              Text(
+                                item.weight == null && item.previousWeight == null
+                                    ? "-"
+                                    : item.weight! > item.previousWeight!
+                                        ? "> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}"
+                                        : item.weight! < item.previousWeight!
+                                            ? "< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}"
+                                            : item.previousQuantity! - item.weight! == 0
+                                                ? "-"
+                                                : "-",
+                                style: item.weight == null && item.previousWeight == null
+                                    ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                    : item.weight! > item.previousWeight!
+                                        ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                        : item.weight! < item.previousWeight!
+                                            ? AppTextStyle.redTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                            : item.weight! - item.previousWeight! == 0
+                                                ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
+                                                : AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                              )
+                          ],
+                        ),
+                        if (product.productItems!.last != item && product.productItems!.length > 1) ...[
+                          const SizedBox(
+                            height: 24,
                           ),
-                        ))
-                    .toList())),
+                          const Divider(
+                            color: AppColors.outlineColor,
+                            thickness: 1,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                        ]
+                      ],
+                    ),
+                  );
+                }).toList())),
       );
     }
 
