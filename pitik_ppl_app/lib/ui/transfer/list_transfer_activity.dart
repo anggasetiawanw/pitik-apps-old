@@ -60,7 +60,7 @@ class ListTransferActivity extends GetView<ListTransferController> {
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                    Text('Daftar Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                    Text('Daftar Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.black)),
                                     GestureDetector(
                                         onTap: () => controller.showMenuBottomSheet(),
                                         child: Container(

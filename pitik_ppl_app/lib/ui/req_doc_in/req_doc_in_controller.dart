@@ -9,6 +9,7 @@ import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class RequestDocInController extends GetxController {
     RequestDocInController({required this.context});
 
     var isLoading = false.obs;
+    int startTime = DateTime.now().millisecondsSinceEpoch;
 
     final String SUBMISSION_STATUS = "Perlu Pengajuan";
     final String SUBMITTED_DOC_IN = "DOC in Diajukan";
@@ -53,10 +55,10 @@ class RequestDocInController extends GetxController {
     DateTimeField dtTanggal = DateTimeField(
         controller: GetXCreator.putDateTimeFieldController("dfTanggal"),
         label: "Tanggal*",
-        hint: "dd/MM/yyyy",
+        hint: "yyyy-MM-dd",
         alertText: "Oops tanggal DOC-In belum dipilih",
-        onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(dateTime)),
-        flag: 1,
+        onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}'),
+        flag: DateTimeField.DATE_FLAG,
     );
 
     EditField efPopulasi = EditField(
@@ -76,7 +78,7 @@ class RequestDocInController extends GetxController {
         onClick: () {
             switch (btNext.controller.label.value) {
                 case "Simpan":
-                    if(isValid()){
+                    if(isValid()) {
                         _showBottomDialog();
                     }
                     break;
@@ -101,6 +103,7 @@ class RequestDocInController extends GetxController {
         });
 
     late ButtonFill btYakin = ButtonFill(controller: GetXCreator.putButtonFillController("byYakin"), label: "Yakin", onClick: () {
+        GlobalVar.track('Click_button_DOCin_simpan');
         Get.back();
         processRequest();
     });
@@ -110,6 +113,7 @@ class RequestDocInController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_DOCin_form_pengajuan');
         coop = Get.arguments[0];
     }
 
@@ -118,11 +122,14 @@ class RequestDocInController extends GetxController {
         super.onReady();
         isLoading.value = true;
         getApprovalByRole();
+
+        WidgetsBinding.instance.addPostFrameCallback((_) => GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Req_DOCin'}));
     }
 
     void getApprovalByRole() {
-        AuthImpl().get().then((auth) => {
+        AuthImpl().get().then((auth) {
             if (auth != null) {
+                int startTime = DateTime.now().millisecondsSinceEpoch;
                 Service.push(
                     apiKey: ApiMapping.api,
                     service: ListApi.getApproval,
@@ -132,26 +139,33 @@ class RequestDocInController extends GetxController {
                         onResponseDone: (code, message, body, id, packet) {
                             allowApprove.value = (body as AprovalDocInResponse).data!.isAllowed ?? false;
                             getPermissionCreateByRole();
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Success'});
                         },
-                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
-                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
+                        onResponseFail: (code, message, body, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Fail'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getApproval', 'Result': 'Error'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
-                )
+                );
             } else {
-                GlobalVar.invalidResponse()
+                GlobalVar.invalidResponse();
             }
         });
     }
@@ -172,7 +186,7 @@ class RequestDocInController extends GetxController {
                             }
 
                             coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
-                            if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+                            if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
                                 if (allowApprove.isTrue) {
                                     btNext.controller.changeLabel("Setujui");
                                 } else {
@@ -211,25 +225,25 @@ class RequestDocInController extends GetxController {
     void setFieldByStatus() {
         coop.statusText = coop.statusText ?? SUBMISSION_STATUS;
         if ((coop.statusText ?? "").toLowerCase()== SUBMISSION_STATUS.toLowerCase()) {
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
 
             btNext.controller.changeLabel("Simpan");
             boEdit.controller.disable();
             isLoading.value =false;
-        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase()== SUBMITTED_STATUS.toLowerCase()) {
             getDetailDocRequest();
             disableField();
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== PROSESSING.toLowerCase()) {
             getDetailDocRequest();
             disableField();
-            // if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if(coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
             boEdit.controller.disable();
         } else if((coop.statusText ?? "").toLowerCase()== APPROVED.toLowerCase()) {
             getDetailDocRequest();
@@ -239,40 +253,40 @@ class RequestDocInController extends GetxController {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
-        } else if ((coop.statusText ?? "").toLowerCase()== SUBMITTED_OVK.toLowerCase()) {
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== OVK_REJECTED.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             }else{
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
         } else if ((coop.statusText ?? "").toLowerCase()== APPROVED_OVK.toLowerCase()) {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty) {
                 getDetailDocRequest();
             } else {
                 enableField();
-                isLoading.value =false;
+                isLoading.value = false;
             }
-            // if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
-            //     getDetailOvkRequest();
-            // }
+            if (coop.purchaseRequestOvk != null && coop.purchaseRequestOvk!.id!.isNotEmpty) {
+                getDetailOvkRequest();
+            }
         } else if ((coop.statusText ?? "").toLowerCase()== REJECTED.toLowerCase()) {
-            isLoading.value =false;
+            isLoading.value = false;
         }
     }
 
@@ -283,7 +297,7 @@ class RequestDocInController extends GetxController {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
-        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN || (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             dtTanggal.controller.enable();
             efPopulasi.controller.enable();
             btNext.controller.changeLabel("Simpan");
@@ -331,8 +345,9 @@ class RequestDocInController extends GetxController {
     }
 
     void getDetailDocRequest() {
-        AuthImpl().get().then((auth) => {
+        AuthImpl().get().then((auth) {
             if (auth != null) {
+                int startTime = DateTime.now().millisecondsSinceEpoch;
                 Service.push(
                     apiKey: ApiMapping.productReportApi,
                     service: ListApi.getRequestChickinDetail,
@@ -343,39 +358,40 @@ class RequestDocInController extends GetxController {
                             requestChickin.value = (body as RequestChickinResponse).data;
                             requestId.value =(body).data!.id!;
 
-                            try {
-                                DateFormat formatDate = DateFormat("dd/MM/yyyy");
-                                DateTime newStartDate =DateFormat("yyyy-MM-dd HH:mm:ss").parse(requestChickin.value!.chickInDate ?? "");
-                                String startDate = formatDate.format(newStartDate);
-                                dtTanggal.controller.setTextSelected(startDate);
-                            } catch (_) {}
-
+                            dtTanggal.controller.setTextSelected(Convert.getDate(requestChickin.value!.chickInDate));
                             efPopulasi.setInput(requestChickin.value!.initialPopulation.toString());
 
                             if (!((coop.statusText??"").toLowerCase() == SUBMISSION_STATUS.toLowerCase()) && !((coop.statusText??"").toLowerCase() == SUBMITTED_OVK.toLowerCase())) {
                                 disableField();
                             }
                             isLoading.value  = false;
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Success'});
                         },
-                        onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
-                        onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red
-                        ),
+                        onResponseFail: (code, message, body, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Fail'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getRequestChickinDetail', 'Result': 'Error'});
+                            Get.snackbar(
+                                "Pesan",
+                                "Terjadi Kesalahan Internal",
+                                snackPosition: SnackPosition.TOP,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red
+                            );
+                        },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
-                )
+                );
             } else {
-                GlobalVar.invalidResponse()
+                GlobalVar.invalidResponse();
             }
         });
     }
@@ -433,7 +449,7 @@ class RequestDocInController extends GetxController {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text("Tanggal", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                                Text(DateFormat("dd/MM/yyyy").format(dtTanggal.getLastTimeSelected()), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                                Text(dtTanggal.controller.textSelected.value, style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
                                             ],
                                         ),
                                         const SizedBox(height: 8,),
@@ -441,7 +457,7 @@ class RequestDocInController extends GetxController {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                                Text("${efPopulasi.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                                Text("${efPopulasi.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
                                             ],
                                         ),
                                     ],
@@ -469,7 +485,7 @@ class RequestDocInController extends GetxController {
     void processRequest() {
         isLoading.value = true;
         RequestChickin requestChickinBody = RequestChickin();
-        requestChickinBody.chickInDate = DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+        requestChickinBody.chickInDate = dtTanggal.controller.textSelected.value;
         requestChickinBody.initialPopulation = (efPopulasi.getInputNumber()??0).toInt();
         requestChickinBody.coopId = coop.id;
 
@@ -483,14 +499,14 @@ class RequestDocInController extends GetxController {
         doc.productCode = "";
         doc.purchaseUom = "";
         requestChickinBody.doc = doc;
-        
+
         if ((coop.statusText ?? "").toLowerCase() == SUBMISSION_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == REJECTED.toLowerCase()) {
             saveRequestChickin(requestChickinBody);
-        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
+        } else if ((coop.statusText ?? "").toLowerCase() == SUBMITTED_DOC_IN.toLowerCase() || (coop.statusText ?? "").toLowerCase() == SUBMITTED_STATUS.toLowerCase() || (coop.statusText ?? "").toLowerCase() == PROSESSING.toLowerCase()) {
             if (allowApprove.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
-                requestChickinApprove.chickInDate =  DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+                requestChickinApprove.chickInDate =  dtTanggal.controller.textSelected.value;
                 approveRequestChickin(requestChickinApprove);
             } else {
                 updateRequestChickin(requestChickinBody);
@@ -499,7 +515,7 @@ class RequestDocInController extends GetxController {
             if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty && isEdit.isTrue) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
-                requestChickinApprove.chickInDate = DateFormat("yyyy-MM-dd").format(dtTanggal.getLastTimeSelected());
+                requestChickinApprove.chickInDate = dtTanggal.controller.textSelected.value;
                 approveRequestChickin(requestChickinApprove);
             } else if(isEdit.isTrue) {
                 updateRequestChickin(requestChickinBody);

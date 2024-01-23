@@ -350,6 +350,7 @@ class GlobalVar {
     static const Color gray = Color(0xFFCACACA);
     static const Color green = Color(0xFF14CB82);
     static const Color greenBackground = Color(0xFFCEFCD8);
+    static const Color greenBackground2 = Color(0xFFEAECF0);
     static const Color blue = Color(0xFF198BDB);
     static const Color blueBackground = Color(0xFFD0F5FD);
     static const Color yellow = Color(0xFFF4B420);

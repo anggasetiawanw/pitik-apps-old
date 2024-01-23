@@ -55,7 +55,7 @@ class TaskApi {
     /// @param path The path to the report.
     @POST(value : POST.PATH_PARAMETER, as : ReportResponse, error : ErrorResponse)
     @JSON(isPlaint: true)
-    void reviewReport(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path){}
+    void reviewReport(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data){}
 
     @GET(value: GET.PATH_PARAMETER, as: TaskTicketResponse, error: ErrorResponse)
     void getTaskTicketList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit,

@@ -3,6 +3,7 @@ import 'package:components/global_var.dart';
 import 'package:engine/dao/db_lite.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/util/firebase_config.dart';
+import 'package:engine/util/gps_util.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,6 +33,10 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupCrashlytics();
     FirebaseConfig.setupRemoteConfig();
 
+    // init GPS
+    // GpsUtil.on();
+
     String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('firebaseToken', token ?? '-');
 }

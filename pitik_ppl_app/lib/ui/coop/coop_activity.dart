@@ -27,7 +27,7 @@ class CoopActivity extends GetView<CoopController> {
                                 children: [
                                     Flexible(
                                         flex: 9,
-                                        child: controller.searchCoopField,
+                                        child: controller.searchCoopBarField,
                                     ),
                                     Flexible(
                                         flex: 1,
@@ -47,12 +47,12 @@ class CoopActivity extends GetView<CoopController> {
                                                                 const SizedBox(),
                                                                 Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                                                 const SizedBox()
-                                                            ],
+                                                            ]
                                                         ),
-                                                        onTap: () => GlobalVar.invalidResponse(),
+                                                        onTap: () => GlobalVar.invalidResponse()
                                                     );
                                                 }).toList();
-                                            },
+                                            }
                                         )
                                     )
                                 ]
@@ -75,32 +75,32 @@ class CoopActivity extends GetView<CoopController> {
                         ),
                         const SizedBox(height: 8),
                         Obx(() =>
-                        controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
-                        Expanded(
-                            child: TabBarView(
-                                controller: controller.tabController,
-                                children: [
-                                    RawScrollbar(
-                                        thumbVisibility: true,
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: ListView.builder(
-                                            itemCount: controller.coopFilteredList.length,
-                                            itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                            controller.isLoading.isTrue ? Padding(padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height - 80) / 3), child: const ProgressLoading()) :
+                            Expanded(
+                                child: TabBarView(
+                                    controller: controller.tabController,
+                                    children: [
+                                        RawScrollbar(
+                                            thumbVisibility: true,
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            child: ListView.builder(
+                                                itemCount: controller.coopFilteredList.length,
+                                                itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                                            )
+                                        ),
+                                        RawScrollbar(
+                                            thumbVisibility: true,
+                                            thumbColor: GlobalVar.primaryOrange,
+                                            radius: const Radius.circular(8),
+                                            child: ListView.builder(
+                                                itemCount: controller.coopFilteredList.length,
+                                                itemBuilder: (context, index) => controller.createCoopIdleCard(index)
+                                            )
                                         )
-                                    ),
-                                    RawScrollbar(
-                                        thumbVisibility: true,
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: ListView.builder(
-                                            itemCount: controller.coopFilteredList.length,
-                                            itemBuilder: (context, index) => controller.createCoopIdleCard(index)
-                                        )
-                                    )
-                                ]
+                                    ]
+                                )
                             )
-                        )
                         )
                     ]
                 )

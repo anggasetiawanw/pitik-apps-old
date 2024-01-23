@@ -28,8 +28,11 @@ class HarvestSubmittedFormController extends GetxController {
     BuildContext context;
     HarvestSubmittedFormController({required this.context});
 
+    final ScrollController scrollController = ScrollController();
+
     late Coop coop;
     late Harvest harvest;
+    late bool isEdit = false;
     late DateTimeField submittedDateField;
     late MultipleDynamicFormField<Harvest> submissionField;
 
@@ -96,34 +99,19 @@ class HarvestSubmittedFormController extends GetxController {
         Future.delayed(const Duration(milliseconds: 300), () {
             if (Get.arguments.length > 2) {
                 harvest = Get.arguments[1];
+                isEdit = true;
                 _fillData();
             }
         });
     }
 
     void _fillData() {
-        _increaseCard(index: 0, harvest: harvest);
+        minWeightFieldList[0].setInput(harvest.minWeight != null ? harvest.minWeight!.toStringAsFixed(2) : '');
+        maxWeightFieldList[0].setInput(harvest.maxWeight != null ? harvest.maxWeight!.toStringAsFixed(2) : '');
+        totalChickenFieldList[0].setInput(harvest.quantity != null ? harvest.quantity!.toStringAsFixed(2) : '');
+        reasonFieldList[0].controller.setSelected(harvest.reason ?? '');
+
         submittedDateField.controller.setTextSelected(harvest.datePlanned ?? '');
-        submissionField.controller.addData(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                            Expanded(child: minWeightFieldList[0]),
-                            Text('\ts/d\t', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
-                            Expanded(child: maxWeightFieldList[0])
-                        ]
-                    ),
-                    totalChickenFieldList[0],
-                    reasonFieldList[0]
-                ],
-            ),
-            object: harvest,
-            index: 0
-        );
     }
 
     void _increaseCard({required int index, Harvest? harvest}) {
@@ -137,7 +125,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "Kg",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.minWeight = text.isNotEmpty ? double.parse(text) : harvest.minWeight;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         EditField maxWeightField = EditField(
@@ -149,7 +141,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.maxWeight = text.isNotEmpty ? double.parse(text) : harvest.maxWeight;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         EditField totalChickenField = EditField(
@@ -160,7 +156,11 @@ class HarvestSubmittedFormController extends GetxController {
             textUnit: "Kg",
             maxInput: 10,
             inputType: TextInputType.number,
-            onTyping: (text, field) {}
+            onTyping: (text, field) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.quantity = text.isNotEmpty ? int.parse(text) : harvest.quantity;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         SpinnerField reasonField = SpinnerField(
@@ -169,7 +169,11 @@ class HarvestSubmittedFormController extends GetxController {
             hint: "Alasan Panen",
             alertText: "Oops alasan panen belum dipilih",
             items: const {"Penjarangan": false, "Panen Normal/Panen Raya": false, "Panen Sakit": false, "Panen Penghabisan Kandang": false, "Afkir": false, "Mendesak": false, "Panen Bertahap": false},
-            onSpinnerSelected: (text) {}
+            onSpinnerSelected: (text) {
+                Harvest harvest = submissionField.controller.listData[index];
+                harvest.reason = text;
+                submissionField.controller.updateData(object: harvest, index: index);
+            }
         );
 
         if (harvest != null) {
@@ -183,6 +187,18 @@ class HarvestSubmittedFormController extends GetxController {
         maxWeightFieldList.insert(index, maxWeightField);
         totalChickenFieldList.insert(index, totalChickenField);
         reasonFieldList.insert(index, reasonField);
+
+        _scrollDown();
+    }
+
+    void _scrollDown() {
+        Future.delayed(const Duration(milliseconds: 200), () {
+            scrollController.animateTo(
+                scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.fastOutSlowIn,
+            );
+        });
     }
 
     void _getInitialPopulation() => AuthImpl().get().then((auth) {
@@ -220,8 +236,21 @@ class HarvestSubmittedFormController extends GetxController {
 
     void sendHarvestSubmitted() => AuthImpl().get().then((auth) {
         if (auth != null) {
-            if (submissionField.controller.listData.length > 1) {
-                _showBottomDialog(auth);
+            Harvest? tempHarvest;
+            int index = submissionField.controller.listData.length - 1;
+
+            if (minWeightFieldList[index].getInputNumber() != null && maxWeightFieldList[index].getInputNumber() != null && totalChickenFieldList[index].getInputNumber() != null && reasonFieldList[index].controller.selectedIndex != -1) {
+                tempHarvest = Harvest(
+                    farmingCycleId: coop.farmingCycleId,
+                    minWeight: minWeightFieldList[index].getInputNumber(),
+                    maxWeight: maxWeightFieldList[index].getInputNumber(),
+                    quantity: totalChickenFieldList[index].getInputNumber()!.toInt(),
+                    reason: reasonFieldList[index].getController().textSelected.value
+                );
+            }
+
+            if (submissionField.controller.listData.length > 1 || tempHarvest != null) {
+                _showBottomDialog(auth: auth, temptHarvest: tempHarvest);
             } else {
                 Get.snackbar(
                     "Pesan", "Pengajuan masih kosong, silahkan isi minimal satu pengajuan..!",
@@ -236,7 +265,7 @@ class HarvestSubmittedFormController extends GetxController {
         }
     });
 
-    _showBottomDialog(Auth auth) {
+    _showBottomDialog({required Auth auth, Harvest? temptHarvest}) {
         return showModalBottomSheet(
             useSafeArea: true,
             shape: const RoundedRectangleBorder(
@@ -303,6 +332,40 @@ class HarvestSubmittedFormController extends GetxController {
                                 })
                             ),
                         ),
+                        if (temptHarvest != null) ...[
+                            Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text("Pengajuan ${submissionField.controller.listData.length > 1 ? submissionField.controller.listData.length : 1}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, color: GlobalVar.black, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Rentang BW', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(
+                                                    '${temptHarvest.minWeight == null ? '-' : temptHarvest.minWeight!.toStringAsFixed(1)} Kg s.d ${temptHarvest.maxWeight == null ? '-' : temptHarvest.maxWeight!.toStringAsFixed(1)} Kg',
+                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                )
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Jumlah Ayam', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text(
+                                                    '${temptHarvest.quantity != null ? Convert.toCurrencyWithoutDecimal(temptHarvest.quantity.toString(), '', '.') : '-'} Ekor',
+                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                )
+                                            ],
+                                        ),
+                                        const SizedBox(height: 16)
+                                    ]
+                                )
+                            )
+                        ],
                         Container(
                             margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
                             child: Row(
@@ -315,6 +378,10 @@ class HarvestSubmittedFormController extends GetxController {
                                         List<Harvest> harvestList = [];
                                         for (int i = 0; i < submissionField.controller.listData.length - 1; i++) {
                                             harvestList.add(submissionField.controller.listData[i]);
+                                        }
+
+                                        if (temptHarvest != null) {
+                                            harvestList.add(temptHarvest);
                                         }
 
                                         Map<String, dynamic> bodyRequest = {
@@ -334,7 +401,12 @@ class HarvestSubmittedFormController extends GetxController {
                                                         keyPage: "harvestSubmitted",
                                                         message: "Pengajuan panen sudah terkirim\nSelanjutnya akan segera diproses",
                                                         showButtonHome: false,
-                                                        onTapClose: () => Get.back(),
+                                                        onTapClose: () {
+                                                            Get.back(result: true);
+                                                            if (isEdit) {
+                                                                Get.back(result: true);
+                                                            }
+                                                        },
                                                         onTapHome: () {}
                                                     ));
                                                 },

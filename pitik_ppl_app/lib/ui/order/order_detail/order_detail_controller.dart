@@ -265,7 +265,7 @@ class OrderDetailController extends GetxController {
                                         height: 200,
                                         width: 200,
                                     ),
-                                    onTapClose: () => Get.back(),
+                                    onTapClose: () => Get.back(result: true),
                                     onTapHome: () {}
                                 ));
                             },

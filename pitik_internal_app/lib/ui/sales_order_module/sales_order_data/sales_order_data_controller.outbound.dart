@@ -61,6 +61,10 @@ extension OutboundOrderController on SalesOrderController {
     bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
     bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
+    bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
   }
 
   ResponseListener responOutbound() {

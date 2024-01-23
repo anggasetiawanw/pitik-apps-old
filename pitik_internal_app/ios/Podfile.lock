@@ -1,4 +1,6 @@
 PODS:
+  - app_settings (5.1.1):
+    - Flutter
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -221,6 +223,8 @@ PODS:
   - GTMSessionFetcher/Core (3.2.0)
   - image_picker_ios (0.0.1):
     - Flutter
+  - location (0.0.1):
+    - Flutter
   - Mixpanel-swift (4.2.0):
     - Mixpanel-swift/Complete (= 4.2.0)
   - Mixpanel-swift/Complete (4.2.0)
@@ -273,6 +277,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
@@ -286,6 +291,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - location (from `.symlinks/plugins/location/ios`)
   - mixpanel_flutter (from `.symlinks/plugins/mixpanel_flutter/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -337,6 +343,8 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
+  app_settings:
+    :path: ".symlinks/plugins/app_settings/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   file_picker:
@@ -363,6 +371,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  location:
+    :path: ".symlinks/plugins/location/ios"
   mixpanel_flutter:
     :path: ".symlinks/plugins/mixpanel_flutter/ios"
   package_info_plus:
@@ -389,6 +399,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
@@ -426,6 +437,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
   mixpanel_flutter: ed1e5eaea382cbbaf655d20e23478211727ee011
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb

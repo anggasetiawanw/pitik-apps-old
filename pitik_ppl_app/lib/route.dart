@@ -68,6 +68,8 @@ import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_detail/order_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_activity.dart';
 import 'package:pitik_ppl_app/ui/order/order_request/order_request_controller.dart';
+import 'package:pitik_ppl_app/ui/pullet_in/pullet_in_activity.dart';
+import 'package:pitik_ppl_app/ui/pullet_in/pullet_in_controller.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/req_doc_in/req_doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration.dart';
@@ -180,6 +182,9 @@ class AppRoutes {
         // Issue Report
         GetPage(name: RoutePage.issueReport, page: () => const IssueReportActivity(), binding: IssueReportDataBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.issueReportForm, page: () => const IssueReportForm(), binding: IssueReportFormBindings(context: GlobalVar.getContext())),
+
+        // Pullet In
+        GetPage(name: RoutePage.pulletInForm, page: () => const PulletInActivity(), binding: PulletInBinding(context: GlobalVar.getContext())),
     ];
 }
 
@@ -234,4 +239,5 @@ class RoutePage {
     static const String addTaskSelfRegistration = "/addTaskSelfRegistration";
     static const String issueReport = "/issueReport";
     static const String issueReportForm = "/issueReportForm";
+    static const String pulletInForm = "/pulletInForm";
 }

@@ -43,7 +43,7 @@ class CheckBoxField extends StatelessWidget {
                             height: 20,
                             decoration: BoxDecoration(
                                 border: Border.fromBorderSide(BorderSide(
-                                    color: controller.isChecked.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
+                                    color: GlobalVar.primaryOrange,
                                     width: 2
                                 )),
                                 color: controller.isChecked.isTrue ? GlobalVar.primaryOrange : Colors.transparent

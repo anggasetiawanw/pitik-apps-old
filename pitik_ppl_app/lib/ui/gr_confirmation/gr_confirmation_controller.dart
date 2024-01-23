@@ -16,6 +16,7 @@ import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
@@ -26,8 +27,6 @@ import 'package:model/product_model.dart';
 import 'package:model/response/procurement_detail_response.dart';
 import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/check_box/check_box_field.dart';
-
-import '../../route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -51,6 +50,7 @@ class GrConfirmationController extends GetxController {
 
     RxMap<EditField, Product> efProductReceivedMap = <EditField, Product>{}.obs;
     RxList<MediaUploadModel?> grPhotoList = <MediaUploadModel?>[].obs;
+    Rx<Column> outstandingGrInputWidget = (const Column()).obs;
 
     @override
     void onInit() {
@@ -139,14 +139,15 @@ class GrConfirmationController extends GetxController {
                             procurement = body.data!;
 
                             // fill photo confirmation
-                            grPhotoList.value = body.data!.photos;
-                            if (grPhotoList.isNotEmpty) {
-                                grPhotoField.getController().setInformasiText("File telah terupload");
-                                grPhotoField.getController().showInformation();
-                                grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
-                            }
+                            // grPhotoList.value = body.data!.photos;
+                            // if (grPhotoList.isNotEmpty) {
+                            //     grPhotoField.getController().setInformasiText("File telah terupload");
+                            //     grPhotoField.getController().showInformation();
+                            //     grPhotoField.getController().setFileName(grPhotoList[0]!.id!);
+                            // }
                         }
 
+                        _createProductReceivedCards(productList: procurement.details);
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
@@ -446,9 +447,11 @@ class GrConfirmationController extends GetxController {
                                     )
                                 ),
                                 const SizedBox(height: 16),
-                                Text('Apakah yakin kamu inginmelakukan retur', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                Text('Apakah yakin kamu ingin melakukan retur?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
                                 const SizedBox(height: 16),
                                 Text('Pastikan barang sudah sesuai dan benar sebelum melakukan penolakan', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                const SizedBox(height: 16),
+                                Center(child: SvgPicture.asset('images/people_confirm_icon.svg')),
                                 const SizedBox(height: 32),
                                 SizedBox(
                                     width: MediaQuery.of(Get.context!).size.width - 32,
@@ -480,9 +483,9 @@ class GrConfirmationController extends GetxController {
         );
     }
 
-    Column createProductReceivedCards({required List<Product?> productList}) {
+    void _createProductReceivedCards({required List<Product?> productList}) {
         efProductReceivedMap.clear();
-        return Column(
+        outstandingGrInputWidget.value = Column(
             children: List.generate(procurement.details.length, (index) {
                 if (procurement.details[index] == null) {
                     return const SizedBox();
@@ -674,13 +677,23 @@ class GrConfirmationController extends GetxController {
                                             Text(procurement.erpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                         ],
                                     ),
+                                    if (!isFromTransfer) ...[
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text('Kode Pembelian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                                Text(procurement.purchaseRequestErpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                            ]
+                                        )
+                                    ],
                                     const SizedBox(height: 8),
                                     Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                            Text('Kode Pembelian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                            Text(procurement.purchaseRequestErpCode ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                        ],
+                                            Text('Tanggal Pengiriman', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            Text(procurement.deliveryDate ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                        ]
                                     ),
                                     const SizedBox(height: 8),
                                     Row(
@@ -813,10 +826,7 @@ class GrConfirmationController extends GetxController {
                                                                                 keyPage: "grConfirmationSaved",
                                                                                 message: "Kamu telah berhasil melakukan penerimaan sapronak",
                                                                                 showButtonHome: false,
-                                                                                onTapClose: () => Get.toNamed(
-                                                                                    isFromTransfer ? RoutePage.listTransferPage : RoutePage.listOrderPage,
-                                                                                    arguments: isFromTransfer ? coop : [coop, fromCoopRest]
-                                                                                ),
+                                                                                onTapClose: () => Get.back(result: true),
                                                                                 onTapHome: () {}
                                                                             ));
                                                                         },

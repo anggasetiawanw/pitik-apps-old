@@ -71,6 +71,11 @@ class SpinnerFieldController<T> extends GetxController {
     void generateWeight(Map<String, double> data) => weightItems.value = data;
     void addItems({required String value, required bool isActive, int milisecondsDelayed = 200}) => Future.delayed(Duration(milliseconds: milisecondsDelayed), () => items[value] = isActive);
     T? getSelectedObject() => selectedObject;
+    void reset() {
+        selectedObject = null;
+        selectedIndex = -1;
+        setTextSelected('');
+    }
     void setSelected(String textSelected) => Future.delayed(const Duration(milliseconds: 500), () {
         int index = 0;
         items.forEach((key, value) {

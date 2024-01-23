@@ -1,3 +1,4 @@
+import 'package:model/chick_type_model.dart';
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
@@ -21,7 +22,8 @@ class RequestChickin {
     String? remarks;
     String? coopId;
     bool? hasFinishedDOCin;
-    
+    int? pulletInWeeks;
+
     @IsChild()
     Product? doc;
 
@@ -33,6 +35,9 @@ class RequestChickin {
 
     @IsChild()
     Procurement? internalOvkTransferRequest;
+
+    @IsChild()
+    ChickType? chickType;
 
     @IsChildren()
     List<MediaUploadModel?>? suratJalanPhotos;
@@ -48,9 +53,10 @@ class RequestChickin {
     String? mergedCoopId;
     String? mergedLogisticCoopName;
     int? mergedLogisticFarmingCycleDays;
-    RequestChickin({this.id, this.additionalPopulation, this.bw, this.chickInDate, this.coopId, this.doc,this.docInFormPhotos, this.erpCode, this.finishChickIn, this.hasFinishedDOCin, this.initialPopulation, this.internalOvkTransferRequest, this.mergedCoopId, this.mergedLogistic, this.mergedLogisticCoopName, this.mergedLogisticFarmingCycleDays, this.notes, this.ovk, this.pakan, this.photos, 
-    this.poCode, this.recordStart, this.remarks, this.startDate, this.suratJalanPhotos, this.truckArrival, this.truckLeaving, this.uniformity
-    });
+
+    RequestChickin({this.id, this.additionalPopulation, this.bw, this.chickInDate, this.coopId, this.doc,this.docInFormPhotos, this.erpCode, this.finishChickIn, this.hasFinishedDOCin, this.initialPopulation, this.internalOvkTransferRequest,
+                    this.mergedCoopId, this.mergedLogistic, this.mergedLogisticCoopName, this.mergedLogisticFarmingCycleDays, this.notes, this.ovk, this.pakan, this.photos, this.poCode, this.recordStart, this.remarks, this.startDate,
+                    this.pulletInWeeks, this.chickType, this.suratJalanPhotos, this.truckArrival, this.truckLeaving, this.uniformity});
 
     static RequestChickin toResponseModel(Map<String, dynamic> map) {
         return RequestChickin(
@@ -78,6 +84,8 @@ class RequestChickin {
             docInFormPhotos: Mapper.children<MediaUploadModel>(map['docInFormPhotos']),
             photos: Mapper.children<MediaUploadModel>(map['photos']),
             notes: map['notes'],
+            pulletInWeeks: map['pulletInWeeks'],
+            chickType: Mapper.child<ChickType>(map['chickType']),
             mergedLogistic: map['mergedLogistic'],
             mergedCoopId: map['mergedCoopId'],
             mergedLogisticCoopName: map['mergedLogisticCoopName'],

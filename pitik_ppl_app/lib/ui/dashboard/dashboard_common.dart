@@ -33,34 +33,44 @@ import 'package:pitik_ppl_app/route.dart';
 
 class DashboardCommon {
 
-    static void getUnreadNotificationCount({required RxInt countUnreadNotifications}) => AuthImpl().get().then((auth) => {
-        if (auth != null){
+    static void getUnreadNotificationCount({required RxInt countUnreadNotifications}) => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            int startTime = DateTime.now().millisecondsSinceEpoch;
             Service.push(
                 apiKey: ApiMapping.api,
                 service: ListApi.countUnreadNotifications,
                 context: Get.context!,
                 body: ['Bearer ${auth.token}', auth.id],
                 listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) => countUnreadNotifications.value = (body.data),
-                    onResponseFail: (code, message, body, id, packet) => Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red
-                    ),
-                    onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan Internal",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red
-                    ),
+                    onResponseDone: (code, message, body, id, packet) {
+                        countUnreadNotifications.value = (body.data);
+                        GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'countUnreadNotifications', 'Result': 'Success'});
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        );
+                        GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'countUnreadNotifications', 'Result': 'Fail'});
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red
+                        );
+                        GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'countUnreadNotifications', 'Result': 'Error'});
+                    },
                     onTokenInvalid: () => GlobalVar.invalidResponse()
                 )
-            )
+            );
         } else {
-            GlobalVar.invalidResponse()
+            GlobalVar.invalidResponse();
         }
     });
 

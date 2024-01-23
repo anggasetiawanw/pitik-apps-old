@@ -26,7 +26,6 @@ import 'package:model/product_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/products_response.dart';
 import 'package:model/response/stock_summary_response.dart';
-import 'package:pitik_ppl_app/route.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -190,6 +189,10 @@ class TransferRequestController extends GetxController {
             selectedObject: () => getFeedSelectedObject(),
             selectedObjectWhenIncreased: (product) => getFeedSelectedObjectWhenIncreased(product),
             keyData: () => getFeedProductName(),
+            onAfterAdded: () {
+                feedSpinnerField.controller.reset();
+                feedQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (feedSpinnerField.getController().selectedIndex == -1) {
@@ -235,6 +238,10 @@ class TransferRequestController extends GetxController {
             selectedObject: () => getOvkSelectedObject(),
             selectedObjectWhenIncreased: (product) => getOvkSelectedObjectWhenIncreased(product),
             keyData: () => getOvkProductName(),
+            onAfterAdded: () {
+                ovkSpinnerField.controller.reset();
+                ovkQuantityField.setInput('');
+            },
             validationAdded: () {
                 bool isPass = true;
                 if (ovkSpinnerField.getController().selectedIndex == -1) {
@@ -763,7 +770,12 @@ class TransferRequestController extends GetxController {
                         keyPage: "transferSaved",
                         message: "Kamu telah berhasil melakukan permintaan transfer pakan ke kandang lain",
                         showButtonHome: false,
-                        onTapClose: () => Get.toNamed(RoutePage.listTransferPage, arguments: coop),
+                        onTapClose: () {
+                            Get.back(result: true);
+                            if (isEdit) {
+                                Get.back(result: true);
+                            }
+                        },
                         onTapHome: () {}
                     ));
                 },
@@ -844,7 +856,11 @@ class TransferRequestController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, ListApi.pathFeedStocks(coop.farmingCycleId!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        _setupSpinnerBrand(field: feedSpinnerField, productList: (body as ProductsResponse).data);
+                        if ((body as ProductsResponse).data.isNotEmpty) {
+                            feedStockSummaryList.value = body.data;
+                        }
+
+                        _setupSpinnerBrand(field: feedSpinnerField, productList: body.data);
                         _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
@@ -866,7 +882,11 @@ class TransferRequestController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, ListApi.pathOvkStocks(coop.farmingCycleId!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        _setupSpinnerBrand(field: ovkSpinnerField, productList: (body as ProductsResponse).data, isFeed: false);
+                        if ((body as ProductsResponse).data.isNotEmpty) {
+                            feedStockSummaryList.value = body.data;
+                        }
+
+                        _setupSpinnerBrand(field: ovkSpinnerField, productList: body.data, isFeed: false);
                         _checkCountLoading();
                     },
                     onResponseFail: (code, message, body, id, packet) => _checkCountLoading(),
@@ -879,10 +899,7 @@ class TransferRequestController extends GetxController {
         }
     });
 
-    String _getRemainingQuantity(Product product) {
-        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
-    }
-
+    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? 'Karung'}';
     void _getFeedStockSummary() => AuthImpl().get().then((auth) => {
         if (auth != null) {
             Service.push(
@@ -893,8 +910,6 @@ class TransferRequestController extends GetxController {
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if ((body as StockSummaryResponse).data != null && body.data!.summaries.isNotEmpty) {
-                            feedStockSummaryList.value = body.data!.summaries;
-
                             for (var product in body.data!.summaries) {
                                 if (product != null) {
                                     if (product.subcategoryCode != null && product.subcategoryCode == "PRESTARTER") {
@@ -935,7 +950,7 @@ class TransferRequestController extends GetxController {
 
                             for (var product in body.data!.summaries) {
                                 ovkStock += product == null ? 0.0 : product.remainingQuantity ?? 0.0;
-                                uom = product == null ? '' : product.uom ?? product.purchaseUom ?? '';
+                                uom = product == null ? 'Botol' : product.uom ?? product.purchaseUom ?? 'Botol';
                             }
 
                             ovkStockSummary.value = '${ovkStock.toStringAsFixed(0)} $uom';
@@ -966,6 +981,8 @@ class TransferRequestController extends GetxController {
         if (feedSpinnerField.getController().getSelectedObject() != null) {
             Product product = feedSpinnerField.getController().getSelectedObject();
             product.quantity = feedQuantityField.getInputNumber() ?? 0;
+            product.categoryCode = 'PAKAN';
+            product.categoryName = 'PAKAN';
 
             return product;
         } else {
@@ -977,6 +994,8 @@ class TransferRequestController extends GetxController {
         if (ovkSpinnerField.getController().getSelectedObject() != null) {
             Product product = ovkSpinnerField.getController().getSelectedObject();
             product.quantity = ovkQuantityField.getInputNumber() ?? 0;
+            product.categoryCode = 'OVK';
+            product.categoryName = 'OVK';
 
             return product;
         } else {
@@ -988,6 +1007,8 @@ class TransferRequestController extends GetxController {
         if (feedSpinnerField.getController().getSelectedObject() != null) {
             Product product = feedSpinnerField.getController().getSelectedObject();
             product.quantity = (oldProduct.quantity ?? 0) + (feedQuantityField.getInputNumber() ?? 0);
+            product.categoryCode = 'PAKAN';
+            product.categoryName = 'PAKAN';
 
             return product;
         } else {
@@ -999,6 +1020,8 @@ class TransferRequestController extends GetxController {
         if (ovkSpinnerField.getController().getSelectedObject() != null) {
             Product product = ovkSpinnerField.getController().getSelectedObject();
             product.quantity = (oldProduct.quantity ?? 0) + (ovkQuantityField.getInputNumber() ?? 0);
+            product.categoryCode = 'OVK';
+            product.categoryName = 'OVK';
 
             return product;
         } else {

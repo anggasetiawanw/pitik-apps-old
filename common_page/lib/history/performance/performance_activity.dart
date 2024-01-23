@@ -173,15 +173,15 @@ class PerformanceActivity extends GetView<PerformanceController> {
                                                 children: [
                                                     SizedBox(
                                                         width: (MediaQuery.of(Get.context!).size.width / 2) * 0.3,
-                                                        child: Text('Variabel', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                                        child: Text('Variabel', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black))
                                                     ),
                                                     SizedBox(
                                                         width: (MediaQuery.of(Get.context!).size.width / 2) * 0.3,
-                                                        child: Text('Saat Ini', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                                        child: Text('Saat Ini', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black))
                                                     ),
                                                     SizedBox(
                                                         width: (MediaQuery.of(Get.context!).size.width / 2) * 0.3,
-                                                        child: Text('Standar', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black))
+                                                        child: Text('Standar', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black), textAlign: TextAlign.end)
                                                     )
                                                 ],
                                             ),

@@ -69,56 +69,73 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                                 )
                                             ]
                                         ),
+                                        if (!controller.isFromTransfer) ...[
+                                            const SizedBox(height: 8),
+                                            Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                    Text('Kode Pembelian', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                    Text(
+                                                        controller.procurement.purchaseRequestErpCode ?? '-',
+                                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                    )
+                                                ]
+                                            )
+                                        ] else if (controller.isFromTransfer && controller.procurement.route != null && controller.isOwnFarm()) ...[
+                                            const SizedBox(height: 8),
+                                            Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                    Text('Tujuan Transfer', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                    Text(
+                                                        controller.procurement.route == "COOP-TO-BRANCH" ? "Unit" : "Kandang",
+                                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                    )
+                                                ]
+                                            )
+                                        ],
                                         const SizedBox(height: 8),
                                         Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                                Text('Kode Pembelian', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                Text(
-                                                    controller.procurement.purchaseRequestErpCode ?? '-',
-                                                    style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                )
-                                            ]
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                                Text('Jenis Order', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                Text('Jenis ${controller.isFromTransfer ? 'Transfer' : 'Order'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                                 Text(
                                                     controller.procurement.type == null ? '-' : controller.procurement.type == 'pakan' ? 'Pakan' : 'OVK',
                                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                 )
                                             ]
                                         ),
-                                        controller.procurement.type != null && controller.procurement.type == 'pakan' ?
-                                        Column(
+                                        controller.procurement.type != null && controller.procurement.type == 'pakan' ? Column(
                                             children: [
+                                                if (!controller.isFromTransfer) ...[
+                                                    const SizedBox(height: 8),
+                                                    Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                            Text('Digabung?', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                            Text(
+                                                                controller.procurement.mergedLogistic == null ? '-' : controller.procurement.mergedLogistic! ? 'Ya' : 'Tidak',
+                                                                style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                            )
+                                                        ]
+                                                    )
+                                                ],
                                                 const SizedBox(height: 8),
                                                 Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
-                                                        Text('Digabung?', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                        Text(
-                                                            controller.procurement.mergedLogistic == null ? '-' : controller.procurement.mergedLogistic! ? 'Ya' : 'Tidak',
+                                                        Text('${controller.isFromTransfer ? 'Asal' : 'Nama'} Kandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                        controller.isFromTransfer ? Text(
+                                                            controller.procurement.coopSourceName == null ? '-' : controller.procurement.coopSourceName!,
                                                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                        )
-                                                    ]
-                                                ),
-                                                const SizedBox(height: 8),
-                                                Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                        Text('Nama Kandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                        Text(
+                                                        ) : Text(
                                                             controller.procurement.mergedLogisticCoopName == null ? '-' : controller.procurement.mergedLogisticCoopName!,
                                                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                         )
                                                     ]
                                                 )
                                             ],
-                                        ) : controller.procurement.type != null && controller.procurement.type == 'pakan' && controller.isOwnFarm() ?
-                                        Column(
+                                        ) : controller.procurement.type != null && controller.procurement.type == 'pakan' && controller.isOwnFarm() ? Column(
                                             children: [
                                                 const SizedBox(height: 8),
                                                 Row(
@@ -139,8 +156,27 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                 )
                             ),
                             const SizedBox(height: 8),
-                            controller.procurement.statusText == GlobalVar.DIPROSES || controller.procurement.statusText == GlobalVar.DITOLAK ?
-                            Column(
+                            controller.procurement.statusText == GlobalVar.SEBAGIAN || controller.procurement.statusText == GlobalVar.DIKIRIM ? Container(
+                                decoration: const BoxDecoration(
+                                    color: GlobalVar.redBackground,
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                child: Row(
+                                    children: [
+                                        SvgPicture.asset('images/error_icon.svg'),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                            child: Text(
+                                                'Pastikan barang tidak ada yang di Retur, Jika sudah Diterima maka Barang pada PO ini tidak bisa di Retur lagi',
+                                                style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.red)
+                                            )
+                                        )
+                                    ]
+                                )
+                            ) : const SizedBox(),
+                            const SizedBox(height: 8),
+                            controller.procurement.statusText == GlobalVar.DIPROSES || controller.procurement.statusText == GlobalVar.DITOLAK ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                     Text(
@@ -150,8 +186,7 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                     const SizedBox(height: 12),
                                     controller.createProductCards(productList: controller.procurement.details, isFeed: controller.procurement.type == 'pakan')
                                 ],
-                            ) :
-                            Column(
+                            ) : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                     const SizedBox(height: 8),
@@ -207,7 +242,7 @@ class GrConfirmationActivity extends GetView<GrConfirmationController> {
                                         children: [
                                             Text('Sisa Belum Diterima', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                             const SizedBox(height: 8),
-                                            controller.createProductReceivedCards(productList: controller.procurement.details),
+                                            controller.outstandingGrInputWidget.value,
                                             controller.grReceivedDateField,
                                             controller.grNotesField,
                                             controller.isLoadingPicture.isTrue ? SizedBox(
