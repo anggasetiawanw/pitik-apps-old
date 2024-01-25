@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_controller.dart';
+import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
 class BerandaActivity extends StatelessWidget {
@@ -12,26 +13,38 @@ class BerandaActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     final BerandaController controller = Get.put(BerandaController(context: context));
 
-    // @override
-    // Widget header() {
-    //   return Stack(
-    //     children: [
-    //       SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
-    //       Container(
-    //         margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Text(
-    //               "Selamat Datang\nDi Internal App!",
-    //               style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-    //             ),
-    //           ],
-    //         ),
-    //       )
-    //     ],
-    //   );
-    // }
+    @override
+    Widget header() {
+      return Stack(
+        children: [
+          Image.asset("images/header_ios.png"),
+          SafeArea(
+            child: Padding(
+              padding:  EdgeInsets.only(left: Get.width * 0.8, top: 24, bottom: 16, right: 6),
+              child: GestureDetector(
+                onTap: () => Get.toNamed(RoutePage.notification),
+                child: SizedBox(
+                  width: 50,
+                  height: 34,
+                  child: Stack(
+                    children: [
+                      Positioned(left: 12, top: 8, child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)),
+                      Container(
+                        decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: AppColors.red),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Text("123", style: AppTextStyle.subTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium, color: Colors.white)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }
 
     Widget toolTab() {
       return Container(
@@ -182,9 +195,7 @@ class BerandaActivity extends StatelessWidget {
             )
           : Column(
               children: [
-                //   header(),
-                Image.asset("images/header_ios.png"),
-                // SvgPicture.asset("images/header_ios.svg"),
+                header(),
                 const SizedBox(
                   height: 16,
                 ),
