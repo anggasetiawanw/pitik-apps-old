@@ -48,7 +48,7 @@ class DateTimeField extends StatelessWidget {
         final labelField = SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
-                label,
+                controller.label.value.isEmpty ?label : controller.label.value,
                 textAlign: TextAlign.left,
                 style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),

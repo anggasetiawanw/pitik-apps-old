@@ -13,8 +13,9 @@ class SearchBarField extends StatelessWidget {
     final Function(String, SearchBarField) onTyping;
     final Function(String) onCategorySelected;
     final String? hint;
+    final bool addPrefixDropdown;
 
-    SearchBarField({super.key, required this.controller, this.hint, required this.items, required this.onTyping, required this.onCategorySelected});
+    SearchBarField({super.key, required this.controller, this.hint, required this.items, required this.onTyping, required this.onCategorySelected, this.addPrefixDropdown = true});
     SearchBarController getController() => Get.find(tag: controller.tag);
 
     bool onInit = true;
@@ -40,11 +41,11 @@ class SearchBarField extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 4.0),
                 hintText: hint ?? "Cari ${controller.selectedValue.value}",
                 hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                suffixIcon: Padding(
+                suffixIcon:addPrefixDropdown ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                     child: SvgPicture.asset("images/search_icon.svg")
-                ),
-                prefixIcon: Padding(
+                ) : null,
+                prefixIcon: addPrefixDropdown ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: SizedBox(
                         width: 104,
@@ -82,6 +83,9 @@ class SearchBarField extends StatelessWidget {
                             ]
                         )
                     )
+                ) : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                    child: SvgPicture.asset("images/search_icon.svg")
                 ),
                 focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(width: 1.0, color: GlobalVar.primaryOrange)),
                 disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(width: 1.0, color: GlobalVar.primaryOrange)),

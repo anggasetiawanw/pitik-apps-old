@@ -7,10 +7,12 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/purchase_module/data_purchase_activity/data_purchase_controller.dart';
 import 'package:pitik_internal_app/utils/route.dart';
+import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
 import 'package:pitik_internal_app/widget/common/list_card_purchase.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
@@ -27,26 +29,6 @@ class _PurchasePageState extends State<PurchasePage>{
   @override
   Widget build(BuildContext context) {
     final PurchaseController controller = Get.put(PurchaseController(context: context));
-    Widget appBar() {
-      return AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-        ),
-        backgroundColor: AppColors.primaryOrange,
-        centerTitle: true,
-        title: Text(
-          "Pembelian",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-        ),
-      );
-    }
 
     Widget bottomNavbar() {
       return Align(
@@ -90,13 +72,75 @@ class _PurchasePageState extends State<PurchasePage>{
       );
     }
 
-
+Widget filterList() {
+      List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+      return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: listFilter.length,
+          itemBuilder: (context, index) {
+            if (listFilter[index].value.isEmpty) {
+              return const SizedBox();
+            }
+            return Container(
+              height: 32,
+              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8, left: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.bgAbu),
+              child: Row(
+                children: [
+                  Text(
+                    listFilter[index].value,
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => controller.removeOneFilter(listFilter[index].key),
+                    child: const Icon(Icons.close, size: 16, color: AppColors.primaryOrange),
+                  )
+                ],
+              ),
+            );
+          });
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: appBar()),
+            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
+            child: Column(
+              children: [
+                CustomAppbar(
+                  title: "Pembelian",
+                  onBack: () => Navigator.of(context).pop(),
+                  isFlat: true,
+                ),
+                Container(
+                  color: AppColors.primaryOrange,
+                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 32,
+                          width: 32,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
+                          child: SvgPicture.asset("images/filter_line.svg"),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: SizedBox(height: 42, child: controller.sbSearch),
+                      ),
+                    ],
+                  ),
+                ),
+                Obx(
+                  () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
+                ),
+              ],
+            )),
       body: Stack(
         children: [
           Obx(() =>

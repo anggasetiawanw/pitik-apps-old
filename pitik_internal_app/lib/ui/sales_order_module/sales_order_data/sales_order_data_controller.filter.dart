@@ -98,7 +98,6 @@ extension FilterOrderController on SalesOrderController {
 
   bool validationFilter() {
     if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
-      print("masuk sini");
       if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
         Get.snackbar(
           "Oops",

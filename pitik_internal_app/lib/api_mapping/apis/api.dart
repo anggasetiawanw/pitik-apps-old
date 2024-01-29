@@ -687,7 +687,7 @@ class API {
   /// internal transfers. It is a string parameter that can have one of the
   /// following values: "draft", "submitted", "approved", "rejected", "canceled",
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
-  void getGoodReceiptTransferList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String status, @Query("status") String statusDelivered, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getGoodReceiptTransferList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusReceived, @Query("status") String statusDelivered, @Query("withinProductionTeam") String withinProductionTeam) {}
 
   /// This function creates a goods received record using a POST request with
   /// authorization and parameter inputs.

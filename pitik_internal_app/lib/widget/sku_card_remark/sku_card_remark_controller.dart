@@ -79,7 +79,7 @@ class SkuCardRemarkController extends GetxController {
           items: const {
             "Potong Biasa": false,
             "Bekakak": false,
-            "Potong Utuh": false,
+            "Utuh": false,
           },
           onSpinnerSelected: (value) {
             if (value == "Potong Biasa") {
@@ -195,7 +195,7 @@ class SkuCardRemarkController extends GetxController {
         return "REGULER";
       case "Bekakak":
         return "BEKAKAK";
-      case "Potong Utuh":
+      case "Utuh":
         return "UTUH";
       default:
         return "REGULER";
@@ -209,7 +209,7 @@ class SkuCardRemarkController extends GetxController {
       case "BEKAKAK":
         spinnerTypePotongan.value[index].controller.textSelected.value = "Bekakak";
       case "UTUH":
-        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Utuh";
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Utuh";
       default:
     }
   }

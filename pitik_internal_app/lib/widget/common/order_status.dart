@@ -58,14 +58,14 @@ class OrderStatus extends StatelessWidget{
             orderStatus == EnumSO.returned ? "Dikembalikan" :
             orderStatus == EnumSO.onDelivery ? "Perjalanan" :
             orderStatus == EnumSO.delivered && soPage!? "Terkirim" :
-            orderStatus == EnumSO.rejected && soPage!&& returnStatus == EnumSO.returnedPartial ? "Terima Sebagian" :
+            orderStatus == EnumSO.rejected && soPage!&& returnStatus == EnumSO.returnedPartial ? "Terkirim Sebagian" :
             orderStatus == EnumSO.rejected && soPage!? "Ditolak" :
             orderStatus == EnumSO.rejected&& returnStatus == EnumSO.returnedFull && grStatus == EnumSO.received ? "Diterima" :
             orderStatus == EnumSO.rejected&& returnStatus == EnumSO.returnedFull? "Ditolak" :
-            orderStatus == EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terima Sebagian" :
+            orderStatus == EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terkirim Sebagian" :
             orderStatus == EnumSO.rejected&& returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? "Diterima" :
             orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected && soPage!? "Ditolak" :
-            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terima Sebagian" :
+            orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus ==EnumSO.rejected? "Terkirim Sebagian" :
             orderStatus == EnumSO.delivered && returnStatus == EnumSO.returnedPartial && grStatus == EnumSO.received ? "Diterima" :
            "Draft",
 
