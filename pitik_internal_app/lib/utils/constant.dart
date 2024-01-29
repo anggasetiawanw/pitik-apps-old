@@ -111,7 +111,7 @@ class Constant {
             case "BEKAKAK":
                 return "Bekakak";
             case "UTUH":
-                return "Potong Utuh";
+                return "Utuh";
             default:
                 return "Potong Biasa";
         }

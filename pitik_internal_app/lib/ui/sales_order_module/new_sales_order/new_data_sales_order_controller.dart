@@ -366,6 +366,7 @@ class NewDataSalesOrderController extends GetxController {
             }
             //Generate Card SKU
             mapList.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
+            mapListRemark.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
             Timer(const Duration(milliseconds: 100), () {
               skuCard.controller.spinnerCategories.value[0].controller.enable();
               skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("");
