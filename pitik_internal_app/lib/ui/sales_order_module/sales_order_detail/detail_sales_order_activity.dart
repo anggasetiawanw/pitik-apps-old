@@ -88,7 +88,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Tujuan",
+                  "Customer",
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
@@ -110,7 +110,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Kategori",
+                  "Jenis Penjualan",
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
@@ -160,70 +160,72 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 ),
               ],
             ),
-            if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Driver",
-                    style: AppTextStyle.subTextStyle.copyWith(
-                      fontSize: 10,
+            if (controller.orderDetail.value!.category == EnumSO.outbound) ...[
+              if (controller.orderDetail.value!.status == EnumSO.readyToDeliver) ...[
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Driver",
+                      style: AppTextStyle.subTextStyle.copyWith(
+                        fontSize: 10,
+                      ),
                     ),
-                  ),
-                  Text(
-                    controller.orderDetail.value!.driver!.fullName ?? "-",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              )
-            ],
-            if (controller.orderDetail.value!.deliveryTime != null) ...[
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Target Pengiriman",
-                    style: AppTextStyle.subTextStyle.copyWith(
-                      fontSize: 10,
+                    Text(
+                      controller.orderDetail.value!.driver!.fullName ?? "-",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Text(
-                    controller.orderDetail.value!.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) : "-",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Waktu Pengiriman",
-                    style: AppTextStyle.subTextStyle.copyWith(
-                      fontSize: 10,
+                  ],
+                )
+              ],
+              if (controller.orderDetail.value!.deliveryTime != null) ...[
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Target Pengiriman",
+                      style: AppTextStyle.subTextStyle.copyWith(
+                        fontSize: 10,
+                      ),
                     ),
-                  ),
-                  Text(
-                    controller.orderDetail.value!.deliveryTime != null
-                        ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) != "00:00"
-                            ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!))
-                            : "-"
-                        : "-",
-                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+                    Text(
+                      controller.orderDetail.value!.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) : "-",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Waktu Pengiriman",
+                      style: AppTextStyle.subTextStyle.copyWith(
+                        fontSize: 10,
+                      ),
+                    ),
+                    Text(
+                      controller.orderDetail.value!.deliveryTime != null
+                          ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) != "00:00"
+                              ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!))
+                              : "-"
+                          : "-",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ]
             ]
           ],
         ),
@@ -280,10 +282,10 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && controller.orderDetail.value!.type != "LB") infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && controller.orderDetail.value!.type != "LB") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
