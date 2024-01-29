@@ -79,6 +79,7 @@ class SkuCardRemarkController extends GetxController {
           items: const {
             "Potong Biasa": false,
             "Bekakak": false,
+            "Potong Utuh": false,
           },
           onSpinnerSelected: (value) {
             if (value == "Potong Biasa") {
@@ -186,6 +187,31 @@ class SkuCardRemarkController extends GetxController {
     }
 
     return [isValid, error];
+  }
+
+  String getTypePotongan(int index) {
+    switch (spinnerTypePotongan.value[index].controller.textSelected.value) {
+      case "Potong Biasa":
+        return "REGULER";
+      case "Bekakak":
+        return "BEKAKAK";
+      case "Potong Utuh":
+        return "UTUH";
+      default:
+        return "REGULER";
+    }
+  }
+
+  void setTypePotongan(int index, String type) {
+    switch (type) {
+      case "REGULER":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Biasa";
+      case "BEKAKAK":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Bekakak";
+      case "UTUH":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Utuh";
+      default:
+    }
   }
 }
 

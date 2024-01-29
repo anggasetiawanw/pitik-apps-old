@@ -74,7 +74,7 @@ class CreateBookStockPage extends StatelessWidget {
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
                       if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                      if (products.cutType != null && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
+                      if (products.cutType != null) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
                       if (products.numberOfCuts != null && products.cutType == "REGULAR" && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
                       if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),

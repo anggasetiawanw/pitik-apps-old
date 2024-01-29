@@ -98,9 +98,9 @@ class NewDataSalesOrderController extends GetxController {
           for (var product in listCategoriesRemark.value) {
             mapListRemark[product!.name!] = false;
           }
+          mapListRemark.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
           Timer(const Duration(milliseconds: 100), () {
             skuCardRemark.controller.spinnerCategories.value[0].controller.generateItems(mapListRemark);
-
             for (var result in listCategories.value) {
               if (result!.name == AppStrings.LIVE_BIRD) {
                 spinnerCategories.controller.setTextSelected(result.name!);
@@ -608,6 +608,7 @@ class NewDataSalesOrderController extends GetxController {
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldPotongan.value[whichItem]),
+          cutType: skuCard.controller.getTypePotongan(whichItem),
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
@@ -648,7 +649,7 @@ class NewDataSalesOrderController extends GetxController {
           productCategoryId: productSelected.id,
           quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa" ? "REGULAR" : "BEKAKAK",
+          cutType: skuCardRemark.controller.getTypePotongan(whichItem),
           weight: null,
         ));
       }

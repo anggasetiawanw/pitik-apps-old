@@ -28,6 +28,7 @@ import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/enum/so_status.dart';
 import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
 import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order.dart';
 import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order_controller.dart';
@@ -286,9 +287,10 @@ class EditDataSalesOrderController extends GetxController {
     }
     efRemark.setInput(order.remarks != null ? Uri.decodeFull(order.remarks!) : "");
 
-    dtDeliveryDate.controller.setTextSelected("${Convert.getDay(Convert.getDatetime(order.deliveryTime!))}/${Convert.getMonthNumber(Convert.getDatetime(order.deliveryTime!))}/${Convert.getYear(Convert.getDatetime(order.deliveryTime!))}");
-    dtDeliveryTime.controller.setTextSelected("${Convert.getHour(Convert.getDatetime(order.deliveryTime!))}:${Convert.getMinute(Convert.getDatetime(order.deliveryTime!))}");
-
+    if(order.deliveryTime != null && order.category == EnumSO.outbound){
+      dtDeliveryDate.controller.setTextSelected("${Convert.getDay(Convert.getDatetime(order.deliveryTime!))}/${Convert.getMonthNumber(Convert.getDatetime(order.deliveryTime!))}/${Convert.getYear(Convert.getDatetime(order.deliveryTime!))}");
+      dtDeliveryTime.controller.setTextSelected("${Convert.getHour(Convert.getDatetime(order.deliveryTime!))}:${Convert.getMinute(Convert.getDatetime(order.deliveryTime!))}");
+    }
     if (order.type! == "LB") {
       getSku(orderDetail.products![0]!.category!.id!);
       if (orderDetail.productNotes!.isNotEmpty && orderDetail.productNotes != null) {
@@ -317,7 +319,7 @@ class EditDataSalesOrderController extends GetxController {
             skuCardRemark.controller.spinnerCategories.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.name!);
             skuCardRemark.controller.spinnerCategories.value[j].controller.generateItems(listSkuRemark);
             skuCardRemark.controller.editFieldJumlahAyam.value[j].setInput(orderDetail.productNotes![j]!.quantity!.toString());
-            skuCardRemark.controller.spinnerTypePotongan.value[j].controller.setTextSelected(orderDetail.productNotes![j]!.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak");
+            skuCardRemark.controller.setTypePotongan(j, orderDetail.productNotes![j]!.cutType!);
             skuCardRemark.controller.editFieldPotongan.value[j].setInput(orderDetail.productNotes![j]!.numberOfCuts!.toString());
           }
         });
@@ -342,6 +344,7 @@ class EditDataSalesOrderController extends GetxController {
             skuCard.controller.editFieldPotongan.value[j].setInput(orderDetail.products![j]!.numberOfCuts!.toString());
             skuCard.controller.editFieldKebutuhan.value[j].setInput(orderDetail.products![j]!.weight!.toString());
             skuCard.controller.editFieldHarga.value[j].setInput(orderDetail.products![j]!.price!.toString());
+            skuCard.controller.setTypePotongan(j, orderDetail.products![j]!.cutType!);
 
             skuCard.controller.listSku.value[j] = orderDetail.products!;
             skuCard.controller.mapSumChick[j] = skuCard.controller.editFieldJumlahAyam.value[j].getInputNumber()!;
@@ -354,11 +357,14 @@ class EditDataSalesOrderController extends GetxController {
               skuCard.controller.getLoadSku(selectCategory!, j);
               if (skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.AYAM_UTUH || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.BRANGKAS || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.LIVE_BIRD || skuCard.controller.spinnerCategories.value[j].controller.textSelected.value == AppStrings.KARKAS) {
                 skuCard.controller.editFieldJumlahAyam.value[j].controller.visibleField();
-                skuCard.controller.editFieldPotongan.value[j].controller.visibleField();
               } else {
                 skuCard.controller.editFieldKebutuhan.value[j].controller.visibleField();
               }
               skuCard.controller.editFieldHarga.value[j].controller.visibleField();
+              skuCard.controller.spinnerTypePotongan.value[j].controller.visibleSpinner();
+              if (skuCard.controller.spinnerTypePotongan.value[j].controller.textSelected.value == "Potong Biasa") {
+                skuCard.controller.editFieldPotongan.value[j].controller.visibleField();
+              }
             });
           }
 

@@ -65,7 +65,7 @@ class Constant {
     }
 
     /// The function sets the global context for the Dart code.
-    /// 
+    ///
     /// Args:
     ///   context (BuildContext): The context parameter is an instance of the BuildContext class. It
     /// represents the location in the widget tree where the current widget is being built. It provides
@@ -83,18 +83,16 @@ class Constant {
 
     /// The function `invalidResponse` returns a callback function that deletes user authentication, Google
     /// user data, and user profile data, and then navigates to the login page.
-    /// 
+    ///
     /// Returns:
     ///   A `VoidCallback` is being returned.
     static VoidCallback invalidResponse() {
         return () async{
-
             Get.offAllNamed(RoutePage.loginPage);
             AuthImpl().delete(null, []);
             UserGoogleImpl().delete(null, []);
             ProfileImpl().delete(null, []);
-            // XAppIdImpl().delete(null, []);
-             GoogleSignIn().disconnect(); 
+             GoogleSignIn().disconnect();
              FirebaseAuth.instance.signOut();
             isChangeBranch.value = false;
             isDeveloper.value = false;
@@ -104,5 +102,18 @@ class Constant {
             isSales.value = false;
             isSalesLead.value= false;
         };
+    }
+
+    static String getTypePotongan(String type) {
+        switch (type) {
+            case "REGULER":
+                return "Potong Biasa";
+            case "BEKAKAK":
+                return "Bekakak";
+            case "UTUH":
+                return "Potong Utuh";
+            default:
+                return "Potong Biasa";
+        }
     }
 }

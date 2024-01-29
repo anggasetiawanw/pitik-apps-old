@@ -32,6 +32,8 @@ class SkuCardOrderController extends GetxController {
   Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
   Rx<Map<int, List<Products?>>> listSku = Rx<Map<int, List<Products?>>>({});
 
+  Rx<List<SpinnerField>> spinnerTypePotongan = Rx<List<SpinnerField>>([]);
+
   var itemCount = 0.obs;
   var expanded = false.obs;
   var isShow = true.obs;
@@ -78,16 +80,14 @@ class SkuCardOrderController extends GetxController {
                 spinnerSku.value[numberList].controller.visibleSpinner();
                 editFieldJumlahAyam.value[numberList].controller.visibleField();
                 editFieldHarga.value[numberList].controller.visibleField();
-                editFieldPotongan.value[numberList].controller.visibleField();
                 editFieldKebutuhan.value[numberList].controller.invisibleField();
               } else {
                 spinnerSku.value[numberList].controller.invisibleSpinner();
                 editFieldJumlahAyam.value[numberList].controller.invisibleField();
-                editFieldPotongan.value[numberList].controller.invisibleField();
                 editFieldKebutuhan.value[numberList].controller.visibleField();
                 editFieldHarga.value[numberList].controller.visibleField();
               }
-
+              spinnerTypePotongan.value[numberList].controller.visibleSpinner();
               spinnerSku.value[numberList].controller.textSelected.value = "";
               editFieldJumlahAyam.value[numberList].setInput("");
               editFieldKebutuhan.value[numberList].setInput("");
@@ -162,11 +162,34 @@ class SkuCardOrderController extends GetxController {
             refreshtotalPurchase();
           }
         }));
+
+    spinnerTypePotongan.value.add(
+      SpinnerField(
+          controller: GetXCreator.putSpinnerFieldController("spinTypePotongan${numberList}Ordersssss"),
+          label: "Jenis Potongan*",
+          hint: "Pilih Salah Satu",
+          alertText: "Jenis Potongan Harus Dipilih",
+          items: const {
+            "Potong Biasa": false,
+            "Bekakak": false,
+            "Potong Utuh": false,
+          },
+          onSpinnerSelected: (value) {
+            if (value == "Potong Biasa") {
+              editFieldPotongan.value[numberList].controller.visibleField();
+              editFieldPotongan.value[numberList].setInput("");
+            } else {
+              editFieldPotongan.value[numberList].controller.invisibleField();
+            }
+          }),
+    );
+
     spinnerSku.value[numberList].controller.invisibleSpinner();
     editFieldJumlahAyam.value[numberList].controller.invisibleField();
     editFieldKebutuhan.value[numberList].controller.invisibleField();
     editFieldHarga.value[numberList].controller.invisibleField();
     editFieldPotongan.value[numberList].controller.invisibleField();
+    spinnerTypePotongan.value[numberList].controller.invisibleSpinner();
     itemCount.value = index.value.length;
     idx.value++;
   }
@@ -249,6 +272,13 @@ class SkuCardOrderController extends GetxController {
           isValid = false;
           return [isValid, error];
         }
+      }
+
+      if (spinnerTypePotongan.value[whichItem].controller.textSelected.value.isEmpty) {
+        spinnerTypePotongan.value[whichItem].controller.showAlert();
+        Scrollable.ensureVisible(spinnerTypePotongan.value[whichItem].controller.formKey.currentContext!);
+        isValid = false;
+        return [isValid, error];
       }
 
       if (editFieldHarga.value[whichItem].getInput().isEmpty) {
@@ -386,6 +416,31 @@ class SkuCardOrderController extends GetxController {
               Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onTokenInvalid: () {}));
+  }
+
+  String getTypePotongan(int index) {
+    switch (spinnerTypePotongan.value[index].controller.textSelected.value) {
+      case "Potong Biasa":
+        return "REGULER";
+      case "Bekakak":
+        return "BEKAKAK";
+      case "Potong Utuh":
+        return "UTUH";
+      default:
+        return "REGULER";
+    }
+  }
+
+  void setTypePotongan(int index, String type) {
+    switch (type) {
+      case "REGULER":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Biasa";
+      case "BEKAKAK":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Bekakak";
+      case "UTUH":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Utuh";
+      default:
+    }
   }
 }
 
