@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
@@ -72,10 +73,11 @@ class _PurchasePageState extends State<PurchasePage>{
                   controller: GetXCreator.putButtonFillController("dataBaruHome"),
                   label: "Buat Pembelian",
                   onClick: () {
+                    GlobalVar.track("Click_Buat_Pembelian");
                     Get.toNamed(RoutePage.newDataPurchase)!.then((value) {
                       controller.isLoading.value =true;
                       controller.purchaseList.value.clear();
-                        controller.page.value = 1;
+                      controller.page.value = 1;
                       Timer(const Duration(milliseconds: 100), () {
                         controller.getListPurchase();
                       });
@@ -136,6 +138,7 @@ class _PurchasePageState extends State<PurchasePage>{
                     CardListPurchase(
                       purchase: controller.purchaseList.value[index]!,
                       onTap: () {
+                        GlobalVar.track("Click_Detail_Pembelian");
                         Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
                           controller.isLoading.value =true;
                           controller.purchaseList.value.clear();

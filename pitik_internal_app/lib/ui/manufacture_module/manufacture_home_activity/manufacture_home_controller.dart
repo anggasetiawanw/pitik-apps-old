@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class ManufactureHomeController extends GetxController {
     var isLoading = false.obs;
     var isLoadMore = false.obs;
 
-    late ButtonFill createManufacture = ButtonFill(controller: GetXCreator.putButtonFillController("createManufacture"), label: "Buat Manufaktur", onClick: (){ 
+    late ButtonFill createManufacture = ButtonFill(controller: GetXCreator.putButtonFillController("createManufacture"), label: "Buat Manufaktur", onClick: (){
+        GlobalVar.track("Click_Buat_Manufaktur");
         Get.toNamed(RoutePage.manufactureForm)!.then((value) {
             isLoading.value =true;
             listManufacture.value.clear();
@@ -36,7 +38,10 @@ class ManufactureHomeController extends GetxController {
              });
         });
     });
-    
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
@@ -85,6 +90,9 @@ class ManufactureHomeController extends GetxController {
                             isLoading.value = false;
                         }
                     }
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    GlobalVar.trackRenderTime("Manufacture_Home", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -94,7 +102,7 @@ class ManufactureHomeController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,
-                    );  
+                    );
 
                     isLoading.value = false;
                 },
@@ -108,7 +116,7 @@ class ManufactureHomeController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                     print(stacktrace);
-                    isLoading.value = false;  
+                    isLoading.value = false;
                 },
                 onTokenInvalid: Constant.invalidResponse()));
     }

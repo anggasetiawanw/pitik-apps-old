@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -109,9 +110,12 @@ class NewDataPurchaseController extends GetxController {
 
   late SkuCardPurchase skuCard;
   late SkuCardPurchaseInternal skuCardInternal;
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
-    getListDestinationPurchase();
+    timeStart = DateTime.now();
     isLoading.value = true;
     spinnerDestination.controller.disable();
     spinnerSource.controller.disable();
@@ -151,8 +155,8 @@ class NewDataPurchaseController extends GetxController {
     });
     skuCard.controller.invisibleCard();
     skuCardInternal.controller.invisibleCard();
-    isLoading.value = false;
     super.onReady();
+    getListDestinationPurchase();
   }
 
   void generateListProduct(int idx) {
@@ -275,7 +279,7 @@ class NewDataPurchaseController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
           Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
@@ -289,6 +293,10 @@ class NewDataPurchaseController extends GetxController {
           spinnerDestination.controller.hideLoading();
           spinnerDestination.controller.enable();
           spinnerDestination.controller.refresh();
+          isLoading.value = false;
+          timeEnd = DateTime.now();
+          Duration totalTime = timeEnd.difference(timeStart);
+          GlobalVar.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",

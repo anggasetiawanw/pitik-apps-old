@@ -2,6 +2,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/stock_opname_field/stock_opname_field.dart';
 import 'package:engine/request/service.dart';
@@ -53,6 +54,7 @@ class StockOpnameController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
       onClick: () {
+        GlobalVar.track("Click_Konfirmasi_Stock_Opname");
         if (isEdit.isTrue) {
           Get.back();
           updateStock("CONFIRMED");
@@ -68,6 +70,11 @@ class StockOpnameController extends GetxController {
       onClick: () {
         Get.back();
       });
+
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+    int countApi = 0;
+
   @override
   void onInit() {
     super.onInit();
@@ -102,6 +109,16 @@ class StockOpnameController extends GetxController {
     });
   }
 
+  void countingApi(){
+    countApi++;
+    if(countApi == 2){
+      isLoading.value = false;
+      timeEnd = DateTime.now();
+        Duration totalTime = timeEnd.difference(timeStart);
+        GlobalVar.trackRenderTime("Form_Stock_Opname", totalTime);
+    }
+  }
+
   void getListSourceUnit() {
     Service.push(
         service: ListApi.getListOperationUnits,
@@ -117,7 +134,7 @@ class StockOpnameController extends GetxController {
               for (var result in body.data) {
                 listOperationUnits.value.add(result);
               }
-              isLoading.value = false;
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -158,7 +175,7 @@ class StockOpnameController extends GetxController {
               for (var result in (body as CategoryListResponse).data) {
                 listCategories.value.add(result);
               }
-              isLoading.value = false;
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

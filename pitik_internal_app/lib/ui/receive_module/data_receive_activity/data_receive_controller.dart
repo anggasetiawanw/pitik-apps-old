@@ -1,3 +1,4 @@
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +93,7 @@ class ReceiveController extends GetxController{
               isLoadingPurchase.value = false;
             }
           }
+          countingApi();
         }, onResponseFail: (code, message, body, id, packet){
           Get.snackbar(
             "Pesan",
@@ -102,6 +104,7 @@ class ReceiveController extends GetxController{
             backgroundColor: Colors.red,
           );
           isLoadingPurchase.value = false;
+          countingApi();
         }, onResponseError: (exception, stacktrace, id, packet){
                 Get.snackbar(
                     "Pesan",
@@ -110,8 +113,9 @@ class ReceiveController extends GetxController{
                         duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
-                );  
+                );
             isLoadingPurchase.value = false;
+          countingApi();
         },  onTokenInvalid: Constant.invalidResponse()));
   }
 
@@ -137,6 +141,7 @@ class ReceiveController extends GetxController{
               isLoadingTransfer.value = false;
             }
           }
+          countingApi();
         }, onResponseFail: (code, message, body, id, packet){
           Get.snackbar(
             "Pesan",
@@ -146,6 +151,7 @@ class ReceiveController extends GetxController{
             colorText: Colors.white,
             backgroundColor: Colors.red,
           );
+          countingApi();
         }, onResponseError: (exception, stacktrace, id, packet){
                           Get.snackbar(
                     "Pesan",
@@ -154,7 +160,8 @@ class ReceiveController extends GetxController{
                         duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
-                ); 
+                );
+          countingApi();
 
         },  onTokenInvalid: Constant.invalidResponse()));
   }
@@ -188,6 +195,7 @@ class ReceiveController extends GetxController{
               isLoadingOrder.value = false;
             }
           }
+          countingApi();
         }, onResponseFail: (code, message, body, id, packet){
           Get.snackbar(
             "Pesan",
@@ -197,6 +205,7 @@ class ReceiveController extends GetxController{
             colorText: Colors.white,
             backgroundColor: Colors.red,
           );
+          countingApi();
         }, onResponseError: (exception, stacktrace, id, packet){
             Get.snackbar(
                     "Pesan",
@@ -205,12 +214,16 @@ class ReceiveController extends GetxController{
                         duration: const Duration(seconds: 5),
                     colorText: Colors.white,
                     backgroundColor: Colors.red,
-                ); 
+                );
+                countingApi();
 
         },  onTokenInvalid: Constant.invalidResponse()));
   }
 
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi =0;
 
   @override
   void onInit() {
@@ -227,6 +240,15 @@ class ReceiveController extends GetxController{
     getListPurchase();
     getListTransfer();
     getListReturn();
+  }
+
+  void countingApi(){
+    countApi++;
+    if(countApi == 3){
+      timeEnd = DateTime.now();
+      Duration duration = timeEnd.difference(timeStart);
+      GlobalVar.trackRenderTime("Penerimaan", duration);
+    }
   }
 
 

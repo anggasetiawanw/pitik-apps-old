@@ -5,6 +5,7 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:components/switch_linear/switch_linear.dart';
@@ -151,18 +152,6 @@ class NewDataSalesOrderController extends GetxController {
         refreshtotalPurchase();
       });
 
-//   late EditField editFieldKebutuhan = EditField(
-//       controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
-//       label: "Kebutuhan*",
-//       hint: "Tulis Jumlah*",
-//       alertText: "Kolom Ini Harus Di Isi",
-//       textUnit: "Kg",
-//       inputType: TextInputType.number,
-//       maxInput: 20,
-//       onTyping: (value, control) {
-//         refreshtotalPurchase();
-//       });
-
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
       label: "Harga*",
@@ -210,9 +199,14 @@ class NewDataSalesOrderController extends GetxController {
     flag: 2,
   );
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi = 0;
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     isInbound.value = Get.arguments;
     isLoading.value = true;
     spinnerOrderType.controller.setTextSelected("Non-LB");
@@ -235,6 +229,7 @@ class NewDataSalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("iyaPurchase"),
       label: "Ya",
       onClick: () {
+        GlobalVar.trackWithMap("Click_Konfirmasi_Penjualan", {"Jenis_Penjualan": produkType.value, "Category_Penjualan": isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
         Get.back();
         saveOrder();
       },
@@ -260,10 +255,21 @@ class NewDataSalesOrderController extends GetxController {
     editFieldHarga.controller.disable();
     if (isInbound.isTrue) {
       getListSource();
+    } else {
+        countingApi();
     }
     getListCustomer();
     getCategorySku();
     super.onReady();
+  }
+
+  void countingApi() {
+    countApi++;
+    if (countApi == 3) {
+      timeEnd = DateTime.now();
+      Duration totalTime = timeEnd.difference(timeStart);
+      GlobalVar.trackRenderTime("Buat_Penjualan", totalTime);
+    }
   }
 
   void generateListProduct(int idx) {
@@ -320,6 +326,7 @@ class NewDataSalesOrderController extends GetxController {
           }
           spinnerCustomer.controller.hideLoading();
           spinnerCustomer.controller.setTextSelected("");
+          countingApi();
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",
@@ -390,6 +397,8 @@ class NewDataSalesOrderController extends GetxController {
               }
             }
             isLoading.value = false;
+
+            countingApi();
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
@@ -475,6 +484,7 @@ class NewDataSalesOrderController extends GetxController {
                 ..enable()
                 ..setTextSelected("")
                 ..hideLoading();
+                countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

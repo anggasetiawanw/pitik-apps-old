@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -153,7 +154,7 @@ class EditDataController extends GetxController {
         maxInput: 100,
         onTyping: (text, editField) {},
     );
-    
+
     SpinnerSearch spBranch = SpinnerSearch(
         controller: GetXCreator.putSpinnerSearchController("spBranch"),
         label: "Branch*",
@@ -161,7 +162,7 @@ class EditDataController extends GetxController {
         alertText: "Branch harus dipilih!",
         items: const {},
         onSpinnerSelected: (text) {
-            
+
         },
     );
 
@@ -185,6 +186,9 @@ class EditDataController extends GetxController {
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
     Rx<List<Branch?>> listBranch = Rx<List<Branch?>>([]);
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
@@ -204,7 +208,7 @@ class EditDataController extends GetxController {
             onSpinnerSelected: (text) {
                 if (text.isNotEmpty) {
                     editNamaSupplier.controller.visibleField();
-                } 
+                }
             },
         );
 
@@ -219,8 +223,8 @@ class EditDataController extends GetxController {
 
     @override
     void onReady() {
-        super.onReady();    
-        isLoading.value = true;   
+        super.onReady();
+        isLoading.value = true;
         WidgetsBinding.instance.addPostFrameCallback((_) {
             Get.find<SkuCardController>(tag: "editCardController")
                 .itemCount
@@ -229,9 +233,9 @@ class EditDataController extends GetxController {
             getProvince();
             getBranch();
             getProduct();
-            getSalesList(); 
+            getSalesList();
         });
-        
+
     }
 
     bool checkRole(){
@@ -252,9 +256,12 @@ class EditDataController extends GetxController {
         if(countFetch == 4){
             loadData(customer);
             isLoading.value = false;
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("Edit_Data_Customer", totalTime);
         }
     }
-    
+
     void getBranch(){
         AuthImpl().get().then((auth) => {
             if (auth != null){
@@ -333,7 +340,7 @@ class EditDataController extends GetxController {
             spinnerSupplier.controller.setTextSelected(custArg.supplier!);
             editNamaSupplier.setInput(custArg.supplierDetail!);
             editNamaSupplier.controller.visibleField();
-        } 
+        }
 
         if (custArg.products!.isNotEmpty && customer.products != null) {
             for (int i = 0; i < custArg.products!.length - 1; i++) {
@@ -343,7 +350,7 @@ class EditDataController extends GetxController {
             for (var product in listCategories.value) {
               listKebutuhan[product!.name!] = false;
             }
-            Timer(Duration.zero, () { 
+            Timer(Duration.zero, () {
                 for (int j = 0; j < custArg.products!.length; j++) {
                     skuCard.controller.spinnerProduct.value[j].controller.setTextSelected(customer.products![j]!.category!.name!);
                     skuCard.controller.spinnerProduct.value[j].controller.generateItems(listKebutuhan);
@@ -448,6 +455,7 @@ class EditDataController extends GetxController {
     }
 
     void saveCustomer() {
+        GlobalVar.track("Click_Simpan_Edit_Data_Customer");
         List ret = validation();
         if (ret[0]) {
             isLoading.value = true;
@@ -673,9 +681,9 @@ class EditDataController extends GetxController {
                         Products? selectTemp = customer.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
                         selectCategory = selectTemp!.category;
                     }
-                } else {                    
+                } else {
                     Products? selectTemp = customer.products!.firstWhereOrNull((element) => element!.category!.name! == skuCard.controller.spinnerProduct.value[whichItem].controller.textSelected.value );
-                    selectCategory = selectTemp!.category; 
+                    selectCategory = selectTemp!.category;
                 }
 
                 Products? selectProduct;
@@ -720,7 +728,7 @@ class EditDataController extends GetxController {
             );
         }
 
-        
+
         SalesPerson? salesSelect;
         if(isSalesLead.isTrue){
             salesSelect = listSalesperson.value.firstWhereOrNull((element) =>element!.email == spinnerPicSales.controller.textSelected.value,);

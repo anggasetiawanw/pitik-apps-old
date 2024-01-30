@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -35,55 +36,27 @@ class DetailGrOrderController extends GetxController {
     late ButtonFill createGr = ButtonFill(
         controller: GetXCreator.putButtonFillController("createGrOrder"),
         label: "Buat Penerimaan",
-        onClick: () => Get.toNamed(RoutePage.createGrOrderPage, arguments: orderDetail.value)!.then((value) {
-            isLoading.value =true;
-            Timer(const Duration(milliseconds: 500), () {
-            getDetailOrder();
+        onClick: () {
+            GlobalVar.track("Click_Buat_Penerimaan_Penjualan");
+            Get.toNamed(RoutePage.createGrOrderPage, arguments: orderDetail.value)!.then((value) {
+                isLoading.value =true;
+                Timer(const Duration(milliseconds: 500), () {
+                getDetailOrder();
+                });
             });
-        })
-    );
-    late ButtonFill bookStockButton = ButtonFill(
-        controller: GetXCreator.putButtonFillController("bookStock"),
-        label: "Pesan Stock",
-        onClick: () => Get.toNamed(RoutePage.newBookStock, arguments: orderDetail.value)!.then((value) {
-            isLoading.value =true;
-            Timer(const Duration(milliseconds: 500), () {
-            getDetailOrder();
-            });
-        })
-    );
-    late ButtonFill sendButton = ButtonFill(
-        controller: GetXCreator.putButtonFillController("sent"),
-        label: "Kirim",
-        onClick: () => Get.toNamed(RoutePage.assignToDriver, arguments: orderDetail.value)!.then((value) {
-            isLoading.value =true;
-            Timer(const Duration(milliseconds: 500), () {
-            getDetailOrder();
-            });
-        })
-    );
-    late ButtonFill editDriver = ButtonFill(
-        controller: GetXCreator.putButtonFillController("editDriver"),
-        label: "Edit",
-        onClick: () => Get.toNamed(RoutePage.assignToDriver, arguments: orderDetail.value)!.then((value) {
-            isLoading.value =true;
-            Timer(const Duration(milliseconds: 500), () {
-            getDetailOrder();
-            });
-        })
-    );
-    late ButtonOutline cancelButton = ButtonOutline(
-        controller: GetXCreator.putButtonOutlineController("cancelOrder"),
-        label: "Batal",
-        onClick: () => null,
+        }
     );
 
     late ButtonFill bfYesCancel;
     late ButtonOutline boNoCancel;
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
+        timeStart = DateTime.now();
         orderDetail.value = Get.arguments as Order;
         getDetailOrder();
         boNoCancel = ButtonOutline(
@@ -134,17 +107,20 @@ class DetailGrOrderController extends GetxController {
             body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathDetailOrderById(orderDetail.value!.id!)],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
-                List <Products?> product=[];
-                for (var result in (body as OrderResponse).data!.products!){
-                    if(result!.returnQuantity != null || result.returnWeight != null){
-                    product.add(result);
+                    List <Products?> product=[];
+                    for (var result in (body as OrderResponse).data!.products!){
+                        if(result!.returnQuantity != null || result.returnWeight != null){
+                        product.add(result);
+                        }
                     }
-                }
-                orderDetail.value = (body).data;
-                orderDetail.value!.products!.clear();
-                orderDetail.value!.products = product;
-                isLoading.value = false;
-                getTotalQuantity(body.data);
+                    orderDetail.value = (body).data;
+                    orderDetail.value!.products!.clear();
+                    orderDetail.value!.products = product;
+                    isLoading.value = false;
+                    getTotalQuantity(body.data);
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    GlobalVar.trackRenderTime("Detail_Penerimaan_Penjualan", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet){
                 isLoading.value = false;
