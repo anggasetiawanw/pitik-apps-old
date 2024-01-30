@@ -106,7 +106,7 @@ class Constant {
 
     static String getTypePotongan(String type) {
         switch (type) {
-            case "REGULER":
+            case "REGULAR":
                 return "Potong Biasa";
             case "BEKAKAK":
                 return "Bekakak";

@@ -198,7 +198,7 @@ class NewDataSalesOrderController extends GetxController {
     label: "Tanggal Pengiriman*",
     hint: "dd/mm/yyyy",
     alertText: "Tanggal Pengiriman harus dipilih!",
-    onDateTimeSelected: (date, dateField) =>dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
     flag: 1,
   );
   DateTimeField dtDeliveryTime = DateTimeField(
@@ -206,7 +206,7 @@ class NewDataSalesOrderController extends GetxController {
     label: "Waktu Pengiriman",
     hint: "hh:mm",
     alertText: "Waktu Pengiriman harus dipilih!",
-    onDateTimeSelected: (date, dateField) =>dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
     flag: 2,
   );
 
@@ -244,10 +244,14 @@ class NewDataSalesOrderController extends GetxController {
   @override
   void onReady() {
     Get.find<SkuCardOrderController>(tag: "skuOrder").idx.listen((p0) {
-      generateListProduct(p0);
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListProduct(p0);
+      });
     });
-    Get.find<SkuCardRemarkController>(tag: "skuRemark").itemCount.listen((p0) {
-      generateListRemark(p0);
+    Get.find<SkuCardRemarkController>(tag: "skuRemark").idx.listen((p0) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListRemark(p0);
+      });
     });
     skuCard.controller.visibleCard();
     skuCardRemark.controller.visibleCard();
@@ -263,20 +267,13 @@ class NewDataSalesOrderController extends GetxController {
   }
 
   void generateListProduct(int idx) {
-    Timer(const Duration(milliseconds: 500), () {
-      idx = idx - 1;
-      skuCard.controller.spinnerCategories.value[idx].controller.generateItems(mapListSku.value);
-      skuCard.controller.editFieldHarga.value[idx].controller.addListener(() {});
-    });
+    idx = idx - 1;
+    skuCard.controller.spinnerCategories.value[idx].controller.generateItems(mapListSku.value);
   }
 
   void generateListRemark(int idx) {
-    Timer(const Duration(milliseconds: 500), () {
-      idx = idx - 1;
-      skuCardRemark.controller.spinnerCategories.value[idx].controller.generateItems(mapListRemark.value);
-      // skuCardRemark.controller.editFieldHarga.value[idx].controller.addListener(() {
-      // });
-    });
+    idx = idx - 1;
+    skuCardRemark.controller.spinnerCategories.value[idx].controller.generateItems(mapListRemark.value);
   }
 
   void refreshtotalPurchase() {
@@ -590,7 +587,7 @@ class NewDataSalesOrderController extends GetxController {
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
       remarks: Uri.encodeFull(efRemark.getInput()),
       withDeliveryFee: isDeliveryPrice.value,
-      deliveryTime: resultDate !=null ? Convert.getStringIso(resultDate) : null,
+      deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : null,
     );
   }
 
