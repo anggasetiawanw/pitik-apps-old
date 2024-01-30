@@ -514,6 +514,9 @@ class PurchaseController extends GetxController {
       if (spSku.controller.textSelected.value.isNotEmpty) {
         listFilter.value["SKU"] = spSku.controller.textSelected.value;
       }
+      if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Jenis Sumber"] = spJenisSumber.controller.textSelected.value;
+      }
       if (spSumber.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Sumber"] = spSumber.controller.textSelected.value;
       }
@@ -583,9 +586,13 @@ class PurchaseController extends GetxController {
       case "SKU":
         spSku.controller.setTextSelected("");
         break;
-      case "Sumber":
+      case "Jenis Sumber":
         spSumber.controller.setTextSelected("");
         spJenisSumber.controller.setTextSelected("");
+        listFilter.value.remove("Sumber");
+        break;
+      case "Sumber":
+        spSumber.controller.setTextSelected("");
         break;
       case "Destination":
         spTujuan.controller.setTextSelected("");
@@ -669,7 +676,11 @@ class PurchaseController extends GetxController {
     bodyGeneralPurhcase[BodyQueryPurhcase.vendorId.index] = vendorSelect?.id;
     bodyGeneralPurhcase[BodyQueryPurhcase.jagalId.index] = jagalSelect?.id;
     bodyGeneralPurhcase[BodyQueryPurhcase.status.index] = status;
-    bodyGeneralPurhcase[BodyQueryPurhcase.source.index] = spJenisSumber.controller.textSelected.value.isEmpty? null : spJenisSumber.controller.textSelected.value == "Jagal Eksternal" ? "JAGAL" : "VENDOR";
+    bodyGeneralPurhcase[BodyQueryPurhcase.source.index] = spJenisSumber.controller.textSelected.value.isEmpty
+        ? null
+        : spJenisSumber.controller.textSelected.value == "Jagal Eksternal"
+            ? "JAGAL"
+            : "VENDOR";
     isLoading.value = true;
     getListPurchase();
   }
@@ -698,7 +709,8 @@ class PurchaseController extends GetxController {
       });
     }
   }
-  void pullRefresh(){
+
+  void pullRefresh() {
     purchaseList.value.clear();
     page.value = 1;
     isLoading.value = true;
