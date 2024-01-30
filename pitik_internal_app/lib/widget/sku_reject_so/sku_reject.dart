@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
+import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/sku_reject_so/sku_reject_controller.dart';
 
 class SkuReject extends StatelessWidget {
@@ -11,7 +12,7 @@ class SkuReject extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    
+
     Widget infoDetailSKU(String title, String name){
         return Container(
             margin: const EdgeInsets.only(top: 14),
@@ -49,7 +50,7 @@ class SkuReject extends StatelessWidget {
                         })),
                         Text("SKU ${index+1}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),),
                     ],
-                    ),   
+                    ),
                 ),
                 Container(
                     width: double.infinity,
@@ -63,7 +64,8 @@ class SkuReject extends StatelessWidget {
                             infoDetailSKU("Kategori SKU", "${controller.products[index]!.category!.name}"),
                             infoDetailSKU("SKU", "${controller.products[index]!.name}"),
                             if(controller.products[index]!.quantity != null  && controller.products[index]!.quantity != 0 )  infoDetailSKU("Total Ekor", "${controller.products[index]!.quantity} Ekor"),
-                            if (controller.products[index]!.numberOfCuts != 0) infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
+                            if (controller.products[index]!.cutType != null) infoDetailSKU("Jenis Potong", Constant.getTypePotongan(controller.products[index]!.cutType!)),
+                            if (controller.products[index]!.cutType == "REGULAR") infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
                             infoDetailSKU("Kebutuhan", "${controller.products[index]!.weight} Kg"),
                             infoDetailSKU("Harga", Convert.toCurrency("${controller.products[index]!.price}", "Rp. ", ".")),
                             controller.jumlahEkorDitolak.value[index],
@@ -75,6 +77,6 @@ class SkuReject extends StatelessWidget {
             ],
         );
     },).toList());
-    
+
   }
 }
