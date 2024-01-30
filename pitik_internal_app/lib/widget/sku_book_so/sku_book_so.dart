@@ -50,10 +50,10 @@ class SkuBookSO extends StatelessWidget {
                     ),
                     child: Column(
                         children: [
-                            infoDetailSKU("Kategori SKU", "${controller.isRemarks ?  controller.products[index]!.name: controller.products[index]!.category!.name}"),
+                            infoDetailSKU("Kategori SKU", "${controller.isRemarks ?  controller.products[index]!.name: controller.products[index]!.category?.name}"),
                             if(!controller.isRemarks) infoDetailSKU("SKU", "${controller.products[index]!.name}"),
-                            if (controller.products[index]!.cutType != null ) infoDetailSKU("Jenis Potong", Constant.getTypePotongan(controller.products[index]!.cutType!)),
-                            if (controller.products[index]!.cutType == "REGULAR") infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
+                            if (controller.products[index]!.cutType != null && controller.products[index]!.category?.name != AppStrings.LIVE_BIRD) infoDetailSKU("Jenis Potong", Constant.getTypePotongan(controller.products[index]!.cutType!)),
+                            if (controller.products[index]!.cutType == "REGULAR"  && controller.products[index]!.category?.name != AppStrings.LIVE_BIRD) infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
                             if(controller.products[index]!.price !=null )infoDetailSKU("Harga", "${Convert.toCurrency("${controller.products[index]!.price}", "Rp. ", ".")}/kg"),
                             controller.jumlahEkor.value[index],
                             if(!controller.isRemarks)controller.jumlahkg.value[index],
