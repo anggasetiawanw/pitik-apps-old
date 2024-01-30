@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_variable/global_variable.dart';
+import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/sku_book_so/sku_book_so_controller.dart';
 
 class SkuBookSO extends StatelessWidget {
@@ -10,7 +11,7 @@ class SkuBookSO extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    
+
     Widget infoDetailSKU(String title, String name){
         return Container(
             margin: const EdgeInsets.only(top: 14),
@@ -38,7 +39,7 @@ class SkuBookSO extends StatelessWidget {
                     ),
                     child:Container(
                             margin: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text("SKU ${index+1}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),))  
+                            child: Text("SKU ${index+1}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),))
                 ),
                 Container(
                     width: double.infinity,
@@ -51,8 +52,8 @@ class SkuBookSO extends StatelessWidget {
                         children: [
                             infoDetailSKU("Kategori SKU", "${controller.isRemarks ?  controller.products[index]!.name: controller.products[index]!.category!.name}"),
                             if(!controller.isRemarks) infoDetailSKU("SKU", "${controller.products[index]!.name}"),
-                            if(controller.products[index]!.cutType !=null )infoDetailSKU("Jenis Potongan",  controller.products[index]!.cutType == "REGULAR"? "Potong Biasa" :"Bekakak"),
-                            if (controller.products[index]!.cutType != "REGULAR") infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
+                            if (controller.products[index]!.cutType != null ) infoDetailSKU("Jenis Potong", Constant.getTypePotongan(controller.products[index]!.cutType!)),
+                            if (controller.products[index]!.cutType == "REGULAR") infoDetailSKU("Potongan", "${controller.products[index]!.numberOfCuts} Potong"),
                             if(controller.products[index]!.price !=null )infoDetailSKU("Harga", "${Convert.toCurrency("${controller.products[index]!.price}", "Rp. ", ".")}/kg"),
                             controller.jumlahEkor.value[index],
                             if(!controller.isRemarks)controller.jumlahkg.value[index],
@@ -63,6 +64,6 @@ class SkuBookSO extends StatelessWidget {
             ],
         );
     },).toList());
-    
+
   }
 }
