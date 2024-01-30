@@ -6,6 +6,7 @@ import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/search_bar/search_bar.dart';
 import 'package:components/spinner_field/spinner_field.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -186,6 +187,160 @@ class ReceiveController extends GetxController {
 
   late SearchBarField sbSearch;
 
+  void getListPurchase(){
+    Service.push(
+        service: ListApi.getGoodReceiptPOList,
+        context: context,
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pagePurchase.value, limit.value,"CONFIRMED","RECEIVED",AppStrings.TRUE_LOWERCASE],
+        listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
+          if ((body as ListPurchaseResponse).data.isNotEmpty){
+            for (var result in body.data){
+              listPurchase.value.add(result as Purchase);
+            }
+            isLoadingPurchase.value  = false;
+            if(isLoadMore.isTrue){
+              isLoadMore.value = false;
+            }
+          } else {
+            if(isLoadMore.isTrue){
+              pagePurchase.value = (listPurchase.value.length ~/ 10).toInt() + 1;
+              isLoadMore.value = false;
+            } else {
+              isLoadingPurchase.value = false;
+            }
+          }
+          countingApi();
+        }, onResponseFail: (code, message, body, id, packet){
+          Get.snackbar(
+            "Pesan",
+            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+          );
+          isLoadingPurchase.value = false;
+          countingApi();
+        }, onResponseError: (exception, stacktrace, id, packet){
+                Get.snackbar(
+                    "Pesan",
+                    "Terjadi kesalahan internal",
+                    snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+            isLoadingPurchase.value = false;
+          countingApi();
+        },  onTokenInvalid: Constant.invalidResponse()));
+  }
+
+  void getListTransfer(){
+    Service.push(
+        service: ListApi.getGoodReceiptTransferList,
+        context: context,
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limit.value,"RECEIVED", "DELIVERED", AppStrings.TRUE_LOWERCASE],
+        listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
+          if ((body as ListTransferResponse).data.isNotEmpty){
+            for (var result in body.data){
+              listTransfer.value.add(result as TransferModel);
+            }
+            isLoadingTransfer.value  = false;
+            if(isLoadMore.isTrue){
+              isLoadMore.value = false;
+            }
+          } else {
+            if(isLoadMore.isTrue){
+              pageTransfer.value = (listTransfer.value.length ~/ 10).toInt() + 1;
+              isLoadMore.value = false;
+            } else {
+              isLoadingTransfer.value = false;
+            }
+          }
+          countingApi();
+        }, onResponseFail: (code, message, body, id, packet){
+          Get.snackbar(
+            "Pesan",
+            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+          );
+          countingApi();
+        }, onResponseError: (exception, stacktrace, id, packet){
+                          Get.snackbar(
+                    "Pesan",
+                    "Terjadi kesalahan internal",
+                    snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+          countingApi();
+
+        },  onTokenInvalid: Constant.invalidResponse()));
+  }
+
+  void getListReturn(){
+    Service.push(
+        service: ListApi.getGoodReceiptsOrderList,
+        context: context,
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageOrder.value, limit.value,"RECEIVED","REJECTED"],
+        listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
+          if ((body as SalesOrderListResponse).data.isNotEmpty){
+            for (var result in body.data){
+              if(result!.grStatus! == "REJECTED" || result.grStatus == "RECEIVED") {
+                listReturn.value.add(result);
+              }
+            }
+            Map<String, bool> mapListRemark = {};
+            for (var product in body.data) {
+              mapListRemark[product!.status!] = false;
+            }
+            mapListRemark.removeWhere((key, value) => key == "REJECTED");
+            isLoadingOrder.value  = false;
+            if(isLoadMore.isTrue){
+              isLoadMore.value = false;
+            }
+          } else {
+            if(isLoadMore.isTrue){
+              pageOrder.value = (listReturn.value.length ~/ 10).toInt() + 1;
+              isLoadMore.value = false;
+            } else {
+              isLoadingOrder.value = false;
+            }
+          }
+          countingApi();
+        }, onResponseFail: (code, message, body, id, packet){
+          Get.snackbar(
+            "Pesan",
+            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+          );
+          countingApi();
+        }, onResponseError: (exception, stacktrace, id, packet){
+            Get.snackbar(
+                    "Pesan",
+                    "Terjadi kesalahan internal",
+                    snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                );
+                countingApi();
+
+        },  onTokenInvalid: Constant.invalidResponse()));
+  }
+
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi =0;
+
   @override
   void onInit() {
     super.onInit();
@@ -240,6 +395,15 @@ class ReceiveController extends GetxController {
       }
     });
   }
+  void countingApi(){
+    countApi++;
+    if(countApi == 3){
+      timeEnd = DateTime.now();
+      Duration duration = timeEnd.difference(timeStart);
+      GlobalVar.trackRenderTime("Penerimaan", duration);
+    }
+  }
+
 
   void openFilter() {
     if (spSku.controller.textSelected.isEmpty) {
@@ -523,155 +687,6 @@ class ReceiveController extends GetxController {
     loading.value = false;
   }
 
-  void getListPurchase() {
-    Service.push(
-        service: ListApi.getGoodReceiptPOList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pagePurchase.value, limit.value, "CONFIRMED", "RECEIVED", AppStrings.TRUE_LOWERCASE],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as ListPurchaseResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  listPurchase.value.add(result as Purchase);
-                }
-                isLoadingPurchase.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pagePurchase.value = (listPurchase.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingPurchase.value = false;
-                }
-              }
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoadingPurchase.value = false;
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoadingPurchase.value = false;
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
-
-  void getListTransfer() {
-    Service.push(
-        service: ListApi.getGoodReceiptTransferList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limit.value, "RECEIVED", "DELIVERED", AppStrings.TRUE_LOWERCASE],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as ListTransferResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  listTransfer.value.add(result as TransferModel);
-                }
-                isLoadingTransfer.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pageTransfer.value = (listTransfer.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingTransfer.value = false;
-                }
-              }
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
-
-  void getListReturn() {
-    Service.push(
-        service: ListApi.getGoodReceiptsOrderList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageOrder.value, limit.value, "RECEIVED", "REJECTED"],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as SalesOrderListResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  if (result!.grStatus! == "REJECTED" || result.grStatus == "RECEIVED") {
-                    listReturn.value.add(result);
-                  }
-                }
-                Map<String, bool> mapListRemark = {};
-                for (var product in body.data) {
-                  mapListRemark[product!.status!] = false;
-                }
-                mapListRemark.removeWhere((key, value) => key == "REJECTED");
-                isLoadingOrder.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pageOrder.value = (listReturn.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingOrder.value = false;
-                }
-              }
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
 
   void getCategorySku() {
     spCategory.controller.disable();

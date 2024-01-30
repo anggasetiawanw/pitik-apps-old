@@ -57,4 +57,15 @@ class F {
                 return AppStrings.WEB_CERT_PRODUCTION;
         }
     }
+
+    static String get tokenMixpanel {
+        switch (appFlavor) {
+            case Flavor.PROD:
+                return '42baf55600c341ade7c4d01c366e6869';
+            case Flavor.DEV:
+                return '8d2c97dc21c83ad4c45fa246c9f26e23';
+            default:
+                return '8d2c97dc21c83ad4c45fa246c9f26e23';
+        }
+    }
 }

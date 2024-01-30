@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ class HomePageCustomerController extends GetxController {
     late ButtonOutline kunjunganModalButton = ButtonOutline(
         controller: GetXCreator.putButtonOutlineController("lamaKunjungan"),
         label: "Lama",
-        onClick: () { 
+        onClick: () {
+            GlobalVar.track("Click_Kunjungan_Lama");
             Get.back();
             Get.toNamed(
             RoutePage.visitCustomer,
@@ -49,6 +51,7 @@ class HomePageCustomerController extends GetxController {
         controller: GetXCreator.putButtonFillController("baruKunjungan"),
         label: "Baru",
         onClick: () {
+            GlobalVar.track("Click_Data_Baru");
             Get.back();
             Get.toNamed(RoutePage.newDataCustomer)!.then((value) {
             isLoading.value =true;
@@ -58,6 +61,9 @@ class HomePageCustomerController extends GetxController {
              });
         });}
     );
+
+    late DateTime timeStart = DateTime.now();
+    late DateTime timeEnd = DateTime.now();
 
     @override
     void onInit() {
@@ -115,9 +121,12 @@ class HomePageCustomerController extends GetxController {
     }
 
 
-    final _getListCustomerListener = ResponseListener(
+    late final ResponseListener _getListCustomerListener = ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
             if (id == 1) {
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                GlobalVar.trackRenderTime("List_Customer", totalTime);
                 if ((body as ListCustomerResponse).data.isNotEmpty) {
                     for (var result in body.data) {
                         (packet[0] as Rx<List<Customer?>>).value.add(result);
@@ -181,7 +190,7 @@ class HomePageCustomerController extends GetxController {
                 backgroundColor: Colors.red,
             );
         },
-                      onResponseError: (exception, stacktrace, id, packet) {            
+                      onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

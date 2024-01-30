@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
@@ -93,9 +94,14 @@ class CreateBookStockController extends GetxController {
     },
   );
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi =0;
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     isLoading.value = true;
     orderDetail.value = Get.arguments[0] as Order;
     isAllocated.value = Get.arguments[1] as bool;
@@ -142,8 +148,18 @@ class CreateBookStockController extends GetxController {
       spinnerSource.controller.setTextSelected(orderDetail.value!.operationUnit!.operationUnitName!);
       spinnerSource.controller.disable();
       bookStockButton.controller.enable();
+      countingApi();
     } else {
       getListSource();
+    }
+  }
+
+  void countingApi() {
+    countApi++;
+    if (countApi == 2) {
+        timeEnd = DateTime.now();
+        Duration totalTime = timeEnd.difference(timeStart);
+        GlobalVar.trackRenderTime(isAllocated.isTrue ? "Form_Alokasi_Penjualan" :" From_Pesan_Stock_Penjualan", totalTime);
     }
   }
 
@@ -157,6 +173,7 @@ class CreateBookStockController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               isLoading.value = false;
               orderDetail.value = (body as OrderResponse).data;
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
@@ -200,6 +217,7 @@ class CreateBookStockController extends GetxController {
                 ..enable()
                 ..setTextSelected("")
                 ..hideLoading();
+                countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -258,6 +276,7 @@ class CreateBookStockController extends GetxController {
           body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, ListApi.pathBookStock(orderDetail.value!.id!), Mapper.asJsonString(orderRequest)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
+                GlobalVar.track("Click_Button_Pesan_Stock_Penjualan");
                 Get.back();
                 isLoading.value = false;
                 Get.back();
@@ -271,6 +290,7 @@ class CreateBookStockController extends GetxController {
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
                 );
+                GlobalVar.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": (body).error!.message!});
 
                 isLoading.value = false;
               },
@@ -284,6 +304,7 @@ class CreateBookStockController extends GetxController {
                   backgroundColor: Colors.red,
                 );
                 isLoading.value = false;
+                GlobalVar.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": exception});
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
@@ -309,15 +330,18 @@ class CreateBookStockController extends GetxController {
       context: context,
       body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathEditSalesOrder(orderDetail.value!.id!), Mapper.asJsonString(orderPayload)],
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
+        GlobalVar.track("Click_Button_Alokasikan_Penjualan");
         isLoading.value = false;
         Get.back();
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        GlobalVar.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": (body).error!.message!});
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        GlobalVar.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": exception});
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),

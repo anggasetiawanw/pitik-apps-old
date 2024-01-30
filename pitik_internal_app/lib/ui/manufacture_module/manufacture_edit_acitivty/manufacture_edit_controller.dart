@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -32,11 +33,12 @@ class ManufactureEditFromController extends GetxController {
     var isLoading = false.obs;
 
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
+        GlobalVar.track("Click_Konfirmasi_Edit_Manufaktur");
         Get.back();
         updateManufacture("INPUT_CONFIRMED");
     });
     ButtonOutline noButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("No Button"), label: "Tidak", onClick: (){Get.back();});
-   
+
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
         if (listOperationUnits.value.isNotEmpty) {
             OperationUnitModel? selectUnit = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName! == value);
@@ -72,17 +74,20 @@ class ManufactureEditFromController extends GetxController {
                 skuField.controller.disable();
                 totalField.controller.enable();
             }
-            
+
         }
     });
 
     late SpinnerField skuField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("skuField"), label: "SKU*", hint: "Pilih salah satu", alertText: "SKU harus dipilih!",isDetail: true, items: const {}, onSpinnerSelected: (value){
 
     });
-    
+
     EditField amountField = EditField(controller: GetXCreator.putEditFieldController("amountBirds"), label: "Jumlah Ekor*", hint: "Tulis Jumlah", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
     EditField totalField = EditField(controller: GetXCreator.putEditFieldController("totalFields"), label: "Total*", hint: "Tulis Jumlah", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
 
+    int countApi = 0;
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
 
     @override
     void onInit() {
@@ -109,6 +114,15 @@ class ManufactureEditFromController extends GetxController {
 
     }
 
+    void countingAPI(){
+        countApi++;
+        if(countApi == 2){
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("Manufacture_Edit_Form", totalTime);
+        }
+    }
+
     void getListSourceUnit() {
         Service.push(
             service: ListApi.getListOperationUnits,
@@ -127,7 +141,8 @@ class ManufactureEditFromController extends GetxController {
                     }
 
                     sourceModel  = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName! == manufactureModel.operationUnit!.operationUnitName);
-                        
+                    countingAPI();
+
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -207,6 +222,7 @@ class ManufactureEditFromController extends GetxController {
                         categorySKUField.controller.disable();
                     }
                     isLoading.value = false;
+                    countingAPI();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -274,8 +290,8 @@ class ManufactureEditFromController extends GetxController {
             OperationUnitModel? selectSource;
             selectSource= listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value,);
             manufactureModel.operationUnit!.id = selectSource!.id;
-        } 
-    
+        }
+
         if(manufactureModel.input!.productItems![0]!.name != skuField.controller.textSelected.value){
             StockModel? selectStock = categorySelect!.productItems!.firstWhereOrNull((element) => element!.name == skuField.controller.textSelected.value,);
             manufactureModel.input!.productItems![0]!.id = selectStock!.productItemId!;
@@ -307,7 +323,7 @@ class ManufactureEditFromController extends GetxController {
             sourceField.controller.showAlert();
             sourceField.controller.focusNode.requestFocus();
             return false;
-        }        
+        }
         if (categorySKUField.controller.textSelected.value.isEmpty) {
             categorySKUField.controller.showAlert();
             categorySKUField.controller.focusNode.requestFocus();
@@ -317,7 +333,7 @@ class ManufactureEditFromController extends GetxController {
             categorySKUField.controller.showAlert();
             categorySKUField.controller.focusNode.requestFocus();
 
-            return false; 
+            return false;
         }
 
         if( categorySKUField.controller.textSelected.value == AppStrings.AYAM_UTUH || categorySKUField.controller.textSelected.value == AppStrings.BRANGKAS || categorySKUField.controller.textSelected.value == AppStrings.LIVE_BIRD){

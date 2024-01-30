@@ -1,6 +1,7 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -20,12 +21,13 @@ class TransferDriverController extends GetxController {
 
     TransferDriverController({required this.context});
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
+        GlobalVar.track("Click_Assign_Driver_Transfer");
         Get.back();
         isLoading.value = true;
         updateStatus();
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
-        Get.back();        
+        Get.back();
     });
 
     SpinnerSearch assignDriver = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value){});
@@ -35,6 +37,10 @@ class TransferDriverController extends GetxController {
     late TransferModel transferModel;
     late DateTime createdDate;
     Rx<List<Profile?>> listDriver = Rx<List<Profile?>>([]);
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
@@ -67,8 +73,11 @@ class TransferDriverController extends GetxController {
                     assignDriver.controller.generateItems(mapList);
                     for (var result in body.data) {
                         listDriver.value.add(result);
-                    }             
-                    isLoading.value = false;       
+                    }
+                    isLoading.value = false;
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    GlobalVar.trackRenderTime("Driver_Form_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -77,7 +86,7 @@ class TransferDriverController extends GetxController {
                         snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
-                        backgroundColor: Colors.red,);   
+                        backgroundColor: Colors.red,);
                     isLoading.value = false;
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
@@ -87,7 +96,7 @@ class TransferDriverController extends GetxController {
                         snackPosition: SnackPosition.TOP,
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
-                        backgroundColor: Colors.red,);   
+                        backgroundColor: Colors.red,);
                     isLoading.value = false;
                 },
                 onTokenInvalid: Constant.invalidResponse()));
@@ -136,14 +145,14 @@ class TransferDriverController extends GetxController {
             assignDriver.controller.showAlert();
             Scrollable.ensureVisible(assignDriver.controller.formKey.currentContext!);
             return false;
-        }  
+        }
 
         return true;
     }
 
     TransferModel generatePayload(){
         Profile? selectDriver = listDriver.value.firstWhereOrNull((element) => element!.fullName == assignDriver.controller.textSelected.value);
-        
+
         return TransferModel(
             driverId: selectDriver!.id,
         );

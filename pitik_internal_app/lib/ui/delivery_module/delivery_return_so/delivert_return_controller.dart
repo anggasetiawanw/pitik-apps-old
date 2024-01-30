@@ -1,6 +1,7 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -39,6 +40,7 @@ class DeliveryRejectSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendItem"),
       label: "Ya",
       onClick: (){
+        GlobalVar.track("Click_Tolak_Konirmasi_Pengiriman_Sales_Order");
         Get.back();
         confirmed();
       }
@@ -156,7 +158,7 @@ class DeliveryRejectSOController extends GetxController {
                 backgroundColor: Colors.red,);
                 return false;
         }
-  
+
         return true;
     }
 

@@ -10,6 +10,7 @@ import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/search_bar/search_bar.dart';
 import 'package:components/spinner_field/spinner_field.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,9 @@ class PurchaseController extends GetxController {
 
   var isLoading = false.obs;
   var isLoadMore = false.obs;
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   ScrollController scrollController = ScrollController();
   RxList<dynamic> bodyGeneralPurhcase = RxList<dynamic>(List.generate(BodyQueryPurhcase.values.length, (index) => null));
@@ -133,6 +137,7 @@ class PurchaseController extends GetxController {
 
   @override
   void onInit() {
+    timeStart = DateTime.now();
     super.onInit();
     sbSearch = SearchBarField(
       controller: GetXCreator.putSearchBarController("purhcaseSearchBar"),
@@ -740,6 +745,9 @@ class PurchaseController extends GetxController {
                 }
               }
               isLoading.value = false;
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackWithMap("Render_Time", {'Page': "Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

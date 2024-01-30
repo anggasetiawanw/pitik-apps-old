@@ -2,6 +2,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -52,6 +53,9 @@ class CreateGrPurchaseJagalController extends GetxController {
   late ButtonFill bfYesGrPurchase;
   late ButtonOutline boNoGrPurchase;
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -77,10 +81,14 @@ class CreateGrPurchaseJagalController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesJagalGrPurchase"),
       label: "Ya",
       onClick: () {
+        GlobalVar.track("Click_Konfirmasi_Penerimaan_Pembelian");
         Get.back();
         saveGrPurchase();
       },
     );
+    timeEnd = DateTime.now();
+    Duration totalTime = timeEnd.difference(timeStart);
+    GlobalVar.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
   }
 
   void getDetailPurchase() {
@@ -163,12 +171,7 @@ class CreateGrPurchaseJagalController extends GetxController {
       ));
     }
 
-    return Purchase(
-      products: listProductPayload,
-      purchaseOrderId: purchaseDetail.value!.id!,
-      remarks: Uri.encodeFull(efRemark.getInput()),
-      totalWeight: efTotalKG.getInputNumber()
-    );
+    return Purchase(products: listProductPayload, purchaseOrderId: purchaseDetail.value!.id!, remarks: Uri.encodeFull(efRemark.getInput()), totalWeight: efTotalKG.getInputNumber());
   }
 }
 

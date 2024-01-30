@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -82,6 +83,7 @@ class DetailGRTransfer extends StatelessWidget {
                                                 "createTransferReceive"),
                                             label: "Buat Penerimaan",
                                             onClick: () {
+                                                GlobalVar.track("Click_Buat_Penerimaan_Transfer");
                                               Get.toNamed(RoutePage.createGrTransferPage, arguments: controller.transferModel)!.then((value) {
                                                 controller.isLoading.value =true;
                                                 Timer(const Duration(milliseconds: 500), () {

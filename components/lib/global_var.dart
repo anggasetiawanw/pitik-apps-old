@@ -544,6 +544,23 @@ class GlobalVar {
         }
     }
 
+    /// The function `trackWithMap` tracks an event with Mixpanel using a provided
+    /// event name and a map of properties.
+    ///
+    /// Args:
+    ///   eventName (String): The eventName parameter is a String that represents
+    /// the name of the event you want to track. It is used to identify the event in
+    /// your analytics system.
+    ///   map (Map<String, dynamic>): The `map` parameter is a `Map` object that
+    /// contains key-value pairs. The keys represent property names, and the values
+    /// represent the corresponding property values. These properties are additional
+    /// data that you want to include when tracking the event with Mixpanel.
+    static void trackRenderTime(String pageName, Duration totalTime) {
+        if (mixpanel != null) {
+            mixpanel!.track("Render_Time", properties:  {'Page': pageName, 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+        }
+    }
+
     /// The function sends the render time of a page to Mixpanel with the page name
     /// and the total time in hours, minutes, seconds, and milliseconds.
     ///

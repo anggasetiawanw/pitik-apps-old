@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
@@ -32,6 +33,7 @@ class CreateGrOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendGrSOButton"),
       label: "Ya",
       onClick: () {
+        GlobalVar.track("Click_Konfirmasi_Penerimaan_Penjualan");
         saveGrOrder();
         Get.back();
       });
@@ -68,9 +70,13 @@ class CreateGrOrderController extends GetxController {
   late DateTime createdDate;
   late SkuCardGr skuCardGr;
 
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     orderDetail = Get.arguments;
     createdDate = Convert.getDatetime(orderDetail.createdDate!);
     skuCardGr = SkuCardGr(
@@ -144,6 +150,9 @@ class CreateGrOrderController extends GetxController {
         }
       });
     }
+    timeEnd = DateTime.now();
+    Duration totalTime = timeEnd.difference(timeStart);
+    GlobalVar.trackRenderTime("Buat_Penerimaan_Penjualan", totalTime);
   }
 }
 

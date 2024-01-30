@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -70,6 +71,7 @@ class DeliveryConfirmSOController extends GetxController {
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {
+        GlobalVar.track("Click_Checkin_Pengiriman_Sales_Order");
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
@@ -145,6 +147,10 @@ class DeliveryConfirmSOController extends GetxController {
 
     late Order order;
     late DateTime createdDate;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         isLoading.value = true;
@@ -159,6 +165,9 @@ class DeliveryConfirmSOController extends GetxController {
         super.onReady();
         WidgetsBinding.instance.addPostFrameCallback((_) {
            isLoading.value = false;
+           timeEnd = DateTime.now();
+            Duration difference = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("Terkirim_Pengiriman_Sales_Order", difference);
         });
 
     }
@@ -202,6 +211,7 @@ class DeliveryConfirmSOController extends GetxController {
     }
 
     void konfirmasi(){
+        GlobalVar.track("Click_Konfirmasi_Pengiriman_Sales_Order");
         if(validation()){
             isLoading.value = true;
             Service.push(

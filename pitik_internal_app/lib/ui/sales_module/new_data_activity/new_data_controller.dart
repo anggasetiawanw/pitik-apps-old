@@ -4,6 +4,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -169,7 +170,7 @@ class NewDataController extends GetxController {
         alertText: "Branch harus dipilih!",
         items: const {},
         onSpinnerSelected: (text) {
-            
+
         },
     );
 
@@ -196,10 +197,12 @@ class NewDataController extends GetxController {
   //   late SkuCardController skuListener;
     Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
     @override
     void onInit() {
-        super.onInit();     
-        skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("cardController",context));           
+        super.onInit();
+        skuCard = SkuCard(controller: InternalControllerCreator.putSkuCardController("cardController",context));
         editSalesPIC.setInput(Constant.profileUser!.email!);
         editSalesPIC.controller.disable();
         editNamaSupplier.controller.invisibleField();
@@ -242,7 +245,7 @@ class NewDataController extends GetxController {
     @override
     void onReady() {
         super.onReady();
-       
+
         isLoading.value = true;
         spinnerKota.controller.disable();
         spinnerKecamatan.controller.disable();
@@ -262,6 +265,9 @@ class NewDataController extends GetxController {
             isLoading.value = false;
              skuCard.controller.spinnerProduct.value[0].controller
                             .generateItems(mapList.value);
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackRenderTime("New_Customer", totalTime);
         }
     }
 
@@ -378,11 +384,11 @@ class NewDataController extends GetxController {
                     for (var product in body.data) {
                       mapList[product!.name!] = false;
                     }
-                    
+
                     Timer(const Duration(milliseconds: 100), () {
                     skuCard.controller.spinnerProduct.value[0].controller
                         .generateItems(mapList);
-                        countFetchAPI(); 
+                        countFetchAPI();
                     });
 
                     skuCard.controller.setMaplist(listCategories.value);
@@ -408,6 +414,7 @@ class NewDataController extends GetxController {
     }
 
     void saveCustomer(bool isYesButton) {
+        GlobalVar.track("Click_Simpan");
         Get.back();
         List ret = validation();
         if (ret[0]) {
@@ -453,7 +460,7 @@ class NewDataController extends GetxController {
                         backgroundColor: const Color(0xFFFF0000),
                         colorText: const Color(0xFFFFFFFF));
             }
-            
+
         } else {
             if (ret[1] != null) {
                 if ((ret[1] as String).isNotEmpty) {
@@ -613,7 +620,7 @@ class NewDataController extends GetxController {
                   mapList[location!.provinceName!] = false;
                 }
 
-                
+
 
                 Timer(const Duration(milliseconds: 500), () {(packet[2] as SpinnerSearch).controller.generateItems(mapList); });
 

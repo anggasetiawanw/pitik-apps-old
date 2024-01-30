@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/location_permission.dart';
@@ -44,6 +45,7 @@ class DeliveryConfirmTransferController extends GetxController {
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {
+        GlobalVar.track("Click_Checkin_Pengiriman_Transfer");
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
@@ -131,6 +133,7 @@ class DeliveryConfirmTransferController extends GetxController {
     }
 
     void konfirmasi(){
+        GlobalVar.track("Click_Konfirmasi_Pengiriman_Transfer");
         isLoading.value = true;
         Service.push(
             service: ListApi.transferStatusDriver,

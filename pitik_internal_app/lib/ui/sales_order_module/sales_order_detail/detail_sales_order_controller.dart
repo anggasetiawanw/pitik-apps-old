@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -106,9 +107,13 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     orderDetail.value = Get.arguments as Order;
     isShopkeeper.value = Constant.isShopKepper.value;
     isScRelation.value = Constant.isScRelation.value;
@@ -145,6 +150,9 @@ class DetailSalesOrderController extends GetxController {
               orderDetail.value = (body as OrderResponse).data;
               getTotalQuantity((body).data);
               isLoading.value = false;
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                GlobalVar.trackRenderTime("Detail_Penjualan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
@@ -184,6 +192,7 @@ class DetailSalesOrderController extends GetxController {
         ],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
           isLoading.value = false;
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "After Status" : body.data?.status});
           Get.back();
         }, onResponseFail: (code, message, body, id, packet) {
           isLoading.value = false;
@@ -195,9 +204,11 @@ class DetailSalesOrderController extends GetxController {
             colorText: Colors.white,
             backgroundColor: Colors.red,
           );
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "Error" : message});
         }, onResponseError: (exception, stacktrace, id, packet) {
           isLoading.value = false;
           Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "Error" : exception});
         }, onTokenInvalid: () {
           Constant.invalidResponse();
         }));

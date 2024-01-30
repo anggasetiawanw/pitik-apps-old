@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +39,15 @@ class DetailGrPurchaseController extends GetxController {
   late ButtonFill bfMakePurchase = ButtonFill(
     controller: GetXCreator.putButtonFillController("makePurchase"),
     label: "Buat Penerimaan",
-      onClick: () =>
-          Get.toNamed(purchaseDetail.value!.vendor!= null ? RoutePage.createGrPurchasePage : RoutePage.createGrJagalPurchasePage , arguments: purchaseDetail.value)!.then((value) {
-            isLoading.value =true;
-            Timer(const Duration(milliseconds: 500), () {
-              getDetailConfirmed();
+      onClick: () {
+        GlobalVar.track("Click_Buat_Penerimaan_Pembelian");
+        Get.toNamed(purchaseDetail.value!.vendor!= null ? RoutePage.createGrPurchasePage : RoutePage.createGrJagalPurchasePage , arguments: purchaseDetail.value)!.then((value) {
+          isLoading.value =true;
+          Timer(const Duration(milliseconds: 500), () {
+            getDetailConfirmed();
+          });
         });
-      })
+      }
   );
   late ButtonOutline cancelButton = ButtonOutline(
     controller: GetXCreator.putButtonOutlineController("cancelPurchase"),
@@ -55,12 +58,14 @@ class DetailGrPurchaseController extends GetxController {
   late ButtonFill bfYesCancel;
   late ButtonOutline boNoCancel;
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     purchaseDetail.value = Get.arguments as Purchase;
     purchaseDetail.value!.status == "CONFIRMED" ? getDetailConfirmed() : getDetailReceived();
-    // purchaseDetail.value!.status == "CONFIRMED" ?  bfMakePurchase.controller.disable() : bfMakePurchase.controller.enable();
 
     boNoCancel = ButtonOutline(
       controller: GetXCreator.putButtonOutlineController("noCancelGrPurchase"),
@@ -100,8 +105,10 @@ class DetailGrPurchaseController extends GetxController {
               } else {
                 getTotalQuantity();
                 isLoading.value = false;
-                
               }
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
 
@@ -113,7 +120,7 @@ class DetailGrPurchaseController extends GetxController {
   }
 
 
-  void getDetailReceived(){ 
+  void getDetailReceived(){
     isLoading.value = true;
     Service.push(
       service: ListApi.detailReceivedById,
@@ -122,9 +129,11 @@ class DetailGrPurchaseController extends GetxController {
       listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet){
               goodReceiptDetail.value = (body as GoodReceiveReponse).data;
-            //   print(Mapper.asJsonString(goodReceiptDetail.value));
               getTotalQuantity();
               isLoading.value = false;
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
               isLoading.value = false;
@@ -168,8 +177,8 @@ class DetailGrPurchaseController extends GetxController {
                 sumChick.value += product.quantity!;
                 sumPriceMin.value += product.price! * (product.productItem!.minValue! * product.quantity!);
                 sumPriceMax.value += product.price! * (product.productItem!.maxValue! * product.quantity!);
-            } 
-        }    
+            }
+        }
     }
     else if(purchaseDetail.value!.goodsReceived != null && purchaseDetail.value!.goodsReceived!.status == "CONFIRMED") {
         for(var product in purchaseDetail.value!.goodsReceived!.products!) {
@@ -185,7 +194,7 @@ class DetailGrPurchaseController extends GetxController {
                     sumPriceMin.value += product.weight! * product.price!;
                     sumPriceMax.value +=  product.weight! * product.price!;
             }
-        }    
+        }
     }
     else {
      for(var product in purchaseDetail.value!.products!) {
@@ -201,11 +210,12 @@ class DetailGrPurchaseController extends GetxController {
                 sumPriceMin.value += product.weight! * product.price!;
                 sumPriceMax.value +=  product.weight! * product.price!;
         }
-    }       
+    }
     }
   }
 
   void cancelGRPurchase(BuildContext context) {
+    GlobalVar.track("Click_Batal_Penerimaan_Pembelian");
     String purchaseid = goodReceiptDetail.value!.id!;
     isLoading.value = true;
       Service.push(
@@ -226,7 +236,7 @@ class DetailGrPurchaseController extends GetxController {
                   backgroundColor: Colors.red,
                 );
               },
-                onResponseError: (exception, stacktrace, id, packet) {            
+                onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

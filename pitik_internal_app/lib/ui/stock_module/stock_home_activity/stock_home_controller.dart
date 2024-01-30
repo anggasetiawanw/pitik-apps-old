@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -108,6 +109,7 @@ class StockHomeController extends GetxController {
       controller: GetXCreator.putButtonFillController("stockOpname"),
       label: "Stock Opname",
       onClick: () {
+        GlobalVar.track("Click_Stock_Opname");
         Get.toNamed(RoutePage.stockOpname, arguments: [null, false, selectSourceOpname])!.then((value) {
           Timer(const Duration(milliseconds: 500), () {
             if (selectSourceOpname != null) {
@@ -119,6 +121,9 @@ class StockHomeController extends GetxController {
           });
         });
       });
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -170,7 +175,7 @@ class StockHomeController extends GetxController {
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               for (var units in (body as ListOperationUnitsResponse).data) {
@@ -183,6 +188,9 @@ class StockHomeController extends GetxController {
               }
               isLoading.value = false;
               sourceLatestStock.controller.visibleSpinner();
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Stock_Home", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

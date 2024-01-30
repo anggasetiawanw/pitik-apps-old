@@ -2,6 +2,7 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -28,6 +29,7 @@ class CreateGrTransferController extends GetxController {
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendGrTransferButton"), label: "Ya", onClick: (){
         Get.back();
         saveGrTransfer();
+        GlobalVar.track("Click_Konfirmasi_Penerimaan_Transfer");
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("noSendGrTransferButton"), label: "Tidak", onClick: (){
         Get.back();
@@ -40,11 +42,23 @@ class CreateGrTransferController extends GetxController {
     late TransferModel transferModel;
     late DateTime createdDate;
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
+        timeStart = DateTime.now();
         transferModel = Get.arguments;
         createdDate = Convert.getDatetime(transferModel.createdDate!);
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        timeEnd = DateTime.now();
+        Duration totalTime = timeEnd.difference(timeStart);
+        GlobalVar.trackRenderTime("Buat_Penerimaan_Transfer", totalTime);
     }
 
     void getDetailTransfer(){
