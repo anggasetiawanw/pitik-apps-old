@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:components/custom_dialog.dart';
 import 'package:components/global_var.dart';
 import 'package:components/listener/custom_dialog_listener.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/location_permission.dart';
