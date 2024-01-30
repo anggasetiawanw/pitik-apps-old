@@ -421,19 +421,19 @@ class SkuCardOrderController extends GetxController {
   String getTypePotongan(int index) {
     switch (spinnerTypePotongan.value[index].controller.textSelected.value) {
       case "Potong Biasa":
-        return "REGULER";
+        return "REGULAR";
       case "Bekakak":
         return "BEKAKAK";
       case "Utuh":
         return "UTUH";
       default:
-        return "REGULER";
+        return "REGULAR";
     }
   }
 
   void setTypePotongan(int index, String type) {
     switch (type) {
-      case "REGULER":
+      case "REGULAR":
         spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Biasa";
       case "BEKAKAK":
         spinnerTypePotongan.value[index].controller.textSelected.value = "Bekakak";

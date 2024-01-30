@@ -249,10 +249,14 @@ class EditDataSalesOrderController extends GetxController {
   void onReady() async {
     super.onReady();
     Get.find<SkuCardOrderController>(tag: "skuOrder").idx.listen((p0) {
-      generateListProduct(p0);
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListProduct(p0);
+      });
     });
     Get.find<SkuCardRemarkController>(tag: "skuRemark").itemCount.listen((p0) {
-      generateListRemark(p0);
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListRemark(p0);
+      });
     });
     skuCard.controller.visibleCard();
     skuCardRemark.controller.visibleCard();
@@ -448,6 +452,8 @@ class EditDataSalesOrderController extends GetxController {
               mapListRemark[product!.name!] = false;
             }
             //Generate Card SKU
+            mapList.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
+            mapListRemark.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
             Timer(const Duration(milliseconds: 100), () {
               skuCard.controller.spinnerCategories.value[0].controller.generateItems(mapList);
 
