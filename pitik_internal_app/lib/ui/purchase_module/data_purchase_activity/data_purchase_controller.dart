@@ -31,6 +31,8 @@ import 'package:model/response/internal_app/vendor_list_response.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 
+enum BodyQueryPurhcase { token, auth, xAppId, page, limit, code, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status, source }
+
 class PurchaseController extends GetxController {
   BuildContext context;
   PurchaseController({required this.context});
@@ -43,6 +45,7 @@ class PurchaseController extends GetxController {
   var isLoadMore = false.obs;
 
   ScrollController scrollController = ScrollController();
+  RxList<dynamic> bodyGeneralPurhcase = RxList<dynamic>(List.generate(BodyQueryPurhcase.values.length, (index) => null));
 
   scrollListener() async {
     scrollController.addListener(() {
@@ -52,55 +55,6 @@ class PurchaseController extends GetxController {
         getListPurchase();
       }
     });
-  }
-
-  void getListPurchase() {
-    Service.push(
-        service: ListApi.getPurchaseOrderList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, page.value, limit.value],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as ListPurchaseResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  purchaseList.value.add(result as Purchase);
-                }
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  page.value = (purchaseList.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoading.value = false;
-                }
-              }
-              isLoading.value = false;
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoading.value = false;
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoading.value = false;
-            },
-            onTokenInvalid: Constant.invalidResponse()));
   }
 
   Timer? debounce;
@@ -194,7 +148,21 @@ class PurchaseController extends GetxController {
   void onReady() {
     super.onReady();
     isLoading.value = true;
+    resetAllBodyValue();
     getListPurchase();
+  }
+
+  void resetAllBodyValue() {
+    page.value = 1;
+    purchaseList.value.clear();
+    for (int i = 0; i < bodyGeneralPurhcase.length; i++) {
+      bodyGeneralPurhcase[i] = null;
+    }
+    bodyGeneralPurhcase[BodyQueryPurhcase.token.index] = Constant.auth!.token;
+    bodyGeneralPurhcase[BodyQueryPurhcase.auth.index] = Constant.auth!.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.xAppId.index] = Constant.xAppId;
+    bodyGeneralPurhcase[BodyQueryPurhcase.page.index] = page.value;
+    bodyGeneralPurhcase[BodyQueryPurhcase.limit.index] = limit.value;
   }
 
   void getSku(String categoriId) {
@@ -549,7 +517,6 @@ class PurchaseController extends GetxController {
       if (spSumber.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Sumber"] = spSumber.controller.textSelected.value;
       }
-
       if (spTujuan.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Destination"] = spTujuan.controller.textSelected.value;
       }
@@ -558,25 +525,25 @@ class PurchaseController extends GetxController {
       Get.back();
       isFilter.value = true;
       isSearch.value = false;
-      // TODO : API
+      filterPurchase();
     }
   }
 
   bool validationFilter() {
-    if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
-      if (spSumber.controller.textSelected.value.isEmpty) {
-        Get.snackbar(
-          "Pesan",
-          "Sumber harus diisi",
-          snackPosition: SnackPosition.TOP,
-          duration: const Duration(seconds: 5),
-          colorText: Colors.white,
-          backgroundColor: Colors.red,
-        );
-        spSumber.controller.showAlert();
-        return false;
-      }
-    }
+    // if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
+    //   if (spSumber.controller.textSelected.value.isEmpty) {
+    //     Get.snackbar(
+    //       "Pesan",
+    //       "Sumber harus diisi",
+    //       snackPosition: SnackPosition.TOP,
+    //       duration: const Duration(seconds: 5),
+    //       colorText: Colors.white,
+    //       backgroundColor: Colors.red,
+    //     );
+    //     spSumber.controller.showAlert();
+    //     return false;
+    //   }
+    // }
     return true;
   }
 
@@ -584,7 +551,6 @@ class PurchaseController extends GetxController {
     listFilter.value.clear();
     listFilter.refresh();
     dtTanggalPembelian.controller.setTextSelected("");
-
     spStatus.controller.setTextSelected("");
     spCategory.controller.setTextSelected("");
     spSku.controller.setTextSelected("");
@@ -593,7 +559,12 @@ class PurchaseController extends GetxController {
     spSumber.controller.setTextSelected("");
     spTujuan.controller.setTextSelected("");
     Get.back();
-    // TODO : API
+    listFilter.value.clear();
+    isFilter.value = false;
+    isSearch.value = false;
+    resetAllBodyValue();
+    isLoading.value = true;
+    getListPurchase();
   }
 
   void removeOneFilter(String key) {
@@ -625,8 +596,82 @@ class PurchaseController extends GetxController {
 
     listFilter.value.remove(key);
     listFilter.refresh();
+    if (listFilter.value.isEmpty) {
+      isFilter.value = false;
+      isSearch.value = false;
+      resetAllBodyValue();
+      isLoading.value = true;
+      getListPurchase();
+    } else {
+      isLoading.value = true;
+      filterPurchase();
+    }
+  }
 
-    //TODO :: CALL API
+  void filterPurchase() {
+    page.value = 1;
+    resetAllBodyValue();
+
+    CategoryModel? categorySelect;
+    if (spCategory.controller.textSelected.value.isNotEmpty) {
+      categorySelect = listCategory.firstWhereOrNull(
+        (element) => element!.name == spCategory.controller.textSelected.value,
+      );
+    }
+
+    Products? productSelect;
+    if (spSku.controller.textSelected.value.isNotEmpty) {
+      productSelect = listProduct.firstWhereOrNull(
+        (element) => element!.name == spSku.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? operationUnitSelect;
+    if (spTujuan.controller.textSelected.value.isNotEmpty) {
+      operationUnitSelect = listDestinationPurchase.value.firstWhere(
+        (element) => element!.operationUnitName == spTujuan.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? jagalSelect;
+    VendorModel? vendorSelect;
+
+    if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
+      if (spJenisSumber.controller.textSelected.value == "Jagal Eksternal") {
+        jagalSelect = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
+      } else {
+        vendorSelect = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spSumber.controller.textSelected.value);
+      }
+    }
+
+    String? status;
+    switch (spStatus.controller.textSelected.value) {
+      case "Draft":
+        status = "DRAFT";
+        break;
+      case "Terkonfirmasi":
+        status = "CONFIRMED";
+        break;
+      case "Diterima":
+        status = "RECEIVED";
+        break;
+      case "Ditolak":
+        status = "REJECTED";
+        break;
+      default:
+    }
+
+    String? date = dtTanggalPembelian.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPembelian.getLastTimeSelected());
+    bodyGeneralPurhcase[BodyQueryPurhcase.createdDate.index] = date;
+    bodyGeneralPurhcase[BodyQueryPurhcase.productCategoryId.index] = categorySelect?.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.productItemId.index] = productSelect?.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.operationUnitId.index] = operationUnitSelect?.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.vendorId.index] = vendorSelect?.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.jagalId.index] = jagalSelect?.id;
+    bodyGeneralPurhcase[BodyQueryPurhcase.status.index] = status;
+    bodyGeneralPurhcase[BodyQueryPurhcase.source.index] = spJenisSumber.controller.textSelected.value.isEmpty? null : spJenisSumber.controller.textSelected.value == "Jagal Eksternal" ? "JAGAL" : "VENDOR";
+    isLoading.value = true;
+    getListPurchase();
   }
 
   void searchOrder(String text) {
@@ -636,16 +681,77 @@ class PurchaseController extends GetxController {
         isSearch.value = true;
         isFilter.value = false;
         listFilter.value.clear();
-        //TODO : API
+        isLoading.value = true;
+        resetAllBodyValue();
+        bodyGeneralPurhcase[BodyQueryPurhcase.code.index] = text;
+        getListPurchase();
       });
     } else {
       if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
-
-        //TODO : API
+        isFilter.value = false;
+        listFilter.value.clear();
+        isLoading.value = true;
+        resetAllBodyValue();
+        getListPurchase();
       });
     }
+  }
+  void pullRefresh(){
+    purchaseList.value.clear();
+    page.value = 1;
+    isLoading.value = true;
+    getListPurchase();
+  }
+
+  void getListPurchase() {
+    Service.push(
+        service: ListApi.getPurchaseOrderList,
+        context: context,
+        body: bodyGeneralPurhcase,
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) {
+              if ((body as ListPurchaseResponse).data.isNotEmpty) {
+                for (var result in body.data) {
+                  purchaseList.value.add(result as Purchase);
+                }
+                if (isLoadMore.isTrue) {
+                  isLoadMore.value = false;
+                }
+              } else {
+                if (isLoadMore.isTrue) {
+                  page.value = (purchaseList.value.length ~/ 10).toInt() + 1;
+                  isLoadMore.value = false;
+                } else {
+                  isLoading.value = false;
+                }
+              }
+              isLoading.value = false;
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              isLoading.value = false;
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "Terjadi kesalahan internal",
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              isLoading.value = false;
+            },
+            onTokenInvalid: Constant.invalidResponse()));
   }
 }
 

@@ -106,121 +106,123 @@ class SalesOrderPage extends StatelessWidget {
     }
 
     Widget tabViewOutbound() {
-      return Container(
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-          child: RawScrollbar(
-              controller: controller.scrollControllerOutbound,
-              thumbColor: AppColors.primaryOrange,
-              radius: const Radius.circular(8),
-              child: RefreshIndicator(
-                  onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
-                  color: AppColors.primaryOrange,
-                  child: ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    controller: controller.scrollControllerOutbound,
-                    itemCount: controller.isLoadMore.isTrue ? controller.orderListOutbound.length + 1 : controller.orderListOutbound.length,
-                    itemBuilder: (context, index) {
-                      int length = controller.orderListOutbound.length;
-                      if (index >= length) {
-                        return const Column(
-                          children: [
-                            Center(child: ProgressLoading()),
-                            SizedBox(height: 120),
-                          ],
-                        );
-                      }
-                      return Column(
+      return RawScrollbar(
+          controller: controller.scrollControllerOutbound,
+          thumbColor: AppColors.primaryOrange,
+          radius: const Radius.circular(8),
+          child: RefreshIndicator(
+              onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
+              color: AppColors.primaryOrange,
+              child: Container(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: controller.scrollControllerOutbound,
+                  itemCount: controller.isLoadMore.isTrue ? controller.orderListOutbound.length + 1 : controller.orderListOutbound.length,
+                  itemBuilder: (context, index) {
+                    int length = controller.orderListOutbound.length;
+                    if (index >= length) {
+                      return const Column(
                         children: [
-                          CardListOrder(
-                            isSoPage: true,
-                            order: controller.orderListOutbound[index]!,
-                            onTap: () {
-                              Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListOutbound[index])!.then((value) {
-                                Timer(const Duration(milliseconds: 100), () {
-                                  if (controller.isFilter.isTrue) {
-                                    controller.orderListOutbound.clear();
-                                    controller.pageOutbound.value = 1;
-                                    controller.isLoadData.value = true;
-                                    controller.getFilterOutbound();
-                                  } else if (controller.isSearch.isTrue) {
-                                    controller.orderListOutbound.clear();
-                                    controller.pageOutbound.value = 1;
-                                    controller.isLoadData.value = true;
-                                    controller.searchOrderOutbound();
-                                  } else {
-                                    controller.orderListOutbound.clear();
-                                    controller.pageOutbound.value = 1;
-                                    controller.isLoadData.value = true;
-                                    controller.getListOutboundGeneral();
-                                  }
-                                });
-                              });
-                            },
-                          ),
-                          index == controller.orderListOutbound.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                          Center(child: ProgressLoading()),
+                          SizedBox(height: 120),
                         ],
                       );
-                    },
-                  ))));
+                    }
+                    return Column(
+                      children: [
+                        CardListOrder(
+                          isSoPage: true,
+                          order: controller.orderListOutbound[index]!,
+                          onTap: () {
+                            Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListOutbound[index])!.then((value) {
+                              Timer(const Duration(milliseconds: 100), () {
+                                if (controller.isFilter.isTrue) {
+                                  controller.orderListOutbound.clear();
+                                  controller.pageOutbound.value = 1;
+                                  controller.isLoadData.value = true;
+                                  controller.getFilterOutbound();
+                                } else if (controller.isSearch.isTrue) {
+                                  controller.orderListOutbound.clear();
+                                  controller.pageOutbound.value = 1;
+                                  controller.isLoadData.value = true;
+                                  controller.searchOrderOutbound();
+                                } else {
+                                  controller.orderListOutbound.clear();
+                                  controller.pageOutbound.value = 1;
+                                  controller.isLoadData.value = true;
+                                  controller.getListOutboundGeneral();
+                                }
+                              });
+                            });
+                          },
+                        ),
+                        index == controller.orderListOutbound.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                      ],
+                    );
+                  },
+                ),
+              )));
     }
 
     Widget tabViewInbound() {
-      return Container(
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-          child: RawScrollbar(
-              controller: controller.scrollControllerInbound,
-              thumbColor: AppColors.primaryOrange,
-              radius: const Radius.circular(8),
-              child: RefreshIndicator(
-                  onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
-                  color: AppColors.primaryOrange,
-                  child: ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    controller: controller.scrollControllerInbound,
-                    itemCount: controller.isLoadMore.isTrue ? controller.orderListInbound.length + 1 : controller.orderListInbound.length,
-                    itemBuilder: (context, index) {
-                      int length = controller.orderListInbound.length;
-                      if (index >= length) {
-                        return const Column(
-                          children: [
-                            Center(child: ProgressLoading()),
-                            SizedBox(height: 120),
-                          ],
-                        );
-                      }
-                      return Column(
+      return RawScrollbar(
+          controller: controller.scrollControllerInbound,
+          thumbColor: AppColors.primaryOrange,
+          radius: const Radius.circular(8),
+          child: RefreshIndicator(
+              onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
+              color: AppColors.primaryOrange,
+              child: Container(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: controller.scrollControllerInbound,
+                  itemCount: controller.isLoadMore.isTrue ? controller.orderListInbound.length + 1 : controller.orderListInbound.length,
+                  itemBuilder: (context, index) {
+                    int length = controller.orderListInbound.length;
+                    if (index >= length) {
+                      return const Column(
                         children: [
-                          CardListOrder(
-                            isSoPage: true,
-                            order: controller.orderListInbound[index]!,
-                            onTap: () {
-                              Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListInbound[index])!.then((value) {
-                                Timer(const Duration(milliseconds: 100), () {
-                                  if (controller.isFilter.isTrue) {
-                                    controller.orderListInbound.clear();
-                                    controller.pageInbound.value = 1;
-                                    controller.isLoadData.value = true;
-                                    controller.getFilterInbound();
-                                  } else if (controller.isSearch.isTrue) {
-                                    controller.orderListInbound.clear();
-                                    controller.pageInbound.value = 1;
-                                    controller.isLoadData.value = true;
-                                    controller.searchOrderInbound();
-                                  } else {
-                                    controller.isLoadData.value = true;
-                                    controller.orderListInbound.clear();
-                                    controller.pageInbound.value = 1;
-                                    controller.getListInboundGeneral();
-                                  }
-                                });
-                              });
-                            },
-                          ),
-                          index == controller.orderListInbound.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                          Center(child: ProgressLoading()),
+                          SizedBox(height: 120),
                         ],
                       );
-                    },
-                  ))));
+                    }
+                    return Column(
+                      children: [
+                        CardListOrder(
+                          isSoPage: true,
+                          order: controller.orderListInbound[index]!,
+                          onTap: () {
+                            Get.toNamed(RoutePage.salesOrderDetailPage, arguments: controller.orderListInbound[index])!.then((value) {
+                              Timer(const Duration(milliseconds: 100), () {
+                                if (controller.isFilter.isTrue) {
+                                  controller.orderListInbound.clear();
+                                  controller.pageInbound.value = 1;
+                                  controller.isLoadData.value = true;
+                                  controller.getFilterInbound();
+                                } else if (controller.isSearch.isTrue) {
+                                  controller.orderListInbound.clear();
+                                  controller.pageInbound.value = 1;
+                                  controller.isLoadData.value = true;
+                                  controller.searchOrderInbound();
+                                } else {
+                                  controller.isLoadData.value = true;
+                                  controller.orderListInbound.clear();
+                                  controller.pageInbound.value = 1;
+                                  controller.getListInboundGeneral();
+                                }
+                              });
+                            });
+                          },
+                        ),
+                        index == controller.orderListInbound.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                      ],
+                    );
+                  },
+                ),
+              )));
     }
 
     return Obx(

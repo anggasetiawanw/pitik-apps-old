@@ -216,7 +216,23 @@ class API {
   /// of items to be returned in a single page of the response. It is used for
   /// pagination purposes.
   @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
-  void getPurchaseOrderList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit) {}
+  void getPurchaseOrderList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("code") String code,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("vendorId") String vendorId,
+    @Query("jagalId") String jagalId,
+    @Query("status") String status,
+    @Query("source") String source,
+
+  ) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
   /// purchase orders for good receipts, with authorization and pagination
@@ -850,7 +866,7 @@ class API {
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
   void getDeliveryListTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("driverId") String driverId, @Query("status") String readyToDeliver, @Query("status") String onDelivery, @Query("status") String delivered, @Query("status") String received) {}
 
- @JSON(isPlaint: true)
+  @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
   void deliveryPickupSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 

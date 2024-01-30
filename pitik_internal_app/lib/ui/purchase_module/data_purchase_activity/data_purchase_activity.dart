@@ -23,9 +23,7 @@ class PurchasePage extends StatefulWidget {
   State<PurchasePage> createState() => _PurchasePageState();
 }
 
-class _PurchasePageState extends State<PurchasePage>{
-
-
+class _PurchasePageState extends State<PurchasePage> {
   @override
   Widget build(BuildContext context) {
     final PurchaseController controller = Get.put(PurchaseController(context: context));
@@ -37,15 +35,13 @@ class _PurchasePageState extends State<PurchasePage>{
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromARGB(20, 158, 157, 157),
-                  blurRadius: 5,
-                  offset: Offset(0.75, 0.0))
-            ],
+            boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
             borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           ),
-          padding: const EdgeInsets.only(left: 16, bottom: 16,),
+          padding: const EdgeInsets.only(
+            left: 16,
+            bottom: 16,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -55,9 +51,9 @@ class _PurchasePageState extends State<PurchasePage>{
                   label: "Buat Pembelian",
                   onClick: () {
                     Get.toNamed(RoutePage.newDataPurchase)!.then((value) {
-                      controller.isLoading.value =true;
+                      controller.isLoading.value = true;
                       controller.purchaseList.value.clear();
-                        controller.page.value = 1;
+                      controller.page.value = 1;
                       Timer(const Duration(milliseconds: 100), () {
                         controller.getListPurchase();
                       });
@@ -72,7 +68,7 @@ class _PurchasePageState extends State<PurchasePage>{
       );
     }
 
-Widget filterList() {
+    Widget filterList() {
       List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
       return ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -103,111 +99,110 @@ Widget filterList() {
           });
     }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-            preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
-            child: Column(
-              children: [
-                CustomAppbar(
-                  title: "Pembelian",
-                  onBack: () => Navigator.of(context).pop(),
-                  isFlat: true,
-                ),
-                Container(
-                  color: AppColors.primaryOrange,
-                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
-                          child: SvgPicture.asset("images/filter_line.svg"),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: SizedBox(height: 42, child: controller.sbSearch),
-                      ),
-                    ],
+    return Obx(() => Scaffold(
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(
+              preferredSize: Size.fromHeight(controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? 160 : 110),
+              child: Column(
+                children: [
+                  CustomAppbar(
+                    title: "Pembelian",
+                    onBack: () => Navigator.of(context).pop(),
+                    isFlat: true,
                   ),
-                ),
-                Obx(
-                  () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
-                ),
-              ],
-            )),
-      body: Stack(
-        children: [
-          Obx(() =>
-          controller.isLoading.isTrue ? const SizedBox()
-              : controller.purchaseList.value.isEmpty
-              ? Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
-              child: Text(
-                "Data Purchase Belum Ada",
-                style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )
-              : Container(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            child: ListView.builder(
-              controller: controller.scrollController,
-              itemCount: controller.isLoadMore.isTrue
-                  ? controller.purchaseList.value.length + 1
-                  : controller.purchaseList.value.length,
-              itemBuilder: (context, index) {
-                int length = controller.purchaseList.value.length;
-                if (index >= length) {
-                  return const Column(
-                    children: [
-                      Center(
-                        child: ProgressLoading()
-                      ),
-                      SizedBox(height: 120),
-                    ],
-                  );
-                }
-                return Column(
-                  children: [
-                    CardListPurchase(
-                      purchase: controller.purchaseList.value[index]!,
-                      onTap: () {
-                        Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
-                          controller.isLoading.value =true;
-                          controller.purchaseList.value.clear();
-                            controller.page.value = 1;
-                          Timer(const Duration(milliseconds: 100), () {
-                            controller.getListPurchase();
-                          });
-                        });
-                      },
+                  Container(
+                    color: AppColors.primaryOrange,
+                    padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => controller.openFilter(),
+                          child: Container(
+                            height: 32,
+                            width: 32,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
+                            child: SvgPicture.asset("images/filter_line.svg"),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: SizedBox(height: 42, child: controller.sbSearch),
+                        ),
+                      ],
                     ),
-                    index == controller.purchaseList.value.length - 1 ? const SizedBox(height: 120)
-                        : const SizedBox(),
-                  ],
-                );
-              },
-            ),
-          )
+                  ),
+                  Obx(
+                    () => controller.isFilter.isTrue && controller.listFilter.value.isNotEmpty ? Expanded(child: filterList()) : const SizedBox(),
+                  ),
+                ],
+              )),
+          body: Stack(
+            children: [
+              Obx(() => controller.isLoading.isTrue
+                  ? const SizedBox()
+                  : controller.purchaseList.value.isEmpty
+                      ? Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Center(
+                            child: Text(
+                              "Data Purchase Belum Ada",
+                              style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        )
+                      : RawScrollbar(
+                          controller: controller.scrollController,
+                          thumbColor: AppColors.primaryOrange,
+                          radius: const Radius.circular(8),
+                          child: RefreshIndicator(
+                            color: AppColors.primaryOrange,
+                            onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.pullRefresh()),
+                            child: Container(
+                              padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                              child: ListView.builder(
+                                controller: controller.scrollController,
+                                itemCount: controller.isLoadMore.isTrue ? controller.purchaseList.value.length + 1 : controller.purchaseList.value.length,
+                                itemBuilder: (context, index) {
+                                  int length = controller.purchaseList.value.length;
+                                  if (index >= length) {
+                                    return const Column(
+                                      children: [
+                                        Center(child: ProgressLoading()),
+                                        SizedBox(height: 120),
+                                      ],
+                                    );
+                                  }
+                                  return Column(
+                                    children: [
+                                      CardListPurchase(
+                                        purchase: controller.purchaseList.value[index]!,
+                                        onTap: () {
+                                          Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
+                                            controller.isLoading.value = true;
+                                            controller.purchaseList.value.clear();
+                                            controller.page.value = 1;
+                                            Timer(const Duration(milliseconds: 100), () {
+                                              controller.getListPurchase();
+                                            });
+                                          });
+                                        },
+                                      ),
+                                      index == controller.purchaseList.value.length - 1 ? const SizedBox(height: 120) : const SizedBox(),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        )),
+              bottomNavbar(),
+              Obx(
+                () => controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : const SizedBox(),
+              ),
+            ],
           ),
-          bottomNavbar(),
-          Obx(
-                () => controller.isLoading.isTrue
-                ? const Center(
-                      child: ProgressLoading()
-            )
-                : const SizedBox(),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
