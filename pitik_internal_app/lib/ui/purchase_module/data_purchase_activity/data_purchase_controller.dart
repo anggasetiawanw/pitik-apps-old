@@ -567,7 +567,6 @@ class PurchaseController extends GetxController {
     spSumber.controller.setTextSelected("");
     spTujuan.controller.setTextSelected("");
     Get.back();
-    listFilter.value.clear();
     isFilter.value = false;
     isSearch.value = false;
     resetAllBodyValue();
@@ -621,6 +620,7 @@ class PurchaseController extends GetxController {
   }
 
   void filterPurchase() {
+    isLoading.value = true;
     page.value = 1;
     resetAllBodyValue();
 
@@ -686,7 +686,6 @@ class PurchaseController extends GetxController {
         : spJenisSumber.controller.textSelected.value == "Jagal Eksternal"
             ? "JAGAL"
             : "VENDOR";
-    isLoading.value = true;
     getListPurchase();
   }
 

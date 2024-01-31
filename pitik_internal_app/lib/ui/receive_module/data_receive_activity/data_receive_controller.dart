@@ -4,9 +4,9 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:components/search_bar/search_bar.dart';
 import 'package:components/spinner_field/spinner_field.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +42,9 @@ part 'data_receive_controller.transfer.dart';
 ///@create date 13/04/23
 ///
 
-enum BodyQueryPurhcase { token, auth, xAppId, page, limit, statusConfirmed, statusReceived, withinProductionTeam, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status }
+enum BodyQueryPurhcase { token, auth, xAppId, page, limit, statusConfirmed, statusReceived, withinProductionTeam, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status, source, code }
 
-enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status }
+enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status,code }
 
 enum BodyQueryReturn { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, returnStatus, category, createdDate, productCategoryId, productItemId, operationUnitId, status }
 
@@ -69,6 +69,8 @@ class ReceiveController extends GetxController {
   Rx<List<OperationUnitModel?>> listSourceJagal = Rx<List<OperationUnitModel>>([]);
   Rx<List<VendorModel?>> listSourceVendor = Rx<List<VendorModel>>([]);
   Rx<List<OperationUnitModel?>> listDestinationPurchase = Rx<List<OperationUnitModel>>([]);
+  Rx<List<OperationUnitModel?>> listSourceOperationUnits = Rx<List<OperationUnitModel?>>([]);
+  Rx<List<OperationUnitModel?>> listDestinationOperationUnits = Rx<List<OperationUnitModel?>>([]);
 
   RxList<dynamic> bodyGeneralPurhcase = RxList<dynamic>(List.generate(BodyQueryPurhcase.values.length, (index) => null));
   RxList<dynamic> bodyGeneralTransfer = RxList<dynamic>(List.generate(BodyQueryTransfer.values.length, (index) => null));
@@ -165,16 +167,6 @@ class ReceiveController extends GetxController {
     onClick: () => clearFilter(),
   );
 
-  scrollTransferListener() async {
-    scrollTransferController.addListener(() {
-      if (scrollTransferController.position.maxScrollExtent == scrollTransferController.position.pixels) {
-        isLoadMore.value = true;
-        pageTransfer++;
-        getListTransfer();
-      }
-    });
-  }
-
   scrollOrderListener() async {
     scrollOrderController.addListener(() {
       if (scrollOrderController.position.maxScrollExtent == scrollOrderController.position.pixels) {
@@ -186,108 +178,6 @@ class ReceiveController extends GetxController {
   }
 
   late SearchBarField sbSearch;
-
-  void getListPurchase() {
-    Service.push(
-        service: ListApi.getGoodReceiptPOList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pagePurchase.value, limit.value, "CONFIRMED", "RECEIVED", AppStrings.TRUE_LOWERCASE],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as ListPurchaseResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  listPurchase.value.add(result as Purchase);
-                }
-                isLoadingPurchase.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pagePurchase.value = (listPurchase.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingPurchase.value = false;
-                }
-              }
-              countingApi();
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoadingPurchase.value = false;
-              countingApi();
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              isLoadingPurchase.value = false;
-              countingApi();
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
-
-  void getListTransfer() {
-    Service.push(
-        service: ListApi.getGoodReceiptTransferList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limit.value, "RECEIVED", "DELIVERED", AppStrings.TRUE_LOWERCASE],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as ListTransferResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  listTransfer.value.add(result as TransferModel);
-                }
-                isLoadingTransfer.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pageTransfer.value = (listTransfer.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingTransfer.value = false;
-                }
-              }
-              countingApi();
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              countingApi();
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              countingApi();
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
 
   void getListReturn() {
     Service.push(
@@ -353,6 +243,7 @@ class ReceiveController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     scrollPurchaseListener();
     scrollTransferListener();
     scrollOrderListener();
@@ -370,9 +261,8 @@ class ReceiveController extends GetxController {
     super.onReady();
     tabbarListener();
     isLoadingPurchase.value = true;
+    resetAllBodyPurhcaseValue();
     getListPurchase();
-    getListTransfer();
-    getListReturn();
   }
 
   void tabbarListener() {
@@ -407,7 +297,7 @@ class ReceiveController extends GetxController {
 
   void countingApi() {
     countApi++;
-    if (countApi == 3) {
+    if (countApi == 1) {
       timeEnd = DateTime.now();
       Duration duration = timeEnd.difference(timeStart);
       GlobalVar.trackRenderTime("Penerimaan", duration);
@@ -415,22 +305,16 @@ class ReceiveController extends GetxController {
   }
 
   void openFilter() {
-    if (spSku.controller.textSelected.isEmpty) {
-      spSku.controller.disable();
+    if (isPurhcase.isTrue) {
+      openFilterPurchase();
+    } else if (isTransfer.isTrue) {
+      openFilterTransfer();
+    } else if (isOrderReturn.isTrue) {
+      openFilterOrder();
     }
-    if (spCategory.controller.textSelected.isNotEmpty) {
-      spSku.controller.enable();
-    }
-    if (spSumber.controller.textSelected.isEmpty) {
-      spSumber.controller.disable();
-    }
-    if (spJenisSumber.controller.textSelected.isNotEmpty) {
-      spSumber.controller.enable();
-    }
-    // getCategorySku();
-    // getListDestinationPurchase();
-    showFilter();
   }
+
+  void openFilterOrder() {}
 
   void saveFilter() {
     if (validationFilter()) {
@@ -448,6 +332,9 @@ class ReceiveController extends GetxController {
       if (spSku.controller.textSelected.value.isNotEmpty) {
         listFilter.value["SKU"] = spSku.controller.textSelected.value;
       }
+      if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
+        listFilter.value["Jenis Sumber"] = spJenisSumber.controller.textSelected.value;
+      }
       if (spSumber.controller.textSelected.value.isNotEmpty) {
         listFilter.value["Sumber"] = spSumber.controller.textSelected.value;
       }
@@ -460,25 +347,13 @@ class ReceiveController extends GetxController {
       Get.back();
       isFilter.value = true;
       isSearch.value = false;
-      // TODO : API
+      if (isPurhcase.isTrue) {
+        filterPurchase();
+      }
     }
   }
 
   bool validationFilter() {
-    if (spJenisSumber.controller.textSelected.value.isNotEmpty && isPurhcase.isTrue) {
-      if (spSumber.controller.textSelected.value.isEmpty) {
-        Get.snackbar(
-          "Pesan",
-          "Sumber harus diisi",
-          snackPosition: SnackPosition.TOP,
-          duration: const Duration(seconds: 5),
-          colorText: Colors.white,
-          backgroundColor: Colors.red,
-        );
-        spSumber.controller.showAlert();
-        return false;
-      }
-    }
     return true;
   }
 
@@ -494,7 +369,13 @@ class ReceiveController extends GetxController {
     spSumber.controller.setTextSelected("");
     spTujuan.controller.setTextSelected("");
     Get.back();
-    // TODO : API
+    isFilter.value = false;
+    isSearch.value = false;
+    if (isPurhcase.isTrue) {
+      resetAllBodyPurhcaseValue();
+      isLoadingPurchase.value = true;
+      getListPurchase();
+    }
   }
 
   void removeOneFilter(String key) {
@@ -510,12 +391,16 @@ class ReceiveController extends GetxController {
         spSku.controller.setTextSelected("");
         listFilter.value.remove("SKU");
         break;
+      case "Jenis Sumber":
+        spSumber.controller.setTextSelected("");
+        spJenisSumber.controller.setTextSelected("");
+        listFilter.value.remove("Sumber");
+        break;
       case "SKU":
         spSku.controller.setTextSelected("");
         break;
       case "Sumber":
         spSumber.controller.setTextSelected("");
-        spJenisSumber.controller.setTextSelected("");
         break;
       case "Destination":
         spTujuan.controller.setTextSelected("");
@@ -526,8 +411,20 @@ class ReceiveController extends GetxController {
 
     listFilter.value.remove(key);
     listFilter.refresh();
-
-    //TODO :: API
+    if (listFilter.value.isEmpty) {
+      if (isPurhcase.isTrue) {
+        isFilter.value = false;
+        isSearch.value = false;
+        resetAllBodyPurhcaseValue();
+        isLoadingPurchase.value = true;
+        getListPurchase();
+      }
+    } else {
+      if (isPurhcase.isTrue) {
+        isLoadingPurchase.value = true;
+        filterPurchase();
+      }
+    }
   }
 
   void searchOrder(String text) {
@@ -537,14 +434,26 @@ class ReceiveController extends GetxController {
         isSearch.value = true;
         isFilter.value = false;
         listFilter.value.clear();
-        //TODO : API
+        if (isPurhcase.isTrue) {
+          pagePurchase.value = 1;
+          listPurchase.value.clear();
+          isLoadingPurchase.value = true;
+          resetAllBodyPurhcaseValue();
+          bodyGeneralPurhcase[BodyQueryPurhcase.code.index] = text;
+          getListPurchase();
+        }
       });
     } else {
       if (debouncer?.isActive ?? false) debouncer?.cancel();
       debouncer = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
-
-        //TODO : API
+        if (isPurhcase.isTrue) {
+          pagePurchase.value = 1;
+          listPurchase.value.clear();
+          isLoadingPurchase.value = true;
+          resetAllBodyPurhcaseValue();
+          getListPurchase();
+        }
       });
     }
   }

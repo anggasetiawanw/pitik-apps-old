@@ -231,7 +231,6 @@ class API {
     @Query("jagalId") String jagalId,
     @Query("status") String status,
     @Query("source") String source,
-
   ) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
@@ -256,7 +255,25 @@ class API {
   /// like "draft", "open", "closed", "cancelled", etc. depending on the possible
   /// status values defined in the API documentation.
   @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
-  void getGoodReceiptPOList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusConfirmed, @Query("status") String statusReceived, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getGoodReceiptPOList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("status") String statusConfirmed,
+    @Query("status") String statusReceived,
+    @Query("withinProductionTeam") String withinProductionTeam,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("vendorId") String vendorId,
+    @Query("jagalId") String jagalId,
+    @Query("status") String status,
+    @Query("source") String source,
+    @Query("code") String code,
+  ) {}
 
   /// This is a Dart function that retrieves details of a purchase by its ID, with
   /// authorization and error handling.
@@ -703,7 +720,23 @@ class API {
   /// internal transfers. It is a string parameter that can have one of the
   /// following values: "draft", "submitted", "approved", "rejected", "canceled",
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
-  void getGoodReceiptTransferList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusReceived, @Query("status") String statusDelivered, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getGoodReceiptTransferList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("status") String statusReceived,
+    @Query("status") String statusDelivered,
+    @Query("withinProductionTeam") String withinProductionTeam,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("sourceOperationUnitId") String operationUnitId,
+    @Query("targetOperationUnitId") String vendorId,
+    @Query("status") String status,
+    @Query("code") String code,
+  ) {}
 
   /// This function creates a goods received record using a POST request with
   /// authorization and parameter inputs.

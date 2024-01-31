@@ -211,7 +211,7 @@ class ReceiveActivity extends GetView<ReceiveController> {
             }
             return Container(
               height: 32,
-              margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8, left: 8),
+              margin: const EdgeInsets.only(right: 8, top: 8, left: 8),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.bgAbu),
               child: Row(

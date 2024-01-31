@@ -213,7 +213,7 @@ class TransferFormController extends GetxController {
                     }
                     countingApi();
                     sourceField.controller
-                    .showLoading();
+                    .hideLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -224,6 +224,8 @@ class TransferFormController extends GetxController {
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                      isLoading.value = false;
+                        sourceField.controller
+                        .hideLoading();
                     },
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
@@ -235,7 +237,7 @@ class TransferFormController extends GetxController {
                         backgroundColor: Colors.red,);
                      isLoading.value = false;
                         sourceField.controller
-                        .showLoading();
+                        .hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
                 )
