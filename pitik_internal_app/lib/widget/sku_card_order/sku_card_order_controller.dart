@@ -81,13 +81,14 @@ class SkuCardOrderController extends GetxController {
                 editFieldJumlahAyam.value[numberList].controller.visibleField();
                 editFieldHarga.value[numberList].controller.visibleField();
                 editFieldKebutuhan.value[numberList].controller.invisibleField();
+                spinnerTypePotongan.value[numberList].controller.visibleSpinner();
               } else {
                 spinnerSku.value[numberList].controller.invisibleSpinner();
                 editFieldJumlahAyam.value[numberList].controller.invisibleField();
                 editFieldKebutuhan.value[numberList].controller.visibleField();
                 editFieldHarga.value[numberList].controller.visibleField();
+                spinnerTypePotongan.value[numberList].controller.invisibleSpinner();
               }
-              spinnerTypePotongan.value[numberList].controller.visibleSpinner();
               spinnerSku.value[numberList].controller.textSelected.value = "";
               editFieldJumlahAyam.value[numberList].setInput("");
               editFieldKebutuhan.value[numberList].setInput("");
@@ -128,7 +129,28 @@ class SkuCardOrderController extends GetxController {
           refreshtotalPurchase();
         }));
 
-    editFieldPotongan.value.add(EditField(controller: GetXCreator.putEditFieldController("editPotongan${numberList}Sku"), label: "Potongan", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Potongan", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
+    editFieldPotongan.value.add(
+      EditField(
+        controller: GetXCreator.putEditFieldController("editPotongan${numberList}Sku"),
+        label: "Potongan*",
+        hint: "Ketik di sini",
+        alertText: "Kolom Ini Harus Di Isi",
+        textUnit: "Potongan",
+        inputType: TextInputType.number,
+        maxInput: 20,
+        onTyping: (value, control) {
+          if (value.isNotEmpty) {
+            if (control.getInputNumber()! < 2) {
+              control.controller.setAlertText("Potongan Harus lebih dari 1");
+              control.controller.showAlert();
+            } else {
+              control.controller.setAlertText("Kolom Ini Harus Di Isi");
+              control.controller.hideAlert();
+            }
+          }
+        },
+      ),
+    );
 
     editFieldKebutuhan.value.add(EditField(
         controller: GetXCreator.putEditFieldController("editJenis${numberList}Sku"),
@@ -180,6 +202,7 @@ class SkuCardOrderController extends GetxController {
               editFieldPotongan.value[numberList].setInput("");
             } else {
               editFieldPotongan.value[numberList].controller.invisibleField();
+              editFieldPotongan.value[numberList].setInput("");
             }
           }),
     );
@@ -265,6 +288,29 @@ class SkuCardOrderController extends GetxController {
           isValid = false;
           return [isValid, error];
         }
+        if (spinnerTypePotongan.value[whichItem].controller.textSelected.value.isEmpty) {
+          spinnerTypePotongan.value[whichItem].controller.showAlert();
+          Scrollable.ensureVisible(spinnerTypePotongan.value[whichItem].controller.formKey.currentContext!);
+          isValid = false;
+          return [isValid, error];
+        }
+        if (spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa") {
+          if (editFieldPotongan.value[whichItem].getInput().isEmpty) {
+            editFieldPotongan.value[whichItem].controller.setAlertText("Potongan harus diisi");
+            editFieldPotongan.value[whichItem].controller.showAlert();
+            Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
+            isValid = false;
+            return [isValid, error];
+          }
+
+          if ((editFieldPotongan.value[whichItem].getInputNumber() ?? 0) < 2) {
+            editFieldPotongan.value[whichItem].controller.setAlertText("Potongan Tidak Valid!");
+            editFieldPotongan.value[whichItem].controller.showAlert();
+            Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
+            isValid = false;
+            return [isValid, error];
+          }
+        }
       } else {
         if (editFieldKebutuhan.value[whichItem].getInput().isEmpty) {
           editFieldKebutuhan.value[whichItem].controller.showAlert();
@@ -272,13 +318,6 @@ class SkuCardOrderController extends GetxController {
           isValid = false;
           return [isValid, error];
         }
-      }
-
-      if (spinnerTypePotongan.value[whichItem].controller.textSelected.value.isEmpty) {
-        spinnerTypePotongan.value[whichItem].controller.showAlert();
-        Scrollable.ensureVisible(spinnerTypePotongan.value[whichItem].controller.formKey.currentContext!);
-        isValid = false;
-        return [isValid, error];
       }
 
       if (editFieldHarga.value[whichItem].getInput().isEmpty) {

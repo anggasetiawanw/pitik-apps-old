@@ -14,8 +14,10 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/strings.dart';
+import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
@@ -256,7 +258,7 @@ class NewDataSalesOrderController extends GetxController {
     if (isInbound.isTrue) {
       getListSource();
     } else {
-        countingApi();
+      countingApi();
     }
     getListCustomer();
     getCategorySku();
@@ -484,7 +486,7 @@ class NewDataSalesOrderController extends GetxController {
                 ..enable()
                 ..setTextSelected("")
                 ..hideLoading();
-                countingApi();
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -616,7 +618,7 @@ class NewDataSalesOrderController extends GetxController {
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldPotongan.value[whichItem]),
-          cutType: skuCard.controller.getTypePotongan(whichItem),
+          cutType: Constant.havePotongan(productSelected.category?.name) ? skuCard.controller.getTypePotongan(whichItem) : null,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
@@ -636,7 +638,7 @@ class NewDataSalesOrderController extends GetxController {
         quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
-        weight: /*editFieldKebutuhan.getInputNumber()*/ 0,
+        weight: 0,
       ));
     }
 
@@ -675,7 +677,11 @@ class NewDataSalesOrderController extends GetxController {
 
   int? _getNumberOfCuts(CategoryModel? category, EditField ef) {
     if (category != null && (category.name == AppStrings.AYAM_UTUH || category.name == AppStrings.BRANGKAS || category.name == AppStrings.LIVE_BIRD || category.name == AppStrings.KARKAS)) {
-      return (ef.getInputNumber() ?? 0).toInt(); // Ganti dengan logic sesuai kebutuhan
+      if (ef.getInputNumber() == null) {
+        return null;
+      } else {
+        return (ef.getInputNumber() ?? 0).toInt();
+      }
     }
     return null;
   }
@@ -731,6 +737,16 @@ class NewDataSalesOrderController extends GetxController {
       return ret = [false, ""];
     }
 
+    int totalEKorRemark = 0;
+    for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+      int whichItem = skuCardRemark.controller.index.value[i];
+      totalEKorRemark += (skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber() ?? 0).toInt();
+    }
+    if (editFieldJumlahAyam.getInputNumber()! != totalEKorRemark) {
+      showAlertDialog();
+      return ret = [false, ""];
+    }
+
     if (isInbound.isFalse) {
       if (dtDeliveryDate.controller.textSelected.value.isEmpty) {
         dtDeliveryDate.controller.showAlert();
@@ -741,6 +757,57 @@ class NewDataSalesOrderController extends GetxController {
 
     ret = skuCardRemark.controller.validation();
     return ret;
+  }
+
+  void showAlertDialog() {
+    Get.dialog(
+        Center(
+          child: Container(
+            width: 300,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      "images/failed_checkin.svg",
+                      height: 24,
+                      width: 24,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Perhatian !",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Jumlah Ekor LB berbeda dengan jumlah Ekor catatan",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 32,
+                      width: 100,
+                      color: Colors.transparent,
+                    ),
+                    SizedBox(
+                      width: 100,
+                      child: ButtonFill(controller: GetXCreator.putButtonFillController("DialogDoang"), label: "OK", onClick: () => {Get.back()}),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        barrierDismissible: false);
   }
 }
 

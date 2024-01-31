@@ -90,7 +90,7 @@ class DetailSalesOrderController extends GetxController {
   late ButtonFill alocatedButton = ButtonFill(
       controller: GetXCreator.putButtonFillController("alocatedButton"),
       label: "Alokasikan",
-      onClick: () => Get.toNamed(RoutePage.newBookStock, arguments: [orderDetail.value,true])!.then((value) {
+      onClick: () => Get.toNamed(RoutePage.newBookStock, arguments: [orderDetail.value, true])!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
               getDetailOrder();
@@ -107,8 +107,8 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
 
-    DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -150,9 +150,9 @@ class DetailSalesOrderController extends GetxController {
               orderDetail.value = (body as OrderResponse).data;
               getTotalQuantity((body).data);
               isLoading.value = false;
-                timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                GlobalVar.trackRenderTime("Detail_Penjualan", totalTime);
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackRenderTime("Detail_Penjualan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
@@ -185,15 +185,15 @@ class DetailSalesOrderController extends GetxController {
               ? ListApi.pathCancelBookedOrder(orderId)
               : orderDetail.value!.status! == EnumSO.readyToDeliver
                   ? ListApi.pathCancelDeliveryOrder(orderId)
-              : orderDetail.value!.status! == EnumSO.allocated
-                  ? ListApi.pathCancelAllocated(orderId)
-                  : ListApi.pathCancelOrder(orderId),
+                  : orderDetail.value!.status! == EnumSO.allocated
+                      ? ListApi.pathCancelAllocated(orderId)
+                      : ListApi.pathCancelOrder(orderId),
           ""
         ],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
           isLoading.value = false;
-          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "After Status" : body.data?.status});
           Get.back();
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value!.category!, "Before Status": orderDetail.value!.status!, "After Status": body.data['status']});
         }, onResponseFail: (code, message, body, id, packet) {
           isLoading.value = false;
           Get.snackbar(
@@ -204,11 +204,11 @@ class DetailSalesOrderController extends GetxController {
             colorText: Colors.white,
             backgroundColor: Colors.red,
           );
-          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "Error" : message});
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status": orderDetail.value?.status, "Error": message});
         }, onResponseError: (exception, stacktrace, id, packet) {
           isLoading.value = false;
           Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status" : orderDetail.value?.status, "Error" : exception});
+          GlobalVar.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status": orderDetail.value?.status, "Error": exception});
         }, onTokenInvalid: () {
           Constant.invalidResponse();
         }));
@@ -224,8 +224,8 @@ class DetailSalesOrderController extends GetxController {
     sumKg.value = 0;
     sumPrice.value = 0;
     isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
-    priceDelivery.value = data.deliveryFee?? 0;
-    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver|| orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered || orderDetail.value!.status == EnumSO.rejected) {
+    priceDelivery.value = data.deliveryFee ?? 0;
+    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver || orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered || orderDetail.value!.status == EnumSO.rejected) {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
@@ -237,25 +237,25 @@ class DetailSalesOrderController extends GetxController {
             sumPrice.value += product.weight! * product.price!;
           }
         } else {
-            if(orderDetail.value!.returnStatus == EnumSO.returnedPartial){
-                if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
-                sumChick.value += product.quantity! - product.returnQuantity!;
-                sumKg.value += (product.weight! - product.returnWeight!);
-                sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-                } else {
-                sumKg.value += (product.weight! - product.returnWeight!);
-                sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-                }
+          if (orderDetail.value!.returnStatus == EnumSO.returnedPartial) {
+            if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+              sumChick.value += product.quantity! - product.returnQuantity!;
+              sumKg.value += (product.weight! - product.returnWeight!);
+              sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
             } else {
-                if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
-                    sumChick.value += product.returnQuantity!;
-                    sumKg.value += product.returnWeight!;
-                    sumPrice.value += product.returnWeight! * product.price!;
-                } else {
-                    sumKg.value += product.returnWeight!;
-                    sumPrice.value += product.returnWeight! * product.price!;
-                }
+              sumKg.value += (product.weight! - product.returnWeight!);
+              sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
             }
+          } else {
+            if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+              sumChick.value += product.returnQuantity!;
+              sumKg.value += product.returnWeight!;
+              sumPrice.value += product.returnWeight! * product.price!;
+            } else {
+              sumKg.value += product.returnWeight!;
+              sumPrice.value += product.returnWeight! * product.price!;
+            }
+          }
         }
       }
     } else {

@@ -285,18 +285,20 @@ class NewDataPurchaseController extends GetxController {
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
-          spinnerDestination.controller.generateItems(mapList);
+          isLoading.value = false;
+          Timer(const Duration(milliseconds: 100), () {
+            spinnerDestination.controller.hideLoading();
+            spinnerDestination.controller.enable();
+            spinnerDestination.controller.generateItems(mapList);
+            spinnerDestination.controller.refresh();
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            GlobalVar.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+          });
 
           for (var result in body.data) {
             listDestinationPurchase.value.add(result!);
           }
-          spinnerDestination.controller.hideLoading();
-          spinnerDestination.controller.enable();
-          spinnerDestination.controller.refresh();
-          isLoading.value = false;
-          timeEnd = DateTime.now();
-          Duration totalTime = timeEnd.difference(timeStart);
-          GlobalVar.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",

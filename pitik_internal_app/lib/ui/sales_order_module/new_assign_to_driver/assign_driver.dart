@@ -63,23 +63,45 @@ class AssignDriverPage extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      return Container(
-        margin: const EdgeInsets.only(top: 16),
-        child: Expandable(
-            controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
-            headerText: "${products.name}",
-            child: Column(
-              children: [
-                if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                if (products.cutType != null && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                if (products.numberOfCuts != null && products.cutType == "REGULAR"  && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
-              ],
-            )),
-      );
+      if (products.productCategoryId == null) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}${products.id}ASSSIGN DRIVERR"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else if (products.productCategoryId != null) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uasdasdasdaj;"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else {
+        return Container();
+      }
     }
 
     Widget listExpandadle(List<Products?> products) {

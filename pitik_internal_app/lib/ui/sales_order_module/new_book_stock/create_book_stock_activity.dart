@@ -63,25 +63,45 @@ class CreateBookStockPage extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      return (products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)
-          ? Container(
+       if ( products.productCategoryId == null) {
+          return Container(
               margin: const EdgeInsets.only(top: 16),
               child: Expandable(
-                  controller: GetXCreator.putAccordionController("sku${products.name}${products.id}BOOKSTOCK"),
+                  controller: GetXCreator.putAccordionController("sku${products.name}${products.id}ALLOCATEDD BOOK"),
                   headerText: "${products.name}",
                   child: Column(
                     children: [
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
                       if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                      if (products.cutType != null  && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && products.category?.name != AppStrings.LIVE_BIRD) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
                       if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),
-            )
-          : Container();
+            );
+       } else if (products.productCategoryId != null) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;ujasdads;"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else {
+        return Container();
+      }
     }
 
     Widget bottonNavBar() {

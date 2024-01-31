@@ -144,20 +144,38 @@ class DeliveryDetailSO extends StatelessWidget {
     }
 
     Widget customExpandalbe(Products products) {
-      if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0)) {
+      if ((products.returnWeight == null || products.returnWeight == 0) && (products.returnQuantity == null || products.returnQuantity == 0) && products.productCategoryId == null) {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asd"),
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;"),
               headerText: "${products.name}",
               child: Column(
                 children: [
                   if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                   if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity !=0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight !=0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
+                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                ],
+              )),
+        );
+      } else if (products.productCategoryId != null) {
+        return Container(
+          margin: const EdgeInsets.only(top: 16),
+          child: Expandable(
+              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asdasdasdasas"),
+              headerText: "${products.name}",
+              child: Column(
+                children: [
+                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
                   if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
@@ -174,8 +192,8 @@ class DeliveryDetailSO extends StatelessWidget {
                     if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                     if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
                     if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
-                    if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                    if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                    if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                    if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
                     if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
                     if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                   ],
@@ -193,8 +211,8 @@ class DeliveryDetailSO extends StatelessWidget {
                       if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
                       if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
                       if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
-                      if (products.cutType != null) infoDetailSku("Jenis Potong", products.cutType == "REGULAR" ? "Potong Biasa" : "Bekakak"),
-                      if (products.numberOfCuts != null && products.cutType == "REGULAR") infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
+                      if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
+                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
                       if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
                       if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
@@ -341,7 +359,7 @@ class DeliveryDetailSO extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Total Rp",
+                      "Biaya Pengiriman",
                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                       overflow: TextOverflow.clip,
                     ),
@@ -362,7 +380,7 @@ class DeliveryDetailSO extends StatelessWidget {
                     overflow: TextOverflow.clip,
                   ),
                 ),
-                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.priceDelivery.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + (controller.order.deliveryFee ?? 0))), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
               ],
             )
           ],
