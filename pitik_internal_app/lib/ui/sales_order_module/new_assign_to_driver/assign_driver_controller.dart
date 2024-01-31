@@ -237,7 +237,7 @@ class AssignDriverController extends GetxController {
     Order orderRequest = Order(
       driverId: driverSelected!.id!,
       deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : orderDetail.value!.deliveryTime,
-      withDeliveryFee: orderDetail.value!.deliveryFee != null ? true : false,
+      withDeliveryFee: orderDetail.value!.deliveryFee != null ? false : true,
     );
 
     Service.push(

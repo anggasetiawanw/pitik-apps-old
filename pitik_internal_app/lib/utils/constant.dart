@@ -3,6 +3,7 @@ import 'package:dao_impl/user_google_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_variable/strings.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:model/auth_model.dart';
 import 'package:model/profile.dart';
@@ -115,5 +116,17 @@ class Constant {
             default:
                 return "Potong Biasa";
         }
+    }
+
+    static bool havePotongan(String? categoryName){
+        switch (categoryName) {
+            case AppStrings.BRANGKAS:
+                return true;
+            case AppStrings.AYAM_UTUH:
+                return true;
+            case AppStrings.KARKAS:
+                return true;
+        }
+        return false;
     }
 }
