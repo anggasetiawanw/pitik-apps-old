@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -25,7 +24,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Batal_Pemusnahan");
+        Constant.track("Click_Batal_Pemusnahan");
         Get.back();
         if (terminateModel.status == "FINISHED") {
           updateTerminate("BOOKED");
@@ -44,7 +43,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendButton"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Musnahkan_Pemusnahan");
+        Constant.track("Click_Musnahkan_Pemusnahan");
         Get.back();
         updateTerminate("FINISHED");
       });
@@ -59,7 +58,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendButton"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Pesan_StockPemusnahan");
+        Constant.track("Click_Pesan_StockPemusnahan");
         Get.back();
         updateTerminate("BOOKED");
       });
@@ -164,7 +163,7 @@ class TerminateDetailController extends GetxController {
               isLoading.value = false;
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Detail_Pemusnahan", totalTime);
+              Constant.trackRenderTime("Detail_Pemusnahan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;

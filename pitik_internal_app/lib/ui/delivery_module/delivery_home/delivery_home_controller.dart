@@ -1,4 +1,3 @@
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +50,7 @@ class DeliveryHomeController extends GetxController {
     if (countApi == 2) {
       timeEnd = DateTime.now();
       Duration totalTime = timeEnd.difference(timeStart);
-      GlobalVar.trackRenderTime("Delivery_Home", totalTime);
+      Constant.trackRenderTime("Delivery_Home", totalTime);
     }
   }
 

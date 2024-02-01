@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -24,7 +23,7 @@ class DetailGRTransferController extends GetxController {
 
     DetailGRTransferController({required this.context});
     late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Cancel_Penerimaan_Transfer");
+        Constant.track("Click_Cancel_Penerimaan_Transfer");
         Get.back();
         cancelGRTransfer(context);
       });
@@ -70,7 +69,7 @@ class DetailGRTransferController extends GetxController {
                     }
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
+                    Constant.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;
@@ -110,7 +109,7 @@ class DetailGRTransferController extends GetxController {
 
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
+              Constant.trackRenderTime("Detail_Penerimaan_Transfer", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
               isLoading.value = false;

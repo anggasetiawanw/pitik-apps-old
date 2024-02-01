@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -33,7 +32,7 @@ class ManufactureEditFromController extends GetxController {
     var isLoading = false.obs;
 
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Konfirmasi_Edit_Manufaktur");
+        Constant.track("Click_Konfirmasi_Edit_Manufaktur");
         Get.back();
         updateManufacture("INPUT_CONFIRMED");
     });
@@ -119,7 +118,7 @@ class ManufactureEditFromController extends GetxController {
         if(countApi == 2){
             timeEnd = DateTime.now();
             Duration totalTime = timeEnd.difference(timeStart);
-            GlobalVar.trackRenderTime("Manufacture_Edit_Form", totalTime);
+            Constant.trackRenderTime("Manufacture_Edit_Form", totalTime);
         }
     }
 

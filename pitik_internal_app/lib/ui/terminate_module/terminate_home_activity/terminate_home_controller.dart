@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class TerminateHomeController extends GetxController {
       controller: GetXCreator.putButtonFillController("createTerminate"),
       label: "Buat Pemusnahan",
       onClick: () {
-        GlobalVar.track("Click_Buat_Pemusnahan");
+        Constant.track("Click_Buat_Pemusnahan");
         Get.toNamed(RoutePage.terminateForm, arguments: [null, false])!.then((value) {
           isLoading.value = true;
           listTerminate.value.clear();
@@ -100,7 +99,7 @@ class TerminateHomeController extends GetxController {
               }
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Data_Pemusnahan", totalTime);
+              Constant.trackRenderTime("Data_Pemusnahan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

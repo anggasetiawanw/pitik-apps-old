@@ -142,26 +142,28 @@ class BerandaController extends GetxController {
       osVersion = Platform.operatingSystem;
     }
 
-    GlobalVar.mixpanel = await Mixpanel.init(F.tokenMixpanel, trackAutomaticEvents: true);
-    GlobalVar.mixpanel!.registerSuperProperties({
+    Constant.mixpanel = await Mixpanel.init(F.tokenMixpanel, trackAutomaticEvents: true);
+    Constant.mixpanel!.registerSuperProperties({
       "Phone_Number": Constant.profileUser!.phoneNumber,
       "Username": Constant.profileUser!.phoneNumber,
       "Location": "$latitude,$longitude",
       "Device": deviceTracking,
       "Phone_Carrier": phoneCarrier,
       "OS": osVersion,
-      "Role": Constant.profileUser!.roles!.map((e) => e!.name).toList(),
+      "Role": Constant.profileUser?.roles?.map((e) => e?.name).toList(),
     });
-    GlobalVar.mixpanel!.identify(Constant.profileUser!.phoneNumber!);
+    Constant.mixpanel!.identify(Constant.profileUser!.phoneNumber!);
 
-    GlobalVar.mixpanel!.getPeople().set("\$name", Constant.profileUser!.phoneNumber!);
-    GlobalVar.mixpanel!.getPeople().set("\$email", Constant.profileUser!.email!);
+    Constant.mixpanel!.getPeople().set("\$name", Constant.profileUser!.phoneNumber!);
+    Constant.mixpanel!.getPeople().set("\$email", Constant.profileUser!.email!);
 
-    GlobalVar.trackWithMap("Open_Beranda", {'Day_Value': 0});
+    GlobalVar.mixpanel = Constant.mixpanel;
+
+    Constant.trackWithMap("Open_Beranda", {'Day_Value': 0});
 
     timeEnd = DateTime.now();
     Duration totalTime = timeEnd.difference(timeStart);
-    GlobalVar.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+    Constant.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
   }
 
   void checkRoleBranch() {

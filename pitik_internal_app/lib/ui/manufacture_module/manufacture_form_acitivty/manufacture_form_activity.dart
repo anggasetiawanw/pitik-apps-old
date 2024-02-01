@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
@@ -58,7 +57,7 @@ Widget build(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                             Expanded(child:ButtonFill(controller: GetXCreator.putButtonFillController("saveButton"), label: "Simpan", onClick: (){
-                                GlobalVar.track("Click_Simpan_Input_Manufaktur");
+                                Constant.track("Click_Simpan_Input_Manufaktur");
                                 controller.createManufacture("INPUT_DRAFT");})),
                             const SizedBox(width: 16,),
                             Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("confirmButtin"), label: "Konfirmasi", onClick: (){_showBottomDialog(context,controller);}))

@@ -1,4 +1,3 @@
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class DetailVisitController extends GetxController {
                     isLoading.value = false;
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Detail_Visit_Customer", totalTime);
+                    Constant.trackRenderTime("Detail_Visit_Customer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

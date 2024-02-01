@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
@@ -131,10 +130,10 @@ class ChangeBranchController extends GetxController {
                             Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: ['Bearer ${auth.token}', auth.id, Constant.xAppId],
                                 listener: ResponseListener(
                                     onResponseDone: (code, message, body, id, packet) {
-                                        GlobalVar.trackWithMap("Change Branch(Before)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
+                                        Constant.trackWithMap("Change Branch(Before)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
                                         ProfileImpl().save((body as ProfileResponse).data);
                                         Constant.profileUser = body.data;
-                                        GlobalVar.trackWithMap("Change Branch(After)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
+                                        Constant.trackWithMap("Change Branch(After)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
                                         Get.back();
                                         isLoading.value = false;
                                     },

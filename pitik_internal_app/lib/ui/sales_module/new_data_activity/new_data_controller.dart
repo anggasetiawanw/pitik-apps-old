@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -267,7 +266,7 @@ class NewDataController extends GetxController {
                             .generateItems(mapList.value);
             timeEnd = DateTime.now();
             Duration totalTime = timeEnd.difference(timeStart);
-            GlobalVar.trackRenderTime("New_Customer", totalTime);
+            Constant.trackRenderTime("New_Customer", totalTime);
         }
     }
 
@@ -414,7 +413,7 @@ class NewDataController extends GetxController {
     }
 
     void saveCustomer(bool isYesButton) {
-        GlobalVar.track("Click_Simpan");
+        Constant.track("Click_Simpan");
         Get.back();
         List ret = validation();
         if (ret[0]) {

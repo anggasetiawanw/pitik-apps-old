@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -60,7 +59,7 @@ class NewDataSalesOrder extends StatelessWidget {
                   controller: GetXCreator.putButtonFillController("saveDataSalesOrder"),
                   label: "Simpan",
                   onClick: () {
-                    GlobalVar.trackWithMap("Click_Simpan_Penjualan", {"Jenis_Penjualan": controller.produkType.value, "Category_Penjualan": controller.isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
+                    Constant.trackWithMap("Click_Simpan_Penjualan", {"Jenis_Penjualan": controller.produkType.value, "Category_Penjualan": controller.isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
                     controller.status.value = "DRAFT";
                     controller.saveOrder();
                   },

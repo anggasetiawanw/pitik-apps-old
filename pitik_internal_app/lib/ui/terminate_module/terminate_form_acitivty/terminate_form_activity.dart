@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -55,7 +54,7 @@ class TerminateFormActivity extends StatelessWidget {
                       controller: GetXCreator.putButtonFillController("saveButton"),
                       label: "Simpan",
                       onClick: () {
-                        GlobalVar.track("Click_Simpan_Pemusnahan");
+                        Constant.track("Click_Simpan_Pemusnahan");
                         if (controller.isEdit.isTrue) {
                           controller.updateTerminate("DRAFT");
                         } else {

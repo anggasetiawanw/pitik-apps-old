@@ -5,7 +5,6 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:components/switch_linear/switch_linear.dart';
@@ -280,7 +279,7 @@ class EditDataSalesOrderController extends GetxController {
     if (countApi == 4) {
       timeEnd = DateTime.now();
       Duration totalTime = timeEnd.difference(timeStart);
-      GlobalVar.trackRenderTime("Edit_Penjualan", totalTime);
+      Constant.trackRenderTime("Edit_Penjualan", totalTime);
     }
   }
 

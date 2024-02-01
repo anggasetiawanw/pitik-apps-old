@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -293,7 +292,7 @@ class NewDataPurchaseController extends GetxController {
             spinnerDestination.controller.refresh();
             timeEnd = DateTime.now();
             Duration totalTime = timeEnd.difference(timeStart);
-            GlobalVar.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+            Constant.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
           });
 
           for (var result in body.data) {

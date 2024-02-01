@@ -2,7 +2,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -29,7 +28,7 @@ class ManufactureFromController extends GetxController {
     var isLoading = false.obs;
 
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Konfirmasi_Input_Manufaktur");
+        Constant.track("Click_Konfirmasi_Input_Manufaktur");
         Get.back();
         createManufacture("INPUT_CONFIRMED");
     });
@@ -118,7 +117,7 @@ class ManufactureFromController extends GetxController {
                     sourceField.controller.hideLoading();
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Manufacture_Form", totalTime);
+                    Constant.trackRenderTime("Manufacture_Form", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

@@ -6,12 +6,12 @@ import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/purchase_module/data_purchase_activity/data_purchase_controller.dart';
+import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
 import 'package:pitik_internal_app/widget/common/list_card_purchase.dart';
@@ -51,7 +51,7 @@ class _PurchasePageState extends State<PurchasePage> {
                   controller: GetXCreator.putButtonFillController("dataBaruHome"),
                   label: "Buat Pembelian",
                   onClick: () {
-                    GlobalVar.track("Click_Buat_Pembelian");
+                    Constant.track("Click_Buat_Pembelian");
                     Get.toNamed(RoutePage.newDataPurchase)!.then((value) {
                       controller.isLoading.value = true;
                       controller.purchaseList.value.clear();
@@ -181,7 +181,7 @@ class _PurchasePageState extends State<PurchasePage> {
                                       CardListPurchase(
                                         purchase: controller.purchaseList.value[index]!,
                                         onTap: () {
-                                            GlobalVar.track("Click_Detail_Pembelian");
+                                            Constant.track("Click_Detail_Pembelian");
                                           Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
                                             controller.isLoading.value = true;
                                             controller.purchaseList.value.clear();

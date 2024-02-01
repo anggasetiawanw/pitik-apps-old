@@ -1,4 +1,3 @@
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -149,7 +148,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 Obx(() => Constant.isChangeBranch.isTrue
                     ? listComponent(() {
                         Get.toNamed(RoutePage.changeBranch);
-                        GlobalVar.track("Click Profile Change Branch");
+                        Constant.track("Click Profile Change Branch");
                       }, "images/branch_icon.svg", "Ganti Branch")
                     : const SizedBox()),
                 listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),

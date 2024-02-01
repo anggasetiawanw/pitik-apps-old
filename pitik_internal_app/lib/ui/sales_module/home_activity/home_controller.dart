@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +32,7 @@ class HomePageCustomerController extends GetxController {
         controller: GetXCreator.putButtonOutlineController("lamaKunjungan"),
         label: "Lama",
         onClick: () {
-            GlobalVar.track("Click_Kunjungan_Lama");
+            Constant.track("Click_Kunjungan_Lama");
             Get.back();
             Get.toNamed(
             RoutePage.visitCustomer,
@@ -51,7 +50,7 @@ class HomePageCustomerController extends GetxController {
         controller: GetXCreator.putButtonFillController("baruKunjungan"),
         label: "Baru",
         onClick: () {
-            GlobalVar.track("Click_Data_Baru");
+            Constant.track("Click_Data_Baru");
             Get.back();
             Get.toNamed(RoutePage.newDataCustomer)!.then((value) {
             isLoading.value =true;
@@ -126,7 +125,7 @@ class HomePageCustomerController extends GetxController {
             if (id == 1) {
                 timeEnd = DateTime.now();
                 Duration totalTime = timeEnd.difference(timeStart);
-                GlobalVar.trackRenderTime("List_Customer", totalTime);
+                Constant.trackRenderTime("List_Customer", totalTime);
                 if ((body as ListCustomerResponse).data.isNotEmpty) {
                     for (var result in body.data) {
                         (packet[0] as Rx<List<Customer?>>).value.add(result);

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -258,7 +257,7 @@ class EditDataController extends GetxController {
             isLoading.value = false;
             timeEnd = DateTime.now();
             Duration totalTime = timeEnd.difference(timeStart);
-            GlobalVar.trackRenderTime("Edit_Data_Customer", totalTime);
+            Constant.trackRenderTime("Edit_Data_Customer", totalTime);
         }
     }
 
@@ -455,7 +454,7 @@ class EditDataController extends GetxController {
     }
 
     void saveCustomer() {
-        GlobalVar.track("Click_Simpan_Edit_Data_Customer");
+        Constant.track("Click_Simpan_Edit_Data_Customer");
         List ret = validation();
         if (ret[0]) {
             isLoading.value = true;

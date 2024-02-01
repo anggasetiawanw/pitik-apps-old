@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -109,7 +108,7 @@ class StockHomeController extends GetxController {
       controller: GetXCreator.putButtonFillController("stockOpname"),
       label: "Stock Opname",
       onClick: () {
-        GlobalVar.track("Click_Stock_Opname");
+        Constant.track("Click_Stock_Opname");
         Get.toNamed(RoutePage.stockOpname, arguments: [null, false, selectSourceOpname])!.then((value) {
           Timer(const Duration(milliseconds: 500), () {
             if (selectSourceOpname != null) {
@@ -190,7 +189,7 @@ class StockHomeController extends GetxController {
               sourceLatestStock.controller.visibleSpinner();
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Stock_Home", totalTime);
+              Constant.trackRenderTime("Stock_Home", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
