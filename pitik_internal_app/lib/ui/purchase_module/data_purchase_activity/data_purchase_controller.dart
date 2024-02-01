@@ -2,7 +2,6 @@
 ///@email <robert.kuncoro@pitik.id>
 ///@create date 04/04/23
 
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +62,7 @@ class PurchaseController extends GetxController{
           isLoading.value  = false;
           timeEnd = DateTime.now();
           Duration totalTime = timeEnd.difference(timeStart);
-          GlobalVar.trackWithMap("Render_Time", {'Page': "Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+          Constant.trackWithMap("Render_Time", {'Page': "Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
 
         }, onResponseFail: (code, message, body, id, packet){
           Get.snackbar(

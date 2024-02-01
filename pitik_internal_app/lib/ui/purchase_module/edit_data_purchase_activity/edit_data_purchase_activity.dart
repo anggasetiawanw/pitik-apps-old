@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -60,7 +59,7 @@ class EditDataPurchase extends StatelessWidget {
                   controller: GetXCreator.putButtonFillController("saveDataPurchase"),
                   label: "Simpan",
                   onClick: () {
-                    GlobalVar.track("Click_Simpan_Edit_Pembelian");
+                    Constant.track("Click_Simpan_Edit_Pembelian");
                     controller.status.value = "DRAFT";
                     controller.editPurchase();
                   },

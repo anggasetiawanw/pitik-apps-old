@@ -2,7 +2,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -69,7 +68,7 @@ class TerminateApproveController extends GetxController {
               isLoading.value = false;
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Approve_Pemusnahan", totalTime);
+              Constant.trackRenderTime("Approve_Pemusnahan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
@@ -97,7 +96,7 @@ class TerminateApproveController extends GetxController {
   }
 
   void updateTerminate(String status) {
-    GlobalVar.track("Click_Setujui_Pemusnahan");
+    Constant.track("Click_Setujui_Pemusnahan");
     Get.back();
     isLoading.value = true;
     Service.push(

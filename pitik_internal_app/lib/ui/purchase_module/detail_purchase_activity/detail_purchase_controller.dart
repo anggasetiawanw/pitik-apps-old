@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class DetailPurchaseController extends GetxController {
       controller: GetXCreator.putButtonFillController("editPurchase"),
       label: "Edit",
       onClick: () {
-        GlobalVar.track("Click_Edit_Pembelian");
+        Constant.track("Click_Edit_Pembelian");
         Get.toNamed(RoutePage.purchaseEditPage, arguments: purchaseDetail.value)!.then((value) {
           isLoading.value = true;
           Timer(const Duration(milliseconds: 500), () {
@@ -97,7 +96,7 @@ class DetailPurchaseController extends GetxController {
               isLoading.value = false;
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackWithMap("Render_Time", {'Page': "Detail_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+              Constant.trackWithMap("Render_Time", {'Page': "Detail_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
             },
             onResponseFail: (code, message, body, id, packet) {},
             onResponseError: (exception, stacktrace, id, packet) {},
@@ -131,7 +130,7 @@ class DetailPurchaseController extends GetxController {
   void cancelPurchase(BuildContext context) {
     String purchaseid = purchaseDetail.value!.id!;
     isLoading.value = true;
-    GlobalVar.trackWithMap("Click_Batal_Pembelian", {"Status": "${purchaseDetail.value!.status}"});
+    Constant.trackWithMap("Click_Batal_Pembelian", {"Status": "${purchaseDetail.value!.status}"});
     Service.push(
         service: ListApi.cancelPurchase,
         context: context,
@@ -150,7 +149,7 @@ class DetailPurchaseController extends GetxController {
                 backgroundColor: Colors.red,
               );
               isLoading.value = false;
-              GlobalVar.trackWithMap("Click_Batal_Pembelian", {"error": "${(body).error!.message}"});
+              Constant.trackWithMap("Click_Batal_Pembelian", {"error": "${(body).error!.message}"});
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
@@ -162,7 +161,7 @@ class DetailPurchaseController extends GetxController {
                 backgroundColor: Colors.red,
               );
 
-              GlobalVar.trackWithMap("Click_Batal_Pembelian", {"error": exception});
+              Constant.trackWithMap("Click_Batal_Pembelian", {"error": exception});
               //  isLoading.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));

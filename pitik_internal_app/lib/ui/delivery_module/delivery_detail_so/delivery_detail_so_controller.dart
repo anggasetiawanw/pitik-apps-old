@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -33,7 +32,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("confirmButtonasd"),
       label: "Terkirim",
       onClick: () {
-        GlobalVar.track("Click_Terkirim_Pengiriman_Sales_Order");
+        Constant.track("Click_Terkirim_Pengiriman_Sales_Order");
         Get.toNamed(RoutePage.deliveryConfirmSO, arguments: order)!.then((value) {
           isLoading.value = true;
           Timer(const Duration(milliseconds: 500), () {
@@ -46,7 +45,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendItemasd"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Kirim_Barang_Pengiriman_Sales_Order");
+        Constant.track("Click_Kirim_Barang_Pengiriman_Sales_Order");
         Get.back();
         isLoading.value = true;
         sendItem();
@@ -63,7 +62,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesRejectItemasd"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Ditolak_Pengiriman_Sales_Order");
+        Constant.track("Click_Ditolak_Pengiriman_Sales_Order");
         Get.back();
         Get.toNamed(RoutePage.deliveryRejectSO, arguments: order)!.then((value) {
           isLoading.value = true;
@@ -175,7 +174,7 @@ class DeliveryDetailSOController extends GetxController {
     }
     timeEnd = DateTime.now();
     Duration totalTime = timeEnd.difference(timeStart);
-    GlobalVar.trackRenderTime("Detail_Pengiriman_Sales_Order", totalTime);
+    Constant.trackRenderTime("Detail_Pengiriman_Sales_Order", totalTime);
   }
 
   void sendItem() {

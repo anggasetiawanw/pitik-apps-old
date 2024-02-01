@@ -9,7 +9,6 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:dao_impl/auth_impl.dart';
@@ -539,7 +538,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
 
   void backFromForm(bool isInbound) {
     Get.back();
-    GlobalVar.track("Click_Button_Penjualan_${isInbound ? "Inbound" : "Outbound"}");
+    Constant.track("Click_Button_Penjualan_${isInbound ? "Inbound" : "Outbound"}");
     Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
       if (isFilter.isTrue) {
         if (isOutbondTab.isFalse) {

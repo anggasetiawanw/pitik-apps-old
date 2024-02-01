@@ -1,4 +1,3 @@
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -247,7 +246,7 @@ class ReceiveController extends GetxController{
     if(countApi == 3){
       timeEnd = DateTime.now();
       Duration duration = timeEnd.difference(timeStart);
-      GlobalVar.trackRenderTime("Penerimaan", duration);
+      Constant.trackRenderTime("Penerimaan", duration);
     }
   }
 

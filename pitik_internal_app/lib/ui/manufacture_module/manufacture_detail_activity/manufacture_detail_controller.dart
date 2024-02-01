@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
@@ -20,7 +19,7 @@ class ManufactureDetailController extends GetxController {
     var isLoading = false.obs;
 
     late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Batal_Manufaktur");
+        Constant.track("Click_Batal_Manufaktur");
         Get.back();
         if(manufactureModel.status == "INPUT_BOOKED"){
             updateManufacture("INPUT_CONFIRMED");
@@ -39,7 +38,7 @@ class ManufactureDetailController extends GetxController {
         Get.back();
     });
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Book_Stock_Manufaktur");
+        Constant.track("Click_Book_Stock_Manufaktur");
         Get.back();
         updateManufacture("INPUT_BOOKED");
     });
@@ -77,7 +76,7 @@ class ManufactureDetailController extends GetxController {
                     isLoading.value = false;
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Detail_Manufaktur", totalTime);
+                    Constant.trackRenderTime("Detail_Manufaktur", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;

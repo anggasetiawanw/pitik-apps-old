@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -18,7 +17,7 @@ class TransferDetailController extends GetxController {
 
     TransferDetailController({required this.context});
     late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Batal_Transfer");
+        Constant.track("Click_Batal_Transfer");
         Get.back();
         isLoading.value = true;
         if(transferModel.status == "BOOKED"){
@@ -35,7 +34,7 @@ class TransferDetailController extends GetxController {
         Get.back();
     });
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Pesan_Stock_Transfer");
+        Constant.track("Click_Pesan_Stock_Transfer");
         isLoading.value = true;
         Get.back();
         updateStatus(ListApi.pathTransferBookStock(transferModel.id!));
@@ -77,7 +76,7 @@ class TransferDetailController extends GetxController {
                     isLoading.value = false;
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Detail_Transfer", totalTime);
+                    Constant.trackRenderTime("Detail_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;

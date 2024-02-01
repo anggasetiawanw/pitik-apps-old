@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/user_google_impl.dart';
@@ -151,7 +150,7 @@ class EditDataPurchaseController extends GetxController {
       controller: GetXCreator.putButtonFillController("iyaPurchase"),
       label: "Ya",
       onClick: () {
-        GlobalVar.track("Click_Simpan_Konfirmasi_Pembelian");
+        Constant.track("Click_Simpan_Konfirmasi_Pembelian");
         Get.back();
         editPurchase();
 
@@ -210,7 +209,7 @@ class EditDataPurchaseController extends GetxController {
           isLoading.value = false;
           timeEnd = DateTime.now();
           Duration totalTime = timeEnd.difference(timeStart);
-          GlobalVar.trackWithMap("Render_Time", {'Page': "Edit_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+          Constant.trackWithMap("Render_Time", {'Page': "Edit_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",

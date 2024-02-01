@@ -1,7 +1,6 @@
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
@@ -21,7 +20,7 @@ class TransferDriverController extends GetxController {
 
     TransferDriverController({required this.context});
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
-        GlobalVar.track("Click_Assign_Driver_Transfer");
+        Constant.track("Click_Assign_Driver_Transfer");
         Get.back();
         isLoading.value = true;
         updateStatus();
@@ -77,7 +76,7 @@ class TransferDriverController extends GetxController {
                     isLoading.value = false;
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Driver_Form_Transfer", totalTime);
+                    Constant.trackRenderTime("Driver_Form_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(

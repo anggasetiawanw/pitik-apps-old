@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,7 @@ class DetailGrPurchaseController extends GetxController {
     controller: GetXCreator.putButtonFillController("makePurchase"),
     label: "Buat Penerimaan",
       onClick: () {
-        GlobalVar.track("Click_Buat_Penerimaan_Pembelian");
+        Constant.track("Click_Buat_Penerimaan_Pembelian");
         Get.toNamed(purchaseDetail.value!.vendor!= null ? RoutePage.createGrPurchasePage : RoutePage.createGrJagalPurchasePage , arguments: purchaseDetail.value)!.then((value) {
           isLoading.value =true;
           Timer(const Duration(milliseconds: 500), () {
@@ -108,7 +107,7 @@ class DetailGrPurchaseController extends GetxController {
               }
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
+              Constant.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
 
@@ -133,7 +132,7 @@ class DetailGrPurchaseController extends GetxController {
               isLoading.value = false;
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
+              Constant.trackRenderTime("Detail_Penerimaan_Pembelian", totalTime);
             },
             onResponseFail: (code, message, body, id, packet){
               isLoading.value = false;
@@ -215,7 +214,7 @@ class DetailGrPurchaseController extends GetxController {
   }
 
   void cancelGRPurchase(BuildContext context) {
-    GlobalVar.track("Click_Batal_Penerimaan_Pembelian");
+    Constant.track("Click_Batal_Penerimaan_Pembelian");
     String purchaseid = goodReceiptDetail.value!.id!;
     isLoading.value = true;
       Service.push(

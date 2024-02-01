@@ -4,7 +4,6 @@ import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_multi_field/spinner_multi_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
@@ -106,7 +105,7 @@ class VisitController extends GetxController {
         controller: GetXCreator.putButtonFillController("SelesaiKunjungan"),
         label: "Selesai Kunjungan",
         onClick: () {
-            GlobalVar.track("Click_Selesai_Kunjungan");
+            Constant.track("Click_Selesai_Kunjungan");
             List ret = validation();
             if (ret[0]) {
                 VisitCustomer visPayload = generatePayload();
@@ -246,7 +245,7 @@ class VisitController extends GetxController {
         label: "Checkin",
         isHaveIcon: true,
         onClick: () async {
-            GlobalVar.track("Click_Checkin_Customer");
+            Constant.track("Click_Checkin_Customer");
             isLoadCheckin.value = true;
             final hasPermission = await handleLocationPermission();
             if (hasPermission){

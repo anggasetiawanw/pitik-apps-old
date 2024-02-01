@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/switch_linear/switch_linear.dart';
 import 'package:engine/request/service.dart';
@@ -159,7 +158,7 @@ class CreateBookStockController extends GetxController {
     if (countApi == 2) {
         timeEnd = DateTime.now();
         Duration totalTime = timeEnd.difference(timeStart);
-        GlobalVar.trackRenderTime(isAllocated.isTrue ? "Form_Alokasi_Penjualan" :" From_Pesan_Stock_Penjualan", totalTime);
+        Constant.trackRenderTime(isAllocated.isTrue ? "Form_Alokasi_Penjualan" :" From_Pesan_Stock_Penjualan", totalTime);
     }
   }
 
@@ -276,7 +275,7 @@ class CreateBookStockController extends GetxController {
           body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, ListApi.pathBookStock(orderDetail.value!.id!), Mapper.asJsonString(orderRequest)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
-                GlobalVar.track("Click_Button_Pesan_Stock_Penjualan");
+                Constant.track("Click_Button_Pesan_Stock_Penjualan");
                 Get.back();
                 isLoading.value = false;
                 Get.back();
@@ -290,7 +289,7 @@ class CreateBookStockController extends GetxController {
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
                 );
-                GlobalVar.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": (body).error!.message!});
+                Constant.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": (body).error!.message!});
 
                 isLoading.value = false;
               },
@@ -304,7 +303,7 @@ class CreateBookStockController extends GetxController {
                   backgroundColor: Colors.red,
                 );
                 isLoading.value = false;
-                GlobalVar.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": exception});
+                Constant.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": exception});
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
@@ -330,18 +329,18 @@ class CreateBookStockController extends GetxController {
       context: context,
       body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathEditSalesOrder(orderDetail.value!.id!), Mapper.asJsonString(orderPayload)],
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-        GlobalVar.track("Click_Button_Alokasikan_Penjualan");
+        Constant.track("Click_Button_Alokasikan_Penjualan");
         isLoading.value = false;
         Get.back();
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-        GlobalVar.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": (body).error!.message!});
+        Constant.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": (body).error!.message!});
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
         Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-        GlobalVar.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": exception});
+        Constant.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": exception});
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),

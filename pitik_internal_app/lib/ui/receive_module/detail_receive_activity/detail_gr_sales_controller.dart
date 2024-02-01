@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class DetailGrOrderController extends GetxController {
         controller: GetXCreator.putButtonFillController("createGrOrder"),
         label: "Buat Penerimaan",
         onClick: () {
-            GlobalVar.track("Click_Buat_Penerimaan_Penjualan");
+            Constant.track("Click_Buat_Penerimaan_Penjualan");
             Get.toNamed(RoutePage.createGrOrderPage, arguments: orderDetail.value)!.then((value) {
                 isLoading.value =true;
                 Timer(const Duration(milliseconds: 500), () {
@@ -120,7 +119,7 @@ class DetailGrOrderController extends GetxController {
                     getTotalQuantity(body.data);
                     timeEnd = DateTime.now();
                     Duration totalTime = timeEnd.difference(timeStart);
-                    GlobalVar.trackRenderTime("Detail_Penerimaan_Penjualan", totalTime);
+                    Constant.trackRenderTime("Detail_Penerimaan_Penjualan", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet){
                 isLoading.value = false;

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,7 @@ class CustomerDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("kunjunganDetail"),
       label: "Kunjungan",
       onClick: () {
-        GlobalVar.track("Click_Kunjungan_Customer");
+        Constant.track("Click_Kunjungan_Customer");
         Get.toNamed(RoutePage.visitCustomer, arguments: [RoutePage.fromDetailCustomer, customerDetail.value])!.then((value) => getData());
       });
 
@@ -49,7 +48,7 @@ class CustomerDetailController extends GetxController {
       controller: GetXCreator.putButtonOutlineController("editDetail"),
       label: "Edit",
       onClick: () {
-        GlobalVar.track("Click_Edit_Customer");
+        Constant.track("Click_Edit_Customer");
         Get.toNamed(RoutePage.editCustomer, arguments: customerDetail.value)!.then((value) {
           Timer(const Duration(milliseconds: 100), () {
             getData();
@@ -87,7 +86,7 @@ class CustomerDetailController extends GetxController {
     String custId = customerDetail.value!.id!;
     isLoadingDetails.value = true;
     if (customerDetail.value!.isArchived! == true) {
-      GlobalVar.track("Click_Unarchive_Customer");
+      Constant.track("Click_Unarchive_Customer");
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
@@ -145,7 +144,7 @@ class CustomerDetailController extends GetxController {
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
-      GlobalVar.track("Click_Archive_Customer");
+      Constant.track("Click_Archive_Customer");
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
@@ -238,7 +237,7 @@ class CustomerDetailController extends GetxController {
                 isLoadingDetails.value = false;
                 timeEnd = DateTime.now();
                 Duration totalTime = timeEnd.difference(timeStart);
-                GlobalVar.trackRenderTime("Detail_Customer", totalTime);
+                Constant.trackRenderTime("Detail_Customer", totalTime);
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(

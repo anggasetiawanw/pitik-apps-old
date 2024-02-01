@@ -5,7 +5,6 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/date_time_field/datetime_field.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
-import 'package:components/global_var.dart';
 import 'package:components/spinner_field/spinner_field.dart';
 import 'package:components/spinner_search/spinner_search.dart';
 import 'package:components/switch_linear/switch_linear.dart';
@@ -231,7 +230,7 @@ class NewDataSalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("iyaPurchase"),
       label: "Ya",
       onClick: () {
-        GlobalVar.trackWithMap("Click_Konfirmasi_Penjualan", {"Jenis_Penjualan": produkType.value, "Category_Penjualan": isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
+        Constant.trackWithMap("Click_Konfirmasi_Penjualan", {"Jenis_Penjualan": produkType.value, "Category_Penjualan": isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
         Get.back();
         saveOrder();
       },
@@ -270,7 +269,7 @@ class NewDataSalesOrderController extends GetxController {
     if (countApi == 3) {
       timeEnd = DateTime.now();
       Duration totalTime = timeEnd.difference(timeStart);
-      GlobalVar.trackRenderTime("Buat_Penjualan", totalTime);
+      Constant.trackRenderTime("Buat_Penjualan", totalTime);
     }
   }
 

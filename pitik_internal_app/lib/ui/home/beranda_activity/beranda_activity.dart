@@ -1,9 +1,9 @@
-import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_controller.dart';
+import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
 class BerandaActivity extends StatelessWidget {
@@ -79,7 +79,7 @@ class BerandaActivity extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
-                        GlobalVar.track("Click_Menu_${controller.module.value[index]['nameModule']}");
+                        Constant.track("Click_Menu_${controller.module.value[index]['nameModule']}");
                       },
                       child: Container(
                         width: double.infinity,
@@ -119,7 +119,7 @@ class BerandaActivity extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(controller.module.value[index]['homeRoute'])!.then((value) => controller.refreshHome(context));
-                        GlobalVar.track("Click_Menu_${controller.module.value[index]['nameModule']}");
+                        Constant.track("Click_Menu_${controller.module.value[index]['nameModule']}");
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
