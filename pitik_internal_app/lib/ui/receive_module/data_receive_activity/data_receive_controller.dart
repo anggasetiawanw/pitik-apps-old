@@ -43,7 +43,7 @@ part 'data_receive_controller.transfer.dart';
 
 enum BodyQueryPurhcase { token, auth, xAppId, page, limit, statusConfirmed, statusReceived, withinProductionTeam, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status, source, code }
 
-enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status,code }
+enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status, code , source}
 
 enum BodyQueryReturn { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, returnStatus, category, createdDate, productCategoryId, productItemId, operationUnitId, status }
 
@@ -274,6 +274,10 @@ class ReceiveController extends GetxController {
         listFilter.value.clear();
         isSearch.value = false;
         sbSearch.controller.setSelectedValue("Nomor PO");
+        isLoadingPurchase.value = true;
+        listPurchase.value.clear();
+        resetAllBodyPurhcaseValue();
+        getListPurchase();
       } else if (tabController.controller.index == 1) {
         isPurhcase.value = false;
         isTransfer.value = true;
@@ -282,6 +286,10 @@ class ReceiveController extends GetxController {
         listFilter.value.clear();
         isSearch.value = false;
         sbSearch.controller.setSelectedValue("Nomor Transfer");
+        isLoadingTransfer.value = true;
+        listTransfer.value.clear();
+        resetAllBodyTransferValue();
+        getListTransfer();
       } else if (tabController.controller.index == 2) {
         isPurhcase.value = false;
         isTransfer.value = false;
@@ -348,6 +356,10 @@ class ReceiveController extends GetxController {
       isSearch.value = false;
       if (isPurhcase.isTrue) {
         filterPurchase();
+      } else if (isTransfer.isTrue) {
+        filterTransfer();
+      } else if (isOrderReturn.isTrue) {
+        // filterOrder(
       }
     }
   }
@@ -374,6 +386,13 @@ class ReceiveController extends GetxController {
       resetAllBodyPurhcaseValue();
       isLoadingPurchase.value = true;
       getListPurchase();
+    } else if(isTransfer.isTrue){
+      resetAllBodyTransferValue();
+      isLoadingTransfer.value = true;
+      getListTransfer();
+    }else if(isOrderReturn.isTrue){
+      listReturn.value.clear();
+      isLoadingOrder.value = true;
     }
   }
 
@@ -417,11 +436,20 @@ class ReceiveController extends GetxController {
         resetAllBodyPurhcaseValue();
         isLoadingPurchase.value = true;
         getListPurchase();
+      } else if( isTransfer.isTrue){
+        isFilter.value = false;
+        isSearch.value = false;
+        resetAllBodyTransferValue();
+        isLoadingTransfer.value = true;
+        getListTransfer();
       }
     } else {
       if (isPurhcase.isTrue) {
         isLoadingPurchase.value = true;
         filterPurchase();
+      } else if(isTransfer.isTrue){
+        isLoadingTransfer.value = true;
+        filterTransfer();
       }
     }
   }
@@ -434,12 +462,24 @@ class ReceiveController extends GetxController {
         isFilter.value = false;
         listFilter.value.clear();
         if (isPurhcase.isTrue) {
-          pagePurchase.value = 1;
           listPurchase.value.clear();
           isLoadingPurchase.value = true;
           resetAllBodyPurhcaseValue();
           bodyGeneralPurhcase[BodyQueryPurhcase.code.index] = text;
           getListPurchase();
+        } else if (isTransfer.isTrue) {
+          listTransfer.value.clear();
+          isLoadingTransfer.value = true;
+          resetAllBodyTransferValue();
+          bodyGeneralTransfer[BodyQueryTransfer.code.index] = text;
+          getListTransfer();
+        } else if (isOrderReturn.isTrue) {
+          pageOrder.value = 1;
+          listReturn.value.clear();
+          isLoadingOrder.value = true;
+        //   resetAllBodyReturnValue();
+        //   bodyGeneralReturn[BodyQueryReturn.code.index] = text;
+        //   getListReturn();
         }
       });
     } else {
@@ -447,11 +487,19 @@ class ReceiveController extends GetxController {
       debouncer = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
         if (isPurhcase.isTrue) {
-          pagePurchase.value = 1;
           listPurchase.value.clear();
           isLoadingPurchase.value = true;
           resetAllBodyPurhcaseValue();
           getListPurchase();
+        } else if (isTransfer.isTrue) {
+          listTransfer.value.clear();
+          isLoadingTransfer.value = true;
+          resetAllBodyTransferValue();
+          getListTransfer();
+        } else if (isOrderReturn.isTrue) {
+          pageOrder.value = 1;
+          listReturn.value.clear();
+          isLoadingOrder.value = true;
         }
       });
     }

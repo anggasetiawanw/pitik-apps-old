@@ -12,6 +12,9 @@ extension TransferReceiveController on ReceiveController {
     bodyGeneralTransfer[BodyQueryTransfer.xAppId.index] = Constant.xAppId;
     bodyGeneralTransfer[BodyQueryTransfer.page.index] = pagePurchase.value;
     bodyGeneralTransfer[BodyQueryTransfer.limit.index] = limit.value;
+    bodyGeneralTransfer[BodyQueryTransfer.statusReceived.index] = "RECEIVED";
+    bodyGeneralTransfer[BodyQueryTransfer.statusDelivered.index] = "DELIVERED";
+    bodyGeneralTransfer[BodyQueryTransfer.withinProductionTeam.index] = AppStrings.TRUE_LOWERCASE;
   }
 
   void openFilterTransfer() {
@@ -26,6 +29,65 @@ extension TransferReceiveController on ReceiveController {
     getListOperationUnit();
     getListDestinationOperationUnit();
     showFilter();
+  }
+
+  void filterTransfer() {
+    resetAllBodyTransferValue();
+    CategoryModel? categorySelect;
+    if (spCategory.controller.textSelected.value.isNotEmpty) {
+      categorySelect = listCategory.firstWhereOrNull(
+        (element) => element!.name == spCategory.controller.textSelected.value,
+      );
+    }
+
+    Products? productSelect;
+    if (spSku.controller.textSelected.value.isNotEmpty) {
+      productSelect = listProduct.firstWhereOrNull(
+        (element) => element!.name == spSku.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? destinationSelect;
+    if (spTujuan.controller.textSelected.value.isNotEmpty) {
+      destinationSelect = listDestinationOperationUnits.value.firstWhere(
+        (element) => element!.operationUnitName == spTujuan.controller.textSelected.value,
+      );
+    }
+
+    OperationUnitModel? sourceSelect;
+    if (spSumber.controller.textSelected.value.isNotEmpty) {
+      sourceSelect = listSourceOperationUnits.value.firstWhere(
+        (element) => element!.operationUnitName == spSumber.controller.textSelected.value,
+      );
+    }
+    if (sourceSelect != null) {
+      bodyGeneralTransfer[BodyQueryTransfer.source.index] = sourceSelect.type;
+    }
+    String? status;
+    switch (spStatus.controller.textSelected.value) {
+      case "Terkirim":
+        status = "DELIVERED";
+        break;
+      case "Diterima":
+        status = "RECEIVED";
+        break;
+      default:
+    }
+    if (status != null) {
+      bodyGeneralTransfer[BodyQueryTransfer.statusReceived.index] = null;
+      bodyGeneralTransfer[BodyQueryTransfer.statusDelivered.index] = null;
+    }
+    String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalFilterReceive.getLastTimeSelected());
+
+    bodyGeneralTransfer[BodyQueryTransfer.productCategoryId.index] = categorySelect?.id;
+    bodyGeneralTransfer[BodyQueryTransfer.productItemId.index] = productSelect?.id;
+    bodyGeneralTransfer[BodyQueryTransfer.targetOperationUnitId.index] = destinationSelect?.id;
+    bodyGeneralTransfer[BodyQueryTransfer.sourceOperationUnitId.index] = sourceSelect?.id;
+    bodyGeneralTransfer[BodyQueryTransfer.status.index] = status;
+    bodyGeneralTransfer[BodyQueryTransfer.createdDate.index] = date;
+    isLoadingTransfer.value = true;
+    listTransfer.value.clear();
+    getListTransfer();
   }
 
   scrollTransferListener() async {
@@ -174,6 +236,7 @@ extension TransferReceiveController on ReceiveController {
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
+              isLoadingTransfer.value = false;
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
@@ -184,6 +247,7 @@ extension TransferReceiveController on ReceiveController {
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
+              isLoadingTransfer.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));
   }

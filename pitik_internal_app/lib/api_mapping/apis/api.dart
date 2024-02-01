@@ -736,6 +736,7 @@ class API {
     @Query("targetOperationUnitId") String vendorId,
     @Query("status") String status,
     @Query("code") String code,
+    @Query("source") String source,
   ) {}
 
   /// This function creates a goods received record using a POST request with

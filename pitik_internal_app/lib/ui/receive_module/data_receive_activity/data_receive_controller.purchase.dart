@@ -46,7 +46,6 @@ extension PurhcaseReceiveController on ReceiveController {
   }
 
   void filterPurchase() {
-    pagePurchase.value = 1;
     resetAllBodyPurhcaseValue();
 
     CategoryModel? categorySelect;
@@ -83,9 +82,6 @@ extension PurhcaseReceiveController on ReceiveController {
 
     String? status;
     switch (spStatus.controller.textSelected.value) {
-      case "Draft":
-        status = "DRAFT";
-        break;
       case "Terkonfirmasi":
         status = "CONFIRMED";
         break;
@@ -96,6 +92,11 @@ extension PurhcaseReceiveController on ReceiveController {
         status = "REJECTED";
         break;
       default:
+    }
+
+    if(status != null){
+        bodyGeneralPurhcase[BodyQueryPurhcase.statusConfirmed.index] = null;
+        bodyGeneralPurhcase[BodyQueryPurhcase.statusReceived.index] = null;
     }
 
     String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalFilterReceive.getLastTimeSelected());
