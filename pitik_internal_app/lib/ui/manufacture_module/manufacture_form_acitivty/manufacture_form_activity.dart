@@ -56,7 +56,9 @@ Widget build(BuildContext context) {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                            Expanded(child:ButtonFill(controller: GetXCreator.putButtonFillController("saveButton"), label: "Simpan", onClick: (){controller.createManufacture("INPUT_DRAFT");})),
+                            Expanded(child:ButtonFill(controller: GetXCreator.putButtonFillController("saveButton"), label: "Simpan", onClick: (){
+                                Constant.track("Click_Simpan_Input_Manufaktur");
+                                controller.createManufacture("INPUT_DRAFT");})),
                             const SizedBox(width: 16,),
                             Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("confirmButtin"), label: "Konfirmasi", onClick: (){_showBottomDialog(context,controller);}))
                         ],
@@ -69,7 +71,7 @@ Widget build(BuildContext context) {
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60),
             child: appBar(),
-        ),  
+        ),
         body: Obx(() => controller.isLoading.isTrue? const Center(child: ProgressLoading() )
         : Stack(
             children: [

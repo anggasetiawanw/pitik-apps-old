@@ -82,11 +82,12 @@ class _ProfileActivityState extends State<ProfileActivity> {
                     style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,
                   ),
-                  if(Constant.profileUser != null && Constant.profileUser!.roles != null && Constant.profileUser!.roles!.isNotEmpty) Text(
-                    Constant.profileUser!.roles!.map((element) => element!.name).toList().join(", "),
-                    style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
-                    overflow: TextOverflow.clip,
-                  ),
+                  if (Constant.profileUser != null && Constant.profileUser!.roles != null && Constant.profileUser!.roles!.isNotEmpty)
+                    Text(
+                      Constant.profileUser!.roles!.map((element) => element!.name).toList().join(", "),
+                      style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                      overflow: TextOverflow.clip,
+                    ),
                 ],
               ),
             )
@@ -143,8 +144,13 @@ class _ProfileActivityState extends State<ProfileActivity> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                Obx(() => Constant.isDeveloper.isTrue || F.appFlavor == Flavor.DEV? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
-                Obx(() => Constant.isChangeBranch.isTrue ? listComponent(() => Get.toNamed(RoutePage.changeBranch), "images/branch_icon.svg", "Ganti Branch") : const SizedBox()),
+                Obx(() => Constant.isDeveloper.isTrue || F.appFlavor == Flavor.DEV ? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
+                Obx(() => Constant.isChangeBranch.isTrue
+                    ? listComponent(() {
+                        Get.toNamed(RoutePage.changeBranch);
+                        Constant.track("Click Profile Change Branch");
+                      }, "images/branch_icon.svg", "Ganti Branch")
+                    : const SizedBox()),
                 listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
                 listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
                 listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),

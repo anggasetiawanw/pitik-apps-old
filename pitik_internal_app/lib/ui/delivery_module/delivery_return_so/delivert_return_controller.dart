@@ -39,6 +39,7 @@ class DeliveryRejectSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendItem"),
       label: "Ya",
       onClick: (){
+        Constant.track("Click_Tolak_Konirmasi_Pengiriman_Sales_Order");
         Get.back();
         confirmed();
       }
@@ -156,7 +157,7 @@ class DeliveryRejectSOController extends GetxController {
                 backgroundColor: Colors.red,);
                 return false;
         }
-  
+
         return true;
     }
 

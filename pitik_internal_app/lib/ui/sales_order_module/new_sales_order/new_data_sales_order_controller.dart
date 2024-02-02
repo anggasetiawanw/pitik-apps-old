@@ -13,8 +13,10 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/strings.dart';
+import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/customer_model.dart';
@@ -98,9 +100,9 @@ class NewDataSalesOrderController extends GetxController {
           for (var product in listCategoriesRemark.value) {
             mapListRemark[product!.name!] = false;
           }
+          mapListRemark.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
           Timer(const Duration(milliseconds: 100), () {
             skuCardRemark.controller.spinnerCategories.value[0].controller.generateItems(mapListRemark);
-
             for (var result in listCategories.value) {
               if (result!.name == AppStrings.LIVE_BIRD) {
                 spinnerCategories.controller.setTextSelected(result.name!);
@@ -151,18 +153,6 @@ class NewDataSalesOrderController extends GetxController {
         refreshtotalPurchase();
       });
 
-//   late EditField editFieldKebutuhan = EditField(
-//       controller: GetXCreator.putEditFieldController("editFieldKebutuhanLb"),
-//       label: "Kebutuhan*",
-//       hint: "Tulis Jumlah*",
-//       alertText: "Kolom Ini Harus Di Isi",
-//       textUnit: "Kg",
-//       inputType: TextInputType.number,
-//       maxInput: 20,
-//       onTyping: (value, control) {
-//         refreshtotalPurchase();
-//       });
-
   late EditField editFieldHarga = EditField(
       controller: GetXCreator.putEditFieldController("edithargaLb"),
       label: "Harga*",
@@ -198,7 +188,7 @@ class NewDataSalesOrderController extends GetxController {
     label: "Tanggal Pengiriman*",
     hint: "dd/mm/yyyy",
     alertText: "Tanggal Pengiriman harus dipilih!",
-    onDateTimeSelected: (date, dateField) =>dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
     flag: 1,
   );
   DateTimeField dtDeliveryTime = DateTimeField(
@@ -206,13 +196,18 @@ class NewDataSalesOrderController extends GetxController {
     label: "Waktu Pengiriman",
     hint: "hh:mm",
     alertText: "Waktu Pengiriman harus dipilih!",
-    onDateTimeSelected: (date, dateField) =>dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
+    onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
     flag: 2,
   );
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi = 0;
 
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     isInbound.value = Get.arguments;
     isLoading.value = true;
     spinnerOrderType.controller.setTextSelected("Non-LB");
@@ -235,6 +230,7 @@ class NewDataSalesOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("iyaPurchase"),
       label: "Ya",
       onClick: () {
+        Constant.trackWithMap("Click_Konfirmasi_Penjualan", {"Jenis_Penjualan": produkType.value, "Category_Penjualan": isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
         Get.back();
         saveOrder();
       },
@@ -244,10 +240,14 @@ class NewDataSalesOrderController extends GetxController {
   @override
   void onReady() {
     Get.find<SkuCardOrderController>(tag: "skuOrder").idx.listen((p0) {
-      generateListProduct(p0);
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListProduct(p0);
+      });
     });
-    Get.find<SkuCardRemarkController>(tag: "skuRemark").itemCount.listen((p0) {
-      generateListRemark(p0);
+    Get.find<SkuCardRemarkController>(tag: "skuRemark").idx.listen((p0) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        generateListRemark(p0);
+      });
     });
     skuCard.controller.visibleCard();
     skuCardRemark.controller.visibleCard();
@@ -256,27 +256,31 @@ class NewDataSalesOrderController extends GetxController {
     editFieldHarga.controller.disable();
     if (isInbound.isTrue) {
       getListSource();
+    } else {
+      countingApi();
     }
     getListCustomer();
     getCategorySku();
     super.onReady();
   }
 
+  void countingApi() {
+    countApi++;
+    if (countApi == 3) {
+      timeEnd = DateTime.now();
+      Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackRenderTime("Buat_Penjualan", totalTime);
+    }
+  }
+
   void generateListProduct(int idx) {
-    Timer(const Duration(milliseconds: 500), () {
-      idx = idx - 1;
-      skuCard.controller.spinnerCategories.value[idx].controller.generateItems(mapListSku.value);
-      skuCard.controller.editFieldHarga.value[idx].controller.addListener(() {});
-    });
+    idx = idx - 1;
+    skuCard.controller.spinnerCategories.value[idx].controller.generateItems(mapListSku.value);
   }
 
   void generateListRemark(int idx) {
-    Timer(const Duration(milliseconds: 500), () {
-      idx = idx - 1;
-      skuCardRemark.controller.spinnerCategories.value[idx].controller.generateItems(mapListRemark.value);
-      // skuCardRemark.controller.editFieldHarga.value[idx].controller.addListener(() {
-      // });
-    });
+    idx = idx - 1;
+    skuCardRemark.controller.spinnerCategories.value[idx].controller.generateItems(mapListRemark.value);
   }
 
   void refreshtotalPurchase() {
@@ -323,6 +327,7 @@ class NewDataSalesOrderController extends GetxController {
           }
           spinnerCustomer.controller.hideLoading();
           spinnerCustomer.controller.setTextSelected("");
+          countingApi();
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",
@@ -366,6 +371,7 @@ class NewDataSalesOrderController extends GetxController {
             }
             //Generate Card SKU
             mapList.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
+            mapListRemark.removeWhere((key, value) => key == AppStrings.LIVE_BIRD);
             Timer(const Duration(milliseconds: 100), () {
               skuCard.controller.spinnerCategories.value[0].controller.enable();
               skuCard.controller.spinnerCategories.value[0].controller.setTextSelected("");
@@ -392,6 +398,8 @@ class NewDataSalesOrderController extends GetxController {
               }
             }
             isLoading.value = false;
+
+            countingApi();
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
@@ -477,6 +485,7 @@ class NewDataSalesOrderController extends GetxController {
                 ..enable()
                 ..setTextSelected("")
                 ..hideLoading();
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -589,7 +598,7 @@ class NewDataSalesOrderController extends GetxController {
       category: isInbound.isTrue ? "INBOUND" : "OUTBOUND",
       remarks: Uri.encodeFull(efRemark.getInput()),
       withDeliveryFee: isDeliveryPrice.value,
-      deliveryTime: resultDate !=null ? Convert.getStringIso(resultDate) : null,
+      deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : null,
     );
   }
 
@@ -608,6 +617,7 @@ class NewDataSalesOrderController extends GetxController {
           productItemId: productSelected.id,
           quantity: _getQuantity(productSelected.category, skuCard.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected.category, skuCard.controller.editFieldPotongan.value[whichItem]),
+          cutType: Constant.havePotongan(productSelected.category?.name) ? skuCard.controller.getTypePotongan(whichItem) : null,
           price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
@@ -627,7 +637,7 @@ class NewDataSalesOrderController extends GetxController {
         quantity: (editFieldJumlahAyam.getInputNumber() ?? 0).toInt(),
         numberOfCuts: 0,
         price: editFieldHarga.getInputNumber(),
-        weight: /*editFieldKebutuhan.getInputNumber()*/ 0,
+        weight: 0,
       ));
     }
 
@@ -648,7 +658,7 @@ class NewDataSalesOrderController extends GetxController {
           productCategoryId: productSelected.id,
           quantity: _getQuantity(productSelected, skuCardRemark.controller.editFieldJumlahAyam.value[whichItem]),
           numberOfCuts: _getNumberOfCuts(productSelected, skuCardRemark.controller.editFieldPotongan.value[whichItem]),
-          cutType: skuCardRemark.controller.spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa" ? "REGULAR" : "BEKAKAK",
+          cutType: skuCardRemark.controller.getTypePotongan(whichItem),
           weight: null,
         ));
       }
@@ -666,7 +676,11 @@ class NewDataSalesOrderController extends GetxController {
 
   int? _getNumberOfCuts(CategoryModel? category, EditField ef) {
     if (category != null && (category.name == AppStrings.AYAM_UTUH || category.name == AppStrings.BRANGKAS || category.name == AppStrings.LIVE_BIRD || category.name == AppStrings.KARKAS)) {
-      return (ef.getInputNumber() ?? 0).toInt(); // Ganti dengan logic sesuai kebutuhan
+      if (ef.getInputNumber() == null) {
+        return null;
+      } else {
+        return (ef.getInputNumber() ?? 0).toInt();
+      }
     }
     return null;
   }
@@ -722,6 +736,16 @@ class NewDataSalesOrderController extends GetxController {
       return ret = [false, ""];
     }
 
+    int totalEKorRemark = 0;
+    for (int i = 0; i < skuCardRemark.controller.itemCount.value; i++) {
+      int whichItem = skuCardRemark.controller.index.value[i];
+      totalEKorRemark += (skuCardRemark.controller.editFieldJumlahAyam.value[whichItem].getInputNumber() ?? 0).toInt();
+    }
+    if (editFieldJumlahAyam.getInputNumber()! != totalEKorRemark) {
+      showAlertDialog();
+      return ret = [false, ""];
+    }
+
     if (isInbound.isFalse) {
       if (dtDeliveryDate.controller.textSelected.value.isEmpty) {
         dtDeliveryDate.controller.showAlert();
@@ -732,6 +756,57 @@ class NewDataSalesOrderController extends GetxController {
 
     ret = skuCardRemark.controller.validation();
     return ret;
+  }
+
+  void showAlertDialog() {
+    Get.dialog(
+        Center(
+          child: Container(
+            width: 300,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      "images/failed_checkin.svg",
+                      height: 24,
+                      width: 24,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Perhatian !",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Jumlah Ekor LB berbeda dengan jumlah Ekor catatan",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 32,
+                      width: 100,
+                      color: Colors.transparent,
+                    ),
+                    SizedBox(
+                      width: 100,
+                      child: ButtonFill(controller: GetXCreator.putButtonFillController("DialogDoang"), label: "OK", onClick: () => {Get.back()}),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        barrierDismissible: false);
   }
 }
 

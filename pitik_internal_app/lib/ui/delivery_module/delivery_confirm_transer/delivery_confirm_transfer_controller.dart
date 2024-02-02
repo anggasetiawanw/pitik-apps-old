@@ -44,6 +44,7 @@ class DeliveryConfirmTransferController extends GetxController {
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {
+        Constant.track("Click_Checkin_Pengiriman_Transfer");
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
@@ -131,6 +132,7 @@ class DeliveryConfirmTransferController extends GetxController {
     }
 
     void konfirmasi(){
+        Constant.track("Click_Konfirmasi_Pengiriman_Transfer");
         isLoading.value = true;
         Service.push(
             service: ListApi.transferStatusDriver,

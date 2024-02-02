@@ -24,9 +24,10 @@ class TransferFormController extends GetxController {
     TransferFormController({required this.context});
 
     OperationUnitModel? sourceSelect;
-    
+
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
-    Get.back();
+        Constant.track("Click_Konfirmasi_Transfer");
+        Get.back();
         if(isEdit.isTrue){
             updateTransfer("CONFIRMED");
         } else {
@@ -36,7 +37,7 @@ class TransferFormController extends GetxController {
     ButtonOutline noButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("No Button"), label: "Tidak", onClick: (){
         Get.back();
     });
-   
+
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
         sourceSelect = listSourceOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
         if(sourceSelect != null){
@@ -84,7 +85,7 @@ class TransferFormController extends GetxController {
     late SpinnerField skuField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("skuTransfer"), label: "SKU*", hint: "Pilih salah satu", alertText: "Sku harus dipilih!", items: const {}, onSpinnerSelected: (value){
 
     });
-    
+
     EditField amountField = EditField(controller: GetXCreator.putEditFieldController("amountBirds"), label: "Jumlah Ekor*", hint: "0", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
     EditField totalField = EditField(controller: GetXCreator.putEditFieldController("totalFields"), label: "Total*", hint: "0.0", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
 
@@ -98,11 +99,16 @@ class TransferFormController extends GetxController {
     var isEdit = false.obs;
 
     TransferModel? transferModel;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+    int countApi =0;
+
     @override
     void onInit() {
-        
+
         super.onInit();
-        
+
         isLoading.value = true;
         transferModel = Get.arguments[0];
         isEdit.value = Get.arguments[1];
@@ -137,6 +143,16 @@ class TransferFormController extends GetxController {
         }
     }
 
+    void countingApi() {
+        countApi++;
+        if(countApi == 4){
+            isLoading.value = false;
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime("Buat_Transfer", totalTime);
+        }
+    }
+
     void getListOperationUnit() {
         sourceField.controller
         ..disable()
@@ -147,7 +163,7 @@ class TransferFormController extends GetxController {
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!,AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-                    
+
                     Map<String, bool> mapList3 ={};
                     for (var units in (body as ListOperationUnitsResponse).data) {
                       mapList3[units!.operationUnitName!] = false;
@@ -176,9 +192,10 @@ class TransferFormController extends GetxController {
                                 categorySKUField.controller.items.refresh();
                                 categorySKUField.controller.enable();
                                 refresh();
+                                countingApi();
                             });
                             Products? products = sourceSelect!.purchasableProducts!.firstWhereOrNull((element) => element!.name! == transferModel!.products![0]!.name);
-                            Timer(const Duration(milliseconds: 500), () { 
+                            Timer(const Duration(milliseconds: 500), () {
                                 Map<String, bool> mapList2 ={};
                                 for (var element in products!.productItems!) { mapList2[element!.name!] = false;}
                                 skuField.controller.generateItems(mapList2);
@@ -186,9 +203,14 @@ class TransferFormController extends GetxController {
                                 skuField.controller.hideLoading();
                                 skuField.controller.enable();
                                 refresh();
+                                countingApi();
                             });
                         }
+                    } else {
+                        countingApi();
+                        countingApi();
                     }
+                    countingApi();
                     sourceField.controller
                     .showLoading();
                 },
@@ -236,15 +258,14 @@ class TransferFormController extends GetxController {
                     }
                     for (var result in body.data) {
                         listDestinationOperationUnits.value.add(result);
-                    } 
+                    }
                     Timer(const Duration(milliseconds: 500), () {
                         destinationField.controller
                         ..enable()
                         ..hideLoading()
                         ..generateItems(mapList);
+                        countingApi();
                     });
-                    isLoading.value = false;
-                    refresh();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -254,7 +275,7 @@ class TransferFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;                    
+                    isLoading.value = false;
                     destinationField.controller
                     ..enable()
                     ..hideLoading();
@@ -267,7 +288,7 @@ class TransferFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;                    
+                    isLoading.value = false;
                     destinationField.controller
                     ..enable()
                     ..hideLoading();
@@ -275,7 +296,7 @@ class TransferFormController extends GetxController {
                 onTokenInvalid: Constant.invalidResponse()
             )
         );
-    }  
+    }
 
     void createTransfer(String status){
         if(validation()){
@@ -366,16 +387,16 @@ class TransferFormController extends GetxController {
         if (sourceField.controller.textSelected.value.isEmpty) {
             sourceField.controller.showAlert();
             Scrollable.ensureVisible(sourceField.controller.formKey.currentContext!);
-            
+
             return false;
-        }  
+        }
 
         if (destinationField.controller.textSelected.value.isEmpty) {
             destinationField.controller.showAlert();
             Scrollable.ensureVisible(destinationField.controller.formKey.currentContext!);
 
             return false;
-        }  
+        }
 
         if (categorySKUField.controller.textSelected.value.isEmpty) {
             categorySKUField.controller.showAlert();
@@ -391,7 +412,7 @@ class TransferFormController extends GetxController {
                 return false;
             }
         }
-        
+
         if (totalField.getInput().isEmpty) {
             totalField.controller.showAlert();
             Scrollable.ensureVisible(totalField.controller.formKey.currentContext!);

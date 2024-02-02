@@ -54,6 +54,7 @@ class TerminateFormActivity extends StatelessWidget {
                       controller: GetXCreator.putButtonFillController("saveButton"),
                       label: "Simpan",
                       onClick: () {
+                        Constant.track("Click_Simpan_Pemusnahan");
                         if (controller.isEdit.isTrue) {
                           controller.updateTerminate("DRAFT");
                         } else {

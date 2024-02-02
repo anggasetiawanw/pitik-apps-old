@@ -18,13 +18,14 @@ class ManufactureDetailController extends GetxController {
 
     var isLoading = false.obs;
 
-    late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){        
+    late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Batal_Manufaktur");
         Get.back();
-        if(manufactureModel.status == "INPUT_BOOKED"){  
-            updateManufacture("INPUT_CONFIRMED");   
+        if(manufactureModel.status == "INPUT_BOOKED"){
+            updateManufacture("INPUT_CONFIRMED");
         }
         else if (manufactureModel.status == "OUTPUT_DRAFT"){
-            updateManufacture("INPUT_BOOKED");   
+            updateManufacture("INPUT_BOOKED");
 
         }else if(manufactureModel.status=="INPUT_CONFIRMED"){
             updateManufacture("INPUT_DRAFT");
@@ -37,20 +38,31 @@ class ManufactureDetailController extends GetxController {
         Get.back();
     });
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Book_Stock_Manufaktur");
         Get.back();
         updateManufacture("INPUT_BOOKED");
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
         Get.back();
     });
-    
+
     late ManufactureModel manufactureModel;
     late DateTime createdDate;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
     @override
     void onInit() {
         super.onInit();
+        isLoading.value = true;
         manufactureModel = Get.arguments;
         createdDate = Convert.getDatetime(manufactureModel.createdDate!);
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        getDetailManufacture();
     }
 
     void getDetailManufacture(){
@@ -62,6 +74,9 @@ class ManufactureDetailController extends GetxController {
                 onResponseDone: (code, message, body, id, packet) {
                     manufactureModel = body.data;
                     isLoading.value = false;
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    Constant.trackRenderTime("Detail_Manufaktur", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;
@@ -120,7 +135,7 @@ class ManufactureDetailController extends GetxController {
                     },
                     onTokenInvalid: Constant.invalidResponse()));
     }
-    
+
     ManufactureModel generatePayload(String status){
         List<Products?> output = [];
         return ManufactureModel(

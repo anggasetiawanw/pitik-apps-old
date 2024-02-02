@@ -22,6 +22,7 @@ class DeliveryDetailTransferController extends GetxController {
   var isSendItem = false.obs;
     DeliveryDetailTransferController({required this.context});
     late ButtonFill doneSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("doneSendButton"), label: "Terkirim", onClick: (){
+        Constant.track("Click_Terkirim_Pengiriman_Transfer");
         Get.toNamed(RoutePage.deliveryConfirmTransfer, arguments: transferModel)!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -31,6 +32,7 @@ class DeliveryDetailTransferController extends GetxController {
     });
 
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Kirim_Barang_Pengiriman_Transfer");
         isLoading.value = true;
         Get.back();
         updateStatus(ListApi.pathTransferPickUp(transferModel.id!));

@@ -82,6 +82,7 @@ class DetailGRTransfer extends StatelessWidget {
                                                 "createTransferReceive"),
                                             label: "Buat Penerimaan",
                                             onClick: () {
+                                                Constant.track("Click_Buat_Penerimaan_Transfer");
                                               Get.toNamed(RoutePage.createGrTransferPage, arguments: controller.transferModel)!.then((value) {
                                                 controller.isLoading.value =true;
                                                 Timer(const Duration(milliseconds: 500), () {

@@ -32,6 +32,7 @@ class CreateGrOrderController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendGrSOButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Konfirmasi_Penerimaan_Penjualan");
         saveGrOrder();
         Get.back();
       });
@@ -68,9 +69,13 @@ class CreateGrOrderController extends GetxController {
   late DateTime createdDate;
   late SkuCardGr skuCardGr;
 
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     orderDetail = Get.arguments;
     createdDate = Convert.getDatetime(orderDetail.createdDate!);
     skuCardGr = SkuCardGr(
@@ -144,6 +149,9 @@ class CreateGrOrderController extends GetxController {
         }
       });
     }
+    timeEnd = DateTime.now();
+    Duration totalTime = timeEnd.difference(timeStart);
+    Constant.trackRenderTime("Buat_Penerimaan_Penjualan", totalTime);
   }
 }
 

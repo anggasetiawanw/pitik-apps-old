@@ -27,6 +27,7 @@ class TerminateFormController extends GetxController {
     TerminateFormController({required this.context});
     OperationUnitModel? sourceSelect;
     late ButtonFill yesButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Konfirmasi_Pemusnahan");
         Get.back();
         if(isEdit.isTrue){
             updateTerminate("CONFIRMED");
@@ -37,7 +38,7 @@ class TerminateFormController extends GetxController {
     ButtonOutline noButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("No Button"), label: "Tidak", onClick: (){
         Get.back();
     });
-   
+
     late SpinnerField sourceField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("sourceTransfer"), label: "Sumber*", hint: "Pilih salah satu", alertText: "Sumber harus dipilih!", items: const {}, onSpinnerSelected: (value){
             sourceSelect = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == sourceField.controller.textSelected.value);
             if(sourceSelect != null){
@@ -82,10 +83,10 @@ class TerminateFormController extends GetxController {
     late SpinnerField skuField = SpinnerField(controller: GetXCreator.putSpinnerFieldController("skuTransfer"), label: "SKU*", hint: "Pilih salah satu", alertText: "Sku harus dipilih!", items: const {}, onSpinnerSelected: (value){
 
     });
-    
+
     EditField amountField = EditField(controller: GetXCreator.putEditFieldController("amountBirds"), label: "Jumlah Ekor*", hint: "0", alertText: "Jumlah Ekor harus diisi!", textUnit: "Ekor", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
     EditField totalField = EditField(controller: GetXCreator.putEditFieldController("totalFields"), label: "Total*", hint: "0.0", alertText: "Total Kg harus diisi!", textUnit: "Kg", maxInput: 20, onTyping: (value,controller){}, inputType: TextInputType.number,);
-    
+
     Rx<List<CategoryModel?>> listCategories = Rx<List<CategoryModel>>([]);
     Rx<List<OperationUnitModel?>> listOperationUnits = Rx<List<OperationUnitModel?>>([]);
     Rx<MediaUploadModel> mediaUploadData = Rx<MediaUploadModel>(MediaUploadModel());
@@ -131,6 +132,10 @@ class TerminateFormController extends GetxController {
         }
     }, label: "", hint: "Upload Bukti Photo", alertText: "Bukti Photo harus disertakan", showGallerOptions: false, type: 2,);
     TerminateModel? terminateModel;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
@@ -142,7 +147,7 @@ class TerminateFormController extends GetxController {
         amountField.controller.disable();
         totalField.controller.disable();
         mediaField.controller.disable();
-        
+
     }
     @override
     void onReady() {
@@ -202,7 +207,9 @@ class TerminateFormController extends GetxController {
                         }
                     }
                     isLoading.value = false;
-
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    Constant.trackRenderTime("Buat_Pemusnahan", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -260,7 +267,7 @@ class TerminateFormController extends GetxController {
                         colorText: Colors.white,
                         duration: const Duration(seconds: 5),
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;                    
+                    isLoading.value = false;
                     categorySKUField.controller
                     .hideLoading();
                     },
@@ -272,7 +279,7 @@ class TerminateFormController extends GetxController {
                         duration: const Duration(seconds: 5),
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
-                    isLoading.value = false;                    
+                    isLoading.value = false;
                     categorySKUField.controller
                     .hideLoading();
                 },
@@ -280,6 +287,7 @@ class TerminateFormController extends GetxController {
     }
 
     void createTerminate(String status){
+
         if(validation()){
             isLoading.value =true;
             Service.push(
@@ -370,7 +378,7 @@ class TerminateFormController extends GetxController {
             sourceField.controller.showAlert();
             Scrollable.ensureVisible(sourceField.controller.formKey.currentContext!);
             return false;
-        }        
+        }
         if (categorySKUField.controller.textSelected.value.isEmpty) {
             categorySKUField.controller.showAlert();
             Scrollable.ensureVisible(categorySKUField.controller.formKey.currentContext!);

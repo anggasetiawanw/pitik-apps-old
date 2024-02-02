@@ -24,6 +24,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Batal_Pemusnahan");
         Get.back();
         if (terminateModel.status == "FINISHED") {
           updateTerminate("BOOKED");
@@ -42,6 +43,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Musnahkan_Pemusnahan");
         Get.back();
         updateTerminate("FINISHED");
       });
@@ -56,6 +58,7 @@ class TerminateDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Pesan_StockPemusnahan");
         Get.back();
         updateTerminate("BOOKED");
       });
@@ -90,13 +93,23 @@ class TerminateDetailController extends GetxController {
   var isLoading = false.obs;
   late TerminateModel terminateModel;
   late DateTime createdDate;
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    isLoading.value = true;
     terminateModel = Get.arguments;
     createdDate = Convert.getDatetime(terminateModel.createdDate!);
 
     initializeDateFormatting();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    getDetailTerminate();
   }
 
   void updateTerminate(String status) {
@@ -148,6 +161,9 @@ class TerminateDetailController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               terminateModel = body.data;
               isLoading.value = false;
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime("Detail_Pemusnahan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;

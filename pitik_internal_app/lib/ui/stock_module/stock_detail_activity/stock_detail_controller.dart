@@ -32,6 +32,7 @@ class StockDetailController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Batal_Stock");
         updateStock("CANCELLED");
         Get.back();
       });
@@ -80,6 +81,9 @@ class StockDetailController extends GetxController {
         });
       });
 
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     opnameModel = Get.arguments;
@@ -99,6 +103,9 @@ class StockDetailController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
               isLoading.value = false;
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime("Detail_Stock", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;

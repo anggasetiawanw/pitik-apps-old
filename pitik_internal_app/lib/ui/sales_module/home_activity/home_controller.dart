@@ -31,7 +31,8 @@ class HomePageCustomerController extends GetxController {
     late ButtonOutline kunjunganModalButton = ButtonOutline(
         controller: GetXCreator.putButtonOutlineController("lamaKunjungan"),
         label: "Lama",
-        onClick: () { 
+        onClick: () {
+            Constant.track("Click_Kunjungan_Lama");
             Get.back();
             Get.toNamed(
             RoutePage.visitCustomer,
@@ -49,6 +50,7 @@ class HomePageCustomerController extends GetxController {
         controller: GetXCreator.putButtonFillController("baruKunjungan"),
         label: "Baru",
         onClick: () {
+            Constant.track("Click_Data_Baru");
             Get.back();
             Get.toNamed(RoutePage.newDataCustomer)!.then((value) {
             isLoading.value =true;
@@ -58,6 +60,9 @@ class HomePageCustomerController extends GetxController {
              });
         });}
     );
+
+    late DateTime timeStart = DateTime.now();
+    late DateTime timeEnd = DateTime.now();
 
     @override
     void onInit() {
@@ -115,9 +120,12 @@ class HomePageCustomerController extends GetxController {
     }
 
 
-    final _getListCustomerListener = ResponseListener(
+    late final ResponseListener _getListCustomerListener = ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
             if (id == 1) {
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime("List_Customer", totalTime);
                 if ((body as ListCustomerResponse).data.isNotEmpty) {
                     for (var result in body.data) {
                         (packet[0] as Rx<List<Customer?>>).value.add(result);
@@ -181,7 +189,7 @@ class HomePageCustomerController extends GetxController {
                 backgroundColor: Colors.red,
             );
         },
-                      onResponseError: (exception, stacktrace, id, packet) {            
+                      onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

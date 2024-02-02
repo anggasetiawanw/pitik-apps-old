@@ -34,6 +34,11 @@ class StockApprovalController extends GetxController {
 
   late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock(EnumStock.finished));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
+
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
+
   @override
   void onInit() {
     super.onInit();
@@ -53,10 +58,6 @@ class StockApprovalController extends GetxController {
     efName.setInput(Constant.profileUser!.fullName ?? "");
     efMail.setInput(Constant.profileUser!.email ?? "");
   }
-  // @override
-  // void onClose() {
-  //     super.onClose();
-  // }
 
   void getDetailStock() {
     Service.push(
@@ -67,6 +68,9 @@ class StockApprovalController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
               isLoading.value = false;
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime("Approval_Stock_Opname", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
@@ -94,6 +98,7 @@ class StockApprovalController extends GetxController {
   }
 
   void updateStock(String status) {
+    Constant.track("Click_Setujui_Stock_Opname");
     Get.back();
     isLoading.value = true;
     Service.push(

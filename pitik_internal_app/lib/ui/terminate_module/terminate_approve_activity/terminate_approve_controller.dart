@@ -35,6 +35,9 @@ class TerminateApproveController extends GetxController {
   late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.finished));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
 
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -63,6 +66,9 @@ class TerminateApproveController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               terminateModel = body.data;
               isLoading.value = false;
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime("Approve_Pemusnahan", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
@@ -90,6 +96,7 @@ class TerminateApproveController extends GetxController {
   }
 
   void updateTerminate(String status) {
+    Constant.track("Click_Setujui_Pemusnahan");
     Get.back();
     isLoading.value = true;
     Service.push(

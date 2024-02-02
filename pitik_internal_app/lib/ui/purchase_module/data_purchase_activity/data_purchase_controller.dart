@@ -23,6 +23,9 @@ class PurchaseController extends GetxController{
   var isLoading = false.obs;
   var isLoadMore = false.obs;
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+
   ScrollController scrollController = ScrollController();
 
   scrollListener() async {
@@ -57,6 +60,10 @@ class PurchaseController extends GetxController{
             }
           }
           isLoading.value  = false;
+          timeEnd = DateTime.now();
+          Duration totalTime = timeEnd.difference(timeStart);
+          Constant.trackWithMap("Render_Time", {'Page': "Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+
         }, onResponseFail: (code, message, body, id, packet){
           Get.snackbar(
             "Pesan",
@@ -83,6 +90,7 @@ class PurchaseController extends GetxController{
 
   @override
   void onInit() {
+    timeStart = DateTime.now();
     super.onInit();
     scrollListener();
   }

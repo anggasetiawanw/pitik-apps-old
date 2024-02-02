@@ -27,6 +27,10 @@ class StockRejectedController extends GetxController {
 
   late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("REJECTED"));
   late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
+
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -50,6 +54,9 @@ class StockRejectedController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
               isLoading.value = false;
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime("Tolak_Stock_Opname", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
@@ -77,6 +84,7 @@ class StockRejectedController extends GetxController {
   }
 
   void updateStock(String status) {
+    Constant.track("Click_Tolak_Stock_Opname");
     Get.back();
     isLoading.value = true;
     Service.push(

@@ -357,9 +357,14 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     "Batal": false,
   });
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  bool isInit = true;
+
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     initializeDateFormatting();
     tabController = TabController(vsync: this, length: 2)
       ..addListener(() {
@@ -533,6 +538,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
 
   void backFromForm(bool isInbound) {
     Get.back();
+    Constant.track("Click_Button_Penjualan_${isInbound ? "Inbound" : "Outbound"}");
     Get.toNamed(RoutePage.newDataSalesOrder, arguments: isInbound)!.then((value) {
       if (isFilter.isTrue) {
         if (isOutbondTab.isFalse) {

@@ -52,6 +52,9 @@ class CreateGrPurchaseJagalController extends GetxController {
   late ButtonFill bfYesGrPurchase;
   late ButtonOutline boNoGrPurchase;
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -77,10 +80,14 @@ class CreateGrPurchaseJagalController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesJagalGrPurchase"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Konfirmasi_Penerimaan_Pembelian");
         Get.back();
         saveGrPurchase();
       },
     );
+    timeEnd = DateTime.now();
+    Duration totalTime = timeEnd.difference(timeStart);
+    Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
   }
 
   void getDetailPurchase() {
@@ -163,12 +170,7 @@ class CreateGrPurchaseJagalController extends GetxController {
       ));
     }
 
-    return Purchase(
-      products: listProductPayload,
-      purchaseOrderId: purchaseDetail.value!.id!,
-      remarks: Uri.encodeFull(efRemark.getInput()),
-      totalWeight: efTotalKG.getInputNumber()
-    );
+    return Purchase(products: listProductPayload, purchaseOrderId: purchaseDetail.value!.id!, remarks: Uri.encodeFull(efRemark.getInput()), totalWeight: efTotalKG.getInputNumber());
   }
 }
 

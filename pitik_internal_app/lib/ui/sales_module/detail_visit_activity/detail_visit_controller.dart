@@ -19,6 +19,9 @@ class DetailVisitController extends GetxController {
     Rxn<VisitCustomer> customer = Rxn<VisitCustomer>();
     Rxn<DateTime> dateCustomer = Rxn<DateTime>();
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
@@ -41,6 +44,9 @@ class DetailVisitController extends GetxController {
                 onResponseDone: (code, message, body, id, packet) {
                     customer.value = (body as VisitCustomerResponse).data;
                     isLoading.value = false;
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    Constant.trackRenderTime("Detail_Visit_Customer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -52,7 +58,7 @@ class DetailVisitController extends GetxController {
                         backgroundColor: Colors.red,
                     );
                 },
-                              onResponseError: (exception, stacktrace, id, packet) {            
+                              onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",

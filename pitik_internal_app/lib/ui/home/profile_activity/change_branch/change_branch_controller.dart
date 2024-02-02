@@ -32,7 +32,7 @@ class ChangeBranchController extends GetxController {
             return;
         }
         _showBottomDialog();
-        
+
     });
     late ButtonFill btYakin = ButtonFill(controller: GetXCreator.putButtonFillController("btYakin"), label: "Iya", onClick: () {
         Get.back();
@@ -127,11 +127,13 @@ class ChangeBranchController extends GetxController {
                     ],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                            Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: ['Bearer ${auth.token}', auth.id, Constant.xAppId], 
+                            Service.push(apiKey: 'userApi', service: ListApi.getSalesProfile, context: context, body: ['Bearer ${auth.token}', auth.id, Constant.xAppId],
                                 listener: ResponseListener(
                                     onResponseDone: (code, message, body, id, packet) {
+                                        Constant.trackWithMap("Change Branch(Before)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
                                         ProfileImpl().save((body as ProfileResponse).data);
                                         Constant.profileUser = body.data;
+                                        Constant.trackWithMap("Change Branch(After)", {"Branch": Constant.profileUser!.branch!.name!, "Branch ID": Constant.profileUser!.branch!.id.toString()});
                                         Get.back();
                                         isLoading.value = false;
                                     },
@@ -183,7 +185,7 @@ class ChangeBranchController extends GetxController {
             else
                 {Constant.invalidResponse()}
         });
-    }    
+    }
 
     _showBottomDialog() {
           return showModalBottomSheet(

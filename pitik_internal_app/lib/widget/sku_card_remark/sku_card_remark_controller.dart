@@ -57,9 +57,11 @@ class SkuCardRemarkController extends GetxController {
                 CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value);
                 if (selectCategory != null) {
                   if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.LIVE_BIRD || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
-                    editFieldJumlahAyam.value[numberList].controller.enable();
+                    editFieldJumlahAyam.value[numberList].controller.visibleField();
+                    spinnerTypePotongan.value[numberList].controller.visibleSpinner();
                   } else {
-                    editFieldJumlahAyam.value[numberList].controller.disable();
+                    editFieldJumlahAyam.value[numberList].controller.invisibleField();
+                    spinnerTypePotongan.value[numberList].controller.invisibleSpinner();
                   }
                   editFieldJumlahAyam.value[numberList].setInput("");
                 }
@@ -79,22 +81,36 @@ class SkuCardRemarkController extends GetxController {
           items: const {
             "Potong Biasa": false,
             "Bekakak": false,
+            "Utuh": false,
           },
           onSpinnerSelected: (value) {
             if (value == "Potong Biasa") {
               editFieldPotongan.value[numberList].controller.visibleField();
+              editFieldPotongan.value[numberList].setInput("");
             } else {
               editFieldPotongan.value[numberList].controller.invisibleField();
+              editFieldPotongan.value[numberList].setInput("");
             }
           }),
     );
 
     editFieldJumlahAyam.value.add(EditField(controller: GetXCreator.putEditFieldController("editJumlah${numberList}Remark"), label: "Jumlah Ekor", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
 
-    editFieldPotongan.value.add(EditField(controller: GetXCreator.putEditFieldController("editPotongan${numberList}Remark"), label: "Potongan", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Potongan", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
+    editFieldPotongan.value.add(EditField(controller: GetXCreator.putEditFieldController("editPotongan${numberList}Remark"), label: "Potongan", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Potongan", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {
+        if(value.isNotEmpty){
+            if(control.getInputNumber()! < 2) {
+                control.controller.setAlertText("Potongan Harus lebih dari 1");
+                control.controller.showAlert();
+            } else {
+                control.controller.setAlertText("Kolom Ini Harus Di Isi");
+                control.controller.hideAlert();
+            }
+        }
+    }));
 
     itemCount.value = index.value.length;
     editFieldPotongan.value[numberList].controller.invisibleField();
+    spinnerTypePotongan.value[numberList].controller.invisibleSpinner();
     idx.value++;
   }
 
@@ -129,12 +145,28 @@ class SkuCardRemarkController extends GetxController {
           return [isValid, error];
         }
 
-        if (editFieldPotongan.value[whichItem].getInput().isEmpty && spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa") {
-          editFieldPotongan.value[whichItem].controller.showAlert();
-          Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
-
+        if (spinnerTypePotongan.value[whichItem].controller.textSelected.value.isEmpty) {
+          spinnerTypePotongan.value[whichItem].controller.showAlert();
+          Scrollable.ensureVisible(spinnerTypePotongan.value[whichItem].controller.formKey.currentContext!);
           isValid = false;
           return [isValid, error];
+        }
+        if (spinnerTypePotongan.value[whichItem].controller.textSelected.value == "Potong Biasa") {
+          if (editFieldPotongan.value[whichItem].getInput().isEmpty) {
+            editFieldPotongan.value[whichItem].controller.setAlertText("Potongan harus diisi");
+            editFieldPotongan.value[whichItem].controller.showAlert();
+            Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
+            isValid = false;
+            return [isValid, error];
+          }
+
+          if ((editFieldPotongan.value[whichItem].getInputNumber() ?? 0) < 2) {
+            editFieldPotongan.value[whichItem].controller.setAlertText("Potongan Tidak Valid!");
+            editFieldPotongan.value[whichItem].controller.showAlert();
+            Scrollable.ensureVisible(editFieldPotongan.value[whichItem].controller.formKey.currentContext!);
+            isValid = false;
+            return [isValid, error];
+          }
         }
       }
 
@@ -186,6 +218,31 @@ class SkuCardRemarkController extends GetxController {
     }
 
     return [isValid, error];
+  }
+
+  String getTypePotongan(int index) {
+    switch (spinnerTypePotongan.value[index].controller.textSelected.value) {
+      case "Potong Biasa":
+        return "REGULAR";
+      case "Bekakak":
+        return "BEKAKAK";
+      case "Utuh":
+        return "UTUH";
+      default:
+        return "REGULAR";
+    }
+  }
+
+  void setTypePotongan(int index, String type) {
+    switch (type) {
+      case "REGULAR":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Potong Biasa";
+      case "BEKAKAK":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Bekakak";
+      case "UTUH":
+        spinnerTypePotongan.value[index].controller.textSelected.value = "Utuh";
+      default:
+    }
   }
 }
 

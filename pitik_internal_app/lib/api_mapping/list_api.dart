@@ -184,7 +184,7 @@ class ListApi {
     }
 
     static String pathTransferReadyToDeliver(String transferId) {
-        return "v2/sales/internal-transfers/$transferId/ready-to-deliver//cancel";
+        return "v2/sales/internal-transfers/$transferId/ready-to-deliver/cancel";
     }
 
     static String pathTransferCancel(String transferId) {
@@ -251,7 +251,7 @@ class ListApi {
 
     static String pathEditUser(String userId) {
         return "v2/fms-users/$userId/branch";
-    }    
+    }
     static String pathCancelAllocated(String orderId) {
         return "v2/sales/sales-orders/$orderId/allocated/cancel";
     }

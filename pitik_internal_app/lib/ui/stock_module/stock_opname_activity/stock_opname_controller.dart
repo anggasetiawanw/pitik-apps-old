@@ -53,6 +53,7 @@ class StockOpnameController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesButton"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Konfirmasi_Stock_Opname");
         if (isEdit.isTrue) {
           Get.back();
           updateStock("CONFIRMED");
@@ -68,6 +69,11 @@ class StockOpnameController extends GetxController {
       onClick: () {
         Get.back();
       });
+
+  DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+    int countApi = 0;
+
   @override
   void onInit() {
     super.onInit();
@@ -102,6 +108,16 @@ class StockOpnameController extends GetxController {
     });
   }
 
+  void countingApi(){
+    countApi++;
+    if(countApi == 2){
+      isLoading.value = false;
+      timeEnd = DateTime.now();
+        Duration totalTime = timeEnd.difference(timeStart);
+        Constant.trackRenderTime("Form_Stock_Opname", totalTime);
+    }
+  }
+
   void getListSourceUnit() {
     Service.push(
         service: ListApi.getListOperationUnits,
@@ -117,7 +133,7 @@ class StockOpnameController extends GetxController {
               for (var result in body.data) {
                 listOperationUnits.value.add(result);
               }
-              isLoading.value = false;
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
@@ -158,7 +174,7 @@ class StockOpnameController extends GetxController {
               for (var result in (body as CategoryListResponse).data) {
                 listCategories.value.add(result);
               }
-              isLoading.value = false;
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

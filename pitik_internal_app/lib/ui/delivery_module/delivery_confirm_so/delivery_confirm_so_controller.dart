@@ -70,6 +70,7 @@ class DeliveryConfirmSOController extends GetxController {
     label: "Checkin",
     isHaveIcon: true,
     onClick: () async {
+        Constant.track("Click_Checkin_Pengiriman_Sales_Order");
         isLoadCheckin.value = true;
         final hasPermission = await handleLocationPermission();
         if (hasPermission){
@@ -145,6 +146,10 @@ class DeliveryConfirmSOController extends GetxController {
 
     late Order order;
     late DateTime createdDate;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         isLoading.value = true;
@@ -159,6 +164,9 @@ class DeliveryConfirmSOController extends GetxController {
         super.onReady();
         WidgetsBinding.instance.addPostFrameCallback((_) {
            isLoading.value = false;
+           timeEnd = DateTime.now();
+            Duration difference = timeEnd.difference(timeStart);
+            Constant.trackRenderTime("Terkirim_Pengiriman_Sales_Order", difference);
         });
 
     }
@@ -202,6 +210,7 @@ class DeliveryConfirmSOController extends GetxController {
     }
 
     void konfirmasi(){
+        Constant.track("Click_Konfirmasi_Pengiriman_Sales_Order");
         if(validation()){
             isLoading.value = true;
             Service.push(

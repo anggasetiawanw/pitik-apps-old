@@ -32,6 +32,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("confirmButtonasd"),
       label: "Terkirim",
       onClick: () {
+        Constant.track("Click_Terkirim_Pengiriman_Sales_Order");
         Get.toNamed(RoutePage.deliveryConfirmSO, arguments: order)!.then((value) {
           isLoading.value = true;
           Timer(const Duration(milliseconds: 500), () {
@@ -44,6 +45,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesSendItemasd"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Kirim_Barang_Pengiriman_Sales_Order");
         Get.back();
         isLoading.value = true;
         sendItem();
@@ -60,6 +62,7 @@ class DeliveryDetailSOController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesRejectItemasd"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Ditolak_Pengiriman_Sales_Order");
         Get.back();
         Get.toNamed(RoutePage.deliveryRejectSO, arguments: order)!.then((value) {
           isLoading.value = true;
@@ -80,6 +83,10 @@ class DeliveryDetailSOController extends GetxController {
 
   late Order order;
   late DateTime createdDate;
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -165,6 +172,9 @@ class DeliveryDetailSOController extends GetxController {
         }
       }
     }
+    timeEnd = DateTime.now();
+    Duration totalTime = timeEnd.difference(timeStart);
+    Constant.trackRenderTime("Detail_Pengiriman_Sales_Order", totalTime);
   }
 
   void sendItem() {

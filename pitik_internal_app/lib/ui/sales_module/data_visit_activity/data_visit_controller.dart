@@ -105,6 +105,7 @@ class VisitController extends GetxController {
         controller: GetXCreator.putButtonFillController("SelesaiKunjungan"),
         label: "Selesai Kunjungan",
         onClick: () {
+            Constant.track("Click_Selesai_Kunjungan");
             List ret = validation();
             if (ret[0]) {
                 VisitCustomer visPayload = generatePayload();
@@ -244,6 +245,7 @@ class VisitController extends GetxController {
         label: "Checkin",
         isHaveIcon: true,
         onClick: () async {
+            Constant.track("Click_Checkin_Customer");
             isLoadCheckin.value = true;
             final hasPermission = await handleLocationPermission();
             if (hasPermission){

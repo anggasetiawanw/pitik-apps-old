@@ -54,6 +54,7 @@ class StockOpnameActivity extends StatelessWidget {
                       controller: GetXCreator.putButtonFillController("saveButton"),
                       label: "Simpan",
                       onClick: () {
+                        Constant.track("Click_Simpan_Stock_Opname");
                         if (controller.isEdit.isTrue) {
                           controller.updateStock("DRAFT");
                         } else {

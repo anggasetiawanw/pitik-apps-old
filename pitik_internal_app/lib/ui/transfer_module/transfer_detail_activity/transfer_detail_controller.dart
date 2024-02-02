@@ -17,6 +17,7 @@ class TransferDetailController extends GetxController {
 
     TransferDetailController({required this.context});
     late ButtonFill yesCancelButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Batal_Transfer");
         Get.back();
         isLoading.value = true;
         if(transferModel.status == "BOOKED"){
@@ -33,12 +34,13 @@ class TransferDetailController extends GetxController {
         Get.back();
     });
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
+        Constant.track("Click_Pesan_Stock_Transfer");
         isLoading.value = true;
         Get.back();
         updateStatus(ListApi.pathTransferBookStock(transferModel.id!));
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
-        Get.back();        
+        Get.back();
     });
 
     SpinnerField assignDriver = SpinnerField(controller: GetXCreator.putSpinnerFieldController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value){});
@@ -47,11 +49,20 @@ class TransferDetailController extends GetxController {
     late TransferModel transferModel;
     late DateTime createdDate;
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
         transferModel = Get.arguments;
         createdDate = Convert.getDatetime(transferModel.createdDate!);
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        getDetailTransfer();
     }
 
     void getDetailTransfer(){
@@ -63,6 +74,9 @@ class TransferDetailController extends GetxController {
                 onResponseDone: (code, message, body, id, packet) {
                     transferModel = body.data;
                     isLoading.value = false;
+                    timeEnd = DateTime.now();
+                    Duration totalTime = timeEnd.difference(timeStart);
+                    Constant.trackRenderTime("Detail_Transfer", totalTime);
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = true;

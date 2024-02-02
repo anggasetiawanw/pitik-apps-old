@@ -75,6 +75,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                                   "editManufacture"),
                               label: "Edit",
                               onClick: () {
+                                Constant.track("Click_Edit_Input_Manufaktur");
                                     Get.toNamed(RoutePage.manufactureEdit, arguments: controller.manufactureModel)!.then((value) {
                                         controller.isLoading.value =true;
                                         Timer(const Duration(milliseconds: 500), () {
@@ -99,6 +100,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                                               "createOutput"),
                                       label: "Buat Output",
                                       onClick: () {
+                                        Constant.track("Click_Buat_Output_Manufaktur");
                                         Get.toNamed(RoutePage.manufactureOutput, arguments: [controller.manufactureModel, false])!.then((value) {
                                             controller.isLoading.value =true;
                                             Timer(const Duration(milliseconds: 500), () {
@@ -114,6 +116,7 @@ class ManufactureDetailActivity extends StatelessWidget {
                                                   "editManufacture"),
                                           label: "Edit",
                                           onClick: () {
+                                            Constant.track("Click_Edit_Output_Manufaktur");
                                                 Get.toNamed(RoutePage.manufactureOutput, arguments: [controller.manufactureModel, true])!.then((value) {
                                                     controller.isLoading.value =true;
                                                     Timer(const Duration(milliseconds: 500), () {

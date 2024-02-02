@@ -28,6 +28,7 @@ class CreateGrTransferController extends GetxController {
     late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendGrTransferButton"), label: "Ya", onClick: (){
         Get.back();
         saveGrTransfer();
+        Constant.track("Click_Konfirmasi_Penerimaan_Transfer");
     });
     ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("noSendGrTransferButton"), label: "Tidak", onClick: (){
         Get.back();
@@ -40,11 +41,23 @@ class CreateGrTransferController extends GetxController {
     late TransferModel transferModel;
     late DateTime createdDate;
 
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
+
     @override
     void onInit() {
         super.onInit();
+        timeStart = DateTime.now();
         transferModel = Get.arguments;
         createdDate = Convert.getDatetime(transferModel.createdDate!);
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        timeEnd = DateTime.now();
+        Duration totalTime = timeEnd.difference(timeStart);
+        Constant.trackRenderTime("Buat_Penerimaan_Transfer", totalTime);
     }
 
     void getDetailTransfer(){

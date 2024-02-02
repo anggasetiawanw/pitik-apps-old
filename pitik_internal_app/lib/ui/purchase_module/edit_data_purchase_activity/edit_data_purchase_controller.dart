@@ -121,9 +121,13 @@ class EditDataPurchaseController extends GetxController {
   late SkuCardPurchase skuCard;
   late SkuCardPurchaseInternal skuCardInternal;
 
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    timeStart = DateTime.now();
     spinnerDestination.controller.disable();
     purchaseDetail = Get.arguments;
     isLoading.value = true;
@@ -146,8 +150,10 @@ class EditDataPurchaseController extends GetxController {
       controller: GetXCreator.putButtonFillController("iyaPurchase"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Simpan_Konfirmasi_Pembelian");
         Get.back();
         editPurchase();
+
       },
     );
   }
@@ -201,6 +207,9 @@ class EditDataPurchaseController extends GetxController {
             listSourceVendor.value.add(result);
           }
           isLoading.value = false;
+          timeEnd = DateTime.now();
+          Duration totalTime = timeEnd.difference(timeStart);
+          Constant.trackWithMap("Render_Time", {'Page': "Edit_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
             "Pesan",

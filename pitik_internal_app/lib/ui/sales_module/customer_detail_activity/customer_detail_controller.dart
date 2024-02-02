@@ -37,27 +37,24 @@ class CustomerDetailController extends GetxController {
   var limit = 10.obs;
 
   late ButtonFill kunjunganButton = ButtonFill(
-    controller: GetXCreator.putButtonFillController("kunjunganDetail"),
-    label: "Kunjungan",
-    onClick: () => Get.toNamed(
-      RoutePage.visitCustomer,
-      arguments: [
-        RoutePage.fromDetailCustomer,
-        customerDetail.value,
-      ],
-    )!.then((value) => getData()),
-  );
+      controller: GetXCreator.putButtonFillController("kunjunganDetail"),
+      label: "Kunjungan",
+      onClick: () {
+        Constant.track("Click_Kunjungan_Customer");
+        Get.toNamed(RoutePage.visitCustomer, arguments: [RoutePage.fromDetailCustomer, customerDetail.value])!.then((value) => getData());
+      });
 
   late ButtonOutline editButton = ButtonOutline(
       controller: GetXCreator.putButtonOutlineController("editDetail"),
       label: "Edit",
-      onClick: () =>
-          Get.toNamed(RoutePage.editCustomer, arguments: customerDetail.value)!
-              .then((value) {
-            Timer(const Duration(milliseconds: 100), () {
-              getData();
-            });
-          }));
+      onClick: () {
+        Constant.track("Click_Edit_Customer");
+        Get.toNamed(RoutePage.editCustomer, arguments: customerDetail.value)!.then((value) {
+          Timer(const Duration(milliseconds: 100), () {
+            getData();
+          });
+        });
+      });
 
   late ButtonFill iyaArchiveButton;
 
@@ -66,6 +63,9 @@ class CustomerDetailController extends GetxController {
     label: "Tidak",
     onClick: () => Get.back(),
   );
+
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -79,63 +79,53 @@ class CustomerDetailController extends GetxController {
     super.onReady();
     getData();
     getTime(false);
-    iyaArchiveButton = ButtonFill(
-        controller: GetXCreator.putButtonFillController("IyaArchive"),
-        label: "Ya",
-        onClick: () => archivedCustomer(context));
+    iyaArchiveButton = ButtonFill(controller: GetXCreator.putButtonFillController("IyaArchive"), label: "Ya", onClick: () => archivedCustomer(context));
   }
-
 
   void archivedCustomer(BuildContext context) {
     String custId = customerDetail.value!.id!;
     isLoadingDetails.value = true;
     if (customerDetail.value!.isArchived! == true) {
+      Constant.track("Click_Unarchive_Customer");
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
           context: context,
-          body: [
-            Constant.auth!.token,
-            Constant.auth!.id,
-            Constant.xAppId,
-            ListApi.pathUnarchiveCustomer(custId)
-          ],
+          body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathUnarchiveCustomer(custId)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Service.push(
                     apiKey: 'userApi',
                     service: ListApi.detailCustomerById,
                     context: context,
-                    body: [
-                      Constant.auth!.token,
-                      Constant.auth!.id,
-                      Constant.xAppId,
-                      ListApi.pathGetDetailCustomerById(custId)
-                    ],
+                    body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathGetDetailCustomerById(custId)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                      customerDetail.value = (body as CustomerResponse).data;
-                      isLoadingDetails.value = false;
-                    }, onResponseFail: (code, message, body, id, packet) {
-                      Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,
-                      );
-                    }, onResponseError: (exception, stacktrace, id, packet) {
-                      Get.snackbar(
-                        "Pesan",
-                        "Terjadi kesalahan internal",
-                        snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,
-                      );
-                      //  isLoading.value = false;
-                    }, onTokenInvalid:Constant.invalidResponse()));
+                          customerDetail.value = (body as CustomerResponse).data;
+                          isLoadingDetails.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                          Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
+                          );
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                          Get.snackbar(
+                            "Pesan",
+                            "Terjadi kesalahan internal",
+                            snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 5),
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
+                          );
+                          //  isLoading.value = false;
+                        },
+                        onTokenInvalid: Constant.invalidResponse()));
 
                 kunjunganButton.controller.enable();
                 editButton.controller.enable();
@@ -154,32 +144,22 @@ class CustomerDetailController extends GetxController {
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
+      Constant.track("Click_Archive_Customer");
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
           context: context,
-          body: [
-            Constant.auth!.token,
-            Constant.auth!.id,
-            Constant.xAppId,
-            ListApi.pathArchiveCustomer(custId)
-          ],
+          body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathArchiveCustomer(custId)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Service.push(
                     apiKey: 'userApi',
                     service: ListApi.detailCustomerById,
                     context: context,
-                    body: [
-                      Constant.auth!.token,
-                      Constant.auth!.id,
-                      Constant.xAppId,
-                      ListApi.pathGetDetailCustomerById(custId)
-                    ],
+                    body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathGetDetailCustomerById(custId)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                          customerDetail.value =
-                              (body as CustomerResponse).data;
+                          customerDetail.value = (body as CustomerResponse).data;
                           isLoadingDetails.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) {
@@ -228,18 +208,15 @@ class CustomerDetailController extends GetxController {
   }
 
   void getTime(bool isRefresh) {
-    if(isRefresh){ 
-        if (customerDetail.value!.latestVisit != null) {
-            dateCustomer.value =
-                Convert.getDatetime(customerDetail.value!.latestVisit!.createdDate!);
-        }
+    if (isRefresh) {
+      if (customerDetail.value!.latestVisit != null) {
+        dateCustomer.value = Convert.getDatetime(customerDetail.value!.latestVisit!.createdDate!);
+      }
     } else {
-        if (customer.value!.latestVisit != null) {
-            dateCustomer.value =
-                Convert.getDatetime(customer.value!.latestVisit!.createdDate!);
-        }
+      if (customer.value!.latestVisit != null) {
+        dateCustomer.value = Convert.getDatetime(customer.value!.latestVisit!.createdDate!);
+      }
     }
-   
   }
 
   void getData() {
@@ -252,17 +229,15 @@ class CustomerDetailController extends GetxController {
           apiKey: 'userApi',
           service: ListApi.detailCustomerById,
           context: context,
-          body: [
-            Constant.auth!.token,
-            Constant.auth!.id,
-            Constant.xAppId,
-            ListApi.pathGetDetailCustomerById(custId)
-          ],
+          body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathGetDetailCustomerById(custId)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 customerDetail.value = (body as CustomerResponse).data;
                 getTime(true);
                 isLoadingDetails.value = false;
+                timeEnd = DateTime.now();
+                Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime("Detail_Customer", totalTime);
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
@@ -292,69 +267,58 @@ class CustomerDetailController extends GetxController {
       Service.push(
           service: ListApi.getListVisit,
           context: context,
-          body: [
-            Constant.auth!.token,
-            Constant.auth!.id,
-            Constant.xAppId,
-            page.value,
-            limit.value,
-            ListApi.pathGetListVisit(custId)
-          ],
-          listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-            for (var result in (body as ListVisitCustomerResponse).data) {
-              visitCustomer.value.add(result);
-            }
+          body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, page.value, limit.value, ListApi.pathGetListVisit(custId)],
+          listener: ResponseListener(
+              onResponseDone: (code, message, body, id, packet) {
+                for (var result in (body as ListVisitCustomerResponse).data) {
+                  visitCustomer.value.add(result);
+                }
 
-            isLoadingKunjungan.value = false;
-          }, onResponseFail: (code, message, body, id, packet) {
-            Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-              snackPosition: SnackPosition.TOP,
-              duration: const Duration(seconds: 5),
-              colorText: Colors.white,
-              backgroundColor: Colors.red,
-            );
-          }, onResponseError: (exception, stacktrace, id, packet) {
-            Get.snackbar(
-              "Pesan",
-              "Terjadi kesalahan internal",
-              snackPosition: SnackPosition.TOP,
-              duration: const Duration(seconds: 5),
-              colorText: Colors.white,
-              backgroundColor: Colors.red,
-            );
-            //  isLoading.value = false;
-          }, onTokenInvalid: Constant.invalidResponse()));
+                isLoadingKunjungan.value = false;
+              },
+              onResponseFail: (code, message, body, id, packet) {
+                Get.snackbar(
+                  "Pesan",
+                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 5),
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+              },
+              onResponseError: (exception, stacktrace, id, packet) {
+                Get.snackbar(
+                  "Pesan",
+                  "Terjadi kesalahan internal",
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 5),
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+                //  isLoading.value = false;
+              },
+              onTokenInvalid: Constant.invalidResponse()));
     } catch (e) {
-        Get.snackbar(
-            "Pesan",
-            "Terjadi kesalahan internal",
-            snackPosition: SnackPosition.TOP,
-            duration: const Duration(seconds: 5),
-            colorText: Colors.white,
-            backgroundColor: Colors.red,
-        );
+      Get.snackbar(
+        "Pesan",
+        "Terjadi kesalahan internal",
+        snackPosition: SnackPosition.TOP,
+        duration: const Duration(seconds: 5),
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
     }
   }
 
   addItems() async {
     scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-          scrollController.position.pixels) {
+      if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         page.value++;
         String custId = customerDetail.value!.id!;
         Service.push(
             service: ListApi.getListVisit,
             context: context,
-            body: [
-              Constant.auth!.token,
-              Constant.auth!.id,
-              Constant.xAppId,
-              page.value,
-              limit.value,
-              ListApi.pathGetListVisit(custId)
-            ],
+            body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, page.value, limit.value, ListApi.pathGetListVisit(custId)],
             listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
               for (var result in (body as ListVisitCustomerResponse).data) {
                 visitCustomer.value.add(result);

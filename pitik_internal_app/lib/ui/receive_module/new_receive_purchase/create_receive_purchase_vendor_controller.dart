@@ -61,6 +61,9 @@ class CreateGrPurchaseController extends GetxController {
   late ButtonFill bfYesGrPurchase;
   late ButtonOutline boNoGrPurchase;
 
+
+    DateTime timeStart = DateTime.now();
+    DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
@@ -84,6 +87,7 @@ class CreateGrPurchaseController extends GetxController {
 
   @override
   void onReady() {
+    timeStart = DateTime.now();
     if (purchaseDetail.value!.vendor!.type == AppStrings.INTERNAL) {
       getCategorySkuInternal();
       skuCardInternal.controller.visibleCard();
@@ -104,6 +108,7 @@ class CreateGrPurchaseController extends GetxController {
       controller: GetXCreator.putButtonFillController("yesGrPurchase"),
       label: "Ya",
       onClick: () {
+        Constant.track("Click_Konfirmasi_Penerimaan_Pembelian");
         saveGrPurchase();
       },
     );
@@ -318,6 +323,10 @@ class CreateGrPurchaseController extends GetxController {
             });
 
             isLoading.value = false;
+
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
@@ -358,6 +367,9 @@ class CreateGrPurchaseController extends GetxController {
             skuCardInternal.controller.idx.refresh();
             this.mapList.value = mapList;
             isLoading.value = false;
+            timeEnd = DateTime.now();
+            Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(

@@ -64,6 +64,7 @@ class TransferFormActivity extends StatelessWidget {
                           GetXCreator.putButtonFillController("saveButton"),
                       label: "Simpan",
                       onClick: () {
+                        Constant.track("Click_Simpan_Transfer");
                         if (controller.isEdit.isTrue) {
                           controller.updateTransfer("DRAFT");
                         } else {

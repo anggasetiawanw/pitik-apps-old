@@ -59,6 +59,7 @@ class NewDataSalesOrder extends StatelessWidget {
                   controller: GetXCreator.putButtonFillController("saveDataSalesOrder"),
                   label: "Simpan",
                   onClick: () {
+                    Constant.trackWithMap("Click_Simpan_Penjualan", {"Jenis_Penjualan": controller.produkType.value, "Category_Penjualan": controller.isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
                     controller.status.value = "DRAFT";
                     controller.saveOrder();
                   },

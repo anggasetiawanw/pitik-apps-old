@@ -30,6 +30,9 @@ class DeliveryHomeController extends GetxController {
   var isLoadMoreTransfer = false.obs;
   ScrollController scrollControllerTransfer = ScrollController();
 
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
+  int countApi = 0;
 
   @override
   void onReady() {
@@ -42,11 +45,18 @@ class DeliveryHomeController extends GetxController {
     transferScrollListener();
   }
 
+  void countingAPI() {
+    countApi++;
+    if (countApi == 2) {
+      timeEnd = DateTime.now();
+      Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackRenderTime("Delivery_Home", totalTime);
+    }
+  }
 
   salesScrollListener() async {
     scrollControllerSales.addListener(() {
-      if (scrollControllerSales.position.maxScrollExtent ==
-          scrollControllerSales.position.pixels) {
+      if (scrollControllerSales.position.maxScrollExtent == scrollControllerSales.position.pixels) {
         isLoadMoreSales.value = true;
         pageSales++;
         getListOrders();
@@ -82,13 +92,13 @@ class DeliveryHomeController extends GetxController {
                 }
               } else {
                 if (isLoadMoreSales.isTrue) {
-                  pageSales.value =
-                      (listSalesOrder.value.length ~/ 10).toInt() + 1;
+                  pageSales.value = (listSalesOrder.value.length ~/ 10).toInt() + 1;
                   isLoadMoreSales.value = false;
                 } else {
                   isLoadingSales.value = false;
                 }
               }
+              countingAPI();
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoadingSales.value = false;
@@ -96,29 +106,28 @@ class DeliveryHomeController extends GetxController {
                 "Pesan",
                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                 snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
             },
             onResponseError: (exception, stacktrace, id, packet) {
-            Get.snackbar(
+              Get.snackbar(
                 "Pesan",
                 "Terjadi kesalahan internal",
                 snackPosition: SnackPosition.TOP,
-                    duration: const Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
-            );
-            isLoadingSales.value = false;
+              );
+              isLoadingSales.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
 
-    transferScrollListener() async {
+  transferScrollListener() async {
     scrollControllerTransfer.addListener(() {
-      if (scrollControllerTransfer.position.maxScrollExtent ==
-          scrollControllerTransfer.position.pixels) {
+      if (scrollControllerTransfer.position.maxScrollExtent == scrollControllerTransfer.position.pixels) {
         isLoadMoreTransfer.value = true;
         pageTransfer++;
         getListTransfer();
@@ -130,18 +139,7 @@ class DeliveryHomeController extends GetxController {
     Service.push(
         service: ListApi.getDeliveryListTransfer,
         context: Get.context!,
-        body: [
-          Constant.auth!.token!,
-          Constant.auth!.id,
-          Constant.xAppId!,
-          pageTransfer.value,
-          limitTransfer.value,
-          Constant.profileUser!.id,
-          "READY_TO_DELIVER",
-          "ON_DELIVERY",
-          "DELIVERED",
-          "RECEIVED"
-        ],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limitTransfer.value, Constant.profileUser!.id, "READY_TO_DELIVER", "ON_DELIVERY", "DELIVERED", "RECEIVED"],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ListTransferResponse).data.isNotEmpty) {
@@ -154,13 +152,13 @@ class DeliveryHomeController extends GetxController {
                 }
               } else {
                 if (isLoadMoreTransfer.isTrue) {
-                  pageTransfer.value =
-                      (listTransfer.value.length ~/ 10).toInt() + 1;
+                  pageTransfer.value = (listTransfer.value.length ~/ 10).toInt() + 1;
                   isLoadMoreTransfer.value = false;
                 } else {
                   isLoadingTransfer.value = false;
                 }
               }
+              countingAPI();
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoadingSales.value = false;
@@ -168,21 +166,21 @@ class DeliveryHomeController extends GetxController {
                 "Pesan",
                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
                 snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
             },
             onResponseError: (exception, stacktrace, id, packet) {
-                Get.snackbar(
-                    "Pesan",
-                    "Terjadi kesalahan internal",
-                    snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,
-                );             
-                isLoadingSales.value = false;
+              Get.snackbar(
+                "Pesan",
+                "Terjadi kesalahan internal",
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              isLoadingSales.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));
   }

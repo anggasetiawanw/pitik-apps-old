@@ -59,6 +59,7 @@ class EditDataPurchase extends StatelessWidget {
                   controller: GetXCreator.putButtonFillController("saveDataPurchase"),
                   label: "Simpan",
                   onClick: () {
+                    Constant.track("Click_Simpan_Edit_Pembelian");
                     controller.status.value = "DRAFT";
                     controller.editPurchase();
                   },
