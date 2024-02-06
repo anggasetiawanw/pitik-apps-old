@@ -23,7 +23,7 @@ class AdjustmentFeedActivity extends GetView<AdjustmentFeedController> {
             Scaffold(
                 backgroundColor: Colors.white,
                 appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(135),
+                    preferredSize: const Size.fromHeight(140),
                     child: AppBarFormForCoop(
                         title: 'Pencatatan Pakan',
                         coop: controller.coop,

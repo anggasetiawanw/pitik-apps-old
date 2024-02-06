@@ -177,6 +177,14 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         }
     }
 
+    String? _getFarmCategory() {
+        if (searchCoopBarField.controller.selectedValue.value != 'Broiler' && searchCoopBarField.controller.selectedValue.value != 'Layer') {
+            return null;
+        } else {
+            return searchCoopBarField.controller.selectedValue.value.toUpperCase();
+        }
+    }
+
     void generateCoopList(bool isCoopActive) {
         isLoading.value = true;
         GlobalVar.track('Open_kandang_list');
@@ -189,7 +197,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                     apiKey: "coopApi",
                     service: isCoopActive ? 'getCoopActive' : 'getCoopIdle',
                     context: context,
-                    body: ['Bearer ${auth.token}', auth.id, true, searchCoopBarField.controller.selectedValue.value],
+                    body: ['Bearer ${auth.token}', auth.id, true, _getFarmCategory()],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             _clearCoopList();
@@ -224,7 +232,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                 _showCoopAdditionalButtonSheet(coop: coop, isRestCoop: false);
             } else {
                 GlobalVar.trackWithMap('Click_card_kandang', {'Coop_Status': 'ACTIVE'});
-                Get.toNamed(RoutePage.coopDashboard, arguments: [coop])!.then((value) => _refreshCoopList());
+                Get.toNamed(coop.farmCategory == 'BROILER' ? RoutePage.coopDashboard : RoutePage.layerDashboard, arguments: [coop])!.then((value) => _refreshCoopList());
             }
         } else {
             GlobalVar.trackWithMap('Click_card_kandang', {'Coop_Status': 'IDLE'});
@@ -342,7 +350,6 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
 
     Widget createCoopActiveCard(int index) {
         Coop coop = coopFilteredList[index]!;
-        coop.farmCategory = 'BROILER';
         DateTime? startDate;
         if (coop.startDate != null) {
             startDate = Convert.getDatetime(coop.startDate!);
@@ -374,7 +381,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                             SvgPicture.asset('images/${_isBroiler(coop) ? 'chicken_icon.svg' : 'egg_icon.svg'}'),
                                             const SizedBox(width: 8),
                                             Text(_isBroiler(coop) ? 'Peternakan Broiler' : 'Peternakan Layer', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                        ],
+                                        ]
                                     ),
                                 ) : const SizedBox(),
                                 const SizedBox(height: 12),
@@ -383,7 +390,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                     children: [
                                         Expanded(child: Text(coop.coopName ?? '-', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black), overflow: TextOverflow.clip)),
                                         _isCoopNew(coop) ? const SizedBox() : Text("Hari ${coop.day}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
-                                    ],
+                                    ]
                                 ),
                                 Text('${coop.coopDistrict ?? '-'}, ${coop.coopCity ?? '-'}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), overflow: TextOverflow.clip),
                                 const SizedBox(height: 12),
@@ -395,7 +402,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                         ) : const SizedBox(),
                                         coop.week != null ? Text('${coop.week} Minggu', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)) : const SizedBox()
-                                    ],
+                                    ]
                                 ),
                                 const SizedBox(height: 16),
                                 _isCoopNew(coop) ? Container(
@@ -425,7 +432,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                         SvgPicture.asset('images/${_isBroiler(coop) ? 'bw_icon.svg' : 'hdp_icon.svg'}', width: 24, height: 24),
                                                         const SizedBox(width: 8),
                                                         Text(_isBroiler(coop) ? 'BW/Standar' : 'HDP/Standar', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                    ],
+                                                    ]
                                                 ),
                                                 coop.bw == null ? const SizedBox() :
                                                 Row(
@@ -435,11 +442,11 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: coop.bw!.actual! > coop.bw!.standard! ? GlobalVar.green : GlobalVar.red)
                                                         ),
                                                         Text(' / ${_isBroiler(coop) ? _getBwStandard(coop) : _getHdpStandard(coop)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                    ],
+                                                    ]
                                                 )
-                                            ],
-                                        ),
-                                    ),
+                                            ]
+                                        )
+                                    )
                                 ),
                                 SizedBox(height: _isCoopNew(coop) ? 0 : 8),
                                 _isCoopNew(coop) || coop.farmCategory == null || coop.farmCategory!.isEmpty ? const SizedBox() :
@@ -459,7 +466,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                         SvgPicture.asset('images/${_isBroiler(coop) ? 'ip_icon.svg' : 'feed_intake_icon.svg'}', width: 24, height: 24),
                                                         const SizedBox(width: 8),
                                                         Text(_isBroiler(coop) ? 'IP/Standar' : 'Feed Intake/Standar', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                    ],
+                                                    ]
                                                 ),
                                                 coop.ip == null ? const SizedBox() :
                                                 Row(
@@ -469,27 +476,26 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: coop.ip!.actual! > coop.ip!.standard! ? GlobalVar.green : GlobalVar.red)
                                                         ),
                                                         Text(' / ${_isBroiler(coop) ? _getIpStandard(coop) : _getFeedIntakeStandard(coop)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
-                                                    ],
+                                                    ]
                                                 )
-                                            ],
-                                        ),
-                                    ),
+                                            ]
+                                        )
+                                    )
                                 ),
                                 coop.isActionNeeded != null && coop.isActionNeeded! ?
                                 ButtonFill(controller: GetXCreator.putButtonFillController("btnCoopActionNeeded"), label: 'Cek Laporan Harian',
-                                    onClick: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop])!.then((value) => _refreshCoopList())
+                                    onClick: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop, coop.farmCategory == 'LAYER' ? true : false])!.then((value) => _refreshCoopList())
                                 ) : const SizedBox()
                             ]
-                        ),
-                    ),
-                ),
-            ),
+                        )
+                    )
+                )
+            )
         );
     }
 
     Widget createCoopIdleCard(int index) {
         Coop coop = coopFilteredList[index]!;
-        coop.farmCategory = 'BROILER';
         return GestureDetector(
             onTap: () => _isBroiler(coop) ? actionCoop(coop) : {},
             child: Padding(

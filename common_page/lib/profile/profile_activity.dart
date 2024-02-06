@@ -135,7 +135,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                               listComponent(() => Get.toNamed(widget.aboutUsRoute), "images/about_us.svg", "Tentang Kami"),
                               listComponent(() => Get.toNamed(widget.helpRoute), "images/help.svg", "Bantuan"),
                               listComponent(() => Get.toNamed(widget.licenseRoute), "images/license.svg", "Lisensi"),
-                              listComponent(() => GlobalVar.invalidResponse(), "images/logout_icon.svg", "Logout"),
+                              listComponent(() => GlobalVar.invalidResponse(showSnackBar: false), "images/logout_icon.svg", "Logout"),
                               const SizedBox(height: 16,),
                               Align(alignment: Alignment.bottomCenter,child: Text("V $_version",style: GlobalVar.greyTextStyle,),),
                               const SizedBox(height: 40,)

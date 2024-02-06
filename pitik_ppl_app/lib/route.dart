@@ -33,9 +33,15 @@ import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_for
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_daily_report_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_daily_report_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/layer_dashboard/layer_dashboard_activity.dart';
+import 'package:pitik_ppl_app/ui/dashboard/layer_dashboard/layer_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_activity.dart';
@@ -113,6 +119,7 @@ class AppRoutes {
         GetPage(name: RoutePage.farmingDashboard, page: () => const FarmingDashboardActivity(), binding: FarmingDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDashboard, page: () => const LayerDashboardActivity(), binding: LayerDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.notification, page: () => const NotificationActivity(), binding: NotificationBindings(context: GlobalVar.getContext())),
 
         // Profile Page
@@ -139,9 +146,13 @@ class AppRoutes {
         // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext())),
+
+        // Daily Report
         GetPage(name: RoutePage.dailyReport, page: ()=> const DailyReportHomeActivity(), binding: DailyReportHomeBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportForm, page: ()=> const DailyReportFormActivity(), binding: DailyReportFormBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportDetail, page: ()=> const DailyReportDetailActivity(), binding: DailyReportDetailBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportForm, page: ()=> const LayerDailyReportFormActivity(), binding: LayerDailyReportFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportDetail, page: ()=> const LayerDailyReportDetailActivity(), binding: LayerDailyReportDetailBinding(context: GlobalVar.getContext())),
 
         // Smart Controller
         GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
@@ -196,6 +207,7 @@ class RoutePage {
     static const String farmingDashboard = "/farmingDashboard";
     static const String coopList = "/coopList";
     static const String coopDashboard = "/coopDashboard";
+    static const String layerDashboard = "/layerDashboard";
     static const String privacyPage = "/privacy";
     static const String termPage = "/term";
     static const String aboutPage = "/about";
@@ -214,6 +226,9 @@ class RoutePage {
     static const String dailyReport = "/daily-Report";
     static const String dailyReportForm = "/daily-Report-Form";
     static const String dailyReportDetail = "/daily-Report-Detail";
+    static const String layerDailyReportForm = "/layerDailyReportForm";
+    static const String layerDailyReportDetail = "/layerDailyReportDetail";
+    static const String layerDailyReportRevision = "/layerDailyReportRevision";
     static const String smartControllerList = "/smartControllerList";
     static const String smartControllerDashboard = "/smartControllerDashboard";
     static const String smartMonitorController = "/smartMonitorController";

@@ -948,7 +948,7 @@ class FarmingDashboardController extends GetxController {
                         children: [
                             index == coopSelected.value ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                             const SizedBox(width: 16),
-                            Text('${coopList[index]!.coopName ?? '- '} (Hari ${coopList[index]!.day ?? '-'})', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                            Expanded(child: Text('${coopList[index]!.coopName ?? '- '} (Hari ${coopList[index]!.day ?? '-'})', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
                         ]
                     ),
                     const SizedBox(height: 10)

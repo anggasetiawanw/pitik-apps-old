@@ -170,7 +170,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                     children: [
                                                         SvgPicture.asset('images/information_blue_icon.svg'),
                                                         const SizedBox(width: 12),
-                                                        Text('Pencatatan sisa ayam yang ada di kandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue)),
+                                                        Expanded(child: Text('Pencatatan sisa ayam yang ada di kandang', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue), overflow: TextOverflow.clip)),
                                                     ],
                                                 )
                                             ),
@@ -295,7 +295,7 @@ class FarmClosingActivity extends GetView<FarmClosingController> {
                                                             children: [
                                                                 SvgPicture.asset('images/information_blue_icon.svg'),
                                                                 const SizedBox(width: 12),
-                                                                Text('Transfer pakan belum diterima oleh kandang tujuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue)),
+                                                                Expanded(child: Text('Transfer pakan belum diterima oleh kandang tujuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.blue), overflow: TextOverflow.clip)),
                                                             ]
                                                         )
                                                     ),

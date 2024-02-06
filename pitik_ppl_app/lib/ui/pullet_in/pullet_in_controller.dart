@@ -105,7 +105,7 @@ class PulletInController extends GetxController {
         label: "Jam Truck Berangkat",
         hint: "08:00",
         alertText: "Harus diisi..!",
-        onDateTimeSelected: (time, dateField) => '${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}'
+        onDateTimeSelected: (time, dateField) => dateField.controller.setTextSelected('${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}')
     );
 
     DateTimeField dtTruckCome = DateTimeField(
@@ -113,7 +113,7 @@ class PulletInController extends GetxController {
         label: "Jam Truck Tiba",
         hint: "12:00",
         alertText: "Harus diisi..!",
-        onDateTimeSelected: (time, dateField) => '${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}'
+        onDateTimeSelected: (time, dateField) => dateField.controller.setTextSelected('${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}')
     );
 
     DateTimeField dtFinishPulletIn = DateTimeField(
@@ -445,6 +445,7 @@ class PulletInController extends GetxController {
 
     _showBottomDialog() {
         return showModalBottomSheet(
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: Get.context!,
             builder: (context) => Container(
@@ -550,15 +551,15 @@ class PulletInController extends GetxController {
                                     Expanded(
                                         child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreePulletIn"), label: "Yakin", onClick: () {
                                             Navigator.pop(Get.context!);
-                                            isLoading.value = true;
                                             AuthImpl().get().then((auth) {
                                                 if (auth != null) {
-                                                    isLoading.value = false;
+                                                    isLoading.value = true;
+                                                    RequestChickin bodyPayload = generatePayload();
                                                     Service.push(
                                                         apiKey: "productReportApi",
                                                         service: ListApi.updateRequestChickin,
                                                         context: context,
-                                                        body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(generatePayload())],
+                                                        body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(bodyPayload)],
                                                         listener: ResponseListener(
                                                             onResponseDone: (code, message, body, id, packet) {
                                                                 isLoading.value = false;
@@ -573,14 +574,14 @@ class PulletInController extends GetxController {
                                                                         String text = 'Pullet In Kawan Pitik\n\n';
                                                                         text += 'Cabang : ${coop.coopCity}\n';
                                                                         text += 'Kandang : ${coop.coopName}\n';
-                                                                        text += 'Populasi : ${efPopulation.getInputNumber() != null ? efPopulation.getInputNumber()!.toInt() : '-'} Ekor\n';
-                                                                        text += 'Umur : ${efAge.getInputNumber() != null ? efAge.getInputNumber()!.toInt() : '-'} Ekor\n';
+                                                                        text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
+                                                                        text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Ekor\n';
                                                                         text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
-                                                                        text += 'BW : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} gr\n';
-                                                                        text += 'Uniformity : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} %\n';
-                                                                        text += 'Jam truk berangkat : ${dtTruckGo.getLastTimeSelectedText()}\n';
-                                                                        text += 'Jam truk tiba : ${dtTruckCome.getLastTimeSelectedText()}\n';
-                                                                        text += 'Selesai Pullet In : ${dtFinishPulletIn.getLastTimeSelectedText()}\n';
+                                                                        text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
+                                                                        text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
+                                                                        text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';
+                                                                        text += 'Jam truk tiba : ${bodyPayload.truckArrival ?? '-'}\n';
+                                                                        text += 'Selesai Pullet In : ${bodyPayload.finishChickIn ?? '-'}\n';
 
                                                                         Share.share(text);
 
@@ -635,12 +636,14 @@ class PulletInController extends GetxController {
 
     RequestChickin generatePayload() {
         RequestChickin requestChickin = RequestChickin();
-        requestChickin.poCode = request.value != null ? request.value!.poCode : null;
-        requestChickin.erpCode = request.value != null ? request.value!.erpCode : null;
+        if (request.value != null) {
+            requestChickin.poCode = request.value!.poCode;
+            requestChickin.erpCode = request.value!.erpCode;
+        }
         requestChickin.startDate = dtTanggal.getLastTimeSelectedText();
         requestChickin.initialPopulation = (efPopulation.getInputNumber() ?? 0).toInt();
         requestChickin.pulletInWeeks = (efAge.getInputNumber() ?? 0).toInt();
-        // requestChickin.additionalPopulation = (efMoreDOC.getInputNumber() ?? 0).toInt();
+        requestChickin.additionalPopulation = 0;
         requestChickin.bw = (efBw.getInputNumber() ?? 0).toInt();
         requestChickin.uniformity = (efUniform.getInputNumber() ?? 0).toInt();
         requestChickin.truckLeaving = dtTruckGo.getLastTimeSelectedText();

@@ -454,6 +454,31 @@ class ProductReportApi {
     void getTransferSend(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("type") String type, @Query("fromDate") String fromDate,
                          @Query("untilDate") String untilDate) {}
 
+    /// The function `getTransferSendByStatus` is a GET request that retrieves a
+    /// list of transfer requests with a specific status.
+    ///
+    /// Args:
+    ///   authorization (String): The "authorization" parameter is a header
+    /// parameter that is used to pass the authorization token for authentication
+    /// purposes. It is typically used to verify the identity of the user making the
+    /// request.
+    ///   xId (String): The `xId` parameter is a unique identifier for the request.
+    /// It is typically used for tracking or logging purposes.
+    ///   farmingCycleId (String): The farmingCycleId parameter is used to specify
+    /// the ID of the farming cycle for which you want to retrieve transfer
+    /// requests.
+    ///   type (String): The "type" parameter is used to specify the type of
+    /// transfer request. It could be a string value indicating the type of transfer
+    /// request, such as "internal" or "external".
+    ///   status1 (String): The "status1" parameter is used to filter the transfer
+    /// requests by a specific status.
+    ///   status2 (String): The "status2" parameter is used to filter the transfer
+    /// requests by a second status. It is an optional parameter that allows you to
+    /// specify an additional status value to further narrow down the results.
+    @GET(value:"v2/transfer-requests/exit", as:  ProcurementListResponse, error: ErrorResponse)
+    void getTransferSendByStatus(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("farmingCycleId") String farmingCycleId, @Query("type") String type,
+                                 @Query("status") String status1, @Query("status") String status2) {}
+
     /// The function `getTransferReceived` is a GET request that retrieves transfer
     /// requests for procurement, with various query parameters.
     ///
@@ -567,8 +592,26 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void createReceiptTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("data") String data) {}
 
+    /// The function saves stocks with the provided authorization, X-ID, path, and
+    /// data.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send a token
+    /// or credentials to authenticate the request. It is typically used to verify
+    /// the identity of the user making the request.
+    ///   xId (String): The `xId` parameter is a header parameter that represents
+    /// the X-ID header value. It is used to identify a specific entity or resource
+    /// in the request.
+    ///   path (String): The `path` parameter is a string that represents the path
+    /// of the request. It is used to specify the endpoint or resource that the
+    /// request is being made to.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// to be saved. It is passed as a parameter in the request body.
     @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void saveStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
+    @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
+    @JSON(isPlaint: true)
+    void requestDailyReportRevision(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 }

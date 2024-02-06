@@ -4,6 +4,7 @@ import 'package:engine/request/annotation/mediatype/json.dart';
 import 'package:engine/request/annotation/property/header.dart';
 import 'package:engine/request/annotation/property/parameter.dart';
 import 'package:engine/request/annotation/property/path.dart';
+import 'package:engine/request/annotation/request/delete.dart';
 import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/annotation/request/post.dart';
@@ -35,6 +36,9 @@ class UserApi {
     @JSON()
     void addDevice(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("token") String token, @Parameter("type") String type, @Parameter("os") String os,
                    @Parameter("model") String model) {}
+
+    @DELETE(value: DELETE.PATH_PARAMETER, error: ErrorResponse)
+    void deleteDevice(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 
     /// The function "profile" is a GET request that retrieves member information
     /// with the specified headers and parameters.

@@ -81,6 +81,41 @@ class TransferCommon {
         });
     }
 
+    static void getListSendByStatus({required Coop coop, required RxBool isLoading, required RxList<Procurement?> destinationTransferList, String? type, required String status1, required String status2, Function()? onDone}) {
+        isLoading.value = true;
+        AuthImpl().get().then((auth) {
+            if (auth != null) {
+                Service.push(
+                    apiKey: 'productReportApi',
+                    service: ListApi.getListTransferSendByStatus,
+                    context: Get.context!,
+                    body: ['Bearer ${auth.token}', auth.id, coop.farmingCycleId, type, status1, status2],
+                    listener: ResponseListener(
+                        onResponseDone: (code, message, body, id, packet) {
+                            destinationTransferList.value = (body as ProcurementListResponse).data;
+
+                            if (onDone != null) {
+                                onDone();
+                            }
+                            isLoading.value = false;
+                        },
+                        onResponseFail: (code, message, body, id, packet) {
+                            Get.snackbar("Pesan", '${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+                            isLoading.value = false;
+                        },
+                        onResponseError: (exception, stacktrace, id, packet) {
+                            Get.snackbar("Pesan", exception, snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+                            isLoading.value = false;
+                        },
+                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    )
+                );
+            } else {
+                GlobalVar.invalidResponse();
+            }
+        });
+    }
+
     static Widget createTransferCard({bool isGrTransfer = false, required Coop coop, Procurement? procurement, Function()? onRefreshData}) {
         if (procurement != null) {
             String title = 'N/A';

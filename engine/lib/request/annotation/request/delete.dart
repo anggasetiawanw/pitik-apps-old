@@ -1,6 +1,6 @@
 // ignore_for_file: slash_for_doc_comments, constant_identifier_names
 
-import 'package:engine/model/string_model.dart';
+import '../../../model/string_model.dart';
 
 /**
  * @author DICKY

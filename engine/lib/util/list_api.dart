@@ -9,6 +9,7 @@
 class ListApi {
     static const String auth = "auth";
     static const String addDevice = "addDevice";
+    static const String deleteDevice = "deleteDevice";
     static const String profile = "profile";
     static const String changePassword = "changePassword";
     static const String getHomeData = "getHomeData";
@@ -90,6 +91,7 @@ class ListApi {
     static const String rejectOrder = "rejectOrder";
     static const String approveOrder = "approvalOrder";
     static const String getListTransferSend = "getTransferSend";
+    static const String getListTransferSendByStatus = "getTransferSendByStatus";
     static const String getListTransferReceived = "getTransferReceived";
     static const String getTransferDetail = "getTransferDetail";
     static const String getStocks = "getStocks";
@@ -98,6 +100,7 @@ class ListApi {
     static const String createReceiptOrder = "createReceiptOrder";
     static const String createReceiptTransfer = "createReceiptTransfer";
     static const String saveStocks = "saveStocks";
+    static const String requestDailyReportRevision = "requestDailyReportRevision";
 
     // api FARMING PERFORMANCE
     static const String farmList = "farmList";
