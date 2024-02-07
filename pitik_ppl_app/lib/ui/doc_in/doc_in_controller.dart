@@ -22,6 +22,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/request_chickin.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -158,7 +159,6 @@ class DocInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfSuratJalan");
@@ -173,7 +173,6 @@ class DocInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfFormDOC");
@@ -188,7 +187,6 @@ class DocInController extends GetxController {
         alertText: "",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfAnotherDoc");
@@ -363,16 +361,23 @@ class DocInController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, "goods-receipt-purchase-order", file],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
+                            if ((body as MediaUploadResponse).data != null) {
+                                body.data!.url = Uri.encodeFull(body.data!.url!);
+                            }
+
                             if (mediaField == "mfSuratJalan") {
                                 mediaListSuratJalan.add(body.data);
+                                mfSuratJalan.controller.setFileName(body.data!.url ?? '-');
                                 mfSuratJalan.controller.setInformasiText("File telah terupload");
                                 mfSuratJalan.controller.showInformation();
                             } else if (mediaField == "mfFormDOC") {
                                 mediaListDoc.add(body.data);
+                                mfFormDOC.controller.setFileName(body.data!.url ?? '-');
                                 mfFormDOC.controller.setInformasiText("File telah terupload");
                                 mfFormDOC.controller.showInformation();
                             } else if (mediaField == "mfAnotherDoc") {
                                 mediaListLainnya.add(body.data);
+                                mfAnotherDoc.controller.setFileName(body.data!.url ?? '-');
                                 mfAnotherDoc.controller.setInformasiText("File telah terupload");
                                 mfAnotherDoc.controller.showInformation();
                             }

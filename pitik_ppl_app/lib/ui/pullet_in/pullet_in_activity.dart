@@ -31,7 +31,7 @@ class PulletInActivity extends GetView<PulletInController> {
                         color: Colors.white,
                         boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]
                     ),
-                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitPulletIn"), label: "Buat Penjualan", onClick: () => controller.submitPulletIn()),
+                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitPulletIn"), label: "Simpan", onClick: () => controller.submitPulletIn()),
                 ),
                 body:  controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
                     children: [

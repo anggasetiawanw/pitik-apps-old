@@ -23,6 +23,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/request_chickin.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -141,7 +142,6 @@ class PulletInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInSuratJalan");
@@ -156,7 +156,6 @@ class PulletInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInFormPullet");
@@ -171,7 +170,6 @@ class PulletInController extends GetxController {
         alertText: "",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInAnotherPullet");
@@ -187,7 +185,6 @@ class PulletInController extends GetxController {
 
         // disable some field init
         dtTanggal.controller.disable();
-        efPopulation.controller.disable();
         efAge.controller.disable();
     }
 
@@ -264,6 +261,8 @@ class PulletInController extends GetxController {
             doneDocIn = DateFormat("HH:mm").format(newDoneDocIn);
         } catch (_) {}
 
+        efPopulation.controller.disable();
+
         efBw.setInput((request.bw ?? 0).toString());
         efBw.controller.disable();
 
@@ -306,18 +305,25 @@ class PulletInController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, "goods-receipt-purchase-order", file],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
+                            if ((body as MediaUploadResponse).data != null) {
+                                body.data!.url = Uri.encodeFull(body.data!.url!);
+                            }
+
                             if (mediaField == "pulletInSuratJalan") {
                                 mediaListSuratJalan.add(body.data);
+                                mfSuratJalan.controller.setFileName(body.data!.url ?? '-');
                                 mfSuratJalan.controller.setInformasiText("File telah terupload");
                                 mfSuratJalan.controller.showInformation();
                                 isLoadingSuratJalan.value = false;
                             } else if (mediaField == "pulletInFormPullet") {
                                 mediaListPulletIn.add(body.data);
+                                mfFormPullet.controller.setFileName(body.data!.url ?? '-');
                                 mfFormPullet.controller.setInformasiText("File telah terupload");
                                 mfFormPullet.controller.showInformation();
                                 isLoadingFormPulletIn.value = false;
                             } else if (mediaField == "pulletInAnotherPullet") {
                                 mediaListLainnya.add(body.data);
+                                mfAnotherPullet.controller.setFileName(body.data!.url ?? '-');
                                 mfAnotherPullet.controller.setInformasiText("File telah terupload");
                                 mfAnotherPullet.controller.showInformation();
                                 isLoadingAnotherPullet.value = false;
@@ -575,7 +581,7 @@ class PulletInController extends GetxController {
                                                                         text += 'Cabang : ${coop.coopCity}\n';
                                                                         text += 'Kandang : ${coop.coopName}\n';
                                                                         text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
-                                                                        text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Ekor\n';
+                                                                        text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Minggu\n';
                                                                         text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
                                                                         text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
                                                                         text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';

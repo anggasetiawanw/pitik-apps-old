@@ -36,7 +36,7 @@ class MediaField extends StatelessWidget {
     bool showGalleryOptions;
     Function(File?) onMediaResult;
 
-    MediaField({super.key, required this.controller, required this.onMediaResult, required this.label, required this.hint, required this.alertText, this.hideLabel = false, this.type = ALL, this.showGalleryOptions = true, this.multi =false,});
+    MediaField({super.key, required this.controller, required this.onMediaResult, required this.label, required this.hint, required this.alertText, this.hideLabel = false, this.type = ALL, this.showGalleryOptions = true, this.multi = false});
 
     MediaFieldController getController() {
         return Get.find<MediaFieldController>(tag: controller.tag);

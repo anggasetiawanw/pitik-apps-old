@@ -29,6 +29,7 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                             title: 'Laporan Harian',
                             coop: controller.coop,
                             onBackPressed: () => controller.previousPage(),
+                            titleStartDate: 'Pullet In',
                         )
                     ),
                     bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() : Container(
@@ -111,6 +112,7 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                                                     ),
                                                 )
                                             ) : controller.mfChickDead,
+                                            const SizedBox(height: 10),
                                             controller.reasonMultipleFormField
                                         ]
                                     )

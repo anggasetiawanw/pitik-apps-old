@@ -9,7 +9,6 @@ import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/deeplink.dart';
 import 'package:engine/util/list_api.dart';
-import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -653,7 +652,16 @@ class LayerDashboardController extends GetxController {
         );
     }
 
-    Widget generateHistoryWidget() => const SizedBox();
+    Widget generateHistoryWidget() => Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                SvgPicture.asset('images/empty_icon.svg'),
+                const SizedBox(height: 8),
+                Text('Data Kosong,\nFitur dalam pengembangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), textAlign: TextAlign.center),
+            ],
+        ),
+    );
 
     /// The function generates a widget for a smart monitor.
     Widget generateMonitorWidget() => detailSmartMonitor;

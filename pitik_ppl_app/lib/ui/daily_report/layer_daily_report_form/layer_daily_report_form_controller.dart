@@ -25,6 +25,7 @@ import 'package:model/internal_app/product_model.dart';
 import 'package:model/mortality_reason_model.dart';
 import 'package:model/product_model.dart';
 import 'package:model/report.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/products_response.dart';
 import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 
@@ -148,6 +149,10 @@ class LayerDailyReportFormController extends GetxController {
                             body: ['Bearer ${auth.token}', auth.id, "transfer-request", file],
                             listener: ResponseListener(
                                 onResponseDone: (code, message, body, id, packet) {
+                                    if ((body as MediaUploadResponse).data != null) {
+                                        body.data!.url = Uri.encodeFull(body.data!.url!);
+                                    }
+
                                     chickDeadPhotoList.clear();
                                     chickDeadPhotoList.add(body.data);
                                     mfChickDead.getController().setInformasiText("File telah terupload");
@@ -199,6 +204,10 @@ class LayerDailyReportFormController extends GetxController {
                             body: ['Bearer ${auth.token}', auth.id, "transfer-request", file],
                             listener: ResponseListener(
                                 onResponseDone: (code, message, body, id, packet) {
+                                    if ((body as MediaUploadResponse).data != null) {
+                                        body.data!.url = Uri.encodeFull(body.data!.url!);
+                                    }
+
                                     recordingCardPhotoList.clear();
                                     recordingCardPhotoList.add(body.data);
                                     mfRecordingCard.getController().setInformasiText("File telah terupload");
@@ -255,10 +264,6 @@ class LayerDailyReportFormController extends GetxController {
             },
             validationAdded: () {
                 bool isPass = true;
-                if (spReason.getController().selectedIndex == -1) {
-                    spReason.getController().showAlert();
-                    isPass = false;
-                }
                 if (efDead.getInputNumber() == null) {
                     efDead.getController().showAlert();
                     isPass = false;
@@ -441,13 +446,15 @@ class LayerDailyReportFormController extends GetxController {
         efCulled.setInput('${report.culling ?? ''}');
 
         // fill photo mortality
-        chickDeadPhotoList.add(MediaUploadModel(
-            url: report.mortalityImage
-        ));
-        if (chickDeadPhotoList.isNotEmpty) {
-            mfChickDead.getController().setInformasiText("File telah terupload");
-            mfChickDead.getController().showInformation();
-            mfChickDead.getController().setFileName(chickDeadPhotoList[0]!.url ?? '-');
+        if (report.mortalityImage != null && report.mortalityImage!.isNotEmpty) {
+            chickDeadPhotoList.add(MediaUploadModel(
+                url: report.mortalityImage
+            ));
+            if (chickDeadPhotoList.isNotEmpty) {
+                mfChickDead.getController().setInformasiText("File telah terupload");
+                mfChickDead.getController().showInformation();
+                mfChickDead.getController().setFileName(chickDeadPhotoList[0]!.url ?? '-');
+            }
         }
 
         // fill list reason
@@ -504,20 +511,22 @@ class LayerDailyReportFormController extends GetxController {
         }
 
         // fill photo recording card
-        recordingCardPhotoList.add(MediaUploadModel(
-            url: report.recordingImage
-        ));
-        if (recordingCardPhotoList.isNotEmpty) {
-            mfRecordingCard.getController().setInformasiText("File telah terupload");
-            mfRecordingCard.getController().showInformation();
-            mfRecordingCard.getController().setFileName(recordingCardPhotoList[0]!.url ?? '-');
+        if (report.recordingImage != null && report.recordingImage!.isNotEmpty) {
+            recordingCardPhotoList.add(MediaUploadModel(
+                url: report.recordingImage
+            ));
+            if (recordingCardPhotoList.isNotEmpty) {
+                mfRecordingCard.getController().setInformasiText("File telah terupload");
+                mfRecordingCard.getController().showInformation();
+                mfRecordingCard.getController().setFileName(recordingCardPhotoList[0]!.url ?? '-');
+            }
         }
 
         spAbnormalEgg.controller.setSelected(report.isAbnormal != null && report.isAbnormal! ? 'Ya' : report.isAbnormal != null && !report.isAbnormal! ? 'Tidak' : '');
         eaDesc.setValue(report.remarks ?? '');
     }
 
-    void _changeHarvestedEggData({required String productName, required EditField editField, bool isQuantity = true}) {
+    void _changeHarvestedEggData({required String productName, required EditField editField, required String producItemId, bool isQuantity = true}) {
         bool isContain = false;
         for (int i = 0; i < report.harvestedEgg.length; i++) {
             if (report.harvestedEgg[i]!.productItem!.name == productName) {
@@ -527,6 +536,7 @@ class LayerDailyReportFormController extends GetxController {
                     report.harvestedEgg[i]!.weight = editField.getInputNumber();
                 }
 
+                report.harvestedEgg[i]!.productItemId = producItemId;
                 isContain = true;
                 break;
             }
@@ -537,6 +547,7 @@ class LayerDailyReportFormController extends GetxController {
                 Products(
                     quantity: isQuantity ? editField.getInputNumber() == null ? null : editField.getInputNumber()!.toInt() : 0,
                     weight: !isQuantity ? editField.getInputNumber() : 0.0,
+                    productItemId: producItemId,
                     productItem: Products(
                         name: productName,
                         uom: 'Butir'
@@ -606,7 +617,7 @@ class LayerDailyReportFormController extends GetxController {
     }
 
     MortalityReason getReasonSelectedObject() {
-        if (spReason.controller.selectedIndex != -1) {
+        if (efDead.getInputNumber() != null) {
             MortalityReason deadReason = MortalityReason(
                 cause: spReason.controller.textSelected.value,
                 quantity: efDead.getInputNumber() != null ? efDead.getInputNumber()!.toInt() : null
@@ -619,7 +630,7 @@ class LayerDailyReportFormController extends GetxController {
     }
 
     MortalityReason getReasonSelectedObjectWhenIncreased(MortalityReason oldReason) {
-        if (spReason.controller.selectedIndex != -1) {
+        if (efDead.getInputNumber() != null) {
             MortalityReason deadReason = MortalityReason(
                 cause: spReason.controller.textSelected.value,
                 quantity: (oldReason.quantity ?? 0) + (efDead.getInputNumber() ?? 0).toInt()
@@ -938,73 +949,6 @@ class LayerDailyReportFormController extends GetxController {
 
     void saveDailyReport() => AuthImpl().get().then((auth) {
         if (auth != null) {
-            showModalBottomSheet(
-                useSafeArea: true,
-                isDismissible: false,
-                enableDrag: false,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
-                ),
-                isScrollControlled: true,
-                context: Get.context!,
-                builder: (context) => Container(
-                    color: Colors.transparent,
-                    child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Center(
-                                        child: Container(
-                                            width: 60,
-                                            height: 4,
-                                            decoration: const BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                color: GlobalVar.outlineColor
-                                            )
-                                        )
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
-                                    const SizedBox(height: 16),
-                                    Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                    const SizedBox(height: 16),
-                                    Center(child: SvgPicture.asset('images/people_ask_confirm_icon.svg')),
-                                    const SizedBox(height: 32),
-                                    SizedBox(
-                                        width: MediaQuery.of(Get.context!).size.width - 32,
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                                Expanded(
-                                                    child: ButtonFill(controller: GetXCreator.putButtonFillController("btnLayerDailyReportYes"), label: "Yakin", onClick: () {
-                                                        Navigator.pop(Get.context!);
-                                                        _pushDailyReportToServer();
-                                                    })
-                                                ),
-                                                const SizedBox(width: 16),
-                                                Expanded(
-                                                    child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnLayerDailyReportNo"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
-                                                )
-                                            ]
-                                        )
-                                    ),
-                                    const SizedBox(height: 32)
-                                ]
-                            )
-                        )
-                    )
-                )
-            );
-        } else {
-            GlobalVar.invalidResponse();
-        }
-    });
-
-    void _pushDailyReportToServer() => AuthImpl().get().then((auth) {
-        if (auth != null) {
             bool isPass = true;
             if (efUtuhCoklat.getInputNumber() == null) {
                 efUtuhCoklat.controller.showAlert();
@@ -1056,71 +1000,158 @@ class LayerDailyReportFormController extends GetxController {
             }
 
             if (isPass) {
-                isLoading.value = true;
-                _changeHarvestedEggData(productName: 'Telur Utuh Cokelat', editField: efUtuhCoklat);
-                _changeHarvestedEggData(productName: 'Telur Utuh Cokelat', editField: efUtuhCoklatTotal, isQuantity: false);
-                _changeHarvestedEggData(productName: 'Telur Utuh Krem', editField: efUtuhKrem);
-                _changeHarvestedEggData(productName: 'Telur Utuh Krem', editField: efUtuhKremTotal, isQuantity: false);
-                _changeHarvestedEggData(productName: 'Telur Retak', editField: efRetak);
-                _changeHarvestedEggData(productName: 'Telur Retak', editField: efRetakTotal, isQuantity: false);
-                _changeHarvestedEggData(productName: 'Telur Pecah', editField: efPecah);
-                _changeHarvestedEggData(productName: 'Telur Pecah', editField: efPecahTotal, isQuantity: false);
-                _changeHarvestedEggData(productName: 'Telur Kotor', editField: efKotor);
-                _changeHarvestedEggData(productName: 'Telur Kotor', editField: efKotorTotal, isQuantity: false);
-
-                Report bodyReport = Report(
-                    averageWeight: efWeight.getInputNumber(),
-                    culling: efCulled.getInputNumber()!.toInt(),
-                    mortalityImage: chickDeadPhotoList[0]!.url,
-                    mortalityList: List.generate(reasonMultipleFormField.controller.listObjectAdded.length, (index) => reasonMultipleFormField.controller.listObjectAdded[index] as MortalityReason),
-                    feedConsumptions: List.generate(feedMultipleFormField.controller.listObjectAdded.length, (index) => feedMultipleFormField.controller.listObjectAdded[index] as Product),
-                    ovkConsumptions: List.generate(ovkMultipleFormField.controller.listObjectAdded.length, (index) => ovkMultipleFormField.controller.listObjectAdded[index] as Product),
-                    harvestedEgg: report.harvestedEgg,
-                    recordingImage: recordingCardPhotoList[0]!.url,
-                    remarks: eaDesc.getInput(),
-                    isAbnormal: spAbnormalEgg.controller.textSelected.value == 'Ya'
-                );
-
-                Service.push(
-                    apiKey: ApiMapping.taskApi,
-                    service: ListApi.addReport,
+                showModalBottomSheet(
+                    useSafeArea: true,
+                    isDismissible: false,
+                    enableDrag: false,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
+                    ),
+                    isScrollControlled: true,
                     context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathAddReport(coop.farmingCycleId!, report.date!), Mapper.asJsonString(bodyReport)],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                            Get.to(TransactionSuccessActivity(
-                                keyPage: "addReportLayerDaily",
-                                message: "Kamu telah berhasil melakukan laporan harian",
-                                showButtonHome: false,
-                                onTapClose: () => Get.back(),
-                                onTapHome: () {}
-                            ))!.then((value) => Get.back(result: true));
-                        },
-                        onResponseFail: (code, message, body, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,
-                            );
-                        },
-                        onResponseError: (exception, stacktrace, id, packet) {
-                            isLoading.value = false;
-                            Get.snackbar(
-                                "Pesan",
-                                "Terjadi Kesalahan, $exception",
-                                snackPosition: SnackPosition.TOP,
-                                colorText: Colors.white,
-                                backgroundColor: Colors.red,
-                            );
-                        },
-                        onTokenInvalid: () => GlobalVar.invalidResponse()
+                    builder: (context) => Container(
+                        color: Colors.transparent,
+                        child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Center(
+                                            child: Container(
+                                                width: 60,
+                                                height: 4,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                    color: GlobalVar.outlineColor
+                                                )
+                                            )
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                        const SizedBox(height: 16),
+                                        Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                        const SizedBox(height: 16),
+                                        Center(child: SvgPicture.asset('images/people_ask_confirm_icon.svg')),
+                                        const SizedBox(height: 32),
+                                        SizedBox(
+                                            width: MediaQuery.of(Get.context!).size.width - 32,
+                                            child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                    Expanded(
+                                                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnLayerDailyReportYes"), label: "Yakin", onClick: () {
+                                                            Navigator.pop(Get.context!);
+                                                            _pushDailyReportToServer();
+                                                        })
+                                                    ),
+                                                    const SizedBox(width: 16),
+                                                    Expanded(
+                                                        child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnLayerDailyReportNo"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                                                    )
+                                                ]
+                                            )
+                                        ),
+                                        const SizedBox(height: 32)
+                                    ]
+                                )
+                            )
+                        )
                     )
                 );
             }
+        } else {
+            GlobalVar.invalidResponse();
+        }
+    });
+
+    void _pushDailyReportToServer() => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            isLoading.value = true;
+            _changeHarvestedEggData(productName: 'Telur Utuh Cokelat', producItemId: 'cc9f03bd-5d75-467f-bada-74382ac7bac2', editField: efUtuhCoklat);
+            _changeHarvestedEggData(productName: 'Telur Utuh Cokelat', producItemId: 'cc9f03bd-5d75-467f-bada-74382ac7bac2', editField: efUtuhCoklatTotal, isQuantity: false);
+            _changeHarvestedEggData(productName: 'Telur Utuh Krem', producItemId: 'd66aa790-4495-483f-96ce-00214c220a49', editField: efUtuhKrem);
+            _changeHarvestedEggData(productName: 'Telur Utuh Krem', producItemId: 'd66aa790-4495-483f-96ce-00214c220a49', editField: efUtuhKremTotal, isQuantity: false);
+            _changeHarvestedEggData(productName: 'Telur Retak', producItemId: '96ed27f9-f2a4-4c33-919d-e7ac8d274154', editField: efRetak);
+            _changeHarvestedEggData(productName: 'Telur Retak', producItemId: '96ed27f9-f2a4-4c33-919d-e7ac8d274154', editField: efRetakTotal, isQuantity: false);
+            _changeHarvestedEggData(productName: 'Telur Pecah', producItemId: '6721a808-ceea-44a9-bbed-eba8b0ccfcb4', editField: efPecah);
+            _changeHarvestedEggData(productName: 'Telur Pecah', producItemId: '6721a808-ceea-44a9-bbed-eba8b0ccfcb4', editField: efPecahTotal, isQuantity: false);
+            _changeHarvestedEggData(productName: 'Telur Kotor', producItemId: '2186e5cf-feb6-4f9c-ad6e-e43f6957262b', editField: efKotor);
+            _changeHarvestedEggData(productName: 'Telur Kotor', producItemId: '2186e5cf-feb6-4f9c-ad6e-e43f6957262b', editField: efKotorTotal, isQuantity: false);
+
+            int mortality = 0;
+            reasonMultipleFormField.controller.listObjectAdded.entries.map((entry) {
+                if ((entry.value as MortalityReason).quantity != null) {
+                    mortality += (entry.value as MortalityReason).quantity!.toInt();
+                }
+            }).toList();
+
+            Report bodyReport = Report(
+                averageWeight: efWeight.getInputNumber(),
+                culling: efCulled.getInputNumber()!.toInt(),
+                mortality: mortality,
+                mortalityImage: chickDeadPhotoList[0]!.url,
+                mortalityList: reasonMultipleFormField.controller.listObjectAdded.entries.map((entry) => entry.value as MortalityReason).toList(),
+                feedConsumptions: feedMultipleFormField.controller.listObjectAdded.entries.map((entry) {
+                    if ((entry.value as Product).feedStockSummaryId == null) {
+                        (entry.value as Product).feedStockSummaryId = (entry.value as Product).id;
+                    }
+                    return entry.value;
+                }).toList().cast<Product>(),
+                ovkConsumptions: ovkMultipleFormField.controller.listObjectAdded.entries.map((entry) {
+                    if ((entry.value as Product).ovkStockSummaryId == null) {
+                        (entry.value as Product).ovkStockSummaryId = (entry.value as Product).id;
+                    }
+                    return entry.value;
+                }).toList().cast<Product>(),
+                harvestedEgg: report.harvestedEgg,
+                recordingImage: recordingCardPhotoList[0]!.url,
+                remarks: eaDesc.getInput(),
+                isAbnormal: spAbnormalEgg.controller.textSelected.value == 'Ya',
+                feedTypeCode: "",
+                feedQuantity: 0
+            );
+
+            Service.push(
+                apiKey: ApiMapping.taskApi,
+                service: ListApi.addReport,
+                context: Get.context!,
+                body: ['Bearer ${auth.token}', auth.id, ListApi.pathAddReport(coop.farmingCycleId!, report.date!), Mapper.asJsonString(bodyReport)],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) {
+                        isLoading.value = false;
+                        Get.to(TransactionSuccessActivity(
+                            keyPage: "addReportLayerDaily",
+                            message: "Kamu telah berhasil melakukan laporan harian",
+                            showButtonHome: false,
+                            onTapClose: () => Get.back(),
+                            onTapHome: () {}
+                        ))!.then((value) => Get.back(result: true));
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
+                        isLoading.value = false;
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
+                        );
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
+                        isLoading.value = false;
+                        Get.snackbar(
+                            "Pesan",
+                            "Terjadi Kesalahan, $exception",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
+                        );
+                    },
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                )
+            );
         } else {
             GlobalVar.invalidResponse();
         }
