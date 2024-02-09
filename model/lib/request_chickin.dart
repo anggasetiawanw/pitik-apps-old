@@ -46,6 +46,9 @@ class RequestChickin {
     List<MediaUploadModel?>? docInFormPhotos;
 
     @IsChildren()
+    List<MediaUploadModel?>? pulletInFormPhotos;
+
+    @IsChildren()
     List<MediaUploadModel?>? photos;
 
     String? notes;
@@ -56,7 +59,7 @@ class RequestChickin {
 
     RequestChickin({this.id, this.additionalPopulation, this.bw, this.chickInDate, this.coopId, this.doc,this.docInFormPhotos, this.erpCode, this.finishChickIn, this.hasFinishedDOCin, this.initialPopulation, this.internalOvkTransferRequest,
                     this.mergedCoopId, this.mergedLogistic, this.mergedLogisticCoopName, this.mergedLogisticFarmingCycleDays, this.notes, this.ovk, this.pakan, this.photos, this.poCode, this.recordStart, this.remarks, this.startDate,
-                    this.pulletInWeeks, this.chickType, this.suratJalanPhotos, this.truckArrival, this.truckLeaving, this.uniformity});
+                    this.pulletInWeeks, this.chickType, this.suratJalanPhotos, this.pulletInFormPhotos, this.truckArrival, this.truckLeaving, this.uniformity});
 
     static RequestChickin toResponseModel(Map<String, dynamic> map) {
         return RequestChickin(
@@ -82,6 +85,7 @@ class RequestChickin {
             internalOvkTransferRequest: Mapper.child<Procurement>(map['internalOvkTransferRequest']),
             suratJalanPhotos: Mapper.children<MediaUploadModel>(map['suratJalanPhotos']),
             docInFormPhotos: Mapper.children<MediaUploadModel>(map['docInFormPhotos']),
+            pulletInFormPhotos: Mapper.children<MediaUploadModel>(map['pulletInFormPhotos']),
             photos: Mapper.children<MediaUploadModel>(map['photos']),
             notes: map['notes'],
             pulletInWeeks: map['pulletInWeeks'],

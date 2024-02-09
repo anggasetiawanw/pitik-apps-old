@@ -657,7 +657,7 @@ class PulletInController extends GetxController {
         requestChickin.finishChickIn = dtFinishPulletIn.getLastTimeSelectedText();
         requestChickin.remarks = eaDesc.getInput();
         requestChickin.suratJalanPhotos = mediaListSuratJalan;
-        requestChickin.docInFormPhotos = mediaListPulletIn;
+        requestChickin.pulletInFormPhotos = mediaListPulletIn;
         requestChickin.photos = mediaListLainnya;
 
         return requestChickin;

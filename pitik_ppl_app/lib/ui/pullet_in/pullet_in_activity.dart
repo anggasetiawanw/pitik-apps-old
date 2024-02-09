@@ -191,13 +191,30 @@ class PulletInActivity extends GetView<PulletInController> {
                                                 ),
                                                 const SizedBox(height: 16),
                                                 Column(
-                                                    children: List.generate(controller.request.value != null && controller.request.value!.docInFormPhotos != null ? controller.request.value!.docInFormPhotos!.length : 0, (index) {
+                                                    children: List.generate(controller.request.value != null && controller.request.value!.pulletInFormPhotos != null ? controller.request.value!.pulletInFormPhotos!.length : 0, (index) {
                                                         return Padding(
                                                             padding: const EdgeInsets.only(bottom: 16),
                                                             child: ClipRRect(
                                                                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                                                                 child: Image.network(
-                                                                    controller.request.value!.docInFormPhotos![index] != null ? controller.request.value!.docInFormPhotos![index]!.url! : '',
+                                                                    controller.request.value!.pulletInFormPhotos![index] != null ? controller.request.value!.pulletInFormPhotos![index]!.url! : '',
+                                                                    width: MediaQuery.of(context).size.width - 36,
+                                                                    height: MediaQuery.of(context).size.width /2,
+                                                                    fit: BoxFit.fill,
+                                                                ),
+                                                            ),
+                                                        );
+                                                    }),
+                                                ),
+                                                const SizedBox(height: 16),
+                                                Column(
+                                                    children: List.generate(controller.request.value != null && controller.request.value!.photos != null ? controller.request.value!.photos!.length : 0, (index) {
+                                                        return Padding(
+                                                            padding: const EdgeInsets.only(bottom: 16),
+                                                            child: ClipRRect(
+                                                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                child: Image.network(
+                                                                    controller.request.value!.photos![index] != null ? controller.request.value!.photos![index]!.url! : '',
                                                                     width: MediaQuery.of(context).size.width - 36,
                                                                     height: MediaQuery.of(context).size.width /2,
                                                                     fit: BoxFit.fill,
