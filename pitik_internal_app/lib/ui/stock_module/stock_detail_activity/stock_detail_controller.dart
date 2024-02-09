@@ -82,12 +82,11 @@ class StockDetailController extends GetxController {
       });
 
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
     opnameModel = Get.arguments;
-    createdDate = Convert.getDatetime(opnameModel.createdDate!);
     isLoading.value = true;
     getDetailStock();
     initializeDateFormatting();
@@ -102,10 +101,11 @@ class StockDetailController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
+              createdDate = Convert.getDatetime(opnameModel.createdDate!);
               isLoading.value = false;
-                timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                Constant.trackRenderTime("Detail_Stock", totalTime);
+              timeEnd = DateTime.now();
+              Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime("Detail_Stock", totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;

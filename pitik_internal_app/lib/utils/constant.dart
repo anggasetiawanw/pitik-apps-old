@@ -1,5 +1,7 @@
 import 'package:components/library/dao_impl_library.dart';
 import 'package:dao_impl/user_google_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +9,13 @@ import 'package:global_variable/strings.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:model/auth_model.dart';
+import 'package:model/error/error.dart';
 import 'package:model/profile.dart';
+import 'package:model/token_device.dart';
 import 'package:model/user_google_model.dart';
 import 'package:model/x_app_model.dart';
+import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
+import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
 class Constant {
@@ -32,7 +38,10 @@ class Constant {
   static var isOpsLead = false.obs;
   static var isSales = false.obs;
   static var isSalesLead = false.obs;
+  static var isScFleet = false.obs;
   static const double bottomSheetMargin = 24;
+  static TokenDevice? tokenDevice;
+  static RxString pushNotifPayload = "".obs;
 
   static Mixpanel? mixpanel;
 
@@ -93,6 +102,32 @@ class Constant {
   static VoidCallback invalidResponse() {
     return () async {
       Get.offAllNamed(RoutePage.loginPage);
+      Service.push(
+          apiKey: ApiMapping.userApi,
+          service: ListApi.deleteDevice,
+          context: Get.context!,
+          body: [auth!.token, auth!.id, "v2/devices/${tokenDevice!.id}"],
+          listener: ResponseListener(
+              onResponseDone: (code, message, body, id, packet) {},
+              onResponseFail: (code, message, body, id, packet) {
+                Get.snackbar(
+                  "Pesan",
+                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  snackPosition: SnackPosition.TOP,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+              },
+              onResponseError: (exception, stacktrace, id, packet) {
+                Get.snackbar(
+                  "Pesan",
+                  "Terjadi Kesalahan Internal",
+                  snackPosition: SnackPosition.TOP,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+              },
+              onTokenInvalid: (){}));
       AuthImpl().delete(null, []);
       UserGoogleImpl().delete(null, []);
       ProfileImpl().delete(null, []);

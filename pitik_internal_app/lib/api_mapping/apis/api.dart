@@ -519,7 +519,26 @@ class API {
   /// you need to pass additional information related to the status of the sales
   /// orders.
   @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
-  void getGoodReceiptsOrderList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("grStatus") String grStatusReceived, @Query("grStatus") String grStatusRejected) {}
+  void getGoodReceiptsOrderList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("grStatus") String grStatusReceived,
+    @Query("grStatus") String grStatusRejected,
+    @Query("category") String category,
+    @Query("withinProductionTeam") bool withinProductionTeam,
+    @Query("date") String date,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("status") String status,
+    @Query("returnStatus") String returnStatus,
+    @Query("code") String code,
+
+
+  ) {}
 
   /// This is a Dart function that cancels an order using HTTP PUT method with
   /// authorization and path parameters.

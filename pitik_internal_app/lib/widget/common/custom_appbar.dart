@@ -23,7 +23,7 @@ class CustomAppbar extends StatelessWidget {
         return AppBar(
             elevation: 0,
             leading: isBack ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 24),
                 onPressed: onBack,
             ) : null,
             shape: RoundedRectangleBorder(

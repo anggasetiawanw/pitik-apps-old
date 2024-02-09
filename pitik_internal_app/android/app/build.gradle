@@ -46,7 +46,7 @@ android {
         dev {
             dimension "flavor-type"
             applicationId "id.pitik.mobile.mobile_flutter.staging"
-            resValue "string", "app_name", "[Staging]Pitik Internal App"
+            resValue "string", "app_name", "Pitik Internal App - Staging"
             resValue "string", "uri", "https://api.pitik.dev/"
             resValue "string", "crashlytic", "STAGING"
         }

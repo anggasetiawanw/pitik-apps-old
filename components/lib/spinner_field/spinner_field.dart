@@ -20,12 +20,13 @@ class SpinnerField extends StatelessWidget {
     String alertText;
     bool hideLabel = false;
     bool isDetail;
+    bool hasSubtitle;
     Color backgroundField;
     Map<String, bool> items;
     Function(String) onSpinnerSelected;
 
     SpinnerField({super.key, required this.controller, required this.label, required this.hint, required this.alertText, this.hideLabel = false, required this.items, required this.onSpinnerSelected,
-                  this.isDetail = false, this.backgroundField =  GlobalVar.primaryLight});
+                  this.isDetail = false, this.backgroundField =  GlobalVar.primaryLight, this.hasSubtitle = false});
 
     SpinnerFieldController getController() {
         return Get.find(tag: controller.tag);
@@ -38,7 +39,6 @@ class SpinnerField extends StatelessWidget {
         if (onInit) {
             controller.hideLabel.value = hideLabel;
             controller.generateItems(items);
-
             int index = 0;
             items.forEach((key, value) {
                 if (value) {
@@ -47,7 +47,7 @@ class SpinnerField extends StatelessWidget {
                 }
                 index++;
             });
-
+            controller.hasSubtitle.value = hasSubtitle;
             onInit = false;
         }
 
@@ -228,7 +228,8 @@ class SpinnerField extends StatelessWidget {
                         children: [
                             controller.items[key] == true ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                             const SizedBox(width: 8),
-                            isDetail ? Center(
+                            if(isDetail)...[
+                                Center(
                                 child: Container(
                                     margin: const EdgeInsets.only(left: 4),
                                     child: Column(
@@ -247,7 +248,30 @@ class SpinnerField extends StatelessWidget {
                                         ],
                                     ),
                                 ),
-                            ) : Expanded(child: Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
+                            )
+                            ], if(controller.hasSubtitle.isTrue)...[
+                                Center(
+                                child: Container(
+                                    margin: const EdgeInsets.only(left: 4),
+                                    child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            const SizedBox(height: 8),
+                                            Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14)),
+                                            Row(
+                                                children: [
+                                                    Text("Total Global : ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 10),),
+                                                    Text("${controller.subtitle[key]} Kg", style: GlobalVar.blackTextStyle.copyWith(fontSize: 10, fontWeight: FontWeight.w700)),
+                                                ]
+                                            )
+                                        ],
+                                    ),
+                                ),
+                            )
+                            ] else ...[
+                                Expanded(child: Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip))
+                            ],
+
                         ]
                     )
                 )

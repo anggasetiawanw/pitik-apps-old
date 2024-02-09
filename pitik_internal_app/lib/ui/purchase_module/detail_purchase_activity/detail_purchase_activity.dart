@@ -145,7 +145,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Text(
                 label,
                 style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
@@ -153,10 +153,10 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
               ),
             ),
             const SizedBox(
-              width: 10,
+              width: 8,
             ),
             isLeadStatus
-                ? LeadStatus(leadStatus: controller.purchaseDetail.value!.status != null ? controller.purchaseDetail.value!.status! : null)
+                ? LeadStatus(leadStatus:controller.purchaseDetail.value?.status)
                 : Expanded(
                     flex: 2,
                     child: Text(
@@ -182,7 +182,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                 listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
                 listDetail("SKU", products.name != null ? "${products.name}" : "-", false),
                 if (products.quantity != 0) listDetail("Jumlah Ekor", "${products.quantity ?? "-"} Ekor", false),
-                if (products.weight != 0) listDetail("Kebutuhan", "${products.weight ?? "-"} Kg", false),
+                if (products.weight != 0) listDetail("Kebutuhan", "${products.weight ?? "-"}Kg", false),
                 if (products.price != null) listDetail("Harga ", "${products.price == 0 ? "-" : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} "} /Kg", false),
               ],
             )),

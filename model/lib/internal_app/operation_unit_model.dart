@@ -18,6 +18,7 @@ class OperationUnitModel {
     String? category;
     String? plusCode;
     double? latitude;
+    double? totalStockWeight;
     double? longitude;
     bool? status;
 
@@ -28,10 +29,10 @@ class OperationUnitModel {
     Location? district;
 
     @IsChild()
-    Location? province;  
+    Location? province;
 
     @IsChild()
-    BranchModel? branch;  
+    BranchModel? branch;
 
     @IsChild()
     JagalModel? jagalData;
@@ -39,9 +40,12 @@ class OperationUnitModel {
     @IsChildren()
     List<Products?>? purchasableProducts;
 
-  OperationUnitModel({this.id, this.operationUnitName, this.type, this.city, this.district, this.province, this.status, this.latitude, this.longitude, this.plusCode, this.category, this.branch, this.jagalData,this.purchasableProducts});
+  OperationUnitModel({this.id, this.operationUnitName, this.type, this.city, this.district, this.province, this.status, this.latitude, this.longitude, this.plusCode, this.category, this.branch, this.jagalData,this.purchasableProducts, this.totalStockWeight});
 
   static OperationUnitModel toResponseModel(Map<String, dynamic> map) {
+    if(map['totalStockWeight'] is int) {
+      map['totalStockWeight'] = map['totalStockWeight'].toDouble();
+    }
     return OperationUnitModel(
         id: map['id'],
         operationUnitName: map['operationUnitName'],
@@ -52,11 +56,12 @@ class OperationUnitModel {
         status: map['isArchived'],
         city: Mapper.child<Location>(map["city"]),
         district: Mapper.child<Location>(map["district"]),
-        province: Mapper.child<Location>(map["province"]),  
+        province: Mapper.child<Location>(map["province"]),
         branch: Mapper.child<BranchModel>(map["branch"]),
         jagalData: Mapper.child<JagalModel>(map["jagalData"]),
         purchasableProducts: Mapper.children<Products>(map["purchasableProducts"]),
-        category: map["category"]    
+        category: map["category"],
+        totalStockWeight: map["totalStockWeight"],
     );
   }
 }

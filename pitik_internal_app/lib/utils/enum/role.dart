@@ -7,4 +7,5 @@ class RoleEnum{
     static const String shopkeeper = "shopkeeper";
     static const String scRelation = "sc relation";
     static const String developer = "developer";
+    static const String scFleet = "sc fleet";
 }

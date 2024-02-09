@@ -43,9 +43,9 @@ part 'data_receive_controller.transfer.dart';
 
 enum BodyQueryPurhcase { token, auth, xAppId, page, limit, statusConfirmed, statusReceived, withinProductionTeam, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status, source, code }
 
-enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status, code , source}
+enum BodyQueryTransfer { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, createdDate, productCategoryId, productItemId, sourceOperationUnitId, targetOperationUnitId, status, code, source }
 
-enum BodyQueryReturn { token, auth, xAppId, page, limit, statusReceived, statusDelivered, withinProductionTeam, returnStatus, category, createdDate, productCategoryId, productItemId, operationUnitId, status }
+enum BodyQueryReturn { token, auth, xAppId, page, limit, statusReceived, statusDelivered, category, withinProductionTeam, createdDate, productCategoryId, productItemId, operationUnitId, status, returnStatus, code }
 
 class ReceiveController extends GetxController {
   BuildContext context;
@@ -166,74 +166,7 @@ class ReceiveController extends GetxController {
     onClick: () => clearFilter(),
   );
 
-  scrollOrderListener() async {
-    scrollOrderController.addListener(() {
-      if (scrollOrderController.position.maxScrollExtent == scrollOrderController.position.pixels) {
-        isLoadMore.value = true;
-        pageOrder++;
-        getListReturn();
-      }
-    });
-  }
-
   late SearchBarField sbSearch;
-
-  void getListReturn() {
-    Service.push(
-        service: ListApi.getGoodReceiptsOrderList,
-        context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageOrder.value, limit.value, "RECEIVED", "REJECTED"],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-              if ((body as SalesOrderListResponse).data.isNotEmpty) {
-                for (var result in body.data) {
-                  if (result!.grStatus! == "REJECTED" || result.grStatus == "RECEIVED") {
-                    listReturn.value.add(result);
-                  }
-                }
-                Map<String, bool> mapListRemark = {};
-                for (var product in body.data) {
-                  mapListRemark[product!.status!] = false;
-                }
-                mapListRemark.removeWhere((key, value) => key == "REJECTED");
-                isLoadingOrder.value = false;
-                if (isLoadMore.isTrue) {
-                  isLoadMore.value = false;
-                }
-              } else {
-                if (isLoadMore.isTrue) {
-                  pageOrder.value = (listReturn.value.length ~/ 10).toInt() + 1;
-                  isLoadMore.value = false;
-                } else {
-                  isLoadingOrder.value = false;
-                }
-              }
-              countingApi();
-            },
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              countingApi();
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
-                snackPosition: SnackPosition.TOP,
-                duration: const Duration(seconds: 5),
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-              countingApi();
-            },
-            onTokenInvalid: Constant.invalidResponse()));
-  }
 
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
@@ -275,7 +208,6 @@ class ReceiveController extends GetxController {
         isSearch.value = false;
         sbSearch.controller.setSelectedValue("Nomor PO");
         isLoadingPurchase.value = true;
-        listPurchase.value.clear();
         resetAllBodyPurhcaseValue();
         getListPurchase();
       } else if (tabController.controller.index == 1) {
@@ -287,7 +219,6 @@ class ReceiveController extends GetxController {
         isSearch.value = false;
         sbSearch.controller.setSelectedValue("Nomor Transfer");
         isLoadingTransfer.value = true;
-        listTransfer.value.clear();
         resetAllBodyTransferValue();
         getListTransfer();
       } else if (tabController.controller.index == 2) {
@@ -298,6 +229,9 @@ class ReceiveController extends GetxController {
         listFilter.value.clear();
         isSearch.value = false;
         sbSearch.controller.setSelectedValue("Nomor SO");
+        isLoadingOrder.value = true;
+        resetAllBodyReturnValue();
+        getListReturn();
       }
     });
   }
@@ -320,8 +254,6 @@ class ReceiveController extends GetxController {
       openFilterOrder();
     }
   }
-
-  void openFilterOrder() {}
 
   void saveFilter() {
     if (validationFilter()) {
@@ -359,7 +291,7 @@ class ReceiveController extends GetxController {
       } else if (isTransfer.isTrue) {
         filterTransfer();
       } else if (isOrderReturn.isTrue) {
-        // filterOrder(
+        filterOrder();
       }
     }
   }
@@ -386,13 +318,14 @@ class ReceiveController extends GetxController {
       resetAllBodyPurhcaseValue();
       isLoadingPurchase.value = true;
       getListPurchase();
-    } else if(isTransfer.isTrue){
+    } else if (isTransfer.isTrue) {
       resetAllBodyTransferValue();
       isLoadingTransfer.value = true;
       getListTransfer();
-    }else if(isOrderReturn.isTrue){
-      listReturn.value.clear();
+    } else if (isOrderReturn.isTrue) {
+      resetAllBodyReturnValue();
       isLoadingOrder.value = true;
+      getListReturn();
     }
   }
 
@@ -436,20 +369,29 @@ class ReceiveController extends GetxController {
         resetAllBodyPurhcaseValue();
         isLoadingPurchase.value = true;
         getListPurchase();
-      } else if( isTransfer.isTrue){
+      } else if (isTransfer.isTrue) {
         isFilter.value = false;
         isSearch.value = false;
         resetAllBodyTransferValue();
         isLoadingTransfer.value = true;
         getListTransfer();
+      } else if (isOrderReturn.isTrue) {
+        isFilter.value = false;
+        isSearch.value = false;
+        resetAllBodyReturnValue();
+        isLoadingOrder.value = true;
+        getListReturn();
       }
     } else {
       if (isPurhcase.isTrue) {
         isLoadingPurchase.value = true;
         filterPurchase();
-      } else if(isTransfer.isTrue){
+      } else if (isTransfer.isTrue) {
         isLoadingTransfer.value = true;
         filterTransfer();
+      } else if (isOrderReturn.isTrue) {
+        isLoadingOrder.value = true;
+        filterOrder();
       }
     }
   }
@@ -462,24 +404,20 @@ class ReceiveController extends GetxController {
         isFilter.value = false;
         listFilter.value.clear();
         if (isPurhcase.isTrue) {
-          listPurchase.value.clear();
           isLoadingPurchase.value = true;
           resetAllBodyPurhcaseValue();
           bodyGeneralPurhcase[BodyQueryPurhcase.code.index] = text;
           getListPurchase();
         } else if (isTransfer.isTrue) {
-          listTransfer.value.clear();
           isLoadingTransfer.value = true;
           resetAllBodyTransferValue();
           bodyGeneralTransfer[BodyQueryTransfer.code.index] = text;
           getListTransfer();
         } else if (isOrderReturn.isTrue) {
-          pageOrder.value = 1;
-          listReturn.value.clear();
           isLoadingOrder.value = true;
-        //   resetAllBodyReturnValue();
-        //   bodyGeneralReturn[BodyQueryReturn.code.index] = text;
-        //   getListReturn();
+          resetAllBodyReturnValue();
+          bodyGeneralReturn[BodyQueryReturn.code.index] = text;
+          getListReturn();
         }
       });
     } else {

@@ -487,7 +487,7 @@ class EditDataPurchaseController extends GetxController {
       jagalSelected = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
     }
     if (vendorSelected?.type == AppStrings.INTERNAL && spinnerTypeSource.controller.textSelected.value == "Vendor") {
-      for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
+      for (int i = 0; i < skuCardInternal.controller.index.value.length; i++) {
         int whichItem = skuCardInternal.controller.index.value[i];
         // CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerCategories.value[whichItem].controller.textSelected.value);
         var listProductTemp = skuCardInternal.controller.listSku.value.values.toList();

@@ -84,7 +84,7 @@ class TransferDetailActivity extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "BOOKED" && (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) ...[
+                  ] else if (controller.transferModel.status == "BOOKED" && Constant.isScFleet.isTrue) ...[
                     Expanded(
                         child: ButtonFill(
                             controller: GetXCreator.putButtonFillController("Kirim Transfer"),
@@ -100,7 +100,7 @@ class TransferDetailActivity extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "READY_TO_DELIVER"&& (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) ...[
+                  ] else if (controller.transferModel.status == "READY_TO_DELIVER"&& Constant.isScFleet.isTrue) ...[
                     Expanded(
                         child: ButtonFill(
                             controller: GetXCreator.putButtonFillController("editTransfer"),

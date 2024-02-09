@@ -350,6 +350,8 @@ class EditDataSalesOrderController extends GetxController {
                 skuCardRemark.controller.editFieldPotongan.value[j].controller.visibleField();
               }
             }
+            skuCardRemark.controller.refresh();
+            skuCardRemark.controller.update();
           });
         }
         isLoadData.value = false;
@@ -396,6 +398,8 @@ class EditDataSalesOrderController extends GetxController {
                   skuCard.controller.editFieldPotongan.value[j].controller.visibleField();
                 }
               }
+              skuCard.controller.refresh();
+              skuCard.controller.update();
             });
           }
 

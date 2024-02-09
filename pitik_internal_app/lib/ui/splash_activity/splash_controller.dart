@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:components/button_fill/button_fill.dart';
@@ -21,124 +20,120 @@ import 'package:model/x_app_model.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
 
-final _shorebirdCodePush = ShorebirdCodePush();
 class SplashController extends GetxController {
-    var isUpdated = false.obs;
-    @override
-    void onReady() async {
-        super.onReady();
-        await UpdaterCodeMagic().checkForUpdate(
-                isAvailable: (isAvailable) {
-                    if(isAvailable){
-                        isUpdated.value = true;
-                    } else {
-                        runSplash();
-                    }
-                } ,
-                isReadyToRestart: (isReadyToRestart) => Timer(const Duration(seconds: 1), () {showInformation();}),
-        );
-        
-    }
+  var isUpdated = false.obs;
 
-    void runSplash(){
-            Timer(
-                const Duration(seconds: 1),
-                () async {
-                        Auth? auth = await AuthImpl().get();
-                        UserGoogle? userGoogle = await UserGoogleImpl().get();
-                        Profile? userProfile = await ProfileImpl().get();
-                        XAppId? xAppId = await XAppIdImpl().get();
-                        if (auth == null || userGoogle == null ||userProfile == null ) {
-                            Get.offNamed(RoutePage.loginPage);
-                        } else {
-                            Constant.auth = auth;
-                            Constant.profileUser = userProfile;
-                            String appId = FirebaseRemoteConfig.instance.getString("appId");
-                            if(xAppId != null && (appId.isNotEmpty && xAppId.appId != appId) ){
-                                xAppId.appId = appId;
-                                XAppIdImpl().save(xAppId);
-                                Constant.xAppId = xAppId.appId;
-                            } else if(xAppId != null){
-                                Constant.xAppId = xAppId.appId;
-                            } else {
-                                xAppId = XAppId();
-                                xAppId.appId = appId;
-                                XAppIdImpl().save(xAppId);
-                                Constant.xAppId = appId;
-                            }
-                            Get.offNamed(RoutePage.homePage);
-                        }
-                },
-            );
-    }
+  String pushNotificationPayload = "";
+  @override
+  void onInit() {
+    super.onInit();
+    pushNotificationPayload = Get.arguments ?? '';
+  }
 
-     void showInformation(){
-        Get.dialog(
-            Center(
-            child: Container(
-                width: 350,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        Row(
-                            children: [
-                                SvgPicture.asset(
-                                    "images/success_checkin.svg",
-                                    height: 24,
-                                    width: 24,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                    "Information!",
-                                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
-                                ),
-                            ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                            "Update aplikasi berhasil, silahkan restart aplikasi" ,
-                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                SizedBox(
-                                    width: 120,
-                                    child: ButtonOutline(
-                                        controller:
-                                        GetXCreator.putButtonOutlineController("ButtonOutlineDialog"),
-                                        label: "Tutup",
-                                        onClick: () => Get.back()
-                                        
-                                    ),
-                                ),
-                                SizedBox(
-                                    width: 120,
-                                    child: ButtonFill(
-                                        controller:
-                                        GetXCreator.putButtonFillController("Dialog"),
-                                        label: "Restart",
-                                        onClick: () => Restart.restartApp()
-                                    ),
-                                ),
-                            ],
-                        ),
-                    ],
+  @override
+  void onReady() async {
+    super.onReady();
+    await UpdaterCodeMagic().checkForUpdate(
+      isAvailable: (isAvailable) {
+        if (isAvailable) {
+          isUpdated.value = true;
+        } else {
+          runSplash();
+        }
+      },
+      isReadyToRestart: (isReadyToRestart) => Timer(const Duration(seconds: 1), () {
+        showInformation();
+      }),
+    );
+  }
+
+  void runSplash() {
+    Timer(
+      const Duration(seconds: 1),
+      () async {
+        Auth? auth = await AuthImpl().get();
+        UserGoogle? userGoogle = await UserGoogleImpl().get();
+        Profile? userProfile = await ProfileImpl().get();
+        XAppId? xAppId = await XAppIdImpl().get();
+        if (auth == null || userGoogle == null || userProfile == null) {
+          Get.offNamed(RoutePage.loginPage);
+        } else {
+          Constant.auth = auth;
+          Constant.profileUser = userProfile;
+          String appId = FirebaseRemoteConfig.instance.getString("appId");
+          if (xAppId != null && (appId.isNotEmpty && xAppId.appId != appId)) {
+            xAppId.appId = appId;
+            XAppIdImpl().save(xAppId);
+            Constant.xAppId = xAppId.appId;
+          } else if (xAppId != null) {
+            Constant.xAppId = xAppId.appId;
+          } else {
+            xAppId = XAppId();
+            xAppId.appId = appId;
+            XAppIdImpl().save(xAppId);
+            Constant.xAppId = appId;
+          }
+          Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
+        }
+      },
+    );
+  }
+
+  void showInformation() {
+    Get.dialog(
+        Center(
+          child: Container(
+            width: 350,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      "images/success_checkin.svg",
+                      height: 24,
+                      width: 24,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Information!",
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  "Update aplikasi berhasil, silahkan restart aplikasi",
+                  style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("ButtonOutlineDialog"), label: "Tutup", onClick: () => Get.back()),
+                    ),
+                    SizedBox(
+                      width: 120,
+                      child: ButtonFill(controller: GetXCreator.putButtonFillController("Dialog"), label: "Restart", onClick: () => Restart.restartApp()),
+                    ),
+                  ],
+                ),
+              ],
             ),
+          ),
         ),
-        barrierDismissible: false
-        );
-    }
+        barrierDismissible: false);
+  }
 }
+
 class SplashBindings extends Bindings {
-    SplashBindings();
-    @override
-    void dependencies() {
-        Get.lazyPut(() => SplashController());
-    }
+  SplashBindings();
+  @override
+  void dependencies() {
+    Get.lazyPut(() => SplashController());
+  }
 }

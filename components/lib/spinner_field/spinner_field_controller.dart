@@ -30,6 +30,8 @@ class SpinnerFieldController<T> extends GetxController {
     var showSpinner = true.obs;
     var isLoading =false.obs;
     var alertText = "".obs;
+    var hasSubtitle = false.obs;
+    RxMap<String, String> subtitle = RxMap<String, String>({});
 
     void visibleSpinner() => showSpinner.value = true;
     void invisibleSpinner() => showSpinner.value = false;
@@ -66,6 +68,12 @@ class SpinnerFieldController<T> extends GetxController {
         items.clear();
         items.addAll(data);
         items.refresh();
+    }
+
+    void generateSubtitle(Map<String, String> data) {
+        subtitle.clear();
+        subtitle.addAll(data);
+        subtitle.refresh();
     }
     void generateAmount(Map<String, int> data) => amountItems.value = data;
     void generateWeight(Map<String, double> data) => weightItems.value = data;

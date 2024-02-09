@@ -108,9 +108,7 @@ class DetailGrOrderController extends GetxController {
                 onResponseDone: (code, message, body, id, packet){
                     List <Products?> product=[];
                     for (var result in (body as OrderResponse).data!.products!){
-                        if(result!.returnQuantity != null || result.returnWeight != null){
                         product.add(result);
-                        }
                     }
                     orderDetail.value = (body).data;
                     orderDetail.value!.products!.clear();

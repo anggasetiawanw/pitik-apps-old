@@ -11,9 +11,17 @@ extension OutboundOrderController on SalesOrderController {
     } else if (Constant.isSalesLead.isTrue) {
       salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
     }
-    if (Constant.isScRelation.isTrue) {
+    if (Constant.isScRelation.isTrue && !Constant.isScFleet.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+    } else {
+      if (Constant.isScRelation.isTrue) {
+        scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+      }
+      if (Constant.isScFleet.isTrue) {
+        scFleetBodyGeneralOutbound(bodyGeneralOutbound);
+      }
     }
+
     fetchOrder(bodyGeneralOutbound, responOutbound());
   }
 
@@ -67,6 +75,13 @@ extension OutboundOrderController on SalesOrderController {
     bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
   }
 
+  void scFleetBodyGeneralOutbound(List<dynamic> bodyGeneral) {
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = null;
+    bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
+    bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
+  }
+
   ResponseListener responOutbound() {
     return ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
@@ -93,7 +108,7 @@ extension OutboundOrderController on SalesOrderController {
               isLoadData.value = false;
             }
           }
-          if(isInit){
+          if (isInit) {
             isInit = false;
             timeEnd = DateTime.now();
             Duration totalTime = timeEnd.difference(timeStart);
@@ -121,6 +136,9 @@ extension OutboundOrderController on SalesOrderController {
     }
     if (Constant.isScRelation.isTrue) {
       scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+    }
+    if (Constant.isScFleet.isTrue) {
+      scFleetBodyGeneralOutbound(bodyGeneralOutbound);
     }
     if (selectedValue.value == "Customer") {
       bodyGeneralOutbound[BodyQuerySales.customerName.index] = searchValue.value;
@@ -262,6 +280,13 @@ extension OutboundOrderController on SalesOrderController {
     if (Constant.isScRelation.isTrue) {
       if (status == null) {
         scRelationdBodyGeneralOutbound(bodyGeneralOutbound);
+      } else {
+        bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = null;
+      }
+    }
+    if (Constant.isScFleet.isTrue) {
+      if (status == null) {
+        scFleetBodyGeneralOutbound(bodyGeneralOutbound);
       } else {
         bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = null;
       }

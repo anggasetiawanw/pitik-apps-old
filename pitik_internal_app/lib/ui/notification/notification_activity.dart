@@ -21,6 +21,7 @@ class NotificationActivity extends StatelessWidget {
           child: CustomAppbar(title: "Notification", onBack: () => Get.back(), actions: [
             PopupMenuButton(
                 icon: const Icon(Icons.more_vert, color: Colors.white), // add this line
+                color: Colors.white,
                 itemBuilder: (_) => <PopupMenuItem<String>>[
                       PopupMenuItem<String>(
                           value: 'Baca Semua',
@@ -43,8 +44,10 @@ class NotificationActivity extends StatelessWidget {
                 })
           ])),
       body: Obx(
-        () => controller.notificationList.isEmpty
-            ? Center(child: Text("Tidak ada notifikasi", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)))
+        () => controller.isLoading.isTrue
+            ? const Center(
+                child: ProgressLoading(),
+              )
             : RawScrollbar(
                 thumbVisibility: true,
                 controller: controller.scrollController,
@@ -56,11 +59,8 @@ class NotificationActivity extends StatelessWidget {
                     controller.page = 1;
                     controller.getListNotification();
                   }),
-                  child: controller.isLoading.isTrue
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 16, top: 16),
-                          child: Image.asset('images/card_height_450_lazy.gif'),
-                        )
+                  child: controller.notificationList.isEmpty
+                      ? Center(child: Text("Tidak ada notifikasi", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)))
                       : ListView.builder(
                           scrollDirection: Axis.vertical,
                           controller: controller.scrollController,
@@ -92,7 +92,7 @@ class NotificationActivity extends StatelessWidget {
                                             height: 40,
                                             width: 40,
                                             child: Center(
-                                              child: SvgPicture.asset(controller.notificationList[index].isRead! ? "images/notification_off_icon.svg" : "images/notification_icon.svg"),
+                                              child: SvgPicture.asset(controller.notificationList[index].isRead! ? "images/notification_off_icon.svg" : "images/notification_on_icon.svg"),
                                             ),
                                           ),
                                           const SizedBox(width: 8),

@@ -62,6 +62,7 @@ class DetailGrPurchaseController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    isLoading.value = true;
     timeStart = DateTime.now();
     purchaseDetail.value = Get.arguments as Purchase;
     purchaseDetail.value!.status == "CONFIRMED" ? getDetailConfirmed() : getDetailReceived();

@@ -295,7 +295,7 @@ class SalesOrderPage extends StatelessWidget {
                           ? const Center(
                               child: ProgressLoading(),
                             )
-                          : controller.orderListInbound.isEmpty
+                          : controller.orderListInbound.isEmpty || (Constant.isScFleet.isTrue && Constant.isScRelation.isFalse)
                               ? Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 16),
                                   child: Center(

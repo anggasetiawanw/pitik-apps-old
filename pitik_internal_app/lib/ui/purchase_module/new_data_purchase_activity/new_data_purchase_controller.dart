@@ -436,7 +436,7 @@ class NewDataPurchaseController extends GetxController {
       jagalSelected = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
     }
     if (vendorSelected?.type == AppStrings.INTERNAL && spinnerTypeSource.controller.textSelected.value == "Vendor") {
-      for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
+      for (int i = 0; i < skuCardInternal.controller.index.value.length; i++) {
         int whichItem = skuCardInternal.controller.index.value[i];
         var listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
         Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
@@ -466,7 +466,7 @@ class NewDataPurchaseController extends GetxController {
     );
 
     return Purchase(
-      vendorId: vendorSelected == null ? null : vendorSelected.id!,
+      vendorId:  vendorSelected?.id,
       jagalId: jagalSelected?.id,
       operationUnitId: destinationPurchaseSelected!.id!,
       products: listProductPayload,

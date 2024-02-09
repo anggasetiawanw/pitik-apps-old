@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_controller.dart';
-import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
 
 class BerandaActivity extends StatelessWidget {
@@ -34,7 +34,7 @@ class BerandaActivity extends StatelessWidget {
                         decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: AppColors.red),
                         child: Padding(
                           padding: const EdgeInsets.all(4),
-                          child: Text("123", style: AppTextStyle.subTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium, color: Colors.white)),
+                          child: Obx(() => Text(controller.countUnreadNotifications.toString(), style: AppTextStyle.subTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium, color: Colors.white)),)
                         ),
                       )
                     ],

@@ -20,9 +20,11 @@ import 'package:model/error/error.dart';
 import 'package:model/response/internal_app/profile_response.dart';
 import 'package:open_store/open_store.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/deeplink_mapping_argument.dart';
 import 'package:pitik_internal_app/utils/enum/role.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
@@ -55,6 +57,7 @@ class BerandaController extends GetxController {
   String? osVersion = "";
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
+  RxInt countUnreadNotifications = 0.obs;
 
   List<SimCard> simCard = <SimCard>[];
   @override
@@ -64,15 +67,16 @@ class BerandaController extends GetxController {
   }
 
   @override
-  void onReady() async{
+  void onReady() async {
     super.onReady();
     checkVersion(Get.context!);
     getRole();
-    await initValueMixpanel();
+    getUnreadNotif();
   }
 
   void refreshHome(BuildContext context) {
     isLoading.value = true;
+    getUnreadNotif();
     checkVersion(context);
     getRole();
   }
@@ -160,10 +164,6 @@ class BerandaController extends GetxController {
     GlobalVar.mixpanel = Constant.mixpanel;
 
     Constant.trackWithMap("Open_Beranda", {'Day_Value': 0});
-
-    timeEnd = DateTime.now();
-    Duration totalTime = timeEnd.difference(timeStart);
-    Constant.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
   }
 
   void checkRoleBranch() {
@@ -198,6 +198,10 @@ class BerandaController extends GetxController {
         if (role.name == RoleEnum.salesLead) {
           Constant.isSalesLead.value = true;
           Constant.isSalesLead.refresh();
+        }
+        if (role.name == RoleEnum.scFleet) {
+          Constant.isScFleet.value = true;
+          Constant.isScFleet.refresh();
         }
       }
     }
@@ -253,9 +257,20 @@ class BerandaController extends GetxController {
     checkRoleBranch();
     if (isInit.value) {
       await initValueMixpanel();
+      checkDeepLink();
       isInit.value = false;
+
+      timeEnd = DateTime.now();
+      Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
     }
     isLoading.value = false;
+  }
+
+  void checkDeepLink() {
+    if (Constant.pushNotifPayload.isNotEmpty) {
+      DeepLinkUtils.process(Constant.pushNotifPayload.value).then((value) => refreshHome(context));
+    }
   }
 
   void checkVersion(BuildContext context) async {
@@ -300,6 +315,25 @@ class BerandaController extends GetxController {
         }
       }
     }
+  }
+
+  void getUnreadNotif() {
+    Service.push(
+        apiKey: ApiMapping.userApi,
+        service: ListApi.countUnreadNotifications,
+        context: Get.context!,
+        body: [Constant.auth!.token, Constant.auth!.id],
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) {
+              countUnreadNotifications.value = (body.data);
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              Get.snackbar("Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}", snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              Get.snackbar("Pesan", "Terjadi Kesalahan Internal", snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+            },
+            onTokenInvalid: () => Constant.invalidResponse()));
   }
 }
 

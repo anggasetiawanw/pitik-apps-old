@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 5.0.5+104
+version: 5.1.5+112
 
 environment:
     sdk: ">=3.0.0 <4.0.0"
@@ -66,8 +66,8 @@ dependencies:
     reflectable: ^4.0.5
     mixpanel_flutter: ^2.1.1
     firebase_crashlytics: ^3.3.0
-    # flutter_local_notifications: ^15.1.1
-    # firebase_messaging: ^14.6.0
+    flutter_local_notifications: ^15.1.1
+    firebase_messaging: ^14.6.0
     sqflite: ^2.3.2
     firebase_remote_config: ^4.2.0
     firebase_core: ^2.12.0
@@ -95,6 +95,7 @@ dependencies:
     pdf: ^3.10.4
     screenshot: ^2.1.0
     share_plus: ^7.2.1
+    shared_preferences: ^2.2.0
 
 dev_dependencies:
     flutter_launcher_icons: ^0.13.1
@@ -142,11 +143,11 @@ flavorizr:
                     config: "ios/config/prod/GoogleService-Info.plist"
         dev:
             app:
-                name: "[Staging]Pitik Internal App"
+                name: "Pitik Internal App - Staging"
 
             android:
                 applicationId: "id.pitik.mobile.mobile_flutter.staging"
-                icon: "ios/config/Launcher.png"
+                icon: "ios/config/staging_launcher.png"
                 resValues:
                     uri:
                         type: "string"
