@@ -110,6 +110,7 @@ class HarvestCommon {
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
                     onTap: () {
+                        GlobalVar.track('Click_card_pengajuan');
                         if (onNavigate != null) {
                             onNavigate();
                         } else {
@@ -181,11 +182,14 @@ class HarvestCommon {
             return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePage.harvestDealDetail, arguments: [coop, harvest])!.then((result) {
-                        if (result != null && result) {
-                            onRefreshData();
-                        }
-                    }),
+                    onTap: () {
+                        GlobalVar.track('Click_card_deal_panen');
+                        Get.toNamed(RoutePage.harvestDealDetail, arguments: [coop, harvest])!.then((result) {
+                            if (result != null && result) {
+                                onRefreshData();
+                            }
+                        });
+                    },
                     child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: const BoxDecoration(
@@ -265,6 +269,7 @@ class HarvestCommon {
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
                 child: GestureDetector(
                     onTap: () {
+                        GlobalVar.track('Click_card_realisasi_panen');
                         if (onNavigate != null) {
                             onNavigate();
                         } else {

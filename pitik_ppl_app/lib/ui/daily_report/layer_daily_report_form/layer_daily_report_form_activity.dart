@@ -281,7 +281,7 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                                                         children: [
                                                             const CircularProgressIndicator(color: GlobalVar.primaryOrange),
                                                             const SizedBox(width: 16),
-                                                            Text('Upload foto kematian...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                            Text('Upload foto kartu recoding...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
                                                         ],
                                                     ),
                                                 )

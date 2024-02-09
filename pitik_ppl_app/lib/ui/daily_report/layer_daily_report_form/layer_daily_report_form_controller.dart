@@ -656,10 +656,6 @@ class LayerDailyReportFormController extends GetxController {
                 efCulled.controller.showAlert();
                 isPass = false;
             }
-            if (chickDeadPhotoList.isEmpty) {
-                mfChickDead.controller.showAlert();
-                isPass = false;
-            }
             if (reasonMultipleFormField.controller.listObjectAdded.isEmpty) {
                 Get.snackbar(
                     "Pesan",
@@ -1091,7 +1087,7 @@ class LayerDailyReportFormController extends GetxController {
                 averageWeight: efWeight.getInputNumber(),
                 culling: efCulled.getInputNumber()!.toInt(),
                 mortality: mortality,
-                mortalityImage: chickDeadPhotoList[0]!.url,
+                mortalityImage: chickDeadPhotoList.isNotEmpty ? chickDeadPhotoList[0]!.url : null,
                 mortalityList: reasonMultipleFormField.controller.listObjectAdded.entries.map((entry) => entry.value as MortalityReason).toList(),
                 feedConsumptions: feedMultipleFormField.controller.listObjectAdded.entries.map((entry) {
                     if ((entry.value as Product).feedStockSummaryId == null) {

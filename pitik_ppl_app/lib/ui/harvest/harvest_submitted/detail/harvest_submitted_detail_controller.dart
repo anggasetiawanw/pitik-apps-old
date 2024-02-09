@@ -37,6 +37,8 @@ class HarvestSubmittedDetailController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_detail_page_pengajuan_panen');
+
         coop = Get.arguments[0];
         harvest.value = Get.arguments[1];
         if (Get.arguments.length > 2) {

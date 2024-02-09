@@ -51,6 +51,7 @@ class HarvestRealizationFormController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_form_realisasi_page');
         bundle = Get.arguments;
 
         _fillRealizationData();
@@ -390,6 +391,7 @@ class HarvestRealizationFormController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
+                    GlobalVar.track('Open_success_realisasi_panen_page');
                     Get.to(TransactionSuccessActivity(
                         keyPage: "harvestRealizationSubmitSuccess",
                         message: bundle.getRealization == null ? "Kamu telah berhasil melakukan realisasi panen" : "Kamu telah berhasil mengubah data realisasi panen",

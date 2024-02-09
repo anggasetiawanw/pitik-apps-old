@@ -30,6 +30,7 @@ class ListTransferController extends GetxController with GetSingleTickerProvider
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_panen_page_transfer');
         coop = Get.arguments;
 
         tabController = TabController(vsync: this, length: 2);

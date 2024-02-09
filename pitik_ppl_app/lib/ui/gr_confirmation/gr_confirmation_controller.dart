@@ -60,6 +60,8 @@ class GrConfirmationController extends GetxController {
         isFromTransfer = Get.arguments[2];
         fromCoopRest = Get.arguments[3];
 
+        GlobalVar.track(isFromTransfer ? 'Open_detail_terima_transfer_page' : 'Open_detail_terima_order_page');
+
         grReceivedDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("grReceivedDateField$isFromTransfer"), label: "Tanggal Penerimaan", hint: "2022-12-31", alertText: "Tanggal Penerimaan harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}')
         );
@@ -799,7 +801,9 @@ class GrConfirmationController extends GetxController {
                                                 Expanded(
                                                     child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitGrConfirmation"), label: "Yakin", onClick: () {
                                                         Navigator.pop(Get.context!);
+                                                        GlobalVar.track(isFromTransfer ? 'Click_konfirmasi_button_terima_transfer' : 'Click_konfirmasi_button_penerimaan');
                                                         isLoading.value = true;
+
                                                         AuthImpl().get().then((auth) {
                                                             if (auth != null) {
                                                                 String? productListJson = Mapper.asJsonString(efProductReceivedMap.entries.map((entry) => entry.value).toList());
@@ -822,6 +826,7 @@ class GrConfirmationController extends GetxController {
                                                                     listener: ResponseListener(
                                                                         onResponseDone: (code, message, body, id, packet) {
                                                                             isLoading.value = false;
+                                                                            GlobalVar.track(isFromTransfer ? 'Open_success_terima_transfer_page' : 'Open_success_penerimaan_page');
                                                                             Get.off(TransactionSuccessActivity(
                                                                                 keyPage: "grConfirmationSaved",
                                                                                 message: "Kamu telah berhasil melakukan penerimaan sapronak",

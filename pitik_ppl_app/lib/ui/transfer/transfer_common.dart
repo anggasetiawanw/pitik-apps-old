@@ -130,12 +130,14 @@ class TransferCommon {
                 child: GestureDetector(
                     onTap: () {
                         if (!isGrTransfer) {
+                            GlobalVar.track('Click_card_transfer');
                             Get.toNamed(RoutePage.transferDetailPage, arguments: [coop, procurement, !isGrTransfer])!.then((value) {
                                 if (onRefreshData != null) {
                                     onRefreshData();
                                 }
                             });
                         } else {
+                            GlobalVar.track('Click_card_terima_transfer');
                             Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, true, false])!.then((value) {
                                 if (onRefreshData != null) {
                                     onRefreshData();

@@ -88,7 +88,7 @@ class EditAreaField extends StatelessWidget {
                                                 contentPadding: const EdgeInsets.all(8),
                                                 counterText: "",
                                                 hintText: hint,
-                                                hintStyle: const TextStyle(color: GlobalVar.grayText),
+                                                hintStyle: const TextStyle(color: Color(0xFF9E9D9D)),
                                                 prefixIcon: prefixIcon,
                                                 suffixIcon: Padding(
                                                     padding: const EdgeInsets.all(16),

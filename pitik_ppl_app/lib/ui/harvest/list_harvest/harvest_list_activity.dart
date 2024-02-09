@@ -31,7 +31,10 @@ class HarvestListActivity extends GetView<HarvestListController> {
                     padding: const EdgeInsets.only(bottom: 32),
                     child: FloatingActionButton(
                         elevation: 12,
-                        onPressed: () => Get.toNamed(RoutePage.harvestSubmittedForm, arguments: [controller.coop])!.then((value) => controller.refreshHarvestList()),
+                        onPressed: () {
+                            GlobalVar.track('Click_floating_button_add_panen');
+                            Get.toNamed(RoutePage.harvestSubmittedForm, arguments: [controller.coop])!.then((value) => controller.refreshHarvestList());
+                        },
                         backgroundColor: GlobalVar.primaryOrange,
                         child: const Icon(Icons.add, color: Colors.white),
                     ),

@@ -78,6 +78,8 @@ class TransferRequestController extends GetxController {
     void onInit() {
         super.onInit();
         isLoading.value = true;
+        GlobalVar.track('Open_transfer_form');
+
         coop = Get.arguments[0];
         isEdit = Get.arguments[1];
         isOwnFarm = coop.isOwnFarm != null && coop.isOwnFarm!;
@@ -696,7 +698,9 @@ class TransferRequestController extends GetxController {
                                             Expanded(
                                                 child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeTransferRequest"), label: "Yakin", onClick: () {
                                                     Navigator.pop(Get.context!);
+                                                    GlobalVar.track('Click_button_kirim');
                                                     isLoading.value = true;
+
                                                     AuthImpl().get().then((auth) {
                                                         if (auth != null) {
                                                             String requestedDate = '${Convert.getYear(transferDateField.getLastTimeSelected())}-${Convert.getMonthNumber(transferDateField.getLastTimeSelected())}-${Convert.getDay(transferDateField.getLastTimeSelected())}';
@@ -766,6 +770,7 @@ class TransferRequestController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
+                    GlobalVar.track('Open_success_transfer_page');
                     Get.off(TransactionSuccessActivity(
                         keyPage: "transferSaved",
                         message: "Kamu telah berhasil melakukan permintaan transfer pakan ke kandang lain",

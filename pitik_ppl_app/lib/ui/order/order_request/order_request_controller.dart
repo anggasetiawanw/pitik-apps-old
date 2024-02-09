@@ -67,7 +67,9 @@ class OrderRequestController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_order_form');
         isLoading.value = true;
+
         coop = Get.arguments[0];
         isEdit = Get.arguments[1];
         fromCoopRest = Get.arguments[2];
@@ -694,7 +696,9 @@ class OrderRequestController extends GetxController {
                                             Expanded(
                                                 child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeOrderRequest"), label: "Yakin", onClick: () {
                                                     Navigator.pop(Get.context!);
+                                                    GlobalVar.track('Click_kirim_button_order');
                                                     isLoading.value = true;
+
                                                     AuthImpl().get().then((auth) {
                                                         if (auth != null) {
                                                             String requestedDate = '${Convert.getYear(orderDateField.getLastTimeSelected())}-${Convert.getMonthNumber(orderDateField.getLastTimeSelected())}-${Convert.getDay(orderDateField.getLastTimeSelected())}';
@@ -781,6 +785,7 @@ class OrderRequestController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
+                    GlobalVar.track('Open_success_order_page');
                     Get.off(TransactionSuccessActivity(
                         keyPage: "orderSaved",
                         message: "Kamu telah berhasil melakukan pengajuan permintaan sapronak",

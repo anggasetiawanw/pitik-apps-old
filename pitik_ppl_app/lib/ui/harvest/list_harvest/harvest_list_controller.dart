@@ -1,4 +1,5 @@
 
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
@@ -30,10 +31,13 @@ class HarvestListController extends GetxController with GetSingleTickerProviderS
         tabController.addListener(() {
             if (tabController.index == 0) {
                 HarvestCommon.getSubmittedList(isLoading: isLoading, coop: coop, harvestList: harvestList);
+                GlobalVar.track('Open_panen_page_pengajuan');
             } else if (tabController.index == 1) {
                 HarvestCommon.getDealList(isLoading: isLoading, coop: coop, harvestList: harvestList);
+                GlobalVar.track('Open_panen_page_deal');
             } else {
                 HarvestCommon.getRealizationList(isLoading: isLoading, coop: coop, realizationList: realizationList);
+                GlobalVar.track('Open_panen_page_realisasi');
             }
         });
 

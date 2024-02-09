@@ -43,10 +43,13 @@ class HarvestRealizationDetailActivity extends GetView<HarvestRealizationDetailC
                             child: ButtonFill(
                                 controller: GetXCreator.putButtonFillController("btnHarvestRealizationEdit"),
                                 label: "Edit",
-                                onClick: () => Get.offNamed(RoutePage.harvestRealizationForm, arguments: HarvestRealizationBundle(
-                                    getCoop: controller.coop,
-                                    getRealization: controller.realization
-                                ))
+                                onClick: () {
+                                    GlobalVar.track('Click_button_edit_realisasi');
+                                    Get.offNamed(RoutePage.harvestRealizationForm, arguments: HarvestRealizationBundle(
+                                        getCoop: controller.coop,
+                                        getRealization: controller.realization
+                                    ));
+                                }
                             )
                         )
                     )

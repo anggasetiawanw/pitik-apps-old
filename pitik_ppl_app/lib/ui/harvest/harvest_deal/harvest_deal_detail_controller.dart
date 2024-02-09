@@ -30,6 +30,8 @@ class HarvestDealDetailController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_detail_page_deal_panen');
+
         coop = Get.arguments[0];
         harvest.value = Get.arguments[1];
 
