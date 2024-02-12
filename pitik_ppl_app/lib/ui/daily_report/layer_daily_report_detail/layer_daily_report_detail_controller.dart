@@ -29,6 +29,8 @@ class LayerDailyReportDetailController extends GetxController {
     final String REVISED = 'REVISED';
 
     late Coop coop;
+    late Report reportArguments;
+
     Rx<Report> report = Report().obs;
     Rx<Column> feedConsumptionWidget = const Column().obs;
     Rx<Column> ovkConsumptionWidget = const Column().obs;
@@ -42,15 +44,21 @@ class LayerDailyReportDetailController extends GetxController {
     void onInit() {
         super.onInit();
         coop = Get.arguments[0];
+        reportArguments = Get.arguments[1];
         report.value = Get.arguments[1];
 
-        bfEdit = ButtonFill(controller: GetXCreator.putButtonFillController("layerDailyDetailEdit"), label: "Edit", onClick: () => Get.toNamed(RoutePage.layerDailyReportForm, arguments: [coop, report.value])!.then((value) {
-            if (value) {
-                Get.back();
-            } else {
-                getDetailReport();
-            }
-        }));
+        bfEdit = ButtonFill(controller: GetXCreator.putButtonFillController("layerDailyDetailEdit"), label: "Edit", onClick: () {
+            report.value.date = reportArguments.date;
+            report.value.status = reportArguments.status;
+
+            Get.toNamed(RoutePage.layerDailyReportForm, arguments: [coop, report.value])!.then((value) {
+                if (value != null) {
+                    Get.back();
+                } else {
+                    getDetailReport();
+                }
+            });
+        });
         bfRevision = ButtonFill(controller: GetXCreator.putButtonFillController("layerDailyDetailRevision"), label: "Permintaan Edit", onClick: () => Get.toNamed(RoutePage.layerDailyReportRevision, arguments: [coop, report.value])!.then((value) {
             if (value) {
                 Get.back();
@@ -73,12 +81,12 @@ class LayerDailyReportDetailController extends GetxController {
                 apiKey: ApiMapping.taskApi,
                 service: ListApi.getDetailDailyReport,
                 context: context,
-                body: ['Bearer ${auth.token}', auth.id, ListApi.pathDailyReportDetail(coop.farmingCycleId!, report.value.date!)],
+                body: ['Bearer ${auth.token}', auth.id, ListApi.pathDailyReportDetail(coop.farmingCycleId!, reportArguments.date!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if (body.data != null) {
                             report.value = body.data as Report;
-                            isCanRevision.value = (report.value.status == EnumDailyReport.LATE || report.value.status != EnumDailyReport.FINISHED) && report.value.revisionStatus == null;
+                            isCanRevision.value = (reportArguments.status == EnumDailyReport.LATE || reportArguments.status == EnumDailyReport.FINISHED) && report.value.revisionStatus == null;
                         }
 
                         generateProductCards(productList: report.value.feedConsumptions ?? [], isFeed: true);

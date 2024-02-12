@@ -32,7 +32,7 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     decoration: const BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]),
                     child: controller.bfRevision,
-                ) : controller.report.value.status != EnumDailyReport.LATE && controller.report.value.status != EnumDailyReport.FINISHED && controller.report.value.revisionStatus != 'REVISED' ? Container(
+                ) : controller.reportArguments.status! != EnumDailyReport.LATE && controller.reportArguments.status! != EnumDailyReport.FINISHED && controller.report.value.revisionStatus != 'REVISED' ? Container(
                     padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     decoration: const BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 2)]),
                     child: controller.bfEdit,
@@ -60,10 +60,10 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                                         children: [
                                                             Text("Detail Laporan Harian", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
                                                             const SizedBox(height: 4),
-                                                            Text("${controller.report.value.date}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12))
+                                                            Text(controller.reportArguments.date ?? '-', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12))
                                                         ]
                                                     ),
-                                                    StatusDailyReport(status: controller.report.value.status!)
+                                                    StatusDailyReport(status: controller.reportArguments.status!)
                                                 ]
                                             )
                                         ]
@@ -109,49 +109,57 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                 const SizedBox(height: 16),
                                 const Divider(color: GlobalVar.outlineColor, height: 1.4),
                                 const SizedBox(height: 16),
-                                Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: GlobalVar.outlineColor, width: 1)
-                                    ),
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: List.generate(controller.report.value.mortalityList.length, (index) => Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                                Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                controller.report.value.mortalityList.isNotEmpty ? Column(
+                                    children: [
+                                        Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                border: Border.all(color: GlobalVar.outlineColor, width: 1)
+                                            ),
+                                            padding: const EdgeInsets.all(16),
+                                            child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: List.generate(controller.report.value.mortalityList.length, (index) => Column(
                                                     children: [
-                                                        Text('Kematian', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                        const SizedBox(height: 4),
-                                                        Text(
-                                                            '${controller.report.value.mortalityList[index]!.quantity ?? '-'} Ekor',
-                                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                        )
+                                                        Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                                Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                        Text('Kematian', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 4),
+                                                                        Text(
+                                                                            '${controller.report.value.mortalityList[index]!.quantity ?? '-'} Ekor',
+                                                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                                        )
+                                                                    ]
+                                                                ),
+                                                                Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                                    children: [
+                                                                        Text('Alasan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                                                        const SizedBox(height: 4),
+                                                                        Text(
+                                                                            controller.report.value.mortalityList[index]!.cause ?? '-',
+                                                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                                                        )
+                                                                    ]
+                                                                )
+                                                            ]
+                                                        ),
+                                                        if (index < controller.report.value.mortalityList.length) ...[
+                                                            const SizedBox(height: 8),
+                                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
+                                                            const SizedBox(height: 8),
+                                                        ]
                                                     ]
-                                                ),
-                                                Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                    children: [
-                                                        Text('Alasan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                        const SizedBox(height: 4),
-                                                        Text(
-                                                            controller.report.value.mortalityList[index]!.cause ?? '-',
-                                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                        )
-                                                    ]
-                                                ),
-                                                if (index < controller.report.value.mortalityList.length - 1) ...[
-                                                    const SizedBox(height: 16),
-                                                    const Divider(color: GlobalVar.outlineColor, height: 1.4),
-                                                    const SizedBox(height: 16),
-                                                ]
-                                            ]
-                                        ))
-                                    )
-                                ),
-                                const SizedBox(height: 16),
+                                                ))
+                                            )
+                                        ),
+                                        const SizedBox(height: 16)
+                                    ]
+                                ) : const SizedBox(),
                                 Text('Produksi Telur', style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
                                 const SizedBox(height: 8),
                                 Container(

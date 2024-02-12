@@ -481,7 +481,7 @@ class LayerDailyReportFormController extends GetxController {
         if (report.ovkConsumptions != null) {
             for (var product in report.ovkConsumptions!) {
                 ovkMultipleFormField.getController().addData(
-                    child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product)),
+                    child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product), reason: product != null ? product.remarks ?? '' : ''),
                     object: product,
                     key: getOvkProductName(product: product)
                 );
@@ -502,7 +502,7 @@ class LayerDailyReportFormController extends GetxController {
                     efRetakTotal.setInput('${egg.weight}');
                 } else if (egg.productItem!.name == 'Telur Pecah') {
                     efPecah.setInput('${egg.quantity}');
-                    efPecah.setInput('${egg.weight}');
+                    efPecahTotal.setInput('${egg.weight}');
                 } else if (egg.productItem!.name == 'Telur Kotor') {
                     efKotor.setInput('${egg.quantity}');
                     efKotorTotal.setInput('${egg.weight}');
@@ -1005,55 +1005,58 @@ class LayerDailyReportFormController extends GetxController {
                     ),
                     isScrollControlled: true,
                     context: Get.context!,
-                    builder: (context) => Container(
-                        color: Colors.transparent,
-                        child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                        Center(
-                                            child: Container(
-                                                width: 60,
-                                                height: 4,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                                                    color: GlobalVar.outlineColor
-                                                )
-                                            )
-                                        ),
-                                        const SizedBox(height: 16),
-                                        Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
-                                        const SizedBox(height: 16),
-                                        Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                        const SizedBox(height: 16),
-                                        Center(child: SvgPicture.asset('images/people_ask_confirm_icon.svg')),
-                                        const SizedBox(height: 32),
-                                        SizedBox(
-                                            width: MediaQuery.of(Get.context!).size.width - 32,
-                                            child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                    Expanded(
-                                                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnLayerDailyReportYes"), label: "Yakin", onClick: () {
-                                                            Navigator.pop(Get.context!);
-                                                            _pushDailyReportToServer();
-                                                        })
-                                                    ),
-                                                    const SizedBox(width: 16),
-                                                    Expanded(
-                                                        child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnLayerDailyReportNo"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                    builder: (context) => ClipRRect(
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                        child: Container(
+                            color: Colors.white,
+                            child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                            Center(
+                                                child: Container(
+                                                    width: 60,
+                                                    height: 4,
+                                                    decoration: const BoxDecoration(
+                                                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                                                        color: GlobalVar.outlineColor
                                                     )
-                                                ]
-                                            )
-                                        ),
-                                        const SizedBox(height: 32)
-                                    ]
+                                                )
+                                            ),
+                                            const SizedBox(height: 16),
+                                            Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
+                                            const SizedBox(height: 16),
+                                            Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
+                                            const SizedBox(height: 16),
+                                            Center(child: SvgPicture.asset('images/people_ask_confirm_icon.svg')),
+                                            const SizedBox(height: 32),
+                                            SizedBox(
+                                                width: MediaQuery.of(Get.context!).size.width - 32,
+                                                child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                        Expanded(
+                                                            child: ButtonFill(controller: GetXCreator.putButtonFillController("btnLayerDailyReportYes"), label: "Yakin", onClick: () {
+                                                                Navigator.pop(Get.context!);
+                                                                _pushDailyReportToServer();
+                                                            })
+                                                        ),
+                                                        const SizedBox(width: 16),
+                                                        Expanded(
+                                                            child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnLayerDailyReportNo"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!))
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                            const SizedBox(height: 32)
+                                        ]
+                                    )
                                 )
                             )
-                        )
+                        ),
                     )
                 );
             }

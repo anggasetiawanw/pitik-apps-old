@@ -454,188 +454,179 @@ class PulletInController extends GetxController {
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: Get.context!,
-            builder: (context) => Container(
-                decoration: const BoxDecoration(
+            builder: (context) => ClipRRect(
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                child: Container(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                    ),
-                ),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            width: 60,
-                            height: 4,
-                            decoration: BoxDecoration(
-                                color: GlobalVar.outlineColor,
-                                borderRadius: BorderRadius.circular(2),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                width: 60,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                    color: GlobalVar.outlineColor,
+                                    borderRadius: BorderRadius.circular(2),
+                                ),
                             ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold))
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                                children: [
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Tanggal Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTanggal.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efPopulation.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Umur", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efAge.getInput()} Minggu", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTruckGo.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTruckCome.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Selesai Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                            Text(dtFinishPulletIn.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    )
-                                ]
-                            )
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Expanded(
-                                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreePulletIn"), label: "Yakin", onClick: () {
-                                            Navigator.pop(Get.context!);
-                                            AuthImpl().get().then((auth) {
-                                                if (auth != null) {
-                                                    isLoading.value = true;
-                                                    RequestChickin bodyPayload = generatePayload();
-                                                    Service.push(
-                                                        apiKey: "productReportApi",
-                                                        service: ListApi.updateRequestChickin,
-                                                        context: context,
-                                                        body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(bodyPayload)],
-                                                        listener: ResponseListener(
-                                                            onResponseDone: (code, message, body, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.off(TransactionSuccessActivity(
-                                                                    keyPage: "pulletInSaved",
-                                                                    message: "Selamat kamu sudah selesai melakukan Pullet in",
-                                                                    showButtonHome: false,
-                                                                    showButtonShare: true,
-                                                                    onTapClose: () => Get.back(result: true),
-                                                                    onTapHome: () {},
-                                                                    onTapShare: () async {
-                                                                        String text = 'Pullet In Kawan Pitik\n\n';
-                                                                        text += 'Cabang : ${coop.coopCity}\n';
-                                                                        text += 'Kandang : ${coop.coopName}\n';
-                                                                        text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
-                                                                        text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Minggu\n';
-                                                                        text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
-                                                                        text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
-                                                                        text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
-                                                                        text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';
-                                                                        text += 'Jam truk tiba : ${bodyPayload.truckArrival ?? '-'}\n';
-                                                                        text += 'Selesai Pullet In : ${bodyPayload.finishChickIn ?? '-'}\n';
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                                child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold))
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Tanggal Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTanggal.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efPopulation.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Umur", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efAge.getInput()} Minggu", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTruckGo.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTruckCome.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Selesai Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                                Text(dtFinishPulletIn.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        )
+                                    ]
+                                )
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Expanded(
+                                            child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreePulletIn"), label: "Yakin", onClick: () {
+                                                Navigator.pop(Get.context!);
+                                                AuthImpl().get().then((auth) {
+                                                    if (auth != null) {
+                                                        isLoading.value = true;
+                                                        RequestChickin bodyPayload = generatePayload();
+                                                        Service.push(
+                                                            apiKey: "productReportApi",
+                                                            service: ListApi.updateRequestChickin,
+                                                            context: context,
+                                                            body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(bodyPayload)],
+                                                            listener: ResponseListener(
+                                                                onResponseDone: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.off(TransactionSuccessActivity(
+                                                                        keyPage: "pulletInSaved",
+                                                                        message: "Selamat kamu sudah selesai melakukan Pullet in",
+                                                                        showButtonHome: false,
+                                                                        showButtonShare: true,
+                                                                        onTapClose: () => Get.back(result: true),
+                                                                        onTapHome: () {},
+                                                                        onTapShare: () async {
+                                                                            String text = 'Pullet In Kawan Pitik\n\n';
+                                                                            text += 'Cabang : ${coop.coopCity}\n';
+                                                                            text += 'Kandang : ${coop.coopName}\n';
+                                                                            text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
+                                                                            text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Minggu\n';
+                                                                            text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
+                                                                            text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
+                                                                            text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
+                                                                            text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';
+                                                                            text += 'Jam truk tiba : ${bodyPayload.truckArrival ?? '-'}\n';
+                                                                            text += 'Selesai Pullet In : ${bodyPayload.finishChickIn ?? '-'}\n';
 
-                                                                        Share.share(text);
-
-                                                                        // final String getUrl = "https://api.whatsapp.com/send?phone=62&text=$text ";
-                                                                        // final Uri url = Uri.parse(Uri.encodeFull(getUrl));
-                                                                        // if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                                                                        //     throw Exception('Could not launch $url');
-                                                                        // }
-                                                                    },
-                                                                ));
-                                                            },
-                                                            onResponseFail: (code, message, body, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.snackbar(
-                                                                    "Pesan",
-                                                                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                                                    snackPosition: SnackPosition.TOP,
-                                                                    colorText: Colors.white,
-                                                                    backgroundColor: Colors.red
-                                                                );
-                                                            },
-                                                            onResponseError: (exception, stacktrace, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.snackbar(
-                                                                    "Pesan",
-                                                                    "Terjadi Kesalahan Internal",
-                                                                    snackPosition: SnackPosition.TOP,
-                                                                    colorText: Colors.white,
-                                                                    backgroundColor: Colors.red
-                                                                );
-                                                            },
-                                                            onTokenInvalid: () => GlobalVar.invalidResponse()
-                                                        )
-                                                    );
-                                                } else {
-                                                    GlobalVar.invalidResponse();
-                                                }
-                                            });
-                                        }),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreePulletIn"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
-                                ]
-                            )
-                        ),
-                        const SizedBox(height: GlobalVar.bottomSheetMargin)
-                    ]
-                )
+                                                                            Share.share(text);
+                                                                        },
+                                                                    ));
+                                                                },
+                                                                onResponseFail: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red
+                                                                    );
+                                                                },
+                                                                onResponseError: (exception, stacktrace, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan Internal",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red
+                                                                    );
+                                                                },
+                                                                onTokenInvalid: () => GlobalVar.invalidResponse()
+                                                            )
+                                                        );
+                                                    } else {
+                                                        GlobalVar.invalidResponse();
+                                                    }
+                                                });
+                                            }),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreePulletIn"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
+                                    ]
+                                )
+                            ),
+                            const SizedBox(height: GlobalVar.bottomSheetMargin)
+                        ]
+                    )
+                ),
             )
         );
     }
