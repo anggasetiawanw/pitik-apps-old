@@ -28,8 +28,10 @@ class CheckBoxField extends StatelessWidget {
                     if (onTap(controller) == null) {
                         if (controller.isChecked.isTrue) {
                             controller.unchecked();
+                            onTap(controller);
                         } else {
                             controller.checked();
+                            onTap(controller);
                         }
                     } else {
                         controller.isChecked.value = onTap(controller);
@@ -43,7 +45,7 @@ class CheckBoxField extends StatelessWidget {
                             height: 20,
                             decoration: BoxDecoration(
                                 border: Border.fromBorderSide(BorderSide(
-                                    color: GlobalVar.primaryOrange,
+                                    color: controller.isChecked.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
                                     width: 2
                                 )),
                                 color: controller.isChecked.isTrue ? GlobalVar.primaryOrange : Colors.transparent
@@ -51,7 +53,7 @@ class CheckBoxField extends StatelessWidget {
                             child: controller.isChecked.isTrue ? const Icon(Icons.check, color: Colors.white, size: 17) : const SizedBox(),
                         ),
                         const SizedBox(width: 8),
-                        Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                        Expanded(child: Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)))
                     ]
                 )
             )

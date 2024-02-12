@@ -46,8 +46,10 @@ import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_
                                      ),
                                      padding: const EdgeInsets.all(16),
                                      child: Row(
+                                         crossAxisAlignment: CrossAxisAlignment.start,
                                          children: [
                                              SvgPicture.asset('images/information_blue_icon.svg'),
+                                             const SizedBox(width: 8),
                                              Expanded(
                                                  child: Text(
                                                      "Pada Form Revisi, anda harus memastikan bahwa semua data yang diisi adalah benar dan revisi data sudah final dimana tidak ada rekayasa apapun yang dilakukan dalam Kandang",
@@ -65,6 +67,7 @@ import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_
                                      ),
                                      padding: const EdgeInsets.all(16),
                                      child: Column(
+                                         crossAxisAlignment: CrossAxisAlignment.start,
                                          children: [
                                              Text("Kenapa anda harus melakukan Revisi?", style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
                                              const SizedBox(height: 8),
@@ -74,30 +77,33 @@ import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_
                                                      children: [
                                                          controller.stateReasonRevision.value == 0 ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                                                          const SizedBox(width: 8),
-                                                         Expanded(child: Text('Perubahan data recording karena adjustment', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)))
+                                                         Expanded(child: Text('Perubahan data recording karena adjustment', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)))
                                                      ]
                                                  )
                                              ),
+                                             const SizedBox(height: 16),
                                              GestureDetector(
                                                  onTap: () => controller.stateReasonRevision.value = 1,
                                                  child: Row(
                                                      children: [
                                                          controller.stateReasonRevision.value == 1 ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                                                          const SizedBox(width: 8),
-                                                         Expanded(child: Text('Recording tidak jelas karena terkena air coretan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)))
+                                                         Expanded(child: Text('Recording tidak jelas karena terkena air coretan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)))
                                                      ]
                                                  )
                                              ),
+                                             const SizedBox(height: 16),
                                              GestureDetector(
                                                  onTap: () => controller.stateReasonRevision.value = 2,
                                                  child: Row(
                                                      children: [
                                                          controller.stateReasonRevision.value == 2 ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                                                          const SizedBox(width: 8),
-                                                         Expanded(child: Text('Other', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)))
+                                                         Expanded(child: Text('Other', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)))
                                                      ]
                                                  )
                                              ),
+                                             const SizedBox(height: 8),
                                              controller.stateReasonRevision.value == 2 ? controller.efOtherReasonRevision : const SizedBox()
                                          ]
                                      )
@@ -110,44 +116,52 @@ import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_
                                      ),
                                      padding: const EdgeInsets.all(16),
                                      child: Column(
+                                         crossAxisAlignment: CrossAxisAlignment.start,
                                          children: [
                                              Text("Revisi apa yang anda lakukan?", style: TextStyle(color: GlobalVar.black, fontSize: 14, fontWeight: GlobalVar.bold)),
-                                             const SizedBox(height: 8),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeFeedConsumption'),
                                                  title: 'Ubah Konsumsi Pakan',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Ubah Konsumsi Pakan', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeReVaccination'),
                                                  title: 'Re-Vaccination',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Re-Vaccination', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangePemberianOVK'),
                                                  title: 'Pemberian OVK',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Pemberian OVK', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangePencegahanPenyakit'),
                                                  title: 'Pencegahan Penyakit',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Pencegahan Penyakit', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeAbw'),
                                                  title: 'Ubah ABW',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Ubah ABW', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeMortality'),
                                                  title: 'Ubah Kematian',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Ubah Kematian', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeCulled'),
                                                  title: 'Ubah Afkir',
                                                  onTap: (checkBoxController) => controller.updateRevisionReasonList(reason: 'Ubah Afkir', isAdd: checkBoxController.isChecked.value)
                                              ),
+                                             const SizedBox(height: 16),
                                              CheckBoxField(
                                                  controller: GetXCreator.putCheckBoxFieldController('layerDailyRevisionCheckChangeTotalEggHarvest'),
                                                  title: 'Ubah jumlah panen telur',

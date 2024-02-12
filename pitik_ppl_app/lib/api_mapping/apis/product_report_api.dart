@@ -8,6 +8,7 @@ import 'package:engine/request/annotation/request/get.dart';
 import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
+import 'package:model/daily_report_revision_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/procurement_detail_response.dart';
 import 'package:model/response/procurement_list_response.dart';
@@ -611,7 +612,26 @@ class ProductReportApi {
     @JSON(isPlaint: true)
     void saveStocks(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
 
+    /// The function `requestDailyReportRevision` is a POST request that sends a
+    /// daily report revision with authorization, X-ID, path, and data as
+    /// parameters.
+    ///
+    /// Args:
+    ///   authorization (String): The "Authorization" header is used to send
+    /// authentication credentials to the server. It typically contains a token or a
+    /// username and password combination.
+    ///   xId (String): The xId parameter is a header parameter that represents the
+    /// X-ID value. It is used to identify a specific entity or resource in the
+    /// request.
+    ///   path (String): The `path` parameter is used to specify the path of the
+    /// resource that the request is being made to. It is typically used in RESTful
+    /// APIs to identify a specific resource or endpoint.
+    ///   data (String): The "data" parameter is a string that represents the data
+    /// for the daily report revision request.
     @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
     @JSON(isPlaint: true)
     void requestDailyReportRevision(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("data") String data) {}
+
+    @GET(value: GET.PATH_PARAMETER, as: DailyReportRevision, error: ErrorResponse)
+    void getRequestDailyReportRevision(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
 }

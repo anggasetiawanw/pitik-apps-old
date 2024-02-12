@@ -150,7 +150,7 @@ class LayerDailyReportRevisionController extends GetxController {
                                                                 apiKey: ApiMapping.productReportApi,
                                                                 service: ListApi.requestDailyReportRevision,
                                                                 context: context,
-                                                                body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/daily-reports/${report.taskTicketId}/request-edit', Mapper.asJsonString(bodyRequest)],
+                                                                body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/daily-reports/${report.date}/revision', Mapper.asJsonString(bodyRequest)],
                                                                 listener: ResponseListener(
                                                                     onResponseDone: (code, message, body, id, packet) {
                                                                         isLoading.value = false;

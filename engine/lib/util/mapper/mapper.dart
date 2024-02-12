@@ -42,6 +42,12 @@ class Mapper {
                 result += ']';
                 return result;
             } else {
+                if (persistanceSource is String) {
+                    return '"$persistanceSource"';
+                } else if (persistanceSource is int || persistanceSource is double || persistanceSource is bool) {
+                    return '$persistanceSource';
+                }
+
                 InstanceMirror instanceMirror = SetupModel.reflect(persistanceSource);
 
                 for (var v in instanceMirror.type.declarations.values) {

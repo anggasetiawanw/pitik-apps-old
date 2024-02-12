@@ -125,51 +125,55 @@ class PulletInActivity extends GetView<PulletInController> {
                                         ),
                                         controller.dtFinishPulletIn,
                                         controller.eaDesc,
-                                        controller.isLoadingSuratJalan.isTrue ? SizedBox(
-                                            height: 50,
-                                            width: MediaQuery.of(context).size.width - 32,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(top: 16),
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
-                                                        const SizedBox(width: 16),
-                                                        Text('Upload foto Surat Jalan...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
-                                                    ],
-                                                ),
-                                            )
-                                        ) : controller.mfSuratJalan,
-                                        controller.isLoadingFormPulletIn.isTrue ? SizedBox(
-                                            height: 50,
-                                            width: MediaQuery.of(context).size.width - 32,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(top: 16),
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
-                                                        const SizedBox(width: 16),
-                                                        Text('Upload foto Form Pullet In...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
-                                                    ],
-                                                ),
-                                            )
-                                        ) : controller.mfFormPullet,
-                                        controller.isLoadingAnotherPullet.isTrue ? SizedBox(
-                                            height: 50,
-                                            width: MediaQuery.of(context).size.width - 32,
-                                            child: Padding(
-                                                padding: const EdgeInsets.only(top: 16),
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                        const CircularProgressIndicator(color: GlobalVar.primaryOrange),
-                                                        const SizedBox(width: 16),
-                                                        Text('Upload foto dokumen lainnya...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
-                                                    ],
-                                                ),
-                                            )
-                                        ) : controller.mfAnotherPullet,
+                                        controller.request.value!.hasFinishedDOCin == null || !controller.request.value!.hasFinishedDOCin! ? Column(
+                                            children: [
+                                                controller.isLoadingSuratJalan.isTrue ? SizedBox(
+                                                    height: 50,
+                                                    width: MediaQuery.of(context).size.width - 32,
+                                                    child: Padding(
+                                                        padding: const EdgeInsets.only(top: 16),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                                const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                                const SizedBox(width: 16),
+                                                                Text('Upload foto Surat Jalan...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                    )
+                                                ) : controller.mfSuratJalan,
+                                                controller.isLoadingFormPulletIn.isTrue ? SizedBox(
+                                                    height: 50,
+                                                    width: MediaQuery.of(context).size.width - 32,
+                                                    child: Padding(
+                                                        padding: const EdgeInsets.only(top: 16),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                                const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                                const SizedBox(width: 16),
+                                                                Text('Upload foto Form Pullet In...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                    )
+                                                ) : controller.mfFormPullet,
+                                                controller.isLoadingAnotherPullet.isTrue ? SizedBox(
+                                                    height: 50,
+                                                    width: MediaQuery.of(context).size.width - 32,
+                                                    child: Padding(
+                                                        padding: const EdgeInsets.only(top: 16),
+                                                        child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                                const CircularProgressIndicator(color: GlobalVar.primaryOrange),
+                                                                const SizedBox(width: 16),
+                                                                Text('Upload foto dokumen lainnya...', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 14, fontWeight: GlobalVar.medium))
+                                                            ],
+                                                        ),
+                                                    )
+                                                ) : controller.mfAnotherPullet
+                                            ]
+                                        ) : const SizedBox(),
                                         controller.isAlreadySubmit.isTrue ? Column(
                                             children: [
                                                 const SizedBox(height: 16),

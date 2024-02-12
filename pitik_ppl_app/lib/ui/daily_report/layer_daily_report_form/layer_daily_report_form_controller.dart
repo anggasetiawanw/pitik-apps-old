@@ -109,7 +109,7 @@ class LayerDailyReportFormController extends GetxController {
     late EditField efKotorTotal;
 
     SpinnerField spAbnormalEgg = SpinnerField(controller: GetXCreator.putSpinnerFieldController("layerDailyFormAbnormalEgg"), label: "Ada Telur Abnormal?", hint: "Pilih salah satu", alertText: "Harus dipilih..!",
-        items: const {'Ya': false, 'Tidak' : false,},
+        items: const {'Ya': false, 'Tidak' : false},
         onSpinnerSelected: (text) {}
     );
 
@@ -437,8 +437,16 @@ class LayerDailyReportFormController extends GetxController {
             onTyping: (text, field) => countTotalWeight()
         );
 
-        _fillData();
         _toChickenProduction();
+    }
+
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            spAbnormalEgg.controller.generateItems({'Ya': false, 'Tidak' : false});
+            _fillData();
+        });
     }
 
     void _fillData() {
@@ -873,6 +881,8 @@ class LayerDailyReportFormController extends GetxController {
             Product product = ovkSuggestField.getController().getSelectedObject();
             product.quantity = ovkQuantityField.getInputNumber() ?? 0;
             product.remarks = spOvkReason.controller.textSelected.value;
+            product.subcategoryCode = 'OVK';
+            product.subcategoryName = 'OVK';
 
             return product;
         } else {
@@ -896,6 +906,8 @@ class LayerDailyReportFormController extends GetxController {
         if (ovkSuggestField.getController().getSelectedObject() != null) {
             Product product = ovkSuggestField.getController().getSelectedObject();
             product.quantity = (oldProduct.quantity ?? 0) + (ovkQuantityField.getInputNumber() ?? 0);
+            product.subcategoryCode = 'OVK';
+            product.subcategoryName = 'OVK';
 
             return product;
         } else {

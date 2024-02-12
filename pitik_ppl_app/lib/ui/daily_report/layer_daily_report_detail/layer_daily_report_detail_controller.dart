@@ -59,13 +59,18 @@ class LayerDailyReportDetailController extends GetxController {
                 }
             });
         });
-        bfRevision = ButtonFill(controller: GetXCreator.putButtonFillController("layerDailyDetailRevision"), label: "Permintaan Edit", onClick: () => Get.toNamed(RoutePage.layerDailyReportRevision, arguments: [coop, report.value])!.then((value) {
-            if (value) {
-                Get.back();
-            } else {
-                getDetailReport();
-            }
-        }));
+        bfRevision = ButtonFill(controller: GetXCreator.putButtonFillController("layerDailyDetailRevision"), label: "Permintaan Edit", onClick: () {
+            report.value.date = reportArguments.date;
+            report.value.status = reportArguments.status;
+
+            Get.toNamed(RoutePage.layerDailyReportRevision, arguments: [coop, report.value])!.then((value) {
+                if (value) {
+                    Get.back();
+                } else {
+                    getDetailReport();
+                }
+            });
+        });
     }
 
     @override

@@ -212,9 +212,7 @@ class PulletInController extends GetxController {
                                 efAge.setInput('${body.data!.pulletInWeeks ?? ''}');
                             }
 
-                            if (body.data != null && body.data!.hasFinishedDOCin != null && body.data!.hasFinishedDOCin!) {
-                                setDetailForm((body).data!);
-                            }
+                            setDetailForm((body).data!);
                             isLoading.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) {
@@ -261,31 +259,28 @@ class PulletInController extends GetxController {
             doneDocIn = DateFormat("HH:mm").format(newDoneDocIn);
         } catch (_) {}
 
-        efPopulation.controller.disable();
 
         efBw.setInput((request.bw ?? 0).toString());
-        efBw.controller.disable();
-
         efUniform.setInput((request.uniformity ?? 0).toString());
-        efUniform.controller.disable();
-
         dtTruckGo.controller.setTextSelected(truckGo);
-        dtTruckGo.controller.disable();
-
         dtTruckCome.controller.setTextSelected(truckCome);
-        dtTruckCome.controller.disable();
-
         dtFinishPulletIn.controller.setTextSelected(doneDocIn);
-        dtFinishPulletIn.controller.disable();
-
         eaDesc.setValue(request.remarks ?? '');
-        eaDesc.controller.disable();
 
-        mfAnotherPullet.controller.disable();
-        mfFormPullet.controller.disable();
-        mfSuratJalan.controller.disable();
+        if (request.hasFinishedDOCin != null && request.hasFinishedDOCin!) {
+            efPopulation.controller.disable();
+            efBw.controller.disable();
+            efUniform.controller.disable();
+            dtTruckGo.controller.disable();
+            dtTruckCome.controller.disable();
+            dtFinishPulletIn.controller.disable();
+            eaDesc.controller.disable();
+            mfAnotherPullet.controller.disable();
+            mfFormPullet.controller.disable();
+            mfSuratJalan.controller.disable();
 
-        isAlreadySubmit.value = true;
+            isAlreadySubmit.value = true;
+        }
     }
 
     void uploadFile(File? file, String mediaField) {

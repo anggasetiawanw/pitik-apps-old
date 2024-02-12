@@ -1,4 +1,5 @@
 import 'package:engine/model/base_model.dart';
+import 'package:engine/util/mapper/annotation/is_children.dart';
 
 /*
   @author AKBAR <akbar.attijani@gmail.com>
@@ -8,6 +9,8 @@ import 'package:engine/model/base_model.dart';
 class DailyReportRevision {
 
     String? reason;
+
+    @IsChildren()
     List<String?> changes;
 
     DailyReportRevision({this.reason, this.changes = const []});

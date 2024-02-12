@@ -37,6 +37,8 @@ import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_da
 import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_daily_report_detail_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_daily_report_revision_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_daily_report_revision_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
@@ -153,6 +155,7 @@ class AppRoutes {
         GetPage(name: RoutePage.dailyReportDetail, page: ()=> const DailyReportDetailActivity(), binding: DailyReportDetailBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.layerDailyReportForm, page: ()=> const LayerDailyReportFormActivity(), binding: LayerDailyReportFormBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.layerDailyReportDetail, page: ()=> const LayerDailyReportDetailActivity(), binding: LayerDailyReportDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportRevision, page: () => const LayerDailyReportRevisionActivity(), binding: LayerDailyReportRevisionBinding(context: GlobalVar.getContext())),
 
         // Smart Controller
         GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
