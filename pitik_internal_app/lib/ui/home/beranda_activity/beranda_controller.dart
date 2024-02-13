@@ -2,12 +2,11 @@
 
 import 'dart:io';
 
-import 'package:components/custom_dialog.dart';
 import 'package:components/global_var.dart';
-import 'package:components/listener/custom_dialog_listener.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/check_version.dart';
 import 'package:engine/util/location_permission.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fl_location/fl_location.dart';
@@ -18,9 +17,12 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/internal_app/profile_response.dart';
+<<<<<<< HEAD
 import 'package:open_store/open_store.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
+=======
+>>>>>>> main
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
@@ -59,6 +61,11 @@ class BerandaController extends GetxController {
   DateTime timeEnd = DateTime.now();
   RxInt countUnreadNotifications = 0.obs;
 
+  CheckVersion checkVersion = CheckVersion(
+    appStoreId: F.appStoreId,
+    androidAppBundleId: F.androidAppBundleId,
+  );
+
   List<SimCard> simCard = <SimCard>[];
   @override
   void onInit() {
@@ -69,15 +76,19 @@ class BerandaController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    checkVersion(Get.context!);
+    await checkVersion.check(context);
     getRole();
     getUnreadNotif();
   }
 
-  void refreshHome(BuildContext context) {
+  void refreshHome(BuildContext context) async{
     isLoading.value = true;
+<<<<<<< HEAD
     getUnreadNotif();
     checkVersion(context);
+=======
+    await checkVersion.check(context);
+>>>>>>> main
     getRole();
   }
 
@@ -267,6 +278,7 @@ class BerandaController extends GetxController {
     isLoading.value = false;
   }
 
+<<<<<<< HEAD
   void checkDeepLink() {
     if (Constant.pushNotifPayload.isNotEmpty) {
       DeepLinkUtils.process(Constant.pushNotifPayload.value).then((value) => refreshHome(context));
@@ -335,6 +347,9 @@ class BerandaController extends GetxController {
             },
             onTokenInvalid: () => Constant.invalidResponse()));
   }
+=======
+
+>>>>>>> main
 }
 
 class BerandaBindings extends Bindings {
@@ -344,23 +359,4 @@ class BerandaBindings extends Bindings {
   void dependencies() {
     Get.lazyPut(() => BerandaController(context: context));
   }
-}
-
-class DialogUpdateListener implements CustomDialogListener {
-  @override
-  set onDialogCancel(Function(BuildContext context, int id, List packet) onDialogCancel) {}
-
-  @override
-  set onDialogOk(Function(BuildContext context, int id, List packet) onDialogOk) {
-    OpenStore.instance.open(
-      appStoreId: '284815942',
-      androidAppBundleId: 'id.pitik.mobile.mobile_flutter',
-    );
-  }
-
-  @override
-  Function(BuildContext context, int id, List packet) get onDialogCancel => throw UnimplementedError();
-
-  @override
-  Function(BuildContext context, int id, List packet) get onDialogOk => throw UnimplementedError();
 }

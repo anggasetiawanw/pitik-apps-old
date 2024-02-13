@@ -14,6 +14,10 @@ class AppStrings {
 
     static const String BASE_URL_PROD = "https://api.pitik.id/";
     static const String BASE_URL_STAGING = "https://api-dev.pitik.id/";
+    static const String APPSTOREID_INTERNAL_STAGING = "6469581106";
+    static const String APPSTOREID_INTERNAL_PROD = "6469581106";
+    static const String ANDROID_BUNDLEID_INTERNAL_STAGING = "id.pitik.mobile.mobile_flutter.staging";
+    static const String ANDROID_BUNDLEID_INTERNAL_PROD = "id.pitik.mobile.mobile_flutter";
 
     static const String AYAM_UTUH ="Ayam Utuh";
     static const String LIVE_BIRD = "Live Bird";

@@ -68,4 +68,26 @@ class F {
                 return AppStrings.MIX_PANEL_TOKE_PRODUCTION;
         }
     }
+
+    static String get appStoreId {
+        switch (appFlavor) {
+            case Flavor.PROD:
+                return AppStrings.APPSTOREID_INTERNAL_PROD;
+            case Flavor.DEV:
+                return AppStrings.APPSTOREID_INTERNAL_STAGING;
+            default:
+                return AppStrings.APPSTOREID_INTERNAL_PROD;
+        }
+    }
+
+    static String get androidAppBundleId {
+        switch (appFlavor) {
+            case Flavor.PROD:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_PROD;
+            case Flavor.DEV:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_STAGING;
+            default:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_PROD;
+        }
+    }
 }
