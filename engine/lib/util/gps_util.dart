@@ -58,7 +58,7 @@ class GpsUtil {
     ///   listener (GpsListener): The listener that will be called when the GPS is
     /// on or off.
     static void isOn(GpsListener listener) async {
-        await _location.serviceEnabled().then((result) {
+        await _location.serviceEnabled().then((result) {    
             if (result) {
                 listener.isOn();
             } else {

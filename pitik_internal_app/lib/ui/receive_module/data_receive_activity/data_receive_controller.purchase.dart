@@ -30,6 +30,9 @@ extension PurhcaseReceiveController on ReceiveController {
     if (spJenisSumber.controller.textSelected.isNotEmpty) {
       spSumber.controller.enable();
     }
+
+    spJenisSumber.controller.visibleSpinner();
+    spTujuan.controller.visibleSpinner();
     getCategorySku();
     getListDestinationPurchase();
     showFilter();

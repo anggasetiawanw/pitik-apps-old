@@ -339,8 +339,9 @@ class LoginActivityController extends GetxController {
         context: Get.context!,
         body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', osVersion, deviceInfo['model'] ?? '-'],
         listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {
-                Constant.tokenDevice = (body as TokenDeviceResponse).data;
+            onResponseDone: (code, message, body, id, packet) async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setString(Constant.deviceIdRegister, (body as TokenDeviceResponse).data!.id!);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(

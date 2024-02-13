@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/strings.dart';
+import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
@@ -461,7 +462,7 @@ class ReceiveController extends GetxController {
       Future.delayed(const Duration(milliseconds: 100), () {
         spStatus.controller.generateItems(mapStatusReturn);
       });
-      dtTanggalFilterReceive.controller.setLabel("Tanggal Order");
+      dtTanggalFilterReceive.controller.setLabel("Tanggal Penjualan");
       spJenisSumber.controller.invisibleSpinner();
       spSumber.controller.enable();
     }
@@ -500,8 +501,12 @@ class ReceiveController extends GetxController {
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 24),
+                                if(isPurhcase.isTrue) Text("Filter Pembelian", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
+                                if(isTransfer.isTrue) Text("Filter Transfer", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
+                                if(isOrderReturn.isTrue) Text("Filter Penjualan", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
                                 dtTanggalFilterReceive,
                                 spCategory,
                                 spSku,

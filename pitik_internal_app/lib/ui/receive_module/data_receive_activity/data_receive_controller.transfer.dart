@@ -25,6 +25,7 @@ extension TransferReceiveController on ReceiveController {
       spSku.controller.enable();
     }
     spJenisSumber.controller.invisibleSpinner();
+    spTujuan.controller.visibleSpinner();
     getCategorySku();
     getListOperationUnit();
     getListDestinationOperationUnit();

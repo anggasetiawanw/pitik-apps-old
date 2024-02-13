@@ -522,7 +522,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                               overflow: TextOverflow.clip,
                             ),
                             controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadleReturn(controller.orderDetail.value!.products as List<Products?>),
-                          ] else if (controller.orderDetail.value!.status == EnumSO.rejected && controller.orderDetail.value!.returnStatus == EnumSO.returnedFull) ...[
+                          ] else if ((controller.orderDetail.value!.status == EnumSO.rejected || controller.orderDetail.value!.status == EnumSO.delivered) && controller.orderDetail.value!.returnStatus == EnumSO.returnedFull) ...[
                             Text(
                               "Detail Ditolak",
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),

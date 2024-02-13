@@ -17,6 +17,7 @@ import 'package:model/x_app_model.dart';
 import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Constant {
   static String? mDeviceId;
@@ -42,6 +43,7 @@ class Constant {
   static const double bottomSheetMargin = 24;
   static TokenDevice? tokenDevice;
   static RxString pushNotifPayload = "".obs;
+  static String deviceIdRegister = "deviceId";
 
   static Mixpanel? mixpanel;
 
@@ -102,44 +104,46 @@ class Constant {
   static VoidCallback invalidResponse() {
     return () async {
       Get.offAllNamed(RoutePage.loginPage);
-      Service.push(
-          apiKey: ApiMapping.userApi,
-          service: ListApi.deleteDevice,
-          context: Get.context!,
-          body: [auth!.token, auth!.id, "v2/devices/${tokenDevice!.id}"],
-          listener: ResponseListener(
-              onResponseDone: (code, message, body, id, packet) {},
-              onResponseFail: (code, message, body, id, packet) {
-                Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                  snackPosition: SnackPosition.TOP,
-                  colorText: Colors.white,
-                  backgroundColor: Colors.red,
-                );
-              },
-              onResponseError: (exception, stacktrace, id, packet) {
-                Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan Internal",
-                  snackPosition: SnackPosition.TOP,
-                  colorText: Colors.white,
-                  backgroundColor: Colors.red,
-                );
-              },
-              onTokenInvalid: (){}));
-      AuthImpl().delete(null, []);
-      UserGoogleImpl().delete(null, []);
-      ProfileImpl().delete(null, []);
-      GoogleSignIn().disconnect();
-      FirebaseAuth.instance.signOut();
-      isChangeBranch.value = false;
-      isDeveloper.value = false;
-      isShopKepper.value = false;
-      isScRelation.value = false;
-      isOpsLead.value = false;
-      isSales.value = false;
-      isSalesLead.value = false;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String tokenDeviceId = prefs.getString(Constant.deviceIdRegister) ?? "";
+        Service.push(
+            apiKey: ApiMapping.userApi,
+            service: ListApi.deleteDevice,
+            context: Get.context!,
+            body: [auth!.token, auth!.id, "v2/devices/$tokenDeviceId"],
+            listener: ResponseListener(
+                onResponseDone: (code, message, body, id, packet) {},
+                onResponseFail: (code, message, body, id, packet) {
+                    Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                    );
+                },
+                onResponseError: (exception, stacktrace, id, packet) {
+                    Get.snackbar(
+                    "Pesan",
+                    "Terjadi Kesalahan Internal",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                    );
+                },
+                onTokenInvalid: (){}));
+        AuthImpl().delete(null, []);
+        UserGoogleImpl().delete(null, []);
+        ProfileImpl().delete(null, []);
+        GoogleSignIn().disconnect();
+        FirebaseAuth.instance.signOut();
+        isChangeBranch.value = false;
+        isDeveloper.value = false;
+        isShopKepper.value = false;
+        isScRelation.value = false;
+        isOpsLead.value = false;
+        isSales.value = false;
+        isSalesLead.value = false;
     };
   }
 
