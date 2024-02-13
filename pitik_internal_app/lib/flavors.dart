@@ -68,4 +68,26 @@ class F {
                 return '8d2c97dc21c83ad4c45fa246c9f26e23';
         }
     }
+
+    static String get appStoreId {
+        switch (appFlavor) {
+            case Flavor.PROD:
+                return AppStrings.APPSTOREID_INTERNAL_PROD;
+            case Flavor.DEV:
+                return AppStrings.APPSTOREID_INTERNAL_STAGING;
+            default:
+                return AppStrings.APPSTOREID_INTERNAL_PROD;
+        }
+    }
+
+    static String get androidAppBundleId {
+        switch (appFlavor) {
+            case Flavor.PROD:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_PROD;
+            case Flavor.DEV:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_STAGING;
+            default:
+                return AppStrings.ANDROID_BUNDLEID_INTERNAL_PROD;
+        }
+    }
 }

@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>232419135326-5ih52lkd0o1e24mmahaa4h8mkgv4e71n.apps.googleusercontent.com</string>
+	<string>98893830821-9s1nf0vnt908bikdpr2i2onnt3p7773b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.232419135326-5ih52lkd0o1e24mmahaa4h8mkgv4e71n</string>
+	<string>com.googleusercontent.apps.98893830821-9s1nf0vnt908bikdpr2i2onnt3p7773b</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>232419135326-60gjsa6rl5o35t9qr0c7taakignckknn.apps.googleusercontent.com</string>
+	<string>98893830821-j53gh5dubhjv0kmqsjnj7cfjokpq8uo6.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAj-yWv8nt8GTckt0Zt5-JsEv8KIr3fXwk</string>
+	<string>AIzaSyDGbCz738aSrXLREfpJai_SHlJ2NMoyuaQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>232419135326</string>
+	<string>98893830821</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>id.pitik.mobile.mobileFlutter</string>
+	<string>id.pitik.mobile.mobileFlutter.staging</string>
 	<key>PROJECT_ID</key>
-	<string>pitik-mobile-flutter-staging</string>
+	<string>pitik-d2c21</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pitik-mobile-flutter-staging.appspot.com</string>
+	<string>pitik-d2c21.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:232419135326:ios:c5de23e981bf37b3f6c9cf</string>
+	<string>1:98893830821:ios:dabd436faa1bb63c2bcb4c</string>
 </dict>
 </plist>
