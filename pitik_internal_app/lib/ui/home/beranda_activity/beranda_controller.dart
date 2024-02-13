@@ -17,12 +17,7 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/internal_app/profile_response.dart';
-<<<<<<< HEAD
-import 'package:open_store/open_store.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-=======
->>>>>>> main
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
@@ -83,12 +78,7 @@ class BerandaController extends GetxController {
 
   void refreshHome(BuildContext context) async{
     isLoading.value = true;
-<<<<<<< HEAD
-    getUnreadNotif();
-    checkVersion(context);
-=======
     await checkVersion.check(context);
->>>>>>> main
     getRole();
   }
 
@@ -277,59 +267,12 @@ class BerandaController extends GetxController {
     }
     isLoading.value = false;
   }
-
-<<<<<<< HEAD
   void checkDeepLink() {
     if (Constant.pushNotifPayload.isNotEmpty) {
       DeepLinkUtils.process(Constant.pushNotifPayload.value).then((value) => refreshHome(context));
     }
   }
-
-  void checkVersion(BuildContext context) async {
-    String version = FirebaseRemoteConfig.instance.getString("pitik_version");
-    String suggestionVersion = FirebaseRemoteConfig.instance.getString("pitik_suggestion_version");
-
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    bool mustBeUpdate = false;
-    bool forceUpdate = false;
-
-    List<String> verCurr = packageInfo.version.split(".");
-    List<String> verSuggestion = suggestionVersion.split(".");
-
-    if (double.parse('${verCurr[0]}.${verCurr[1]}') <= double.parse('${verSuggestion[0]}.${verSuggestion[1]}')) {
-      if (version != "" && version != "0.0.0") {
-        List<String> verPlay = version.split(".");
-        // print("$verPlay and $verCurr");
-        if (int.parse(verPlay[0]) > int.parse(verCurr[0])) {
-          mustBeUpdate = true;
-          forceUpdate = true;
-        } else if (int.parse(verPlay[0]) == int.parse(verCurr[0])) {
-          if (int.parse(verPlay[1]) > int.parse(verCurr[1])) {
-            mustBeUpdate = true;
-          }
-        }
-      }
-
-      if (mustBeUpdate) {
-        if (forceUpdate) {
-          CustomDialog customDialog = CustomDialog(context, Dialogs.YES_OPTION);
-          customDialog.title("Informasi");
-          customDialog.message("Versi terbaru tersedia, mohon lakukan pembaruan aplikasi.");
-          customDialog.listener(DialogUpdateListener());
-          customDialog.show();
-        } else {
-          CustomDialog customDialog = CustomDialog(context, Dialogs.YES_NO_OPTION);
-          customDialog.title("Informasi");
-          customDialog.message("Versi terbaru tersedia, mohon lakukan pembaruan aplikasi.");
-          customDialog.listener(DialogUpdateListener());
-          customDialog.show();
-        }
-      }
-    }
-  }
-
-  void getUnreadNotif() {
+   void getUnreadNotif() {
     Service.push(
         apiKey: ApiMapping.userApi,
         service: ListApi.countUnreadNotifications,
@@ -347,9 +290,6 @@ class BerandaController extends GetxController {
             },
             onTokenInvalid: () => Constant.invalidResponse()));
   }
-=======
-
->>>>>>> main
 }
 
 class BerandaBindings extends Bindings {
