@@ -13,12 +13,8 @@ class CheckVersion {
   CheckVersion({required this.appStoreId, required this.androidAppBundleId});
 
   Future<void> check(BuildContext context) async {
-    String version = FirebaseRemoteConfig.instance.getString("pitik_version");
-    String suggestionVersion = FirebaseRemoteConfig.instance.getString("pitik_suggestion_version");
-    if (version.isNotEmpty && suggestionVersion.isNotEmpty) {
-      await _checkVersionUpdate(version, suggestionVersion);
-    }
-
+    String version ="";
+    String suggestionVersion ="";
     if (Platform.isAndroid) {
       version = FirebaseRemoteConfig.instance.getString("pitik_android_version");
       suggestionVersion = FirebaseRemoteConfig.instance.getString("pitik_android_suggestion");
