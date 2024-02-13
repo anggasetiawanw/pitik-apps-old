@@ -5518,8 +5518,9 @@ final _data = <r.Reflectable, r.ReflectorData>{
             {r'toResponseModel': () => prefix125.ChickType.toResponseModel},
             {},
             {
-              r'': (bool b) => ({id, name, category}) => b
-                  ? prefix125.ChickType(category: category, id: id, name: name)
+              r'': (bool b) => ({id, chickTypeName, category}) => b
+                  ? prefix125.ChickType(
+                      category: category, chickTypeName: chickTypeName, id: id)
                   : null
             },
             -1,
@@ -8298,8 +8299,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const <Object>[const prefix143.IsChildren()]),
         r.VariableMirrorImpl(r'id', 67239941, 109, const prefix0.BaseModel(),
             -1, -1, -1, null, const []),
-        r.VariableMirrorImpl(r'name', 67239941, 109, const prefix0.BaseModel(),
-            -1, -1, -1, null, const []),
+        r.VariableMirrorImpl(r'chickTypeName', 67239941, 109,
+            const prefix0.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'category', 67239941, 109,
             const prefix0.BaseModel(), -1, -1, -1, null, const []),
         r.VariableMirrorImpl(r'seqNo', 67239941, 110, const prefix0.BaseModel(),
@@ -18741,8 +18742,18 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'id', 67253254, 2166, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, #id),
-        r.ParameterMirrorImpl(r'name', 67253254, 2166,
-            const prefix0.BaseModel(), -1, -1, -1, null, const [], null, #name),
+        r.ParameterMirrorImpl(
+            r'chickTypeName',
+            67253254,
+            2166,
+            const prefix0.BaseModel(),
+            -1,
+            -1,
+            -1,
+            null,
+            const [],
+            null,
+            #chickTypeName),
         r.ParameterMirrorImpl(
             r'category',
             67253254,
@@ -18757,7 +18768,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             #category),
         r.ParameterMirrorImpl(r'_id', 67240038, 2161, const prefix0.BaseModel(),
             -1, -1, -1, null, const [], null, null),
-        r.ParameterMirrorImpl(r'_name', 67240038, 2163,
+        r.ParameterMirrorImpl(r'_chickTypeName', 67240038, 2163,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
         r.ParameterMirrorImpl(r'_category', 67240038, 2165,
             const prefix0.BaseModel(), -1, -1, -1, null, const [], null, null),
@@ -20369,6 +20380,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'ipProjection': (dynamic instance) => instance.ipProjection,
         r'topGraph': (dynamic instance) => instance.topGraph,
         r'receivedDate': (dynamic instance) => instance.receivedDate,
+        r'chickTypeName': (dynamic instance) => instance.chickTypeName,
         r'category': (dynamic instance) => instance.category,
         r'jobId': (dynamic instance) => instance.jobId,
         r'createdAt': (dynamic instance) => instance.createdAt,
@@ -20925,6 +20937,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'topGraph=': (dynamic instance, value) => instance.topGraph = value,
         r'receivedDate=': (dynamic instance, value) =>
             instance.receivedDate = value,
+        r'chickTypeName=': (dynamic instance, value) =>
+            instance.chickTypeName = value,
         r'category=': (dynamic instance, value) => instance.category = value,
         r'jobId=': (dynamic instance, value) => instance.jobId = value,
         r'createdAt=': (dynamic instance, value) => instance.createdAt = value,

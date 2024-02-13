@@ -400,10 +400,10 @@ class OrderRequestController extends GetxController {
         if (feedSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
-                return (feedSuggestField.getController().selectedObject as Product).uom!;
-            } else if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
                 return (feedSuggestField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
+                return (feedSuggestField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -414,10 +414,10 @@ class OrderRequestController extends GetxController {
         if (ovkSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
-                return (ovkSuggestField.getController().selectedObject as Product).uom!;
-            } else if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
                 return (ovkSuggestField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
+                return (ovkSuggestField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -428,10 +428,10 @@ class OrderRequestController extends GetxController {
         if (ovkUnitSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((ovkUnitSuggestField.getController().selectedObject as Product).uom != null) {
-                return (ovkUnitSuggestField.getController().selectedObject as Product).uom!;
-            } else if ((ovkUnitSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((ovkUnitSuggestField.getController().selectedObject as Product).purchaseUom != null) {
                 return (ovkUnitSuggestField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((ovkUnitSuggestField.getController().selectedObject as Product).uom != null) {
+                return (ovkUnitSuggestField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -1060,7 +1060,7 @@ class OrderRequestController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -1068,7 +1068,7 @@ class OrderRequestController extends GetxController {
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         }
@@ -1076,7 +1076,7 @@ class OrderRequestController extends GetxController {
 
     String getOvkUnitQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${ovkUnitQuantityField.getInputNumber() == null ? '' : ovkUnitQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkUnitQuantityField.getController().textUnit.value}';
         }

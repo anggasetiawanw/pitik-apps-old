@@ -253,7 +253,7 @@ class GrConfirmationController extends GetxController {
                                 Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                 const SizedBox(height: 4),
                                 Text(
-                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
+                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                             ],
@@ -308,7 +308,7 @@ class GrConfirmationController extends GetxController {
                                                             borderRadius: BorderRadius.all(Radius.circular(10))
                                                         ),
                                                         child: Text(
-                                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                         )
                                                     )
@@ -371,7 +371,7 @@ class GrConfirmationController extends GetxController {
                                                 borderRadius: BorderRadius.all(Radius.circular(10))
                                             ),
                                             child: Text(
-                                                '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                                 style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                             )
                                         );
@@ -500,7 +500,7 @@ class GrConfirmationController extends GetxController {
                         hint: 'Ketik di sini',
                         alertText: 'Harus diisi..!',
                         inputType: TextInputType.number,
-                        textUnit: product.uom ?? product.purchaseUom ?? '',
+                        textUnit: product.purchaseUom ?? product.uom ?? '',
                         maxInput: 50,
                         onTyping: (text, field) {
                             product.quantity = field.getInputNumber();
@@ -561,7 +561,7 @@ class GrConfirmationController extends GetxController {
                                 isCanReturned ? checkBoxField : const SizedBox(),
                                 const SizedBox(height: 16),
                                 Text(
-                                    '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                    '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                                 editField

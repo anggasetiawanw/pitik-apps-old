@@ -8,15 +8,15 @@ import 'package:engine/model/base_model.dart';
 class ChickType {
 
     String? id;
-    String? name;
+    String? chickTypeName;
     String? category;
 
-    ChickType({this.id, this.name, this.category});
+    ChickType({this.id, this.chickTypeName, this.category});
 
     static ChickType toResponseModel(Map<String, dynamic> map) {
         return ChickType(
             id: map['id'],
-            name: map['name'],
+            chickTypeName: map['chickTypeName'],
             category: map['category']
         );
     }

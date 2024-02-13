@@ -54,6 +54,13 @@ class LayerDailyReportDetailController extends GetxController {
             Get.toNamed(RoutePage.layerDailyReportForm, arguments: [coop, report.value])!.then((value) {
                 if (value != null) {
                     Get.back();
+                    Get.snackbar(
+                        "Pesan",
+                        "Berhasil melakukan permintaan edit...",
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.black,
+                        backgroundColor: Colors.white,
+                    );
                 } else {
                     getDetailReport();
                 }
@@ -64,7 +71,7 @@ class LayerDailyReportDetailController extends GetxController {
             report.value.status = reportArguments.status;
 
             Get.toNamed(RoutePage.layerDailyReportRevision, arguments: [coop, report.value])!.then((value) {
-                if (value) {
+                if (value != null) {
                     Get.back();
                 } else {
                     getDetailReport();
@@ -154,7 +161,7 @@ class LayerDailyReportDetailController extends GetxController {
                                     Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                     const SizedBox(height: 4),
                                     Text(
-                                        '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
+                                        '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}',
                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                     )
                                 ] else ...[
@@ -167,7 +174,7 @@ class LayerDailyReportDetailController extends GetxController {
                                                     Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                                     const SizedBox(height: 4),
                                                     Text(
-                                                        '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
+                                                        '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}',
                                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                     )
                                                 ]

@@ -155,13 +155,6 @@ class LayerDailyReportRevisionController extends GetxController {
                                                                     onResponseDone: (code, message, body, id, packet) {
                                                                         isLoading.value = false;
                                                                         Get.back(result: true);
-                                                                        Get.snackbar(
-                                                                            "Pesan",
-                                                                            "Berhasil melakukan permintaan edit...",
-                                                                            snackPosition: SnackPosition.TOP,
-                                                                            colorText: Colors.black,
-                                                                            backgroundColor: Colors.white,
-                                                                        );
                                                                     },
                                                                     onResponseFail: (code, message, body, id, packet) {
                                                                         Get.snackbar(

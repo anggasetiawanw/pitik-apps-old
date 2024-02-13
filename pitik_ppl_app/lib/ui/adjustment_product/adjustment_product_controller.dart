@@ -55,7 +55,7 @@ class AdjustmentProductController extends GetxController {
         super.onInit();
         coop = Get.arguments[0];
         isFeed = Get.arguments[1];
-        
+
         adjustmentTypeField = SpinnerField(
             controller: GetXCreator.putSpinnerFieldController("adjustmentProductTypeField"),
             label: "Jenis Penyesuaian",
@@ -330,10 +330,10 @@ class AdjustmentProductController extends GetxController {
         if (feedSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
-                return (feedSuggestField.getController().selectedObject as Product).uom!;
-            } else if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
                 return (feedSuggestField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
+                return (feedSuggestField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -344,10 +344,10 @@ class AdjustmentProductController extends GetxController {
         if (ovkSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
-                return (ovkSuggestField.getController().selectedObject as Product).uom!;
-            } else if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
                 return (ovkSuggestField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
+                return (ovkSuggestField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -508,7 +508,7 @@ class AdjustmentProductController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -516,7 +516,7 @@ class AdjustmentProductController extends GetxController {
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         }

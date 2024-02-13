@@ -130,10 +130,10 @@ class DailyReportDetailActivity extends StatelessWidget {
                                                 ),
                                                 const SizedBox(height: 24),
                                                 Text("Konsumsi Pakan", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
-                                                if (controller.reportDetail!.feedConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.uom}")).toList())] else ...[Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12))],
+                                                if (controller.reportDetail!.feedConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12))],
                                                 const SizedBox(height: 24),
                                                 Text("Konsumsi OVK", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
-                                                if (controller.reportDetail!.ovkConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.uom}")).toList())] else ...[Container(margin: const EdgeInsets.only(top: 16), child: Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)))],
+                                                if (controller.reportDetail!.ovkConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Container(margin: const EdgeInsets.only(top: 16), child: Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)))],
                                                 const SizedBox(height: 24),
                                                 if (controller.reportDetail!.images!.isNotEmpty) ...[
                                                     Column(

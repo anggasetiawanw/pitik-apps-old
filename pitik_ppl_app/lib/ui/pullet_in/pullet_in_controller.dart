@@ -573,7 +573,7 @@ class PulletInController extends GetxController {
                                                                             text += 'Kandang : ${coop.coopName}\n';
                                                                             text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
                                                                             text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Minggu\n';
-                                                                            text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
+                                                                            text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.chickTypeName ?? '-' : '-'}\n';
                                                                             text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
                                                                             text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
                                                                             text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';

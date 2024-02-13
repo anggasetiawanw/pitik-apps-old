@@ -84,7 +84,7 @@ class PulletInActivity extends GetView<PulletInController> {
                                                         children: [
                                                             Text("Tipe Pullet", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                                             Text(
-                                                                controller.request.value!.chickType != null ? controller.request.value!.chickType!.name ?? '-' : '-',
+                                                                controller.request.value!.chickType != null ? controller.request.value!.chickType!.chickTypeName ?? '-' : '-',
                                                                 style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                             )
                                                         ]
