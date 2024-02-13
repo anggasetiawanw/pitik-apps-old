@@ -13,28 +13,28 @@ import 'package:get/get.dart';
 
 class Intent {
 
-    toWithFeatureFlag({required String target, dynamic arguments}) {
+    toWithFeatureFlag({required String target, dynamic arguments, Function(dynamic)? then}) {
         String targetFix = '/$target${FirebaseRemoteConfig.instance.getValue(target).asString()}';
-        Get.toNamed(targetFix, arguments: arguments);
+        Get.toNamed(targetFix, arguments: arguments)!.then((value) => then != null ? then(value) : {});
     }
 
-    offWithFeatureFlag({required String target, dynamic arguments}) {
+    offWithFeatureFlag({required String target, dynamic arguments, Function(dynamic)? then}) {
         String targetFix = '/$target${FirebaseRemoteConfig.instance.getValue(target).asString()}';
-        Get.offNamed(targetFix, arguments: arguments);
+        Get.offNamed(targetFix, arguments: arguments)!.then((value) => then != null ? then(value) : {});
     }
 
-    offUntilWithFeatureFlag({required String target, dynamic arguments, required bool routeOff}) {
+    offUntilWithFeatureFlag({required String target, dynamic arguments, required bool routeOff, Function(dynamic)? then}) {
         String targetFix = '/$target${FirebaseRemoteConfig.instance.getValue(target).asString()}';
-        Get.offNamedUntil(targetFix, (Route<dynamic> route) => routeOff, arguments: arguments);
+        Get.offNamedUntil(targetFix, (Route<dynamic> route) => routeOff, arguments: arguments)!.then((value) => then != null ? then(value) : {});
     }
 
-    offAllWithFeatureFlag({required String target, dynamic arguments}) {
+    offAllWithFeatureFlag({required String target, dynamic arguments, Function(dynamic)? then}) {
         String targetFix = '/$target${FirebaseRemoteConfig.instance.getValue(target).asString()}';
-        Get.offAllNamed(targetFix, arguments: arguments);
+        Get.offAllNamed(targetFix, arguments: arguments)!.then((value) => then != null ? then(value) : {});
     }
 
-    offAndToWithFeatureFlag({required String target, dynamic arguments}) {
+    offAndToWithFeatureFlag({required String target, dynamic arguments, Function(dynamic)? then}) {
         String targetFix = '/$target${FirebaseRemoteConfig.instance.getValue(target).asString()}';
-        Get.offAndToNamed(targetFix, arguments: arguments);
+        Get.offAndToNamed(targetFix, arguments: arguments)!.then((value) => then != null ? then(value) : {});
     }
 }
