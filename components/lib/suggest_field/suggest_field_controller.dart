@@ -13,6 +13,7 @@ class SuggestFieldController<T> extends GetxController {
 
     String tag;
     SuggestFieldController({required this.tag});
+    FocusNode focusNode = FocusNode();
 
     Rx<TextEditingController> textEditingController = (TextEditingController()).obs;
 
@@ -37,9 +38,11 @@ class SuggestFieldController<T> extends GetxController {
     }
     void addItems(String data) => suggestList.add(data);
     T? getSelectedObject() => selectedObject;
-    void reset() {
-        selectedObject = null;
-        textEditingController.value.text = '';
+    void reset({useDelayed = false}) {
+        Future.delayed(Duration(milliseconds: useDelayed ? 300 : 0), () {
+            selectedObject = null;
+            textEditingController.value.text = '';
+        });
     }
     void setSelectedObject(String textSelected) {
         Future.delayed(const Duration(milliseconds: 500), () {
@@ -55,6 +58,11 @@ class SuggestFieldController<T> extends GetxController {
                 index++;
             }
         });
+    }
+
+    void dissmisDialog(){
+        focusNode.unfocus();
+        textEditingController.value.text = '';
     }
 }
 

@@ -28,20 +28,20 @@ class SplashScreenActivity extends StatelessWidget {
                                 width: 192,
                                 child: SvgPicture.asset("images/white_logo.svg"),
                             ),
-                            const SizedBox(height: 24,),
+                            const SizedBox(height: 24),
                             const Text("Aplikasi sedang memperbarui, jangan tutup aplikasi...", style: TextStyle(color: Colors.white, fontSize: 16)),
                             const SizedBox(height: 24),
                             const SizedBox(
                                 height: 24,
                                 width: 24,
-                                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
                             )
                         ]
                     ) : SizedBox(
                         height: 192,
                         width: 192,
-                        child: SvgPicture.asset("images/white_logo.svg"),
-                    ),
+                        child: SvgPicture.asset("images/white_logo.svg")
+                    )
                 )
             )
         );

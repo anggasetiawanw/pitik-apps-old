@@ -153,7 +153,7 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                             GestureDetector(
-                                                                onTap: () => controller.isFeed.value = true,
+                                                                onTap: () => controller.toFeedConsumption(),
                                                                 child: Container(
                                                                     width: (MediaQuery.of(context).size.width / 2) - 16,
                                                                     decoration: BoxDecoration(
@@ -175,7 +175,7 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                                                                 ),
                                                             ),
                                                             GestureDetector(
-                                                                onTap: () => controller.isFeed.value = false,
+                                                                onTap: () => controller.toOvkConsumption(),
                                                                 child: Container(
                                                                     width: (MediaQuery.of(context).size.width / 2) - 16,
                                                                     decoration: BoxDecoration(

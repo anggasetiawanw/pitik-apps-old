@@ -449,6 +449,23 @@ class LayerDailyReportFormController extends GetxController {
         });
     }
 
+    void _dismissSuggest() {
+        feedSuggestField.controller.dissmisDialog();
+        ovkSuggestField.controller.dissmisDialog();
+    }
+
+    void toFeedConsumption() {
+        _dismissSuggest();
+        feedSuggestField.controller.reset(useDelayed: true);
+        isFeed.value = true;
+    }
+
+    void toOvkConsumption() {
+        _dismissSuggest();
+        ovkSuggestField.controller.reset(useDelayed: true);
+        isFeed.value = false;
+    }
+
     void _fillData() {
         efWeight.setInput('${report.averageWeight ?? ''}');
         efCulled.setInput('${report.culling ?? ''}');
@@ -656,10 +673,6 @@ class LayerDailyReportFormController extends GetxController {
         GlobalVar.track('Click_layer_daily_report_selanjutnya_button');
         if (state.value == 0) {
             bool isPass = true;
-            if (efWeight.getInputNumber() == null) {
-                efWeight.controller.showAlert();
-                isPass = false;
-            }
             if (efCulled.getInputNumber() == null) {
                 efCulled.controller.showAlert();
                 isPass = false;
@@ -685,17 +698,6 @@ class LayerDailyReportFormController extends GetxController {
                 Get.snackbar(
                     "Pesan",
                     "Konsumsi Pakan masih kosong, silahkan isi minimal satu..!",
-                    snackPosition: SnackPosition.TOP,
-                    duration: const Duration(seconds: 5),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red
-                );
-                isPass = false;
-            }
-            if (ovkMultipleFormField.controller.listObjectAdded.isEmpty) {
-                Get.snackbar(
-                    "Pesan",
-                    "Konsumsi OVK masih kosong, silahkan isi minimal satu..!",
                     snackPosition: SnackPosition.TOP,
                     duration: const Duration(seconds: 5),
                     colorText: Colors.white,
@@ -841,10 +843,10 @@ class LayerDailyReportFormController extends GetxController {
         if (feedSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
-                return (feedSuggestField.getController().selectedObject as Product).purchaseUom!;
-            } else if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
+            if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
                 return (feedSuggestField.getController().selectedObject as Product).uom!;
+            } else if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+                return (feedSuggestField.getController().selectedObject as Product).purchaseUom!;
             } else {
                 return '';
             }
@@ -855,10 +857,10 @@ class LayerDailyReportFormController extends GetxController {
         if (ovkSuggestField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
-                return (ovkSuggestField.getController().selectedObject as Product).purchaseUom!;
-            } else if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
+            if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
                 return (ovkSuggestField.getController().selectedObject as Product).uom!;
+            } else if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
+                return (ovkSuggestField.getController().selectedObject as Product).purchaseUom!;
             } else {
                 return '';
             }
@@ -941,7 +943,7 @@ class LayerDailyReportFormController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -949,7 +951,7 @@ class LayerDailyReportFormController extends GetxController {
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
         } else {
             return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         }

@@ -250,7 +250,5 @@ class LoginBinding extends Bindings {
     LoginBinding({required this.context});
 
     @override
-    void dependencies() {
-        Get.lazyPut<LoginController>(() => LoginController(context: context));
-    }
+    void dependencies() => Get.lazyPut<LoginController>(() => LoginController(context: context));
 }
