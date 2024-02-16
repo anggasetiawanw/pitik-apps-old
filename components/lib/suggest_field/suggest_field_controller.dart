@@ -13,6 +13,7 @@ class SuggestFieldController<T> extends GetxController {
 
     String tag;
     SuggestFieldController({required this.tag});
+    FocusNode focusNode = FocusNode();
 
     Rx<TextEditingController> textEditingController = (TextEditingController()).obs;
 
@@ -55,6 +56,11 @@ class SuggestFieldController<T> extends GetxController {
                 index++;
             }
         });
+    }
+
+    void dissmisDialog(){
+        focusNode.unfocus();
+        textEditingController.value.text = '';
     }
 }
 
