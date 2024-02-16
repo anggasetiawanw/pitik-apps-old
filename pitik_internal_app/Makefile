@@ -23,7 +23,7 @@ apk-dev: ## Build aab file with debug configuration
 	flutter build apk --flavor dev -t lib/main_dev.dart
 
 apk-prod: ## Build aab file with production configuration
-	flutter build apk --flavor prod -t lib/main_prod.dart	
+	flutter build apk --flavor prod -t lib/main_prod.dart
 
 gen-flavor: ## Generate New flavor configuration note : app.dart main_dev.dart main_prod.dart and flavor.dart reversal with ctrl+z or command+z
 	flutter pub run flutter_flavorizr
@@ -37,13 +37,13 @@ sb-build-dev-and: ## Build Shorebird Dev
 	shorebird release android --flavor dev -t lib/main_dev.dart
 
 sb-build-prod-and: ## Build Shorebird Production
-	shorebird release android --flavor prod	-t lib/main_prod.dart	
-	
+	shorebird release android --flavor prod	-t lib/main_prod.dart
+
 sb-patch-dev-and: ## Push Patch Shorebird Dev
 	shorebird patch android --flavor dev -t lib/main_dev.dart
 
 sb-patch-prod-and: ## Push Patch Shorebird Production
-	shorebird patch android --flavor prod -t lib/main_prod.dart	
+	shorebird patch android --flavor prod -t lib/main_prod.dart
 
 build-dev-ios: ## Build aab file with debug configuration
 	flutter build ipa --flavor dev -t lib/main_dev.dart
@@ -52,14 +52,14 @@ build-prod-ios: ## Build aab file with production configuration
 	flutter build ipa --flavor prod -t lib/main_prod.dart
 
 sb-build-dev-ios: ## Build Shorebird Dev
-	shorebird release ios-alpha --flavor dev -t lib/main_dev.dart
+	shorebird release ios --flavor dev -t lib/main_dev.dart
 
 sb-build-prod-ios: ## Build Shorebird Production
-	shorebird release ios-alpha --flavor prod	-t lib/main_prod.dart	
-	
+	shorebird release ios --flavor prod	-t lib/main_prod.dart
+
 sb-patch-dev-ios: ## Push Patch Shorebird Dev
-	shorebird patch ios-alpha --flavor dev -t lib/main_dev.dart
+	shorebird patch ios --flavor dev -t lib/main_dev.dart
 
 sb-patch-prod-ios: ## Push Patch Shorebird Production
-	shorebird patch ios-alpha --flavor prod -t lib/main_prod.dart	
+	shorebird patch ios --flavor prod -t lib/main_prod.dart
 

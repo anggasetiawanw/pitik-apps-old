@@ -28,8 +28,8 @@ class TerminateRejectedController extends GetxController {
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.rejected));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesRejectedPemusnahan"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.rejected));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoRejectedPemusnahan"), label: "Tidak", onClick: () => Get.back());
 
     DateTime timeStart = DateTime.now();
     DateTime timeEnd = DateTime.now();
