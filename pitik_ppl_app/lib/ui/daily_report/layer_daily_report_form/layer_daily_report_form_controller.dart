@@ -107,6 +107,7 @@ class LayerDailyReportFormController extends GetxController {
     late EditField efPecahTotal;
     late EditField efKotor;
     late EditField efKotorTotal;
+    late EditField efEggDisposal;
 
     SpinnerField spAbnormalEgg = SpinnerField(controller: GetXCreator.putSpinnerFieldController("layerDailyFormAbnormalEgg"), label: "Ada Telur Abnormal?", hint: "Pilih salah satu", alertText: "Harus dipilih..!",
         items: const {'Ya': false, 'Tidak' : false},
@@ -437,6 +438,10 @@ class LayerDailyReportFormController extends GetxController {
             onTyping: (text, field) => countTotalWeight()
         );
 
+        efEggDisposal = EditField(controller: GetXCreator.putEditFieldController("layerDailyFormEggDisposal"), label: "Pemusnahan", hint: "Ketik di sini", alertText: "Harus diisi..!", textUnit: "kg", maxInput: 100, inputType: TextInputType.number,
+            onTyping: (text, field) {}
+        );
+
         _toChickenProduction();
     }
 
@@ -547,6 +552,7 @@ class LayerDailyReportFormController extends GetxController {
             }
         }
 
+        efEggDisposal.setInput('${report.eggDisposal ?? ''}');
         spAbnormalEgg.controller.setSelected(report.isAbnormal != null && report.isAbnormal! ? 'Ya' : report.isAbnormal != null && !report.isAbnormal! ? 'Tidak' : '');
         eaDesc.setValue(report.remarks ?? '');
     }
@@ -1121,6 +1127,7 @@ class LayerDailyReportFormController extends GetxController {
                 harvestedEgg: report.harvestedEgg,
                 recordingImage: recordingCardPhotoList[0]!.url,
                 remarks: eaDesc.getInput(),
+                eggDisposal: efEggDisposal.getInputNumber(),
                 isAbnormal: spAbnormalEgg.controller.textSelected.value == 'Ya',
                 feedTypeCode: "",
                 feedQuantity: 0

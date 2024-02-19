@@ -23,6 +23,7 @@ class Report {
     String? remarks;
     bool? isAbnormal;
     String? revisionStatus;
+    double? eggDisposal;
 
     @IsChildren()
     List<MediaUploadModel?>? images;
@@ -40,8 +41,8 @@ class Report {
     List<Products?> harvestedEgg;
 
     Report({this.taskTicketId, this.title, this.deskripsi, this.status, this.date, this.averageWeight, this.mortality, this.culling, this.feedQuantity, this.feedTypeCode, this.images,
-            this.feedAdditionalInfo, this.mortalityImage, this.recordingImage, this.summary, this.remarks, this.isAbnormal, this.revisionStatus, this.feedConsumptions, this.ovkConsumptions,
-            this.mortalityList = const [], this.harvestedEgg = const []});
+            this.feedAdditionalInfo, this.mortalityImage, this.recordingImage, this.summary, this.remarks, this.isAbnormal, this.revisionStatus, this.eggDisposal, this.feedConsumptions,
+            this.ovkConsumptions, this.mortalityList = const [], this.harvestedEgg = const []});
 
     static Report toResponseModel(Map<String, dynamic> map) {
         if (map["averageWeight"] is int) {
@@ -70,6 +71,7 @@ class Report {
             remarks: map['remarks'],
             isAbnormal: map['isAbnormal'],
             revisionStatus: map['revisionStatus'],
+            eggDisposal: map['eggDisposal'] != null ? map['eggDisposal'].toDouble() : map['eggDisposal'],
             feedConsumptions: Mapper.children<Product>(map['feedConsumptions']),
             ovkConsumptions: Mapper.children<Product>(map['ovkConsumptions']),
             mortalityList: Mapper.children<MortalityReason>(map['mortalityList']),

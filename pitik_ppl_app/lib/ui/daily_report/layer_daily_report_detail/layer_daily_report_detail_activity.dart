@@ -331,14 +331,28 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                             const SizedBox(height: 16),
                                             const Divider(color: GlobalVar.outlineColor, height: 1.4),
                                             const SizedBox(height: 16),
+                                            Text('Pemusnahan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            const SizedBox(height: 8),
+                                            Text('Total (kg)', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                                '${controller.report.value.eggDisposal ?? '-'} kg',
+                                                style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
+                                            ),
+                                            const SizedBox(height: 16),
+                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
+                                            const SizedBox(height: 16),
+                                            Text('Telur Abnormal', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            const SizedBox(height: 8),
+                                            Text(controller.report.value.isAbnormal != null && controller.report.value.isAbnormal! ? 'Ya' : 'Tidak', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            const SizedBox(height: 16),
+                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
+                                            const SizedBox(height: 16),
                                             Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                     Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(
-                                                        '- Butir',
-                                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                    )
+                                                    Text(controller.getTotal(), style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                 ]
                                             ),
                                             const SizedBox(height: 8),
@@ -346,10 +360,7 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                     Text('Berat Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                    Text(
-                                                        '- kg',
-                                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)
-                                                    )
+                                                    Text(controller.getTotalWeight(), style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                                 ]
                                             )
                                         ]

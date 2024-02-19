@@ -3,6 +3,7 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/password_field/password_field.dart';
+import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/list_api.dart';
@@ -94,6 +95,8 @@ class ChangePassController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_ubah_kata_sandi_page');
+
         isFromLogin = Get.arguments[0];
         homePageRoute = Get.arguments[1];
         // isLoading.value = true;
@@ -159,15 +162,16 @@ class ChangePassController extends GetxController {
     /// The function `changePassword()` is responsible for handling the logic to
     /// change a user's password, including validation, making an API request, and
     /// handling different response scenarios.
-    void changePassword() {
-        Get.back();
-        isLoading.value = true;
-        try {
+    void changePassword() => AuthImpl().get().then((auth) {
+        if (auth != null) {
+            Get.back();
+            isLoading.value = true;
+
             Password payload = generatePayload();
             Service.push(
                 service: ListApi.changePassword,
                 context: context,
-                body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathChangePassword(), Mapper.asJsonString(payload)],
+                body: ['Bearer ${auth.token}', auth.id, GlobalVar.xAppId ?? '', ListApi.pathChangePassword(), Mapper.asJsonString(payload)],
                 listener:ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         if(isFromLogin){
@@ -175,16 +179,20 @@ class ChangePassController extends GetxController {
                         } else {
                             Get.back();
                         }
+
+                        GlobalVar.trackWithMap('Click_simpan_kata_sandi', {'Error': 'false'});
                         isLoading.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
+                        GlobalVar.trackWithMap('Click_simpan_kata_sandi', {'Error': 'false', 'Error_Message' : (body as ErrorResponse).error!.message ?? '-'});
                         isLoading.value = false;
-                        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP,
+                        Get.snackbar("Alert", body.error!.message ?? '-', snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             backgroundColor: Colors.red,
                             colorText: Colors.white);
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
+                        GlobalVar.trackWithMap('Click_simpan_kata_sandi', {'Error': 'false', 'Error_Message' : '$exception -> $stacktrace'});
                         isLoading.value = false;
                         Get.snackbar("Alert","Terjadi kesalahan internal", snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
@@ -194,14 +202,10 @@ class ChangePassController extends GetxController {
                     onTokenInvalid: () => GlobalVar.invalidResponse()
                 ),
             );
-        } catch (e, st) {
-            Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st",
-                snackPosition: SnackPosition.BOTTOM,
-                duration: const Duration(seconds: 5),
-                backgroundColor: const Color(0xFFFF0000),
-                colorText: Colors.white);
+        } else {
+            GlobalVar.invalidResponse();
         }
-    }
+    });
 
 }
 

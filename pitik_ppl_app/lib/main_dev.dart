@@ -16,6 +16,9 @@ import 'app.dart';
 import 'flavors.dart';
 import 'main.reflectable.dart';
 
+// ignore: unused_import
+import 'package:model/password_model.dart';
+
 void main() async {
     F.appFlavor = Flavor.DEV;
     ChuckerFlutter.showOnRelease = true;

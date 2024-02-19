@@ -3,6 +3,8 @@
 import 'package:common_page/profile/about_us_screen.dart';
 import 'package:common_page/profile/change_password/change_pass_activity.dart';
 import 'package:common_page/profile/change_password/change_password_controller.dart';
+import 'package:common_page/profile/forget_password/forget_password_activity.dart';
+import 'package:common_page/profile/forget_password/forget_password_controller.dart';
 import 'package:common_page/profile/help_screen.dart';
 import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
@@ -131,6 +133,7 @@ class AppRoutes {
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.forgetPasswordPage, page: ()=> ForgetPassword(helpRoute: RoutePage.helpPage), binding: ForgetPasswordBindings(context: GlobalVar.getContext())),
 
         // Order Page
         GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
@@ -217,6 +220,7 @@ class RoutePage {
     static const String helpPage = "/help";
     static const String licencePage = "/licence";
     static const String changePasswordPage = "/changePassword";
+    static const String forgetPasswordPage = "/forgetPasswordPage";
     static const String listOrderPage = "/listOrder";
     static const String orderRequestPage = "/orderRequest";
     static const String orderDetailPage = "/orderDetail";

@@ -50,65 +50,68 @@ class ChangePassword extends GetView<ChangePassController> {
 
         showBottomDialog(BuildContext context, ChangePassController controller) {
             return showModalBottomSheet(
-                isScrollControlled: true,
-                useRootNavigator: true,
                 useSafeArea: true,
-                backgroundColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                    return Container(
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-                        ),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                                Container(
-                                    margin: const EdgeInsets.only(top: 8),
-                                    width: 60,
-                                    height: 4,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.outlineColor,
-                                        borderRadius: BorderRadius.circular(2),
+                isDismissible: false,
+                enableDrag: false,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16))
+                ),
+                isScrollControlled: true,
+                context: Get.context!,
+                builder: (context) => ClipRRect(
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                    child: Container(
+                        color: Colors.white,
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 8),
+                                        width: 60,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.outlineColor,
+                                            borderRadius: BorderRadius.circular(2),
+                                        ),
                                     ),
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                                    child: Text(
-                                        "Apakah kamu yakin data yang dimasukan sudah benar?",
-                                        style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                                        child: Text(
+                                            "Apakah kamu yakin data yang dimasukan sudah benar?",
+                                            style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                                        ),
                                     ),
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                                    child: const Text(
-                                        "Pastikan semua data yang kamu masukan semua sudah benar",
-                                        style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(top: 24),
-                                    child: SvgPicture.asset("images/ask_bottom_sheet_1.svg"),
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                                    child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Expanded(child: controller.bfYesRegBuilding),
-                                            const SizedBox(width: 16),
-                                            Expanded(child: controller.boNoRegBuilding),
-                                        ]
-                                    )
-                                ),
-                                const SizedBox(height: 50)
-                            ]
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
+                                        child: const Text(
+                                            "Pastikan semua data yang kamu masukan semua sudah benar",
+                                            style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                                    ),
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 24),
+                                        child: SvgPicture.asset("images/ask_bottom_sheet_1.svg"),
+                                    ),
+                                    Container(
+                                        margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Expanded(child: controller.bfYesRegBuilding),
+                                                const SizedBox(width: 16),
+                                                Expanded(child: controller.boNoRegBuilding),
+                                            ]
+                                        )
+                                    ),
+                                    const SizedBox(height: 50)
+                                ]
+                            )
                         )
-                    );
-                }
+                    ),
+                )
             );
         }
-
 
         Widget bottomNavBar() {
             return Align(
@@ -140,7 +143,7 @@ class ChangePassword extends GetView<ChangePassController> {
                                                 if (controller.validation()) {
                                                     showBottomDialog(context, controller);
                                                 }
-                                            },
+                                            }
                                         )
                                     )
                                 ]
@@ -163,7 +166,7 @@ class ChangePassword extends GetView<ChangePassController> {
                 return await Get.offAllNamed(controller.homePageRoute);
              } else {
                 return Navigator.canPop(context);
-             } 
+             }
             },
             child: Stack(
                 children: [
@@ -191,7 +194,7 @@ class ChangePassword extends GetView<ChangePassController> {
                     )
                   ),bottomNavBar()
                   ]
-          
+
               ),
           ),
     );

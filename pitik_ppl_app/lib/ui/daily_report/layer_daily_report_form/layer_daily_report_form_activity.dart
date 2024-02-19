@@ -268,6 +268,11 @@ class LayerDailyReportFormActivity extends GetView<LayerDailyReportFormControlle
                                                     Expanded(child: controller.efKotorTotal)
                                                 ]
                                             ),
+                                            const SizedBox(height: 16),
+                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
+                                            controller.efEggDisposal,
+                                            const SizedBox(height: 16),
+                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
                                             controller.spAbnormalEgg,
                                             controller.efTotal,
                                             controller.efBeratTotal,

@@ -36,6 +36,7 @@ class LoginController extends GetxController {
     BuildContext context;
     LoginController({required this.context});
 
+    int startTime = DateTime.now().millisecondsSinceEpoch;
     final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
     final EditField phoneNumberField = EditField(
@@ -58,12 +59,22 @@ class LoginController extends GetxController {
         onTyping: (text) {}
     );
 
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            prefs.then((SharedPreferences prefs) => phoneNumberField.setInput(prefs.getString('loginStorePhoneNumber') ?? ''));
+            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Login_Page'});
+        });
+    }
+
     void login() {
         if (phoneNumberField.getInput().isEmpty) {
             phoneNumberField.getController().showAlert();
         } else if (passwordField.getInput().isEmpty) {
             passwordField.getController().showAlert();
         } else {
+            GlobalVar.track('Click_Masuk');
             AlertDialog alert = AlertDialog(
                 content: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -162,6 +173,7 @@ class LoginController extends GetxController {
                     await ProfileImpl().save(body.data);
                     await AuthImpl().save(auth);
 
+                    prefs.then((SharedPreferences prefs) => prefs.setString('loginStorePhoneNumber', body.data != null && body.data!.phoneNumber != null ? body.data!.phoneNumber ?? '' : ''));
                     Future<bool> isFirstLogin = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
                     Navigator.pop(Get.context!);
                     _sendFirebaseTokenToServer(auth);

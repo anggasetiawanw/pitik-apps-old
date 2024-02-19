@@ -6,6 +6,7 @@ import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pitik_ppl_app/route.dart';
 import 'package:pitik_ppl_app/ui/login/login_controller.dart';
 
 ///@author DICKY
@@ -38,16 +39,17 @@ class LoginActivity extends GetView<LoginController> {
                                 children: [
                                     const SizedBox(),
                                     GestureDetector(
-                                        onTap: () {},
+                                        onTap: () {
+                                            GlobalVar.track('Click_lupa_kata_sandi');
+                                            Get.toNamed(RoutePage.forgetPasswordPage);
+                                        },
                                         child: Text('Lupa Kata Sandi?', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange)),
                                     )
-                                ],
+                                ]
                             ),
                             const SizedBox(height: 32),
                             ButtonFill(controller: GetXCreator.putButtonFillController("btnLogin"), label: "Masuk", onClick: () => controller.login()),
-                            ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnRegister"), label: "Bergabung menjadi Kawan Pitik!", onClick: () {
-
-                            })
+                            ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnRegister"), label: "Bergabung menjadi Kawan Pitik!", onClick: () {})
                         ]
                     )
                 )

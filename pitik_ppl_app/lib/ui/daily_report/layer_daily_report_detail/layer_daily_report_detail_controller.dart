@@ -2,6 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:common_page/library/component_library.dart';
+import 'package:common_page/library/engine_library.dart';
 import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
@@ -225,6 +226,28 @@ class LayerDailyReportDetailController extends GetxController {
         }
 
         return '- kg';
+    }
+
+    String getTotal() {
+        int result = 0;
+        for (var egg in report.value.harvestedEgg) {
+            if (egg != null) {
+                result += egg.quantity ?? 0;
+            }
+        }
+
+        return '${Convert.toCurrencyWithoutDecimal(result.toString(), '', '.')} Butir';
+    }
+
+    String getTotalWeight() {
+        double result = 0;
+        for (var egg in report.value.harvestedEgg) {
+            if (egg != null) {
+                result += egg.weight ?? 0;
+            }
+        }
+
+        return '${Convert.toCurrencyWithDecimal(result.toString(), '', '.', ',')} kg';
     }
 }
 

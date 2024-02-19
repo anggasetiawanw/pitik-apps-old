@@ -22,12 +22,13 @@ class SuggestField extends StatelessWidget {
     String hint;
     String alertText;
     bool hideLabel = false;
+    bool caseSensitive;
     Widget? childPrefix;
     List<String> suggestList;
     Function(String) onTyping;
     Function(String) onSubmitted;
 
-    SuggestField({required this.controller, this.id = 1, required this.label, required this.hint, required this.alertText, this.childPrefix, required this.suggestList,
+    SuggestField({required this.controller, this.id = 1, required this.label, required this.hint, this.caseSensitive = false, required this.alertText, this.childPrefix, required this.suggestList,
                   required this.onTyping, required this.onSubmitted});
 
     SuggestFieldController getController() {
@@ -67,8 +68,14 @@ class SuggestField extends StatelessWidget {
                                                 controller.hideAlert();
                                                 List<String> result = [];
                                                 for (var value in controller.suggestList) {
-                                                    if (value.contains(textEditingValue.text)) {
-                                                        result.add(value);
+                                                    if (caseSensitive) {
+                                                        if (value.contains(textEditingValue.text)) {
+                                                            result.add(value);
+                                                        }
+                                                    } else {
+                                                        if (value.toLowerCase().contains(textEditingValue.text.toLowerCase())) {
+                                                            result.add(value);
+                                                        }
                                                     }
                                                 }
 

@@ -18,7 +18,7 @@ class ExpandableController extends GetxController {
     void expand() {
         expanded.value = true;
         refresh();
-    } 
+    }
     void collapse() => expanded.value = false;
 }
 
