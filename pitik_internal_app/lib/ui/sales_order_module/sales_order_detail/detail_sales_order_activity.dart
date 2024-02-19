@@ -375,7 +375,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                       )
                     ] else if (controller.orderDetail.value!.status == EnumSO.confirmed && controller.orderDetail.value!.category == EnumSO.outbound) ...[
-                      if (controller.isScRelation.isTrue) ...[
+                      if (Constant.isScRelation.isTrue || Constant.isScFleet.isTrue) ...[
                         Expanded(
                           child: controller.alocatedButton,
                         ),
@@ -466,16 +466,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         const SizedBox(
                           width: 16,
                         ),
+                        Expanded(
+                            child: ButtonOutline(
+                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
+                            label: "Batal",
+                            onClick: () {
+                                    showBottomDialog(context, controller);
+                                },
+                            ),
+                        )
                       ],
-                      Expanded(
-                        child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
-                          onClick: () {
-                            showBottomDialog(context, controller);
-                          },
-                        ),
-                      )
+
                     ]
                   ],
                 ),

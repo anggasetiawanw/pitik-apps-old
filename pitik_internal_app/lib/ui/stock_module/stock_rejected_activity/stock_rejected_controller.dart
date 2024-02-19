@@ -25,8 +25,8 @@ class StockRejectedController extends GetxController {
   var isSelectedBox = false.obs;
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock("REJECTED"));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesRejected"), label: "Ya", onClick: () => updateStock("REJECTED"));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoRejected"), label: "Tidak", onClick: () => Get.back());
 
   DateTime timeStart = DateTime.now();
     DateTime timeEnd = DateTime.now();

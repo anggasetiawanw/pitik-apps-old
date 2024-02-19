@@ -92,7 +92,7 @@ extension PurhcaseReceiveController on ReceiveController {
         status = "RECEIVED";
         break;
       case "Dibatalkan":
-        status = "REJECTED";
+        status = "CANCELLED";
         break;
       default:
     }

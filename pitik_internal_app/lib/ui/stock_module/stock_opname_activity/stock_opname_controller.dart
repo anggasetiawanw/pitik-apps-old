@@ -88,29 +88,27 @@ class StockOpnameController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    isLoading.value = true;
     if (isEdit.isTrue) {
       isLoading.value = true;
       sourceStock.controller.setTextSelected(opnameModel!.operationUnit!.operationUnitName!);
       showWidget(opnameModel!.products!, true);
       efTotal.setInput((opnameModel?.totalWeight ?? 0).toString());
       efTotal.controller.visibleField();
+      countingApi();
     } else {
       if (operationUnitModel != null) {
         sourceStock.controller.setTextSelected(operationUnitModel!.operationUnitName!);
         showWidget(operationUnitModel!.purchasableProducts!, false);
         efTotal.controller.visibleField();
       }
+      countingApi();
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (isEdit.isTrue) {
-        isLoading.value = false;
-      }
-    });
   }
 
   void countingApi(){
     countApi++;
-    if(countApi == 2){
+    if(countApi == 3){
       isLoading.value = false;
       timeEnd = DateTime.now();
         Duration totalTime = timeEnd.difference(timeStart);

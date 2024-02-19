@@ -23,7 +23,7 @@ class BerandaActivity extends StatelessWidget {
             child: Padding(
               padding:  EdgeInsets.only(left: Get.width * 0.8, top: 24, bottom: 16, right: 6),
               child: GestureDetector(
-                onTap: () => Get.toNamed(RoutePage.notification),
+                onTap: () => Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshHome(context)),
                 child: SizedBox(
                   width: 50,
                   height: 34,

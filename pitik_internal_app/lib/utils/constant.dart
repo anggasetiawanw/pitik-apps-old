@@ -103,7 +103,6 @@ class Constant {
   ///   A `VoidCallback` is being returned.
   static VoidCallback invalidResponse() {
     return () async {
-      Get.offAllNamed(RoutePage.loginPage);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String tokenDeviceId = prefs.getString(Constant.deviceIdRegister) ?? "";
         Service.push(
@@ -144,6 +143,7 @@ class Constant {
         isOpsLead.value = false;
         isSales.value = false;
         isSalesLead.value = false;
+        Get.offAllNamed(RoutePage.loginPage);
     };
   }
 

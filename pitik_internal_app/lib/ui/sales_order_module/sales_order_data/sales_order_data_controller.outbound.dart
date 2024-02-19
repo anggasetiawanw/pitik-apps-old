@@ -77,9 +77,14 @@ extension OutboundOrderController on SalesOrderController {
 
   void scFleetBodyGeneralOutbound(List<dynamic> bodyGeneral) {
     bodyGeneral[BodyQuerySales.withinProductionTeam.index] = null;
+    bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
+    bodyGeneral[BodyQuerySales.status9.index] = EnumSO.allocated;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
     bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
+    bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
+    bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
+
   }
 
   ResponseListener responOutbound() {
@@ -153,50 +158,64 @@ extension OutboundOrderController on SalesOrderController {
     Location? provinceSelect;
 
     if (spProvince.controller.textSelected.value.isNotEmpty) {
-      provinceSelect = province.firstWhereOrNull(
-        (element) => element!.provinceName == spProvince.controller.textSelected.value,
-      );
+        if(province.isNotEmpty) {
+            provinceSelect = province.firstWhereOrNull(
+                (element) => element!.provinceName == spProvince.controller.textSelected.value,
+            );
+        }
     }
 
     Location? citySelect;
     if (spCity.controller.textSelected.value.isNotEmpty) {
-      citySelect = city.firstWhereOrNull(
-        (element) => element!.cityName == spCity.controller.textSelected.value,
-      );
+        if(city.isNotEmpty) {
+            citySelect = city.firstWhereOrNull(
+                (element) => element!.cityName == spCity.controller.textSelected.value,
+            );
+        }
     }
 
     SalesPerson? salesSelect;
     if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-      salesSelect = listSalesperson.firstWhereOrNull(
-        (element) => element!.email == spCreatedBy.controller.textSelected.value,
-      );
+        if(listSalesperson.isNotEmpty) {
+            salesSelect = listSalesperson.firstWhereOrNull(
+                (element) => element!.email == spCreatedBy.controller.textSelected.value,
+            );
+        }
     }
 
     CategoryModel? categorySelect;
     if (spCategory.controller.textSelected.value.isNotEmpty) {
-      categorySelect = listCategory.firstWhereOrNull(
-        (element) => element!.name == spCategory.controller.textSelected.value,
-      );
+        if(listCategory.isNotEmpty) {
+            categorySelect = listCategory.firstWhereOrNull(
+                (element) => element!.name == spCategory.controller.textSelected.value,
+            );
+        }
     }
 
     Products? productSelect;
     if (spSku.controller.textSelected.value.isNotEmpty) {
-      productSelect = listProduct.firstWhereOrNull(
-        (element) => element!.name == spSku.controller.textSelected.value,
-      );
+        if(listProduct.isNotEmpty) {
+            productSelect = listProduct.firstWhereOrNull(
+                (element) => element!.name == spSku.controller.textSelected.value,
+            );
+        }
     }
 
     OperationUnitModel? operationUnitSelect;
     if (spSource.controller.textSelected.value.isNotEmpty) {
-      operationUnitSelect = listOperationUnits.firstWhere(
-        (element) => element!.operationUnitName == spSource.controller.textSelected.value,
-      );
+        if(listOperationUnits.isNotEmpty) {
+            operationUnitSelect = listOperationUnits.firstWhereOrNull(
+                (element) => element!.operationUnitName == spSource.controller.textSelected.value,
+            );
+        }
     }
     Branch? branchSelect;
     if (spSalesBranch.controller.textSelected.value.isNotEmpty) {
-      branchSelect = listBranch.firstWhere(
-        (element) => element!.name == spSalesBranch.controller.textSelected.value,
-      );
+        if(listBranch.isNotEmpty) {
+            branchSelect = listBranch.firstWhereOrNull(
+                (element) => element!.name == spSalesBranch.controller.textSelected.value,
+            );
+        }
     }
 
     String? status;

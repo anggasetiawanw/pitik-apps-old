@@ -80,6 +80,7 @@ class BerandaController extends GetxController {
     isLoading.value = true;
     await checkVersion.check(context);
     getRole();
+    getUnreadNotif();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
