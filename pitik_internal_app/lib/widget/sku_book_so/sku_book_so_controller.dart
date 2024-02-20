@@ -40,7 +40,7 @@ class SkuBookSOController extends GetxController {
       jumlahkg.value.add(EditField(
           controller: GetXCreator.putEditFieldController("${products[numberList]!.name!}Kg $tag"),
           label: "Kebutuhan*",
-          hint: "0.0",
+          hint: "Ketik Disini",
           alertText: "Kolom Ini Harus Di Isi",
           textUnit: "Kg",
           inputType: TextInputType.number,
@@ -53,24 +53,24 @@ class SkuBookSOController extends GetxController {
       if (!isRemarks) {
         if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD || products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS || products[numberList]!.category!.name! == AppStrings.KARKAS)) {
           jumlahEkor.value[numberList].controller.invisibleField();
-          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          jumlahkg.value[numberList].setInput("");
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         } else {
           jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
-          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          jumlahkg.value[numberList].setInput("");
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         }
       } else {
         if (!(products[numberList]!.name! == AppStrings.LIVE_BIRD || products[numberList]!.name! == AppStrings.AYAM_UTUH || products[numberList]!.name! == AppStrings.BRANGKAS || products[numberList]!.name! == AppStrings.KARKAS)) {
           jumlahEkor.value[numberList].controller.invisibleField();
-          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          jumlahkg.value[numberList].setInput("");
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         } else {
           jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
-          jumlahkg.value[numberList].setInput((products[numberList]!.weight ?? 0).toString());
+          jumlahkg.value[numberList].setInput("");
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         }
