@@ -92,6 +92,7 @@ class SuggestField extends StatelessWidget {
                                             },
                                             fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
                                                 controller.textEditingController.value = textEditingController;
+                                                controller.focusNode = focusNode;
                                                 return TextFormField(
                                                     controller: controller.textEditingController.value,
                                                     focusNode: focusNode,

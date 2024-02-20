@@ -313,6 +313,7 @@ class CreateBookStockController extends GetxController {
 
   void updateAllocated(String idJagal) {
     isLoading.value = true;
+        Get.back();
     Order orderPayload = Order(
       customerId: orderDetail.value!.customerId,
       operationUnitId: idJagal,
@@ -331,7 +332,6 @@ class CreateBookStockController extends GetxController {
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
         Constant.track("Click_Button_Alokasikan_Penjualan");
         isLoading.value = false;
-        Get.back();
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;

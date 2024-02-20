@@ -216,7 +216,22 @@ class API {
   /// of items to be returned in a single page of the response. It is used for
   /// pagination purposes.
   @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
-  void getPurchaseOrderList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit) {}
+  void getPurchaseOrderList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("code") String code,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("vendorId") String vendorId,
+    @Query("jagalId") String jagalId,
+    @Query("status") String status,
+    @Query("source") String source,
+  ) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
   /// purchase orders for good receipts, with authorization and pagination
@@ -240,7 +255,25 @@ class API {
   /// like "draft", "open", "closed", "cancelled", etc. depending on the possible
   /// status values defined in the API documentation.
   @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
-  void getGoodReceiptPOList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusConfirmed, @Query("status") String statusReceived, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getGoodReceiptPOList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("status") String statusConfirmed,
+    @Query("status") String statusReceived,
+    @Query("withinProductionTeam") String withinProductionTeam,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("vendorId") String vendorId,
+    @Query("jagalId") String jagalId,
+    @Query("status") String status,
+    @Query("source") String source,
+    @Query("code") String code,
+  ) {}
 
   /// This is a Dart function that retrieves details of a purchase by its ID, with
   /// authorization and error handling.
@@ -486,7 +519,26 @@ class API {
   /// you need to pass additional information related to the status of the sales
   /// orders.
   @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
-  void getGoodReceiptsOrderList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("grStatus") String grStatusReceived, @Query("grStatus") String grStatusRejected) {}
+  void getGoodReceiptsOrderList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("grStatus") String grStatusReceived,
+    @Query("grStatus") String grStatusRejected,
+    @Query("category") String category,
+    @Query("withinProductionTeam") bool withinProductionTeam,
+    @Query("date") String date,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("operationUnitId") String operationUnitId,
+    @Query("status") String status,
+    @Query("returnStatus") String returnStatus,
+    @Query("code") String code,
+
+
+  ) {}
 
   /// This is a Dart function that cancels an order using HTTP PUT method with
   /// authorization and path parameters.
@@ -687,7 +739,24 @@ class API {
   /// internal transfers. It is a string parameter that can have one of the
   /// following values: "draft", "submitted", "approved", "rejected", "canceled",
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
-  void getGoodReceiptTransferList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String status, @Query("status") String statusDelivered, @Query("withinProductionTeam") String withinProductionTeam) {}
+  void getGoodReceiptTransferList(
+    @Header("Authorization") String authorization,
+    @Header("X-ID") String xId,
+    @Header("X-APP-ID") String xAppId,
+    @Query("\$page") int page,
+    @Query("\$limit") int limit,
+    @Query("status") String statusReceived,
+    @Query("status") String statusDelivered,
+    @Query("withinProductionTeam") String withinProductionTeam,
+    @Query("createdDate") String createdDate,
+    @Query("productCategoryId") String productCategoryId,
+    @Query("productItemId") String productItemId,
+    @Query("sourceOperationUnitId") String operationUnitId,
+    @Query("targetOperationUnitId") String vendorId,
+    @Query("status") String status,
+    @Query("code") String code,
+    @Query("source") String source,
+  ) {}
 
   /// This function creates a goods received record using a POST request with
   /// authorization and parameter inputs.
@@ -850,7 +919,7 @@ class API {
   @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
   void getDeliveryListTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("driverId") String driverId, @Query("status") String readyToDeliver, @Query("status") String onDelivery, @Query("status") String delivered, @Query("status") String received) {}
 
- @JSON(isPlaint: true)
+  @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
   void deliveryPickupSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 

@@ -55,16 +55,13 @@ class ListApi {
     static const String getGoodReceiptsOrderList = "getGoodReceiptsOrderList";
     static const String createGoodReceived = "createGoodReceived";
     static const String detailReceivedById = "detailReceivedById";
-
     static const String createStockOpname = "createStockOpname";
     static const String updateOpnameById = "updateOpnameById";
     static const String getListOpname = "getListOpname";
     static const String detailOpnameById = "detailOpnameById";
-
     static const String bookStockSalesOrder = "bookStockSalesOrder";
     static const String editSalesOrder = "editSalesOrder";
     static const String cancelGr = "cancelGr";
-
     static const String getDeliveryListSO = "getDeliveryListSO";
     static const String getDeliveryListTransfer = "getDeliveryListTransfer";
     static const String deliveryPickupSO = "deliveryPickupSO";
@@ -78,6 +75,14 @@ class ListApi {
     static const String loginWithApple = "loginWithApple";
     static const String getListOpnameJob = "getListOpnameJob";
     static const String getListTerminateJob = "getListTerminateJob";
+    static const String deleteDevice = "deleteDevice";
+    static const String countUnreadNotifications = "countUnreadNotifications";
+    static const String readAllNotifications = "readAllNotifications";
+    static const String notifications = "notifications";
+    static const String updateNotification = "updateNotification";
+
+
+    static const String addDevice = "addDevice";
 
     static String pathGetProductById(String productId) {
         return "v2/sales/product/$productId";

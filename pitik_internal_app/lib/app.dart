@@ -21,6 +21,7 @@ class App extends StatelessWidget {
         fontFamily: 'Montserrat_Medium',
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
       ),
       navigatorObservers: [ChuckerFlutter.navigatorObserver],
       initialRoute: AppRoutes.initial,

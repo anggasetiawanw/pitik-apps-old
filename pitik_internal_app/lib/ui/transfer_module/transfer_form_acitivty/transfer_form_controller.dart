@@ -106,24 +106,21 @@ class TransferFormController extends GetxController {
 
     @override
     void onInit() {
-
         super.onInit();
-
-        isLoading.value = true;
         transferModel = Get.arguments[0];
         isEdit.value = Get.arguments[1];
         categorySKUField.controller.disable();
         skuField.controller.disable();
         amountField.controller.disable();
         totalField.controller.disable();
-        getListOperationUnit();
-        getListDestinationOperationUnit();
 
     }
     @override
     void onReady() {
         super.onReady();
-
+        isLoading.value = true;
+        getListOperationUnit();
+        getListDestinationOperationUnit();
         if(isEdit.value){
             sourceField.controller.textSelected.value = transferModel!.sourceOperationUnit!.operationUnitName!;
             destinationField.controller.textSelected.value = transferModel!.targetOperationUnit!.operationUnitName!;
@@ -168,15 +165,15 @@ class TransferFormController extends GetxController {
                     for (var units in (body as ListOperationUnitsResponse).data) {
                       mapList3[units!.operationUnitName!] = false;
                     }
-
                     for (var result in body.data) {
                         listSourceOperationUnits.value.add(result);
                     }
-                    Timer(const Duration(milliseconds: 500), () {
+                    Timer(const Duration(milliseconds: 200), () {
                         sourceField.controller
-                        ..enable()
+                        ..generateItems(mapList3)
                         ..hideLoading()
-                        ..generateItems(mapList3);
+                        ..enable();
+                    countingApi();
                     });
 
                     if(isEdit.isTrue){
@@ -210,9 +207,6 @@ class TransferFormController extends GetxController {
                         countingApi();
                         countingApi();
                     }
-                    countingApi();
-                    sourceField.controller
-                    .showLoading();
                 },
                 onResponseFail: (code, message, body, id, packet) {
                     Get.snackbar(
@@ -223,6 +217,8 @@ class TransferFormController extends GetxController {
                         colorText: Colors.white,
                         backgroundColor: Colors.red,);
                      isLoading.value = false;
+                        sourceField.controller
+                        .hideLoading();
                     },
                 onResponseError: (exception, stacktrace, id, packet) {
                     Get.snackbar(
@@ -234,7 +230,7 @@ class TransferFormController extends GetxController {
                         backgroundColor: Colors.red,);
                      isLoading.value = false;
                         sourceField.controller
-                        .showLoading();
+                        .hideLoading();
                 },
                 onTokenInvalid: Constant.invalidResponse()
                 )
@@ -251,7 +247,6 @@ class TransferFormController extends GetxController {
             body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
-
                      Map<String, bool> mapList ={};
                     for (var units in (body as ListOperationUnitsResponse).data) {
                       mapList[units!.operationUnitName!] = false;
@@ -259,11 +254,11 @@ class TransferFormController extends GetxController {
                     for (var result in body.data) {
                         listDestinationOperationUnits.value.add(result);
                     }
-                    Timer(const Duration(milliseconds: 500), () {
+                    Timer(const Duration(milliseconds: 200), () {
                         destinationField.controller
-                        ..enable()
+                        ..generateItems(mapList)
                         ..hideLoading()
-                        ..generateItems(mapList);
+                        ..enable();
                         countingApi();
                     });
                 },

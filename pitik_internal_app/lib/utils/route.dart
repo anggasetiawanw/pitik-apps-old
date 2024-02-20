@@ -33,6 +33,8 @@ import 'package:pitik_internal_app/ui/manufacture_module/manufacture_home_activi
 import 'package:pitik_internal_app/ui/manufacture_module/manufacture_home_activity/manufacture_home_controller.dart';
 import 'package:pitik_internal_app/ui/manufacture_module/manufacture_output_activity/manufacture_output_activity.dart';
 import 'package:pitik_internal_app/ui/manufacture_module/manufacture_output_activity/manufacture_output_controller.dart';
+import 'package:pitik_internal_app/ui/notification/notification_activity.dart';
+import 'package:pitik_internal_app/ui/notification/notification_controller.dart';
 import 'package:pitik_internal_app/ui/purchase_module/data_purchase_activity/data_purchase_activity.dart';
 import 'package:pitik_internal_app/ui/purchase_module/data_purchase_activity/data_purchase_controller.dart';
 import 'package:pitik_internal_app/ui/purchase_module/detail_purchase_activity/detail_purchase_activity.dart';
@@ -123,6 +125,7 @@ class RoutePage {
     static const String helpPage ="/help";
     static const String changeBranch ="/changeBranch";
     static const String developer ="/developer";
+    static const String notification ="/notification";
 
     //Sales Module
     static const String homePageCustomer = "/homeCustomer";
@@ -214,6 +217,7 @@ class AppRoutes {
         GetPage(name: RoutePage.visitCustomer,page: () => const VisitActivity(),binding: VisitBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.editCustomer,page: () => const EditData(),binding: EditDataBindings(context: Constant.getContext()),),
         GetPage(name: RoutePage.developer,page: () => const DeveloperActivity()),
+        GetPage(name: RoutePage.notification,page: () => const NotificationActivity(), binding: NotificationBindings(context: Constant.getContext()),),
 
         //Purchase Module
         GetPage(name: RoutePage.newDataPurchase,page: () => const NewDataPurchase(),bindings: [ NewDataPurchaseBindings(context: Constant.getContext()),],),
@@ -254,7 +258,7 @@ class AppRoutes {
         GetPage(name: RoutePage.deliveryConfirmTransfer, page: ()=> const DeliveryConfirmTransfer(), binding: DeliveryConfirmTransferBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.deliveryRejectSO, page: ()=> const DeliveryRejectSO(), binding: DeliveryRejectSOBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.deliveryDetailSO, page: ()=> const DeliveryDetailSO(), binding: DeliveryDetailSOBindings(context: Constant.getContext())),
-    
+
         //Stock Module
         GetPage(name: RoutePage.homeStock, page: ()=>const StockHomeActivity(), binding: StockHomeBindings(context: Constant.getContext())),
         GetPage(name: RoutePage.stockOpname, page: ()=>const StockOpnameActivity(),binding: StockOpnameBindings(context: Constant.getContext())),

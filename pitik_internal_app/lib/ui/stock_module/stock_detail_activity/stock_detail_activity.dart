@@ -88,15 +88,7 @@ class StockDetailActivity extends StatelessWidget {
                     width: 16,
                   ),
                   Expanded(child: controller.btTolak)
-                ] else ...[
-                  Expanded(
-                      child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("cancelButton"),
-                          label: "Batal",
-                          onClick: () {
-                            _showBottomDialog(context, controller);
-                          })),
-                ]
+                ] else const SizedBox(),
               ]
             ],
           ),

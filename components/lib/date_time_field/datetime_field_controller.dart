@@ -20,6 +20,8 @@ class DateTimeFieldController extends GetxController {
     var textSelected = "".obs;
     var formKey = GlobalKey<FormState>();
 
+    RxString label = "".obs;
+
     void showAlert() => showTooltip.value = true;
     void hideAlert() => showTooltip.value = false;
     void enable() => activeField.value = true;
@@ -27,6 +29,7 @@ class DateTimeFieldController extends GetxController {
     void invisibleLabel() => hideLabel.value = true;
     void visibleLabel() => hideLabel.value = false;
     void setTextSelected(String text) => textSelected.value = text;
+    void setLabel(String newLabel) => label.value = newLabel;
 }
 
 class DateTimeFieldBinding extends Bindings {

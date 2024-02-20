@@ -349,6 +349,41 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     "Ditolak": false,
     "Batal": false,
   });
+  RxMap<String, bool> mapStatusOutbondAllSC = RxMap<String, bool>({
+    "Terkonfirmasi": false,
+    "Teralokasi": false,
+    "Dipesan": false,
+    "Siap Dikirim": false,
+    "Perjalanan": false,
+    "Terkirim": false,
+    "Ditolak": false,
+  });
+  RxMap<String, bool> mapStatusOutbondScFleet = RxMap<String, bool>({
+    "Terkonfirmasi": false,
+    "Teralokasi": false,
+    "Dipesan": false,
+    "Siap Dikirim": false,
+    "Perjalanan": false,
+    "Terkirim": false,
+    "Ditolak": false,
+  });
+  RxMap<String, bool> mapStatusOutbondOpsUnit = RxMap<String, bool>({
+    "Teralokasi": false,
+    "Dipesan": false,
+    "Siap Dikirim": false,
+    "Perjalanan": false,
+    "Terkirim": false,
+    "Ditolak": false,
+  });
+  RxMap<String, bool> mapStatusOutbondScRelation = RxMap<String, bool>({
+    "Terkonfirmasi": false,
+    "Teralokasi": false,
+    "Dipesan": false,
+    "Siap Dikirim": false,
+    "Perjalanan": false,
+    "Terkirim": false,
+    "Ditolak": false,
+  });
 
   RxMap<String, bool> mapStatusInbound = RxMap<String, bool>({
     "Draft": false,

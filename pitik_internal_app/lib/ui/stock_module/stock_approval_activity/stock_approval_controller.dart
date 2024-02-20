@@ -32,8 +32,8 @@ class StockApprovalController extends GetxController {
 
   late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYes"), label: "Ya", onClick: () => updateStock(EnumStock.finished));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btYes"), label: "Ya", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesStockApp"), label: "Ya", onClick: () => updateStock(EnumStock.finished));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoSTock"), label: "Tidak", onClick: () => Get.back());
 
   DateTime timeStart = DateTime.now();
     DateTime timeEnd = DateTime.now();

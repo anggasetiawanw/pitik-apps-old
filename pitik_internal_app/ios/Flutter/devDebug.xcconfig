@@ -2,7 +2,7 @@
 
 FLUTTER_TARGET=lib/main_dev.dart
 ASSET_PREFIX=dev
-BUNDLE_NAME=[Staging]Pitik Internal App
-BUNDLE_DISPLAY_NAME=[Staging]Pitik Internal App
+BUNDLE_NAME=Pitik Internal App - Staging
+BUNDLE_DISPLAY_NAME=Pitik Internal App - Staging
 uri=https://api.pitik.dev/
 crashlytic=STAGING

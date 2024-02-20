@@ -30,7 +30,8 @@ class SearchBarController extends GetxController {
             }
         }
     }
-}
+
+    void generateItem(List<String> items) => this.items = items;}
 
 class SearchBarBindings extends Bindings {
     String tag;

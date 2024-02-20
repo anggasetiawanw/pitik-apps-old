@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:components/apple_button/apple_button.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
@@ -7,6 +10,7 @@ import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
 import 'package:dao_impl/user_google_impl.dart';
 import 'package:dao_impl/x_app_id_impl.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,15 +18,17 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/auth_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/auth_response.dart';
 import 'package:model/response/internal_app/profile_response.dart';
+import 'package:model/response/token_device_response.dart';
 import 'package:model/user_google_model.dart';
 import 'package:model/x_app_model.dart';
 import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
-import 'package:components/apple_button/apple_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginActivityController extends GetxController {
   BuildContext context;
@@ -106,6 +112,7 @@ class LoginActivityController extends GetxController {
                 Constant.auth = (body as AuthResponse).data;
                 UserGoogleImpl().save(Constant.userGoogle);
                 AuthImpl().save(body.data);
+                _sendFirebaseTokenToServer(Auth(token: body.data!.token, id: body.data!.id));
                 Service.push(
                     apiKey: 'userApi',
                     service: ListApi.getSalesProfile,
@@ -192,6 +199,7 @@ class LoginActivityController extends GetxController {
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                           ProfileImpl().save((body as ProfileResponse).data);
+
                           Constant.profileUser = body.data;
 
                           Get.offAllNamed(RoutePage.homePage);
@@ -261,6 +269,7 @@ class LoginActivityController extends GetxController {
               onResponseDone: (code, message, body, id, packet) {
                 Constant.auth = (body as AuthResponse).data;
                 // UserGoogleImpl().save(Constant.userGoogle);
+                _sendFirebaseTokenToServer(Auth(token: body.data!.token, id: body.data!.id));
                 AuthImpl().save(body.data);
                 Service.push(
                     apiKey: 'userApi',
@@ -317,6 +326,42 @@ class LoginActivityController extends GetxController {
       isLoading.value = false;
       Get.snackbar("Pesan", "$st", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
     }
+  }
+
+  void _sendFirebaseTokenToServer(Auth auth) async {
+    Map deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String osVersion = Platform.operatingSystemVersion;
+
+    Service.push(
+        apiKey: 'userApi',
+        service: ListApi.addDevice,
+        context: Get.context!,
+        body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', osVersion, deviceInfo['model'] ?? '-'],
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setString(Constant.deviceIdRegister, (body as TokenDeviceResponse).data!.id!);
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "${(body as ErrorResponse).error!.message}",
+                snackPosition: SnackPosition.TOP,
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              Get.snackbar(
+                "Pesan",
+                "Terjadi kesalahan internal",
+                snackPosition: SnackPosition.TOP,
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+            },
+            onTokenInvalid: () => Constant.invalidResponse()));
   }
 }
 

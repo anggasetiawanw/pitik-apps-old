@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:pitik_internal_app/ui/transfer_module/transfer_home_activity/transfer_home_controller.dart';
+import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 import 'package:pitik_internal_app/widget/common/list_card_transfer.dart';
 import 'package:pitik_internal_app/widget/common/loading.dart';
@@ -103,19 +104,20 @@ class TransferHomeActivity extends StatelessWidget {
                           ),
                   ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-              ),
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: controller.createTransfer,
-            ),
-          ),
+          if(Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    ),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    child: controller.createTransfer,
+                    ),
+                ),
         ],
       ),
     );

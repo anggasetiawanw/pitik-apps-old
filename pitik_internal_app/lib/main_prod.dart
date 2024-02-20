@@ -8,6 +8,8 @@ import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
 import 'package:pitik_internal_app/flavors.dart';
 import 'package:pitik_internal_app/main.reflectable.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
+import 'package:pitik_internal_app/utils/route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 
@@ -29,5 +31,7 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupCrashlytics();
     FirebaseConfig.setupRemoteConfig();
 
-    // await FirebaseConfig.setupCloudMessaging();
+    String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('firebaseToken', token ?? '-');
 }

@@ -350,6 +350,8 @@ class EditDataSalesOrderController extends GetxController {
                 skuCardRemark.controller.editFieldPotongan.value[j].controller.visibleField();
               }
             }
+            skuCardRemark.controller.refresh();
+            skuCardRemark.controller.update();
           });
         }
         isLoadData.value = false;
@@ -396,6 +398,8 @@ class EditDataSalesOrderController extends GetxController {
                   skuCard.controller.editFieldPotongan.value[j].controller.visibleField();
                 }
               }
+              skuCard.controller.refresh();
+              skuCard.controller.update();
             });
           }
 
@@ -697,7 +701,7 @@ class EditDataSalesOrderController extends GetxController {
     for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
       int whichItem = skuCard.controller.index.value[i];
       var listProductTemp = skuCard.controller.listSku.value.values.toList();
-      Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+      Products? productSelected = listProductTemp[i].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
 
       if (productSelected != null) {
         productList.add(Products(

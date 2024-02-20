@@ -46,11 +46,13 @@ class StockHomeController extends GetxController {
   Rx<List<OpnameModel?>> listOpname = Rx<List<OpnameModel?>>([]);
   OperationUnitModel? selectSourceOpname;
   Products? selectCategory;
+  RxDouble totalWeightGlobal = 0.0.obs;
   late SpinnerField sourceLatestStock = SpinnerField(
       controller: GetXCreator.putSpinnerFieldController("sourceLatestStock"),
       label: "Sumber*",
       hint: "Pilih Salah Satu",
       alertText: "Sumber Harus dipilih!",
+      hasSubtitle: true,
       items: const {},
       onSpinnerSelected: (value) {
         if (listOperationUnits.value.isNotEmpty) {
@@ -59,6 +61,7 @@ class StockHomeController extends GetxController {
             // isLoadingStock.value = true;
             // pieData.value.clear();
             // getLatestStock(selectSource.id!);
+            totalWeightGlobal.value = selectSource.totalStockWeight!;
             categoryStock.controller.setTextSelected("");
             sourceStock = selectSource;
             Map<String, bool> mapStock = {};
@@ -90,6 +93,7 @@ class StockHomeController extends GetxController {
       label: "Sumber*",
       hint: "Pilih Salah Satu",
       alertText: "Sumber Harus Di pilih",
+      hasSubtitle: true,
       items: const {},
       onSpinnerSelected: (value) {
         if (listOperationUnits.value.isNotEmpty) {
@@ -131,7 +135,7 @@ class StockHomeController extends GetxController {
     sourceLatestStock.controller.invisibleSpinner();
     categoryStock.controller.disable();
     tabListener();
-    tooltip = TooltipBehavior(enable: true);
+    tooltip = TooltipBehavior(enable: true,);
   }
 
   @override
@@ -177,11 +181,15 @@ class StockHomeController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
+                Map<String, String> lisTotal = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
+                lisTotal[units.operationUnitName!] = units.totalStockWeight!.toStringAsFixed(2);
               }
               sourceLatestStock.controller.generateItems(mapList);
+              sourceLatestStock.controller.generateSubtitle(lisTotal);
               sourceOpname.controller.generateItems(mapList);
+              sourceOpname.controller.generateSubtitle(lisTotal);
               for (var result in body.data) {
                 listOperationUnits.value.add(result);
               }
@@ -261,6 +269,7 @@ class StockHomeController extends GetxController {
                 backgroundColor: Colors.red,
               );
               isLoadingOpname.value = false;
+              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
@@ -286,10 +295,6 @@ class StockHomeController extends GetxController {
               chartData.value.sort((b, a) => a.x.compareTo(b.x));
               chartData.refresh();
 
-              // chartData.value.forEach((element) {
-              //     print("CHART DATA ->>>> ${element.x}");
-              // });
-
               isLoadingStock.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
@@ -313,6 +318,7 @@ class StockHomeController extends GetxController {
                 backgroundColor: Colors.red,
               );
               isLoadingStock.value = false;
+              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }

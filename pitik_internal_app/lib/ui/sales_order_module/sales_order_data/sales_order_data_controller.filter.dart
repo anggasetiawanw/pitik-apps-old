@@ -98,7 +98,6 @@ extension FilterOrderController on SalesOrderController {
 
   bool validationFilter() {
     if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
-      print("masuk sini");
       if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
         Get.snackbar(
           "Oops",
@@ -330,7 +329,17 @@ extension FilterOrderController on SalesOrderController {
 
   showFilter() {
     if (isOutbondTab.isTrue) {
-      spStatus.controller.generateItems(mapStatusOutbond);
+      if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
+        spStatus.controller.generateItems(mapStatusOutbondOpsUnit);
+      } else if (Constant.isScFleet.isTrue && Constant.isScRelation.isTrue) {
+        spStatus.controller.generateItems(mapStatusOutbondAllSC);
+      } else if (Constant.isScFleet.isTrue) {
+        spStatus.controller.generateItems(mapStatusOutbondScFleet);
+      } else if (Constant.isScRelation.isTrue) {
+        spStatus.controller.generateItems(mapStatusOutbondScRelation);
+      } else {
+        spStatus.controller.generateItems(mapStatusOutbond);
+      }
     } else {
       spStatus.controller.generateItems(mapStatusInbound);
     }

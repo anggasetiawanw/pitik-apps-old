@@ -101,16 +101,11 @@ class TerminateDetailController extends GetxController {
     super.onInit();
     isLoading.value = true;
     terminateModel = Get.arguments;
-    createdDate = Convert.getDatetime(terminateModel.createdDate!);
 
+    getDetailTerminate();
     initializeDateFormatting();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    getDetailTerminate();
-  }
 
   void updateTerminate(String status) {
     isLoading.value = true;
@@ -160,6 +155,7 @@ class TerminateDetailController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               terminateModel = body.data;
+              createdDate = Convert.getDatetime(terminateModel.createdDate!);
               isLoading.value = false;
               timeEnd = DateTime.now();
               Duration totalTime = timeEnd.difference(timeStart);

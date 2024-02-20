@@ -9,6 +9,9 @@ class AppStrings {
     static const String WEB_CERT_PRODUCTION = "BDE3vZutJYBjuzEs8JmvMovLWBieuw7Rhbhp6H0cPfsrAqJ_9lNLJaSeGqBApsZ3AnEjNIG4Gp8G9kTo58ZLYRc";
     static const String WEB_CERT_STAGING = "BBQ22mlm8h-99BCu_L2Bywe8RsBqDLndepktinxyvItignYN07rbcz9b67NXOG-jkBrui047S6hGmqK5CUYhpC8";
 
+    static const String MIX_PANEL_TOKE_PRODUCTION = "42baf55600c341ade7c4d01c366e6869";
+    static const String MIX_PANEL_TOKE_STAGING = "8d2c97dc21c83ad4c45fa246c9f26e23";
+
     static const String BASE_URL_PROD = "https://api.pitik.id/";
     static const String BASE_URL_STAGING = "https://api-dev.pitik.id/";
     static const String APPSTOREID_INTERNAL_STAGING = "6469581106";
