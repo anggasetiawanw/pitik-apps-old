@@ -91,14 +91,6 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                             Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                    Text('Kematian', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                                    Text('${controller.report.value.mortality ?? '-'} Ekor', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
-                                                ]
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
                                                     Text('Afkir', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
                                                     Text('${controller.report.value.culling ?? '-'} Ekor', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                                 ]

@@ -8,6 +8,7 @@
 
 class ListApi {
     static const String auth = "auth";
+    static const String register = "register";
     static const String addDevice = "addDevice";
     static const String deleteDevice = "deleteDevice";
     static const String profile = "profile";

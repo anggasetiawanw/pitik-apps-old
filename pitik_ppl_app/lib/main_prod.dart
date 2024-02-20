@@ -37,7 +37,7 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupRemoteConfig();
 
     // init GPS
-    // GpsUtil.on();
+    GpsUtil.onStream();
 
     String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();

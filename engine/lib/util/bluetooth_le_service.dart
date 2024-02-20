@@ -64,7 +64,8 @@ class BluetoothLeService {
             [
                 Permission.bluetooth,
                 Permission.bluetoothConnect,
-                Permission.bluetoothScan
+                Permission.bluetoothScan,
+                Permission.location,
             ]
             .request().then((status) => _runningScan(bluetoothLeConstant, deviceNameHandle, listener));
         } else {

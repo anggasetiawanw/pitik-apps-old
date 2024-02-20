@@ -10,6 +10,8 @@ import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/register/register_controller.dart';
+import 'package:common_page/register/register_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
 import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
@@ -119,6 +121,7 @@ class AppRoutes {
     static final page = [
         GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity(), binding: SplashScreenBindings()),
         GetPage(name: RoutePage.boardingPage, page: () => const BoardingActivity()),
+        GetPage(name: RoutePage.registerPage, page: () => RegisterActivity(privacyPolicyRoute: RoutePage.privacyPage, termRoute: RoutePage.termPage), binding: RegisterBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.farmingDashboard, page: () => const FarmingDashboardActivity(), binding: FarmingDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
@@ -209,6 +212,7 @@ class RoutePage {
 
     static const String splashPage = "/";
     static const String boardingPage = "/boarding";
+    static const String registerPage = "/registerPage";
     static const String loginPage = "/login";
     static const String farmingDashboard = "/farmingDashboard";
     static const String coopList = "/coopList";

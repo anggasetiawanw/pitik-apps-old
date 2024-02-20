@@ -49,7 +49,7 @@ class LoginActivity extends GetView<LoginController> {
                             ),
                             const SizedBox(height: 32),
                             ButtonFill(controller: GetXCreator.putButtonFillController("btnLogin"), label: "Masuk", onClick: () => controller.login()),
-                            ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnRegister"), label: "Bergabung menjadi Kawan Pitik!", onClick: () {})
+                            ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnRegister"), label: "Bergabung menjadi Kawan Pitik!", onClick: () => Get.toNamed(RoutePage.registerPage))
                         ]
                     )
                 )
