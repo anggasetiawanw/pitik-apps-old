@@ -73,7 +73,7 @@ class TransferDetailActivity extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "CONFIRMED") ...[
+                  ] else if (controller.transferModel.status == "CONFIRMED" && (Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue || Constant.isShopKepper.isTrue)) ...[
                     Expanded(
                         child: ButtonFill(
                             controller: GetXCreator.putButtonFillController("pesanStock"),
