@@ -50,6 +50,7 @@ class ListApi {
     static const String getRecordImages = "getRecordImages";
     static const String getListDataCamera = "getListDataCamera";
     static const String takePictureSmartCamera = "takePictureSmartCamera";
+    static const String submitCrowdedness = "submitCrowdedness";
 
     // api SMART CONTROLLER
     static const String getFloorList = "getFloor";

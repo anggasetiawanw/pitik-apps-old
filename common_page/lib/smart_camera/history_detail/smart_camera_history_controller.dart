@@ -276,6 +276,7 @@ class SmartCameraHistoryController extends GetxController {
                                     controller: GetXCreator.putHistoricalSmartCameraController("ItemHistoricalSmartCamera$index}",context),
                                     recordCamera: recordImages.value[index],
                                     index: index,
+                                    isCanCrowdednessCorrection: !bundle.isCanTakePicture,
                                     onOptionTap: () {}
                                 ),
                                 index == recordImages.value.length - 1 ? const SizedBox(height: 120) : Container()

@@ -26,6 +26,7 @@ class SmartCameraListDayController extends GetxController {
     SmartCameraListDayController({required this.context});
 
     late Coop coop;
+    late bool isCanTakePicture;
 
     RxList<SmartCameraDay?> dayList = <SmartCameraDay?>[].obs;
     var isLoading = false.obs;
@@ -33,7 +34,8 @@ class SmartCameraListDayController extends GetxController {
     @override
     void onInit() {
         super.onInit();
-        coop = Get.arguments;
+        coop = Get.arguments[0];
+        isCanTakePicture = Get.arguments[1];
         getDayList();
     }
 
@@ -86,6 +88,7 @@ class SmartCameraListDayController extends GetxController {
         routeHistoryDetail: ListApi.getRecordImages,
         basePath: 'v2/smart-camera/',
         day: day,
+        isCanTakePicture: isCanTakePicture,
         onGetData: (controller) => AuthImpl().get().then((auth) {
             if (auth != null) {
                 controller.isLoading.value = true;

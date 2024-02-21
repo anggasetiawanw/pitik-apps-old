@@ -340,6 +340,12 @@ class LayerDailyReportDetailActivity extends GetView<LayerDailyReportDetailContr
                                             const SizedBox(height: 16),
                                             const Divider(color: GlobalVar.outlineColor, height: 1.4),
                                             const SizedBox(height: 16),
+                                            Text('Keterangan', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            const SizedBox(height: 8),
+                                            Text(controller.report.value.remarks ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                            const SizedBox(height: 16),
+                                            const Divider(color: GlobalVar.outlineColor, height: 1.4),
+                                            const SizedBox(height: 16),
                                             Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [

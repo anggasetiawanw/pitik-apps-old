@@ -458,7 +458,7 @@ class FarmingDashboardController extends GetxController {
                                             title: "Smart\nCamera",
                                             imagePath: 'images/record_icon.svg',
                                             status: showSmartCameraAlert.value,
-                                            function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coopList[coopSelected.value]!)
+                                            function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: [coopList[coopSelected.value]!, true])
                                         )
                                     ]
                                 )

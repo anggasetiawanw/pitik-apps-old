@@ -327,7 +327,7 @@ class CoopDashboardController extends GetxController {
                                             }),
                                             DashboardCommon.createMenu(title: "Smart\nCamera", imagePath: 'images/record_icon.svg', status: showSmartCameraAlert.value, function: () {
                                                 GlobalVar.track('Click_feature_iot_smart_camera');
-                                                Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop);
+                                                Get.toNamed(RoutePage.listSmartCameraDay, arguments: [coop, false]);
                                             })
                                         ]
                                     )

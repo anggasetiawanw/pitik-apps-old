@@ -91,7 +91,7 @@ class SmartCameraListHistoryActivity extends GetView<SmartCameraListHistoryContr
                                     Expanded(child: controller.listSmartCamera())
                                 ]
                             ),
-                            controller.bottomNavBar()
+                            controller.bundle.isCanTakePicture ? controller.bottomNavBar() : const SizedBox()
                         ]
                     )
                 )
