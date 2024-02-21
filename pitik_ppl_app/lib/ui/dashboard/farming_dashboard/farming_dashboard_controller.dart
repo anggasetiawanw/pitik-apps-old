@@ -196,9 +196,9 @@ class FarmingDashboardController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, url, page, 10, 'DESC'],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
+                        taskTicketList.clear();
                         if ((body as TaskTicketResponse).data.isNotEmpty) {
                             if (page == 1) {
-                                taskTicketList.clear();
                                 taskTicketList.value = body.data;
                             } else {
                                 taskTicketList.addAll(body.data);
@@ -885,7 +885,7 @@ class FarmingDashboardController extends GetxController {
                                                             ),
                                                             const SizedBox(height: 4),
                                                             Html(
-                                                                data: taskTicketList[index]!.instruction,
+                                                                data: taskTicketList[index] == null ? '' : taskTicketList[index]!.instruction ?? '',
                                                                 style: {
                                                                     "body": Style(
                                                                         fontSize: FontSize(10),
