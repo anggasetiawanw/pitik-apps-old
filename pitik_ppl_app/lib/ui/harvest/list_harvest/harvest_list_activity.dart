@@ -82,40 +82,66 @@ class HarvestListActivity extends GetView<HarvestListController> {
                                             ),
                                         )
                                     ),
-                                    RawScrollbar(
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: RefreshIndicator(
-                                            onRefresh: () => Future.delayed(
-                                                const Duration(milliseconds: 200), () => HarvestCommon.getDealList(isLoading: controller.isLoading, coop: controller.coop, harvestList: controller.harvestList)
+                                    Column(
+                                        children: [
+                                            Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                child: controller.efSearchDeal
                                             ),
-                                            child: ListView.builder(
-                                                physics: const AlwaysScrollableScrollPhysics(),
-                                                itemCount: controller.harvestList.length,
-                                                itemBuilder: (context, index) => HarvestCommon.createDealHarvestCard(
-                                                    coop: controller.coop,
-                                                    harvest: controller.harvestList[index],
-                                                    onRefreshData: () => controller.refreshHarvestList())
-                                            ),
-                                        )
-                                    ),
-                                    RawScrollbar(
-                                        thumbColor: GlobalVar.primaryOrange,
-                                        radius: const Radius.circular(8),
-                                        child: RefreshIndicator(
-                                            onRefresh: () => Future.delayed(
-                                                const Duration(milliseconds: 200), () => HarvestCommon.getRealizationList(isLoading: controller.isLoading, coop: controller.coop, realizationList: controller.realizationList)
-                                            ),
-                                            child: ListView.builder(
-                                                physics: const AlwaysScrollableScrollPhysics(),
-                                                itemCount: controller.realizationList.length,
-                                                itemBuilder: (context, index) => HarvestCommon.createRealizationHarvestCard(
-                                                    coop: controller.coop,
-                                                    realization: controller.realizationList[index],
-                                                    onRefreshData: () => controller.refreshHarvestList()
+                                            Expanded(
+                                                child: RawScrollbar(
+                                                    thumbColor: GlobalVar.primaryOrange,
+                                                    radius: const Radius.circular(8),
+                                                    child: RefreshIndicator(
+                                                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => HarvestCommon.getDealList(
+                                                            isLoading: controller.isLoading,
+                                                            coop: controller.coop,
+                                                            harvestList: controller.harvestList,
+                                                            onCallBack: () => controller.clearAndAddListData(originalData: controller.harvestList, filteredData: controller.harvestFilteredList)
+                                                        )),
+                                                        child: ListView.builder(
+                                                            physics: const AlwaysScrollableScrollPhysics(),
+                                                            itemCount: controller.harvestFilteredList.length,
+                                                            itemBuilder: (context, index) => HarvestCommon.createDealHarvestCard(
+                                                                coop: controller.coop,
+                                                                harvest: controller.harvestList[index],
+                                                                onRefreshData: () => controller.refreshHarvestList())
+                                                        )
+                                                    )
                                                 )
                                             )
-                                        )
+                                        ]
+                                    ),
+                                    Column(
+                                        children: [
+                                            Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                child: controller.efSearchRealization
+                                            ),
+                                            Expanded(
+                                                child: RawScrollbar(
+                                                    thumbColor: GlobalVar.primaryOrange,
+                                                    radius: const Radius.circular(8),
+                                                    child: RefreshIndicator(
+                                                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => HarvestCommon.getRealizationList(
+                                                            isLoading: controller.isLoading,
+                                                            coop: controller.coop,
+                                                            realizationList: controller.realizationList,
+                                                            onCallBack: () => controller.clearAndAddListData(originalData: controller.harvestList, filteredData: controller.harvestFilteredList)
+                                                        )),
+                                                        child: ListView.builder(
+                                                            physics: const AlwaysScrollableScrollPhysics(),
+                                                            itemCount: controller.realizationFilteredList.length,
+                                                            itemBuilder: (context, index) => HarvestCommon.createRealizationHarvestCard(
+                                                                coop: controller.coop,
+                                                                realization: controller.realizationFilteredList[index],
+                                                                onRefreshData: () => controller.refreshHarvestList()
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        ]
                                     )
                                 ]
                             )

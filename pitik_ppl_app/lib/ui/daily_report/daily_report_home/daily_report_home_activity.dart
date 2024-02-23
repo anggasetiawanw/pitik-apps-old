@@ -43,7 +43,7 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
                         children: [
                             SvgPicture.asset(
                                 report?.status == EnumDailyReport.REVIEW_SOON || report?.status == EnumDailyReport.FILL_SOON || report?.status == EnumDailyReport.FILLED || report?.status == EnumDailyReport.REVIEWED ? "images/history_active_icon.svg"
-                                : report?.status == EnumDailyReport.FINISHED || report?.status == EnumDailyReport.REVISION ? "images/checkbox_circle_green.svg"
+                                : report?.status == EnumDailyReport.FINISHED ? "images/checkbox_circle_green.svg"
                                 : "images/alarm_warning.svg",
                                 width: 24,
                                 height: 24,

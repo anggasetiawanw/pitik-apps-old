@@ -555,6 +555,8 @@ class LayerDailyReportFormController extends GetxController {
         efEggDisposal.setInput('${report.eggDisposal ?? ''}');
         spAbnormalEgg.controller.setSelected(report.isAbnormal != null && report.isAbnormal! ? 'Ya' : report.isAbnormal != null && !report.isAbnormal! ? 'Tidak' : '');
         eaDesc.setValue(report.remarks ?? '');
+        countTotal();
+        countTotalWeight();
     }
 
     void _changeHarvestedEggData({required String productName, required EditField editField, required String producItemId, bool isQuantity = true}) {

@@ -212,7 +212,7 @@ class HarvestRealizationFormController extends GetxController {
             driverNameField.setInput(bundle.getRealization!.driver ?? '');
             truckPlateField.setInput(bundle.getRealization!.truckLicensePlate ?? '');
 
-            weighingNumberField.setInput(bundle.getRealization!.weighingNumber ?? '');
+            weighingNumberField.setInput(bundle.getRealization!.records.isNotEmpty && bundle.getRealization!.records[0] != null ? bundle.getRealization!.records[0]!.weighingNumber ?? '' : '');
             totalChickenField.setInput('${bundle.getRealization!.quantity ?? ''}');
             tonnageField.setInput('${bundle.getRealization!.tonnage ?? ''}');
             averageWeightField.setInput('${bundle.getRealization!.averageChickenWeighed ?? ''}');

@@ -107,7 +107,7 @@ class DailyReportDetailActivity extends StatelessWidget {
                                                             children: [
                                                               Text("Detail Laporan Harian", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
                                                               const SizedBox(height: 4),
-                                                              Text(DateFormat("yyyy-MM-dd").format(Convert.getDatetime(controller.coop!.startDate!)), style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
+                                                              Text(Convert.getDate(controller.report!.date), style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
                                                             ]
                                                         ),
                                                         StatusDailyReport(status: controller.report!.status!)
@@ -130,12 +130,12 @@ class DailyReportDetailActivity extends StatelessWidget {
                                                 ),
                                                 const SizedBox(height: 24),
                                                 Text("Konsumsi Pakan", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
-                                                if (controller.reportDetail!.feedConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12))],
+                                                if (controller.reportDetail != null && controller.reportDetail!.feedConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12))],
                                                 const SizedBox(height: 24),
                                                 Text("Konsumsi OVK", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold)),
-                                                if (controller.reportDetail!.ovkConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Container(margin: const EdgeInsets.only(top: 16), child: Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)))],
+                                                if (controller.reportDetail != null && controller.reportDetail!.ovkConsumptions!.isNotEmpty) ...[Column(children: controller.reportDetail!.feedConsumptions!.map((e) => consumptionDetail("${e!.subcategoryName} - ${e.productName!}", "${e.quantity} ${e.purchaseUom ?? e.uom ?? '-'}")).toList())] else ...[Container(margin: const EdgeInsets.only(top: 16), child: Text("-", style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 12)))],
                                                 const SizedBox(height: 24),
-                                                if (controller.reportDetail!.images!.isNotEmpty) ...[
+                                                if (controller.reportDetail != null && controller.reportDetail!.images!.isNotEmpty) ...[
                                                     Column(
                                                         children: controller.reportDetail!.images!.map((e) => Container(
                                                               width: double.infinity,

@@ -31,7 +31,7 @@ class HarvestRealizationDetailActivity extends GetView<HarvestRealizationDetailC
                     ),
                 ),
                 bottomNavigationBar: controller.isLoading.isTrue ? const SizedBox() :
-                controller.realization.statusText != GlobalVar.TEREALISASI ? SizedBox(
+                controller.realization.statusText != GlobalVar.SELESAI ? SizedBox(
                     child: Container(
                         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                         decoration: const BoxDecoration(
@@ -183,7 +183,7 @@ class HarvestRealizationDetailActivity extends GetView<HarvestRealizationDetailC
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text('Nomor Data Timbang', style: TextStyle(color: GlobalVar.grayText, fontSize: 12, fontWeight: GlobalVar.medium)),
-                                                Text(controller.realization.weighingNumber ?? '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
+                                                Text(controller.realization.records.isNotEmpty && controller.realization.records[0] != null ? controller.realization.records[0]!.weighingNumber ?? '-' : '-', style: TextStyle(color: GlobalVar.black, fontSize: 12, fontWeight: GlobalVar.medium))
                                             ]
                                         ),
                                         const SizedBox(height: 8),
