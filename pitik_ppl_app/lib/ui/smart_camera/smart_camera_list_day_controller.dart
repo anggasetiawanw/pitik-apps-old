@@ -152,44 +152,26 @@ class SmartCameraListDayController extends GetxController {
                     borderRadius: BorderRadius.circular(8),
                     color: isRedChild ? GlobalVar.redBackground : Colors.transparent
                 ),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        Expanded(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                    Expanded(
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                                Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                        Text("Hari Ke ${smartCameraDay.day}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 16, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)),
-                                                        Text("${Convert.getYear(date)}-${Convert.getMonthNumber(date)}-${Convert.getDay(date)}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 10, overflow: TextOverflow.clip, color: GlobalVar.grayText)),
-                                                    ],
-                                                ),
-                                                const SizedBox(height: 6),
-                                                smartCameraDay.recordCount == null || smartCameraDay.recordCount == 0 ? Text(
-                                                    "Belum ada record",
-                                                    style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)
-                                                ) : Expanded(
-                                                    child: Row(
-                                                        children: [
-                                                            Text("Jumlah Record:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
-                                                            const SizedBox(width: 4),
-                                                            Text("${smartCameraDay.recordCount} Ekor", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)),
-                                                        ],
-                                                    )
-                                                )
-                                            ]
-                                        )
-                                    )
-                                ]
-                            )
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Text("Hari Ke ${smartCameraDay.day}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 16, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)),
+                                Text("${Convert.getYear(date)}-${Convert.getMonthNumber(date)}-${Convert.getDay(date)}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 10, overflow: TextOverflow.clip, color: GlobalVar.grayText)),
+                            ],
+                        ),
+                        const SizedBox(height: 6),
+                        smartCameraDay.recordCount == null || smartCameraDay.recordCount == 0 ? Text(
+                            "Belum ada record",
+                            style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12, overflow: TextOverflow.clip, color: isRedChild ? GlobalVar.red : GlobalVar.black)
+                        ) : Row(
+                            children: [
+                                Text("Jumlah Record:", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
+                                const SizedBox(width: 4),
+                                Text("${smartCameraDay.recordCount} Ekor", style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)),
+                            ],
                         )
                     ]
                 )
