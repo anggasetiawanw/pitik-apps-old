@@ -61,7 +61,7 @@ class ItemHistoricalSmartCameraController extends GetxController {
                 apiKey: 'smartCameraApi',
                 service: ListApi.submitCrowdedness,
                 context: Get.context!,
-                body: ['Bearer ${auth.token}', auth.id, 'v2/smart-camera/${recordCamera.value.jobId ?? '-'}/evaluate'],
+                body: ['Bearer ${auth.token}', auth.id, 'v2/smart-camera/${recordCamera.value.jobId ?? '-'}/evaluate', spCrowdedness.controller.selectedIndex == 0, eaCrowdedness.getInput()],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         recordCamera.value.isCrowded = (body as StringModel).data['isCrowded'];
@@ -79,6 +79,7 @@ class ItemHistoricalSmartCameraController extends GetxController {
                         );
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
+                        print('$exception -> $stacktrace');
                         isLoading.value = false;
                         Get.snackbar(
                             "Pesan", "Terjadi Kesalahan Internal",

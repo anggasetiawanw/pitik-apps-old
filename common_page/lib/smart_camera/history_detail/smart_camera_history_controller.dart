@@ -82,7 +82,10 @@ class SmartCameraHistoryController extends GetxController {
     /// camera ID.
     void _getCameraImageByCameraId() => AuthImpl().get().then((auth) {
         if (auth != null) {
-            isLoading.value = true;
+            if (isLoadMore.isFalse) {
+                isLoading.value = true;
+            }
+
             Service.push(
                 apiKey: 'smartCameraApi',
                 service: bundle.routeHistoryDetail,
@@ -252,20 +255,11 @@ class SmartCameraHistoryController extends GetxController {
 
     Widget listRecordCamera() => ListView.builder(
         controller: scrollCameraController,
-        itemCount: isLoadMore.isTrue ? recordImages.value.length + 1 : recordImages.value.length,
+        itemCount: recordImages.value.length + 1,
         itemBuilder: (context, index) {
             int length = recordImages.value.length;
             if (index >= length) {
-                return const Column(
-                    children: [
-                        Center(
-                            child: SizedBox(
-                                child: CircularProgressIndicator(color: GlobalVar.primaryOrange)
-                            )
-                        ),
-                        SizedBox(height: 120)
-                    ]
-                );
+                return const Center(child: CircularProgressIndicator(color: GlobalVar.primaryOrange));
             }
             return Stack(
                 children: [
