@@ -1,6 +1,0 @@
-# melos_managed_dependency_overrides: engine,model
-dependency_overrides:
-  engine:
-    path: ../engine
-  model:
-    path: ../model
