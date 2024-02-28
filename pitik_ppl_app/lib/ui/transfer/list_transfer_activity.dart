@@ -32,7 +32,10 @@ class ListTransferActivity extends GetView<ListTransferController> {
                     padding: const EdgeInsets.only(bottom: 32),
                     child: FloatingActionButton(
                         elevation: 12,
-                        onPressed: () => Get.toNamed(RoutePage.transferRequestPage, arguments: [controller.coop, false])!.then((value) => controller.refreshTransferList()),
+                        onPressed: () {
+                            GlobalVar.track('Click_floating_button_add_transfer');
+                            Get.toNamed(RoutePage.transferRequestPage, arguments: [controller.coop, false])!.then((value) => controller.refreshTransferList());
+                        },
                         backgroundColor: GlobalVar.primaryOrange,
                         child: const Icon(Icons.add, color: Colors.white),
                     ),

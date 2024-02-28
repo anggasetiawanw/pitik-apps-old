@@ -14,31 +14,31 @@ class RequestDocIn extends StatelessWidget {
         Widget bottomNavbar() {
             return Align(
                 alignment: Alignment.bottomCenter,
-                    child: Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromARGB(20, 158, 157, 157),
-                                  blurRadius: 5,
-                                  offset: Offset(0.75, 0.0))
-                            ],
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                        ),
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                Expanded(child: controller.btNext),
-                                if(controller.boEdit.controller.activeField.isTrue)...[
-                                    const SizedBox(width: 8),
-                                    Expanded(child: controller.boEdit)
-                                ]
+                child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(20, 158, 157, 157),
+                              blurRadius: 5,
+                              offset: Offset(0.75, 0.0))
+                        ],
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                    ),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                            Expanded(child: controller.btNext),
+                            if(controller.boEdit.controller.activeField.isTrue)...[
+                                const SizedBox(width: 8),
+                                Expanded(child: controller.boEdit)
                             ]
-                        )
+                        ]
                     )
-                );
+                )
+            );
         }
 
         return Scaffold(
@@ -50,9 +50,7 @@ class RequestDocIn extends StatelessWidget {
                     hideCoopDetail: true,
                 )
             ),
-            body: Obx(() =>
-            controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-            Stack(
+            body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading()) : Stack(
                 children: [
                     SingleChildScrollView(
                         child: Container(
@@ -67,8 +65,7 @@ class RequestDocIn extends StatelessWidget {
                     ),
                     bottomNavbar()
                 ]
-            )
-            )
+            ))
         );
     }
 }

@@ -12,4 +12,5 @@ class EnumDailyReport {
    static const String REVIEWED = "Sudah Review";
    static const String LATE = "Telat";
    static const String FINISHED = "Selesai";
+   static const String REVISION = "Revisi";
 }

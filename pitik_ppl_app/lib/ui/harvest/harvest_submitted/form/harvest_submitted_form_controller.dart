@@ -47,6 +47,7 @@ class HarvestSubmittedFormController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_panen_form');
         coop = Get.arguments[0];
 
         submittedDateField = DateTimeField(
@@ -372,6 +373,7 @@ class HarvestSubmittedFormController extends GetxController {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                     Expanded(child: ButtonFill(controller: GetXCreator.putButtonFillController("byHarvestSubmittedYakin"), label: "Yakin", onClick: () {
+                                        GlobalVar.track('Click_button_ajukan_panen');
                                         Get.back();
                                         isLoading.value = true;
 
@@ -397,6 +399,7 @@ class HarvestSubmittedFormController extends GetxController {
                                             listener: ResponseListener(
                                                 onResponseDone: (code, message, body, id, packet) {
                                                     isLoading.value = false;
+                                                    GlobalVar.track('Open_success_pengajuan_page');
                                                     Get.off(TransactionSuccessActivity(
                                                         keyPage: "harvestSubmitted",
                                                         message: "Pengajuan panen sudah terkirim\nSelanjutnya akan segera diproses",

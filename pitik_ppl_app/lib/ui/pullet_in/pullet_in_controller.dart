@@ -23,6 +23,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/request_chickin.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -105,7 +106,7 @@ class PulletInController extends GetxController {
         label: "Jam Truck Berangkat",
         hint: "08:00",
         alertText: "Harus diisi..!",
-        onDateTimeSelected: (time, dateField) => '${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}'
+        onDateTimeSelected: (time, dateField) => dateField.controller.setTextSelected('${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}')
     );
 
     DateTimeField dtTruckCome = DateTimeField(
@@ -113,7 +114,7 @@ class PulletInController extends GetxController {
         label: "Jam Truck Tiba",
         hint: "12:00",
         alertText: "Harus diisi..!",
-        onDateTimeSelected: (time, dateField) => '${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}'
+        onDateTimeSelected: (time, dateField) => dateField.controller.setTextSelected('${Convert.getHour(time)}:${Convert.getMinute(time)}:${Convert.getSecond(time)}')
     );
 
     DateTimeField dtFinishPulletIn = DateTimeField(
@@ -141,7 +142,6 @@ class PulletInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInSuratJalan");
@@ -156,7 +156,6 @@ class PulletInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInFormPullet");
@@ -171,7 +170,6 @@ class PulletInController extends GetxController {
         alertText: "",
         showGalleryOptions: true,
         type: MediaField.PHOTO,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "pulletInAnotherPullet");
@@ -187,7 +185,6 @@ class PulletInController extends GetxController {
 
         // disable some field init
         dtTanggal.controller.disable();
-        efPopulation.controller.disable();
         efAge.controller.disable();
     }
 
@@ -215,9 +212,7 @@ class PulletInController extends GetxController {
                                 efAge.setInput('${body.data!.pulletInWeeks ?? ''}');
                             }
 
-                            if (body.data != null && body.data!.hasFinishedDOCin != null && body.data!.hasFinishedDOCin!) {
-                                setDetailForm((body).data!);
-                            }
+                            setDetailForm((body).data!);
                             isLoading.value = false;
                         },
                         onResponseFail: (code, message, body, id, packet) {
@@ -264,29 +259,28 @@ class PulletInController extends GetxController {
             doneDocIn = DateFormat("HH:mm").format(newDoneDocIn);
         } catch (_) {}
 
+
         efBw.setInput((request.bw ?? 0).toString());
-        efBw.controller.disable();
-
         efUniform.setInput((request.uniformity ?? 0).toString());
-        efUniform.controller.disable();
-
         dtTruckGo.controller.setTextSelected(truckGo);
-        dtTruckGo.controller.disable();
-
         dtTruckCome.controller.setTextSelected(truckCome);
-        dtTruckCome.controller.disable();
-
         dtFinishPulletIn.controller.setTextSelected(doneDocIn);
-        dtFinishPulletIn.controller.disable();
-
         eaDesc.setValue(request.remarks ?? '');
-        eaDesc.controller.disable();
 
-        mfAnotherPullet.controller.disable();
-        mfFormPullet.controller.disable();
-        mfSuratJalan.controller.disable();
+        if (request.hasFinishedDOCin != null && request.hasFinishedDOCin!) {
+            efPopulation.controller.disable();
+            efBw.controller.disable();
+            efUniform.controller.disable();
+            dtTruckGo.controller.disable();
+            dtTruckCome.controller.disable();
+            dtFinishPulletIn.controller.disable();
+            eaDesc.controller.disable();
+            mfAnotherPullet.controller.disable();
+            mfFormPullet.controller.disable();
+            mfSuratJalan.controller.disable();
 
-        isAlreadySubmit.value = true;
+            isAlreadySubmit.value = true;
+        }
     }
 
     void uploadFile(File? file, String mediaField) {
@@ -306,18 +300,25 @@ class PulletInController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, "goods-receipt-purchase-order", file],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
+                            if ((body as MediaUploadResponse).data != null) {
+                                body.data!.url = Uri.encodeFull(body.data!.url!);
+                            }
+
                             if (mediaField == "pulletInSuratJalan") {
                                 mediaListSuratJalan.add(body.data);
+                                mfSuratJalan.controller.setFileName(body.data!.url ?? '-');
                                 mfSuratJalan.controller.setInformasiText("File telah terupload");
                                 mfSuratJalan.controller.showInformation();
                                 isLoadingSuratJalan.value = false;
                             } else if (mediaField == "pulletInFormPullet") {
                                 mediaListPulletIn.add(body.data);
+                                mfFormPullet.controller.setFileName(body.data!.url ?? '-');
                                 mfFormPullet.controller.setInformasiText("File telah terupload");
                                 mfFormPullet.controller.showInformation();
                                 isLoadingFormPulletIn.value = false;
                             } else if (mediaField == "pulletInAnotherPullet") {
                                 mediaListLainnya.add(body.data);
+                                mfAnotherPullet.controller.setFileName(body.data!.url ?? '-');
                                 mfAnotherPullet.controller.setInformasiText("File telah terupload");
                                 mfAnotherPullet.controller.showInformation();
                                 isLoadingAnotherPullet.value = false;
@@ -445,202 +446,196 @@ class PulletInController extends GetxController {
 
     _showBottomDialog() {
         return showModalBottomSheet(
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: Get.context!,
-            builder: (context) => Container(
-                decoration: const BoxDecoration(
+            builder: (context) => ClipRRect(
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+                child: Container(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                    ),
-                ),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            width: 60,
-                            height: 4,
-                            decoration: BoxDecoration(
-                                color: GlobalVar.outlineColor,
-                                borderRadius: BorderRadius.circular(2),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                            Container(
+                                margin: const EdgeInsets.only(top: 8),
+                                width: 60,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                    color: GlobalVar.outlineColor,
+                                    borderRadius: BorderRadius.circular(2),
+                                ),
                             ),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
-                            child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold))
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                                children: [
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Tanggal Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTanggal.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efPopulation.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Umur", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efAge.getInput()} Minggu", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTruckGo.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                            Text(dtTruckCome.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text("Selesai Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
-                                            Text(dtFinishPulletIn.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
-                                        ]
-                                    )
-                                ]
-                            )
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Expanded(
-                                        child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreePulletIn"), label: "Yakin", onClick: () {
-                                            Navigator.pop(Get.context!);
-                                            isLoading.value = true;
-                                            AuthImpl().get().then((auth) {
-                                                if (auth != null) {
-                                                    isLoading.value = false;
-                                                    Service.push(
-                                                        apiKey: "productReportApi",
-                                                        service: ListApi.updateRequestChickin,
-                                                        context: context,
-                                                        body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(generatePayload())],
-                                                        listener: ResponseListener(
-                                                            onResponseDone: (code, message, body, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.off(TransactionSuccessActivity(
-                                                                    keyPage: "pulletInSaved",
-                                                                    message: "Selamat kamu sudah selesai melakukan Pullet in",
-                                                                    showButtonHome: false,
-                                                                    showButtonShare: true,
-                                                                    onTapClose: () => Get.back(result: true),
-                                                                    onTapHome: () {},
-                                                                    onTapShare: () async {
-                                                                        String text = 'Pullet In Kawan Pitik\n\n';
-                                                                        text += 'Cabang : ${coop.coopCity}\n';
-                                                                        text += 'Kandang : ${coop.coopName}\n';
-                                                                        text += 'Populasi : ${efPopulation.getInputNumber() != null ? efPopulation.getInputNumber()!.toInt() : '-'} Ekor\n';
-                                                                        text += 'Umur : ${efAge.getInputNumber() != null ? efAge.getInputNumber()!.toInt() : '-'} Ekor\n';
-                                                                        text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.name ?? '-' : '-'}\n';
-                                                                        text += 'BW : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} gr\n';
-                                                                        text += 'Uniformity : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} %\n';
-                                                                        text += 'Jam truk berangkat : ${dtTruckGo.getLastTimeSelectedText()}\n';
-                                                                        text += 'Jam truk tiba : ${dtTruckCome.getLastTimeSelectedText()}\n';
-                                                                        text += 'Selesai Pullet In : ${dtFinishPulletIn.getLastTimeSelectedText()}\n';
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
+                                child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold))
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                    children: [
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Tanggal Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTanggal.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Populasi", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efPopulation.getInput()} Ekor", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Umur", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efAge.getInput()} Minggu", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("BW", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efBw.getInput()} gr", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Uniformity", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text("${efUniform.getInput()} %", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Jam Truck Berangkat", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTruckGo.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Jam Truck Tiba", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                                Text(dtTruckCome.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                Text("Selesai Pullet In", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),),
+                                                Text(dtFinishPulletIn.getLastTimeSelectedText(), style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold))
+                                            ]
+                                        )
+                                    ]
+                                )
+                            ),
+                            Container(
+                                margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Expanded(
+                                            child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreePulletIn"), label: "Yakin", onClick: () {
+                                                Navigator.pop(Get.context!);
+                                                AuthImpl().get().then((auth) {
+                                                    if (auth != null) {
+                                                        isLoading.value = true;
+                                                        RequestChickin bodyPayload = generatePayload();
+                                                        Service.push(
+                                                            apiKey: "productReportApi",
+                                                            service: ListApi.updateRequestChickin,
+                                                            context: context,
+                                                            body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(bodyPayload)],
+                                                            listener: ResponseListener(
+                                                                onResponseDone: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.off(TransactionSuccessActivity(
+                                                                        keyPage: "pulletInSaved",
+                                                                        message: "Selamat kamu sudah selesai melakukan Pullet in",
+                                                                        showButtonHome: false,
+                                                                        showButtonShare: true,
+                                                                        onTapClose: () => Get.back(result: true),
+                                                                        onTapHome: () {},
+                                                                        onTapShare: () async {
+                                                                            String text = 'Pullet In Kawan Pitik\n\n';
+                                                                            text += 'Cabang : ${coop.coopCity}\n';
+                                                                            text += 'Kandang : ${coop.coopName}\n';
+                                                                            text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
+                                                                            text += 'Umur : ${bodyPayload.pulletInWeeks ?? '-'} Minggu\n';
+                                                                            text += 'Pullet Strain : ${request.value!.chickType != null ? request.value!.chickType!.chickTypeName ?? '-' : '-'}\n';
+                                                                            text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
+                                                                            text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
+                                                                            text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';
+                                                                            text += 'Jam truk tiba : ${bodyPayload.truckArrival ?? '-'}\n';
+                                                                            text += 'Selesai Pullet In : ${bodyPayload.finishChickIn ?? '-'}\n';
 
-                                                                        Share.share(text);
-
-                                                                        // final String getUrl = "https://api.whatsapp.com/send?phone=62&text=$text ";
-                                                                        // final Uri url = Uri.parse(Uri.encodeFull(getUrl));
-                                                                        // if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                                                                        //     throw Exception('Could not launch $url');
-                                                                        // }
-                                                                    },
-                                                                ));
-                                                            },
-                                                            onResponseFail: (code, message, body, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.snackbar(
-                                                                    "Pesan",
-                                                                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                                                                    snackPosition: SnackPosition.TOP,
-                                                                    colorText: Colors.white,
-                                                                    backgroundColor: Colors.red
-                                                                );
-                                                            },
-                                                            onResponseError: (exception, stacktrace, id, packet) {
-                                                                isLoading.value = false;
-                                                                Get.snackbar(
-                                                                    "Pesan",
-                                                                    "Terjadi Kesalahan Internal",
-                                                                    snackPosition: SnackPosition.TOP,
-                                                                    colorText: Colors.white,
-                                                                    backgroundColor: Colors.red
-                                                                );
-                                                            },
-                                                            onTokenInvalid: () => GlobalVar.invalidResponse()
-                                                        )
-                                                    );
-                                                } else {
-                                                    GlobalVar.invalidResponse();
-                                                }
-                                            });
-                                        }),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreePulletIn"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
-                                ]
-                            )
-                        ),
-                        const SizedBox(height: GlobalVar.bottomSheetMargin)
-                    ]
-                )
+                                                                            Share.share(text);
+                                                                        },
+                                                                    ));
+                                                                },
+                                                                onResponseFail: (code, message, body, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red
+                                                                    );
+                                                                },
+                                                                onResponseError: (exception, stacktrace, id, packet) {
+                                                                    isLoading.value = false;
+                                                                    Get.snackbar(
+                                                                        "Pesan",
+                                                                        "Terjadi Kesalahan Internal",
+                                                                        snackPosition: SnackPosition.TOP,
+                                                                        colorText: Colors.white,
+                                                                        backgroundColor: Colors.red
+                                                                    );
+                                                                },
+                                                                onTokenInvalid: () => GlobalVar.invalidResponse()
+                                                            )
+                                                        );
+                                                    } else {
+                                                        GlobalVar.invalidResponse();
+                                                    }
+                                                });
+                                            }),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnNotAgreePulletIn"), label: "Tidak Yakin", onClick: () => Navigator.pop(Get.context!)))
+                                    ]
+                                )
+                            ),
+                            const SizedBox(height: GlobalVar.bottomSheetMargin)
+                        ]
+                    )
+                ),
             )
         );
     }
 
     RequestChickin generatePayload() {
         RequestChickin requestChickin = RequestChickin();
-        requestChickin.poCode = request.value != null ? request.value!.poCode : null;
-        requestChickin.erpCode = request.value != null ? request.value!.erpCode : null;
+        if (request.value != null) {
+            requestChickin.poCode = request.value!.poCode;
+            requestChickin.erpCode = request.value!.erpCode;
+        }
         requestChickin.startDate = dtTanggal.getLastTimeSelectedText();
         requestChickin.initialPopulation = (efPopulation.getInputNumber() ?? 0).toInt();
         requestChickin.pulletInWeeks = (efAge.getInputNumber() ?? 0).toInt();
-        // requestChickin.additionalPopulation = (efMoreDOC.getInputNumber() ?? 0).toInt();
+        requestChickin.additionalPopulation = 0;
         requestChickin.bw = (efBw.getInputNumber() ?? 0).toInt();
         requestChickin.uniformity = (efUniform.getInputNumber() ?? 0).toInt();
         requestChickin.truckLeaving = dtTruckGo.getLastTimeSelectedText();
@@ -648,7 +643,7 @@ class PulletInController extends GetxController {
         requestChickin.finishChickIn = dtFinishPulletIn.getLastTimeSelectedText();
         requestChickin.remarks = eaDesc.getInput();
         requestChickin.suratJalanPhotos = mediaListSuratJalan;
-        requestChickin.docInFormPhotos = mediaListPulletIn;
+        requestChickin.pulletInFormPhotos = mediaListPulletIn;
         requestChickin.photos = mediaListLainnya;
 
         return requestChickin;

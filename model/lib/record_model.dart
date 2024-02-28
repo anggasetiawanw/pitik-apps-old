@@ -19,7 +19,7 @@ class RecordCamera {
     double? humidity;
     String? createdAt;
     String? link;
-    String? isCrowded;
+    bool? isCrowded;
     String? remarks;
     String? date;
 

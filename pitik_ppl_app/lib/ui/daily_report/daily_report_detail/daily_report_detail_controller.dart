@@ -40,47 +40,46 @@ class DailyReportDetailController extends GetxController {
         getDetailReport();
     }
 
-  void getDetailReport() {
-    AuthImpl().get().then((auth) => {
-          if (auth != null)
-            {
-              isLoading.value = true,
-              Service.push(
-                  apiKey: ApiMapping.taskApi,
-                  service: ListApi.getDetailDailyReport,
-                  context: context,
-                  body: ['Bearer ${auth.token}', auth.id, ListApi.pathDailyReportDetail(coop!.farmingCycleId!, report!.taskTicketId!)],
-                  listener: ResponseListener(
-                      onResponseDone: (code, message, body, id, packet) {
+    void getDetailReport() => AuthImpl().get().then((auth) => {
+        if (auth != null) {
+            isLoading.value = true,
+            Service.push(
+                apiKey: ApiMapping.taskApi,
+                service: ListApi.getDetailDailyReport,
+                context: context,
+                body: ['Bearer ${auth.token}', auth.id, ListApi.pathDailyReportDetail(coop!.farmingCycleId!, report!.taskTicketId!)],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) {
                         reportDetail = body.data as Report;
                         isLoading.value = false;
-                      },
-                      onResponseFail: (code, message, body, id, packet) {
+                    },
+                    onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                          snackPosition: SnackPosition.TOP,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.red,
+                            "Pesan",
+                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
                         );
                         isLoading.value = false;
-                      },
-                      onResponseError: (exception, stacktrace, id, packet) {
+                    },
+                    onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
-                          snackPosition: SnackPosition.TOP,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.red,
+                            "Pesan",
+                            "Terjadi Kesalahan Internal",
+                            snackPosition: SnackPosition.TOP,
+                            colorText: Colors.white,
+                            backgroundColor: Colors.red,
                         );
                         isLoading.value = false;
-                      },
-                      onTokenInvalid: () => GlobalVar.invalidResponse()))
-            }
-          else
-            {GlobalVar.invalidResponse()}
-        });
-  }
+                    },
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                )
+            )
+        } else {
+            GlobalVar.invalidResponse()
+        }
+    });
 
     void reviewReport() => AuthImpl().get().then((auth) {
         if (auth != null) {

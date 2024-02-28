@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
+import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,16 +22,14 @@ class ForgetPasswordController extends GetxController {
     var isLoading = false.obs;
 
     late EditField efNoHp = EditField(
-        controller: GetXCreator.putEditFieldController(
-            "efNoHpForgetPassword"),
+        controller: GetXCreator.putEditFieldController("efNoHpForgetPassword"),
         label: "Nomor Handphone",
         hint: "08xxxx",
         alertText: "Nomer Handphone Tidak Boleh Kosong",
         textUnit: "",
         inputType: TextInputType.number,
         maxInput: 20,
-        onTyping: (value, control) {
-        }
+        onTyping: (value, control) {}
     );
 
 
@@ -51,9 +50,11 @@ class ForgetPasswordController extends GetxController {
     /// The function `openWhatsApp()` opens WhatsApp and sends a message with a
     /// forgotten password request, using the provided contact number.
     void openWhatsApp() async{
+        GlobalVar.trackWithMap('Click_kirim_lupa_kata_sandi', {'Phone_number_inputted': efNoHp.getInput()});
         var contact = "+6281280709907";
         var androidUrl = "whatsapp://send?phone=$contact&Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi";
         var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi')}";
+
         try{
             if(Platform.isIOS){
                 await launchUrl(Uri.parse(iosUrl));
@@ -79,8 +80,6 @@ class ForgetPasswordBindings extends Bindings {
     ForgetPasswordBindings({required this.context});
 
     @override
-    void dependencies() {
-        Get.lazyPut(() => ForgetPasswordController(context: context));
-    }
+    void dependencies() => Get.lazyPut(() => ForgetPasswordController(context: context));
 }
 

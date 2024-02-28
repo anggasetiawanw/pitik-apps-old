@@ -368,10 +368,10 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
                                                         isLoading.value = true;
 
                                                         Service.push(
-                                                            apiKey: 'productReportApi',
+                                                            apiKey: 'farmMonitoringApi',
                                                             service: ListApi.closeFarm,
                                                             context: context,
-                                                            body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/closing'],
+                                                            body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/closing', '{}'],
                                                             listener: ResponseListener(
                                                                 onResponseDone: (code, message, body, id, packet) {
                                                                     isLoading.value = false;
@@ -530,7 +530,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         }
     });
 
-    void getFeedTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: feedTransferList, type: 'pakan', onDone: () {
+    void getFeedTransferList() => TransferCommon.getListSendByStatus(coop: coop, isLoading: isLoading, destinationTransferList: feedTransferList, type: 'pakan', status1: '0', status2: '1', onDone: () {
         if (feedTransferList.isEmpty && feedLeftOverTotal == 0.0) {
             showFeedInformationBanner.value = false;
             bfNext.controller.enable();
@@ -546,7 +546,7 @@ class FarmClosingController extends GetxController with GetSingleTickerProviderS
         }
     });
 
-    void getOvkTransferList() => TransferCommon.getListSend(coop: coop, isLoading: isLoading, destinationTransferList: ovkTransferList, type: 'ovk', onDone: () {
+    void getOvkTransferList() => TransferCommon.getListSendByStatus(coop: coop, isLoading: isLoading, destinationTransferList: ovkTransferList, type: 'ovk', status1: '0', status2: '1', onDone: () {
         if (ovkTransferList.isEmpty && ovkLeftOverTotal == 0.0) {
             showOvkInformationBanner.value = false;
             bfNext.controller.enable();

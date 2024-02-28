@@ -8,11 +8,12 @@ import 'global_var.dart';
 
 class AppBarFormForCoop extends StatelessWidget {
     String title;
+    String titleStartDate;
     Coop coop;
     bool hideCoopDetail;
     Function()? onBackPressed;
     List<PopupMenuEntry<String>>? actionBars;
-    AppBarFormForCoop({super.key, required this.title, required this.coop, this.hideCoopDetail = false, this.onBackPressed, this.actionBars});
+    AppBarFormForCoop({super.key, required this.title, this.titleStartDate = 'DOC-In', required this.coop, this.hideCoopDetail = false, this.onBackPressed, this.actionBars});
 
     @override
     Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class AppBarFormForCoop extends StatelessWidget {
                                 Text(coop.coopName ?? '-', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: Colors.white)),
                                 const SizedBox(height: 6),
                                 Text(
-                                    'DOC-In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
+                                    '$titleStartDate ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)
                                 )
                             ]

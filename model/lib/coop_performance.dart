@@ -32,6 +32,15 @@ class CoopPerformance {
     CoopActiveStandard? mortality;
 
     @IsChild()
+    CoopActiveStandard? hdp;
+
+    @IsChild()
+    CoopActiveStandard? eggMass;
+
+    @IsChild()
+    CoopActiveStandard? eggWeight;
+
+    @IsChild()
     CoopActiveStandard? feedIntake;
 
     @IsChild()
@@ -43,7 +52,8 @@ class CoopPerformance {
     @IsChild()
     Consumption? ovk;
 
-    CoopPerformance({this.farmingCycleId, this.taskTicketId, this.date, this.day, this.bw, this.adg, this.ip, this.fcr, this.mortality, this.feedIntake, this.population, this.feed, this.ovk});
+    CoopPerformance({this.farmingCycleId, this.taskTicketId, this.date, this.day, this.bw, this.adg, this.ip, this.fcr, this.mortality, this.hdp, this.eggMass, this.eggWeight,
+                    this.feedIntake, this.population, this.feed, this.ovk});
 
     static CoopPerformance toResponseModel(Map<String, dynamic> map) {
         return CoopPerformance(
@@ -56,6 +66,9 @@ class CoopPerformance {
             ip: Mapper.child<CoopActiveStandard>(map['ip']),
             fcr: Mapper.child<CoopActiveStandard>(map['fcr']),
             mortality: Mapper.child<CoopActiveStandard>(map['mortality']),
+            hdp: Mapper.child<CoopActiveStandard>(map['hdp']),
+            eggMass: Mapper.child<CoopActiveStandard>(map['eggMass']),
+            eggWeight: Mapper.child<CoopActiveStandard>(map['eggWeight']),
             feedIntake: Mapper.child<CoopActiveStandard>(map['feedIntake']),
             population: Mapper.child<Population>(map['population']),
             feed: Mapper.child<Consumption>(map['feed']),

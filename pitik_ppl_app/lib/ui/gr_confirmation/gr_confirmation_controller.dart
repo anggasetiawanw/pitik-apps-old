@@ -60,6 +60,8 @@ class GrConfirmationController extends GetxController {
         isFromTransfer = Get.arguments[2];
         fromCoopRest = Get.arguments[3];
 
+        GlobalVar.track(isFromTransfer ? 'Open_detail_terima_transfer_page' : 'Open_detail_terima_order_page');
+
         grReceivedDateField = DateTimeField(controller: GetXCreator.putDateTimeFieldController("grReceivedDateField$isFromTransfer"), label: "Tanggal Penerimaan", hint: "2022-12-31", alertText: "Tanggal Penerimaan harus diisi..!", flag: DateTimeField.DATE_FLAG,
             onDateTimeSelected: (dateTime, dateField) => dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}')
         );
@@ -251,7 +253,7 @@ class GrConfirmationController extends GetxController {
                                 Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                 const SizedBox(height: 4),
                                 Text(
-                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
+                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                             ],
@@ -306,7 +308,7 @@ class GrConfirmationController extends GetxController {
                                                             borderRadius: BorderRadius.all(Radius.circular(10))
                                                         ),
                                                         child: Text(
-                                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                            '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                                         )
                                                     )
@@ -369,7 +371,7 @@ class GrConfirmationController extends GetxController {
                                                 borderRadius: BorderRadius.all(Radius.circular(10))
                                             ),
                                             child: Text(
-                                                '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                                '${isFeed ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                                 style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)
                                             )
                                         );
@@ -498,7 +500,7 @@ class GrConfirmationController extends GetxController {
                         hint: 'Ketik di sini',
                         alertText: 'Harus diisi..!',
                         inputType: TextInputType.number,
-                        textUnit: product.uom ?? product.purchaseUom ?? '',
+                        textUnit: product.purchaseUom ?? product.uom ?? '',
                         maxInput: 50,
                         onTyping: (text, field) {
                             product.quantity = field.getInputNumber();
@@ -559,7 +561,7 @@ class GrConfirmationController extends GetxController {
                                 isCanReturned ? checkBoxField : const SizedBox(),
                                 const SizedBox(height: 16),
                                 Text(
-                                    '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''})',
+                                    '${procurement.type == 'pakan' ? '${product.subcategoryName ?? ''} - ${product.productName ?? ''}' : product.productName ?? ''} - (${product.remaining == null ? '' : product.remaining!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''})',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                                 editField
@@ -799,7 +801,9 @@ class GrConfirmationController extends GetxController {
                                                 Expanded(
                                                     child: ButtonFill(controller: GetXCreator.putButtonFillController("btnSubmitGrConfirmation"), label: "Yakin", onClick: () {
                                                         Navigator.pop(Get.context!);
+                                                        GlobalVar.track(isFromTransfer ? 'Click_konfirmasi_button_terima_transfer' : 'Click_konfirmasi_button_penerimaan');
                                                         isLoading.value = true;
+
                                                         AuthImpl().get().then((auth) {
                                                             if (auth != null) {
                                                                 String? productListJson = Mapper.asJsonString(efProductReceivedMap.entries.map((entry) => entry.value).toList());
@@ -822,6 +826,7 @@ class GrConfirmationController extends GetxController {
                                                                     listener: ResponseListener(
                                                                         onResponseDone: (code, message, body, id, packet) {
                                                                             isLoading.value = false;
+                                                                            GlobalVar.track(isFromTransfer ? 'Open_success_terima_transfer_page' : 'Open_success_penerimaan_page');
                                                                             Get.off(TransactionSuccessActivity(
                                                                                 keyPage: "grConfirmationSaved",
                                                                                 message: "Kamu telah berhasil melakukan penerimaan sapronak",

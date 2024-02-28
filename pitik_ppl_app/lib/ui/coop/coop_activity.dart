@@ -49,7 +49,7 @@ class CoopActivity extends GetView<CoopController> {
                                                                 const SizedBox()
                                                             ]
                                                         ),
-                                                        onTap: () => GlobalVar.invalidResponse()
+                                                        onTap: () => GlobalVar.invalidResponse(showSnackBar: false)
                                                     );
                                                 }).toList();
                                             }
@@ -80,22 +80,34 @@ class CoopActivity extends GetView<CoopController> {
                                 child: TabBarView(
                                     controller: controller.tabController,
                                     children: [
-                                        RawScrollbar(
-                                            thumbVisibility: true,
-                                            thumbColor: GlobalVar.primaryOrange,
-                                            radius: const Radius.circular(8),
-                                            child: ListView.builder(
-                                                itemCount: controller.coopFilteredList.length,
-                                                itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                                        RefreshIndicator(
+                                            onRefresh: () => Future.delayed(
+                                                const Duration(milliseconds: 200), () => controller.generateCoopList(true)
+                                            ),
+                                            child: RawScrollbar(
+                                                thumbVisibility: true,
+                                                thumbColor: GlobalVar.primaryOrange,
+                                                radius: const Radius.circular(8),
+                                                child: ListView.builder(
+                                                    physics: const AlwaysScrollableScrollPhysics(),
+                                                    itemCount: controller.coopFilteredList.length,
+                                                    itemBuilder: (context, index) => controller.createCoopActiveCard(index)
+                                                )
                                             )
                                         ),
-                                        RawScrollbar(
-                                            thumbVisibility: true,
-                                            thumbColor: GlobalVar.primaryOrange,
-                                            radius: const Radius.circular(8),
-                                            child: ListView.builder(
-                                                itemCount: controller.coopFilteredList.length,
-                                                itemBuilder: (context, index) => controller.createCoopIdleCard(index)
+                                        RefreshIndicator(
+                                            onRefresh: () => Future.delayed(
+                                                const Duration(milliseconds: 200), () => controller.generateCoopList(false)
+                                            ),
+                                            child: RawScrollbar(
+                                                thumbVisibility: true,
+                                                thumbColor: GlobalVar.primaryOrange,
+                                                radius: const Radius.circular(8),
+                                                child: ListView.builder(
+                                                    physics: const AlwaysScrollableScrollPhysics(),
+                                                    itemCount: controller.coopFilteredList.length,
+                                                    itemBuilder: (context, index) => controller.createCoopIdleCard(index)
+                                                )
                                             )
                                         )
                                     ]

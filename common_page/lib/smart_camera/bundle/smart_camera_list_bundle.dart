@@ -12,5 +12,6 @@ class SmartCameraBundle<T extends GetxController> {
     String basePath;
     int? day;
     Function(T) onGetData;
-    SmartCameraBundle({required this.getCoop, required this.routeHistoryDetail, required this.basePath, this.day, required this.onGetData});
+    bool isCanTakePicture;
+    SmartCameraBundle({required this.getCoop, required this.routeHistoryDetail, required this.basePath, this.day, required this.onGetData, this.isCanTakePicture = true});
 }

@@ -1,7 +1,10 @@
 // ignore_for_file: slash_for_doc_comments, depend_on_referenced_packages, prefer_interpolation_to_compose_strings, avoid_print, recursive_getters, constant_identifier_names
 
+import 'package:components/library/engine_library.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
+import 'package:engine/request/service.dart';
+import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,6 +14,7 @@ import 'package:model/farm_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 import 'package:model/x_app_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /**
  * @author DICKY
@@ -487,9 +491,37 @@ class GlobalVar {
 
     /// The function `invalidResponse()` deletes user authentication and profile
     /// data and navigates to the login page.
-    static void invalidResponse() {
+    static void invalidResponse({bool showSnackBar = true}) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        Auth? auth = await AuthImpl().get();
+        if (auth != null) {
+            String? id = prefs.getString('registrationTokenFirebase');
+            Service.push(
+                apiKey: "userApi",
+                service: ListApi.deleteDevice,
+                context: Get.context!,
+                body: ['Bearer ${auth.token}', auth.id, 'v2/devices/${id ?? 'null'}'],
+                listener: ResponseListener(
+                    onResponseDone: (code, message, body, id, packet) => prefs.remove('registrationTokenFirebase'),
+                    onResponseFail: (code, message, body, id, packet) {},
+                    onResponseError: (exception, stacktrace, id, packet) {},
+                    onTokenInvalid: () => GlobalVar.invalidResponse()
+                )
+            );
+        }
+
         AuthImpl().delete(null, []);
         ProfileImpl().delete(null, []);
+
+        if (showSnackBar) {
+            Get.snackbar(
+                "Pesan",
+                "Sesi telah habis, silahkan login kembali..!",
+                snackPosition: SnackPosition.TOP,
+                colorText: Colors.white,
+                backgroundColor: Colors.red
+            );
+        }
         Get.offAllNamed('/login');
     }
 

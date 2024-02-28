@@ -45,6 +45,8 @@ class TransferDetailController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_detail_transfer_page');
+
         coop = Get.arguments[0];
         procurement.value = Get.arguments[1];
         isSend = Get.arguments[2];
@@ -211,7 +213,7 @@ class TransferDetailController extends GetxController {
                                 Text('Total', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                 const SizedBox(height: 4),
                                 Text(
-                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}',
+                                    '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}',
                                     style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)
                                 ),
                             ],
@@ -277,6 +279,7 @@ class TransferDetailController extends GetxController {
                         listener: ResponseListener(
                             onResponseDone: (code, message, body, id, packet) {
                                 isLoading.value = false;
+                                GlobalVar.track('Open_success_batalkan_transfer');
                                 Get.off(TransactionSuccessActivity(
                                     keyPage: "transfer${isCancel ? 'Cancel' : 'Reject'}${procurement.value.id}",
                                     message: isCancel ? "Kamu telah berhasil melakukan pembatalan transfer Pakan" : "Kamu telah menolak permintaan transfer sapronak",
@@ -354,6 +357,7 @@ class TransferDetailController extends GetxController {
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnTransferReject"), label: "Tolak", onClick: () {
+                                            GlobalVar.track('Click_tolak_transfer_button');
                                             isCancel.value = true;
                                             _generateButtonBottom();
                                         }))
@@ -382,6 +386,7 @@ class TransferDetailController extends GetxController {
                                         ),
                                         const SizedBox(width: 16),
                                         Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("btnTransferCancel"), label: "Batal", onClick: () {
+                                            GlobalVar.track('Click_batal_transfer_button');
                                             isCancel.value = true;
                                             _generateButtonBottom(isCanceled: true);
                                         }))

@@ -22,6 +22,7 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/procurement_model.dart';
 import 'package:model/request_chickin.dart';
+import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/request_chickin_response.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -158,7 +159,6 @@ class DocInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfSuratJalan");
@@ -173,7 +173,6 @@ class DocInController extends GetxController {
         alertText: "Harus menyertakan media foto",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfFormDOC");
@@ -188,7 +187,6 @@ class DocInController extends GetxController {
         alertText: "",
         showGalleryOptions: true,
         type: 2,
-        multi: true,
         onMediaResult: (file) {
             if (file != null) {
                 uploadFile(file, "mfAnotherDoc");
@@ -363,16 +361,23 @@ class DocInController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, "goods-receipt-purchase-order", file],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
+                            if ((body as MediaUploadResponse).data != null) {
+                                body.data!.url = Uri.encodeFull(body.data!.url!);
+                            }
+
                             if (mediaField == "mfSuratJalan") {
                                 mediaListSuratJalan.add(body.data);
+                                mfSuratJalan.controller.setFileName(body.data!.url ?? '-');
                                 mfSuratJalan.controller.setInformasiText("File telah terupload");
                                 mfSuratJalan.controller.showInformation();
                             } else if (mediaField == "mfFormDOC") {
                                 mediaListDoc.add(body.data);
+                                mfFormDOC.controller.setFileName(body.data!.url ?? '-');
                                 mfFormDOC.controller.setInformasiText("File telah terupload");
                                 mfFormDOC.controller.showInformation();
                             } else if (mediaField == "mfAnotherDoc") {
                                 mediaListLainnya.add(body.data);
+                                mfAnotherDoc.controller.setFileName(body.data!.url ?? '-');
                                 mfAnotherDoc.controller.setInformasiText("File telah terupload");
                                 mfAnotherDoc.controller.showInformation();
                             }
@@ -491,6 +496,7 @@ class DocInController extends GetxController {
 
     _showBottomDialog() {
         return showModalBottomSheet(
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: Get.context!,
             builder: (context) => Container(
@@ -607,14 +613,15 @@ class DocInController extends GetxController {
     }
 
     void addChickin() {
-        AuthImpl().get().then((auth) => {
-            isLoading.value = false,
+        AuthImpl().get().then((auth) {
+            isLoading.value = false;
             if (auth != null) {
+                RequestChickin bodyPayload = generatePayload();
                 Service.push(
                     apiKey: "productReportApi",
                     service: ListApi.updateRequestChickin,
                     context: context,
-                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(generatePayload())],
+                    body: ['Bearer ${auth.token}', auth.id, ListApi.pathGetRequestDocByFarmingId(coop.farmingCycleId!), Mapper.asJsonString(bodyPayload)],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             isLoading.value = false;
@@ -629,12 +636,12 @@ class DocInController extends GetxController {
                                     String text = 'DOC-in Kawan Pitik\n\n';
                                     text += 'Cabang : ${coop.coopCity}\n';
                                     text += 'Kandang : ${coop.coopName}\n';
-                                    text += 'Populasi : ${efReceiveDoc.getInputNumber() != null ? efReceiveDoc.getInputNumber()!.toInt() : '-'} Ekor\n';
-                                    text += 'BW : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} gr\n';
-                                    text += 'Uniformity : ${efBw.getInputNumber() != null ? efBw.getInputNumber()!.toInt() : '-'} %\n';
-                                    text += 'Jam truk berangkat : ${dtTruckGo.getLastTimeSelectedText()}\n';
-                                    text += 'Jam truk tiba : ${dtTruckCome.getLastTimeSelectedText()}\n';
-                                    text += 'Selesai DOC In : ${dtFinishDoc.getLastTimeSelectedText()}\n';
+                                    text += 'Populasi : ${bodyPayload.initialPopulation ?? '-'} Ekor\n';
+                                    text += 'BW : ${bodyPayload.bw ?? '-'} gr\n';
+                                    text += 'Uniformity : ${bodyPayload.uniformity ?? '-'} %\n';
+                                    text += 'Jam truk berangkat : ${bodyPayload.truckLeaving ?? '-'}\n';
+                                    text += 'Jam truk tiba : ${bodyPayload.truckArrival ?? '-'}\n';
+                                    text += 'Selesai DOC In : ${bodyPayload.finishChickIn ?? '-'}\n';
 
                                     Share.share(text);
                                 },
@@ -662,9 +669,9 @@ class DocInController extends GetxController {
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
-                )
+                );
             } else{
-                GlobalVar.invalidResponse()
+                GlobalVar.invalidResponse();
             }
         });
     }
@@ -694,7 +701,5 @@ class DocInBindings extends Bindings {
     DocInBindings({required this.context});
 
     @override
-    void dependencies() {
-        Get.lazyPut(() => DocInController(context: context));
-    }
+    void dependencies() => Get.lazyPut(() => DocInController(context: context));
 }

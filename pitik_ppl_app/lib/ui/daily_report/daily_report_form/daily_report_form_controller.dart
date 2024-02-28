@@ -285,10 +285,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         if (sfMerkPakan.getController().selectedObject == null) {
             return '';
         } else {
-            if ((sfMerkPakan.getController().selectedObject as Product).uom != null) {
-                return (sfMerkPakan.getController().selectedObject as Product).uom!;
-            } else if ((sfMerkPakan.getController().selectedObject as Product).purchaseUom != null) {
+            if ((sfMerkPakan.getController().selectedObject as Product).purchaseUom != null) {
                 return (sfMerkPakan.getController().selectedObject as Product).purchaseUom!;
+            } else if ((sfMerkPakan.getController().selectedObject as Product).uom != null) {
+                return (sfMerkPakan.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -299,10 +299,10 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         if (sfJenisOvk.getController().selectedObject == null) {
             return '';
         } else {
-            if ((sfJenisOvk.getController().selectedObject as Product).uom != null) {
-                return (sfJenisOvk.getController().selectedObject as Product).uom!;
-            } else if ((sfJenisOvk.getController().selectedObject as Product).purchaseUom != null) {
+            if ((sfJenisOvk.getController().selectedObject as Product).purchaseUom != null) {
                 return (sfJenisOvk.getController().selectedObject as Product).purchaseUom!;
+            } else if ((sfJenisOvk.getController().selectedObject as Product).uom != null) {
+                return (sfJenisOvk.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -751,7 +751,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
         }
     });
 
-    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
     void _getFeedStockSummary() => AuthImpl().get().then((auth) => {
         if (auth != null) {
             Service.push(
@@ -803,7 +803,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
 
                             for (var product in body.data!.summaries) {
                                 ovkStock += product == null ? 0.0 : product.remainingQuantity ?? 0.0;
-                                uom = product == null ? '' : product.uom ?? product.purchaseUom ?? '';
+                                uom = product == null ? '' : product.purchaseUom ?? product.uom ?? '';
                             }
 
                             ovkStockSummary.value = '${ovkStock.toStringAsFixed(0)} $uom';
@@ -827,7 +827,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
                 ? '${product == null || product.subcategoryCode == null ? '' : product.subcategoryCode} - ${product == null || product.productName == null ? '' : product.productName}'
                 : product == null || product.productName == null
                     ? ''
-                    : "${product.productName}(${product.remainingQuantity} ${product.uom ?? product.purchaseUom ?? ''})";
+                    : "${product.productName}(${product.remainingQuantity} ${product.purchaseUom ?? product.uom ?? ''})";
 
             field.getController().addItems(value: key, isActive: false);
         }
@@ -903,7 +903,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${efTotalPakan.getInputNumber() == null ? '' : efTotalPakan.getInputNumber()!.toStringAsFixed(0)} ${efTotalPakan.getController().textUnit.value}';
         }
@@ -911,7 +911,7 @@ class DailyReportFormController extends GetxController with GetSingleTickerProvi
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${efTotalOvk.getInputNumber() == null ? '' : efTotalOvk.getInputNumber()!.toStringAsFixed(0)} ${efTotalOvk.getController().textUnit.value}';
         }

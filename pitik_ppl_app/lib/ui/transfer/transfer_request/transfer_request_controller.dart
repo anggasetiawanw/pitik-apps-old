@@ -78,6 +78,8 @@ class TransferRequestController extends GetxController {
     void onInit() {
         super.onInit();
         isLoading.value = true;
+        GlobalVar.track('Open_transfer_form');
+
         coop = Get.arguments[0];
         isEdit = Get.arguments[1];
         isOwnFarm = coop.isOwnFarm != null && coop.isOwnFarm!;
@@ -333,10 +335,10 @@ class TransferRequestController extends GetxController {
         if (feedSpinnerField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((feedSpinnerField.getController().selectedObject as Product).uom != null) {
-                return (feedSpinnerField.getController().selectedObject as Product).uom!;
-            } else if ((feedSpinnerField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((feedSpinnerField.getController().selectedObject as Product).purchaseUom != null) {
                 return (feedSpinnerField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((feedSpinnerField.getController().selectedObject as Product).uom != null) {
+                return (feedSpinnerField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -347,10 +349,10 @@ class TransferRequestController extends GetxController {
         if (ovkSpinnerField.getController().selectedObject == null) {
             return '';
         } else {
-            if ((ovkSpinnerField.getController().selectedObject as Product).uom != null) {
-                return (ovkSpinnerField.getController().selectedObject as Product).uom!;
-            } else if ((ovkSpinnerField.getController().selectedObject as Product).purchaseUom != null) {
+            if ((ovkSpinnerField.getController().selectedObject as Product).purchaseUom != null) {
                 return (ovkSpinnerField.getController().selectedObject as Product).purchaseUom!;
+            } else if ((ovkSpinnerField.getController().selectedObject as Product).uom != null) {
+                return (ovkSpinnerField.getController().selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -696,7 +698,9 @@ class TransferRequestController extends GetxController {
                                             Expanded(
                                                 child: ButtonFill(controller: GetXCreator.putButtonFillController("btnAgreeTransferRequest"), label: "Yakin", onClick: () {
                                                     Navigator.pop(Get.context!);
+                                                    GlobalVar.track('Click_button_kirim');
                                                     isLoading.value = true;
+
                                                     AuthImpl().get().then((auth) {
                                                         if (auth != null) {
                                                             String requestedDate = '${Convert.getYear(transferDateField.getLastTimeSelected())}-${Convert.getMonthNumber(transferDateField.getLastTimeSelected())}-${Convert.getDay(transferDateField.getLastTimeSelected())}';
@@ -766,6 +770,7 @@ class TransferRequestController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
+                    GlobalVar.track('Open_success_transfer_page');
                     Get.off(TransactionSuccessActivity(
                         keyPage: "transferSaved",
                         message: "Kamu telah berhasil melakukan permintaan transfer pakan ke kandang lain",
@@ -899,7 +904,7 @@ class TransferRequestController extends GetxController {
         }
     });
 
-    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? 'Karung'}';
+    String _getRemainingQuantity(Product product) => '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? 'Karung'}';
     void _getFeedStockSummary() => AuthImpl().get().then((auth) => {
         if (auth != null) {
             Service.push(
@@ -950,7 +955,7 @@ class TransferRequestController extends GetxController {
 
                             for (var product in body.data!.summaries) {
                                 ovkStock += product == null ? 0.0 : product.remainingQuantity ?? 0.0;
-                                uom = product == null ? 'Botol' : product.uom ?? product.purchaseUom ?? 'Botol';
+                                uom = product == null ? 'Botol' : product.purchaseUom ?? product.uom ?? 'Botol';
                             }
 
                             ovkStockSummary.value = '${ovkStock.toStringAsFixed(0)} $uom';
@@ -1055,7 +1060,7 @@ class TransferRequestController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -1063,7 +1068,7 @@ class TransferRequestController extends GetxController {
 
     String getOvkQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
         }

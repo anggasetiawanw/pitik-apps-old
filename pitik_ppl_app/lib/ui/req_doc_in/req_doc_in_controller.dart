@@ -512,7 +512,7 @@ class RequestDocInController extends GetxController {
                 updateRequestChickin(requestChickinBody);
             }
         } else if ((coop.statusText ?? "").toLowerCase() == NEED_APPROVED.toLowerCase()) {
-            if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty && isEdit.isTrue) {
+            if (coop.chickInRequestId != null && coop.chickInRequestId!.isNotEmpty && isEdit.isFalse) {
                 RequestChickin requestChickinApprove = RequestChickin();
                 requestChickinApprove.id = requestId.value;
                 requestChickinApprove.chickInDate = dtTanggal.controller.textSelected.value;
@@ -663,7 +663,5 @@ class RequestDocInBindings extends Bindings {
     RequestDocInBindings({required this.context});
 
     @override
-    void dependencies() {
-        Get.lazyPut(() => RequestDocInController(context: context));
-    }
+    void dependencies() => Get.lazyPut(() => RequestDocInController(context: context));
 }

@@ -233,9 +233,9 @@ class Service {
                                 if (body[index] != null) {
                                     Query query = MirrorFeature.getAnnotation(parameter, Query);
                                     if (queryString.trim() == "") {
-                                        queryString += '?${query.value}=${_encodeValue(body[index].toString()) != null ? body[index].toString() : ""}';
+                                        queryString += '?${query.value}=${_encodeValue(body[index].toString()) != null ? _encodeValue(body[index].toString()) : ""}';
                                     } else {
-                                        queryString += '&${query.value}=${_encodeValue(body[index].toString()) != null ? body[index].toString() : ""}';
+                                        queryString += '&${query.value}=${_encodeValue(body[index].toString()) != null ? _encodeValue(body[index].toString()) : ""}';
                                     }
                                 }
                             }

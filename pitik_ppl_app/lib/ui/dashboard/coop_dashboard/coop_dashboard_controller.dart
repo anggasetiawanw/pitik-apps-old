@@ -140,7 +140,7 @@ class CoopDashboardController extends GetxController {
             }
 
             // track render page time
-            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Purpose': 'Page'});
+            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Purpose': 'Page_PPL'});
         });
     }
 
@@ -159,15 +159,15 @@ class CoopDashboardController extends GetxController {
                         onResponseDone: (code, message, body, id, packet) {
                             monitoring.value = (body as MonitoringPerformanceResponse).data!;
                             isLoading.value = false;
-                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Success'});
+                            GlobalVar.trackWithMap('Render_time', {'farmCycle': '${coop.farmingCycleId}' ,'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Success'});
                         },
                         onResponseFail: (code, message, body, id, packet) {
                             isLoading.value = false;
-                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Fail'});
+                            GlobalVar.trackWithMap('Render_time', {'farmCycle': '${coop.farmingCycleId}' ,'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Fail'});
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                             isLoading.value = false;
-                            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Error'});
+                            GlobalVar.trackWithMap('Render_time', {'farmCycle': '${coop.farmingCycleId}' ,'value': Convert.getRenderTime(startTime: startTime), 'API': 'getPerformanceMonitoring', 'Result': 'Error'});
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()
                     )
@@ -213,7 +213,7 @@ class CoopDashboardController extends GetxController {
     }
 
     void showMenuBottomSheet() {
-        GlobalVar.track('Click_floating menu');
+        GlobalVar.track('Click_floating_menu_ppl');
         showModalBottomSheet(
             useSafeArea: true,
             shape: const RoundedRectangleBorder(
@@ -327,7 +327,7 @@ class CoopDashboardController extends GetxController {
                                             }),
                                             DashboardCommon.createMenu(title: "Smart\nCamera", imagePath: 'images/record_icon.svg', status: showSmartCameraAlert.value, function: () {
                                                 GlobalVar.track('Click_feature_iot_smart_camera');
-                                                Get.toNamed(RoutePage.listSmartCameraDay, arguments: coop);
+                                                Get.toNamed(RoutePage.listSmartCameraDay, arguments: [coop, false]);
                                             })
                                         ]
                                     )
@@ -568,7 +568,7 @@ class CoopDashboardController extends GetxController {
                             children: [
                                 Row(
                                     children: [
-                                        SvgPicture.asset('images/fcr_icon.svg', width: 24, height: 24),
+                                        SvgPicture.asset('images/mortality_icon.svg', width: 24, height: 24),
                                         const SizedBox(width: 8),
                                         Text('Mortalitas/Standar', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                     ],

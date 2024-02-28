@@ -3,11 +3,15 @@
 import 'package:common_page/profile/about_us_screen.dart';
 import 'package:common_page/profile/change_password/change_pass_activity.dart';
 import 'package:common_page/profile/change_password/change_password_controller.dart';
+import 'package:common_page/profile/forget_password/forget_password_activity.dart';
+import 'package:common_page/profile/forget_password/forget_password_controller.dart';
 import 'package:common_page/profile/help_screen.dart';
 import 'package:common_page/profile/license_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen.dart';
 import 'package:common_page/profile/privacy/privacy_screen_controller.dart';
 import 'package:common_page/profile/term_screen.dart';
+import 'package:common_page/register/register_controller.dart';
+import 'package:common_page/register/register_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_activity.dart';
 import 'package:common_page/smart_camera/list_history/smart_camera_list_history_controller.dart';
 import 'package:common_page/smart_controller/detail_smartcontroller_activity.dart';
@@ -33,9 +37,17 @@ import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_for
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_form/daily_report_form_controller.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_activity.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_home/daily_report_home_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_daily_report_detail_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_detail/layer_daily_report_detail_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_form/layer_daily_report_form_controller.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_daily_report_revision_activity.dart';
+import 'package:pitik_ppl_app/ui/daily_report/layer_daily_report_revision/layer_daily_report_revision_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/coop_dashboard/coop_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_activity.dart';
 import 'package:pitik_ppl_app/ui/dashboard/farming_dashboard/farming_dashboard_controller.dart';
+import 'package:pitik_ppl_app/ui/dashboard/layer_dashboard/layer_dashboard_activity.dart';
+import 'package:pitik_ppl_app/ui/dashboard/layer_dashboard/layer_dashboard_controller.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_activity.dart';
 import 'package:pitik_ppl_app/ui/doc_in/doc_in_controller.dart';
 import 'package:pitik_ppl_app/ui/farm_closing/farm_closing_activity.dart';
@@ -109,10 +121,12 @@ class AppRoutes {
     static final page = [
         GetPage(name: RoutePage.splashPage, page: () => const SplashScreenActivity(), binding: SplashScreenBindings()),
         GetPage(name: RoutePage.boardingPage, page: () => const BoardingActivity()),
+        GetPage(name: RoutePage.registerPage, page: () => RegisterActivity(privacyPolicyRoute: RoutePage.privacyPage, termRoute: RoutePage.termPage), binding: RegisterBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.loginPage, page: () => const LoginActivity(), binding: LoginBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.farmingDashboard, page: () => const FarmingDashboardActivity(), binding: FarmingDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopList, page: () => const CoopActivity(), binding: CoopBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.coopDashboard, page: () => const CoopDashboardActivity(), binding: CoopDashboardBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDashboard, page: () => const LayerDashboardActivity(), binding: LayerDashboardBinding(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.notification, page: () => const NotificationActivity(), binding: NotificationBindings(context: GlobalVar.getContext())),
 
         // Profile Page
@@ -122,6 +136,7 @@ class AppRoutes {
         GetPage(name: RoutePage.helpPage, page: ()=> const HelpScreen()),
         GetPage(name: RoutePage.licencePage, page: ()=> const LicenseScreen()),
         GetPage(name: RoutePage.changePasswordPage, page: ()=> const ChangePassword(), binding: ChangePasswordBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.forgetPasswordPage, page: ()=> ForgetPassword(helpRoute: RoutePage.helpPage), binding: ForgetPasswordBindings(context: GlobalVar.getContext())),
 
         // Order Page
         GetPage(name: RoutePage.listOrderPage, page: () => const ListOrderActivity(), binding: ListOrderBinding(context: GlobalVar.getContext())),
@@ -139,9 +154,14 @@ class AppRoutes {
         // DOC-In Page
         GetPage(name: RoutePage.docInPage, page: () => const DocInActivity(), binding: DocInBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.reqDocInPage, page: ()=> const RequestDocIn(), binding: RequestDocInBindings(context: GlobalVar.getContext())),
+
+        // Daily Report
         GetPage(name: RoutePage.dailyReport, page: ()=> const DailyReportHomeActivity(), binding: DailyReportHomeBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportForm, page: ()=> const DailyReportFormActivity(), binding: DailyReportFormBindings(context: GlobalVar.getContext())),
         GetPage(name: RoutePage.dailyReportDetail, page: ()=> const DailyReportDetailActivity(), binding: DailyReportDetailBindings(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportForm, page: ()=> const LayerDailyReportFormActivity(), binding: LayerDailyReportFormBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportDetail, page: ()=> const LayerDailyReportDetailActivity(), binding: LayerDailyReportDetailBinding(context: GlobalVar.getContext())),
+        GetPage(name: RoutePage.layerDailyReportRevision, page: () => const LayerDailyReportRevisionActivity(), binding: LayerDailyReportRevisionBinding(context: GlobalVar.getContext())),
 
         // Smart Controller
         GetPage(name: RoutePage.smartControllerList, page: () => const SmartControllerListActivity(), binding: SmartControllerListBinding(context: GlobalVar.getContext())),
@@ -192,16 +212,19 @@ class RoutePage {
 
     static const String splashPage = "/";
     static const String boardingPage = "/boarding";
+    static const String registerPage = "/registerPage";
     static const String loginPage = "/login";
     static const String farmingDashboard = "/farmingDashboard";
     static const String coopList = "/coopList";
     static const String coopDashboard = "/coopDashboard";
+    static const String layerDashboard = "/layerDashboard";
     static const String privacyPage = "/privacy";
     static const String termPage = "/term";
     static const String aboutPage = "/about";
     static const String helpPage = "/help";
     static const String licencePage = "/licence";
     static const String changePasswordPage = "/changePassword";
+    static const String forgetPasswordPage = "/forgetPasswordPage";
     static const String listOrderPage = "/listOrder";
     static const String orderRequestPage = "/orderRequest";
     static const String orderDetailPage = "/orderDetail";
@@ -214,6 +237,9 @@ class RoutePage {
     static const String dailyReport = "/daily-Report";
     static const String dailyReportForm = "/daily-Report-Form";
     static const String dailyReportDetail = "/daily-Report-Detail";
+    static const String layerDailyReportForm = "/layerDailyReportForm";
+    static const String layerDailyReportDetail = "/layerDailyReportDetail";
+    static const String layerDailyReportRevision = "/layerDailyReportRevision";
     static const String smartControllerList = "/smartControllerList";
     static const String smartControllerDashboard = "/smartControllerDashboard";
     static const String smartMonitorController = "/smartMonitorController";

@@ -1,7 +1,11 @@
 
+// ignore_for_file: prefer_final_fields
+
+import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/scheduler.dart';
-import 'package:location/location.dart';
-import 'package:trust_location/trust_location.dart';
+import 'package:fl_location/fl_location.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'interface/gps_listener.dart';
 import 'interface/schedule_listener.dart';
 import 'dart:math' show cos, sqrt, asin;
@@ -11,8 +15,14 @@ import 'dart:math' show cos, sqrt, asin;
  */
 
 class GpsUtil {
-    static Map<String, double>? _locationMap;
-    static final _location = Location();
+    static Map<String, double?> _locationMap = {
+        'longitude': -1,
+        'latitude': -1,
+        'accuracy': -1,
+        'altitude': -1,
+        'speed': -1,
+        'speed_accuracy': -1
+    };
     static bool _isMock = false;
 
     /// `mock(true)` will make all the network calls in the app to be mocked
@@ -25,31 +35,47 @@ class GpsUtil {
     }
 
     /// It gets the current location of the user.
-    static void on() {
-        _locationMap = {};
-        _location.changeSettings(accuracy: LocationAccuracy.high);
-
-        try {
-            _location.getLocation().then((data) {
-              _locationMap!['longitude'] = data.longitude!;
-              _locationMap!['latitude'] = data.latitude!;
-              _locationMap!['accuracy'] = data.accuracy!;
-              _locationMap!['altitude'] = data.altitude!;
-              _locationMap!['speed'] = data.speed!;
-              _locationMap!['speed_accuracy'] = data.speedAccuracy!;
+    static Future<void> onStream({interval = 10000}) async {
+        final hasPermission = await handleLocationPermission();
+        if (hasPermission) {
+            FlLocation.getLocationStream(interval: interval, accuracy: LocationAccuracy.high)
+                .handleError((error) => print('Location error : ${error.toString()}'))
+                .listen((event) {
+                _locationMap['longitude'] = event.longitude;
+                _locationMap['latitude'] = event.latitude;
+                _locationMap['accuracy'] = event.accuracy;
+                _locationMap['altitude'] = event.altitude;
+                _locationMap['speed'] = event.speed;
+                _locationMap['speed_accuracy'] = event.speedAccuracy;
+                _isMock = event.isMock;
             });
-        } on Exception catch (e) {
-            print('Location error : ${e.toString()}');
         }
+    }
 
-        _location.onLocationChanged.listen((data) {
-            _locationMap!['longitude'] = data.longitude!;
-            _locationMap!['latitude'] = data.latitude!;
-            _locationMap!['accuracy'] = data.accuracy!;
-            _locationMap!['altitude'] = data.altitude!;
-            _locationMap!['speed'] = data.speed!;
-            _locationMap!['speed_accuracy'] = data.speedAccuracy!;
-        });
+    static Future<void> getLatestLocation({isMock = true}) async {
+        final hasPermission = await handleLocationPermission();
+        if (hasPermission) {
+            const timeLimit = Duration(seconds: 10);
+            await FlLocation.getLocation(timeLimit: timeLimit).then((event) async {
+                if (isMock && event.isMock) {
+                    Get.snackbar(
+                        "Pesan",
+                        "Terjadi Kesalahan, Gps Mock Detected",
+                        snackPosition: SnackPosition.TOP,
+                        duration: const Duration(seconds: 5),
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                    );
+                } else {
+                    _locationMap!['longitude'] = event.longitude;
+                    _locationMap!['latitude'] = event.latitude;
+                    _locationMap!['accuracy'] = event.accuracy;
+                    _locationMap!['altitude'] = event.altitude;
+                    _locationMap!['speed'] = event.speed;
+                    _locationMap!['speed_accuracy'] = event.speedAccuracy;
+                }
+            });
+        }
     }
 
     /// It checks if the GPS is on or off.
@@ -58,7 +84,7 @@ class GpsUtil {
     ///   listener (GpsListener): The listener that will be called when the GPS is
     /// on or off.
     static void isOn(GpsListener listener) async {
-        await _location.serviceEnabled().then((result) {    
+        await FlLocation.isLocationServicesEnabled.then((result) {
             if (result) {
                 listener.isOn();
             } else {
@@ -68,8 +94,7 @@ class GpsUtil {
     }
 
     static void checkingMock({Function()? onIsMock}) async {
-        bool isMockLocation = await TrustLocation.isMockLocation;
-        if (isMockLocation && onIsMock != null) {
+        if (_isMock && onIsMock != null) {
             onIsMock();
         }
     }

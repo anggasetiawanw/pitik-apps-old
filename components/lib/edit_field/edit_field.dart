@@ -132,7 +132,6 @@ class EditField extends StatelessWidget {
                                                     onTyping(text, this);
                                                 },
                                                 decoration: InputDecoration(
-                                                    
                                                     contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                                     counterText: "",
                                                     hintText: hint,

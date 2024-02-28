@@ -136,7 +136,7 @@ class AdjustmentFeedController extends GetxController {
 
     String getFeedQuantity({Product? product}) {
         if (product != null) {
-            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+            return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
         } else {
             return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
         }
@@ -146,10 +146,10 @@ class AdjustmentFeedController extends GetxController {
         if (feedBrandSpinnerField.controller.selectedObject == null) {
             return '';
         } else {
-            if ((feedBrandSpinnerField.controller.selectedObject as Product).uom != null) {
-                return (feedBrandSpinnerField.controller.selectedObject as Product).uom!;
-            } else if ((feedBrandSpinnerField.controller.selectedObject as Product).purchaseUom != null) {
+            if ((feedBrandSpinnerField.controller.selectedObject as Product).purchaseUom != null) {
                 return (feedBrandSpinnerField.controller.selectedObject as Product).purchaseUom!;
+            } else if ((feedBrandSpinnerField.controller.selectedObject as Product).uom != null) {
+                return (feedBrandSpinnerField.controller.selectedObject as Product).uom!;
             } else {
                 return '';
             }
@@ -157,7 +157,7 @@ class AdjustmentFeedController extends GetxController {
     }
 
     String _getRemainingQuantity(Product product) {
-        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
+        return '${product.remainingQuantity == null ? '-' : product.remainingQuantity!.toStringAsFixed(0)} ${product.purchaseUom ?? product.uom ?? ''}';
     }
 
     Product getFeedSelectedObject() {

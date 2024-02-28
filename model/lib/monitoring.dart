@@ -37,7 +37,7 @@ class Monitoring {
             coopName: map['coopName'],
             period: map['period'],
             currentTemperature: map['currentTemperature'],
-            averageChickenAge: map['averageChickenAge'].toDouble(),
+            averageChickenAge: map['averageChickenAge'] != null ? map['averageChickenAge'].toDouble() : map['averageChickenAge'],
             chickInDate: map['chickInDate'],
             performance: Mapper.child<CoopPerformance>(map['performance']),
             population: Mapper.child<Population>(map['population']),

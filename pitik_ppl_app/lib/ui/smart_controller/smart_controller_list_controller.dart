@@ -2,6 +2,7 @@ import 'package:components/global_var.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/convert.dart';
 import 'package:engine/util/list_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -87,8 +88,10 @@ class SmartControllerListController extends GetxController {
                             children: [
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                        Text('${coop.coopName} ${floor.floorName ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: Colors.black)),
+                                        Expanded(child: Text('${coop.coopName} ${floor.floorName ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: Colors.black))),
+                                        const SizedBox(width: 16),
                                         Text('Hari ${floor.day ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: Colors.black)),
                                     ],
                                 ),
@@ -96,7 +99,8 @@ class SmartControllerListController extends GetxController {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                         Text('Periode ${floor.periode ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
-                                        Text('Chick-in ${floor.chickinDate ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black)),
+                                        const SizedBox(width: 16),
+                                        Expanded(child: Text('Chick-in ${Convert.getDate(floor.chickinDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.black), textAlign: TextAlign.right)),
                                     ],
                                 ),
                                 const SizedBox(height: 16),

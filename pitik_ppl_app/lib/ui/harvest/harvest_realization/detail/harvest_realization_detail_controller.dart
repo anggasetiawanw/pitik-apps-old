@@ -22,6 +22,8 @@ class HarvestRealizationDetailController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_detail_page_realisasi_panen');
+
         coop = Get.arguments[0];
         realization = Get.arguments[1];
     }

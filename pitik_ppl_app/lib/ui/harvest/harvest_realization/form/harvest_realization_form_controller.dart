@@ -51,6 +51,7 @@ class HarvestRealizationFormController extends GetxController {
     @override
     void onInit() {
         super.onInit();
+        GlobalVar.track('Open_form_realisasi_page');
         bundle = Get.arguments;
 
         _fillRealizationData();
@@ -211,7 +212,7 @@ class HarvestRealizationFormController extends GetxController {
             driverNameField.setInput(bundle.getRealization!.driver ?? '');
             truckPlateField.setInput(bundle.getRealization!.truckLicensePlate ?? '');
 
-            weighingNumberField.setInput(bundle.getRealization!.weighingNumber ?? '');
+            weighingNumberField.setInput(bundle.getRealization!.records.isNotEmpty && bundle.getRealization!.records[0] != null ? bundle.getRealization!.records[0]!.weighingNumber ?? '' : '');
             totalChickenField.setInput('${bundle.getRealization!.quantity ?? ''}');
             tonnageField.setInput('${bundle.getRealization!.tonnage ?? ''}');
             averageWeightField.setInput('${bundle.getRealization!.averageChickenWeighed ?? ''}');
@@ -390,6 +391,7 @@ class HarvestRealizationFormController extends GetxController {
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet) {
                     isLoading.value = false;
+                    GlobalVar.track('Open_success_realisasi_panen_page');
                     Get.to(TransactionSuccessActivity(
                         keyPage: "harvestRealizationSubmitSuccess",
                         message: bundle.getRealization == null ? "Kamu telah berhasil melakukan realisasi panen" : "Kamu telah berhasil mengubah data realisasi panen",

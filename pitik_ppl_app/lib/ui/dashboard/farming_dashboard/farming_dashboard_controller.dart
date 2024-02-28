@@ -196,9 +196,9 @@ class FarmingDashboardController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, url, page, 10, 'DESC'],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
+                        taskTicketList.clear();
                         if ((body as TaskTicketResponse).data.isNotEmpty) {
                             if (page == 1) {
-                                taskTicketList.clear();
                                 taskTicketList.value = body.data;
                             } else {
                                 taskTicketList.addAll(body.data);
@@ -458,7 +458,7 @@ class FarmingDashboardController extends GetxController {
                                             title: "Smart\nCamera",
                                             imagePath: 'images/record_icon.svg',
                                             status: showSmartCameraAlert.value,
-                                            function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: coopList[coopSelected.value]!)
+                                            function: () => Get.toNamed(RoutePage.listSmartCameraDay, arguments: [coopList[coopSelected.value]!, true])
                                         )
                                     ]
                                 )
@@ -885,7 +885,7 @@ class FarmingDashboardController extends GetxController {
                                                             ),
                                                             const SizedBox(height: 4),
                                                             Html(
-                                                                data: taskTicketList[index]!.instruction,
+                                                                data: taskTicketList[index] == null ? '' : taskTicketList[index]!.instruction ?? '',
                                                                 style: {
                                                                     "body": Style(
                                                                         fontSize: FontSize(10),
@@ -948,7 +948,7 @@ class FarmingDashboardController extends GetxController {
                         children: [
                             index == coopSelected.value ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                             const SizedBox(width: 16),
-                            Text('${coopList[index]!.coopName ?? '- '} (Hari ${coopList[index]!.day ?? '-'})', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                            Expanded(child: Text('${coopList[index]!.coopName ?? '- '} (Hari ${coopList[index]!.day ?? '-'})', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
                         ]
                     ),
                     const SizedBox(height: 10)

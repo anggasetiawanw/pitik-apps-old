@@ -7,7 +7,6 @@ import 'package:engine/util/gps_util.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pitik_ppl_app/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +14,9 @@ import 'api_mapping/api_mapping.dart';
 import 'app.dart';
 import 'flavors.dart';
 import 'main.reflectable.dart';
+
+// ignore: unused_import
+import 'package:model/password_model.dart';
 
 void main() async {
     F.appFlavor = Flavor.DEV;
@@ -35,9 +37,7 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupRemoteConfig();
 
     // init GPS
-    // if (await Permission.location.request().isGranted) {
-        // GpsUtil.on();
-    // }
+    GpsUtil.onStream();
 
     // saving firebase token
     String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);

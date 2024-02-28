@@ -95,4 +95,8 @@ class SmartCameraApi {
     @POST(value: POST.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
     @JSON(isPlaint: true)
     void takePictureSmartCamera(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+
+    @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
+    @JSON()
+    void submitCrowdedness(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path, @Parameter("isCrowded") bool isCrowded, @Parameter("remarks") String remarks) {}
 }

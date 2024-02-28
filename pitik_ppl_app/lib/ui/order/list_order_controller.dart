@@ -54,28 +54,37 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
         getListRequested();
     }
 
-    void getListRequested({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseRequestForCoopRest : ListApi.getListPurchaseRequest,
-        type: type,
-        fromDate: fromDate,
-        untilDate: untilDate
-    );
+    void getListRequested({String? type, String? fromDate, String? untilDate}) {
+        GlobalVar.track('Open_order_page_pengajuan');
+        _requestOrderDataToServer(
+            route: fromCoopRest ? ListApi.getListPurchaseRequestForCoopRest : ListApi.getListPurchaseRequest,
+            type: type,
+            fromDate: fromDate,
+            untilDate: untilDate
+        );
+    }
 
-    void getListProcessed({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
-        type: type,
-        fromDate: fromDate,
-        untilDate: untilDate,
-        status: "draft,rejected"
-    );
+    void getListProcessed({String? type, String? fromDate, String? untilDate}) {
+        GlobalVar.track('Open_order_page_proses');
+        _requestOrderDataToServer(
+            route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
+            type: type,
+            fromDate: fromDate,
+            untilDate: untilDate,
+            status: "draft,rejected"
+        );
+    }
 
-    void getListReceived({String? type, String? fromDate, String? untilDate}) => _requestOrderDataToServer(
-        route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
-        type: type,
-        fromDate: fromDate,
-        untilDate: untilDate,
-        status: "approved"
-    );
+    void getListReceived({String? type, String? fromDate, String? untilDate}) {
+        GlobalVar.track('Open_order_page_penerimaan');
+        _requestOrderDataToServer(
+            route: fromCoopRest ? ListApi.getListPurchaseOrderForCoopRest : ListApi.getListPurchaseOrder,
+            type: type,
+            fromDate: fromDate,
+            untilDate: untilDate,
+            status: "approved"
+        );
+    }
 
     void _requestOrderDataToServer({required String route, String? type, String? fromDate, String? untilDate, String? status}) {
         isLoading.value = true;
@@ -112,7 +121,7 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
             }
         });
     }
-    
+
     Widget _getStatusOrderWidget({required int tabPosition, required String statusText}) {
         Color background = statusText == GlobalVar.PENGAJUAN || statusText == GlobalVar.SEBAGIAN || statusText == GlobalVar.NEED_APPROVAL || statusText == GlobalVar.SUBMITTED ? GlobalVar.primaryLight2 :
                            statusText == GlobalVar.DIPROSES ? GlobalVar.primaryLight3 :
@@ -182,8 +191,14 @@ class ListOrderController extends GetxController with GetSingleTickerProviderSta
                 child: GestureDetector(
                     onTap: () {
                         if (typePosition == 0) {
+                            GlobalVar.track('Click_card_pengajuan');
                             Get.toNamed(RoutePage.orderDetailPage, arguments: [coop, fromCoopRest, procurement])!.then((value) => refreshOrderList());
                         } else {
+                            if (typePosition == 1) {
+                                GlobalVar.track('Click_card_proses');
+                            } else {
+                                GlobalVar.track('Click_card_penerimaan');
+                            }
                             Get.toNamed(RoutePage.confirmationReceivedPage, arguments: [coop, procurement, false, fromCoopRest])!.then((value) => refreshOrderList());
                         }
                     },

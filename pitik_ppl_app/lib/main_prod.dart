@@ -15,6 +15,9 @@ import 'app.dart';
 import 'flavors.dart';
 import 'main.reflectable.dart';
 
+// ignore: unused_import
+import 'package:model/password_model.dart';
+
 void main() async {
     F.appFlavor = Flavor.PROD;
     ChuckerFlutter.showOnRelease = false;
@@ -34,7 +37,7 @@ Future<void> initPlatformState() async {
     FirebaseConfig.setupRemoteConfig();
 
     // init GPS
-    // GpsUtil.on();
+    GpsUtil.onStream();
 
     String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();

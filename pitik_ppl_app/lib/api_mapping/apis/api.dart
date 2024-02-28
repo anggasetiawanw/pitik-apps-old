@@ -53,6 +53,29 @@ class API {
     @PATCH(value: PATCH.PATH_PARAMETER, as: ProfileResponse, error: ErrorResponse)
     void changePassword(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
 
+    /// This function uploads an image file to a specified folder with authorization
+    /// and additional headers.
+    ///
+    /// Args:
+    ///   authorization (String): The `authorization` parameter in the `uploadImage`
+    /// method is used to pass the authorization token for authentication purposes.
+    /// This token is typically included in the request headers to verify the
+    /// identity of the user making the request. It is important for accessing
+    /// protected resources on the server.
+    ///   xId (String): The `xId` parameter in the `uploadImage` method is used to
+    /// pass a unique identifier associated with the request. It is sent in the
+    /// header of the HTTP request along with the authorization token. This
+    /// identifier can be used for tracking or identifying the request on the server
+    /// side.
+    ///   folder (String): The `folder` parameter in the `uploadImage` method
+    /// specifies the destination folder where the file will be uploaded. This
+    /// parameter allows you to organize and categorize the uploaded files based on
+    /// different criteria such as user, date, or type. When calling the
+    /// `uploadImage` method, you need to
+    ///   file (File): The `file` parameter in the `uploadImage` method represents
+    /// the image file that you want to upload. This parameter expects a `File`
+    /// object that points to the image file on your local system. When you call
+    /// this method to upload an image, you need to provide the actual image file as
     @POST(value: "v2/upload", as: MediaUploadResponse, error: ErrorResponse)
     @Multipart()
     void uploadImage(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("folder") String folder, @Parameter("file") File file) {}

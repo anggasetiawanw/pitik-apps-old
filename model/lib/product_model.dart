@@ -33,13 +33,14 @@ class Product {
     String? farmingCycleId;
     double? remainingQuantity;
     bool? isReturned;
+    String? remarks;
 
     @IsChildren()
     List<MediaUploadModel?> photos;
 
     Product({this.id, this.feedStockSummaryId, this.ovkStockSummaryId, this.categoryCode, this.categoryName, this.subcategoryName, this.subcategoryCode, this.productName, this.productCode, this.quantity,
              this.purchaseUom, this.uom, this.statusText, this.coopSourceName, this.status, this.remaining, this.deliveryDate, this.coopTargetName, this.poProductId, this.notes, this.logisticOption,
-             this.farmingCycleId, this.remainingQuantity, this.isReturned, this.photos = const []});
+             this.farmingCycleId, this.remainingQuantity, this.isReturned, this.remarks, this.photos = const []});
 
     static Product toResponseModel(Map<String, dynamic> map) {
         return Product(
@@ -67,6 +68,7 @@ class Product {
             farmingCycleId: map['farmingCycleId'],
             remainingQuantity: map['remainingQuantity'] != null && map['remainingQuantity'] is int ? map['remainingQuantity'].toDouble() : map['remainingQuantity'],
             isReturned: map['isReturned'],
+            remarks: map['remarks'],
             photos: Mapper.children<MediaUploadModel>(map['photos'])
         );
     }

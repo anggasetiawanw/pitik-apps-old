@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable, slash_for_doc_comments, depend_on_referenced_packages
 
+import 'package:components/expandable/accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 
 import '../global_var.dart';
 import 'expandable_controller.dart';
@@ -35,9 +35,9 @@ class Expandable extends StatelessWidget {
         controller.expanded.value = expanded;
 
         return Obx(() =>
-            GFAccordion(
+            Accordion(
                 margin: EdgeInsets.zero,
-                title: titleWidget !=null ? null : headerText,
+                title: titleWidget != null ? null : headerText,
                 textStyle: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium),
                 onToggleCollapsed: (isExpand) {
                     if (isExpand) {

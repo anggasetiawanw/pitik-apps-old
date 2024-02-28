@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:components/button_fill/button_fill.dart';
@@ -9,6 +10,7 @@ import 'package:components/password_field/password_field.dart';
 import 'package:dao_impl/auth_impl.dart';
 import 'package:dao_impl/profile_impl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:engine/model/string_model.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/convert.dart';
@@ -34,6 +36,7 @@ class LoginController extends GetxController {
     BuildContext context;
     LoginController({required this.context});
 
+    int startTime = DateTime.now().millisecondsSinceEpoch;
     final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
     final EditField phoneNumberField = EditField(
@@ -56,12 +59,22 @@ class LoginController extends GetxController {
         onTyping: (text) {}
     );
 
+    @override
+    void onReady() {
+        super.onReady();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            prefs.then((SharedPreferences prefs) => phoneNumberField.setInput(prefs.getString('loginStorePhoneNumber') ?? ''));
+            GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Login_Page'});
+        });
+    }
+
     void login() {
         if (phoneNumberField.getInput().isEmpty) {
             phoneNumberField.getController().showAlert();
         } else if (passwordField.getInput().isEmpty) {
             passwordField.getController().showAlert();
         } else {
+            GlobalVar.track('Click_Masuk');
             AlertDialog alert = AlertDialog(
                 content: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +98,6 @@ class LoginController extends GetxController {
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
                         _getProfile((body as AuthResponse).data!, body.data!.action);
-                        _sendFirebaseTokenToServer(body.data!);
                     },
                     onResponseFail: (code, message, body, id, packet) {
                         Navigator.pop(Get.context!);
@@ -124,27 +136,24 @@ class LoginController extends GetxController {
             context: Get.context!,
             body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', packageInfo.version, deviceInfo['model'] ?? '-'],
             listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) async {},
-                onResponseFail: (code, message, body, id, packet) {
-                    Navigator.pop(Get.context!);
-                    Get.snackbar(
-                        "Pesan",
-                        "${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,
-                    );
+                onResponseDone: (code, message, body, id, packet) async {
+                    StringModel payload = (body as StringModel);
+                    prefs.setString('registrationTokenFirebase', payload.data['id']);
                 },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    Navigator.pop(Get.context!);
-                    Get.snackbar(
-                        "Pesan",
-                        "Terjadi kesalahan internal",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,
-                    );
-                },
+                onResponseFail: (code, message, body, id, packet) => Get.snackbar(
+                    "Pesan",
+                    "${(body as ErrorResponse).error!.message}",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                ),
+                onResponseError: (exception, stacktrace, id, packet) => Get.snackbar(
+                    "Pesan",
+                    "Terjadi kesalahan internal",
+                    snackPosition: SnackPosition.TOP,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.red,
+                ),
                 onTokenInvalid: () => GlobalVar.invalidResponse()
             )
         );
@@ -164,8 +173,10 @@ class LoginController extends GetxController {
                     await ProfileImpl().save(body.data);
                     await AuthImpl().save(auth);
 
+                    prefs.then((SharedPreferences prefs) => prefs.setString('loginStorePhoneNumber', body.data != null && body.data!.phoneNumber != null ? body.data!.phoneNumber ?? '' : ''));
                     Future<bool> isFirstLogin = prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
                     Navigator.pop(Get.context!);
+                    _sendFirebaseTokenToServer(auth);
 
                     if (await isFirstLogin) {
                         Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(body.data!.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard]);
@@ -251,7 +262,5 @@ class LoginBinding extends Bindings {
     LoginBinding({required this.context});
 
     @override
-    void dependencies() {
-        Get.lazyPut<LoginController>(() => LoginController(context: context));
-    }
+    void dependencies() => Get.lazyPut<LoginController>(() => LoginController(context: context));
 }

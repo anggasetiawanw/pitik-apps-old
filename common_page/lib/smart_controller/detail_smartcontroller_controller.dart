@@ -37,9 +37,9 @@ import 'package:model/sensor_data_model.dart';
 class SmartControllerDashboardController extends GetxController {
     BuildContext context;
     SmartControllerDashboardController({required this.context});
-    
+
     ScrollController scrollController = ScrollController();
-    
+
     var isLoadMore = false.obs;
     var pageSmartMonitor = 1.obs;
     var pageSmartController = 1.obs;
@@ -53,7 +53,7 @@ class SmartControllerDashboardController extends GetxController {
     late String basePath;
     late String routeSmartMonitor;
     String? modifySmartMonitorPage;
-    
+
     DeviceController? deviceController;
     ScrollController scrollMonitorController = ScrollController();
 
@@ -71,7 +71,7 @@ class SmartControllerDashboardController extends GetxController {
             }
         });
     }
-    
+
     var isLoading = false.obs;
     late EditField efBuildingName = EditField(
         controller: GetXCreator.putEditFieldController("efBuildingName"),
@@ -349,10 +349,8 @@ class SmartControllerDashboardController extends GetxController {
                                                             child: index == 0 ? Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children :[
-                                                                    const SizedBox(height: 4),
                                                                     Text('Target Suhu Hari Ini', style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
                                                                     Text('${deviceController!.growthDay!.temperature} °C', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12)),
-                                                                    const SizedBox(height: 4),
                                                                     Text('Umur Pertumbuhan', style: GlobalVar.greyTextStyle.copyWith(fontWeight: GlobalVar.medium, fontSize: 12)),
                                                                     Text('${deviceController!.growthDay!.day} hari', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 12))
                                                                 ]

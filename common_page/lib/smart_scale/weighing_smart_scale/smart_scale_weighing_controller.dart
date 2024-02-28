@@ -85,7 +85,7 @@ class SmartScaleWeighingController extends GetxController {
         if (totalWeighingField.getInput() != '') {
             int count = totalWeighingField.getInputNumber()!.toInt();
             smartScaleRecords.forEach((key, value) {
-                count -= value.count!;
+                count -= value.count ?? 0;
             });
 
             outstandingTotalWeighingField.setInput(count.toString());
