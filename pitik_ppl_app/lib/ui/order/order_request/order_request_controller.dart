@@ -928,7 +928,7 @@ class OrderRequestController extends GetxController {
                         apiKey: 'productReportApi',
                         service: ListApi.searchOvkUnit,
                         context: Get.context!,
-                        body: ['Bearer ${auth.token}', auth.id, keyword, coop.branch == null ? null : coop.branch!.id, "OVK", 1, 100],
+                        body: ['Bearer ${auth.token}', auth.id, keyword, coop.branch?.id, "OVK", 1, 100],
                         listener: ResponseListener(
                             onResponseDone: (code, message, body, id, packet) => _setupSuggestBrand(field: ovkUnitSuggestField, productList: (body as ProductsResponse).data, isFeed: false),
                             onResponseFail: (code, message, body, id, packet) {},

@@ -121,9 +121,8 @@ class DetailVisitCustomer extends GetView<DetailVisitController> {
             ),
             isLeadStatus
                 ? LeadStatus(
-                    leadStatus: controller.customer.value != null
-                        ? controller.customer.value!.leadStatus
-                        : null)
+                    leadStatus:  controller.customer.value?.leadStatus
+                       )
                 : Expanded(
                     flex: 2,
                     child: Text(

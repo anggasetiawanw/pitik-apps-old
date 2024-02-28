@@ -18,31 +18,31 @@ class ProfileActivity extends StatefulWidget {
   State<ProfileActivity> createState() => _ProfileActivityState();
 }
 
-class _ProfileActivityState extends State<ProfileActivity> {  
+class _ProfileActivityState extends State<ProfileActivity> {
     String? _version;
     // String? _buildNumber;
     // String? _buildSignature;
     // String? _appName;
     // String? _packageName;
     // String? _installerStore;
-  
-  
+
+
     @override
     void initState() {
       super.initState();
       _getAppVersion();
     }
-  
+
     void _getAppVersion() async {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  
+
       final version = packageInfo.version;
     //   final buildNumber = packageInfo.buildNumber;
     //   final buildSignature = packageInfo.buildSignature;
     //   final appName = packageInfo.appName;
     //   final packageName = packageInfo.packageName;
     //   final installerStore = packageInfo.installerStore;
-  
+
       setState(() {
         _version = version;
         // _buildNumber = buildNumber;
@@ -176,7 +176,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                           nameInfo(),
                           Container(
                               margin: const EdgeInsets.only(top: 32,left: 39, right: 39),
-                              child: Divider(
+                              child: const Divider(
                                   color: GlobalVar.outlineColor,
                                   thickness: 1.6,
                               ),

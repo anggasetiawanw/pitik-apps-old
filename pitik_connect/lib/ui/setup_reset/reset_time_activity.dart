@@ -123,8 +123,8 @@ class ResetTime extends GetView<ResetTimeController>{
                                             children: [
                                                 SvgPicture.asset("images/information_blue_icon.svg"),
                                                 const SizedBox(width: 8,),
-                                                Expanded(child: Text("Saat ini menggunakan waktu bawaan ", style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip,)),
-                                                Text("${controller.controllerData.onlineTime}", style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)
+                                                const Expanded(child: Text("Saat ini menggunakan waktu bawaan ", style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip,)),
+                                                Text("${controller.controllerData.onlineTime}", style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)
                                             ],
                                         ),
                                     ),

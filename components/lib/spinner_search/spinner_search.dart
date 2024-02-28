@@ -38,7 +38,7 @@ class SpinnerSearch extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -93,7 +93,7 @@ class SpinnerSearch extends StatelessWidget {
                                                 children: [
                                                     controller.isloading.isTrue ? Container(
                                                         margin: const EdgeInsets.only(right: 16),
-                                                        child: SizedBox(
+                                                        child: const SizedBox(
                                                             width: 24,
                                                             height: 24,
                                                             child: CircularProgressIndicator(color: GlobalVar.primaryOrange)
@@ -131,7 +131,7 @@ class SpinnerSearch extends StatelessWidget {
                                                     hintStyle: const TextStyle(fontSize: 12),
                                                     border: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10),
-                                                        borderSide: BorderSide(color: GlobalVar.primaryOrange)
+                                                        borderSide: const BorderSide(color: GlobalVar.primaryOrange)
                                                     ),
                                                     focusedBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
@@ -142,7 +142,7 @@ class SpinnerSearch extends StatelessWidget {
                                                     ),
                                                     disabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
-                                                        borderSide: BorderSide(color: GlobalVar.gray),
+                                                        borderSide: const BorderSide(color: GlobalVar.gray),
                                                     ),
                                                     enabledBorder: OutlineInputBorder(
                                                         borderRadius: BorderRadius.circular(10.0),
@@ -208,7 +208,7 @@ class SpinnerSearch extends StatelessWidget {
                                     Expanded(
                                         child: Text(
                                             controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                            style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                            style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                             overflow: TextOverflow.clip,
                                         ),
                                     )
@@ -233,7 +233,7 @@ class SpinnerSearch extends StatelessWidget {
                         children: [
                             controller.items.value[key] == true ? SvgPicture.asset("images/on_spin.svg") : SvgPicture.asset("images/off_spin.svg"),
                             const SizedBox(width: 8),
-                            Expanded(child: Text(key, style: TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)),
+                            Expanded(child: Text(key, style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)),
                         ]
                     )
                 )

@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:math';
-
 import 'package:components/global_var.dart';
 import 'package:components/multiple_dynamic_form_field/multiple_dynamic_form_field_controller.dart';
 import 'package:flutter/material.dart';

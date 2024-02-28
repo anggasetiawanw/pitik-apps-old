@@ -1,15 +1,9 @@
 import 'dart:convert';
 
-import 'package:engine/request/service.dart';
-import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/mapper/mapper.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:model/error/error.dart';
 import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
 import 'package:pitik_internal_app/utils/constant.dart';
 import 'package:pitik_internal_app/utils/route.dart';
 
@@ -42,32 +36,32 @@ class DeepLinkUtils {
     }
   }
   // TODO : For Future if `ID` of Notification has been implemented
-  static void _readNotif(String id) {
-    Service.push(
-        apiKey: ApiMapping.userApi,
-        service: ListApi.updateNotification,
-        context: Get.context!,
-        body: [Constant.auth!.token, Constant.auth!.id, "v2/notifications/read/$id", ""],
-        listener: ResponseListener(
-            onResponseDone: (code, message, body, id, packet) {},
-            onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.white,
-                backgroundColor: Colors.red,
-              );
-            },
-            onTokenInvalid: () => Constant.invalidResponse()));
-  }
+//   static void _readNotif(String id) {
+//     Service.push(
+//         apiKey: ApiMapping.userApi,
+//         service: ListApi.updateNotification,
+//         context: Get.context!,
+//         body: [Constant.auth!.token, Constant.auth!.id, "v2/notifications/read/$id", ""],
+//         listener: ResponseListener(
+//             onResponseDone: (code, message, body, id, packet) {},
+//             onResponseFail: (code, message, body, id, packet) {
+//               Get.snackbar(
+//                 "Pesan",
+//                 "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+//                 snackPosition: SnackPosition.TOP,
+//                 colorText: Colors.white,
+//                 backgroundColor: Colors.red,
+//               );
+//             },
+//             onResponseError: (exception, stacktrace, id, packet) {
+//               Get.snackbar(
+//                 "Pesan",
+//                 "Terjadi Kesalahan Internal",
+//                 snackPosition: SnackPosition.TOP,
+//                 colorText: Colors.white,
+//                 backgroundColor: Colors.red,
+//               );
+//             },
+//             onTokenInvalid: () => Constant.invalidResponse()));
+//   }
 }

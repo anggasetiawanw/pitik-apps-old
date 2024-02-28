@@ -47,7 +47,7 @@ class PasswordField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -99,7 +99,7 @@ class PasswordField extends StatelessWidget {
                                                 ),
                                                 enabledBorder: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10.0),
-                                                    borderSide: BorderSide(
+                                                    borderSide: const BorderSide(
                                                         color: GlobalVar.primaryLight
                                                     )
                                                 ),
@@ -143,7 +143,7 @@ class PasswordField extends StatelessWidget {
                                                 ],
                                             )
                                         ) : Container(),
-                                    ),                                    
+                                    ),
                                     Align(
                                         alignment: Alignment.topLeft,
                                         child: controller.showTooltip.isTrue ? Container(
@@ -156,7 +156,7 @@ class PasswordField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         controller.alertText.isEmpty ? alertText : controller.alertText.value,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ],
                                             )

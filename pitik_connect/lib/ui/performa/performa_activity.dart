@@ -149,7 +149,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                     nameInfo(),
                     Container(
                         margin: const EdgeInsets.only(top: 32,left: 39, right: 39),
-                        child: Divider(
+                        child: const Divider(
                             color: GlobalVar.outlineColor,
                             thickness: 1.6,
                         ),

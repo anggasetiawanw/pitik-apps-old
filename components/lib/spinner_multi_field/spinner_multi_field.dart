@@ -72,7 +72,6 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
                             ? createDropdown()
                             : GestureDetector(
                                 onTap: () {
-                                  print("com ${controller.items.value}");
                                   if (controller.activeField.isTrue) {
                                     Get.snackbar("Informasi", "$label data kosong", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
                                   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_variable/colors.dart';
+
 import 'listener/custom_dialog_listener.dart';
 
 /*
@@ -185,7 +186,7 @@ class _MyDialogState extends State<_MyDialog> {
                 actions: <Widget>[
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryOrange 
+                            backgroundColor: AppColors.primaryOrange
                         ),
                         onPressed: () {
                             dialog.hide();
@@ -202,7 +203,7 @@ class _MyDialogState extends State<_MyDialog> {
                             dialog.hide();
                             _listener!.onDialogCancel(context, id, packetList);
                         },
-                        child: Text(_titleButtonNo, style:TextStyle(color: Color(0xFFF47B20))),
+                        child: Text(_titleButtonNo, style:const TextStyle(color: Color(0xFFF47B20))),
                     )
                 ],
             );

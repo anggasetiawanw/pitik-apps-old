@@ -53,7 +53,6 @@ class HarvestController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) => isLoading.value = false,
                         onResponseError: (exception, stacktrace, id, packet) {
-                            print('$exception -> $stacktrace');
                             isLoading.value = false;
                         },
                         onTokenInvalid: () => GlobalVar.invalidResponse()

@@ -84,9 +84,9 @@ class DashboardFan extends StatelessWidget {
                                           Container(
                                               width: 40,
                                               height: 40,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                   color:GlobalVar.iconHomeBg,
-                                                  borderRadius: const BorderRadius.only(
+                                                  borderRadius: BorderRadius.only(
                                                       topLeft: Radius.circular(4),
                                                       topRight: Radius.circular(4),
                                                       bottomRight: Radius.circular(4),

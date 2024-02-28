@@ -35,8 +35,8 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                             child: ListView(
                                 children: [
                                     Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(8)),
                                             color: GlobalVar.grayBackground
                                         ),
                                         child: Padding(

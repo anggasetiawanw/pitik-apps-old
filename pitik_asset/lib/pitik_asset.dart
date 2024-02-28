@@ -1,0 +1,1 @@
+library pitik_asset;

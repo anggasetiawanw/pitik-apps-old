@@ -113,13 +113,13 @@ class RegisterFloorController extends GetxController {
                 ListApi.pathListCoops()],
             listener: ResponseListener(
                 onResponseDone: (code, message, body, id, packet){
-                    if ((body as CoopListResponse).data!.isNotEmpty){
-                        for (var result in body.data!){
+                    if ((body as CoopListResponse).data.isNotEmpty){
+                        for (var result in body.data){
                             coops.value.add(result as Coop);
                         }
                     }
                     Map<String, bool> mapList = {};
-                    for (var product in body.data!) {
+                    for (var product in body.data) {
                       mapList[product!.name!] = false;
                     }
                     spBuilding.controller.generateItems(mapList);

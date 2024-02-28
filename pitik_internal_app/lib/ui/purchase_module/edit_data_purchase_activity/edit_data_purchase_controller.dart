@@ -519,7 +519,7 @@ class EditDataPurchaseController extends GetxController {
     );
 
     return Purchase(
-      vendorId: vendorSelected == null ? null : vendorSelected.id!,
+      vendorId: vendorSelected?.id,
       jagalId: jagalSelected?.id,
       operationUnitId: destinationPurchaseSelected!.id!,
       products: listProductPayload,

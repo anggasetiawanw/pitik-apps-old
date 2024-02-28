@@ -13,7 +13,7 @@ class FarmPerformanceActualActivity extends GetView<FarmPerformanceActualControl
     @override
     Widget build(BuildContext context) {
         return Obx(() =>
-            Column(
+            const Column(
                 children: [
 
                 ],

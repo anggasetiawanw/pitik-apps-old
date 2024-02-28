@@ -48,7 +48,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         Container(
                                                             width: 24,
                                                             height: 24,
-                                                            decoration: BoxDecoration(
+                                                            decoration: const BoxDecoration(
                                                                 color: GlobalVar.green,
                                                                 shape: BoxShape.circle
                                                             )
@@ -59,7 +59,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                                         Container(
                                                             width: 24,
                                                             height: 24,
-                                                            decoration: BoxDecoration(
+                                                            decoration: const BoxDecoration(
                                                                 color: GlobalVar.red,
                                                                 shape: BoxShape.circle
                                                             )
@@ -76,8 +76,8 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                         padding: const EdgeInsets.only(top: 16, bottom: 8),
                                         child: Container(
                                             width: MediaQuery.of(context).size.width,
-                                            decoration: BoxDecoration(
-                                                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(8)),
                                                 color: GlobalVar.grayBackground
                                             ),
                                             child: Padding(

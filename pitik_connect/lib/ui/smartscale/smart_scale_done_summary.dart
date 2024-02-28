@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
+
 import 'list_smart_scale/list_smart_scale_controller.dart';
 
 /**
@@ -78,8 +79,8 @@ class SmartScaleDoneSummary extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 24),
                                 Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(8)),
                                         color: GlobalVar.grayBackground
                                     ),
                                     child: Padding(

@@ -1,14 +1,16 @@
 
 // ignore_for_file: prefer_final_fields
 
+import 'dart:math' show cos, sqrt, asin;
+
 import 'package:engine/util/location_permission.dart';
 import 'package:engine/util/scheduler.dart';
 import 'package:fl_location/fl_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'interface/gps_listener.dart';
 import 'interface/schedule_listener.dart';
-import 'dart:math' show cos, sqrt, asin;
 
 /*
   @author AKBAR <akbar.attijani@gmail.com>
@@ -39,7 +41,7 @@ class GpsUtil {
         final hasPermission = await handleLocationPermission();
         if (hasPermission) {
             FlLocation.getLocationStream(interval: interval, accuracy: LocationAccuracy.high)
-                .handleError((error) => print('Location error : ${error.toString()}'))
+                .handleError((error) {})
                 .listen((event) {
                 _locationMap['longitude'] = event.longitude;
                 _locationMap['latitude'] = event.latitude;
@@ -67,12 +69,12 @@ class GpsUtil {
                         backgroundColor: Colors.red,
                     );
                 } else {
-                    _locationMap!['longitude'] = event.longitude;
-                    _locationMap!['latitude'] = event.latitude;
-                    _locationMap!['accuracy'] = event.accuracy;
-                    _locationMap!['altitude'] = event.altitude;
-                    _locationMap!['speed'] = event.speed;
-                    _locationMap!['speed_accuracy'] = event.speedAccuracy;
+                    _locationMap['longitude'] = event.longitude;
+                    _locationMap['latitude'] = event.latitude;
+                    _locationMap['accuracy'] = event.accuracy;
+                    _locationMap['altitude'] = event.altitude;
+                    _locationMap['speed'] = event.speed;
+                    _locationMap['speed_accuracy'] = event.speedAccuracy;
                 }
             });
         }
@@ -105,7 +107,7 @@ class GpsUtil {
     /// Returns:
     ///   The latitude and longitude of the current location.
     static double? longitude() {
-        return _locationMap!['longitude'];
+        return _locationMap['longitude'];
     }
 
     /// > If the locationMap is not null, return the latitude value from the
@@ -114,7 +116,7 @@ class GpsUtil {
     /// Returns:
     ///   The latitude of the current location.
     static double? latitude() {
-        return _locationMap!['latitude'];
+        return _locationMap['latitude'];
     }
 
     /// `return _locationMap!['accuracy'];`
@@ -130,7 +132,7 @@ class GpsUtil {
     /// Returns:
     ///   The accuracy of the location.
     static double? accuracy() {
-        return _locationMap!['accuracy'];
+        return _locationMap['accuracy'];
     }
 
     /// If the locationMap is not null, return the value of the key 'altitude' in
@@ -139,7 +141,7 @@ class GpsUtil {
     /// Returns:
     ///   The altitude of the device.
     static double? altitude() {
-        return _locationMap!['altitude'];
+        return _locationMap['altitude'];
     }
 
     /// If the locationMap is not null, return the value of the speed key in the
@@ -148,7 +150,7 @@ class GpsUtil {
     /// Returns:
     ///   The speed of the device.
     static double? speed() {
-        return _locationMap!['speed'];
+        return _locationMap['speed'];
     }
 
     /// `speedAccuracy` returns the speed accuracy of the current location
@@ -156,7 +158,7 @@ class GpsUtil {
     /// Returns:
     ///   The speed accuracy of the location.
     static double? speedAccuracy() {
-        return _locationMap!['speed_accuracy'];
+        return _locationMap['speed_accuracy'];
     }
 
     /// Run the GPS scheduler for the given duration, and always force the GPS

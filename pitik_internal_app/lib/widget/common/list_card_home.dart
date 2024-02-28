@@ -57,7 +57,7 @@ class CardListHome extends StatelessWidget {
                                                         ),
                                                     ),
                                                     const SizedBox(width: 14,),
-                                                    LeadStatus(leadStatus: customer.latestVisit != null ? customer.latestVisit!.leadStatus : null),
+                                                    LeadStatus(leadStatus:customer.latestVisit?.leadStatus),
                                                 ],
                                             ),
                                             Text(

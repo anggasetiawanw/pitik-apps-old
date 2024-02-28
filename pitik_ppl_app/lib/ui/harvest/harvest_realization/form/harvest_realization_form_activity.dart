@@ -1,5 +1,4 @@
 
-import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';

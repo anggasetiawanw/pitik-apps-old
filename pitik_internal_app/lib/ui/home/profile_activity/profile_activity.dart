@@ -107,6 +107,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 imagePath,
                 width: 24,
                 height: 24,
+                // ignore: deprecated_member_use
                 color: AppColors.primaryOrange,
               ),
               const SizedBox(

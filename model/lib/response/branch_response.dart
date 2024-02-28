@@ -1,5 +1,6 @@
-import 'package:model/branch.dart';
 import 'package:model/engine_library.dart';
+
+import '../branch.dart';
 
 @SetupModel
 class ListBranchResponse {

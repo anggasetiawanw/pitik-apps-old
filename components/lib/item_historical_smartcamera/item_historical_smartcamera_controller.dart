@@ -79,7 +79,6 @@ class ItemHistoricalSmartCameraController extends GetxController {
                         );
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
-                        print('$exception -> $stacktrace');
                         isLoading.value = false;
                         Get.snackbar(
                             "Pesan", "Terjadi Kesalahan Internal",

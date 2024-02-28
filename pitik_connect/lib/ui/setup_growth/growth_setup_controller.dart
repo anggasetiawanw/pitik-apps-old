@@ -212,8 +212,6 @@ class GrowthSetupController extends GetxController {
                 },
                 onResponseError: (exception, stacktrace, id, packet) {
                     isLoading.value = false;
-                    print("HAHAHAHA ${exception}");
-
                 }, onTokenInvalid: () => GlobalVar.invalidResponse())
         );
     }

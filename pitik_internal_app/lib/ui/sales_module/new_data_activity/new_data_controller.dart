@@ -20,7 +20,7 @@ import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
-import 'package:model/response/%20branch_response.dart';
+import 'package:model/response/branch_response.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/customer_response.dart';
 import 'package:model/response/internal_app/location_list_response.dart';

@@ -52,7 +52,7 @@ class HarvestSubmittedDetailActivity extends GetView<HarvestSubmittedDetailContr
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                                 Text('Tanggal Pengajuan', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                                Text(Convert.getDate(controller.harvest.value != null ? controller.harvest.value!.datePlanned : null), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                                Text(Convert.getDate( controller.harvest.value?.datePlanned ), style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                             ]
                                         )
                                     ]

@@ -17,7 +17,6 @@ import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/fan_detail_response.dart';
-import 'package:model/response/fan_list_response.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -159,7 +158,7 @@ class FanSetupController extends GetxController {
             service: ListApi.getFanDetail,
             context: context,
             body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!,
-                ListApi.pathDetailFanData('v2/b2b/iot-devices/smart-controller/coop/', "fan",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!, deviceSetting!.id!)],
+                ListApi.pathDetailFanData('v2/b2b/iot-devices/smart-controller/coop/', "fan",device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!, deviceSetting.id!)],
             listener: ResponseListener(onResponseDone: (code, message, body, id, packet){
                 if ((body as FanDetailResponse).data != null){
                     loadPage((body).data);
@@ -283,9 +282,9 @@ class FanSetupController extends GetxController {
     void loadPage(DeviceSetting? fanData){
         if(isEdit.isTrue){
             efDiffTemp.setInput("${fanData!.temperatureTarget}");
-            tmPickerDurationOn.controller.setTextSelected("${fanData!.onlineDuration}");
-            tmPickerFanOffDurartion.controller.setTextSelected("${fanData!.offlineDuration}");
-            if(fanData!.intermitten == true) {
+            tmPickerDurationOn.controller.setTextSelected("${fanData.onlineDuration}");
+            tmPickerFanOffDurartion.controller.setTextSelected("${fanData.offlineDuration}");
+            if(fanData.intermitten == true) {
                 sbIntermittern.controller.setOn();
             }else{
                 sbIntermittern.controller.setOff();
@@ -296,10 +295,10 @@ class FanSetupController extends GetxController {
             tmPickerFanOffDurartion.controller.enable();
         }else{
             efDiffTemp.setInput("${fanData!.temperatureTarget}");
-            tmPickerDurationOn.controller.setTextSelected("${fanData!.onlineDuration}");
-            tmPickerFanOffDurartion.controller.setTextSelected("${fanData!.offlineDuration}");
+            tmPickerDurationOn.controller.setTextSelected("${fanData.onlineDuration}");
+            tmPickerFanOffDurartion.controller.setTextSelected("${fanData.offlineDuration}");
 
-            if(fanData!.intermitten == true) {
+            if(fanData.intermitten == true) {
                 sbIntermittern.controller.setOn();
             }else{
                 sbIntermittern.controller.setOff();

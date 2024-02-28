@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/device_model.dart';
-import 'package:model/error/error.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 

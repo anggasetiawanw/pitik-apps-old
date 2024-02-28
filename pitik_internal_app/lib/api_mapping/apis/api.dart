@@ -14,7 +14,7 @@ import 'package:engine/request/annotation/request/put.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/manufacture_output_model.dart';
-import 'package:model/response/ branch_response.dart';
+import 'package:model/response/branch_response.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/checkin_response.dart';
 import 'package:model/response/internal_app/good_receive_response.dart';

@@ -114,7 +114,6 @@ class ManufactureHomeController extends GetxController {
                         colorText: Colors.white,
                         backgroundColor: Colors.red,
                     );
-                    print(stacktrace);
                     isLoading.value = false;
                 },
                 onTokenInvalid: Constant.invalidResponse()));

@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: components,dao_impl,engine,global_variable,model
+dependency_overrides:
+  components:
+    path: ../components
+  dao_impl:
+    path: ../dao_impl
+  engine:
+    path: ../engine
+  global_variable:
+    path: ../global_variable
+  model:
+    path: ../model

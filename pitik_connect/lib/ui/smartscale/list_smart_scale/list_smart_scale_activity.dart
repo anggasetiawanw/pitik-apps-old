@@ -119,8 +119,8 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                             child: Container(
                                                 width: 60,
                                                 height: 4,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
                                                     color: GlobalVar.outlineColor
                                                 )
                                             )

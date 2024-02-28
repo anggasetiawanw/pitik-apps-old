@@ -230,7 +230,7 @@ class HarvestSubmittedFormController extends GetxController {
             farmingCycleId: coop.farmingCycleId,
             minWeight: minWeightFieldList[index].getInputNumber(),
             maxWeight: maxWeightFieldList[index].getInputNumber(),
-            quantity: totalChickenFieldList[index].getInputNumber() != null ? totalChickenFieldList[index].getInputNumber()!.toInt() : null,
+            quantity: totalChickenFieldList[index].getInputNumber()?.toInt(),
             reason: reasonFieldList[index].getController().textSelected.value
         );
     }

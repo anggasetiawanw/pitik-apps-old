@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:components/global_var.dart';
-import 'package:components/list_card_smartcontroller/card_list_controller.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

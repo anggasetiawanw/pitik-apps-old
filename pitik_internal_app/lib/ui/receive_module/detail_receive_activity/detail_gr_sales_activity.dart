@@ -268,7 +268,6 @@ class DetailGrOrder extends GetView<DetailGrOrderController> {
     }
 
     Widget customExpandalbeDetail(Products products) {
-        print("PRIODD ${products.name}");
       if (products.productCategoryId == null) {
         return Container(
           margin: const EdgeInsets.only(top: 16),

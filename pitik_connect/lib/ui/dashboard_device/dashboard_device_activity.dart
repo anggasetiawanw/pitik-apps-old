@@ -181,7 +181,7 @@ class DashboardDevice extends GetView<DashboardDeviceController>{
                     alignment: Alignment.bottomCenter,
                     children: [
                         Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(color: GlobalVar.gray, width: 2.0),
                                 ),

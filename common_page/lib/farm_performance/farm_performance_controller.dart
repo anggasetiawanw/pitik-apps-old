@@ -250,7 +250,7 @@ class FarmPerformanceController extends GetxController {
                             );
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
-                            print('$exception -> $stacktrace');
+
                             isLoadMore.value = false;
                             Get.snackbar(
                                 "Pesan",

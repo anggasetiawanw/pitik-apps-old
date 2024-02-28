@@ -468,7 +468,6 @@ class SmartScaleHarvestDetailController extends GetxController {
         final file = File(fullPathIncludeName);
         await file.writeAsBytes(await pdf.save());// Page
         isLoading.value = false;
-        print('directory -> $fullPathIncludeName');
         Get.snackbar("Pesan", 'Berhasil mengunduh data ($fullPathIncludeName)...', snackPosition: SnackPosition.TOP, colorText: Colors.black, backgroundColor: Colors.white);
     }
 }

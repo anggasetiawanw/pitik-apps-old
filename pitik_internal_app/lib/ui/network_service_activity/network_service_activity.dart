@@ -7,6 +7,7 @@ class NetworkErrorItem extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
+        // ignore: deprecated_member_use
         return WillPopScope(child:Scaffold(
             body: Container(
                 height: Get.height, //Get.height = MediaQuery.of(context).size.height

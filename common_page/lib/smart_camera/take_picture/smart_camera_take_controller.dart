@@ -1,14 +1,12 @@
 
-import 'dart:io';
-
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
+import 'package:components/item_take_picture/item_take_picture.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/record_model.dart';
-import 'package:components/item_take_picture/item_take_picture.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>

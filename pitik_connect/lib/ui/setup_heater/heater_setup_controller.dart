@@ -1,6 +1,4 @@
 
-import 'dart:ffi';
-
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_field/edit_field.dart';
@@ -52,10 +50,8 @@ class HeaterSetupController extends GetxController {
         super.onInit();
         device = Get.arguments[0];
         controllerData = Get.arguments[1];
-        if(controllerData != null){
-            loadPage();
-        }
-        boNoSetHeater = ButtonOutline(
+          loadPage();
+              boNoSetHeater = ButtonOutline(
             controller: GetXCreator.putButtonOutlineController("boNoSetHeater"),
             label: "Tidak",
             onClick: () {

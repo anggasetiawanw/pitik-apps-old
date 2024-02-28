@@ -155,7 +155,7 @@ class DetailGrPurchase extends GetView<DetailGrPurchaseController> {
               width: 10,
             ),
             isLeadStatus
-                ? LeadStatus(leadStatus: controller.purchaseDetail.value!.status != null ? controller.purchaseDetail.value!.status! : null)
+                ? LeadStatus(leadStatus: controller.purchaseDetail.value?.status )
                 : Expanded(
                     flex: 2,
                     child: Text(

@@ -269,7 +269,6 @@ class StockHomeController extends GetxController {
                 backgroundColor: Colors.red,
               );
               isLoadingOpname.value = false;
-              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
@@ -318,7 +317,6 @@ class StockHomeController extends GetxController {
                 backgroundColor: Colors.red,
               );
               isLoadingStock.value = false;
-              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }

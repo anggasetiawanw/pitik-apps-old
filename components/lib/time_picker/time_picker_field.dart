@@ -52,7 +52,7 @@ class TimePickerField extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -111,7 +111,7 @@ class TimePickerField extends StatelessWidget {
                                                     ),
                                                     Text(
                                                         alertText,
-                                                        style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                        style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                     )
                                                 ]
                                             )
@@ -137,10 +137,10 @@ class TimePickerField extends StatelessWidget {
                 hideHeader: true,
                 height: 70,
                 confirmText: 'Ok',
-                confirmTextStyle: TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
-                title: Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
-                selectedTextStyle: TextStyle(color: GlobalVar.primaryOrange),
-                cancelTextStyle: TextStyle(color: GlobalVar.primaryOrange),
+                confirmTextStyle: const TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
+                title: const Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
+                selectedTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
+                cancelTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
                 onConfirm: (Picker picker, List<int> value) {
                     // You get your duration here
                     String hours = "${picker.getSelectedValues()[0]}";
@@ -162,10 +162,10 @@ class TimePickerField extends StatelessWidget {
                 hideHeader: true,
                 height: 90,
                 confirmText: 'Ok',
-                confirmTextStyle: TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
-                title: Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
-                selectedTextStyle: TextStyle(color: GlobalVar.primaryOrange),
-                cancelTextStyle: TextStyle(color: GlobalVar.primaryOrange),
+                confirmTextStyle: const TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
+                title: const Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
+                selectedTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
+                cancelTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
                 onConfirm: (Picker picker, List<int> value) {
                     String hours = "${picker.getSelectedValues()[0]}";
                     String minutes = "${picker.getSelectedValues()[1]}";
@@ -184,10 +184,10 @@ class TimePickerField extends StatelessWidget {
                 hideHeader: true,
                 height: 90,
                 confirmText: 'Ok',
-                confirmTextStyle: TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
-                title: Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
-                selectedTextStyle: TextStyle(color: GlobalVar.primaryOrange),
-                cancelTextStyle: TextStyle(color: GlobalVar.primaryOrange),
+                confirmTextStyle: const TextStyle(inherit: false, color: GlobalVar.primaryOrange, fontSize: 16),
+                title: const Text('Tentukan Durasi', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 18)),
+                selectedTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
+                cancelTextStyle: const TextStyle(color: GlobalVar.primaryOrange),
                 onConfirm: (Picker picker, List<int> value) {
 
                     String minutes = "${picker.getSelectedValues()[0]}";

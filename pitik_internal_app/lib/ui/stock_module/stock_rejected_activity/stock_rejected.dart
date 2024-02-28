@@ -112,22 +112,6 @@ class StockRejectedActivity extends StatelessWidget {
       );
     }
 
-    Widget infoDetailSKU(String title, String name) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
-          ),
-          Text(
-            name,
-            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium),
-          )
-        ],
-      );
-    }
-
     Widget detailSKU(Products product) {
       return Container(
         margin: const EdgeInsets.only(top: 16),

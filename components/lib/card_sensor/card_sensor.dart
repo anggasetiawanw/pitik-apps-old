@@ -62,7 +62,7 @@ class CardSensor extends StatelessWidget {
                                                     width: 48,
                                                     height: 48,
                                                     child: index == (controller.index.value[controller.itemCount.value - 1]) || controller.itemCount.value == 1 ?
-                                                    Icon(Icons.add, size: 30, color: GlobalVar.primaryOrange,)
+                                                    const Icon(Icons.add, size: 30, color: GlobalVar.primaryOrange,)
                                                         :Padding(
                                                         padding: const EdgeInsets.all(12),
                                                         child: SvgPicture.asset("images/delete_sku.svg", fit: BoxFit.cover, width: 20, height: 20),
@@ -74,14 +74,14 @@ class CardSensor extends StatelessWidget {
                                 ),
                                 Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(color: GlobalVar.outlineColor, width: 1),
                                             left: BorderSide(color: GlobalVar.outlineColor, width: 1),
                                             right: BorderSide(color: GlobalVar.outlineColor, width: 1),
                                             top: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                         ),
-                                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                                     ),
                                     child: Column(
                                         children: [

@@ -14,7 +14,6 @@ import 'package:engine/util/list_api.dart';
 import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/product_model.dart';

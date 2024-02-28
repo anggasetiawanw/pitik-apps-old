@@ -1,7 +1,7 @@
 name: model
 description: Model Pitik Library
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ">=3.1.1 <4.0.0"

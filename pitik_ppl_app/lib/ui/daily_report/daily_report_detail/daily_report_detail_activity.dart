@@ -4,7 +4,6 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pitik_ppl_app/ui/daily_report/daily_report_detail/daily_report_detail_controller.dart';
 import 'package:pitik_ppl_app/utils/enums/daily_report_enum.dart';
 import 'package:pitik_ppl_app/utils/widgets/status_daily.dart';

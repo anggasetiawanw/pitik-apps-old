@@ -564,7 +564,7 @@ class LayerDailyReportFormController extends GetxController {
         for (int i = 0; i < report.harvestedEgg.length; i++) {
             if (report.harvestedEgg[i]!.productItem!.name == productName) {
                 if (isQuantity) {
-                    report.harvestedEgg[i]!.quantity = editField.getInputNumber() == null ? null : editField.getInputNumber()!.toInt();
+                    report.harvestedEgg[i]!.quantity = editField.getInputNumber()?.toInt();
                 } else {
                     report.harvestedEgg[i]!.weight = editField.getInputNumber();
                 }
@@ -578,7 +578,7 @@ class LayerDailyReportFormController extends GetxController {
         if (!isContain) {
             report.harvestedEgg.add(
                 Products(
-                    quantity: isQuantity ? editField.getInputNumber() == null ? null : editField.getInputNumber()!.toInt() : 0,
+                    quantity: isQuantity ? editField.getInputNumber()?.toInt() : 0,
                     weight: !isQuantity ? editField.getInputNumber() : 0.0,
                     productItemId: producItemId,
                     productItem: Products(
@@ -653,7 +653,7 @@ class LayerDailyReportFormController extends GetxController {
         if (efDead.getInputNumber() != null) {
             MortalityReason deadReason = MortalityReason(
                 cause: spReason.controller.textSelected.value,
-                quantity: efDead.getInputNumber() != null ? efDead.getInputNumber()!.toInt() : null
+                quantity: efDead.getInputNumber()?.toInt()
             );
 
             return deadReason;

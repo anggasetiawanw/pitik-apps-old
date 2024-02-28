@@ -45,7 +45,7 @@ class LicenseScreen extends StatelessWidget {
                     TextSpan(text: "$text\n", style: GlobalVar.blackTextStyle),
                     TextSpan(
                         text: url,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: GlobalVar.primaryOrange,
                             decoration: TextDecoration.underline,
                         ),
@@ -72,13 +72,13 @@ class LicenseScreen extends StatelessWidget {
                   customExpandale("Icon","Seluruh Icon (symbol) dalam aplikasi ini menggunakan lisensi gratis dari:", "https://remixicon.com/"),
                   customExpandale("Illustrasi","Penggunaan illustrasi pada aplikasi ini seluruhnya menggunakan lisensi dari:", "https://www.manypixels.co/"),
                   customExpandale("Font","Penggunaan font pada aplikasi ini menggunakan lisensi gratis dari:", "https://fonts.google.com/"),
-        
+
                 ],
             ),
           ),
         ),
     );
-    
+
   }
 
    Future<void> _launchUrl(String url) async {

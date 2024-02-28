@@ -375,7 +375,7 @@ class HarvestRealizationFormController extends GetxController {
         RealizationRecord realizationRecord = RealizationRecord(
             weighingNumber: weighingNumberField.getInput(),
             tonnage: tonnageField.getInputNumber(),
-            quantity: totalChickenField.getInputNumber() != null ? totalChickenField.getInputNumber()!.toInt() : null,
+            quantity: totalChickenField.getInputNumber()?.toInt(),
             averageWeight: averageWeightField.getInputNumber(),
             image: weighingMediaList[0]?.url
         );

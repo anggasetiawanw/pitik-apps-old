@@ -64,7 +64,7 @@ class EditFieldQR extends StatelessWidget {
             child: Text(
                 label,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: GlobalVar.black, fontSize: 14),
+                style: const TextStyle(color: GlobalVar.black, fontSize: 14),
             ),
         );
 
@@ -139,11 +139,11 @@ class EditFieldQR extends StatelessWidget {
                                                             ),
                                                             disabledBorder: OutlineInputBorder(
                                                                 borderRadius: BorderRadius.circular(10.0),
-                                                                borderSide: BorderSide(color: GlobalVar.gray),
+                                                                borderSide: const BorderSide(color: GlobalVar.gray),
                                                             ),
                                                             enabledBorder: OutlineInputBorder(
                                                                 borderRadius: BorderRadius.circular(10.0),
-                                                                borderSide: BorderSide(color: GlobalVar.primaryLight)
+                                                                borderSide: const BorderSide(color: GlobalVar.primaryLight)
                                                             ),
                                                             filled: true,
                                                         ),
@@ -214,7 +214,7 @@ class EditFieldQR extends StatelessWidget {
                                                     Expanded(
                                                         child: Text(
                                                             controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText,
-                                                            style: TextStyle(color: GlobalVar.red, fontSize: 12),
+                                                            style: const TextStyle(color: GlobalVar.red, fontSize: 12),
                                                             overflow: TextOverflow.clip,
                                                         ),
                                                     )

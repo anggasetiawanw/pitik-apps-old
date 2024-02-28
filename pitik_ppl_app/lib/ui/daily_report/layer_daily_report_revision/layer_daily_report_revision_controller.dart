@@ -143,7 +143,7 @@ class LayerDailyReportRevisionController extends GetxController {
 
                                                             DailyReportRevision bodyRequest = DailyReportRevision(
                                                                 reason: _getReasonRevision(),
-                                                                changes: revisionReasonList.value
+                                                                changes: revisionReasonList
                                                             );
 
                                                             Service.push(

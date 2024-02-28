@@ -52,6 +52,7 @@ class ScanBarcodeActivity extends GetView<ScanBarcodeController> {
                                 Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
+                                        // ignore: deprecated_member_use
                                         if (controller.result.value.code != "") Text(' ${describeEnum(controller.result.value.format)}   Data: ${controller.result.value.code}')
                                         else const Text(''),
                                         Row(

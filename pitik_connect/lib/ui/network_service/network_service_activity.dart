@@ -17,16 +17,16 @@ class NetworkErrorItem extends StatelessWidget {
                 height: Get.height, //Get.height = MediaQuery.of(context).size.height
                 width: Get.width, //Get.width = MediaQuery.of(context).size.width
                 color: Colors.white,
-                child: Column(
+                child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                         Icon(Icons.wifi, size: 200, color: GlobalVar.primaryOrange,),
-                        const SizedBox(height: 30),
-                        const Text(
+                        SizedBox(height: 30),
+                        Text(
                             'Sedang tidak ada jaringan',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-                        const Text(
+                        Text(
                             'Periksa kembali koneksi internet kamu !',
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                         )

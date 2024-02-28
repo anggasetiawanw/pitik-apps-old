@@ -1,0 +1,17 @@
+name: basecleanflutter
+
+packages:
+  - ./**
+
+command:
+  bootstrap:
+    runPubGetInParallel: false
+
+scripts:
+  # build runner build
+  build_all:
+    run: dart pub global run melos exec --depends-on="build_runner" "flutter packages pub run build_runner build"
+    description: build_runner build all modules.
+  generate-assets:
+    run: melos exec --scope="*pitil_asset*" -- "fluttergen"
+    description: "Generate asset for UI Kit Package"

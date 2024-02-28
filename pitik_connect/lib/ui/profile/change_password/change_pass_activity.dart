@@ -1,4 +1,6 @@
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
@@ -34,7 +36,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                 Get.offAllNamed(RoutePage.homePage);
              } else {
                 Get.back();
-             } 
+             }
             }),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -171,7 +173,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                 return await Get.offAllNamed(RoutePage.homePage);
              } else {
                 return Navigator.canPop(context);
-             } 
+             }
             },
             child: Stack(
                 children: [
@@ -199,7 +201,7 @@ class ChangePassword extends GetView<ChangePasswordController> {
                     )
                   ),bottomNavBar()
                   ]
-          
+
               ),
           ),
     );

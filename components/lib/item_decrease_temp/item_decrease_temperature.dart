@@ -45,14 +45,14 @@ class ItemDecreaseTemperature extends StatelessWidget {
                                 ),
                                 Container(
                                     padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(color: GlobalVar.outlineColor, width: 2),
                                             left: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                             right: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                             top: BorderSide(color: GlobalVar.outlineColor, width: 0),
                                         ),
-                                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                                     ),
                                     child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

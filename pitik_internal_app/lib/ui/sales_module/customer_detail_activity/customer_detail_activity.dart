@@ -177,10 +177,9 @@ class CustomerDetail extends GetView<CustomerDetailController> {
             isLeadStatus
                 ? LeadStatus(
                     leadStatus:
-                        controller.customerDetail.value!.latestVisit != null
-                            ? controller
-                                .customerDetail.value!.latestVisit!.leadStatus!
-                            : null)
+                       controller
+                                .customerDetail.value?.latestVisit?.leadStatus
+                            )
                 : Expanded(
                     flex: 2,
                     child: Text(

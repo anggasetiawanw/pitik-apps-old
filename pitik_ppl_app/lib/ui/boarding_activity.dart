@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: deprecated_member_use
+
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';

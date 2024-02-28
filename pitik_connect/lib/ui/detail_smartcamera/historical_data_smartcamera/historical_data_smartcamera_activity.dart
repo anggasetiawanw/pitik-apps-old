@@ -52,7 +52,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                 itemBuilder: (context, index) {
                     int length = controller.recordImages.value.length;
                     if (index >= length) {
-                        return Column(
+                        return const Column(
                             children: [
                                 Center(
                                     child: SizedBox(
@@ -61,7 +61,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                         ),
                                     ),
                                 ),
-                                const SizedBox(height: 120),
+                                SizedBox(height: 120),
                             ],
                         );
                     }
@@ -91,7 +91,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                           padding: const EdgeInsets.all(4),
                                           decoration: BoxDecoration(
                                               color: GlobalVar.primaryLight,
-                                              border: Border(
+                                              border: const Border(
                                                   bottom: BorderSide(color: GlobalVar.primaryOrange, width: 1),
                                                   left: BorderSide(color: GlobalVar.primaryOrange, width: 1),
                                                   right: BorderSide(color: GlobalVar.primaryOrange, width: 1),

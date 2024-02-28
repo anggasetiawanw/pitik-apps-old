@@ -71,7 +71,7 @@ class TakePictureResult extends GetView<TakePictureResultController>{
                                 title: Column(
                                     children: [
                                         ItemTakePictureCamera(
-                                            controller: GetXCreator.putItemTakePictureController("ItemTakePictureCamera${index}",context),
+                                            controller: GetXCreator.putItemTakePictureController("ItemTakePictureCamera$index",context),
                                             recordCamera: controller.recordImages.value[index],
                                             index: index,
                                             onOptionTap: () {

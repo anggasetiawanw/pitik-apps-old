@@ -1,5 +1,5 @@
 
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:common_page/profile/change_password/change_password_controller.dart';
 import 'package:components/button_fill/button_fill.dart';

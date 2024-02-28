@@ -103,7 +103,7 @@ class SwitchButton extends StatelessWidget {
                                     Text(
                                         label,
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(color: GlobalVar.black, fontSize: 14),),
+                                        style: const TextStyle(color: GlobalVar.black, fontSize: 14),),
                                     controller.activeField.isTrue ?
                                     Padding(
                                         padding: const EdgeInsets.only(left: 8),

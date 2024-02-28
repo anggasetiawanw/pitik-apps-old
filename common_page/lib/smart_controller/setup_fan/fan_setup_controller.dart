@@ -20,7 +20,6 @@ import 'package:model/device_model.dart';
 import 'package:model/device_setting_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/fan_detail_response.dart';
-import 'package:model/response/fan_list_response.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>

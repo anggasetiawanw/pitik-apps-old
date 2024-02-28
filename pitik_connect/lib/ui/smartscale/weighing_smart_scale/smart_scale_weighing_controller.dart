@@ -178,8 +178,8 @@ class SmartScaleWeighingController extends GetxController {
                 child: Container(
                     height: 50,
                     width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
                         color: GlobalVar.gray
                     ),
                     child: Padding(
@@ -270,8 +270,8 @@ class SmartScaleWeighingController extends GetxController {
                                             child: Container(
                                                 width: 60,
                                                 height: 4,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                                decoration: const BoxDecoration(
+                                                    borderRadius: BorderRadius.all(Radius.circular(4)),
                                                     color: GlobalVar.outlineColor
                                                 )
                                             )

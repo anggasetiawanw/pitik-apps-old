@@ -88,11 +88,9 @@ class DashboardCommon {
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                             controller.smartScaleList.value = body.data;
-                            try {
-                                _ascendingHistory(controller, coop, startDateCustom);
-                            } catch (e, s) {
-                                print('$e -> $s');
-                            }
+
+                            _ascendingHistory(controller, coop, startDateCustom);
+
 
                             controller.isLoadMore.value = false;
                             controller.isLoading.value = false;
