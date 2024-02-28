@@ -14,7 +14,7 @@ Future<void> main() async {
   ChuckerFlutter.showOnRelease = true;
 
   initializeReflectable();
-  initPlatformState();
+  await initPlatformState();
   Service.setApiMapping(ApiMapping());
   runApp(const PitikApplication());
 }
@@ -35,8 +35,6 @@ class PitikApplication extends StatelessWidget {
       // getPages: AppRoutes.page,
     );
   }
-
-
 }
 
 Future<void> initPlatformState() async {

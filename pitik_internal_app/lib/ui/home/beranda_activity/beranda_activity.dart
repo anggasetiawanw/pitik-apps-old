@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/loading.dart';
+import 'beranda_controller.dart';
 
 class BerandaActivity extends StatelessWidget {
   const BerandaActivity({super.key});
@@ -18,10 +19,10 @@ class BerandaActivity extends StatelessWidget {
     Widget header() {
       return Stack(
         children: [
-          Image.asset("images/header_ios.png"),
+          Image.asset('images/header_ios.png'),
           SafeArea(
             child: Padding(
-              padding:  EdgeInsets.only(left: Get.width * 0.8, top: 24, bottom: 16, right: 6),
+              padding: EdgeInsets.only(left: Get.width * 0.8, top: 24, bottom: 16, right: 6),
               child: GestureDetector(
                 onTap: () => Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshHome(context)),
                 child: SizedBox(
@@ -33,9 +34,10 @@ class BerandaActivity extends StatelessWidget {
                       Container(
                         decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: AppColors.red),
                         child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Obx(() => Text(controller.countUnreadNotifications.toString(), style: AppTextStyle.subTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium, color: Colors.white)),)
-                        ),
+                            padding: const EdgeInsets.all(4),
+                            child: Obx(
+                              () => Text(controller.countUnreadNotifications.toString(), style: AppTextStyle.subTextStyle.copyWith(fontSize: 10, fontWeight: AppTextStyle.medium, color: Colors.white)),
+                            )),
                       )
                     ],
                   ),
@@ -54,7 +56,7 @@ class BerandaActivity extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Fitur Produksi",
+              'Fitur Produksi',
               style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
             ),
             SizedBox(
@@ -74,7 +76,7 @@ class BerandaActivity extends StatelessWidget {
                           height: 26,
                           decoration: BoxDecoration(color: controller.isList.isTrue ? const Color(0xFFFEEFD2) : const Color(0xFFFAFAFA), borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
                           child: Center(
-                            child: SvgPicture.asset(controller.isList.isTrue ? "images/list_on_icon.svg" : "images/list_off_icon.svg"),
+                            child: SvgPicture.asset(controller.isList.isTrue ? 'images/list_on_icon.svg' : 'images/list_off_icon.svg'),
                           ),
                         ),
                       )),
@@ -90,7 +92,7 @@ class BerandaActivity extends StatelessWidget {
                         height: 26,
                         decoration: BoxDecoration(color: controller.isList.isTrue ? const Color(0xFFFAFAFA) : const Color(0xFFFEEFD2), borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
                         child: Center(
-                          child: SvgPicture.asset(controller.isList.isTrue ? "images/grid_off_icon.svg" : "images/grid_on_icon.svg"),
+                          child: SvgPicture.asset(controller.isList.isTrue ? 'images/grid_off_icon.svg' : 'images/grid_on_icon.svg'),
                         ),
                       ),
                     ),
@@ -208,14 +210,14 @@ class BerandaActivity extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset("images/akses_disable.svg"),
+                          SvgPicture.asset('images/akses_disable.svg'),
                           const SizedBox(
                             height: 16,
                           ),
                           Container(
                               margin: const EdgeInsets.symmetric(horizontal: 32),
                               child: Text(
-                                "Oops.. maaf kamu tidak memiliki akses untuk masuk ke halaman ini",
+                                'Oops.. maaf kamu tidak memiliki akses untuk masuk ke halaman ini',
                                 style: AppTextStyle.greyTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                                 textAlign: TextAlign.center,
                               ))

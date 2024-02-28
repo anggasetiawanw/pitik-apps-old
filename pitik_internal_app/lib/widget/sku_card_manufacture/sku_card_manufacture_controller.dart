@@ -10,8 +10,8 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../api_mapping/list_api.dart';
+import '../../utils/constant.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -47,33 +47,37 @@ class SkuCardManufactureController extends GetxController {
     addCard();
   }
 
-  addCard() {
+  void addCard() {
     index.value.add(idx.value);
-    int numberList = idx.value;
+    final int numberList = idx.value;
     spinnerCategories.value.add(
       SpinnerField(
-          controller: GetXCreator.putSpinnerFieldController("spin${numberList}SKU"),
-          label: "Kategori SKU*",
-          hint: "Pilih Salah Satu",
-          alertText: "Kategori SKU harus dipilih!",
+          controller: GetXCreator.putSpinnerFieldController('spin${numberList}SKU'),
+          label: 'Kategori SKU*',
+          hint: 'Pilih Salah Satu',
+          alertText: 'Kategori SKU harus dipilih!',
           items: const {},
           onSpinnerSelected: (value) {
             if (listCategories.value.isNotEmpty) {
-              CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element?.name == value);
+              final CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element?.name == value);
               if (value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.KARKAS) {
                 // editFieldJumlahAyam.value[numberList].controller.enable();
                 spinnerSku.value[numberList].controller.enable();
-                editFieldJumlahAyam.value[numberList].controller..visibleField()..enable();
+                editFieldJumlahAyam.value[numberList].controller
+                  ..visibleField()
+                  ..enable();
                 editFieldJumlahKg.value[numberList].controller.invisibleField();
               } else {
                 spinnerSku.value[numberList].controller.disable();
                 editFieldJumlahAyam.value[numberList].controller.invisibleField();
-                editFieldJumlahKg.value[numberList].controller..visibleField()..enable();
+                editFieldJumlahKg.value[numberList].controller
+                  ..visibleField()
+                  ..enable();
               }
 
-              spinnerSku.value[numberList].controller.textSelected.value = "";
-              editFieldJumlahAyam.value[numberList].setInput("");
-              editFieldJumlahKg.value[numberList].setInput("");
+              spinnerSku.value[numberList].controller.textSelected.value = '';
+              editFieldJumlahAyam.value[numberList].setInput('');
+              editFieldJumlahKg.value[numberList].setInput('');
               getSku(selectCategory!, numberList);
             }
           }),
@@ -81,23 +85,41 @@ class SkuCardManufactureController extends GetxController {
 
     spinnerSku.value.add(
       SpinnerField(
-          controller: GetXCreator.putSpinnerFieldController("size${numberList}SKU"),
-          label: "SKU*",
-          hint: "Pilih Salah Satu",
-          alertText: "Ukuran harus dipilih!",
+          controller: GetXCreator.putSpinnerFieldController('size${numberList}SKU'),
+          label: 'SKU*',
+          hint: 'Pilih Salah Satu',
+          alertText: 'Ukuran harus dipilih!',
           items: const {},
           onSpinnerSelected: (value) {
             if (listCategories.value.isNotEmpty) {
-              if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
-                editFieldJumlahAyam.value[numberList].setInput("");
+              if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
+                  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS ||
+                  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
+                editFieldJumlahAyam.value[numberList].setInput('');
               }
             }
           }),
     );
 
-    editFieldJumlahAyam.value.add(EditField(controller: GetXCreator.putEditFieldController("editJumlah${numberList}Sku"), label: "Jumlah Ekor*", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
+    editFieldJumlahAyam.value.add(EditField(
+        controller: GetXCreator.putEditFieldController('editJumlah${numberList}Sku'),
+        label: 'Jumlah Ekor*',
+        hint: 'Ketik di sini',
+        alertText: 'Kolom Ini Harus Di Isi',
+        textUnit: 'Ekor',
+        inputType: TextInputType.number,
+        maxInput: 20,
+        onTyping: (value, control) {}));
 
-    editFieldJumlahKg.value.add(EditField(controller: GetXCreator.putEditFieldController("editJenis${numberList}Sku"), label: "Jumlah Kg*", hint: "Ketik di sini", alertText: "Kolom Ini Harus Di Isi", textUnit: "Kg", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
+    editFieldJumlahKg.value.add(EditField(
+        controller: GetXCreator.putEditFieldController('editJenis${numberList}Sku'),
+        label: 'Jumlah Kg*',
+        hint: 'Ketik di sini',
+        alertText: 'Kolom Ini Harus Di Isi',
+        textUnit: 'Kg',
+        inputType: TextInputType.number,
+        maxInput: 20,
+        onTyping: (value, control) {}));
 
     spinnerSku.value[numberList].controller.disable();
     editFieldJumlahAyam.value[numberList].controller.disable();
@@ -106,22 +128,22 @@ class SkuCardManufactureController extends GetxController {
     idx.value++;
   }
 
-  removeCard(int idx) {
+  void removeCard(int idx) {
     index.value.removeWhere((item) => item == idx);
     itemCount.value = index.value.length;
   }
 
-  setMaplist(List<CategoryModel?> map) {
+  void setMaplist(List<CategoryModel?> map) {
     listCategories.value = map;
     listCategories.refresh();
   }
 
-  List validation() {
+  List<dynamic> validation() {
     bool isValid = true;
-    String error = "";
+    String error = '';
     final temp = <String>[];
     for (int i = 0; i < index.value.length; i++) {
-      int whichItem = index.value[i];
+      final int whichItem = index.value[i];
       if (spinnerCategories.value[whichItem].controller.textSelected.value.isEmpty) {
         spinnerCategories.value[whichItem].controller.showAlert();
         Scrollable.ensureVisible(spinnerCategories.value[whichItem].controller.formKey.currentContext!);
@@ -136,7 +158,9 @@ class SkuCardManufactureController extends GetxController {
         return [isValid, error];
       }
 
-       if (spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.KARKAS) {
+      if (spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH ||
+          spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS ||
+          spinnerCategories.value[whichItem].controller.textSelected.value == AppStrings.KARKAS) {
         if (editFieldJumlahAyam.value[whichItem].getInput().isEmpty) {
           editFieldJumlahAyam.value[whichItem].controller.showAlert();
           Scrollable.ensureVisible(editFieldJumlahAyam.value[whichItem].controller.formKey.currentContext!);
@@ -155,20 +179,20 @@ class SkuCardManufactureController extends GetxController {
 
       if (temp.contains(spinnerCategories.value[whichItem].controller.textSelected.value)) {
         for (int j = 0; j < index.value.length; j++) {
-          int whereItem = index.value[j];
+          final int whereItem = index.value[j];
           if ((spinnerCategories.value[whereItem].controller.textSelected.value == spinnerCategories.value[whichItem].controller.textSelected.value) && (whereItem != whichItem)) {
             if (spinnerSku.value[whereItem].controller.textSelected.value == spinnerSku.value[whichItem].controller.textSelected.value) {
               error = spinnerSku.value[whichItem].controller.textSelected.value;
               spinnerSku.value[whichItem].controller
-                ..alertText.value = "Duplikat Jenis Ukuran  $error"
+                ..alertText.value = 'Duplikat Jenis Ukuran  $error'
                 ..showAlert();
 
               spinnerSku.value[whereItem].controller
-                ..alertText.value = "Duplikat Jenis Ukuran $error"
+                ..alertText.value = 'Duplikat Jenis Ukuran $error'
                 ..showAlert();
               Scrollable.ensureVisible(spinnerSku.value[whichItem].controller.formKey.currentContext!);
 
-              Get.snackbar("Alert", "Duplikat Jenis Ukuran  $error", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Duplikat Jenis Ukuran  $error', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
               isValid = false;
               return [isValid, error];
             } else {
@@ -196,13 +220,13 @@ class SkuCardManufactureController extends GetxController {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
                 listSku.value.update(idx, (value) => body.data, ifAbsent: () => body.data);
 
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
 
                 spinnerSku.value[idx].controller
-                  ..textSelected.value = ""
+                  ..textSelected.value = ''
                   ..generateItems(mapList)
                   ..enable();
               } else {
@@ -219,12 +243,12 @@ class SkuCardManufactureController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }
@@ -241,7 +265,7 @@ class SkuCardManufactureController extends GetxController {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
                 listSku.value.update(idx, (value) => body.data, ifAbsent: () => body.data);
 
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
@@ -263,12 +287,12 @@ class SkuCardManufactureController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }

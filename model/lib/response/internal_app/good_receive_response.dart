@@ -6,17 +6,13 @@ import 'package:model/internal_app/goods_received_model.dart';
 ///@create date 07/06/23
 
 @SetupModel
-class GoodReceiveReponse{
-
+class GoodReceiveReponse {
   int code;
   GoodsReceived? data;
 
   GoodReceiveReponse({required this.code, required this.data});
 
   static GoodReceiveReponse toResponseModel(Map<String, dynamic> map) {
-    return GoodReceiveReponse(
-        code: map['code'],
-        data: Mapper.child<GoodsReceived>(map['data'])
-    );
+    return GoodReceiveReponse(code: map['code'], data: Mapper.child<GoodsReceived>(map['data']));
   }
 }

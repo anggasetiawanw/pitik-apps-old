@@ -13,7 +13,7 @@ class OperationUnitListResponse {
   OperationUnitListResponse({this.code, required this.data});
 
   static OperationUnitListResponse toResponseModel(Map<String, dynamic> map) => OperationUnitListResponse(
-    code: map['code'],
-    data: Mapper.children<Customer>(map['data']),
-  );
+        code: map['code'],
+        data: Mapper.children<Customer>(map['data']),
+      );
 }

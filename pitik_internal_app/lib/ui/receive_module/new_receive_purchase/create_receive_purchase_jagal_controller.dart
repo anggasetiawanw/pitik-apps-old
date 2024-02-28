@@ -13,10 +13,10 @@ import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/purchase_model.dart';
 import 'package:model/response/internal_app/purchase_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_card_gr/sku_card_gr.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/internal_controller_creator.dart';
+import '../../../widget/sku_card_gr/sku_card_gr.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -41,13 +41,22 @@ class CreateGrPurchaseJagalController extends GetxController {
   late SkuCardGr skuCard;
 
   late ButtonOutline cancelButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("cancelPurchase"),
-    label: "Batal",
+    controller: GetXCreator.putButtonOutlineController('cancelPurchase'),
+    label: 'Batal',
     onClick: () => null,
   );
 
-  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkGR PO"), label: "Catatan Penerimaan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
-  EditField efTotalKG = EditField(controller: GetXCreator.putEditFieldController("efTotalKGPOGR"), label: "Total/Global(Kg)*", hint: "Ketik di sini", alertText: "Total Kg harus diisi", textUnit: "Kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+  EditField efRemark = EditField(
+      controller: GetXCreator.putEditFieldController('efRemarkGR PO'), label: 'Catatan Penerimaan', hint: 'Ketik disini', alertText: '', textUnit: '', maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efTotalKG = EditField(
+      controller: GetXCreator.putEditFieldController('efTotalKGPOGR'),
+      label: 'Total/Global(Kg)*',
+      hint: 'Ketik di sini',
+      alertText: 'Total Kg harus diisi',
+      textUnit: 'Kg',
+      maxInput: 20,
+      inputType: TextInputType.number,
+      onTyping: (value, editField) {});
 
   late ButtonFill bfYesGrPurchase;
   late ButtonOutline boNoGrPurchase;
@@ -61,11 +70,11 @@ class CreateGrPurchaseJagalController extends GetxController {
     purchaseDetail.value = Get.arguments as Purchase;
 
     skuCard = SkuCardGr(
-      controller: InternalControllerCreator.putSkuCardGrOrder("skuGrJagalPurchase", purchaseDetail.value!.products!),
+      controller: InternalControllerCreator.putSkuCardGrOrder('skuGrJagalPurchase', purchaseDetail.value!.products!),
     );
     boNoGrPurchase = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noJagalGrPurchase"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noJagalGrPurchase'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -77,17 +86,17 @@ class CreateGrPurchaseJagalController extends GetxController {
     super.onReady();
     getTotalQuantity();
     bfYesGrPurchase = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesJagalGrPurchase"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesJagalGrPurchase'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Konfirmasi_Penerimaan_Pembelian");
+        Constant.track('Click_Konfirmasi_Penerimaan_Pembelian');
         Get.back();
         saveGrPurchase();
       },
     );
     timeEnd = DateTime.now();
-    Duration totalTime = timeEnd.difference(timeStart);
-    Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
+    final Duration totalTime = timeEnd.difference(timeStart);
+    Constant.trackRenderTime('Buat_Penerimaan_Pembelian', totalTime);
   }
 
   void getDetailPurchase() {
@@ -138,7 +147,7 @@ class CreateGrPurchaseJagalController extends GetxController {
 
   void saveGrPurchase() {
     isLoading.value = true;
-    Purchase purchasePayload = generatePayload();
+    final Purchase purchasePayload = generatePayload();
     Service.push(
       service: ListApi.createGoodReceived,
       context: context,
@@ -149,10 +158,10 @@ class CreateGrPurchaseJagalController extends GetxController {
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),
@@ -160,7 +169,7 @@ class CreateGrPurchaseJagalController extends GetxController {
   }
 
   Purchase generatePayload() {
-    List<Products?> listProductPayload = [];
+    final List<Products?> listProductPayload = [];
     for (int i = 0; i < purchaseDetail.value!.products!.length; i++) {
       listProductPayload.add(Products(
         productItemId: purchaseDetail.value!.products![i]!.id!,

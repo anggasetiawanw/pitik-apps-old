@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
-import 'package:pitik_internal_app/ui/home/job_activity/job_controller.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
-import 'package:pitik_internal_app/widget/common/list_card_stock.dart';
-import 'package:pitik_internal_app/widget/common/list_card_terminate.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/route.dart';
+import '../../../widget/common/custom_appbar.dart';
+import '../../../widget/common/list_card_stock.dart';
+import '../../../widget/common/list_card_terminate.dart';
+import '../../../widget/common/loading.dart';
+import 'job_controller.dart';
 
 class JobActivity extends GetView<JobController> {
   const JobActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    JobController controller = Get.put(JobController(context: context));
+    final JobController controller = Get.put(JobController(context: context));
 
     Widget tabBar() {
       return Container(
@@ -37,10 +38,10 @@ class JobActivity extends GetView<JobController> {
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
-                  text: "Stock Opname",
+                  text: 'Stock Opname',
                 ),
                 Tab(
-                  text: "Pemusnahan",
+                  text: 'Pemusnahan',
                 ),
               ],
               labelColor: AppColors.primaryOrange,
@@ -68,7 +69,7 @@ class JobActivity extends GetView<JobController> {
               controller: controller.scrollStockOpname,
               itemCount: controller.isLoadMore.isTrue ? controller.listStock.value.length + 1 : controller.listStock.value.length,
               itemBuilder: (context, index) {
-                int length = controller.listStock.value.length;
+                final int length = controller.listStock.value.length;
                 if (index >= length) {
                   return const Column(
                     children: [
@@ -123,7 +124,7 @@ class JobActivity extends GetView<JobController> {
               controller: controller.scrollTerminate,
               itemCount: controller.isLoadMore.isTrue ? controller.listTerminate.value.length + 1 : controller.listTerminate.value.length,
               itemBuilder: (context, index) {
-                int length = controller.listTerminate.value.length;
+                final int length = controller.listTerminate.value.length;
                 if (index >= length) {
                   return const Column(
                     children: [
@@ -163,7 +164,7 @@ class JobActivity extends GetView<JobController> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: CustomAppbar(
-          title: "Tugas",
+          title: 'Tugas',
           onBack: () {},
           isBack: false,
         ),
@@ -190,7 +191,7 @@ class JobActivity extends GetView<JobController> {
                                 margin: const EdgeInsets.symmetric(horizontal: 16),
                                 child: Center(
                                   child: Text(
-                                    "Data Stock Perlu Persetujuan Belum Ada",
+                                    'Data Stock Perlu Persetujuan Belum Ada',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                     textAlign: TextAlign.center,
                                   ),
@@ -207,7 +208,7 @@ class JobActivity extends GetView<JobController> {
                               margin: const EdgeInsets.symmetric(horizontal: 16),
                               child: Center(
                                 child: Text(
-                                  "Data Pemusnahan Perlu Persetujuan Belum Ada",
+                                  'Data Pemusnahan Perlu Persetujuan Belum Ada',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                   textAlign: TextAlign.center,
                                 ),

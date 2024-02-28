@@ -31,18 +31,26 @@ class SkuBookSOController extends GetxController {
     addCard();
   }
 
-  addCard() {
+  void addCard() {
     for (var _ in products) {
       index.value.add(idx.value);
-      int numberList = idx.value;
-      jumlahEkor.value.add(EditField(controller: GetXCreator.putEditFieldController("${products[numberList]!.name!}Ekor $tag"), label: "Jumlah Ekor*", hint: "0", alertText: "Kolom Ini Harus Di Isi", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 20, onTyping: (value, control) {}));
+      final int numberList = idx.value;
+      jumlahEkor.value.add(EditField(
+          controller: GetXCreator.putEditFieldController('${products[numberList]!.name!}Ekor $tag'),
+          label: 'Jumlah Ekor*',
+          hint: '0',
+          alertText: 'Kolom Ini Harus Di Isi',
+          textUnit: 'Ekor',
+          inputType: TextInputType.number,
+          maxInput: 20,
+          onTyping: (value, control) {}));
 
       jumlahkg.value.add(EditField(
-          controller: GetXCreator.putEditFieldController("${products[numberList]!.name!}Kg $tag"),
-          label: "Kebutuhan*",
-          hint: "Ketik Disini",
-          alertText: "Kolom Ini Harus Di Isi",
-          textUnit: "Kg",
+          controller: GetXCreator.putEditFieldController('${products[numberList]!.name!}Kg $tag'),
+          label: 'Kebutuhan*',
+          hint: 'Ketik Disini',
+          alertText: 'Kolom Ini Harus Di Isi',
+          textUnit: 'Kg',
           inputType: TextInputType.number,
           maxInput: 20,
           onTyping: (value, control) {
@@ -51,26 +59,29 @@ class SkuBookSOController extends GetxController {
           }));
 
       if (!isRemarks) {
-        if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD || products[numberList]!.category!.name! == AppStrings.AYAM_UTUH || products[numberList]!.category!.name! == AppStrings.BRANGKAS || products[numberList]!.category!.name! == AppStrings.KARKAS)) {
+        if (!(products[numberList]!.category!.name! == AppStrings.LIVE_BIRD ||
+            products[numberList]!.category!.name! == AppStrings.AYAM_UTUH ||
+            products[numberList]!.category!.name! == AppStrings.BRANGKAS ||
+            products[numberList]!.category!.name! == AppStrings.KARKAS)) {
           jumlahEkor.value[numberList].controller.invisibleField();
-          jumlahkg.value[numberList].setInput("");
+          jumlahkg.value[numberList].setInput('');
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         } else {
           jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
-          jumlahkg.value[numberList].setInput("");
+          jumlahkg.value[numberList].setInput('');
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         }
       } else {
         if (!(products[numberList]!.name! == AppStrings.LIVE_BIRD || products[numberList]!.name! == AppStrings.AYAM_UTUH || products[numberList]!.name! == AppStrings.BRANGKAS || products[numberList]!.name! == AppStrings.KARKAS)) {
           jumlahEkor.value[numberList].controller.invisibleField();
-          jumlahkg.value[numberList].setInput("");
+          jumlahkg.value[numberList].setInput('');
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         } else {
           jumlahEkor.value[numberList].setInput(products[numberList]!.quantity!.toString());
-          jumlahkg.value[numberList].setInput("");
+          jumlahkg.value[numberList].setInput('');
           mapSumKg[numberList] = products[numberList]!.weight ?? 0;
           refreshtotalPurchase();
         }
@@ -80,13 +91,13 @@ class SkuBookSOController extends GetxController {
     }
   }
 
-  refreshtotalPurchase() {
+  void refreshtotalPurchase() {
     sumKg.value = 0;
     sumPrice.value = 0;
-    int indexProduct = 0;
+    const int indexProduct = 0;
     for (var idx in index.value) {
-      double kg = jumlahkg.value[idx].getInputNumber() ?? 0;
-      double price = products[indexProduct]!.price ?? 0;
+      final double kg = jumlahkg.value[idx].getInputNumber() ?? 0;
+      final double price = products[indexProduct]!.price ?? 0;
       sumKg.value += kg;
       sumPrice.value += price * kg;
     }

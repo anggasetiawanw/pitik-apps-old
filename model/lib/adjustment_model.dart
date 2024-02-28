@@ -6,16 +6,12 @@ import 'package:engine/model/base_model.dart';
 
 @SetupModel
 class Adjustment {
+  double? plus;
+  double? minus;
 
-    double? plus;
-    double? minus;
+  Adjustment({this.plus, this.minus});
 
-    Adjustment({this.plus, this.minus});
-
-    static Adjustment toResponseModel(Map<String, dynamic> map) {
-        return Adjustment(
-            plus: map['plus'] != null ? map['plus'].toDouble() : map['plus'],
-            minus: map['minus'] != null ? map['minus'].toDouble() : map['minus']
-        );
-    }
+  static Adjustment toResponseModel(Map<String, dynamic> map) {
+    return Adjustment(plus: map['plus'] != null ? map['plus'].toDouble() : map['plus'], minus: map['minus'] != null ? map['minus'].toDouble() : map['minus']);
+  }
 }

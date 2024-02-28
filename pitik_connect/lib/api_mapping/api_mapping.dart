@@ -1,5 +1,3 @@
-
-
 import 'package:engine/request/api_mapping_list.dart';
 
 import '../../flavors.dart';
@@ -12,20 +10,15 @@ import 'apis/user_api.dart';
 ///@create date 11/09/2023
 
 class ApiMapping extends ApiMappingList {
+  Map<String, Type> apiMapping = {'api': API, 'userApi': UserApi, 'smartScaleApi': SmartScaleApi};
 
-    Map<String, Type> apiMapping = {
-        "api": API,
-        "userApi": UserApi,
-        "smartScaleApi": SmartScaleApi
-    };
+  @override
+  Type getApiMapping(String apiKey) {
+    return apiMapping[apiKey]!;
+  }
 
-    @override
-    Type getApiMapping(String apiKey) {
-        return apiMapping[apiKey]!;
-    }
-
-    @override
-    String getBaseUrl() {
-        return F.uri;
-    }
+  @override
+  String getBaseUrl() {
+    return F.uri;
+  }
 }

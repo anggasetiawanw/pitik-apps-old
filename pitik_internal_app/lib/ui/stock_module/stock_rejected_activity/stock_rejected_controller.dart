@@ -13,8 +13,8 @@ import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 class StockRejectedController extends GetxController {
   BuildContext context;
@@ -23,13 +23,13 @@ class StockRejectedController extends GetxController {
   late DateTime createdDate;
   var isLoading = false.obs;
   var isSelectedBox = false.obs;
-  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
+  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController('confirmedButton'), label: 'Konfirmasi', onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesRejected"), label: "Ya", onClick: () => updateStock("REJECTED"));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoRejected"), label: "Tidak", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController('btYesRejected'), label: 'Ya', onClick: () => updateStock('REJECTED'));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController('BtNoRejected'), label: 'Tidak', onClick: () => Get.back());
 
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -54,15 +54,15 @@ class StockRejectedController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
               isLoading.value = false;
-                timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                Constant.trackRenderTime("Tolak_Stock_Opname", totalTime);
+              timeEnd = DateTime.now();
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Tolak_Stock_Opname', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -72,8 +72,8 @@ class StockRejectedController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -84,7 +84,7 @@ class StockRejectedController extends GetxController {
   }
 
   void updateStock(String status) {
-    Constant.track("Click_Tolak_Stock_Opname");
+    Constant.track('Click_Tolak_Stock_Opname');
     Get.back();
     isLoading.value = true;
     Service.push(
@@ -98,8 +98,8 @@ class StockRejectedController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -110,8 +110,8 @@ class StockRejectedController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -123,7 +123,7 @@ class StockRejectedController extends GetxController {
   }
 
   OpnameModel generatePayload(String status) {
-    List<Products?> products = [];
+    final List<Products?> products = [];
 
     for (var product in opnameModel.products!) {
       for (var item in product!.productItems!) {
@@ -141,7 +141,7 @@ class StockRejectedController extends GetxController {
     );
   }
 
-  _showBottomDialog() {
+  Future<void> _showBottomDialog() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
@@ -171,19 +171,19 @@ class StockRejectedController extends GetxController {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan penolakan?",
+                    'Apakah kamu yakin ingin melakukan penolakan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukanponalakan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukanponalakan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Center(
                   child: Container(
                     margin: const EdgeInsets.only(top: 24),
                     child: SvgPicture.asset(
-                      "images/cancel_icon.svg",
+                      'images/cancel_icon.svg',
                     ),
                   ),
                 ),

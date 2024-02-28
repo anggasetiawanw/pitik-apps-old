@@ -1,4 +1,3 @@
-
 import 'package:model/engine_library.dart';
 
 /// @author [Angga Setiawan Wahyudin]
@@ -9,13 +8,12 @@ import 'package:model/engine_library.dart';
 
 @SetupModel
 class OrderIssueCategories {
-    String? id;
-    String? title;
+  String? id;
+  String? title;
 
-    OrderIssueCategories({this.id, this.title});
-    static OrderIssueCategories toResponseModel(Map<String, dynamic> map) => OrderIssueCategories(
+  OrderIssueCategories({this.id, this.title});
+  static OrderIssueCategories toResponseModel(Map<String, dynamic> map) => OrderIssueCategories(
         id: map["id"],
         title: map["title"],
-    );
-
+      );
 }

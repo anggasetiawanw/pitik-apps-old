@@ -7,40 +7,39 @@ import 'package:engine/util/gps_util.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pitik_ppl_app/route.dart';
+// ignore: unused_import
+import 'package:model/password_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api_mapping/api_mapping.dart';
 import 'app.dart';
 import 'flavors.dart';
 import 'main.reflectable.dart';
-
-// ignore: unused_import
-import 'package:model/password_model.dart';
+import 'route.dart';
 
 void main() async {
-    F.appFlavor = Flavor.DEV;
-    ChuckerFlutter.showOnRelease = true;
-    initializeReflectable();
-    await initPlatformState();
-    Service.setApiMapping(ApiMapping());
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: GlobalVar.primaryOrange));
-    runApp(const App());
+  F.appFlavor = Flavor.DEV;
+  ChuckerFlutter.showOnRelease = true;
+  initializeReflectable();
+  await initPlatformState();
+  Service.setApiMapping(ApiMapping());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: GlobalVar.primaryOrange));
+  runApp(const App());
 }
 
 Future<void> initPlatformState() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await DBLite(tables: GlobalVar.tables, version: 2).create;
+  WidgetsFlutterBinding.ensureInitialized();
+  await DBLite(tables: GlobalVar.tables, version: 2).create;
 
-    await Firebase.initializeApp();
-    FirebaseConfig.setupCrashlytics();
-    FirebaseConfig.setupRemoteConfig();
+  await Firebase.initializeApp();
+  FirebaseConfig.setupCrashlytics();
+  FirebaseConfig.setupRemoteConfig();
 
-    // init GPS
-    GpsUtil.onStream();
+  // init GPS
+  await GpsUtil.onStream();
 
-    // saving firebase token
-    String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('firebaseToken', token ?? '-');
+  // saving firebase token
+  final String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('firebaseToken', token ?? '-');
 }

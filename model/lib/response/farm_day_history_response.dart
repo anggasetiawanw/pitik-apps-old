@@ -9,15 +9,12 @@ import 'package:model/farm_day_history_model.dart';
 
 @SetupModel
 class FarmDayHistoryResponse {
+  @IsChildren()
+  List<FarmDayHistory?> data;
 
-    @IsChildren()
-    List<FarmDayHistory?> data;
+  FarmDayHistoryResponse({this.data = const []});
 
-    FarmDayHistoryResponse({this.data = const []});
-
-    static FarmDayHistoryResponse toResponseModel(Map<String, dynamic> map) {
-        return FarmDayHistoryResponse(
-            data: Mapper.children<FarmDayHistory>(map['data'])
-        );
-    }
+  static FarmDayHistoryResponse toResponseModel(Map<String, dynamic> map) {
+    return FarmDayHistoryResponse(data: Mapper.children<FarmDayHistory>(map['data']));
+  }
 }

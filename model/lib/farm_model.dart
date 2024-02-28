@@ -2,26 +2,23 @@
 
 import '../engine_library.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 @SetupModel
-class Farm{
+class Farm {
+  String? id;
+  String? name;
+  String? status;
 
-    String? id;
-    String? name;
-    String? status;
+  Farm({this.id, this.name, this.status});
 
-    Farm({this.id, this.name, this.status});
-
-    static Farm toResponseModel(Map<String, dynamic> map) {
-        return Farm(
-            id: map['id'],
-            name: map['name'],
-            status: map['status'],
-        );
-    }
+  static Farm toResponseModel(Map<String, dynamic> map) {
+    return Farm(
+      id: map['id'],
+      name: map['name'],
+      status: map['status'],
+    );
+  }
 }

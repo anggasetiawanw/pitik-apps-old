@@ -7,12 +7,12 @@ import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
 import 'package:model/response/internal_app/list_opnames_response.dart';
 import 'package:model/response/internal_app/list_terminate_response.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/stock_status.dart';
-import 'package:pitik_internal_app/utils/enum/terminate_status.dart';
 
+import '../../../api_mapping/api_mapping.dart';
 import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/stock_status.dart';
+import '../../../utils/enum/terminate_status.dart';
 
 class JobController extends GetxController with GetSingleTickerProviderStateMixin {
   BuildContext context;
@@ -31,7 +31,7 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
   ScrollController scrollStockOpname = ScrollController();
   ScrollController scrollTerminate = ScrollController();
 
-  scrollStockOpnameListener() async {
+  void scrollStockOpnameListener() {
     scrollStockOpname.addListener(() {
       if (scrollStockOpname.position.maxScrollExtent == scrollStockOpname.position.pixels) {
         isLoadMore.value = true;
@@ -41,7 +41,7 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
     });
   }
 
-  scrollTerminateListener() async {
+  void scrollTerminateListener() {
     scrollTerminate.addListener(() {
       if (scrollTerminate.position.maxScrollExtent == scrollTerminate.position.pixels) {
         isLoadMore.value = true;
@@ -59,7 +59,7 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
     scrollTerminateListener();
     tabController.addListener(() {
       if (tabController.index == 0) {
-        isLoadingStock.value = true;        
+        isLoadingStock.value = true;
         listStock.value.clear();
         pageStock.value = 1;
         getListStock();
@@ -91,7 +91,8 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
     pageStock.value = 1;
     getListStock();
   }
-  void pullrefreshTerminate(){
+
+  void pullrefreshTerminate() {
     isLoadingTerminate.value = true;
     listTerminate.value.clear();
     pageTerminate.value = 1;
@@ -126,8 +127,8 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -137,8 +138,8 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -177,8 +178,8 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -188,8 +189,8 @@ class JobController extends GetxController with GetSingleTickerProviderStateMixi
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

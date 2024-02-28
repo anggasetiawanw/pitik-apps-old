@@ -8,15 +8,12 @@ import '../engine_library.dart';
 
 @SetupModel
 class MonitoringPerformanceResponse {
+  @IsChild()
+  Monitoring? data;
 
-    @IsChild()
-    Monitoring? data;
+  MonitoringPerformanceResponse({this.data});
 
-    MonitoringPerformanceResponse({this.data});
-
-    static MonitoringPerformanceResponse toResponseModel(Map<String, dynamic> map) {
-        return MonitoringPerformanceResponse(
-            data: Mapper.child<Monitoring>(map['data'])
-        );
-    }
+  static MonitoringPerformanceResponse toResponseModel(Map<String, dynamic> map) {
+    return MonitoringPerformanceResponse(data: Mapper.child<Monitoring>(map['data']));
+  }
 }

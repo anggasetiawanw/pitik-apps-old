@@ -1,4 +1,3 @@
-
 import 'engine_library.dart';
 
 /*
@@ -7,22 +6,15 @@ import 'engine_library.dart';
 
 @SetupModel
 class Sapronak {
+  String? date;
+  String? productCode;
+  String? productName;
+  String? subcategoryName;
+  int? quantity;
 
-    String? date;
-    String? productCode;
-    String? productName;
-    String? subcategoryName;
-    int? quantity;
+  Sapronak({this.date, this.productCode, this.productName, this.subcategoryName, this.quantity});
 
-    Sapronak({this.date, this.productCode, this.productName, this.subcategoryName, this.quantity});
-
-    static Sapronak toResponseModel(Map<String, dynamic> map) {
-        return Sapronak(
-            date: map['date'],
-            productCode: map['productCode'],
-            productName: map['productName'],
-            subcategoryName: map['subcategoryName'],
-            quantity: map['quantity']
-        );
-    }
+  static Sapronak toResponseModel(Map<String, dynamic> map) {
+    return Sapronak(date: map['date'], productCode: map['productCode'], productName: map['productName'], subcategoryName: map['subcategoryName'], quantity: map['quantity']);
+  }
 }

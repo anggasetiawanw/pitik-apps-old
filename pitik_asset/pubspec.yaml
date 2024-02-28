@@ -1,0 +1,37 @@
+name: pitik_asset
+description: "A new Flutter package project."
+version: 0.0.1
+
+environment:
+    sdk: ">=3.2.5 <4.0.0"
+    flutter: ">=1.17.0"
+
+dependencies:
+    flutter:
+        sdk: flutter
+    lottie: ^2.7.0
+    flutter_svg: ^2.0.9
+    flutter_screenutil: ^5.9.0
+
+dev_dependencies:
+    flutter_test:
+        sdk: flutter
+    flutter_lints: ^2.0.0
+    very_good_analysis: ^5.1.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+    assets:
+        - assets/animations/
+        - assets/icons/
+        - assets/images/
+    uses-material-design: true
+
+flutter_gen:
+    output: lib/src/assets/
+    integrations:
+        flutter_svg: true
+        lottie: true

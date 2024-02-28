@@ -5,10 +5,8 @@ import 'package:model/internal_app/product_model.dart';
 ///@email <robert.kuncoro@pitik.id>
 ///@create date 09/05/23
 
-
 @SetupModel
-class PurchaseRequest{
-
+class PurchaseRequest {
   String? vendorId;
   String? operationUnitId;
   String? purchaseOrderId;
@@ -19,7 +17,6 @@ class PurchaseRequest{
 
   @IsChildren()
   List<Products?>? products;
-
 
   PurchaseRequest({this.vendorId, this.operationUnitId, this.status, this.products, this.purchaseOrderId, this.internalTransferId, this.salesOrderId, this.jagalId});
 

@@ -21,7 +21,7 @@ class F {
     }
   }
 
-  static  String get uri {
+  static String get uri {
     switch (appFlavor) {
       case Flavor.PROD:
         return 'https://api.pitik.id/';

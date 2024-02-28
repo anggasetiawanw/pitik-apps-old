@@ -6,41 +6,41 @@ import 'package:get/get.dart';
  */
 
 class EditFieldTwoRowController extends GetxController {
-    String tag;
-    EditFieldTwoRowController({required this.tag});
+  String tag;
+  EditFieldTwoRowController({required this.tag});
 
-    final FocusNode focusNode1 = FocusNode();
-    final FocusNode focusNode2 = FocusNode();
+  final FocusNode focusNode1 = FocusNode();
+  final FocusNode focusNode2 = FocusNode();
 
-    var activeField = true.obs;
-    var showField = true.obs;
-    var showTooltip = false.obs;
-    var hideLabel = false.obs;
-    var alertText = "".obs;
-    var formKey = GlobalKey<FormState>();
+  var activeField = true.obs;
+  var showField = true.obs;
+  var showTooltip = false.obs;
+  var hideLabel = false.obs;
+  var alertText = "".obs;
+  var formKey = GlobalKey<FormState>();
 
-    void showAlert() => showTooltip.value = true;
-    void hideAlert() => showTooltip.value = false;
-    void enable() => activeField.value = true;
-    void disable() => activeField.value = false;
-    void invisibleLabel() => hideLabel.value = true;
-    void visibleLabel() => hideLabel.value = false;
-    void visibleField() => showField.value = true;
-    void invisibleField() => showField.value = false;
+  void showAlert() => showTooltip.value = true;
+  void hideAlert() => showTooltip.value = false;
+  void enable() => activeField.value = true;
+  void disable() => activeField.value = false;
+  void invisibleLabel() => hideLabel.value = true;
+  void visibleLabel() => hideLabel.value = false;
+  void visibleField() => showField.value = true;
+  void invisibleField() => showField.value = false;
 
-    void setAlertText(String text) => alertText.value = text;
+  void setAlertText(String text) => alertText.value = text;
 
-    @override
-    void onClose() {
-        super.onClose();
-        focusNode1.dispose();
-        focusNode2.dispose();
-    }
+  @override
+  void onClose() {
+    super.onClose();
+    focusNode1.dispose();
+    focusNode2.dispose();
+  }
 }
 
 class EditFieldTwoRowBinding extends Bindings {
-    @override
-    void dependencies() {
-        Get.lazyPut<EditFieldTwoRowController>(() => EditFieldTwoRowController(tag: ""));
-    }
+  @override
+  void dependencies() {
+    Get.lazyPut<EditFieldTwoRowController>(() => EditFieldTwoRowController(tag: ""));
+  }
 }

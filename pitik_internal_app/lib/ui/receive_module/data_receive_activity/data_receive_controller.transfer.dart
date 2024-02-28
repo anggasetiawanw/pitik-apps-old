@@ -12,8 +12,8 @@ extension TransferReceiveController on ReceiveController {
     bodyGeneralTransfer[BodyQueryTransfer.xAppId.index] = Constant.xAppId;
     bodyGeneralTransfer[BodyQueryTransfer.page.index] = pagePurchase.value;
     bodyGeneralTransfer[BodyQueryTransfer.limit.index] = limit.value;
-    bodyGeneralTransfer[BodyQueryTransfer.statusReceived.index] = "RECEIVED";
-    bodyGeneralTransfer[BodyQueryTransfer.statusDelivered.index] = "DELIVERED";
+    bodyGeneralTransfer[BodyQueryTransfer.statusReceived.index] = 'RECEIVED';
+    bodyGeneralTransfer[BodyQueryTransfer.statusDelivered.index] = 'DELIVERED';
     bodyGeneralTransfer[BodyQueryTransfer.withinProductionTeam.index] = AppStrings.TRUE_LOWERCASE;
   }
 
@@ -66,11 +66,11 @@ extension TransferReceiveController on ReceiveController {
     }
     String? status;
     switch (spStatus.controller.textSelected.value) {
-      case "Terkirim":
-        status = "DELIVERED";
+      case 'Terkirim':
+        status = 'DELIVERED';
         break;
-      case "Diterima":
-        status = "RECEIVED";
+      case 'Diterima':
+        status = 'RECEIVED';
         break;
       default:
     }
@@ -78,7 +78,7 @@ extension TransferReceiveController on ReceiveController {
       bodyGeneralTransfer[BodyQueryTransfer.statusReceived.index] = null;
       bodyGeneralTransfer[BodyQueryTransfer.statusDelivered.index] = null;
     }
-    String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalFilterReceive.getLastTimeSelected());
+    final String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat('yyyy-MM-dd').format(dtTanggalFilterReceive.getLastTimeSelected());
 
     bodyGeneralTransfer[BodyQueryTransfer.productCategoryId.index] = categorySelect?.id;
     bodyGeneralTransfer[BodyQueryTransfer.productItemId.index] = productSelect?.id;
@@ -91,7 +91,7 @@ extension TransferReceiveController on ReceiveController {
     getListTransfer();
   }
 
-  scrollTransferListener() async {
+  void scrollTransferListener() {
     scrollTransferController.addListener(() {
       if (scrollTransferController.position.maxScrollExtent == scrollTransferController.position.pixels) {
         isLoadMore.value = true;
@@ -111,7 +111,7 @@ extension TransferReceiveController on ReceiveController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList3 = {};
+              final Map<String, bool> mapList3 = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList3[units!.operationUnitName!] = false;
               }
@@ -128,8 +128,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -138,8 +138,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -160,7 +160,7 @@ extension TransferReceiveController on ReceiveController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
               }
@@ -176,8 +176,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -189,8 +189,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -230,8 +230,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -241,8 +241,8 @@ extension TransferReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

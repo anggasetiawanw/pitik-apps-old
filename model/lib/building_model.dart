@@ -1,4 +1,3 @@
-
 import 'engine_library.dart';
 
 /*
@@ -7,22 +6,15 @@ import 'engine_library.dart';
 
 @SetupModel
 class Building {
+  String? buildingId;
+  String? buildingName;
+  String? roomId;
+  String? roomCode;
+  String? roomTypeName;
 
-    String? buildingId;
-    String? buildingName;
-    String? roomId;
-    String? roomCode;
-    String? roomTypeName;
+  Building({this.buildingId, this.buildingName, this.roomId, this.roomCode, this.roomTypeName});
 
-    Building({this.buildingId, this.buildingName, this.roomId, this.roomCode, this.roomTypeName});
-
-    static Building toResponseModel(Map<String, dynamic> map) {
-        return Building(
-            buildingId: map['buildingId'],
-            buildingName: map['buildingName'],
-            roomId: map['roomId'],
-            roomCode: map['roomCode'],
-            roomTypeName: map['roomTypeName']
-        );
-    }
+  static Building toResponseModel(Map<String, dynamic> map) {
+    return Building(buildingId: map['buildingId'], buildingName: map['buildingName'], roomId: map['roomId'], roomCode: map['roomCode'], roomTypeName: map['roomTypeName']);
+  }
 }

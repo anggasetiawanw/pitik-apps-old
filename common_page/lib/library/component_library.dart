@@ -1,8 +1,6 @@
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 library model;
 

@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/transfer_status.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/transfer_status.dart';
 
 import 'delivery_detail_transfer_controller.dart';
 
@@ -32,7 +32,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Pengiriman",
+          'Detail Pengiriman',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -52,20 +52,20 @@ class DeliveryDetailTransfer extends StatelessWidget {
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
               ),
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: controller.transferModel.status == "ON_DELIVERY"
+              child: controller.transferModel.status == 'ON_DELIVERY'
                   ? controller.doneSendButton
-                  : controller.transferModel.status == "READY_TO_DELIVER"
+                  : controller.transferModel.status == 'READY_TO_DELIVER'
                       ? ButtonFill(
-                          controller: GetXCreator.putButtonFillController("READY_TO_DELIVERBarang"),
-                          label: "Kirim Barang",
+                          controller: GetXCreator.putButtonFillController('READY_TO_DELIVERBarang'),
+                          label: 'Kirim Barang',
                           onClick: () {
-                            if (controller.transferModel.status =="READY_TO_DELIVER" && controller.isSendItem.isFalse) {
-                                    controller.isSendItem.value = true;
-                                    ButtonFillController btController = Get.find(tag: "READY_TO_DELIVERBarang");
-                                    btController.changeLabel("Konfirmasi");
-                                  } else if (controller.isSendItem.isTrue) {
-                                    _showBottomDialogSend(context, controller);
-                                  }
+                            if (controller.transferModel.status == 'READY_TO_DELIVER' && controller.isSendItem.isFalse) {
+                              controller.isSendItem.value = true;
+                              final ButtonFillController btController = Get.find(tag: 'READY_TO_DELIVERBarang');
+                              btController.changeLabel('Konfirmasi');
+                            } else if (controller.isSendItem.isTrue) {
+                              _showBottomDialogSend(context, controller);
+                            }
                           })
                       : const SizedBox(),
             ),
@@ -106,14 +106,14 @@ class DeliveryDetailTransfer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Transfer",
+                        'Informasi Transfer',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -129,15 +129,15 @@ class DeliveryDetailTransfer extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.transferModel.sourceOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.transferModel.sourceOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Tujuan', '${controller.transferModel.targetOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : const SizedBox(),
+            controller.transferModel.driver != null ? infoDetailHeader('Driver', '${controller.transferModel.driver!.fullName}') : const SizedBox(),
           ],
         ),
       );
@@ -179,7 +179,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.symmetric(vertical: 16),
                               child: Text(
-                                "Detail SKU",
+                                'Detail SKU',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -189,7 +189,7 @@ class DeliveryDetailTransfer extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                               decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                               child: Text(
-                                "${controller.transferModel.products![0]!.productItems![0]!.name}",
+                                '${controller.transferModel.products![0]!.productItems![0]!.name}',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -199,17 +199,17 @@ class DeliveryDetailTransfer extends StatelessWidget {
                               decoration: BoxDecoration(border: Border.all(color: AppColors.outlineColor, width: 1), borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
                               child: Column(
                                 children: [
-                                  infoDetailSKU("Kategori SKU", "${controller.transferModel.products != null ? controller.transferModel.products![0]!.name : "null"}"),
+                                  infoDetailSKU('Kategori SKU', "${controller.transferModel.products != null ? controller.transferModel.products![0]!.name : "null"}"),
                                   if (controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
                                     const SizedBox(
                                       height: 14,
                                     ),
-                                    infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                    infoDetailSKU('Jumlah Ekor', '${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor'),
                                   ],
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight} Kg"),
+                                  infoDetailSKU('Total', '${controller.transferModel.products![0]!.productItems![0]!.weight} Kg'),
                                 ],
                               ),
                             ),
@@ -229,21 +229,21 @@ class DeliveryDetailTransfer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan",
+                                  'Catatan',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : '-',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
                             ),
                           ),
                           if (controller.isSendItem.isTrue) controller.efRemark,
-                          if (controller.transferModel.status != "READY_TO_DELIVER") ...[
+                          if (controller.transferModel.status != 'READY_TO_DELIVER') ...[
                             const SizedBox(
                               height: 16,
                             ),
@@ -258,31 +258,33 @@ class DeliveryDetailTransfer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Catatan Pengiriman",
+                                    'Catatan Pengiriman',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : '-',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],
                               ),
                             ),
                           ],
-                          const SizedBox(height: 120,),
+                          const SizedBox(
+                            height: 120,
+                          ),
                         ]),
                       ),
                     ),
-                    controller.transferModel.status == "ON_DELIVERY" || controller.transferModel.status == "READY_TO_DELIVER" ? bottomNavbar() : const SizedBox()
+                    controller.transferModel.status == 'ON_DELIVERY' || controller.transferModel.status == 'READY_TO_DELIVER' ? bottomNavbar() : const SizedBox()
                   ],
                 ),
         ));
   }
 
-  _showBottomDialogSend(BuildContext context, DeliveryDetailTransferController controller) {
+  Future<void> _showBottomDialogSend(BuildContext context, DeliveryDetailTransferController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -311,18 +313,18 @@ class DeliveryDetailTransfer extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin akan mengirim barang ini?",
+                    'Apakah kamu yakin akan mengirim barang ini?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan barang yang akan kamu kirim sudah sesuai dan benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan barang yang akan kamu kirim sudah sesuai dan benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/image_logistic.svg",
+                    'images/image_logistic.svg',
                   ),
                 ),
                 Container(

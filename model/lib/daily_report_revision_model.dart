@@ -7,18 +7,14 @@ import 'package:engine/util/mapper/annotation/is_children.dart';
 
 @SetupModel
 class DailyReportRevision {
+  String? reason;
 
-    String? reason;
+  @IsChildren()
+  List<String?> changes;
 
-    @IsChildren()
-    List<String?> changes;
+  DailyReportRevision({this.reason, this.changes = const []});
 
-    DailyReportRevision({this.reason, this.changes = const []});
-
-    static DailyReportRevision toResponseModel(Map<String, dynamic> map) {
-        return DailyReportRevision(
-            reason: map['reason'],
-            changes: map['changes']
-        );
-    }
+  static DailyReportRevision toResponseModel(Map<String, dynamic> map) {
+    return DailyReportRevision(reason: map['reason'], changes: map['changes']);
+  }
 }

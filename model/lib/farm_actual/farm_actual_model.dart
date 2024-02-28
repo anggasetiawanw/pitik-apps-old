@@ -10,30 +10,29 @@ import 'package:model/farm_actual/farm_actual_detail_model.dart';
 
 @SetupModel
 class FarmActual {
+  String? date;
 
-    String? date;
+  @IsChild()
+  FarmActualDetail? abw;
 
-    @IsChild()
-    FarmActualDetail? abw;
+  @IsChild()
+  FarmActualDetail? mortality;
 
-    @IsChild()
-    FarmActualDetail? mortality;
+  @IsChild()
+  FarmActualDetail? feedConsumption;
 
-    @IsChild()
-    FarmActualDetail? feedConsumption;
+  @IsChild()
+  FarmActualCycle? cycle;
 
-    @IsChild()
-    FarmActualCycle? cycle;
+  FarmActual({this.date, this.abw, this.mortality, this.feedConsumption, this.cycle});
 
-    FarmActual({this.date, this.abw, this.mortality, this.feedConsumption, this.cycle});
-
-    static FarmActual toResponseModel(Map<String, dynamic> map) {
-        return FarmActual(
-            date: map['date'],
-            abw: Mapper.child<FarmActualDetail>(map['abw']),
-            mortality: Mapper.child<FarmActualDetail>(map['mortality']),
-            feedConsumption: Mapper.child<FarmActualDetail>(map['feedConsumption']),
-            cycle: Mapper.child<FarmActualCycle>(map['cycle']),
-        );
-    }
+  static FarmActual toResponseModel(Map<String, dynamic> map) {
+    return FarmActual(
+      date: map['date'],
+      abw: Mapper.child<FarmActualDetail>(map['abw']),
+      mortality: Mapper.child<FarmActualDetail>(map['mortality']),
+      feedConsumption: Mapper.child<FarmActualDetail>(map['feedConsumption']),
+      cycle: Mapper.child<FarmActualCycle>(map['cycle']),
+    );
+  }
 }

@@ -13,10 +13,10 @@ import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/terminate_status.dart';
 
 import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/terminate_status.dart';
 
 class TerminateRejectedController extends GetxController {
   BuildContext context;
@@ -26,13 +26,13 @@ class TerminateRejectedController extends GetxController {
   late TerminateModel terminateModel;
   late DateTime createdDate;
 
-  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
+  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController('confirmedButton'), label: 'Konfirmasi', onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesRejectedPemusnahan"), label: "Ya", onClick: () => updateTerminate(EnumTerminateStatus.rejected));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoRejectedPemusnahan"), label: "Tidak", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController('btYesRejectedPemusnahan'), label: 'Ya', onClick: () => updateTerminate(EnumTerminateStatus.rejected));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController('BtNoRejectedPemusnahan'), label: 'Tidak', onClick: () => Get.back());
 
-    DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -53,14 +53,14 @@ class TerminateRejectedController extends GetxController {
               terminateModel = body.data;
               isLoading.value = false;
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Tolak_Pemusnahan", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Tolak_Pemusnahan', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -70,8 +70,8 @@ class TerminateRejectedController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -82,7 +82,7 @@ class TerminateRejectedController extends GetxController {
   }
 
   void updateTerminate(String status) {
-    Constant.track("Click_Tolak_Pemusnahan");
+    Constant.track('Click_Tolak_Pemusnahan');
     Get.back();
     isLoading.value = true;
     Service.push(
@@ -96,8 +96,8 @@ class TerminateRejectedController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${body.error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -107,8 +107,8 @@ class TerminateRejectedController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -136,7 +136,7 @@ class TerminateRejectedController extends GetxController {
   // void onClose() {
   //     super.onClose();
   // }
-  _showBottomDialog() {
+  Future<dynamic> _showBottomDialog() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
@@ -166,19 +166,19 @@ class TerminateRejectedController extends GetxController {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan penolakan?",
+                    'Apakah kamu yakin ingin melakukan penolakan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukanponalakan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukanponalakan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Center(
                   child: Container(
                     margin: const EdgeInsets.only(top: 24),
                     child: SvgPicture.asset(
-                      "images/cancel_icon.svg",
+                      'images/cancel_icon.svg',
                     ),
                   ),
                 ),

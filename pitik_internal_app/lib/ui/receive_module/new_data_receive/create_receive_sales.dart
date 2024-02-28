@@ -5,9 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/receive_module/new_data_receive/create_receive_sales_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/order_status.dart';
+import 'create_receive_sales_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -33,13 +34,13 @@ class CreateGrOrder extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Form Penerimaan",
+          'Form Penerimaan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
     }
 
-    showBottomDialogSend(BuildContext context, CreateGrOrderController controller) {
+    Future<void> showBottomDialogSend(BuildContext context, CreateGrOrderController controller) {
       return showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
@@ -67,18 +68,18 @@ class CreateGrOrder extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                     child: Text(
-                      "Apakah kamu yakin data yang dimasukan sudah benar?",
+                      'Apakah kamu yakin data yang dimasukan sudah benar?',
                       style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                    child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                    child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 24),
                     child: SvgPicture.asset(
-                      "images/visit_customer.svg",
+                      'images/visit_customer.svg',
                     ),
                   ),
                   Container(
@@ -122,8 +123,8 @@ class CreateGrOrder extends StatelessWidget {
                 children: [
                   Expanded(
                       child: ButtonFill(
-                          controller: GetXCreator.putButtonFillController("saveGrPo"),
-                          label: "Simpan",
+                          controller: GetXCreator.putButtonFillController('saveGrPo'),
+                          label: 'Simpan',
                           onClick: () {
                             controller.isValid() ? showBottomDialogSend(context, controller) : null;
                           })),
@@ -167,14 +168,14 @@ class CreateGrOrder extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Informasi Pengembalian",
+                      'Informasi Pengembalian',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     Text(
-                      "${controller.orderDetail.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                      '${controller.orderDetail.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                       style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                     )
                   ],
@@ -185,37 +186,37 @@ class CreateGrOrder extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.orderDetail.operationUnit != null ? controller.orderDetail.operationUnit!.operationUnitName : ""}"),
+            infoDetailHeader('Sumber', "${controller.orderDetail.operationUnit != null ? controller.orderDetail.operationUnit!.operationUnitName : ""}"),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Tujuan", "${controller.orderDetail.customer!.businessName}"),
+            infoDetailHeader('Tujuan', '${controller.orderDetail.customer!.businessName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Dibuat Oleh", controller.orderDetail.userCreator?.email ?? "-"),
+            infoDetailHeader('Dibuat Oleh', controller.orderDetail.userCreator?.email ?? '-'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Sales Branch", controller.orderDetail.salesperson == null ? "-" : "${controller.orderDetail.salesperson?.branch?.name}"),
+            infoDetailHeader('Sales Branch', controller.orderDetail.salesperson == null ? '-' : '${controller.orderDetail.salesperson?.branch?.name}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Driver", "${controller.orderDetail.driver == null ? "-" : controller.orderDetail.driver!.fullName}"),
+            infoDetailHeader('Driver', "${controller.orderDetail.driver == null ? "-" : controller.orderDetail.driver!.fullName}"),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Target Pengiriman", controller.orderDetail.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.orderDetail.deliveryTime!)) : "-"),
+            infoDetailHeader('Target Pengiriman', controller.orderDetail.deliveryTime != null ? DateFormat('dd MMM yyyy').format(Convert.getDatetime(controller.orderDetail.deliveryTime!)) : '-'),
             const SizedBox(
               height: 8,
             ),
             infoDetailHeader(
-              "Waktu Pengiriman",
+              'Waktu Pengiriman',
               controller.orderDetail.deliveryTime != null
-                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.deliveryTime!)) != "00:00"
-                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.deliveryTime!))
-                      : "-"
-                  : "-",
+                  ? DateFormat('HH:mm').format(Convert.getDatetime(controller.orderDetail.deliveryTime!)) != '00:00'
+                      ? DateFormat('HH:mm').format(Convert.getDatetime(controller.orderDetail.deliveryTime!))
+                      : '-'
+                  : '-',
             ),
           ],
         ),
@@ -248,7 +249,7 @@ class CreateGrOrder extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.symmetric(vertical: 16),
                                 child: Text(
-                                  "Detail SKU Pengembalian",
+                                  'Detail SKU Pengembalian',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                 ),
                               ),

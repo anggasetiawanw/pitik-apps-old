@@ -34,48 +34,48 @@ extension FilterOrderController on SalesOrderController {
       searchController.clear();
       listFilter.value.clear();
       if (dtTanggalPenjualan.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Penjualan"] = dtTanggalPenjualan.controller.textSelected.value;
+        listFilter.value['Tanggal Penjualan'] = dtTanggalPenjualan.controller.textSelected.value;
       }
       if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Dibuat Oleh"] = spCreatedBy.controller.textSelected.value;
+        listFilter.value['Dibuat Oleh'] = spCreatedBy.controller.textSelected.value;
       }
       if (spProvince.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Province"] = spProvince.controller.textSelected.value;
+        listFilter.value['Province'] = spProvince.controller.textSelected.value;
       }
       if (spCity.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Kota"] = spCity.controller.textSelected.value;
+        listFilter.value['Kota'] = spCity.controller.textSelected.value;
       }
       if (efMin.getInput().isNotEmpty) {
-        listFilter.value["Rentang Min"] = efMin.getInput();
+        listFilter.value['Rentang Min'] = efMin.getInput();
       }
       if (efMax.getInput().isNotEmpty) {
-        listFilter.value["Rentang Max"] = efMax.getInput();
+        listFilter.value['Rentang Max'] = efMax.getInput();
       }
       if (spStatus.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Status"] = spStatus.controller.textSelected.value;
+        listFilter.value['Status'] = spStatus.controller.textSelected.value;
       }
       if (spCategory.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Kategori"] = spCategory.controller.textSelected.value;
+        listFilter.value['Kategori'] = spCategory.controller.textSelected.value;
       }
       if (spSku.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["SKU"] = spSku.controller.textSelected.value;
+        listFilter.value['SKU'] = spSku.controller.textSelected.value;
       }
       if (spSource.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Sumber"] = spSource.controller.textSelected.value;
+        listFilter.value['Sumber'] = spSource.controller.textSelected.value;
       }
 
       if (spSalesBranch.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Sales Branch"] = spSalesBranch.controller.textSelected.value;
+        listFilter.value['Sales Branch'] = spSalesBranch.controller.textSelected.value;
       }
       if (dfTanggalPengiriman.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Pengiriman"] = dfTanggalPengiriman.controller.textSelected.value;
+        listFilter.value['Tanggal Pengiriman'] = dfTanggalPengiriman.controller.textSelected.value;
       }
 
       if (dtDeliveryTimeMax.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Pengiriman Min"] = DateFormat("HH:mm").format(dtDeliveryTimeMin.getLastTimeSelected());
+        listFilter.value['Tanggal Pengiriman Min'] = DateFormat('HH:mm').format(dtDeliveryTimeMin.getLastTimeSelected());
       }
       if (dtDeliveryTimeMin.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Pengiriman Max"] = DateFormat("HH:mm").format(dtDeliveryTimeMax.getLastTimeSelected());
+        listFilter.value['Tanggal Pengiriman Max'] = DateFormat('HH:mm').format(dtDeliveryTimeMax.getLastTimeSelected());
       }
 
       listFilter.refresh();
@@ -100,8 +100,8 @@ extension FilterOrderController on SalesOrderController {
     if (efMax.getInput().isNotEmpty && efMin.getInput().isNotEmpty) {
       if (efMin.getInputNumber()! > efMax.getInputNumber()!) {
         Get.snackbar(
-          "Oops",
-          "Rentang Min Harus Lebih Kecil Dari Rentang Max",
+          'Oops',
+          'Rentang Min Harus Lebih Kecil Dari Rentang Max',
           snackPosition: SnackPosition.TOP,
           colorText: Colors.white,
           backgroundColor: Colors.red,
@@ -125,8 +125,8 @@ extension FilterOrderController on SalesOrderController {
     if (dtDeliveryTimeMax.controller.textSelected.value.isNotEmpty && dtDeliveryTimeMin.controller.textSelected.value.isNotEmpty) {
       if ((dtDeliveryTimeMax.getLastTimeSelected().hour * 60 + dtDeliveryTimeMax.getLastTimeSelected().minute) < (dtDeliveryTimeMin.getLastTimeSelected().hour * 60 + dtDeliveryTimeMin.getLastTimeSelected().minute)) {
         Get.snackbar(
-          "Oops",
-          "Waktu Pengiriman Min Harus Lebih Kecil Dari Waktu Pengiriman Max",
+          'Oops',
+          'Waktu Pengiriman Min Harus Lebih Kecil Dari Waktu Pengiriman Max',
           snackPosition: SnackPosition.TOP,
           colorText: Colors.white,
           backgroundColor: Colors.red,
@@ -153,26 +153,26 @@ extension FilterOrderController on SalesOrderController {
   void clearFilter() {
     listFilter.value.clear();
     listFilter.refresh();
-    dtTanggalPenjualan.controller.setTextSelected("");
-    spCreatedBy.controller.setTextSelected("");
-    spProvince.controller.setTextSelected("");
-    spCity.controller.setTextSelected("");
+    dtTanggalPenjualan.controller.setTextSelected('');
+    spCreatedBy.controller.setTextSelected('');
+    spProvince.controller.setTextSelected('');
+    spCity.controller.setTextSelected('');
     spCity.controller.disable();
-    efMin.setInput("");
-    efMax.setInput("");
+    efMin.setInput('');
+    efMax.setInput('');
     efMax.controller.hideAlert();
     efMin.controller.hideAlert();
-    spStatus.controller.setTextSelected("");
-    spCategory.controller.setTextSelected("");
-    spSku.controller.setTextSelected("");
+    spStatus.controller.setTextSelected('');
+    spCategory.controller.setTextSelected('');
+    spSku.controller.setTextSelected('');
     spSku.controller.disable();
-    spSource.controller.setTextSelected("");
-    spSalesBranch.controller.setTextSelected("");
-    dfTanggalPengiriman.controller.setTextSelected("");
-    dtDeliveryTimeMin.controller.setTextSelected("");
+    spSource.controller.setTextSelected('');
+    spSalesBranch.controller.setTextSelected('');
+    dfTanggalPengiriman.controller.setTextSelected('');
+    dtDeliveryTimeMin.controller.setTextSelected('');
     dtDeliveryTimeMin.controller.disable();
     dtDeliveryTimeMin.controller.hideAlert();
-    dtDeliveryTimeMax.controller.setTextSelected("");
+    dtDeliveryTimeMax.controller.setTextSelected('');
     dtDeliveryTimeMax.controller.disable();
     dtDeliveryTimeMax.controller.hideAlert();
     Get.back();
@@ -191,55 +191,55 @@ extension FilterOrderController on SalesOrderController {
 
   void removeOneFilter(String key) {
     switch (key) {
-      case "Tanggal Penjualan":
-        dtTanggalPenjualan.controller.setTextSelected("");
+      case 'Tanggal Penjualan':
+        dtTanggalPenjualan.controller.setTextSelected('');
         break;
-      case "Dibuat Oleh":
-        spCreatedBy.controller.setTextSelected("");
+      case 'Dibuat Oleh':
+        spCreatedBy.controller.setTextSelected('');
         break;
-      case "Province":
-        spProvince.controller.setTextSelected("");
+      case 'Province':
+        spProvince.controller.setTextSelected('');
         break;
-      case "Kota":
-        spCity.controller.setTextSelected("");
+      case 'Kota':
+        spCity.controller.setTextSelected('');
         break;
-      case "Rentang Min":
-        listFilter.value.remove("Rentang Max");
-        efMin.setInput("");
-        efMax.setInput("");
+      case 'Rentang Min':
+        listFilter.value.remove('Rentang Max');
+        efMin.setInput('');
+        efMax.setInput('');
         break;
-      case "Rentang Max":
-        listFilter.value.remove("Rentang Min");
-        efMin.setInput("");
-        efMax.setInput("");
+      case 'Rentang Max':
+        listFilter.value.remove('Rentang Min');
+        efMin.setInput('');
+        efMax.setInput('');
         break;
-      case "Status":
-        spStatus.controller.setTextSelected("");
+      case 'Status':
+        spStatus.controller.setTextSelected('');
         break;
-      case "Kategori":
-        spCategory.controller.setTextSelected("");
-        spSku.controller.setTextSelected("");
-        listFilter.value.remove("SKU");
+      case 'Kategori':
+        spCategory.controller.setTextSelected('');
+        spSku.controller.setTextSelected('');
+        listFilter.value.remove('SKU');
         break;
-      case "SKU":
-        spSku.controller.setTextSelected("");
+      case 'SKU':
+        spSku.controller.setTextSelected('');
         break;
-      case "Sumber":
-        spSource.controller.setTextSelected("");
+      case 'Sumber':
+        spSource.controller.setTextSelected('');
         break;
-      case "Sales Branch":
-        spSalesBranch.controller.setTextSelected("");
+      case 'Sales Branch':
+        spSalesBranch.controller.setTextSelected('');
         break;
-      case "Tanggal Pengiriman":
-        dfTanggalPengiriman.controller.setTextSelected("");
+      case 'Tanggal Pengiriman':
+        dfTanggalPengiriman.controller.setTextSelected('');
         break;
-      case "Tanggal Pengiriman Min":
-        dtDeliveryTimeMin.controller.setTextSelected("");
-        dtDeliveryTimeMax.controller.setTextSelected("");
+      case 'Tanggal Pengiriman Min':
+        dtDeliveryTimeMin.controller.setTextSelected('');
+        dtDeliveryTimeMax.controller.setTextSelected('');
         break;
-      case "Tanggal Pengiriman Max":
-        dtDeliveryTimeMax.controller.setTextSelected("");
-        dtDeliveryTimeMin.controller.setTextSelected("");
+      case 'Tanggal Pengiriman Max':
+        dtDeliveryTimeMax.controller.setTextSelected('');
+        dtDeliveryTimeMin.controller.setTextSelected('');
         break;
 
       default:
@@ -327,7 +327,7 @@ extension FilterOrderController on SalesOrderController {
     }
   }
 
-  showFilter() {
+  Future<void> showFilter() {
     if (isOutbondTab.isTrue) {
       if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
         spStatus.controller.generateItems(mapStatusOutbondOpsUnit);
@@ -459,7 +459,7 @@ extension FilterOrderController on SalesOrderController {
   ResponseListener locationListerner() {
     return ResponseListener(
         onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var location in (body as LocationListResponse).data) {
             if (id == 1) {
               mapList[location!.provinceName!] = false;
@@ -479,13 +479,13 @@ extension FilterOrderController on SalesOrderController {
           (packet[1] as SpinnerSearch).controller
             ..enable()
             ..hideLoading();
-          Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         },
         onResponseError: (exception, stacktrace, id, packet) {
           (packet[1] as SpinnerSearch).controller
             ..enable()
             ..hideLoading();
-          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         },
         onTokenInvalid: Constant.invalidResponse());
   }
@@ -498,16 +498,16 @@ extension FilterOrderController on SalesOrderController {
                 ..showLoading()
                 ..disable(),
               Service.push(
-                  apiKey: "api",
+                  apiKey: 'api',
                   service: ListApi.getSalesList,
                   context: context,
-                  body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, "sales,sales lead", 1, 0],
+                  body: ['Bearer ${auth.token}', auth.id, Constant.xAppId!, 'sales,sales lead', 1, 0],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
                         for (var result in (body as SalespersonListResponse).data) {
                           listSalesperson.add(result);
                         }
-                        Map<String, bool> mapList = {};
+                        final Map<String, bool> mapList = {};
                         for (var product in body.data) {
                           mapList[product!.email!] = false;
                         }
@@ -517,8 +517,8 @@ extension FilterOrderController on SalesOrderController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -527,8 +527,8 @@ extension FilterOrderController on SalesOrderController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -545,7 +545,7 @@ extension FilterOrderController on SalesOrderController {
   void getCategorySku() {
     spCategory.controller.disable();
     spCategory.controller.showLoading();
-    spCategory.controller.setTextSelected("Loading...");
+    spCategory.controller.setTextSelected('Loading...');
     Service.push(
       service: ListApi.getCategories,
       context: context,
@@ -555,43 +555,43 @@ extension FilterOrderController on SalesOrderController {
             for (var result in (body as CategoryListResponse).data) {
               listCategory.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
             spCategory.controller.enable();
-            if (listFilter.value["Kategori"] != null) {
-              spCategory.controller.setTextSelected(listFilter.value["Kategori"]!);
+            if (listFilter.value['Kategori'] != null) {
+              spCategory.controller.setTextSelected(listFilter.value['Kategori']!);
             } else {
-              spCategory.controller.setTextSelected("");
+              spCategory.controller.setTextSelected('');
             }
             spCategory.controller.hideLoading();
             spCategory.controller.generateItems(mapList);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onResponseError: (exception, stacktrace, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi KesalahanInternal",
+              'Pesan',
+              'Terjadi KesalahanInternal',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onTokenInvalid: Constant.invalidResponse()),
@@ -601,7 +601,7 @@ extension FilterOrderController on SalesOrderController {
   void getListSource() {
     spSource.controller
       ..disable()
-      ..setTextSelected("Loading...")
+      ..setTextSelected('Loading...')
       ..showLoading();
     Service.push(
         service: ListApi.getListOperationUnits,
@@ -609,7 +609,7 @@ extension FilterOrderController on SalesOrderController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, null, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
               }
@@ -619,35 +619,35 @@ extension FilterOrderController on SalesOrderController {
 
               spSource.controller
                 ..enable()
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
 
               spSource.controller.generateItems(mapList);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               spSource.controller
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               spSource.controller
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
             },
             onTokenInvalid: Constant.invalidResponse()));
@@ -661,11 +661,11 @@ extension FilterOrderController on SalesOrderController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
-                for (var result in (body).data) {
+                for (var result in body.data) {
                   listProduct.add(result);
                 }
                 spSku.controller.generateItems(mapList);
@@ -675,10 +675,10 @@ extension FilterOrderController on SalesOrderController {
               }
             },
             onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }
@@ -705,7 +705,7 @@ extension FilterOrderController on SalesOrderController {
                           listBranch.add(result);
                         }
 
-                        Map<String, bool> mapList = {};
+                        final Map<String, bool> mapList = {};
                         for (var branch in body.data) {
                           mapList[branch!.name!] = false;
                         }
@@ -715,8 +715,8 @@ extension FilterOrderController on SalesOrderController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -725,8 +725,8 @@ extension FilterOrderController on SalesOrderController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,

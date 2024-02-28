@@ -3,9 +3,9 @@ import 'package:engine/util/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import 'ui/home/beranda_activity/beranda_controller.dart';
+import 'utils/constant.dart';
+import 'utils/route.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

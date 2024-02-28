@@ -29,9 +29,10 @@ import 'package:model/response/internal_app/purchase_list_response.dart';
 import 'package:model/response/internal_app/sales_order_list_response.dart';
 import 'package:model/response/internal_app/transfer_list_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/controllers/tab_receive_controller.dart';
+
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/controllers/tab_receive_controller.dart';
 
 part 'data_receive_controller.purchase.dart';
 part 'data_receive_controller.sales_order.dart';
@@ -93,77 +94,77 @@ class ReceiveController extends GetxController {
   ScrollController scrollOrderController = ScrollController();
 
   RxMap<String, bool> mapStatusPo = RxMap<String, bool>({
-    "Terkonfirmasi": false,
-    "Diterima": false,
-    "Dibatalkan": false,
+    'Terkonfirmasi': false,
+    'Diterima': false,
+    'Dibatalkan': false,
   });
 
   RxMap<String, bool> mapStatusTransfer = RxMap<String, bool>({
-    "Terkirim": false,
-    "Diterima": false,
+    'Terkirim': false,
+    'Diterima': false,
   });
 
   RxMap<String, bool> mapStatusReturn = RxMap<String, bool>({
-    "Ditolak": false,
-    "Terkirim Sebagian": false,
-    "Diterima": false,
+    'Ditolak': false,
+    'Terkirim Sebagian': false,
+    'Diterima': false,
   });
 
   DateTimeField dtTanggalFilterReceive = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("dtTanggalFilterReceive"),
-      label: "Tanggal Pembelian",
-      hint: "dd MM yyyy",
-      alertText: "",
+      controller: GetXCreator.putDateTimeFieldController('dtTanggalFilterReceive'),
+      label: 'Tanggal Pembelian',
+      hint: 'dd MM yyyy',
+      alertText: '',
       flag: 1,
       onDateTimeSelected: (date, dateField) {
-        dateField.controller.setTextSelected(DateFormat("dd MMM yyyy", 'id').format(date));
+        dateField.controller.setTextSelected(DateFormat('dd MMM yyyy', 'id').format(date));
       });
 
   late SpinnerField spCategory = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spCategoryFilter"),
-      label: "Kategori SKU",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerFieldController('spCategoryFilter'),
+      label: 'Kategori SKU',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {},
       onSpinnerSelected: (value) {
         if (listCategory.isNotEmpty) {
-          CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
+          final CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
           if (selectCategory != null) {
             getSku(selectCategory.id!);
           }
         }
       });
-  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSkuFilter"), label: "SKU", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spSkuFilter'), label: 'SKU', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
-  SpinnerField spStatus = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spStatusFilter"), label: "Status", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spStatus = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spStatusFilter'), label: 'Status', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
-  SpinnerField spTujuan = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spTujuanFilterPembelian"), label: "Tujuan", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spTujuan = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spTujuanFilterPembelian'), label: 'Tujuan', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
   late SpinnerField spJenisSumber = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spJenisSumberFilterPembelian"),
-      label: "Jenis Sumber",
-      hint: "Pilih Salah Satu",
-      alertText: "",
-      items: const {"Jagal Eksternal": false, "Vendor": false},
+      controller: GetXCreator.putSpinnerFieldController('spJenisSumberFilterPembelian'),
+      label: 'Jenis Sumber',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
+      items: const {'Jagal Eksternal': false, 'Vendor': false},
       onSpinnerSelected: (value) {
         if (value.isNotEmpty) {
-          if (value == "Vendor") {
+          if (value == 'Vendor') {
             getListSourceVendor();
           } else {
             getListJagalExternal();
           }
         }
       });
-  SpinnerField spSumber = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSumberFilterPembelian"), label: "Sumber", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spSumber = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spSumberFilterPembelian'), label: 'Sumber', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
   late ButtonFill btKormasiFilter = ButtonFill(
-    controller: GetXCreator.putButtonFillController("btKormasiFilter"),
-    label: "Konfirmasi Filter",
+    controller: GetXCreator.putButtonFillController('btKormasiFilter'),
+    label: 'Konfirmasi Filter',
     onClick: () => saveFilter(),
   );
 
   late ButtonOutline btBersihkanFilter = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("btBersihkanFilter"),
-    label: "Bersihkan Filter",
+    controller: GetXCreator.putButtonOutlineController('btBersihkanFilter'),
+    label: 'Bersihkan Filter',
     onClick: () => clearFilter(),
   );
 
@@ -181,8 +182,8 @@ class ReceiveController extends GetxController {
     scrollTransferListener();
     scrollOrderListener();
     sbSearch = SearchBarField(
-      controller: GetXCreator.putSearchBarController("purhcaseSearchBar"),
-      items: const ["Nomor PO", "Nomor Transfer", "Nomor SO"],
+      controller: GetXCreator.putSearchBarController('purhcaseSearchBar'),
+      items: const ['Nomor PO', 'Nomor Transfer', 'Nomor SO'],
       onTyping: (value, control) => searchOrder(value),
       onCategorySelected: (value) {},
       addPrefixDropdown: false,
@@ -207,7 +208,7 @@ class ReceiveController extends GetxController {
         isFilter.value = false;
         listFilter.value.clear();
         isSearch.value = false;
-        sbSearch.controller.setSelectedValue("Nomor PO");
+        sbSearch.controller.setSelectedValue('Nomor PO');
         isLoadingPurchase.value = true;
         resetAllBodyPurhcaseValue();
         getListPurchase();
@@ -218,7 +219,7 @@ class ReceiveController extends GetxController {
         isFilter.value = false;
         listFilter.value.clear();
         isSearch.value = false;
-        sbSearch.controller.setSelectedValue("Nomor Transfer");
+        sbSearch.controller.setSelectedValue('Nomor Transfer');
         isLoadingTransfer.value = true;
         resetAllBodyTransferValue();
         getListTransfer();
@@ -229,7 +230,7 @@ class ReceiveController extends GetxController {
         isFilter.value = false;
         listFilter.value.clear();
         isSearch.value = false;
-        sbSearch.controller.setSelectedValue("Nomor SO");
+        sbSearch.controller.setSelectedValue('Nomor SO');
         isLoadingOrder.value = true;
         resetAllBodyReturnValue();
         getListReturn();
@@ -241,8 +242,8 @@ class ReceiveController extends GetxController {
     countApi++;
     if (countApi == 1) {
       timeEnd = DateTime.now();
-      Duration duration = timeEnd.difference(timeStart);
-      Constant.trackRenderTime("Penerimaan", duration);
+      final Duration duration = timeEnd.difference(timeStart);
+      Constant.trackRenderTime('Penerimaan', duration);
     }
   }
 
@@ -261,26 +262,26 @@ class ReceiveController extends GetxController {
       sbSearch.controller.clearText();
       listFilter.value.clear();
       if (dtTanggalFilterReceive.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Pembelian"] = dtTanggalFilterReceive.controller.textSelected.value;
+        listFilter.value['Tanggal Pembelian'] = dtTanggalFilterReceive.controller.textSelected.value;
       }
       if (spStatus.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Status"] = spStatus.controller.textSelected.value;
+        listFilter.value['Status'] = spStatus.controller.textSelected.value;
       }
       if (spCategory.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Kategori"] = spCategory.controller.textSelected.value;
+        listFilter.value['Kategori'] = spCategory.controller.textSelected.value;
       }
       if (spSku.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["SKU"] = spSku.controller.textSelected.value;
+        listFilter.value['SKU'] = spSku.controller.textSelected.value;
       }
       if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Jenis Sumber"] = spJenisSumber.controller.textSelected.value;
+        listFilter.value['Jenis Sumber'] = spJenisSumber.controller.textSelected.value;
       }
       if (spSumber.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Sumber"] = spSumber.controller.textSelected.value;
+        listFilter.value['Sumber'] = spSumber.controller.textSelected.value;
       }
 
       if (spTujuan.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Destination"] = spTujuan.controller.textSelected.value;
+        listFilter.value['Destination'] = spTujuan.controller.textSelected.value;
       }
 
       listFilter.refresh();
@@ -304,14 +305,14 @@ class ReceiveController extends GetxController {
   void clearFilter() {
     listFilter.value.clear();
     listFilter.refresh();
-    dtTanggalFilterReceive.controller.setTextSelected("");
-    spStatus.controller.setTextSelected("");
-    spCategory.controller.setTextSelected("");
-    spSku.controller.setTextSelected("");
+    dtTanggalFilterReceive.controller.setTextSelected('');
+    spStatus.controller.setTextSelected('');
+    spCategory.controller.setTextSelected('');
+    spSku.controller.setTextSelected('');
     spSku.controller.disable();
-    spJenisSumber.controller.setTextSelected("");
-    spSumber.controller.setTextSelected("");
-    spTujuan.controller.setTextSelected("");
+    spJenisSumber.controller.setTextSelected('');
+    spSumber.controller.setTextSelected('');
+    spTujuan.controller.setTextSelected('');
     Get.back();
     isFilter.value = false;
     isSearch.value = false;
@@ -332,30 +333,30 @@ class ReceiveController extends GetxController {
 
   void removeOneFilter(String key) {
     switch (key) {
-      case "Tanggal Pembelian":
-        dtTanggalFilterReceive.controller.setTextSelected("");
+      case 'Tanggal Pembelian':
+        dtTanggalFilterReceive.controller.setTextSelected('');
         break;
-      case "Status":
-        spStatus.controller.setTextSelected("");
+      case 'Status':
+        spStatus.controller.setTextSelected('');
         break;
-      case "Kategori":
-        spCategory.controller.setTextSelected("");
-        spSku.controller.setTextSelected("");
-        listFilter.value.remove("SKU");
+      case 'Kategori':
+        spCategory.controller.setTextSelected('');
+        spSku.controller.setTextSelected('');
+        listFilter.value.remove('SKU');
         break;
-      case "Jenis Sumber":
-        spSumber.controller.setTextSelected("");
-        spJenisSumber.controller.setTextSelected("");
-        listFilter.value.remove("Sumber");
+      case 'Jenis Sumber':
+        spSumber.controller.setTextSelected('');
+        spJenisSumber.controller.setTextSelected('');
+        listFilter.value.remove('Sumber');
         break;
-      case "SKU":
-        spSku.controller.setTextSelected("");
+      case 'SKU':
+        spSku.controller.setTextSelected('');
         break;
-      case "Sumber":
-        spSumber.controller.setTextSelected("");
+      case 'Sumber':
+        spSumber.controller.setTextSelected('');
         break;
-      case "Destination":
-        spTujuan.controller.setTextSelected("");
+      case 'Destination':
+        spTujuan.controller.setTextSelected('');
         break;
 
       default:
@@ -398,8 +399,10 @@ class ReceiveController extends GetxController {
   }
 
   void searchOrder(String text) {
+    if (debouncer?.isActive ?? false) {
+      debouncer?.cancel();
+    }
     if (text.isNotEmpty) {
-      if (debouncer?.isActive ?? false) debouncer?.cancel();
       debouncer = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = true;
         isFilter.value = false;
@@ -422,7 +425,6 @@ class ReceiveController extends GetxController {
         }
       });
     } else {
-      if (debouncer?.isActive ?? false) debouncer?.cancel();
       debouncer = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
         if (isPurhcase.isTrue) {
@@ -444,25 +446,25 @@ class ReceiveController extends GetxController {
     }
   }
 
-  showFilter() {
+  Future<void> showFilter() {
     if (isPurhcase.isTrue) {
       Future.delayed(const Duration(milliseconds: 100), () {
         spStatus.controller.generateItems(mapStatusPo);
       });
-      dtTanggalFilterReceive.controller.setLabel("Tanggal Pembelian");
+      dtTanggalFilterReceive.controller.setLabel('Tanggal Pembelian');
       spJenisSumber.controller.visibleSpinner();
     } else if (isTransfer.isTrue) {
       Future.delayed(const Duration(milliseconds: 100), () {
         spStatus.controller.generateItems(mapStatusTransfer);
       });
-      dtTanggalFilterReceive.controller.setLabel("Tanggal Transfer");
+      dtTanggalFilterReceive.controller.setLabel('Tanggal Transfer');
       spJenisSumber.controller.invisibleSpinner();
       spSumber.controller.enable();
     } else if (isOrderReturn.isTrue) {
       Future.delayed(const Duration(milliseconds: 100), () {
         spStatus.controller.generateItems(mapStatusReturn);
       });
-      dtTanggalFilterReceive.controller.setLabel("Tanggal Penjualan");
+      dtTanggalFilterReceive.controller.setLabel('Tanggal Penjualan');
       spJenisSumber.controller.invisibleSpinner();
       spSumber.controller.enable();
     }
@@ -504,9 +506,9 @@ class ReceiveController extends GetxController {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 24),
-                                if(isPurhcase.isTrue) Text("Filter Pembelian", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
-                                if(isTransfer.isTrue) Text("Filter Transfer", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
-                                if(isOrderReturn.isTrue) Text("Filter Penjualan", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
+                                if (isPurhcase.isTrue) Text('Filter Pembelian', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
+                                if (isTransfer.isTrue) Text('Filter Transfer', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
+                                if (isOrderReturn.isTrue) Text('Filter Penjualan', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 21)),
                                 dtTanggalFilterReceive,
                                 spCategory,
                                 spSku,
@@ -575,8 +577,8 @@ class ReceiveController extends GetxController {
   void onResponseFail(dynamic body, RxBool loading) {
     loading.value = false;
     Get.snackbar(
-      "Pesan",
-      "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+      'Pesan',
+      'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
       snackPosition: SnackPosition.TOP,
       colorText: Colors.white,
       backgroundColor: Colors.red,
@@ -585,8 +587,8 @@ class ReceiveController extends GetxController {
 
   void onResponseError(RxBool loading) {
     Get.snackbar(
-      "Pesan",
-      "Terjadi kesalahan internal",
+      'Pesan',
+      'Terjadi kesalahan internal',
       snackPosition: SnackPosition.TOP,
       duration: const Duration(seconds: 5),
       colorText: Colors.white,
@@ -598,7 +600,7 @@ class ReceiveController extends GetxController {
   void getCategorySku() {
     spCategory.controller.disable();
     spCategory.controller.showLoading();
-    spCategory.controller.setTextSelected("Loading...");
+    spCategory.controller.setTextSelected('Loading...');
     Service.push(
       service: ListApi.getCategories,
       context: context,
@@ -608,43 +610,43 @@ class ReceiveController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategory.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
             spCategory.controller.enable();
-            if (listFilter.value["Kategori"] != null) {
-              spCategory.controller.setTextSelected(listFilter.value["Kategori"]!);
+            if (listFilter.value['Kategori'] != null) {
+              spCategory.controller.setTextSelected(listFilter.value['Kategori']!);
             } else {
-              spCategory.controller.setTextSelected("");
+              spCategory.controller.setTextSelected('');
             }
             spCategory.controller.hideLoading();
             spCategory.controller.generateItems(mapList);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onResponseError: (exception, stacktrace, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi KesalahanInternal",
+              'Pesan',
+              'Terjadi KesalahanInternal',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onTokenInvalid: Constant.invalidResponse()),
@@ -659,11 +661,11 @@ class ReceiveController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
-                for (var result in (body).data) {
+                for (var result in body.data) {
                   listProduct.add(result);
                 }
                 spSku.controller.generateItems(mapList);
@@ -673,10 +675,10 @@ class ReceiveController extends GetxController {
               }
             },
             onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }

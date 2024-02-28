@@ -5,10 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/transfer_module/transfer_driver_activity/transfer_driver_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/transfer_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/transfer_status.dart';
+import 'transfer_driver_controller.dart';
 
 class TransferDriverDetail extends StatelessWidget {
   const TransferDriverDetail({super.key});
@@ -30,7 +31,7 @@ class TransferDriverDetail extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Transfer",
+          'Detail Transfer',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -55,8 +56,8 @@ class TransferDriverDetail extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ButtonFill(
-                        controller: GetXCreator.putButtonFillController("kirimTransfer"),
-                        label: "Kirim",
+                        controller: GetXCreator.putButtonFillController('kirimTransfer'),
+                        label: 'Kirim',
                         onClick: () {
                           _showBottomDialogSend(context, controller);
                         }),
@@ -101,14 +102,14 @@ class TransferDriverDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Informasi Transfer",
+                      'Informasi Transfer',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     Text(
-                      "${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                      '${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                       style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                     )
                   ],
@@ -122,15 +123,15 @@ class TransferDriverDetail extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.transferModel.sourceOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.transferModel.sourceOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Tujuan', '${controller.transferModel.targetOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : const SizedBox(),
+            controller.transferModel.driver != null ? infoDetailHeader('Driver', '${controller.transferModel.driver!.fullName}') : const SizedBox(),
           ],
         ),
       );
@@ -163,7 +164,7 @@ class TransferDriverDetail extends StatelessWidget {
           Obx(() => controller.isLoading.isTrue
               ? const Center(child: ProgressLoading())
               : SingleChildScrollView(
-                child: Container(
+                  child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +174,7 @@ class TransferDriverDetail extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 16),
                             child: Text(
-                              "Detail SKU",
+                              'Detail SKU',
                               style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -183,7 +184,7 @@ class TransferDriverDetail extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                             decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                             child: Text(
-                              "${controller.transferModel.products![0]!.name}",
+                              '${controller.transferModel.products![0]!.name}',
                               style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -203,17 +204,17 @@ class TransferDriverDetail extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
+                                infoDetailSKU('SKU', "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
                                 if (controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                  infoDetailSKU('Jumlah Ekor', '${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor'),
                                 ],
                                 const SizedBox(
                                   height: 14,
                                 ),
-                                controller.transferModel.products![0]!.productItems![0]!.weight != null ? infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg") : const SizedBox(),
+                                controller.transferModel.products![0]!.productItems![0]!.weight != null ? infoDetailSKU('Total', '${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg') : const SizedBox(),
                               ],
                             ),
                           ),
@@ -233,32 +234,34 @@ class TransferDriverDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Catatan",
+                                'Catatan',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 16,
                               ),
                               Text(
-                                controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
+                                controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : '-',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                               )
                             ],
                           ),
                         ),
                         controller.assignDriver,
-                        const SizedBox(height: 120,),
+                        const SizedBox(
+                          height: 120,
+                        ),
                       ],
                     ),
                   ),
-              )),
+                )),
           bottomNavbar()
         ],
       ),
     );
   }
 
-  _showBottomDialogSend(BuildContext context, TransferDriverController controller) {
+  Future<dynamic> _showBottomDialogSend(BuildContext context, TransferDriverController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -287,18 +290,18 @@ class TransferDriverDetail extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:global_variable/colors.dart';
-import 'package:pitik_internal_app/utils/enum/stock_status.dart';
+import '../../utils/enum/stock_status.dart';
 
 class StockStatus extends StatelessWidget {
-  const StockStatus({super.key, required this.stockStatus, required this.isApprove});
+  const StockStatus({required this.stockStatus, required this.isApprove, super.key});
 
   final String? stockStatus;
   final bool? isApprove;
@@ -26,16 +26,16 @@ class StockStatus extends StatelessWidget {
       child: Center(
           child: Text(
         stockStatus == EnumStock.draft
-            ? "Draft"
+            ? 'Draft'
             : stockStatus == EnumStock.confirmed
-                ? "Perlu Persetujuan"
+                ? 'Perlu Persetujuan'
                 : stockStatus == EnumStock.finished
                     ? isApprove!
-                        ? "Disetujui"
-                        : "Selesai"
+                        ? 'Disetujui'
+                        : 'Selesai'
                     : stockStatus == EnumStock.rejected
-                        ? "Ditolak"
-                        : "Dibatalkan",
+                        ? 'Ditolak'
+                        : 'Dibatalkan',
         style: stockStatus == EnumStock.draft
             ? const TextStyle(color: Color(0xFFF47B20))
             : stockStatus == EnumStock.confirmed

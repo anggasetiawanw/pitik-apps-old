@@ -4,14 +4,14 @@ import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/opname_model.dart';
-import 'package:pitik_internal_app/widget/common/stock_status.dart';
+import 'stock_status.dart';
 
 class CardListStock extends StatelessWidget {
   const CardListStock({
-    super.key,
     required this.onTap,
     required this.opnameModel,
     required this.isApprove,
+    super.key,
   });
   final Function() onTap;
   final OpnameModel opnameModel;
@@ -40,12 +40,12 @@ class CardListStock extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${opnameModel.operationUnit!.operationUnitName}",
+                        '${opnameModel.operationUnit!.operationUnitName}',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                         overflow: TextOverflow.clip,
                       ),
                       Text(
-                        "${opnameModel.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}",
+                        '${opnameModel.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       ),
@@ -55,7 +55,10 @@ class CardListStock extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                StockStatus(stockStatus: opnameModel.status, isApprove: isApprove,),
+                StockStatus(
+                  stockStatus: opnameModel.status,
+                  isApprove: isApprove,
+                ),
               ],
             ),
             const SizedBox(
@@ -64,12 +67,16 @@ class CardListStock extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "SKU: ",
+                  'SKU: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                 ),
                 Text(
-                  opnameModel.products!.isNotEmpty ? opnameModel.products!.length > 1 ? "${opnameModel.products![0]?.name} and ${opnameModel.products!.length - 1} lainnya" : "${opnameModel.products?[0]?.name}" : "-",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  opnameModel.products!.isNotEmpty
+                      ? opnameModel.products!.length > 1
+                          ? '${opnameModel.products![0]?.name} and ${opnameModel.products!.length - 1} lainnya'
+                          : '${opnameModel.products?[0]?.name}'
+                      : '-',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -79,12 +86,12 @@ class CardListStock extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Jumlah Ekor: ",
+                  'Jumlah Ekor: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${opnameModel.totalWeight}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${opnameModel.totalWeight}',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -94,12 +101,12 @@ class CardListStock extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Dibuat: ",
+                  'Dibuat: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${opnameModel.createdBy}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${opnameModel.createdBy}',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),

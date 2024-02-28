@@ -6,16 +6,12 @@ import 'package:engine/model/base_model.dart';
 
 @SetupModel
 class AdjustmentClosing {
+  double? value;
+  String? remarks;
 
-    double? value;
-    String? remarks;
+  AdjustmentClosing({this.value, this.remarks});
 
-    AdjustmentClosing({this.value, this.remarks});
-
-    static AdjustmentClosing toResponseModel(Map<String, dynamic> map) {
-        return AdjustmentClosing(
-            value: map['value'] != null ? map['value'].toDouble() : map['value'],
-            remarks: map['remarks']
-        );
-    }
+  static AdjustmentClosing toResponseModel(Map<String, dynamic> map) {
+    return AdjustmentClosing(value: map['value'] != null ? map['value'].toDouble() : map['value'], remarks: map['remarks']);
+  }
 }

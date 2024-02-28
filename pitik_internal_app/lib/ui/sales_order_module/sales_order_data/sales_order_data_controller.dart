@@ -29,18 +29,18 @@ import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/sales_person_model.dart';
-import 'package:model/response/%20branch_response.dart';
+import 'package:model/response/branch_response.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/location_list_response.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
 import 'package:model/response/internal_app/sales_order_list_response.dart';
 import 'package:model/response/internal_app/salesperson_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/so_status.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/api_mapping.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/so_status.dart';
+import '../../../utils/route.dart';
 
 part 'sales_order_data_controller.filter.dart';
 part 'sales_order_data_controller.inbound.dart';
@@ -115,9 +115,9 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   RxBool isLoading = false.obs;
   RxBool isFilter = false.obs;
   RxBool isSearch = false.obs;
-  RxString searchValue = "".obs;
+  RxString searchValue = ''.obs;
   RxBool isLoadData = false.obs;
-  RxString selectedValue = "Nomor SO".obs;
+  RxString selectedValue = 'Nomor SO'.obs;
   RxBool isShowList = false.obs;
   RxBool isOutbondTab = true.obs;
   RxInt tabIndex = 0.obs;
@@ -132,139 +132,139 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   Rx<Map<String, String>> listFilter = Rx<Map<String, String>>({});
 
   late ButtonFill btPenjualan = ButtonFill(
-      controller: GetXCreator.putButtonFillController("btPenjualan"),
-      label: "Buat Penjualan",
+      controller: GetXCreator.putButtonFillController('btPenjualan'),
+      label: 'Buat Penjualan',
       onClick: () {
         // backFromForm(false);
         _showBottomDialog();
       });
 
   DateTimeField dtTanggalPenjualan = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("dtTanggalPenjualan"),
-      label: "Tanggal Penjualan",
-      hint: "dd MM yyyy",
-      alertText: "",
+      controller: GetXCreator.putDateTimeFieldController('dtTanggalPenjualan'),
+      label: 'Tanggal Penjualan',
+      hint: 'dd MM yyyy',
+      alertText: '',
       flag: 1,
       onDateTimeSelected: (date, dateField) {
-        dateField.controller.setTextSelected(DateFormat("dd MMM yyyy", 'id').format(date));
+        dateField.controller.setTextSelected(DateFormat('dd MMM yyyy', 'id').format(date));
       });
-  SpinnerSearch spCreatedBy = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCreatedBy"), label: "Dibuat Oleh", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerSearch spCreatedBy = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController('spCreatedBy'), label: 'Dibuat Oleh', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
-  SpinnerSearch spSalesBranch = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spSalesBranch"), label: "Sales Branch", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerSearch spSalesBranch = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController('spSalesBranch'), label: 'Sales Branch', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
   late SpinnerSearch spProvince = SpinnerSearch(
-      controller: GetXCreator.putSpinnerSearchController("spProvince"),
-      label: "Provinsi Customer",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerSearchController('spProvince'),
+      label: 'Provinsi Customer',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {},
       onSpinnerSelected: (value) {
-        spCity.controller.setTextSelected("");
+        spCity.controller.setTextSelected('');
         spCity.controller.disable();
         if (province.isNotEmpty) {
-          Location? selectLocation = province.firstWhereOrNull((element) => element!.provinceName! == value);
+          final Location? selectLocation = province.firstWhereOrNull((element) => element!.provinceName! == value);
           if (selectLocation != null) {
             getCity(selectLocation);
           }
         }
       });
-  SpinnerSearch spCity = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spCity"), label: "Kota Customer", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerSearch spCity = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController('spCity'), label: 'Kota Customer', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
   late EditField efMin = EditField(
-      controller: GetXCreator.putEditFieldController("efMin"),
-      label: "Rentang Min",
-      hint: "Ketik Disini",
-      alertText: "Min Max harus diiisi",
+      controller: GetXCreator.putEditFieldController('efMin'),
+      label: 'Rentang Min',
+      hint: 'Ketik Disini',
+      alertText: 'Min Max harus diiisi',
       inputType: TextInputType.number,
-      textUnit: "Ekor",
+      textUnit: 'Ekor',
       maxInput: 20,
       onTyping: (value, editField) {
         efMax.controller.hideAlert();
       });
   late EditField efMax = EditField(
-      controller: GetXCreator.putEditFieldController("efMax"),
-      label: "Rentang Max",
-      hint: "Ketik Disini",
-      alertText: "Min Max harus diisi",
+      controller: GetXCreator.putEditFieldController('efMax'),
+      label: 'Rentang Max',
+      hint: 'Ketik Disini',
+      alertText: 'Min Max harus diisi',
       inputType: TextInputType.number,
-      textUnit: "Ekor",
+      textUnit: 'Ekor',
       maxInput: 20,
       onTyping: (value, editField) {
         efMin.controller.hideAlert();
       });
   SpinnerField spStatus = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spStatusFilter"),
-      label: "Status",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerFieldController('spStatusFilter'),
+      label: 'Status',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {
-        "Draft": false,
-        "Terkonfirmasi": false,
-        "Teralokasi": false,
-        "Dipesan": false,
-        "Siap Dikirim": false,
-        "Perjalanan": false,
-        "Terkirim": false,
-        "Ditolak": false,
-        "Batal": false,
+        'Draft': false,
+        'Terkonfirmasi': false,
+        'Teralokasi': false,
+        'Dipesan': false,
+        'Siap Dikirim': false,
+        'Perjalanan': false,
+        'Terkirim': false,
+        'Ditolak': false,
+        'Batal': false,
       },
       onSpinnerSelected: (value) {});
 
   late DateTimeField dfTanggalPengiriman = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("dtTanggalPengirimanSOIni"),
-      label: "Tanggal Pengiriman",
-      hint: "dd MM yyyy",
-      alertText: "",
+      controller: GetXCreator.putDateTimeFieldController('dtTanggalPengirimanSOIni'),
+      label: 'Tanggal Pengiriman',
+      hint: 'dd MM yyyy',
+      alertText: '',
       flag: 1,
       onDateTimeSelected: (date, dateField) {
-        dateField.controller.setTextSelected(DateFormat("dd MMM yyyy", 'id').format(date));
+        dateField.controller.setTextSelected(DateFormat('dd MMM yyyy', 'id').format(date));
         dtDeliveryTimeMin.controller.enable();
         dtDeliveryTimeMax.controller.enable();
       });
 
   late DateTimeField dtDeliveryTimeMin = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("deliveryTimeSoMin"),
-    label: "Waktu Min",
-    hint: "hh:mm",
-    alertText: "harus dipilih!",
+    controller: GetXCreator.putDateTimeFieldController('deliveryTimeSoMin'),
+    label: 'Waktu Min',
+    hint: 'hh:mm',
+    alertText: 'harus dipilih!',
     onDateTimeSelected: (date, dateField) {
-      dateField.controller.setTextSelected(DateFormat("HH:mm", 'id').format(date));
+      dateField.controller.setTextSelected(DateFormat('HH:mm', 'id').format(date));
       dtDeliveryTimeMax.controller.hideAlert();
     },
     flag: 2,
   );
 
   late DateTimeField dtDeliveryTimeMax = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("deliveryTimeSoMax"),
-    label: "Waktu Max",
-    hint: "hh:mm",
-    alertText: "harus dipilih!",
+    controller: GetXCreator.putDateTimeFieldController('deliveryTimeSoMax'),
+    label: 'Waktu Max',
+    hint: 'hh:mm',
+    alertText: 'harus dipilih!',
     onDateTimeSelected: (date, dateField) {
-      dateField.controller.setTextSelected(DateFormat("HH:mm", 'id').format(date));
+      dateField.controller.setTextSelected(DateFormat('HH:mm', 'id').format(date));
       dtDeliveryTimeMin.controller.hideAlert();
     },
     flag: 2,
   );
 
-  late SpinnerSearch spSource = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("spSource"), label: "Sumber", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  late SpinnerSearch spSource = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController('spSource'), label: 'Sumber', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
   late SpinnerField spCategory = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spCategoryFilter"),
-      label: "Kategori SKU",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerFieldController('spCategoryFilter'),
+      label: 'Kategori SKU',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {},
       onSpinnerSelected: (value) {
         if (listCategory.isNotEmpty) {
-          CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
+          final CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
           if (selectCategory != null) {
             getSku(selectCategory.id!);
           }
         }
       });
-  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSkuFilter"), label: "SKU", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spSkuFilter'), label: 'SKU', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
-  late ButtonFill btKormasiFilter = ButtonFill(controller: GetXCreator.putButtonFillController("btKormasiFilter"), label: "Konfirmasi Filter", onClick: () => saveFilter());
+  late ButtonFill btKormasiFilter = ButtonFill(controller: GetXCreator.putButtonFillController('btKormasiFilter'), label: 'Konfirmasi Filter', onClick: () => saveFilter());
 
-  late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btBersihkanFilter"), label: "Bersihkan Filter", onClick: () => clearFilter());
+  late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController('btBersihkanFilter'), label: 'Bersihkan Filter', onClick: () => clearFilter());
 
   late Obx searchBar = Obx(() => TextField(
         controller: searchController,
@@ -276,11 +276,11 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
           fillColor: const Color(0xFFFFF9ED),
           //   isDense: true,
           contentPadding: const EdgeInsets.only(left: 4.0),
-          hintText: "Cari ${selectedValue.value}",
+          hintText: 'Cari ${selectedValue.value}',
           hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
           suffixIcon: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-            child: SvgPicture.asset("images/search_icon.svg"),
+            child: SvgPicture.asset('images/search_icon.svg'),
           ),
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -299,13 +299,13 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                         child: Obx(() => Row(
                               children: [
                                 Text(
-                                  "$selectedValue",
+                                  '$selectedValue',
                                   style: const TextStyle(fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(
                                   width: 4,
                                 ),
-                                isShowList.isTrue ? SvgPicture.asset("images/arrow_up.svg") : SvgPicture.asset("images/arrow_down.svg")
+                                isShowList.isTrue ? SvgPicture.asset('images/arrow_up.svg') : SvgPicture.asset('images/arrow_down.svg')
                               ],
                             )),
                       ),
@@ -317,7 +317,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                           .toList(),
                       value: selectedValue.value,
                       onChanged: (String? value) {
-                        selectedValue.value = value ?? "Customer";
+                        selectedValue.value = value ?? 'Customer';
                       },
                       onMenuStateChange: (isOpen) {
                         isShowList.value = isOpen;
@@ -339,57 +339,57 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
       ));
 
   RxMap<String, bool> mapStatusOutbond = RxMap<String, bool>({
-    "Draft": false,
-    "Terkonfirmasi": false,
-    "Teralokasi": false,
-    "Dipesan": false,
-    "Siap Dikirim": false,
-    "Perjalanan": false,
-    "Terkirim": false,
-    "Ditolak": false,
-    "Batal": false,
+    'Draft': false,
+    'Terkonfirmasi': false,
+    'Teralokasi': false,
+    'Dipesan': false,
+    'Siap Dikirim': false,
+    'Perjalanan': false,
+    'Terkirim': false,
+    'Ditolak': false,
+    'Batal': false,
   });
   RxMap<String, bool> mapStatusOutbondAllSC = RxMap<String, bool>({
-    "Terkonfirmasi": false,
-    "Teralokasi": false,
-    "Dipesan": false,
-    "Siap Dikirim": false,
-    "Perjalanan": false,
-    "Terkirim": false,
-    "Ditolak": false,
+    'Terkonfirmasi': false,
+    'Teralokasi': false,
+    'Dipesan': false,
+    'Siap Dikirim': false,
+    'Perjalanan': false,
+    'Terkirim': false,
+    'Ditolak': false,
   });
   RxMap<String, bool> mapStatusOutbondScFleet = RxMap<String, bool>({
-    "Terkonfirmasi": false,
-    "Teralokasi": false,
-    "Dipesan": false,
-    "Siap Dikirim": false,
-    "Perjalanan": false,
-    "Terkirim": false,
-    "Ditolak": false,
+    'Terkonfirmasi': false,
+    'Teralokasi': false,
+    'Dipesan': false,
+    'Siap Dikirim': false,
+    'Perjalanan': false,
+    'Terkirim': false,
+    'Ditolak': false,
   });
   RxMap<String, bool> mapStatusOutbondOpsUnit = RxMap<String, bool>({
-    "Teralokasi": false,
-    "Dipesan": false,
-    "Siap Dikirim": false,
-    "Perjalanan": false,
-    "Terkirim": false,
-    "Ditolak": false,
+    'Teralokasi': false,
+    'Dipesan': false,
+    'Siap Dikirim': false,
+    'Perjalanan': false,
+    'Terkirim': false,
+    'Ditolak': false,
   });
   RxMap<String, bool> mapStatusOutbondScRelation = RxMap<String, bool>({
-    "Terkonfirmasi": false,
-    "Teralokasi": false,
-    "Dipesan": false,
-    "Siap Dikirim": false,
-    "Perjalanan": false,
-    "Terkirim": false,
-    "Ditolak": false,
+    'Terkonfirmasi': false,
+    'Teralokasi': false,
+    'Dipesan': false,
+    'Siap Dikirim': false,
+    'Perjalanan': false,
+    'Terkirim': false,
+    'Ditolak': false,
   });
 
   RxMap<String, bool> mapStatusInbound = RxMap<String, bool>({
-    "Draft": false,
-    "Terkonfirmasi": false,
-    "Terkirim": false,
-    "Batal": false,
+    'Draft': false,
+    'Terkonfirmasi': false,
+    'Terkirim': false,
+    'Batal': false,
   });
 
   DateTime timeStart = DateTime.now();
@@ -427,7 +427,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     scrollControllerInbound.dispose();
   }
 
-  tabControllerListener(int tab) {
+  void tabControllerListener(int tab) {
     if (tab == 0) {
       searchController.clear();
       isSearch.value = false;
@@ -453,7 +453,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     }
   }
 
-  scrollListenerOutbound() async {
+  Future<void> scrollListenerOutbound() async {
     scrollControllerOutbound.addListener(() {
       if (scrollControllerOutbound.position.maxScrollExtent == scrollControllerOutbound.position.pixels) {
         isLoadMore.value = true;
@@ -469,7 +469,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     });
   }
 
-  scrollListenerInbound() async {
+  Future<void> scrollListenerInbound() async {
     scrollControllerInbound.addListener(() {
       if (scrollControllerInbound.position.maxScrollExtent == scrollControllerInbound.position.pixels) {
         isLoadMore.value = true;
@@ -511,8 +511,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   void onResponseFail(dynamic body, RxBool loading) {
     loading.value = false;
     Get.snackbar(
-      "Pesan",
-      "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+      'Pesan',
+      'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
       snackPosition: SnackPosition.TOP,
       colorText: Colors.white,
       backgroundColor: Colors.red,
@@ -521,8 +521,8 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
 
   void onResponseError(RxBool loading) {
     Get.snackbar(
-      "Pesan",
-      "Terjadi kesalahan internal",
+      'Pesan',
+      'Terjadi kesalahan internal',
       snackPosition: SnackPosition.TOP,
       duration: const Duration(seconds: 5),
       colorText: Colors.white,
@@ -532,8 +532,10 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
   }
 
   void searchOrder(String text) {
+    if (debounce?.isActive ?? false) {
+      debounce?.cancel();
+    }
     if (text.isNotEmpty) {
-      if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = true;
         isFilter.value = false;
@@ -553,7 +555,6 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
         }
       });
     } else {
-      if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
         if (isOutbondTab.isFalse) {
@@ -631,7 +632,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
     });
   }
 
-  _showBottomDialog() {
+  Future<void> _showBottomDialog() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
@@ -666,18 +667,18 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: AppColors.outlineColor)),
                     child: Row(
                       children: [
-                        SvgPicture.asset("images/icon_inbound.svg"),
+                        SvgPicture.asset('images/icon_inbound.svg'),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Penjualan Inbound",
+                                'Penjualan Inbound',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                               ),
                               const SizedBox(height: 4),
-                              Text("Penjualan langsung pada customer tanpa pengantaran", style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10), overflow: TextOverflow.clip),
+                              Text('Penjualan langsung pada customer tanpa pengantaran', style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10), overflow: TextOverflow.clip),
                             ],
                           ),
                         )
@@ -698,7 +699,7 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue ? "images/outbound_off.svg" : "images/icon_outbound.svg",
+                          Constant.isShopKepper.isTrue || Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue ? 'images/outbound_off.svg' : 'images/icon_outbound.svg',
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -706,12 +707,12 @@ class SalesOrderController extends GetxController with GetSingleTickerProviderSt
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Penjualan Outbound",
+                                'Penjualan Outbound',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                "Penjualan langsung pada customer dengan pengantaran",
+                                'Penjualan langsung pada customer dengan pengantaran',
                                 style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                                 overflow: TextOverflow.clip,
                               ),

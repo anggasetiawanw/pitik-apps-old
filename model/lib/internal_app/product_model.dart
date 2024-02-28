@@ -47,7 +47,35 @@ class Products {
   @IsChildren()
   List<Products?>? productItems;
 
-  Products({this.id, this.name, this.dailyQuantity, this.price, this.category, this.categoryId, this.uom, this.value, this.quantity, this.weight, this.productItemId, this.productCategoryId, this.lossPrecentage, this.numberOfCuts, this.productItem, this.returnQuantity, this.returnWeight, this.maxValue, this.minValue, this.productCategory, this.productItems, this.quantityUOM, this.weightUOM, this.totalQuantity, this.totalWeight, this.cutType, this.previousQuantity, this.previousWeight});
+  Products(
+      {this.id,
+      this.name,
+      this.dailyQuantity,
+      this.price,
+      this.category,
+      this.categoryId,
+      this.uom,
+      this.value,
+      this.quantity,
+      this.weight,
+      this.productItemId,
+      this.productCategoryId,
+      this.lossPrecentage,
+      this.numberOfCuts,
+      this.productItem,
+      this.returnQuantity,
+      this.returnWeight,
+      this.maxValue,
+      this.minValue,
+      this.productCategory,
+      this.productItems,
+      this.quantityUOM,
+      this.weightUOM,
+      this.totalQuantity,
+      this.totalWeight,
+      this.cutType,
+      this.previousQuantity,
+      this.previousWeight});
 
   static Products toResponseModel(Map<String, dynamic> map) {
     if (map['value'] is int) {

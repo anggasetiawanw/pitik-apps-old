@@ -2,14 +2,12 @@
 
 import 'package:reflectable/reflectable.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 const Rest = BaseApi();
 
 class BaseApi extends Reflectable {
-    const BaseApi() : super(invokingCapability, declarationsCapability, typeRelationsCapability, metadataCapability);
+  const BaseApi() : super(invokingCapability, declarationsCapability, typeRelationsCapability, metadataCapability);
 }

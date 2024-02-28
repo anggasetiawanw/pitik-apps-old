@@ -18,7 +18,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/media_upload_model.dart';
 import 'package:model/issue.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import '../../../api_mapping/api_mapping.dart';
 
 class IssueReportFormController extends GetxController {
   BuildContext context;
@@ -31,20 +31,20 @@ class IssueReportFormController extends GetxController {
   RxList<MediaUploadModel?> mediaListUpload = <MediaUploadModel?>[].obs;
 
   SpinnerField sfCategory = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("issueCategory"),
-    label: "Kategori Isu",
-    hint: "Pilih Kategori yang sesuai",
-    alertText: "Category Perlu dipilih",
+    controller: GetXCreator.putSpinnerFieldController('issueCategory'),
+    label: 'Kategori Isu',
+    hint: 'Pilih Kategori yang sesuai',
+    alertText: 'Category Perlu dipilih',
     items: const {},
     onSpinnerSelected: (value) {},
   );
 
   EditField efDescription = EditField(
-    controller: GetXCreator.putEditFieldController("Deskripsi Isu Tambah"),
-    label: "Deksripsi Isu",
-    hint: "Tuliskan Deskripsi Isu",
-    alertText: "",
-    textUnit: "",
+    controller: GetXCreator.putEditFieldController('Deskripsi Isu Tambah'),
+    label: 'Deksripsi Isu',
+    hint: 'Tuliskan Deskripsi Isu',
+    alertText: '',
+    textUnit: '',
     onTyping: (value, control) {},
     maxInput: 500,
     inputType: TextInputType.multiline,
@@ -52,7 +52,7 @@ class IssueReportFormController extends GetxController {
   );
 
   late MediaField mfPhoto = MediaField(
-    controller: GetXCreator.putMediaFieldController("photoInAddIssue"),
+    controller: GetXCreator.putMediaFieldController('photoInAddIssue'),
     onMediaResult: (media) => AuthImpl().get().then((auth) {
       if (auth != null) {
         if (media != null) {
@@ -60,22 +60,22 @@ class IssueReportFormController extends GetxController {
           Service.push(
               service: ListApi.uploadImage,
               context: Get.context!,
-              body: ['Bearer ${auth.token}', auth.id, "issue", media],
+              body: ['Bearer ${auth.token}', auth.id, 'issue', media],
               listener: ResponseListener(
                   onResponseDone: (code, message, body, id, packet) {
                     mediaListUpload.clear();
                     mediaListUpload.add(body.data);
-                    mfPhoto.getController().setInformasiText("File telah terupload");
+                    mfPhoto.getController().setInformasiText('File telah terupload');
                     mfPhoto.getController().showInformation();
                     isLoadingPicture.value = false;
                   },
                   onResponseFail: (code, message, body, id, packet) {
-                    Get.snackbar("Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
+                    Get.snackbar('Pesan', 'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
 
                     isLoadingPicture.value = false;
                   },
                   onResponseError: (exception, stacktrace, id, packet) {
-                    Get.snackbar("Pesan", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
+                    Get.snackbar('Pesan', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
 
                     isLoadingPicture.value = false;
                   },
@@ -85,13 +85,13 @@ class IssueReportFormController extends GetxController {
         GlobalVar.invalidResponse();
       }
     }),
-    label: "Upload Foto Atau Video",
-    hint: "Upload Foto Atau Video",
-    alertText: "",
+    label: 'Upload Foto Atau Video',
+    hint: 'Upload Foto Atau Video',
+    alertText: '',
   );
 
-  late ButtonFill btSave = ButtonFill(controller: GetXCreator.putButtonFillController("saveLaporIssue"), label: "Simpan", onClick: () => addIssue());
-  ButtonOutline btCancel = ButtonOutline(controller: GetXCreator.putButtonOutlineController("cancelLaporIssue"), label: "Batal", onClick: () => Get.back());
+  late ButtonFill btSave = ButtonFill(controller: GetXCreator.putButtonFillController('saveLaporIssue'), label: 'Simpan', onClick: () => addIssue());
+  ButtonOutline btCancel = ButtonOutline(controller: GetXCreator.putButtonOutlineController('cancelLaporIssue'), label: 'Batal', onClick: () => Get.back());
 
   @override
   void onReady() {
@@ -108,12 +108,12 @@ class IssueReportFormController extends GetxController {
                   apiKey: ApiMapping.api,
                   service: ListApi.issueTypes,
                   context: context,
-                  body: ['Bearer ${auth.token}', auth.id, "v2/issues/types/${coop.farmingCycleId}"],
+                  body: ['Bearer ${auth.token}', auth.id, 'v2/issues/types/${coop.farmingCycleId}'],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
                         issueTypeList.clear();
                         issueTypeList.value = body.data;
-                        Map<String, bool> map = {};
+                        final Map<String, bool> map = {};
                         for (var element in issueTypeList) {
                           map[element!.text!] = false;
                         }
@@ -122,8 +122,8 @@ class IssueReportFormController extends GetxController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -132,8 +132,8 @@ class IssueReportFormController extends GetxController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -165,8 +165,8 @@ class IssueReportFormController extends GetxController {
   }
 
   Issue generatePayload() {
-    Issue? idType = issueTypeList.firstWhereOrNull((element) => element?.text == sfCategory.getController().textSelected.value);
-    Issue issue = Issue(
+    final Issue? idType = issueTypeList.firstWhereOrNull((element) => element?.text == sfCategory.getController().textSelected.value);
+    final Issue issue = Issue(
       description: Uri.encodeFull(efDescription.getInput()),
       issueTypeId: idType?.id,
       photoValue: mediaListUpload,
@@ -188,15 +188,20 @@ class IssueReportFormController extends GetxController {
                     body: ['Bearer ${auth.token}', auth.id, Mapper.asJsonString(generatePayload())],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
-                          CustomDialog(Get.context!, Dialogs.YES_OPTION).title("Success!").message("Isu berhasil di kirim!").titleButtonOk("Penugasan").listener(CustomDialogListener(onDialogOk: (context, idx, list) => Get.back(), onDialogCancel: (context, idx, list) {})).show();
+                          CustomDialog(Get.context!, Dialogs.YES_OPTION)
+                              .title('Success!')
+                              .message('Isu berhasil di kirim!')
+                              .titleButtonOk('Penugasan')
+                              .listener(CustomDialogListener(onDialogOk: (context, idx, list) => Get.back(), onDialogCancel: (context, idx, list) {}))
+                              .show();
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           CustomDialog(Get.context!, Dialogs.YES_OPTION)
-                              .title("Error!")
+                              .title('Error!')
                               .message(
-                                "${(body).error!.message}",
+                                '${body.error!.message}',
                               )
-                              .titleButtonOk("Tutup")
+                              .titleButtonOk('Tutup')
                               .listener(CustomDialogListener(
                                   onDialogOk: (context, idx, list) {
                                     Get.back();
@@ -206,8 +211,8 @@ class IssueReportFormController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
+                            'Pesan',
+                            'Terjadi Kesalahan Internal',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             backgroundColor: Colors.red,

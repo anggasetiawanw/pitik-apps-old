@@ -12,156 +12,166 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/transfer_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/internal_app/list_driver_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 class TransferDriverController extends GetxController {
-    BuildContext context;
+  BuildContext context;
 
-    TransferDriverController({required this.context});
-    late ButtonFill yesSendButton = ButtonFill(controller: GetXCreator.putButtonFillController("yesSendButton"), label: "Ya", onClick: (){
-        Constant.track("Click_Assign_Driver_Transfer");
+  TransferDriverController({required this.context});
+  late ButtonFill yesSendButton = ButtonFill(
+      controller: GetXCreator.putButtonFillController('yesSendButton'),
+      label: 'Ya',
+      onClick: () {
+        Constant.track('Click_Assign_Driver_Transfer');
         Get.back();
         isLoading.value = true;
         updateStatus();
-    });
-    ButtonOutline noSendButton = ButtonOutline(controller: GetXCreator.putButtonOutlineController("NoSendButton"), label: "Tidak", onClick: (){
+      });
+  ButtonOutline noSendButton = ButtonOutline(
+      controller: GetXCreator.putButtonOutlineController('NoSendButton'),
+      label: 'Tidak',
+      onClick: () {
         Get.back();
-    });
+      });
 
-    SpinnerSearch assignDriver = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController("assignDriver"), label: "Driver*", hint: "Pilih salah satu", alertText: "Driver harus dipilih!", items: const {}, onSpinnerSelected: (value){});
+  SpinnerSearch assignDriver = SpinnerSearch(controller: GetXCreator.putSpinnerSearchController('assignDriver'), label: 'Driver*', hint: 'Pilih salah satu', alertText: 'Driver harus dipilih!', items: const {}, onSpinnerSelected: (value) {});
 
-    var isLoading = false.obs;
-    var isEdit = false.obs;
-    late TransferModel transferModel;
-    late DateTime createdDate;
-    Rx<List<Profile?>> listDriver = Rx<List<Profile?>>([]);
+  var isLoading = false.obs;
+  var isEdit = false.obs;
+  late TransferModel transferModel;
+  late DateTime createdDate;
+  Rx<List<Profile?>> listDriver = Rx<List<Profile?>>([]);
 
-    DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
-    @override
-    void onInit() {
-        super.onInit();
-        transferModel = Get.arguments[0];
-        isEdit.value = Get.arguments[1];
-        createdDate = Convert.getDatetime(transferModel.createdDate!);
+  @override
+  void onInit() {
+    super.onInit();
+    transferModel = Get.arguments[0];
+    isEdit.value = Get.arguments[1];
+    createdDate = Convert.getDatetime(transferModel.createdDate!);
+  }
 
+  @override
+  void onReady() {
+    super.onReady();
+    if (isEdit.isTrue) {
+      assignDriver.controller.textSelected.value = transferModel.driver!.fullName!;
     }
-    @override
-    void onReady() {
-        super.onReady();
-        if(isEdit.isTrue) {
-            assignDriver.controller.textSelected.value = transferModel.driver!.fullName!;
-        }
-        isLoading.value = true;
-        getListDriver();
+    isLoading.value = true;
+    getListDriver();
+  }
+
+  void getListDriver() {
+    Service.push(
+        service: ListApi.getListDriver,
+        context: context,
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, 'driver', 1, 50],
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) {
+              final Map<String, bool> mapList = {};
+              for (var units in (body as ListDriverResponse).data) {
+                mapList[units!.fullName!] = false;
+              }
+              assignDriver.controller.generateItems(mapList);
+              for (var result in body.data) {
+                listDriver.value.add(result);
+              }
+              isLoading.value = false;
+              timeEnd = DateTime.now();
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Driver_Form_Transfer', totalTime);
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              Get.snackbar(
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              isLoading.value = false;
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              Get.snackbar(
+                'Pesan',
+                'Terjadi kesalahan internal',
+                snackPosition: SnackPosition.TOP,
+                duration: const Duration(seconds: 5),
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              isLoading.value = false;
+            },
+            onTokenInvalid: Constant.invalidResponse()));
+  }
+
+  void updateStatus() {
+    if (validation()) {
+      Service.push(
+          service: ListApi.transferStatusDriver,
+          context: context,
+          body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, ListApi.pathTransferSetDriver(transferModel.id!), Mapper.asJsonString(generatePayload())],
+          listener: ResponseListener(
+              onResponseDone: (code, message, body, id, packet) {
+                Get.back();
+                isLoading.value = false;
+              },
+              onResponseFail: (code, message, body, id, packet) {
+                Get.snackbar(
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 5),
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+                isLoading.value = false;
+              },
+              onResponseError: (exception, stacktrace, id, packet) {
+                Get.snackbar(
+                  'Pesan',
+                  'Terjadi kesalahan internal',
+                  snackPosition: SnackPosition.TOP,
+                  duration: const Duration(seconds: 5),
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+                isLoading.value = false;
+              },
+              onTokenInvalid: Constant.invalidResponse()));
+    } else {
+      isLoading.value = false;
+    }
+  }
+
+  bool validation() {
+    if (assignDriver.controller.textSelected.value.isEmpty) {
+      assignDriver.controller.showAlert();
+      Scrollable.ensureVisible(assignDriver.controller.formKey.currentContext!);
+      return false;
     }
 
-    void getListDriver(){
-        Service.push(
-            service: ListApi.getListDriver,
-            context: context,
-            body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, "driver",1,50],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {
-                    Map<String, bool> mapList = {};
-                    for (var units in (body as ListDriverResponse).data) {
-                      mapList[units!.fullName!] = false;
-                    }
-                    assignDriver.controller.generateItems(mapList);
-                    for (var result in body.data) {
-                        listDriver.value.add(result);
-                    }
-                    isLoading.value = false;
-                    timeEnd = DateTime.now();
-                    Duration totalTime = timeEnd.difference(timeStart);
-                    Constant.trackRenderTime("Driver_Form_Transfer", totalTime);
-                },
-                onResponseFail: (code, message, body, id, packet) {
-                    Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,);
-                    isLoading.value = false;
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    Get.snackbar(
-                        "Pesan",
-                        "Terjadi kesalahan internal",
-                        snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                        colorText: Colors.white,
-                        backgroundColor: Colors.red,);
-                    isLoading.value = false;
-                },
-                onTokenInvalid: Constant.invalidResponse()));
-    }
+    return true;
+  }
 
-    void updateStatus(){
-        if(validation()){
-            Service.push(
-                service: ListApi.transferStatusDriver,
-                context: context,
-                body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, ListApi.pathTransferSetDriver(transferModel.id!), Mapper.asJsonString(generatePayload())],
-                listener: ResponseListener(
-                    onResponseDone: (code, message, body, id, packet) {
-                        Get.back();
-                        isLoading.value = false;
-                    },
-                    onResponseFail: (code, message, body, id, packet) {
-                        Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                        isLoading.value = false;
-                    },
-                    onResponseError: (exception, stacktrace, id, packet) {
-                        Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
-                            snackPosition: SnackPosition.TOP,
-                        duration: const Duration(seconds: 5),
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red,);
-                        isLoading.value = false;
-                    },
-                    onTokenInvalid: Constant.invalidResponse()));
-        } else {
-            isLoading.value =false;
-        }
+  TransferModel generatePayload() {
+    final Profile? selectDriver = listDriver.value.firstWhereOrNull((element) => element!.fullName == assignDriver.controller.textSelected.value);
 
-    }
-
-    bool validation(){
-        if (assignDriver.controller.textSelected.value.isEmpty) {
-            assignDriver.controller.showAlert();
-            Scrollable.ensureVisible(assignDriver.controller.formKey.currentContext!);
-            return false;
-        }
-
-        return true;
-    }
-
-    TransferModel generatePayload(){
-        Profile? selectDriver = listDriver.value.firstWhereOrNull((element) => element!.fullName == assignDriver.controller.textSelected.value);
-
-        return TransferModel(
-            driverId: selectDriver!.id,
-        );
-    }
+    return TransferModel(
+      driverId: selectDriver!.id,
+    );
+  }
 }
+
 class TransferDriverBindings extends Bindings {
-    BuildContext context;
-    TransferDriverBindings({required this.context});
-    @override
-    void dependencies() {
-        Get.lazyPut(() => TransferDriverController(context: context));
-    }
+  BuildContext context;
+  TransferDriverBindings({required this.context});
+  @override
+  void dependencies() {
+    Get.lazyPut(() => TransferDriverController(context: context));
+  }
 }

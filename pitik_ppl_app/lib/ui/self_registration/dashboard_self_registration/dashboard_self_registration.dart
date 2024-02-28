@@ -2,16 +2,16 @@ import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pitik_ppl_app/ui/self_registration/dashboard_self_registration/dashboard_self_registration_controller.dart';
+import 'dashboard_self_registration_controller.dart';
 
 class DashboardSelfRegistration extends StatelessWidget {
   const DashboardSelfRegistration({super.key});
 
   @override
   Widget build(BuildContext context) {
-    DashboardSelfRegistrationController controller = Get.put(DashboardSelfRegistrationController(context: context));
+    final DashboardSelfRegistrationController controller = Get.put(DashboardSelfRegistrationController(context: context));
     return Scaffold(
-      appBar: PreferredSize(preferredSize: const Size.fromHeight(120), child: AppBarFormForCoop(title: "Operator Kandang", coop: controller.coop)),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(120), child: AppBarFormForCoop(title: 'Operator Kandang', coop: controller.coop)),
       bottomNavigationBar: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -61,7 +61,7 @@ class DashboardSelfRegistration extends StatelessWidget {
                                       style: GlobalVar.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      "${controller.listOperators[index].role!} - ${controller.listOperators[index].phoneNumber!}",
+                                      '${controller.listOperators[index].role!} - ${controller.listOperators[index].phoneNumber!}',
                                       style: GlobalVar.subTextStyle.copyWith(fontSize: 12),
                                     ),
                                   ],

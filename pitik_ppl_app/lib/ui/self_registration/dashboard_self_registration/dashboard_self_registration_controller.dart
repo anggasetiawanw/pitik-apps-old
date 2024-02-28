@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/profile.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
-import 'package:pitik_ppl_app/route.dart';
+import '../../../api_mapping/api_mapping.dart';
+import '../../../route.dart';
 
 class DashboardSelfRegistrationController extends GetxController {
   BuildContext context;
@@ -23,15 +23,15 @@ class DashboardSelfRegistrationController extends GetxController {
   RxList<Profile> listOperators = <Profile>[].obs;
 
   late ButtonFill btAddOperator = ButtonFill(
-      controller: GetXCreator.putButtonFillController("addOperator"),
-      label: "Tambah Operator Kandang",
+      controller: GetXCreator.putButtonFillController('addOperator'),
+      label: 'Tambah Operator Kandang',
       onClick: () => Get.toNamed(RoutePage.addOperatorSelfRegistration, arguments: [coop])!.then((value) {
             isLoading.value = true;
             getListOperators();
           }));
   late ButtonOutline btAddTask = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("btAddTask"),
-      label: "Tugaskan Operator Kandang",
+      controller: GetXCreator.putButtonOutlineController('btAddTask'),
+      label: 'Tugaskan Operator Kandang',
       onClick: () => Get.toNamed(RoutePage.addTaskSelfRegistration, arguments: [coop])!.then((value) {
             isLoading.value = true;
             getListOperators();
@@ -76,8 +76,8 @@ class DashboardSelfRegistrationController extends GetxController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -86,8 +86,8 @@ class DashboardSelfRegistrationController extends GetxController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,

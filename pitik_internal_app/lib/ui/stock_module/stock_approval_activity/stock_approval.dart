@@ -6,16 +6,17 @@ import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_approval_activity/stock_approval_controller.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/stock_status.dart';
+
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/stock_status.dart';
+import 'stock_approval_controller.dart';
 
 class StockApprovalActivity extends StatelessWidget {
   const StockApprovalActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    StockApprovalController controller = Get.put(StockApprovalController(context: context));
+    final StockApprovalController controller = Get.put(StockApprovalController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -30,7 +31,7 @@ class StockApprovalActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Setujui Stock Opname",
+          'Setujui Stock Opname',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -83,14 +84,14 @@ class StockApprovalActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Stock Opname",
+                        'Informasi Stock Opname',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.opnameModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.opnameModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -100,13 +101,16 @@ class StockApprovalActivity extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                StockStatus(stockStatus: "${controller.opnameModel.status}", isApprove: controller.opnameModel.reviewer != null ? true :false,),
+                StockStatus(
+                  stockStatus: '${controller.opnameModel.status}',
+                  isApprove: controller.opnameModel.reviewer != null ? true : false,
+                ),
               ],
             ),
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.opnameModel.operationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.opnameModel.operationUnit!.operationUnitName}'),
           ],
         ),
       );
@@ -116,7 +120,7 @@ class StockApprovalActivity extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController("${product.name!}Approve"),
+            controller: GetXCreator.putAccordionController('${product.name!}Approve'),
             headerText: product.name!,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,14 +144,14 @@ class StockApprovalActivity extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Jumlah sebelum",
+                                        'Jumlah sebelum',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                       ),
                                       const SizedBox(
                                         height: 4,
                                       ),
                                       Text(
-                                        item.previousQuantity == null && item.previousWeight == null ? "-" : "${item.previousQuantity ?? item.previousWeight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
+                                        item.previousQuantity == null && item.previousWeight == null ? '-' : '${item.previousQuantity ?? item.previousWeight ?? 0} ${product.quantityUOM ?? product.weightUOM}',
                                         style: item.previousQuantity == null && item.previousWeight == null
                                             ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                             : item.previousWeight == 0 || item.previousQuantity == 0
@@ -167,14 +171,14 @@ class StockApprovalActivity extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Jumlah Sesudah",
+                                        'Jumlah Sesudah',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                       ),
                                       const SizedBox(
                                         height: 4,
                                       ),
                                       Text(
-                                        "${item.quantity ?? item.weight ?? 0} ${product.quantityUOM ?? product.weightUOM}",
+                                        '${item.quantity ?? item.weight ?? 0} ${product.quantityUOM ?? product.weightUOM}',
                                         style: item.quantity == null && item.weight == null
                                             ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                             : item.weight == 0 || item.quantity == 0
@@ -196,7 +200,7 @@ class StockApprovalActivity extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Jumlah Selisih",
+                                    'Jumlah Selisih',
                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                   ),
                                   const SizedBox(
@@ -204,8 +208,22 @@ class StockApprovalActivity extends StatelessWidget {
                                   ),
                                   Text(
                                     item.previousQuantity == null && item.previousWeight == null
-                                        ? "-"
-                                        : item.quantity != null ? item.quantity! > item.previousQuantity! ? "> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.quantity! < item.previousQuantity! ? "< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.quantity! == 0 ? "-" : "-" : item.weight! > item.previousWeight! ? "> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}" : item.weight! < item.previousWeight! ? "< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}" : item.previousQuantity! - item.weight! == 0 ? "-" : "-",
+                                        ? '-'
+                                        : item.quantity != null
+                                            ? item.quantity! > item.previousQuantity!
+                                                ? '> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}'
+                                                : item.quantity! < item.previousQuantity!
+                                                    ? '< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM ?? product.weightUOM}'
+                                                    : item.previousQuantity! - item.quantity! == 0
+                                                        ? '-'
+                                                        : '-'
+                                            : item.weight! > item.previousWeight!
+                                                ? '> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}'
+                                                : item.weight! < item.previousWeight!
+                                                    ? '< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}'
+                                                    : item.previousQuantity! - item.weight! == 0
+                                                        ? '-'
+                                                        : '-',
                                     style: item.previousQuantity == null && item.previousWeight == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                         : item.quantity != null
@@ -268,7 +286,7 @@ class StockApprovalActivity extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.only(top: 16),
                               child: Text(
-                                "Detail SKU",
+                                'Detail SKU',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -285,14 +303,14 @@ class StockApprovalActivity extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Total/Global(kg)",
+                                    'Total/Global(kg)',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                   ),
                                   const SizedBox(
                                     height: 16,
                                   ),
                                   Text(
-                                    "${(controller.opnameModel.totalWeight ?? 0)} Kg",
+                                    '${controller.opnameModel.totalWeight ?? 0} Kg',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
                                   ),
                                 ],
@@ -309,7 +327,7 @@ class StockApprovalActivity extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                  Text('Berita Acara', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
                                   const SizedBox(
                                     height: 16,
                                   ),
@@ -335,7 +353,7 @@ class StockApprovalActivity extends StatelessWidget {
                                       ),
                                       Expanded(
                                           child: Text(
-                                        "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname diatas",
+                                        'Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname diatas',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                         overflow: TextOverflow.clip,
                                       ))

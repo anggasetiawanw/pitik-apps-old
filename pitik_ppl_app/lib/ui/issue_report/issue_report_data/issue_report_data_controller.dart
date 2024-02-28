@@ -9,7 +9,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/issue.dart';
 import 'package:model/response/issue_list_response.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import '../../../api_mapping/api_mapping.dart';
 
 class IssueReportDataController extends GetxController {
   BuildContext context;
@@ -31,7 +31,7 @@ class IssueReportDataController extends GetxController {
     getIssueList();
   }
 
-  scrollListener() {
+  void scrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         isLoadMore.value = true;
@@ -58,10 +58,10 @@ class IssueReportDataController extends GetxController {
                   body: [
                     'Bearer ${auth.token}',
                     auth.id,
-                    "v2/issues/list/${coop.farmingCycleId}",
+                    'v2/issues/list/${coop.farmingCycleId}',
                     page,
                     limit,
-                    "DESC",
+                    'DESC',
                   ],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
@@ -79,8 +79,8 @@ class IssueReportDataController extends GetxController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -90,8 +90,8 @@ class IssueReportDataController extends GetxController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,

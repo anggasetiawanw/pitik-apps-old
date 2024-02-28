@@ -9,106 +9,102 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/sku_card_order/sku_card_order_controller.dart';
+import '../../utils/constant.dart';
+import 'sku_card_order_controller.dart';
 
 class SkuCardOrder extends StatelessWidget {
   final SkuCardOrderController controller;
-  const SkuCardOrder({super.key, required this.controller});
+  const SkuCardOrder({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() =>
-    controller.isShow.isTrue
-        ?
-    Column(
-      children: controller.index.value.map((int index) {
-        return Container(
-          margin: const EdgeInsets.only(top: 24),
-          child: Column(
-            children: [
-              Container(
-                height: 48,
-                decoration: const BoxDecoration(
-                    color: Color(0xFFFDDAA5),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        topLeft: Radius.circular(8)
-                    )
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text("SKU ${index + 1}")),
-                    GestureDetector(
-                        onTap: () {
-                          if (index == (controller.index.value[controller.itemCount.value - 1]) || controller.itemCount.value == 1) {
-                            controller.addCard();
-                          } else {
-                            _showBottomDialog(context, index, controller);
-                          }
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            color: Colors.transparent,
-                            width: 48,
-                            height: 48,
-                            child: index == (controller.index.value[controller.itemCount.value - 1]) || controller.itemCount.value == 1 ?
-                            const Icon(Icons.add, size: 30, color: AppColors.primaryOrange,)
-                                :Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: SvgPicture.asset("images/delete_sku.svg", fit: BoxFit.cover, width: 20, height: 20),
-                            )
-                        )
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border(
-                    bottom: BorderSide(color: AppColors.outlineColor, width: 1),
-                    left: BorderSide(color: AppColors.outlineColor, width: 1),
-                    right: BorderSide(color: AppColors.outlineColor, width: 1),
-                    top: BorderSide(color: AppColors.outlineColor, width: 0.1),
-                  ),
-                  // border: Border.all(color: AppColors.grey, width: 1),
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-                ),
+    return Obx(() => controller.isShow.isTrue
+        ? Column(
+            children: controller.index.value.map((int index) {
+              return Container(
+                margin: const EdgeInsets.only(top: 24),
                 child: Column(
                   children: [
-                    controller.spinnerCategories.value[index],
-                    Obx(() => controller.isLoadApi.isTrue ? controller.spinnerSku.value[index] : controller.spinnerSku.value[index],),
-                    controller.editFieldJumlahAyam.value[index],
-                    controller.spinnerTypePotongan.value[index],
-                    controller.editFieldPotongan.value[index],
-                    controller.editFieldKebutuhan.value[index],
-                    controller.editFieldHarga.value[index],
-                    index == (controller.index.value[controller.itemCount.value - 1]) && controller.itemCount.value != 1 ?
-                    ButtonOutline(
-                        controller: GetXCreator.putButtonOutlineController("Cancel$index"),
-                        label: "Cancel",
-                        onClick: (){
-                          _showBottomDialog(context, index, controller);
-                        })
-                        : const SizedBox(),
-                    const SizedBox(height: 16,),
+                    Container(
+                      height: 48,
+                      decoration: const BoxDecoration(color: Color(0xFFFDDAA5), borderRadius: BorderRadius.only(topRight: Radius.circular(8), topLeft: Radius.circular(8))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: Text('SKU ${index + 1}')),
+                          GestureDetector(
+                              onTap: () {
+                                if (index == (controller.index.value[controller.itemCount.value - 1]) || controller.itemCount.value == 1) {
+                                  controller.addCard();
+                                } else {
+                                  _showBottomDialog(context, index, controller);
+                                }
+                              },
+                              child: Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                                  color: Colors.transparent,
+                                  width: 48,
+                                  height: 48,
+                                  child: index == (controller.index.value[controller.itemCount.value - 1]) || controller.itemCount.value == 1
+                                      ? const Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: AppColors.primaryOrange,
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.all(12),
+                                          child: SvgPicture.asset('images/delete_sku.svg', fit: BoxFit.cover, width: 20, height: 20),
+                                        )))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom: BorderSide(color: AppColors.outlineColor, width: 1),
+                          left: BorderSide(color: AppColors.outlineColor, width: 1),
+                          right: BorderSide(color: AppColors.outlineColor, width: 1),
+                          top: BorderSide(color: AppColors.outlineColor, width: 0.1),
+                        ),
+                        // border: Border.all(color: AppColors.grey, width: 1),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                      ),
+                      child: Column(
+                        children: [
+                          controller.spinnerCategories.value[index],
+                          Obx(
+                            () => controller.isLoadApi.isTrue ? controller.spinnerSku.value[index] : controller.spinnerSku.value[index],
+                          ),
+                          controller.editFieldJumlahAyam.value[index],
+                          controller.spinnerTypePotongan.value[index],
+                          controller.editFieldPotongan.value[index],
+                          controller.editFieldKebutuhan.value[index],
+                          controller.editFieldHarga.value[index],
+                          index == (controller.index.value[controller.itemCount.value - 1]) && controller.itemCount.value != 1
+                              ? ButtonOutline(
+                                  controller: GetXCreator.putButtonOutlineController('Cancel$index'),
+                                  label: 'Cancel',
+                                  onClick: () {
+                                    _showBottomDialog(context, index, controller);
+                                  })
+                              : const SizedBox(),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        );
-      }).toList(),
-    )
+              );
+            }).toList(),
+          )
         : const SizedBox());
   }
 
-  _showBottomDialog(BuildContext context, int index, SkuCardOrderController controller) {
+  Future<dynamic> _showBottomDialog(BuildContext context, int index, SkuCardOrderController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -120,7 +116,7 @@ class SkuCardOrder extends StatelessWidget {
               borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
             ),
             child: Column(
-                mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 8),
@@ -134,19 +130,17 @@ class SkuCardOrder extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin menghapus data SKU?",
+                    'Apakah kamu yakin ingin menghapus data SKU?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text(
-                      "Data SKU yang kamu hapus akan hilang secara permanen pastikan kembali sebelum menghapus",
-                      style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Data SKU yang kamu hapus akan hilang secara permanen pastikan kembali sebelum menghapus', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
-                  child: SvgPicture.asset("images/sku_delete_sheet.svg"),
+                  child: SvgPicture.asset('images/sku_delete_sheet.svg'),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 16),
@@ -155,8 +149,8 @@ class SkuCardOrder extends StatelessWidget {
                     children: [
                       Expanded(
                           child: ButtonFill(
-                              controller: GetXCreator.putButtonFillController("iyaSku$index"),
-                              label: "Ya",
+                              controller: GetXCreator.putButtonFillController('iyaSku$index'),
+                              label: 'Ya',
                               onClick: () {
                                 controller.removeCard(index);
                                 Get.back();
@@ -164,21 +158,20 @@ class SkuCardOrder extends StatelessWidget {
                       const SizedBox(width: 16),
                       Expanded(
                           child: ButtonOutline(
-                              controller: GetXCreator.putButtonOutlineController("tidakVisit$index"),
-                              label: "Tidak",
+                              controller: GetXCreator.putButtonOutlineController('tidakVisit$index'),
+                              label: 'Tidak',
                               onClick: () {
                                 Get.back();
-                              }
-                          )
-                      ),
+                              })),
                     ],
                   ),
                 ),
-                const SizedBox(height: Constant.bottomSheetMargin,)
+                const SizedBox(
+                  height: Constant.bottomSheetMargin,
+                )
               ],
             ),
           );
-        }
-    );
+        });
   }
 }

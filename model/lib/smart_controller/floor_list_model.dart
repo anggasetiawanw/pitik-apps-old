@@ -10,18 +10,14 @@ import 'floor_model.dart';
 
 @SetupModel
 class FloorList {
+  String? coopName;
 
-    String? coopName;
+  @IsChildren()
+  List<Floor?> floor;
 
-    @IsChildren()
-    List<Floor?> floor;
+  FloorList({this.coopName, this.floor = const []});
 
-    FloorList({this.coopName, this.floor = const []});
-
-    static FloorList toResponseModel(Map<String, dynamic> map) {
-        return FloorList(
-            coopName: map['coopName'],
-            floor: Mapper.children<Floor>(map['floor'])
-        );
-    }
+  static FloorList toResponseModel(Map<String, dynamic> map) {
+    return FloorList(coopName: map['coopName'], floor: Mapper.children<Floor>(map['floor']));
+  }
 }

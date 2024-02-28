@@ -14,10 +14,11 @@ import 'package:model/profile.dart';
 import 'package:model/token_device.dart';
 import 'package:model/user_google_model.dart';
 import 'package:model/x_app_model.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../api_mapping/api_mapping.dart';
+import '../api_mapping/list_api.dart';
+import 'route.dart';
 
 class Constant {
   static String? mDeviceId;
@@ -42,8 +43,8 @@ class Constant {
   static var isScFleet = false.obs;
   static const double bottomSheetMargin = 24;
   static TokenDevice? tokenDevice;
-  static RxString pushNotifPayload = "".obs;
-  static String deviceIdRegister = "deviceId";
+  static RxString pushNotifPayload = ''.obs;
+  static String deviceIdRegister = 'deviceId';
 
   static Mixpanel? mixpanel;
 
@@ -103,60 +104,60 @@ class Constant {
   ///   A `VoidCallback` is being returned.
   static VoidCallback invalidResponse() {
     return () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String tokenDeviceId = prefs.getString(Constant.deviceIdRegister) ?? "";
-        Service.push(
-            apiKey: ApiMapping.userApi,
-            service: ListApi.deleteDevice,
-            context: Get.context!,
-            body: [auth!.token, auth!.id, "v2/devices/$tokenDeviceId"],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {},
-                onResponseFail: (code, message, body, id, packet) {
-                    Get.snackbar(
-                    "Pesan",
-                    "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                    snackPosition: SnackPosition.TOP,
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,
-                    );
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    Get.snackbar(
-                    "Pesan",
-                    "Terjadi Kesalahan Internal",
-                    snackPosition: SnackPosition.TOP,
-                    colorText: Colors.white,
-                    backgroundColor: Colors.red,
-                    );
-                },
-                onTokenInvalid: (){}));
-        AuthImpl().delete(null, []);
-        UserGoogleImpl().delete(null, []);
-        ProfileImpl().delete(null, []);
-        GoogleSignIn().disconnect();
-        FirebaseAuth.instance.signOut();
-        isChangeBranch.value = false;
-        isDeveloper.value = false;
-        isShopKepper.value = false;
-        isScRelation.value = false;
-        isOpsLead.value = false;
-        isSales.value = false;
-        isSalesLead.value = false;
-        Get.offAllNamed(RoutePage.loginPage);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String tokenDeviceId = prefs.getString(Constant.deviceIdRegister) ?? '';
+      Service.push(
+          apiKey: ApiMapping.userApi,
+          service: ListApi.deleteDevice,
+          context: Get.context!,
+          body: [auth!.token, auth!.id, 'v2/devices/$tokenDeviceId'],
+          listener: ResponseListener(
+              onResponseDone: (code, message, body, id, packet) {},
+              onResponseFail: (code, message, body, id, packet) {
+                Get.snackbar(
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
+                  snackPosition: SnackPosition.TOP,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+              },
+              onResponseError: (exception, stacktrace, id, packet) {
+                Get.snackbar(
+                  'Pesan',
+                  'Terjadi Kesalahan Internal',
+                  snackPosition: SnackPosition.TOP,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.red,
+                );
+              },
+              onTokenInvalid: () {}));
+      await AuthImpl().delete(null, []);
+      await UserGoogleImpl().delete(null, []);
+      await ProfileImpl().delete(null, []);
+      await GoogleSignIn().disconnect();
+      await FirebaseAuth.instance.signOut();
+      isChangeBranch.value = false;
+      isDeveloper.value = false;
+      isShopKepper.value = false;
+      isScRelation.value = false;
+      isOpsLead.value = false;
+      isSales.value = false;
+      isSalesLead.value = false;
+      await Get.offAllNamed(RoutePage.loginPage);
     };
   }
 
   static String getTypePotongan(String type) {
     switch (type) {
-      case "REGULAR":
-        return "Potong Biasa";
-      case "BEKAKAK":
-        return "Bekakak";
-      case "UTUH":
-        return "Utuh";
+      case 'REGULAR':
+        return 'Potong Biasa';
+      case 'BEKAKAK':
+        return 'Bekakak';
+      case 'UTUH':
+        return 'Utuh';
       default:
-        return "Potong Biasa";
+        return 'Potong Biasa';
     }
   }
 
@@ -184,14 +185,14 @@ class Constant {
   /// map that contains key-value pairs representing the base properties that you
   /// want to set for your Mixpanel instance. These properties will be sent with
   /// every event that you track using Mixpanel.
-  static void initMixpanel(String token, Map<String, dynamic> baseProperties) async {
+  static Future<void> initMixpanel(String token, Map<String, dynamic> baseProperties) async {
     mixpanel = await Mixpanel.init(token, trackAutomaticEvents: true);
     mixpanel!.registerSuperProperties(baseProperties);
 
     if (profileUser != null) {
       mixpanel!.identify(profileUser!.phoneNumber!);
-      mixpanel!.getPeople().set("\$name", profileUser!.phoneNumber!);
-      mixpanel!.getPeople().set("\$email", profileUser!.email!);
+      mixpanel!.getPeople().set('\$name', profileUser!.phoneNumber!);
+      mixpanel!.getPeople().set('\$email', profileUser!.email!);
     }
   }
 
@@ -236,7 +237,7 @@ class Constant {
   /// data that you want to include when tracking the event with Mixpanel.
   static void trackRenderTime(String pageName, Duration totalTime) {
     if (mixpanel != null) {
-      mixpanel!.track("Render_Time", properties: {'Page': pageName, 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+      mixpanel!.track('Render_Time', properties: {'Page': pageName, 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
     }
   }
 
@@ -250,7 +251,7 @@ class Constant {
   ///   timeStart (DateTime): The start time of the rendering process.
   ///   timeEnd (DateTime): The time when the rendering process ends.
   static void sendRenderTimeMixpanel(String page, DateTime timeStart, DateTime timeEnd) {
-    Duration totalTime = timeEnd.difference(timeStart);
-    trackWithMap("Render_Time", {'Page': page, 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+    final Duration totalTime = timeEnd.difference(timeStart);
+    trackWithMap('Render_Time', {'Page': page, 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
   }
 }

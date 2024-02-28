@@ -9,15 +9,12 @@ import 'package:model/farm_projection/farm_projection_model.dart';
 
 @SetupModel
 class FarmProjectionResponse {
+  @IsChild()
+  FarmProjection? data;
 
-    @IsChild()
-    FarmProjection? data;
+  FarmProjectionResponse({this.data});
 
-    FarmProjectionResponse({this.data});
-
-    static FarmProjectionResponse toResponseModel(Map<String, dynamic> map) {
-        return FarmProjectionResponse(
-            data: Mapper.child<FarmProjection>(map['data'])
-        );
-    }
+  static FarmProjectionResponse toResponseModel(Map<String, dynamic> map) {
+    return FarmProjectionResponse(data: Mapper.child<FarmProjection>(map['data']));
+  }
 }

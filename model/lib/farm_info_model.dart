@@ -9,15 +9,12 @@ import 'package:model/farm_info_detail_model.dart';
 
 @SetupModel
 class FarmInfo {
+  @IsChild()
+  FarmInfoDetail? farmingInfo;
 
-    @IsChild()
-    FarmInfoDetail? farmingInfo;
+  FarmInfo({this.farmingInfo});
 
-    FarmInfo({this.farmingInfo});
-
-    static FarmInfo toResponseModel(Map<String, dynamic> map) {
-        return FarmInfo(
-            farmingInfo: Mapper.child<FarmInfoDetail>(map['farmingInfo'])
-        );
-    }
+  static FarmInfo toResponseModel(Map<String, dynamic> map) {
+    return FarmInfo(farmingInfo: Mapper.child<FarmInfoDetail>(map['farmingInfo']));
+  }
 }

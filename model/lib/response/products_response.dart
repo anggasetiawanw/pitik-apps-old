@@ -7,15 +7,12 @@ import '../product_model.dart';
 
 @SetupModel
 class ProductsResponse {
+  @IsChildren()
+  List<Product?> data;
 
-    @IsChildren()
-    List<Product?> data;
+  ProductsResponse({this.data = const []});
 
-    ProductsResponse({this.data = const []});
-
-    static ProductsResponse toResponseModel(Map<String, dynamic> map) {
-        return ProductsResponse(
-            data: Mapper.children<Product>(map['data'])
-        );
-    }
+  static ProductsResponse toResponseModel(Map<String, dynamic> map) {
+    return ProductsResponse(data: Mapper.children<Product>(map['data']));
+  }
 }

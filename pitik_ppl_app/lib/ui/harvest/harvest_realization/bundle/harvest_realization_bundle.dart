@@ -1,4 +1,3 @@
-
 import 'package:model/coop_model.dart';
 import 'package:model/harvest_model.dart';
 import 'package:model/realization_model.dart';
@@ -8,9 +7,9 @@ import 'package:model/realization_model.dart';
 ///@create date 23/11/2023
 
 class HarvestRealizationBundle {
-    Coop getCoop;
-    Harvest? getHarvest;
-    Realization? getRealization;
+  Coop getCoop;
+  Harvest? getHarvest;
+  Realization? getRealization;
 
-    HarvestRealizationBundle({required this.getCoop, this.getHarvest, this.getRealization});
+  HarvestRealizationBundle({required this.getCoop, this.getHarvest, this.getRealization});
 }

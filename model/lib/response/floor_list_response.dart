@@ -9,15 +9,12 @@ import 'package:model/smart_controller/floor_list_model.dart';
 
 @SetupModel
 class FloorListResponse {
+  @IsChild()
+  FloorList? data;
 
-    @IsChild()
-    FloorList? data;
+  FloorListResponse({this.data});
 
-    FloorListResponse({this.data});
-
-    static FloorListResponse toResponseModel(Map<String, dynamic> map) {
-        return FloorListResponse(
-            data: Mapper.child<FloorList>(map['data'])
-        );
-    }
+  static FloorListResponse toResponseModel(Map<String, dynamic> map) {
+    return FloorListResponse(data: Mapper.child<FloorList>(map['data']));
+  }
 }

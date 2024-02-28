@@ -16,11 +16,12 @@ import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/list_opnames_response.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/stock_aggregate_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/controllers/tab_detail_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/controllers/tab_detail_controller.dart';
 
 class StockHomeController extends GetxController {
   BuildContext context;
@@ -48,23 +49,23 @@ class StockHomeController extends GetxController {
   Products? selectCategory;
   RxDouble totalWeightGlobal = 0.0.obs;
   late SpinnerField sourceLatestStock = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("sourceLatestStock"),
-      label: "Sumber*",
-      hint: "Pilih Salah Satu",
-      alertText: "Sumber Harus dipilih!",
+      controller: GetXCreator.putSpinnerFieldController('sourceLatestStock'),
+      label: 'Sumber*',
+      hint: 'Pilih Salah Satu',
+      alertText: 'Sumber Harus dipilih!',
       hasSubtitle: true,
       items: const {},
       onSpinnerSelected: (value) {
         if (listOperationUnits.value.isNotEmpty) {
-          OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
+          final OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
           if (selectSource != null) {
             // isLoadingStock.value = true;
             // pieData.value.clear();
             // getLatestStock(selectSource.id!);
             totalWeightGlobal.value = selectSource.totalStockWeight!;
-            categoryStock.controller.setTextSelected("");
+            categoryStock.controller.setTextSelected('');
             sourceStock = selectSource;
-            Map<String, bool> mapStock = {};
+            final Map<String, bool> mapStock = {};
             for (var units in selectSource.purchasableProducts!) {
               mapStock[units!.name!] = false;
             }
@@ -75,10 +76,10 @@ class StockHomeController extends GetxController {
       });
 
   late SpinnerField categoryStock = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("catStockOpname"),
-      label: "Kategori SKU*",
-      hint: "Pilih salah satu",
-      alertText: "Sumber harus dipilih!",
+      controller: GetXCreator.putSpinnerFieldController('catStockOpname'),
+      label: 'Kategori SKU*',
+      hint: 'Pilih salah satu',
+      alertText: 'Sumber harus dipilih!',
       items: const {},
       onSpinnerSelected: (value) {
         if (sourceStock != null) {
@@ -89,10 +90,10 @@ class StockHomeController extends GetxController {
       });
 
   late SpinnerField sourceOpname = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("souceOpname"),
-      label: "Sumber*",
-      hint: "Pilih Salah Satu",
-      alertText: "Sumber Harus Di pilih",
+      controller: GetXCreator.putSpinnerFieldController('souceOpname'),
+      label: 'Sumber*',
+      hint: 'Pilih Salah Satu',
+      alertText: 'Sumber Harus Di pilih',
       hasSubtitle: true,
       items: const {},
       onSpinnerSelected: (value) {
@@ -109,10 +110,10 @@ class StockHomeController extends GetxController {
       });
 
   late ButtonFill stockOpnameButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("stockOpname"),
-      label: "Stock Opname",
+      controller: GetXCreator.putButtonFillController('stockOpname'),
+      label: 'Stock Opname',
       onClick: () {
-        Constant.track("Click_Stock_Opname");
+        Constant.track('Click_Stock_Opname');
         Get.toNamed(RoutePage.stockOpname, arguments: [null, false, selectSourceOpname])!.then((value) {
           Timer(const Duration(milliseconds: 500), () {
             if (selectSourceOpname != null) {
@@ -135,7 +136,9 @@ class StockHomeController extends GetxController {
     sourceLatestStock.controller.invisibleSpinner();
     categoryStock.controller.disable();
     tabListener();
-    tooltip = TooltipBehavior(enable: true,);
+    tooltip = TooltipBehavior(
+      enable: true,
+    );
   }
 
   @override
@@ -145,7 +148,7 @@ class StockHomeController extends GetxController {
     getListSourceUnit();
   }
 
-  scrollListener() async {
+  void scrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         if (listOpname.value.isNotEmpty) {
@@ -157,7 +160,7 @@ class StockHomeController extends GetxController {
     });
   }
 
-  tabListener() async {
+  void tabListener() {
     tabController.controller.addListener(() {
       if (tabController.controller.index == 1 && sourceLatestStock.items.values.isEmpty) {
         sourceLatestStock.controller.generateItems(mapList);
@@ -181,7 +184,7 @@ class StockHomeController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-                Map<String, String> lisTotal = {};
+              final Map<String, String> lisTotal = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
                 lisTotal[units.operationUnitName!] = units.totalStockWeight!.toStringAsFixed(2);
@@ -196,13 +199,13 @@ class StockHomeController extends GetxController {
               isLoading.value = false;
               sourceLatestStock.controller.visibleSpinner();
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Stock_Home", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Stock_Home', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -212,8 +215,8 @@ class StockHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -250,8 +253,8 @@ class StockHomeController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -261,15 +264,14 @@ class StockHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               isLoadingOpname.value = false;
-              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
@@ -281,12 +283,15 @@ class StockHomeController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, ListApi.pathGetListStockByUnit(id), productCategoryId],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Random random = Random();
+              final Random random = Random();
               chartData.value.clear();
               for (var units in (body as ListStockAggregateResponse).data[0]!.productItems!) {
-                if (body.data[0]!.productCategoryName == AppStrings.LIVE_BIRD || body.data[0]!.productCategoryName == AppStrings.AYAM_UTUH || body.data[0]!.productCategoryName == AppStrings.BRANGKAS || body.data[0]!.productCategoryName == AppStrings.KARKAS) {
-                  units!.name!.replaceAll("${body.data[0]!.productCategoryName}", "");
-                  units.name!.replaceAll("kg}", "");
+                if (body.data[0]!.productCategoryName == AppStrings.LIVE_BIRD ||
+                    body.data[0]!.productCategoryName == AppStrings.AYAM_UTUH ||
+                    body.data[0]!.productCategoryName == AppStrings.BRANGKAS ||
+                    body.data[0]!.productCategoryName == AppStrings.KARKAS) {
+                  units!.name!.replaceAll('${body.data[0]!.productCategoryName}', '');
+                  units.name!.replaceAll('kg}', '');
                   chartData.value.add(ChartData(body.data[0]!.productCategoryName!, units.name!, units.availableQuantity!, units.availableWeight!, Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1)));
                 } else {
                   chartData.value.add(ChartData(body.data[0]!.productCategoryName!, units!.name!, 0, units.availableWeight!, Color.fromRGBO(random.nextInt(255), random.nextInt(255), random.nextInt(255), 1)));
@@ -299,8 +304,8 @@ class StockHomeController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -310,15 +315,14 @@ class StockHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Something Wrong,$exception}",
+                'Pesan',
+                'Something Wrong,$exception}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               isLoadingStock.value = false;
-              print("$stacktrace");
             },
             onTokenInvalid: Constant.invalidResponse()));
   }

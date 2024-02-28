@@ -7,16 +7,12 @@ import 'package:model/internal_app/purchase_model.dart';
 
 @SetupModel
 class PurchaseResponse {
-
   int code;
   Purchase? data;
 
   PurchaseResponse({required this.code, required this.data});
 
   static PurchaseResponse toResponseModel(Map<String, dynamic> map) {
-    return PurchaseResponse(
-        code: map['code'],
-        data: Mapper.child<Purchase>(map['data'])
-    );
+    return PurchaseResponse(code: map['code'], data: Mapper.child<Purchase>(map['data']));
   }
 }

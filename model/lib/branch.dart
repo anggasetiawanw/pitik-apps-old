@@ -1,4 +1,3 @@
-
 import 'engine_library.dart';
 
 /*
@@ -7,16 +6,12 @@ import 'engine_library.dart';
 
 @SetupModel
 class Branch {
+  String? id;
+  String? name;
 
-    String? id;
-    String? name;
+  Branch({this.id, this.name});
 
-    Branch({this.id, this.name});
-
-    static Branch toResponseModel(Map<String, dynamic> map) {
-        return Branch(
-            id: map['id'],
-            name: map['name']
-        );
-    }
+  static Branch toResponseModel(Map<String, dynamic> map) {
+    return Branch(id: map['id'], name: map['name']);
+  }
 }

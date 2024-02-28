@@ -9,9 +9,9 @@ import 'package:get/get.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/terminate_model.dart';
 import 'package:model/response/internal_app/list_terminate_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 class TerminateHomeController extends GetxController {
   BuildContext context;
@@ -27,10 +27,10 @@ class TerminateHomeController extends GetxController {
   var isLoadMore = false.obs;
 
   late ButtonFill createTerminate = ButtonFill(
-      controller: GetXCreator.putButtonFillController("createTerminate"),
-      label: "Buat Pemusnahan",
+      controller: GetXCreator.putButtonFillController('createTerminate'),
+      label: 'Buat Pemusnahan',
       onClick: () {
-        Constant.track("Click_Buat_Pemusnahan");
+        Constant.track('Click_Buat_Pemusnahan');
         Get.toNamed(RoutePage.terminateForm, arguments: [null, false])!.then((value) {
           isLoading.value = true;
           listTerminate.value.clear();
@@ -42,7 +42,7 @@ class TerminateHomeController extends GetxController {
       });
 
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -57,7 +57,7 @@ class TerminateHomeController extends GetxController {
     getListTerminate();
   }
 
-  scrollListener() async {
+  void scrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         isLoadMore.value = true;
@@ -67,7 +67,7 @@ class TerminateHomeController extends GetxController {
     });
   }
 
-  void pullRefresh(){
+  void pullRefresh() {
     isLoading.value = true;
     listTerminate.value.clear();
     page.value = 1;
@@ -98,13 +98,13 @@ class TerminateHomeController extends GetxController {
                 }
               }
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Data_Pemusnahan", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Data_Pemusnahan', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -115,8 +115,8 @@ class TerminateHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, $stacktrace",
+                'Pesan',
+                'Terjadi Kesalahan, $stacktrace',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

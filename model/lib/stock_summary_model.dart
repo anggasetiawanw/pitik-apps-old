@@ -9,18 +9,14 @@ import 'package:model/product_model.dart';
 
 @SetupModel
 class StockSummary {
+  String? date;
 
-    String? date;
+  @IsChildren()
+  List<Product?> summaries;
 
-    @IsChildren()
-    List<Product?> summaries;
+  StockSummary({this.date, this.summaries = const []});
 
-    StockSummary({this.date, this.summaries = const []});
-
-    static StockSummary toResponseModel(Map<String, dynamic> map) {
-        return StockSummary(
-            date: map['date'],
-            summaries: Mapper.children<Product>(map['summaries'])
-        );
-    }
+  static StockSummary toResponseModel(Map<String, dynamic> map) {
+    return StockSummary(date: map['date'], summaries: Mapper.children<Product>(map['summaries']));
+  }
 }

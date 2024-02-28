@@ -3,17 +3,14 @@ import 'package:model/engine_library.dart';
 
 @SetupModel
 class AssignOperatorCallback {
-    String? id;
+  String? id;
 
-    @IsChild()
-    DataOperatorRequest? data;
+  @IsChild()
+  DataOperatorRequest? data;
 
-    AssignOperatorCallback({this.id, this.data});
+  AssignOperatorCallback({this.id, this.data});
 
-    static  AssignOperatorCallback toResponseModel(Map<String, dynamic> map) {
-        return AssignOperatorCallback (
-            id: map['id'],
-            data: Mapper.child<DataOperatorRequest>(map['data'])
-        );
-    }
+  static AssignOperatorCallback toResponseModel(Map<String, dynamic> map) {
+    return AssignOperatorCallback(id: map['id'], data: Mapper.child<DataOperatorRequest>(map['data']));
+  }
 }

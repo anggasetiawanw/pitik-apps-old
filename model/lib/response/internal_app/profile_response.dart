@@ -7,16 +7,12 @@ import 'package:model/profile.dart';
 
 @SetupModel
 class ProfileResponse {
+  int code;
+  Profile? data;
 
-    int code;
-    Profile? data;
+  ProfileResponse({required this.code, required this.data});
 
-    ProfileResponse({required this.code, required this.data});
-
-    static ProfileResponse toResponseModel(Map<String, dynamic> map) {
-        return ProfileResponse(
-            code: map['code'],
-            data: Mapper.child<Profile>(map['data'])
-        );
-    }
+  static ProfileResponse toResponseModel(Map<String, dynamic> map) {
+    return ProfileResponse(code: map['code'], data: Mapper.child<Profile>(map['data']));
+  }
 }

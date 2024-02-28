@@ -12,9 +12,9 @@ extension ReturnReceiveController on ReceiveController {
     bodyGeneralReturn[BodyQueryReturn.xAppId.index] = Constant.xAppId;
     bodyGeneralReturn[BodyQueryReturn.page.index] = pageOrder.value;
     bodyGeneralReturn[BodyQueryReturn.limit.index] = limit.value;
-    bodyGeneralReturn[BodyQueryReturn.statusReceived.index] = "RECEIVED";
-    bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = "REJECTED";
-    bodyGeneralReturn[BodyQueryReturn.category.index] = "OUTBOUND";
+    bodyGeneralReturn[BodyQueryReturn.statusReceived.index] = 'RECEIVED';
+    bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = 'REJECTED';
+    bodyGeneralReturn[BodyQueryReturn.category.index] = 'OUTBOUND';
     bodyGeneralReturn[BodyQueryReturn.withinProductionTeam.index] = AppStrings.TRUE_LOWERCASE;
   }
 
@@ -62,22 +62,22 @@ extension ReturnReceiveController on ReceiveController {
       bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = null;
     }
     switch (spStatus.controller.textSelected.value) {
-      case "Ditolak":
-        status = "REJECTED";
-        returnStatus = "FULL";
-        bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = "REJECTED";
+      case 'Ditolak':
+        status = 'REJECTED';
+        returnStatus = 'FULL';
+        bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = 'REJECTED';
         break;
-      case "Terkirim Sebagian":
-        status = "REJECTED";
-        returnStatus = "PARTIAL";
-        bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = "REJECTED";
+      case 'Terkirim Sebagian':
+        status = 'REJECTED';
+        returnStatus = 'PARTIAL';
+        bodyGeneralReturn[BodyQueryReturn.statusDelivered.index] = 'REJECTED';
         break;
-      case "Diterima":
-        bodyGeneralReturn[BodyQueryReturn.statusReceived.index] = "RECEIVED";
+      case 'Diterima':
+        bodyGeneralReturn[BodyQueryReturn.statusReceived.index] = 'RECEIVED';
         break;
       default:
     }
-    String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalFilterReceive.getLastTimeSelected());
+    final String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat('yyyy-MM-dd').format(dtTanggalFilterReceive.getLastTimeSelected());
 
     bodyGeneralReturn[BodyQueryReturn.productCategoryId.index] = categorySelect?.id;
     bodyGeneralReturn[BodyQueryReturn.productItemId.index] = productSelect?.id;
@@ -90,7 +90,7 @@ extension ReturnReceiveController on ReceiveController {
     getListReturn();
   }
 
-  scrollOrderListener() async {
+  void scrollOrderListener() {
     scrollOrderController.addListener(() {
       if (scrollOrderController.position.maxScrollExtent == scrollOrderController.position.pixels) {
         isLoadMore.value = true;
@@ -127,8 +127,8 @@ extension ReturnReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -138,8 +138,8 @@ extension ReturnReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

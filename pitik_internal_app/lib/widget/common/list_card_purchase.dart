@@ -4,7 +4,7 @@ import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/purchase_model.dart';
-import 'package:pitik_internal_app/widget/common/purchase_status.dart';
+import 'purchase_status.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -14,7 +14,7 @@ class CardListPurchase extends StatelessWidget {
   final Purchase purchase;
   final Function() onTap;
 
-  const CardListPurchase({super.key, required this.purchase, required this.onTap});
+  const CardListPurchase({required this.purchase, required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class CardListPurchase extends StatelessWidget {
                           height: 4,
                         ),
                         Text(
-                          "${purchase.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}",
+                          '${purchase.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}',
                           style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                           overflow: TextOverflow.clip,
                         ),
@@ -65,13 +65,13 @@ class CardListPurchase extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Jenis Sumber: ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Jenis Sumber: ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
                     purchase.vendor != null
-                        ? "Vendor"
+                        ? 'Vendor'
                         : purchase.jagal != null
-                            ? "Jagal Eksternal"
-                            : "",
+                            ? 'Jagal Eksternal'
+                            : '',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,
                   ),
@@ -84,7 +84,7 @@ class CardListPurchase extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tujuan: ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Tujuan: ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
                     "${purchase.operationUnit == null ? "-" : purchase.operationUnit!.operationUnitName}",
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
@@ -99,14 +99,14 @@ class CardListPurchase extends StatelessWidget {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("SKU: ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                    Text('SKU: ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                     Expanded(
                         child: Text(
                       purchase.products!.isEmpty
-                          ? "-"
+                          ? '-'
                           : purchase.products!.length > 1
-                              ? "${purchase.products![0]!.name} dan ${purchase.products!.length - 1} lainnya"
-                              : "${purchase.products![0]!.name}",
+                              ? '${purchase.products![0]!.name} dan ${purchase.products!.length - 1} lainnya'
+                              : '${purchase.products![0]!.name}',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                       overflow: TextOverflow.clip,
                     ))
@@ -118,10 +118,10 @@ class CardListPurchase extends StatelessWidget {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total Ekor: ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                    Text('Total Ekor: ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                     Expanded(
                         child: Text(
-                      purchase.totalQuantity != null ? "${purchase.totalQuantity} Ekor" : "-",
+                      purchase.totalQuantity != null ? '${purchase.totalQuantity} Ekor' : '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                       overflow: TextOverflow.clip,
                     ))
@@ -133,10 +133,10 @@ class CardListPurchase extends StatelessWidget {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Dibuat oleh: ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                    Text('Dibuat oleh: ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                     Expanded(
                         child: Text(
-                      purchase.createdBy ?? "-",
+                      purchase.createdBy ?? '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                       overflow: TextOverflow.clip,
                     ))

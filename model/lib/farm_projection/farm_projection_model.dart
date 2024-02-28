@@ -9,23 +9,18 @@ import 'package:model/farm_projection/farm_projection_detail_model.dart';
 
 @SetupModel
 class FarmProjection {
+  @IsChild()
+  FarmProjectionDetail? weight;
 
-    @IsChild()
-    FarmProjectionDetail? weight;
+  @IsChild()
+  FarmProjectionDetail? fcr;
 
-    @IsChild()
-    FarmProjectionDetail? fcr;
+  @IsChild()
+  FarmProjectionDetail? mortality;
 
-    @IsChild()
-    FarmProjectionDetail? mortality;
+  FarmProjection({this.weight, this.fcr, this.mortality});
 
-    FarmProjection({this.weight, this.fcr, this.mortality});
-
-    static FarmProjection toResponseModel(Map<String, dynamic> map) {
-        return FarmProjection(
-            weight: Mapper.child<FarmProjectionDetail>(map['weight']),
-            fcr: Mapper.child<FarmProjectionDetail>(map['fcr']),
-            mortality: Mapper.child<FarmProjectionDetail>(map['mortality'])
-        );
-    }
+  static FarmProjection toResponseModel(Map<String, dynamic> map) {
+    return FarmProjection(weight: Mapper.child<FarmProjectionDetail>(map['weight']), fcr: Mapper.child<FarmProjectionDetail>(map['fcr']), mortality: Mapper.child<FarmProjectionDetail>(map['mortality']));
+  }
 }

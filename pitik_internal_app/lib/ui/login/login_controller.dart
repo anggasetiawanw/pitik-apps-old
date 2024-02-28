@@ -25,10 +25,11 @@ import 'package:model/response/internal_app/profile_response.dart';
 import 'package:model/response/token_device_response.dart';
 import 'package:model/user_google_model.dart';
 import 'package:model/x_app_model.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../api_mapping/list_api.dart';
+import '../../utils/constant.dart';
+import '../../utils/route.dart';
 
 class LoginActivityController extends GetxController {
   BuildContext context;
@@ -40,32 +41,32 @@ class LoginActivityController extends GetxController {
 
   var isDemo = false.obs;
 
-  late EditField efUsername = EditField(controller: GetXCreator.putEditFieldController("efUsername"), label: "Username", hint: "Masukan Username", alertText: "Harap masukan username", textUnit: "", maxInput: 50, onTyping: (value, editfield) {});
+  late EditField efUsername = EditField(controller: GetXCreator.putEditFieldController('efUsername'), label: 'Username', hint: 'Masukan Username', alertText: 'Harap masukan username', textUnit: '', maxInput: 50, onTyping: (value, editfield) {});
 
-  PasswordField efPassword = PasswordField(controller: GetXCreator.putPasswordFieldController("efPassword"), label: "Password", hint: "Masukan Password", alertText: "Harap masukan Password", maxInput: 50, onTyping: (value) {});
+  PasswordField efPassword = PasswordField(controller: GetXCreator.putPasswordFieldController('efPassword'), label: 'Password', hint: 'Masukan Password', alertText: 'Harap masukan Password', maxInput: 50, onTyping: (value) {});
 
   late ButtonFill bfLogin = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfSave"),
-      label: "Login",
+      controller: GetXCreator.putButtonFillController('bfSave'),
+      label: 'Login',
       onClick: () async {
         if (efUsername.getInput().isEmpty) {
           efUsername.controller.showAlert();
-          Scrollable.ensureVisible(efUsername.controller.formKey.currentContext!);
+          await Scrollable.ensureVisible(efUsername.controller.formKey.currentContext!);
           return;
         }
         if (efPassword.getInput().isEmpty) {
           efPassword.controller.showAlert();
-          Scrollable.ensureVisible(efPassword.controller.formKey.currentContext!);
+          await Scrollable.ensureVisible(efPassword.controller.formKey.currentContext!);
           return;
         }
-        authLogin(efUsername.getInput(), efPassword.getInput());
+        await authLogin(efUsername.getInput(), efPassword.getInput());
       });
 
   late GoogleSignInButton googleLoginButton = GoogleSignInButton(onTapCallback: (accessToken, error) {
     isLoading.value = true;
     if (accessToken == null && error != null) {
       isLoading.value = false;
-      Get.snackbar("Pesan", "Terjadi Kesalahan, $error", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Pesan', 'Terjadi Kesalahan, $error', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
     } else {
       loginWithGmail(accessToken!);
     }
@@ -75,7 +76,7 @@ class LoginActivityController extends GetxController {
     isLoading.value = true;
     if (identityToken == null && error != null) {
       isLoading.value = false;
-      Get.snackbar("Pesan", "Terjadi Kesalahan, $error", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Pesan', 'Terjadi Kesalahan, $error', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
     } else {
       loginWithApple(identityToken!);
     }
@@ -84,7 +85,7 @@ class LoginActivityController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    bool demo = FirebaseRemoteConfig.instance.getBool("pitik_demo");
+    final bool demo = FirebaseRemoteConfig.instance.getBool('pitik_demo');
     if (demo) {
       isDemo.value = true;
     }
@@ -95,11 +96,13 @@ class LoginActivityController extends GetxController {
       Constant.userGoogle = UserGoogle(
         accessToken: accessToken,
       );
-      String appId = FirebaseRemoteConfig.instance.getString("appId");
+      String appId = FirebaseRemoteConfig.instance.getString('appId');
       if (appId.isEmpty) {
-        appId = FirebaseRemoteConfig.instance.getString("appId");
+        appId = FirebaseRemoteConfig.instance.getString('appId');
       }
-      if (await XAppIdImpl().getById(appId) == null) XAppIdImpl().save(XAppId(appId: appId));
+      if (await XAppIdImpl().getById(appId) == null) {
+        await XAppIdImpl().save(XAppId(appId: appId));
+      }
       Constant.xAppId = appId;
       // ignore: use_build_context_synchronously
       Service.push(
@@ -128,8 +131,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             duration: const Duration(seconds: 5),
@@ -139,8 +142,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
+                            'Pesan',
+                            'Terjadi kesalahan internal',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -153,8 +156,8 @@ class LoginActivityController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
                 Get.snackbar(
-                  "Pesan",
-                  "Fail, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Fail, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -162,24 +165,26 @@ class LoginActivityController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Pesan", "Error, $stacktrace", duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
+                Get.snackbar('Pesan', 'Error, $stacktrace', duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
               },
               onTokenInvalid: Constant.invalidResponse()));
     } catch (err, st) {
       isLoading.value = false;
-      Get.snackbar("Pesan", "Terjadi Kesalah Internal, $err", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
-      FirebaseCrashlytics.instance.recordError("Errors On Login Google : $err", st, fatal: false);
-      FirebaseCrashlytics.instance.log("Errors On Login Google : $err");
+      Get.snackbar('Pesan', 'Terjadi Kesalah Internal, $err', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      await FirebaseCrashlytics.instance.recordError('Errors On Login Google : $err', st, fatal: false);
+      await FirebaseCrashlytics.instance.log('Errors On Login Google : $err');
     }
   }
 
-  void loginWithApple(String identityToken) async {
+  Future<void> loginWithApple(String identityToken) async {
     try {
-      String appId = FirebaseRemoteConfig.instance.getString("appId");
+      String appId = FirebaseRemoteConfig.instance.getString('appId');
       if (appId.isEmpty) {
-        appId = FirebaseRemoteConfig.instance.getString("appId");
+        appId = FirebaseRemoteConfig.instance.getString('appId');
       }
-      if (await XAppIdImpl().getById(appId) == null) XAppIdImpl().save(XAppId(appId: appId));
+      if (await XAppIdImpl().getById(appId) == null) {
+        await XAppIdImpl().save(XAppId(appId: appId));
+      }
       Constant.xAppId = appId;
       // ignore: use_build_context_synchronously
       Service.push(
@@ -207,8 +212,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             duration: const Duration(seconds: 5),
@@ -218,8 +223,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
+                            'Pesan',
+                            'Terjadi kesalahan internal',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -232,8 +237,8 @@ class LoginActivityController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
                 Get.snackbar(
-                  "Pesan",
-                  "Fail, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Fail, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -241,23 +246,25 @@ class LoginActivityController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Pesan", "Error, $stacktrace", duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
+                Get.snackbar('Pesan', 'Error, $stacktrace', duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
               },
               onTokenInvalid: Constant.invalidResponse()));
     } catch (err) {
       isLoading.value = false;
-      Get.snackbar("Pesan", "Terjadi Kesalahan Internal, $err", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Pesan', 'Terjadi Kesalahan Internal, $err', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   Future<void> authLogin(String username, String password) async {
     try {
       isLoading.value = true;
-      String appId = FirebaseRemoteConfig.instance.getString("appId");
+      String appId = FirebaseRemoteConfig.instance.getString('appId');
       if (appId.isEmpty) {
-        appId = FirebaseRemoteConfig.instance.getString("appId");
+        appId = FirebaseRemoteConfig.instance.getString('appId');
       }
-      if (await XAppIdImpl().getById(appId) == null) XAppIdImpl().save(XAppId(appId: appId));
+      if (await XAppIdImpl().getById(appId) == null) {
+        await XAppIdImpl().save(XAppId(appId: appId));
+      }
       Constant.xAppId = appId;
       // ignore: use_build_context_synchronously
       Service.push(
@@ -285,8 +292,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             duration: const Duration(seconds: 5),
@@ -296,8 +303,8 @@ class LoginActivityController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
+                            'Pesan',
+                            'Terjadi kesalahan internal',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -310,8 +317,8 @@ class LoginActivityController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
                 Get.snackbar(
-                  "Pesan",
-                  "Fail, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Fail, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -319,19 +326,19 @@ class LoginActivityController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Pesan", "Error, $stacktrace", duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
+                Get.snackbar('Pesan', 'Error, $stacktrace', duration: const Duration(seconds: 5), snackPosition: SnackPosition.TOP);
               },
               onTokenInvalid: Constant.invalidResponse()));
     } catch (err, st) {
       isLoading.value = false;
-      Get.snackbar("Pesan", "$st", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Pesan', '$st', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  void _sendFirebaseTokenToServer(Auth auth) async {
-    Map deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String osVersion = Platform.operatingSystemVersion;
+  Future<void> _sendFirebaseTokenToServer(Auth auth) async {
+    final Map<dynamic, dynamic> deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String osVersion = Platform.operatingSystemVersion;
 
     Service.push(
         apiKey: 'userApi',
@@ -340,13 +347,13 @@ class LoginActivityController extends GetxController {
         body: [auth.token, auth.id, prefs.getString('firebaseToken') ?? '-', Platform.isAndroid ? 'android' : 'ios', osVersion, deviceInfo['model'] ?? '-'],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString(Constant.deviceIdRegister, (body as TokenDeviceResponse).data!.id!);
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString(Constant.deviceIdRegister, (body as TokenDeviceResponse).data!.id!);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                '${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -354,8 +361,8 @@ class LoginActivityController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,

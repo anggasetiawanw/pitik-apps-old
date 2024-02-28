@@ -3,65 +3,62 @@
 import 'package:engine/util/convert.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.idd>
+/// @create date 11/09/2023
 
 class SmartScaleAdditionalUtil {
-
-    static int getTotalChicken(SmartScale data) {
-        int count = 0;
-        if (data.records.isNotEmpty) {
-            for (var element in data.records) {
-                count += element!.count!;
-            }
-        } else if (data.details.isNotEmpty) {
-            for (var element in data.details) {
-                count += element!.totalCount!;
-            }
-        }
-
-        return count;
+  static int getTotalChicken(SmartScale data) {
+    int count = 0;
+    if (data.records.isNotEmpty) {
+      for (var element in data.records) {
+        count += element!.count!;
+      }
+    } else if (data.details.isNotEmpty) {
+      for (var element in data.details) {
+        count += element!.totalCount!;
+      }
     }
 
-    static double getTonase(SmartScale data) {
-        double count = 0.0;
-        if (data.records.isNotEmpty) {
-            for (var element in data.records) {
-                count += element!.weight!;
-            }
-        } else if (data.details.isNotEmpty) {
-            for (var element in data.details) {
-                count += element!.totalWeight!;
-            }
-        }
+    return count;
+  }
 
-        return count;
+  static double getTonase(SmartScale data) {
+    double count = 0.0;
+    if (data.records.isNotEmpty) {
+      for (var element in data.records) {
+        count += element!.weight!;
+      }
+    } else if (data.details.isNotEmpty) {
+      for (var element in data.details) {
+        count += element!.totalWeight!;
+      }
     }
 
-    static double getAverageWeight(SmartScale data) {
-        int i;
-        double sumWeight = 0;
-        int sumChicken = 0;
+    return count;
+  }
 
-        if (data.records.isNotEmpty) {
-            for (i = 0; i < data.records.length ; i++) {
-                sumWeight = sumWeight + data.records[i]!.weight!;
-                sumChicken = sumChicken + data.records[i]!.count!;
-            }
-        } else if (data.details.isNotEmpty) {
-            for (i = 0; i < data.details.length ; i++) {
-                sumWeight = sumWeight + data.details[i]!.totalWeight!;
-                sumChicken = sumChicken + data.details[i]!.totalCount!;
-            }
-        }
+  static double getAverageWeight(SmartScale data) {
+    int i;
+    double sumWeight = 0;
+    int sumChicken = 0;
 
-        return sumWeight / sumChicken;
+    if (data.records.isNotEmpty) {
+      for (i = 0; i < data.records.length; i++) {
+        sumWeight = sumWeight + data.records[i]!.weight!;
+        sumChicken = sumChicken + data.records[i]!.count!;
+      }
+    } else if (data.details.isNotEmpty) {
+      for (i = 0; i < data.details.length; i++) {
+        sumWeight = sumWeight + data.details[i]!.totalWeight!;
+        sumChicken = sumChicken + data.details[i]!.totalCount!;
+      }
     }
 
-    static String getDateWeighing(SmartScale data) => Convert.getDate(data.date);
-    static String getStartWeighing(SmartScale data) => Convert.getDate(data.startDate);
-    static String getEndWeighing(SmartScale data) => Convert.getDate(data.executionDate);
+    return sumWeight / sumChicken;
+  }
+
+  static String getDateWeighing(SmartScale data) => Convert.getDate(data.date);
+  static String getStartWeighing(SmartScale data) => Convert.getDate(data.startDate);
+  static String getEndWeighing(SmartScale data) => Convert.getDate(data.executionDate);
 }

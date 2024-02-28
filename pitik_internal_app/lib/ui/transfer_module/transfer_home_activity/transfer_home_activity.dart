@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/transfer_module/transfer_home_activity/transfer_home_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/list_card_transfer.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/list_card_transfer.dart';
+import '../../../widget/common/loading.dart';
+import 'transfer_home_controller.dart';
 
 class TransferHomeActivity extends StatelessWidget {
   const TransferHomeActivity({super.key});
@@ -29,7 +30,7 @@ class TransferHomeActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Transfer",
+          'Transfer',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -53,7 +54,7 @@ class TransferHomeActivity extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             child: Center(
                               child: Text(
-                                "List Transfer Belum Ada Data!",
+                                'List Transfer Belum Ada Data!',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                 textAlign: TextAlign.center,
                               ),
@@ -70,7 +71,7 @@ class TransferHomeActivity extends StatelessWidget {
                                 controller: controller.scrollController,
                                 itemCount: controller.isLoadMore.isTrue ? controller.listTransfer.value.length + 1 : controller.listTransfer.value.length,
                                 itemBuilder: (context, index) {
-                                  int length = controller.listTransfer.value.length;
+                                  final int length = controller.listTransfer.value.length;
                                   if (index >= length) {
                                     return const Column(
                                       children: [
@@ -104,20 +105,20 @@ class TransferHomeActivity extends StatelessWidget {
                           ),
                   ),
           ),
-          if(Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                    ),
-                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                    child: controller.createTransfer,
-                    ),
+          if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 ),
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                child: controller.createTransfer,
+              ),
+            ),
         ],
       ),
     );

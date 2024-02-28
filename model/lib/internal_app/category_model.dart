@@ -8,25 +8,20 @@ import 'package:model/engine_library.dart';
 
 @SetupModel
 class CategoryModel {
-    String? id;
-    String? name;    
-    double? minValue;
-    double? maxValue;
+  String? id;
+  String? name;
+  double? minValue;
+  double? maxValue;
 
-    CategoryModel({this.id, this.name, this.maxValue,this.minValue});
+  CategoryModel({this.id, this.name, this.maxValue, this.minValue});
 
-     static CategoryModel toResponseModel(Map<String, dynamic> map) {
-        if(map['maxValue'] is int) {
-            map['maxValue'] = map['maxValue'].toDouble();
-        }
-        if(map['minValue'] is int) {
-            map['minValue'] = map['minValue'].toDouble();
-        }
-        return CategoryModel(
-            id: map['id'],
-            name: map['name'],
-            minValue: map['minValue'],
-            maxValue: map['maxValue']
-        );
-    }   
+  static CategoryModel toResponseModel(Map<String, dynamic> map) {
+    if (map['maxValue'] is int) {
+      map['maxValue'] = map['maxValue'].toDouble();
+    }
+    if (map['minValue'] is int) {
+      map['minValue'] = map['minValue'].toDouble();
+    }
+    return CategoryModel(id: map['id'], name: map['name'], minValue: map['minValue'], maxValue: map['maxValue']);
+  }
 }

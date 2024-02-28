@@ -9,28 +9,25 @@ import 'package:model/smart_scale/smart_scale_model.dart';
 
 import '../auth_impl.dart';
 
-/**
- *@author DICKY
- *@email <dicky.maulana@pitik.idd>
- *@create date 11/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.idd>
+/// @create date 11/09/2023
 
 class SmartScaleBody implements ServiceBody<SmartScale> {
-
-    @override
-    Future<List> body(SmartScale object, List<dynamic> extras) async {
-        Auth? auth = await AuthImpl().get();
-        if (auth != null) {
-            List<SmartScale> scale = [object];
-            ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: scale);
-            return ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${object.farmingCycleId}', Mapper.asJsonString(bodyRequest)];
-        } else {
-            return [];
-        }
+  @override
+  Future<List> body(SmartScale object, List<dynamic> extras) async {
+    Auth? auth = await AuthImpl().get();
+    if (auth != null) {
+      List<SmartScale> scale = [object];
+      ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: scale);
+      return ['Bearer ${auth.token}', auth.id, 'v2/smart-scale/weighing/${object.farmingCycleId}', Mapper.asJsonString(bodyRequest)];
+    } else {
+      return [];
     }
+  }
 
-    @override
-    String getServiceName(SmartScale object) {
-        return object.id != null && object.id != '' ? ListApi.updateSmartScale : ListApi.saveSmartScale;
-    }
+  @override
+  String getServiceName(SmartScale object) {
+    return object.id != null && object.id != '' ? ListApi.updateSmartScale : ListApi.saveSmartScale;
+  }
 }

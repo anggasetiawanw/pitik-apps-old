@@ -5,20 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/notification/notification_controller.dart';
-import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
+
+import '../../widget/common/custom_appbar.dart';
+import 'notification_controller.dart';
 
 class NotificationActivity extends StatelessWidget {
   const NotificationActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    NotificationController controller = Get.put(NotificationController(context: context));
+    final NotificationController controller = Get.put(NotificationController(context: context));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
-          child: CustomAppbar(title: "Notification", onBack: () => Get.back(), actions: [
+          child: CustomAppbar(title: 'Notification', onBack: () => Get.back(), actions: [
             PopupMenuButton(
                 icon: const Icon(Icons.more_vert, color: Colors.white), // add this line
                 color: Colors.white,
@@ -60,14 +61,14 @@ class NotificationActivity extends StatelessWidget {
                     controller.getListNotification();
                   }),
                   child: controller.notificationList.isEmpty
-                      ? Center(child: Text("Tidak ada notifikasi", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)))
+                      ? Center(child: Text('Tidak ada notifikasi', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium)))
                       : ListView.builder(
                           scrollDirection: Axis.vertical,
                           controller: controller.scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: controller.isLoadMore.isTrue ? controller.notificationList.length + 1 : controller.notificationList.length,
                           itemBuilder: (context, index) {
-                            int length = controller.notificationList.length;
+                            final int length = controller.notificationList.length;
                             if (index >= length) {
                               return const Column(
                                 children: [
@@ -80,7 +81,10 @@ class NotificationActivity extends StatelessWidget {
                               onTap: () => controller.onTapNotification(index),
                               child: Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: controller.notificationList[index].isRead! ? Colors.white : GlobalVar.primaryLight, border: Border.all(color: controller.notificationList[index].isRead! ? GlobalVar.outlineColor : GlobalVar.primaryLight)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: controller.notificationList[index].isRead! ? Colors.white : GlobalVar.primaryLight,
+                                    border: Border.all(color: controller.notificationList[index].isRead! ? GlobalVar.outlineColor : GlobalVar.primaryLight)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -92,7 +96,7 @@ class NotificationActivity extends StatelessWidget {
                                             height: 40,
                                             width: 40,
                                             child: Center(
-                                              child: SvgPicture.asset(controller.notificationList[index].isRead! ? "images/notification_off_icon.svg" : "images/notification_on_icon.svg"),
+                                              child: SvgPicture.asset(controller.notificationList[index].isRead! ? 'images/notification_off_icon.svg' : 'images/notification_on_icon.svg'),
                                             ),
                                           ),
                                           const SizedBox(width: 8),
@@ -101,7 +105,7 @@ class NotificationActivity extends StatelessWidget {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                controller.notificationList[index].headline ?? "",
+                                                controller.notificationList[index].headline ?? '',
                                                 style: GlobalVar.blackTextStyle.copyWith(
                                                   fontSize: 14,
                                                   fontWeight: GlobalVar.medium,
@@ -109,7 +113,7 @@ class NotificationActivity extends StatelessWidget {
                                               ),
                                               const SizedBox(height: 8),
                                               Text(
-                                                controller.notificationList[index].subHeadline ?? "",
+                                                controller.notificationList[index].subHeadline ?? '',
                                                 style: GlobalVar.greyTextStyle.copyWith(
                                                   fontSize: 10,
                                                   fontWeight: GlobalVar.regular,
@@ -117,7 +121,8 @@ class NotificationActivity extends StatelessWidget {
                                               ),
                                               const SizedBox(height: 16),
                                               Text(
-                                                DateFormat("dd MMMM yyyy - HH:mm").format(Convert.getDatetime(controller.notificationList[index].isRead! ? controller.notificationList[index].createdDate! : controller.notificationList[index].modifiedDate!)),
+                                                DateFormat('dd MMMM yyyy - HH:mm')
+                                                    .format(Convert.getDatetime(controller.notificationList[index].isRead! ? controller.notificationList[index].createdDate! : controller.notificationList[index].modifiedDate!)),
                                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.regular),
                                               ),
                                             ],

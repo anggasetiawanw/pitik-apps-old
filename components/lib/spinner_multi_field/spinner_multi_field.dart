@@ -7,11 +7,9 @@ import 'package:get/get.dart';
 
 import 'spinner_multi_field_controller.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
   @override
@@ -72,13 +70,21 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
                             ? createDropdown()
                             : GestureDetector(
                                 onTap: () {
-                                  print("com ${controller.items.value}");
                                   if (controller.activeField.isTrue) {
                                     Get.snackbar("Informasi", "$label data kosong", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: Colors.red);
                                   }
                                 },
                                 child: createDropdown())),
-                    Align(alignment: Alignment.topLeft, child: controller.showTooltip.isTrue ? Container(padding: const EdgeInsets.only(top: 4), child: Row(children: [Padding(padding: const EdgeInsets.only(right: 8), child: SvgPicture.asset("images/error_icon.svg")), Text(controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText, style: const TextStyle(color: GlobalVar.red, fontSize: 12))])) : Container())
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: controller.showTooltip.isTrue
+                            ? Container(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Row(children: [
+                                  Padding(padding: const EdgeInsets.only(right: 8), child: SvgPicture.asset("images/error_icon.svg")),
+                                  Text(controller.alertText.value.isNotEmpty ? controller.alertText.value : alertText, style: const TextStyle(color: GlobalVar.red, fontSize: 12))
+                                ]))
+                            : Container())
                   ]))
             ]),
           )
@@ -155,7 +161,8 @@ class SpinnerMultiField extends GetView<SpinnerMultiFieldController> {
                     .toList(),
                 underline: Container(),
                 onTap: controller.activeField.isTrue ? () => controller.expand() : null,
-                hint: Text(controller.selectedValue.value.isNotEmpty ? controller.selectedValue.value.map((e) => e.toString()).reduce((a, b) => '$a , $b') : hint, style: TextStyle(color: controller.selectedValue.value.isNotEmpty ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)),
+                hint: Text(controller.selectedValue.value.isNotEmpty ? controller.selectedValue.value.map((e) => e.toString()).reduce((a, b) => '$a , $b') : hint,
+                    style: TextStyle(color: controller.selectedValue.value.isNotEmpty ? GlobalVar.black : const Color(0xFF9E9D9D), fontSize: 14)),
                 onChanged: controller.activeField.isTrue ? onSpinnerSelected : null,
               ))
         ]));

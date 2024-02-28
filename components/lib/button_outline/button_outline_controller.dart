@@ -2,26 +2,22 @@
 
 import 'package:get/get.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 class ButtonOutlineController extends GetxController {
+  String tag;
+  ButtonOutlineController({required this.tag});
 
-    String tag;
-    ButtonOutlineController({required this.tag});
-
-    var activeField = true.obs;
-    void enable() => activeField.value = true;
-    void disable() => activeField.value = false;
+  var activeField = true.obs;
+  void enable() => activeField.value = true;
+  void disable() => activeField.value = false;
 }
 
 class ButtonOutlineBinding extends Bindings {
-
-    @override
-    void dependencies() {
-        Get.lazyPut<ButtonOutlineController>(() => ButtonOutlineController(tag: "tag"));
-    }
+  @override
+  void dependencies() {
+    Get.lazyPut<ButtonOutlineController>(() => ButtonOutlineController(tag: "tag"));
+  }
 }

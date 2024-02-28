@@ -17,11 +17,11 @@ import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/order_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/so_status.dart';
-import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_book_so/sku_book_so.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/so_status.dart';
+import '../../../widget/internal_controller_creator.dart';
+import '../../../widget/sku_book_so/sku_book_so.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -47,13 +47,13 @@ class CreateBookStockController extends GetxController {
   var sumKg = 0.0.obs;
   var sumPrice = 0.0.obs;
 
-  late ButtonFill bookStockButton = ButtonFill(controller: GetXCreator.putButtonFillController("bookStocked"), label: "Pesan Stock", onClick: () {});
+  late ButtonFill bookStockButton = ButtonFill(controller: GetXCreator.putButtonFillController('bookStocked'), label: 'Pesan Stock', onClick: () {});
 
   late SpinnerField spinnerSource = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("sumberPenjualan"),
-    label: "Sumber*",
-    hint: "Pilih salah satu",
-    alertText: "Sumber harus dipilih!",
+    controller: GetXCreator.putSpinnerFieldController('sumberPenjualan'),
+    label: 'Sumber*',
+    hint: 'Pilih salah satu',
+    alertText: 'Sumber harus dipilih!',
     items: const {},
     onSpinnerSelected: (text) {
       if (text.isNotEmpty) {
@@ -63,10 +63,10 @@ class CreateBookStockController extends GetxController {
   );
 
   late SpinnerField spinnerCustomer = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("customerPenjualan"),
-    label: "Customer*",
-    hint: "Pilih salah satu",
-    alertText: "Customer harus dipilih!",
+    controller: GetXCreator.putSpinnerFieldController('customerPenjualan'),
+    label: 'Customer*',
+    hint: 'Pilih salah satu',
+    alertText: 'Customer harus dipilih!',
     items: const {},
     onSpinnerSelected: (text) {
       if (text.isNotEmpty) {
@@ -81,7 +81,7 @@ class CreateBookStockController extends GetxController {
   Rx<List<OperationUnitModel?>> listSource = Rx<List<OperationUnitModel>>([]);
 
   late SwitchLinear swDelivery = SwitchLinear(
-    controller: GetXCreator.putSwitchLinearController("switchAssignDriver"),
+    controller: GetXCreator.putSwitchLinearController('switchAssignDriver'),
     onSwitch: (isSwitch) {
       if (isSwitch) {
         isSwitchOn.value = true;
@@ -95,7 +95,7 @@ class CreateBookStockController extends GetxController {
 
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
-  int countApi =0;
+  int countApi = 0;
 
   @override
   void onInit() {
@@ -113,15 +113,15 @@ class CreateBookStockController extends GetxController {
     spinnerCustomer.controller.disable();
     bookStockButton.controller.disable();
     boNoBook = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noBookStock"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noBookStock'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
-    skuBookSO = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("skuBookSO", orderDetail.value!.products!, false));
-    if (orderDetail.value!.type! == "LB") {
-      skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController("LBSKUSTOCK", orderDetail.value!.productNotes!, true));
+    skuBookSO = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController('skuBookSO', orderDetail.value!.products!, false));
+    if (orderDetail.value!.type! == 'LB') {
+      skuBookSOLB = SkuBookSO(controller: InternalControllerCreator.putSkuBookSOController('LBSKUSTOCK', orderDetail.value!.productNotes!, true));
     }
   }
 
@@ -129,15 +129,15 @@ class CreateBookStockController extends GetxController {
   void onReady() {
     super.onReady();
     bfYesBook = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesBookStock"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesBookStock'),
+      label: 'Ya',
       onClick: () {
         Get.back();
         updateBookStock();
       },
     );
     if (isAllocated.isTrue) {
-      bookStockButton.controller.changeLabel("Konfirmasi");
+      bookStockButton.controller.changeLabel('Konfirmasi');
       getTotalQuantity(orderDetail.value);
     }
     if (orderDetail.value!.customer != null) {
@@ -156,9 +156,9 @@ class CreateBookStockController extends GetxController {
   void countingApi() {
     countApi++;
     if (countApi == 2) {
-        timeEnd = DateTime.now();
-        Duration totalTime = timeEnd.difference(timeStart);
-        Constant.trackRenderTime(isAllocated.isTrue ? "Form_Alokasi_Penjualan" :" From_Pesan_Stock_Penjualan", totalTime);
+      timeEnd = DateTime.now();
+      final Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackRenderTime(isAllocated.isTrue ? 'Form_Alokasi_Penjualan' : ' From_Pesan_Stock_Penjualan', totalTime);
     }
   }
 
@@ -177,8 +177,8 @@ class CreateBookStockController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -194,15 +194,15 @@ class CreateBookStockController extends GetxController {
   void getListSource() {
     spinnerSource.controller
       ..disable()
-      ..setTextSelected("Loading...")
+      ..setTextSelected('Loading...')
       ..showLoading();
     Service.push(
         service: ListApi.getListOperationUnits,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE,0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
               }
@@ -214,54 +214,62 @@ class CreateBookStockController extends GetxController {
               }
               spinnerSource.controller
                 ..enable()
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
-                countingApi();
+              countingApi();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               spinnerSource.controller
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               spinnerSource.controller
-                ..setTextSelected("")
+                ..setTextSelected('')
                 ..hideLoading();
             },
             onTokenInvalid: Constant.invalidResponse()));
   }
 
   void updateBookStock() {
-    OperationUnitModel? sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
+    final OperationUnitModel? sourceSelected = listSource.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
 
     if (isAllocated.isFalse) {
-      List<Products?> products = [];
-      List<Products?> productNote = [];
+      final List<Products?> products = [];
+      final List<Products?> productNote = [];
       for (int i = 0; i < skuBookSO.controller.itemCount.value; i++) {
-        products.add(Products(productItemId: orderDetail.value!.products![i]!.id, quantity: (skuBookSO.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(), weight: skuBookSO.controller.jumlahkg.value[i].getInputNumber() ?? 0, price: orderDetail.value!.products![i]!.price));
+        products.add(Products(
+            productItemId: orderDetail.value!.products![i]!.id,
+            quantity: (skuBookSO.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(),
+            weight: skuBookSO.controller.jumlahkg.value[i].getInputNumber() ?? 0,
+            price: orderDetail.value!.products![i]!.price));
       }
-      if (orderDetail.value!.type == "LB") {
+      if (orderDetail.value!.type == 'LB') {
         for (int i = 0; i < skuBookSOLB.controller.itemCount.value; i++) {
-          productNote.add(Products(productCategoryId: orderDetail.value!.productNotes![i]!.productCategoryId, quantity: (skuBookSOLB.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(), weight: orderDetail.value!.productNotes![i]!.weight, price: orderDetail.value!.productNotes![i]!.price));
+          productNote.add(Products(
+              productCategoryId: orderDetail.value!.productNotes![i]!.productCategoryId,
+              quantity: (skuBookSOLB.controller.jumlahEkor.value[i].getInputNumber() ?? 0).toInt(),
+              weight: orderDetail.value!.productNotes![i]!.weight,
+              price: orderDetail.value!.productNotes![i]!.price));
         }
       }
-      Order orderRequest = Order(
+      final Order orderRequest = Order(
         customerId: orderDetail.value!.customer?.id,
         operationUnitId: sourceSelected != null ? sourceSelected.id : orderDetail.value!.operationUnit!.id!,
         products: products,
@@ -275,35 +283,35 @@ class CreateBookStockController extends GetxController {
           body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, ListApi.pathBookStock(orderDetail.value!.id!), Mapper.asJsonString(orderRequest)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
-                Constant.track("Click_Button_Pesan_Stock_Penjualan");
+                Constant.track('Click_Button_Pesan_Stock_Penjualan');
                 Get.back();
                 isLoading.value = false;
                 Get.back();
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${body.error!.message}',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
                 );
-                Constant.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": (body).error!.message!});
+                Constant.trackWithMap('Click_Button_Pesan_Stock_Penjualan', {'error': body.error!.message!});
 
                 isLoading.value = false;
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
                 );
                 isLoading.value = false;
-                Constant.trackWithMap("Click_Button_Pesan_Stock_Penjualan", {"error": exception});
+                Constant.trackWithMap('Click_Button_Pesan_Stock_Penjualan', {'error': exception});
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
@@ -313,8 +321,8 @@ class CreateBookStockController extends GetxController {
 
   void updateAllocated(String idJagal) {
     isLoading.value = true;
-        Get.back();
-    Order orderPayload = Order(
+    Get.back();
+    final Order orderPayload = Order(
       customerId: orderDetail.value!.customerId,
       operationUnitId: idJagal,
       products: orderDetail.value!.products,
@@ -330,17 +338,17 @@ class CreateBookStockController extends GetxController {
       context: context,
       body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId, ListApi.pathEditSalesOrder(orderDetail.value!.id!), Mapper.asJsonString(orderPayload)],
       listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-        Constant.track("Click_Button_Alokasikan_Penjualan");
+        Constant.track('Click_Button_Alokasikan_Penjualan');
         isLoading.value = false;
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-        Constant.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": (body).error!.message!});
+        Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Constant.trackWithMap('Click_Button_Alokasikan_Penjualan', {'error': body.error!.message!});
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-        Constant.trackWithMap("Click_Button_Alokasikan_Penjualan", {"error": exception});
+        Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Constant.trackWithMap('Click_Button_Alokasikan_Penjualan', {'error': exception});
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),
@@ -357,7 +365,7 @@ class CreateBookStockController extends GetxController {
     sumPrice.value = 0;
     // isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
     // priceDelivery.value = data.deliveryFee ?? 0;
-    if (orderDetail.value!.status == "BOOKED" || orderDetail.value!.status == "READY_TO_DELIVER") {
+    if (orderDetail.value!.status == 'BOOKED' || orderDetail.value!.status == 'READY_TO_DELIVER') {
       for (var product in data!.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
@@ -371,10 +379,10 @@ class CreateBookStockController extends GetxController {
         } else {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumChick.value += product.quantity! - product.returnQuantity!;
-            sumKg.value += (product.weight! - product.returnWeight!);
+            sumKg.value += product.weight! - product.returnWeight!;
             sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
           } else {
-            sumKg.value += (product.weight! - product.returnWeight!);
+            sumKg.value += product.weight! - product.returnWeight!;
             sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
           }
         }
@@ -402,8 +410,8 @@ class CreateBookStockController extends GetxController {
             sumPriceMin.value += product.price! * (product.minValue! * (product.quantity! - product.returnQuantity!));
             sumPriceMax.value += product.price! * (product.maxValue! * (product.quantity! - product.returnQuantity!));
           } else {
-            sumNeededMin.value += (product.weight! - product.returnWeight!);
-            sumNeededMax.value += (product.weight! - product.returnWeight!);
+            sumNeededMin.value += product.weight! - product.returnWeight!;
+            sumNeededMax.value += product.weight! - product.returnWeight!;
             sumPriceMin.value += (product.weight! - product.returnWeight!) * product.price!;
             sumPriceMax.value += (product.weight! - product.returnWeight!) * product.price!;
           }

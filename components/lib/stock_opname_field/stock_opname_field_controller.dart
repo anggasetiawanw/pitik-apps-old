@@ -37,7 +37,9 @@ class StockOpnameFieldController extends GetxController {
       //products.productItems!.sort((a,b) => a!.name!.compareTo(b!.name!));
       for (var product in products.productItems!) {
         EditField sku = efSku.value.firstWhere((element) => element.controller.tag == product!.name!);
-        sku.setInput(products.name == AppStrings.LIVE_BIRD || products.name == AppStrings.AYAM_UTUH || products.name == AppStrings.BRANGKAS || products.name == AppStrings.KARKAS? (product!.quantity == 0 ? "" : product.quantity.toString()) : (product!.weight == null ? "" : product.weight.toString()));
+        sku.setInput(products.name == AppStrings.LIVE_BIRD || products.name == AppStrings.AYAM_UTUH || products.name == AppStrings.BRANGKAS || products.name == AppStrings.KARKAS
+            ? (product!.quantity == 0 ? "" : product.quantity.toString())
+            : (product!.weight == null ? "" : product.weight.toString()));
       }
     });
   }

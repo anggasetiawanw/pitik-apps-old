@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/text_style.dart';
-import 'package:pitik_internal_app/ui/home/beranda_activity/beranda_activity.dart';
-import 'package:pitik_internal_app/ui/home/job_activity/job_activity.dart';
-import 'package:pitik_internal_app/ui/home/profile_activity/profile_activity.dart';
+import '../beranda_activity/beranda_activity.dart';
+import '../job_activity/job_activity.dart';
+import '../profile_activity/profile_activity.dart';
 
 import 'dashboard_controller.dart';
 
@@ -54,11 +54,11 @@ class DashboardPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(controller.tabIndex.value == 0 ? "images/beranda_on_icon.svg" : "images/beranda_off_icon.svg"),
+                        SvgPicture.asset(controller.tabIndex.value == 0 ? 'images/beranda_on_icon.svg' : 'images/beranda_off_icon.svg'),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Beranda", style: controller.tabIndex.value == 0 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                        Text('Beranda', style: controller.tabIndex.value == 0 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                       ],
                     ),
                   ),
@@ -70,11 +70,11 @@ class DashboardPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(controller.tabIndex.value == 2 ? "images/job_on.svg" : "images/job_off.svg"),
+                          SvgPicture.asset(controller.tabIndex.value == 2 ? 'images/job_on.svg' : 'images/job_off.svg'),
                           const SizedBox(
                             height: 5,
                           ),
-                          Text("Tugas", style: controller.tabIndex.value == 2 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                          Text('Tugas', style: controller.tabIndex.value == 2 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                         ],
                       ),
                     ),
@@ -86,11 +86,11 @@ class DashboardPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(controller.tabIndex.value == 1 ? "images/profile_on_icon.svg" : "images/profile_off_icon.svg"),
+                        SvgPicture.asset(controller.tabIndex.value == 1 ? 'images/profile_on_icon.svg' : 'images/profile_off_icon.svg'),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Profil", style: controller.tabIndex.value == 1 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                        Text('Profil', style: controller.tabIndex.value == 1 ? AppTextStyle.primaryTextStyle.copyWith(fontWeight: AppTextStyle.medium) : AppTextStyle.grayTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                       ],
                     ),
                   ),

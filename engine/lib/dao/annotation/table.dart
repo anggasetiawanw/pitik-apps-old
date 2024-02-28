@@ -1,14 +1,12 @@
 // ignore_for_file: slash_for_doc_comments
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 class Table {
-    final String tableName;
-    final int whenExists;
+  final String tableName;
+  final int whenExists;
 
-    const Table(this.tableName, [this.whenExists = 1]);
+  const Table(this.tableName, [this.whenExists = 1]);
 }

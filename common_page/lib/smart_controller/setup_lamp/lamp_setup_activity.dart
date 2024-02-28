@@ -1,4 +1,3 @@
-
 import 'package:components/app_bar_form_for_coop.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/get_x_creator.dart';
@@ -14,93 +13,57 @@ import 'lamp_setup_controller.dart';
 ///@create date 31/10/2023
 
 class LampSetupActivity extends GetView<LampSetupController> {
-    const LampSetupActivity({super.key});
+  const LampSetupActivity({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-        LampSetupController controller = Get.put(LampSetupController(context: context));
+  @override
+  Widget build(BuildContext context) {
+    LampSetupController controller = Get.put(LampSetupController(context: context));
 
-        Widget bottomNavBar() {
-            return Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        Container(
-                            width: double.infinity,
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                    BoxShadow(
-                                        color: Color.fromARGB(20, 158, 157, 157),
-                                        blurRadius: 5,
-                                        offset: Offset(0.75, 0.0))
-                                ],
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                            ),
-                            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Expanded(
-                                        child: Obx(() =>
-                                            controller.isEdit.isTrue ?
-                                            ButtonFill(
-                                                controller: GetXCreator.putButtonFillController("bfSaveSettingLamp"),
-                                                label: "Simpan",
-                                                onClick: () => controller.showBottomDialog(context)
-                                            ):
-                                            ButtonFill(
-                                                controller: GetXCreator.putButtonFillController("bfEditSettingLamp"),
-                                                label: "Edit",
-                                                onClick: () {
-                                                    controller.isEdit.value = true;
-                                                    controller.isLoading.value = true;
-                                                    controller.loadPage();
-                                                }
-                                            )
-                                        )
-                                    )
-                                ]
-                            )
-                        )
-                    ]
-                )
-            );
-        }
-
-        return SafeArea(
-            child: Scaffold(
-                backgroundColor: Colors.white,
-                appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(60),
-                    child: AppBarFormForCoop(
-                        title: 'Lampu',
-                        coop: Coop(),
-                        hideCoopDetail: true,
-                    ),
+    Widget bottomNavBar() {
+      return Align(
+          alignment: Alignment.bottomCenter,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 ),
-                body: Stack(
-                    children: [
-                        Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading()) :
-                        SingleChildScrollView(
-                            child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                        controller.dtfLampOn,
-                                        controller.dtfLampOff,
-                                        const SizedBox(height: 120)
-                                    ]
-                                )
-                            )
-                        )
-                        ),
-                        bottomNavBar()
-                    ]
-                )
-            )
-        );
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Expanded(
+                      child: Obx(() => controller.isEdit.isTrue
+                          ? ButtonFill(controller: GetXCreator.putButtonFillController("bfSaveSettingLamp"), label: "Simpan", onClick: () => controller.showBottomDialog(context))
+                          : ButtonFill(
+                              controller: GetXCreator.putButtonFillController("bfEditSettingLamp"),
+                              label: "Edit",
+                              onClick: () {
+                                controller.isEdit.value = true;
+                                controller.isLoading.value = true;
+                                controller.loadPage();
+                              })))
+                ]))
+          ]));
     }
+
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(60),
+              child: AppBarFormForCoop(
+                title: 'Lampu',
+                coop: Coop(),
+                hideCoopDetail: true,
+              ),
+            ),
+            body: Stack(children: [
+              Obx(() => controller.isLoading.isTrue
+                  ? const Center(child: ProgressLoading())
+                  : SingleChildScrollView(
+                      child: Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [controller.dtfLampOn, controller.dtfLampOff, const SizedBox(height: 120)])))),
+              bottomNavBar()
+            ])));
+  }
 }

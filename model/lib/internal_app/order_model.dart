@@ -146,8 +146,8 @@ class Order {
       driverRemarks: map['driverRemarks'],
       deliveryTime: map['deliveryTime'],
       withDeliveryFee: map['withDeliveryFee'],
-        deliveryFee: map['deliveryFee'],
-        goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
+      deliveryFee: map['deliveryFee'],
+      goodsReceived: Mapper.child<GoodsReceived>(map['goodsReceived']),
     );
   }
 }

@@ -9,18 +9,14 @@ import 'package:model/farm_actual/farm_actual_target_model.dart';
 
 @SetupModel
 class FarmActualDetail {
+  double? actual;
 
-    double? actual;
+  @IsChild()
+  FarmActualTarget? target;
 
-    @IsChild()
-    FarmActualTarget? target;
+  FarmActualDetail({this.actual, this.target});
 
-    FarmActualDetail({this.actual, this.target});
-
-    static FarmActualDetail toResponseModel(Map<String, dynamic> map) {
-        return FarmActualDetail(
-            actual: map['actual'] != null ? map['actual'].toDouble() : map['actual'],
-            target: Mapper.child<FarmActualTarget>(map['target'])
-        );
-    }
+  static FarmActualDetail toResponseModel(Map<String, dynamic> map) {
+    return FarmActualDetail(actual: map['actual'] != null ? map['actual'].toDouble() : map['actual'], target: Mapper.child<FarmActualTarget>(map['target']));
+  }
 }

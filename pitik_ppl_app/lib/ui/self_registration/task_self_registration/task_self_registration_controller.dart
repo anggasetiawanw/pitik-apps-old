@@ -16,7 +16,7 @@ import 'package:model/data_farmcycle_id.dart';
 import 'package:model/error/error.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/profile_list_response.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import '../../../api_mapping/api_mapping.dart';
 
 class TaskSelfRegistrationController extends GetxController {
   BuildContext context;
@@ -26,11 +26,12 @@ class TaskSelfRegistrationController extends GetxController {
   RxBool isLoading = false.obs;
   RxList<Profile> listOperator = <Profile>[].obs;
 
-  SpinnerMultiField sfOperator = SpinnerMultiField(controller: GetXCreator.putSpinnerMultiFieldController("sfOperatorAddTask"), label: "Operator Kandang", hint: "Pilih Operator Kandang", alertText: "Operator Kandang Harus dipilih", items: const [], onSpinnerSelected: (value) => {});
+  SpinnerMultiField sfOperator = SpinnerMultiField(
+      controller: GetXCreator.putSpinnerMultiFieldController('sfOperatorAddTask'), label: 'Operator Kandang', hint: 'Pilih Operator Kandang', alertText: 'Operator Kandang Harus dipilih', items: const [], onSpinnerSelected: (value) => {});
 
   late ButtonFill btSubmit = ButtonFill(
-    controller: GetXCreator.putButtonFillController("btSubmitAddTask"),
-    label: "Tugaskan",
+    controller: GetXCreator.putButtonFillController('btSubmitAddTask'),
+    label: 'Tugaskan',
     onClick: () => {
       if (validate()) {submit()}
     },
@@ -56,19 +57,19 @@ class TaskSelfRegistrationController extends GetxController {
                   apiKey: ApiMapping.api,
                   service: ListApi.getAssignableOperators,
                   context: context,
-                  body: ['Bearer ${auth.token}', auth.id, "v2/farming-cycles/${coop.farmingCycleId}/operators/available"],
+                  body: ['Bearer ${auth.token}', auth.id, 'v2/farming-cycles/${coop.farmingCycleId}/operators/available'],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
                         listOperator.clear();
                         listOperator.addAll((body as ProfileListResponse).data.map((e) => e!).toList());
-                        List<String> items = [];
+                        final List<String> items = [];
                         for (var element in listOperator) {
                           items.add(element.fullName!);
                         }
                         sfOperator.controller.generateItems(items);
-                        Map<String, String> subtitle = {};
+                        final Map<String, String> subtitle = {};
                         for (var element in listOperator) {
-                          subtitle[element.fullName!] = "${element.role} ${element.phoneNumber}";
+                          subtitle[element.fullName!] = '${element.role} ${element.phoneNumber}';
                         }
                         sfOperator.controller.generateSubtitles(subtitle);
                         sfOperator.controller.showSubtitle();
@@ -76,8 +77,8 @@ class TaskSelfRegistrationController extends GetxController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -85,8 +86,8 @@ class TaskSelfRegistrationController extends GetxController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -135,9 +136,9 @@ class TaskSelfRegistrationController extends GetxController {
                           const SizedBox(height: 16),
                           Text('Apakah yakin melakukan penugasan dengan benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
                           const SizedBox(height: 16),
-                          Text("Kandang ${coop.coopName}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
+                          Text('Kandang ${coop.coopName}', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
                           const SizedBox(height: 16),
-                          Text("Operator Kandang", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
+                          Text('Operator Kandang', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
                           const SizedBox(height: 8),
                           Column(
                             children: List.generate(
@@ -147,7 +148,7 @@ class TaskSelfRegistrationController extends GetxController {
                                 children: [
                                   Text(sfOperator.controller.selectedValue.value[index], style: GlobalVar.blackTextStyle.copyWith(fontSize: 14)),
                                   const SizedBox(height: 4),
-                                  Text(sfOperator.controller.subtitles[sfOperator.controller.selectedValue.value[index]] ?? "", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                  Text(sfOperator.controller.subtitles[sfOperator.controller.selectedValue.value[index]] ?? '', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                   const SizedBox(height: 16),
                                 ],
                               ),
@@ -158,14 +159,14 @@ class TaskSelfRegistrationController extends GetxController {
                             children: [
                               Expanded(
                                   child: ButtonFill(
-                                      controller: GetXCreator.putButtonFillController("YakinAddOp"),
-                                      label: "Yakin",
+                                      controller: GetXCreator.putButtonFillController('YakinAddOp'),
+                                      label: 'Yakin',
                                       onClick: () {
                                         Get.back();
                                         addTask(auth.token!, auth.id!);
                                       })),
                               const SizedBox(width: 8),
-                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("TidakYakinAddOperator"), label: "Tidak Yakin", onClick: () => Get.back())),
+                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController('TidakYakinAddOperator'), label: 'Tidak Yakin', onClick: () => Get.back())),
                             ],
                           ),
                         ],
@@ -187,15 +188,15 @@ class TaskSelfRegistrationController extends GetxController {
         apiKey: ApiMapping.api,
         service: ListApi.assignOperator,
         context: context,
-        body: [token, id, "v2/farming-cycles/${coop.farmingCycleId}/operators", Mapper.asJsonString(generatedAssignOperator())],
+        body: [token, id, 'v2/farming-cycles/${coop.farmingCycleId}/operators', Mapper.asJsonString(generatedAssignOperator())],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Get.back();
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -204,8 +205,8 @@ class TaskSelfRegistrationController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -216,11 +217,11 @@ class TaskSelfRegistrationController extends GetxController {
   }
 
   AssignOperator generatedAssignOperator() {
-    AssignOperator assignOperator = AssignOperator();
+    final AssignOperator assignOperator = AssignOperator();
     assignOperator.operatorIds = [];
     for (var element in sfOperator.controller.selectedValue.value) {
-      Profile? profile = listOperator.firstWhere((e) => e.fullName == element);
-      assignOperator.operatorIds!.add(DataFarmCycleId(id: profile.id));
+      final Profile? profile = listOperator.firstWhere((e) => e.fullName == element);
+      assignOperator.operatorIds!.add(DataFarmCycleId(id: profile?.id));
     }
     return assignOperator;
   }

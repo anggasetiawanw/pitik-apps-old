@@ -3,15 +3,12 @@ import 'package:model/issue.dart';
 
 @SetupModel
 class IssueResponse {
-    int? code;
-    Issue? data;
+  int? code;
+  Issue? data;
 
-    IssueResponse({this.code, required this.data});
+  IssueResponse({this.code, required this.data});
 
-    static IssueResponse toResponseModel(Map<String, dynamic> map) {
-        return IssueResponse(
-            code: map['code'],
-            data: Mapper.child<Issue>(map['data'])
-        );
-    }
+  static IssueResponse toResponseModel(Map<String, dynamic> map) {
+    return IssueResponse(code: map['code'], data: Mapper.child<Issue>(map['data']));
+  }
 }

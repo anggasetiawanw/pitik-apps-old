@@ -13,64 +13,64 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 class TerminateDetailController extends GetxController {
   BuildContext context;
   TerminateDetailController({required this.context});
   late ButtonFill yesCancelButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesButton"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesButton'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Batal_Pemusnahan");
+        Constant.track('Click_Batal_Pemusnahan');
         Get.back();
-        if (terminateModel.status == "FINISHED") {
-          updateTerminate("BOOKED");
+        if (terminateModel.status == 'FINISHED') {
+          updateTerminate('BOOKED');
         } else {
-          updateTerminate("CANCELLED");
+          updateTerminate('CANCELLED');
         }
       });
   ButtonOutline noCancelButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("No Button"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('No Button'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
 
   late ButtonFill yesTerminateButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendButton"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesSendButton'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Musnahkan_Pemusnahan");
+        Constant.track('Click_Musnahkan_Pemusnahan');
         Get.back();
-        updateTerminate("FINISHED");
+        updateTerminate('FINISHED');
       });
   ButtonOutline noTerminateButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("NoSendButton"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('NoSendButton'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
 
   late ButtonFill yesOrderStockButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendButton"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesSendButton'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Pesan_StockPemusnahan");
+        Constant.track('Click_Pesan_StockPemusnahan');
         Get.back();
-        updateTerminate("BOOKED");
+        updateTerminate('BOOKED');
       });
   ButtonOutline noOrderStockButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("NoSendButton"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('NoSendButton'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
   late ButtonFill btSetujui = ButtonFill(
-      controller: GetXCreator.putButtonFillController("btSetujui"),
-      label: "Setujui",
+      controller: GetXCreator.putButtonFillController('btSetujui'),
+      label: 'Setujui',
       onClick: () {
         Get.toNamed(RoutePage.terminateApprove, arguments: terminateModel)!.then((value) {
           isLoading.value = true;
@@ -80,8 +80,8 @@ class TerminateDetailController extends GetxController {
         });
       });
   late ButtonOutline btTolak = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("btTolak"),
-      label: "Tolak",
+      controller: GetXCreator.putButtonOutlineController('btTolak'),
+      label: 'Tolak',
       onClick: () {
         Get.toNamed(RoutePage.terminateRejected, arguments: terminateModel)!.then((value) {
           isLoading.value = true;
@@ -106,7 +106,6 @@ class TerminateDetailController extends GetxController {
     initializeDateFormatting();
   }
 
-
   void updateTerminate(String status) {
     isLoading.value = true;
     Service.push(
@@ -120,8 +119,8 @@ class TerminateDetailController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${body.error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -131,8 +130,8 @@ class TerminateDetailController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -144,7 +143,11 @@ class TerminateDetailController extends GetxController {
   }
 
   TerminateModel generatePayload(String status) {
-    return TerminateModel(operationUnitId: terminateModel.operationUnit!.id, status: status, imageLink: terminateModel.imageLink, product: Products(productItemId: terminateModel.product!.productItem!.id, quantity: terminateModel.product!.productItem!.quantity, weight: terminateModel.product!.productItem!.weight));
+    return TerminateModel(
+        operationUnitId: terminateModel.operationUnit!.id,
+        status: status,
+        imageLink: terminateModel.imageLink,
+        product: Products(productItemId: terminateModel.product!.productItem!.id, quantity: terminateModel.product!.productItem!.quantity, weight: terminateModel.product!.productItem!.weight));
   }
 
   void getDetailTerminate() {
@@ -158,14 +161,14 @@ class TerminateDetailController extends GetxController {
               createdDate = Convert.getDatetime(terminateModel.createdDate!);
               isLoading.value = false;
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Detail_Pemusnahan", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Detail_Pemusnahan', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -175,8 +178,8 @@ class TerminateDetailController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

@@ -6,9 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/purchase_module/edit_data_purchase_activity/edit_data_purchase_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import 'edit_data_purchase_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -34,7 +35,7 @@ class EditDataPurchase extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Pembelian",
+          'Pembelian',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -56,11 +57,11 @@ class EditDataPurchase extends StatelessWidget {
             children: [
               Expanded(
                 child: ButtonFill(
-                  controller: GetXCreator.putButtonFillController("saveDataPurchase"),
-                  label: "Simpan",
+                  controller: GetXCreator.putButtonFillController('saveDataPurchase'),
+                  label: 'Simpan',
                   onClick: () {
-                    Constant.track("Click_Simpan_Edit_Pembelian");
-                    controller.status.value = "DRAFT";
+                    Constant.track('Click_Simpan_Edit_Pembelian');
+                    controller.status.value = 'DRAFT';
                     controller.editPurchase();
                   },
                 ),
@@ -68,10 +69,10 @@ class EditDataPurchase extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(
                 child: ButtonOutline(
-                  controller: GetXCreator.putButtonOutlineController("confirmDataPurchase"),
-                  label: "Konfirmasi",
+                  controller: GetXCreator.putButtonOutlineController('confirmDataPurchase'),
+                  label: 'Konfirmasi',
                   onClick: () {
-                    _showBottomDialog(context, controller, "CONFIRMED");
+                    _showBottomDialog(context, controller, 'CONFIRMED');
                   },
                 ),
               ),
@@ -131,7 +132,7 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Pembelian",
+                                            'Total Pembelian',
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                             overflow: TextOverflow.clip,
                                           ),
@@ -145,13 +146,15 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Kg",
+                                            'Total Kg',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Text(
-                                          controller.skuCardInternal.controller.sumNeededMax.value - controller.skuCardInternal.controller.sumNeededMin.value == 0 ? "${controller.skuCardInternal.controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.skuCardInternal.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCardInternal.controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                          controller.skuCardInternal.controller.sumNeededMax.value - controller.skuCardInternal.controller.sumNeededMin.value == 0
+                                              ? '${controller.skuCardInternal.controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                              : '${controller.skuCardInternal.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCardInternal.controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
@@ -164,13 +167,13 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Ekor",
+                                            'Total Ekor',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Obx(() => Text(
-                                              "${controller.skuCardInternal.controller.sumChick.value} Ekor",
+                                              '${controller.skuCardInternal.controller.sumChick.value} Ekor',
                                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                               overflow: TextOverflow.clip,
                                             )),
@@ -183,7 +186,7 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Rp",
+                                            'Total Rp',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
@@ -191,8 +194,8 @@ class EditDataPurchase extends StatelessWidget {
                                         Text(
                                             controller.skuCardInternal.controller.sumPriceMax.value - controller.skuCardInternal.controller.sumPriceMin.value == 0
                                                 ? controller.skuCardInternal.controller.sumPriceMin.value == 0
-                                                    ? "Rp - "
-                                                    : NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCardInternal.controller.sumPriceMin.value)
+                                                    ? 'Rp - '
+                                                    : NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.skuCardInternal.controller.sumPriceMin.value)
                                                 : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCardInternal.controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCardInternal.controller.sumPriceMax.value)}",
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip),
@@ -203,7 +206,7 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Pembelian",
+                                            'Total Pembelian',
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                             overflow: TextOverflow.clip,
                                           ),
@@ -217,13 +220,15 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Kg",
+                                            'Total Kg',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Text(
-                                          controller.skuCard.controller.sumNeededMax.value - controller.skuCard.controller.sumNeededMin.value == 0 ? "${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCard.controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                          controller.skuCard.controller.sumNeededMax.value - controller.skuCard.controller.sumNeededMin.value == 0
+                                              ? '${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                              : '${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCard.controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
@@ -236,13 +241,13 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Ekor",
+                                            'Total Ekor',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Obx(() => Text(
-                                              "${controller.skuCard.controller.sumChick.value} Ekor",
+                                              '${controller.skuCard.controller.sumChick.value} Ekor',
                                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                               overflow: TextOverflow.clip,
                                             )),
@@ -255,14 +260,14 @@ class EditDataPurchase extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Rp",
+                                            'Total Rp',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Text(
                                             controller.skuCard.controller.sumPriceMax.value - controller.skuCard.controller.sumPriceMin.value == 0
-                                                ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value)
+                                                ? NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value)
                                                 : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMax.value)}",
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip),
@@ -284,7 +289,7 @@ class EditDataPurchase extends StatelessWidget {
         ));
   }
 
-  _showBottomDialog(BuildContext context, EditDataPurchaseController controller, String status) {
+  Future<void> _showBottomDialog(BuildContext context, EditDataPurchaseController controller, String status) {
     controller.status.value = status;
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -314,18 +319,18 @@ class EditDataPurchase extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

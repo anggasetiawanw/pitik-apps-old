@@ -3,10 +3,10 @@ import 'package:components/button_outline/button_outline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../utils/constant.dart';
 
 Future<dynamic> modalBottomSheetTrueData(BuildContext context, ButtonFill iyaVisitButton, ButtonOutline tidakVisitButton) {
-    return showModalBottomSheet(
+  return showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
@@ -19,7 +19,7 @@ Future<dynamic> modalBottomSheetTrueData(BuildContext context, ButtonFill iyaVis
             ),
           ),
           child: Column(
-              mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -33,21 +33,18 @@ Future<dynamic> modalBottomSheetTrueData(BuildContext context, ButtonFill iyaVis
               Container(
                 margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                 child: Text(
-                  "Apakah kamu yakin data yang dimasukan sudah benar?",
-                  style: AppTextStyle.primaryTextStyle
-                      .copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                  'Apakah kamu yakin data yang dimasukan sudah benar?',
+                  style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                child: const Text(
-                    "Pastikan semua data yang kamu masukan semua sudah benar",
-                    style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 24),
                 child: SvgPicture.asset(
-                  "images/visit_customer.svg",
+                  'images/visit_customer.svg',
                 ),
               ),
               Container(
@@ -59,13 +56,13 @@ Future<dynamic> modalBottomSheetTrueData(BuildContext context, ButtonFill iyaVis
                     const SizedBox(
                       width: 16,
                     ),
-                    Expanded(
-                        child: tidakVisitButton
-                    ),
+                    Expanded(child: tidakVisitButton),
                   ],
                 ),
               ),
-              const SizedBox(height: Constant.bottomSheetMargin,)
+              const SizedBox(
+                height: Constant.bottomSheetMargin,
+              )
             ],
           ),
         );

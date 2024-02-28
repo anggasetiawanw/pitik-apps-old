@@ -8,11 +8,12 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/sales_order_module/sales_order_detail/detail_sales_order_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/so_status.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/enum/so_status.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/order_status.dart';
+import 'detail_sales_order_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -23,7 +24,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
 
   @override
   Widget build(BuildContext context) {
-    DetailSalesOrderController controller = Get.put(DetailSalesOrderController(context: context));
+    final DetailSalesOrderController controller = Get.put(DetailSalesOrderController(context: context));
 
     Widget detailOrder() {
       final DateTime createdDate = Convert.getDatetime(controller.orderDetail.value!.createdDate!);
@@ -44,19 +45,19 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Informasi Penjualan",
+                  'Informasi Penjualan',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                 ),
                 OrderStatus(
-                  orderStatus: controller.orderDetail.value!.status ?? "",
-                  returnStatus: controller.orderDetail.value!.returnStatus ?? "",
+                  orderStatus: controller.orderDetail.value!.status ?? '',
+                  returnStatus: controller.orderDetail.value!.returnStatus ?? '',
                   grStatus: controller.orderDetail.value!.grStatus,
                   soPage: true,
                 ),
               ],
             ),
             Text(
-              "${controller.orderDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}",
+              '${controller.orderDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}',
               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
               overflow: TextOverflow.clip,
             ),
@@ -68,13 +69,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Sumber",
+                    'Sumber',
                     style: AppTextStyle.subTextStyle.copyWith(
                       fontSize: 10,
                     ),
                   ),
                   Text(
-                    controller.orderDetail.value!.operationUnit?.operationUnitName ?? "-",
+                    controller.orderDetail.value!.operationUnit?.operationUnitName ?? '-',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -88,7 +89,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Customer",
+                  'Customer',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
@@ -97,7 +98,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   width: 16,
                 ),
                 Text(
-                  controller.orderDetail.value!.customer?.businessName ?? "-",
+                  controller.orderDetail.value!.customer?.businessName ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -110,13 +111,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Jenis Penjualan",
+                  'Jenis Penjualan',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.type == "LB" ? "LB" : "Non LB",
+                  controller.orderDetail.value!.type == 'LB' ? 'LB' : 'Non LB',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -129,13 +130,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Dibuat Oleh",
+                  'Dibuat Oleh',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value?.userCreator?.email ?? "-",
+                  controller.orderDetail.value?.userCreator?.email ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -148,13 +149,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sales Branch",
+                  'Sales Branch',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.salesperson == null ? "-" : "${controller.orderDetail.value!.salesperson?.branch?.name}",
+                  controller.orderDetail.value!.salesperson == null ? '-' : '${controller.orderDetail.value!.salesperson?.branch?.name}',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -169,13 +170,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Driver",
+                      'Driver',
                       style: AppTextStyle.subTextStyle.copyWith(
                         fontSize: 10,
                       ),
                     ),
                     Text(
-                      controller.orderDetail.value!.driver!.fullName ?? "-",
+                      controller.orderDetail.value!.driver!.fullName ?? '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -190,13 +191,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Target Pengiriman",
+                      'Target Pengiriman',
                       style: AppTextStyle.subTextStyle.copyWith(
                         fontSize: 10,
                       ),
                     ),
                     Text(
-                      controller.orderDetail.value!.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) : "-",
+                      controller.orderDetail.value!.deliveryTime != null ? DateFormat('dd MMM yyyy').format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) : '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -209,17 +210,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Waktu Pengiriman",
+                      'Waktu Pengiriman',
                       style: AppTextStyle.subTextStyle.copyWith(
                         fontSize: 10,
                       ),
                     ),
                     Text(
                       controller.orderDetail.value!.deliveryTime != null
-                          ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) != "00:00"
-                              ? DateFormat("HH:mm").format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!))
-                              : "-"
-                          : "-",
+                          ? DateFormat('HH:mm').format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!)) != '00:00'
+                              ? DateFormat('HH:mm').format(Convert.getDatetime(controller.orderDetail.value!.deliveryTime!))
+                              : '-'
+                          : '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -246,7 +247,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Penjualan",
+          'Detail Penjualan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -276,17 +277,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}${products.id}ALLOCATEDD BOOK"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}${products.id}ALLOCATEDD BOOK'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
@@ -294,17 +295,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;ujasdads;"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}delivew;ujasdads;'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != null && products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
@@ -317,17 +318,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController("sku${products.name}asdasdadsaaa"),
-            headerText: "${products.name}",
+            controller: GetXCreator.putAccordionController('sku${products.name}asdasdadsaaa'),
+            headerText: '${products.name}',
             child: Column(
               children: [
-                if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                if (products.returnQuantity != null && products.returnQuantity != 0) infoDetailSku("Jumlah Ekor", "${products.returnQuantity} Ekor"),
-                if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                if (products.returnWeight != null && products.returnWeight != 0) infoDetailSku("Kebutuhan", "${products.returnWeight} Kg"),
-                if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                if (products.returnQuantity != null && products.returnQuantity != 0) infoDetailSku('Jumlah Ekor', '${products.returnQuantity} Ekor'),
+                if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                if (products.returnWeight != null && products.returnWeight != 0) infoDetailSku('Kebutuhan', '${products.returnWeight} Kg'),
+                if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             )),
       );
@@ -367,8 +368,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       ),
                       Expanded(
                         child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                          label: 'Batal',
                           onClick: () {
                             showBottomDialog(context, controller);
                           },
@@ -384,8 +385,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                         ),
                         Expanded(
                           child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                            label: "Batal",
+                            controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                            label: 'Batal',
                             onClick: () {
                               showBottomDialog(context, controller);
                             },
@@ -394,8 +395,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       ] else ...[
                         Expanded(
                           child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("batalPenjualan"),
-                            label: "Batal",
+                            controller: GetXCreator.putButtonFillController('batalPenjualan'),
+                            label: 'Batal',
                             onClick: () {
                               showBottomDialog(context, controller);
                             },
@@ -411,8 +412,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       ),
                       Expanded(
                         child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                          label: 'Batal',
                           onClick: () {
                             showBottomDialog(context, controller);
                           },
@@ -429,8 +430,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       ],
                       Expanded(
                         child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                          label: 'Batal',
                           onClick: () {
                             showBottomDialog(context, controller);
                           },
@@ -447,8 +448,8 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                       ],
                       Expanded(
                         child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                          label: 'Batal',
                           onClick: () {
                             showBottomDialog(context, controller);
                           },
@@ -467,16 +468,15 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                           width: 16,
                         ),
                         Expanded(
-                            child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("batalPenjualan"),
-                            label: "Batal",
+                          child: ButtonOutline(
+                            controller: GetXCreator.putButtonOutlineController('batalPenjualan'),
+                            label: 'Batal',
                             onClick: () {
-                                    showBottomDialog(context, controller);
-                                },
-                            ),
+                              showBottomDialog(context, controller);
+                            },
+                          ),
                         )
                       ],
-
                     ]
                   ],
                 ),
@@ -509,41 +509,41 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                           ),
                           if (controller.orderDetail.value!.status == EnumSO.rejected && controller.orderDetail.value!.returnStatus == EnumSO.returnedPartial) ...[
                             Text(
-                              "Detail SKU",
+                              'Detail SKU',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
-                            controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
+                            controller.orderDetail.value!.products == null ? const Text(' ') : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
                             const SizedBox(
                               height: 16,
                             ),
                             Text(
-                              "Detail Ditolak",
+                              'Detail Ditolak',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
-                            controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadleReturn(controller.orderDetail.value!.products as List<Products?>),
+                            controller.orderDetail.value!.products == null ? const Text(' ') : listExpandadleReturn(controller.orderDetail.value!.products as List<Products?>),
                           ] else if ((controller.orderDetail.value!.status == EnumSO.rejected || controller.orderDetail.value!.status == EnumSO.delivered) && controller.orderDetail.value!.returnStatus == EnumSO.returnedFull) ...[
                             Text(
-                              "Detail Ditolak",
+                              'Detail Ditolak',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
-                            controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadleReturn(controller.orderDetail.value!.products as List<Products?>),
+                            controller.orderDetail.value!.products == null ? const Text(' ') : listExpandadleReturn(controller.orderDetail.value!.products as List<Products?>),
                           ] else ...[
                             Text(
-                              "Detail SKU",
+                              'Detail SKU',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
-                            controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
+                            controller.orderDetail.value!.products == null ? const Text(' ') : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
                           ],
-                          if (controller.orderDetail.value!.type! == "LB") ...[
+                          if (controller.orderDetail.value!.type! == 'LB') ...[
                             const SizedBox(
                               height: 16,
                             ),
                             Text(
-                              "Detail Catatan",
+                              'Detail Catatan',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
@@ -560,12 +560,17 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                             ),
                             child: Column(
                               children: [
-                                if (controller.orderDetail.value!.status == EnumSO.booked || controller.orderDetail.value!.status == EnumSO.readyToDeliver || controller.orderDetail.value!.status == EnumSO.onDelivery || controller.orderDetail.value!.status == EnumSO.delivered || controller.orderDetail.value!.status == EnumSO.received || controller.orderDetail.value!.status == EnumSO.rejected) ...[
+                                if (controller.orderDetail.value!.status == EnumSO.booked ||
+                                    controller.orderDetail.value!.status == EnumSO.readyToDeliver ||
+                                    controller.orderDetail.value!.status == EnumSO.onDelivery ||
+                                    controller.orderDetail.value!.status == EnumSO.delivered ||
+                                    controller.orderDetail.value!.status == EnumSO.received ||
+                                    controller.orderDetail.value!.status == EnumSO.rejected) ...[
                                   Row(
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Penjualan",
+                                          'Total Penjualan',
                                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                           overflow: TextOverflow.clip,
                                         ),
@@ -579,13 +584,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Kg",
+                                          'Total Kg',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Text(
-                                        "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                                        '${controller.sumKg.value.toStringAsFixed(2)}kg',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -599,13 +604,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Ekor",
+                                            'Total Ekor',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Obx(() => Text(
-                                              "${controller.sumChick.value} Ekor",
+                                              '${controller.sumChick.value} Ekor',
                                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                               overflow: TextOverflow.clip,
                                             )),
@@ -620,12 +625,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Biaya Pengiriman",
+                                            'Biaya Pengiriman',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                        Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.priceDelivery.value),
+                                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                       ],
                                     ),
                                     const SizedBox(
@@ -636,12 +642,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Rp",
+                                          'Total Rp',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
-                                      Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.priceDelivery.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                      Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.priceDelivery.value)),
+                                          style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                     ],
                                   )
                                 ] else ...[
@@ -649,7 +656,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Penjualan",
+                                          'Total Penjualan',
                                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                           overflow: TextOverflow.clip,
                                         ),
@@ -663,13 +670,15 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Kg",
+                                          'Total Kg',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Text(
-                                        controller.sumNeededMax.value - controller.sumNeededMin.value == 0 ? "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                        controller.sumNeededMax.value - controller.sumNeededMin.value == 0
+                                            ? '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                            : '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -683,13 +692,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Total Ekor",
+                                            'Total Ekor',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
                                         Obx(() => Text(
-                                              "${controller.sumChick.value} Ekor",
+                                              '${controller.sumChick.value} Ekor',
                                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                               overflow: TextOverflow.clip,
                                             )),
@@ -704,12 +713,13 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "Biaya Pengiriman",
+                                            'Biaya Pengiriman',
                                             style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           ),
                                         ),
-                                        Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                        Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.priceDelivery.value),
+                                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                       ],
                                     ),
                                     const SizedBox(
@@ -720,14 +730,14 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Rp",
+                                          'Total Rp',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Text(
                                           controller.sumPriceMax.value - controller.sumPriceMin.value == 0
-                                              ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
+                                              ? NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
                                               : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value + controller.priceDelivery.value)}",
                                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip),
@@ -751,14 +761,14 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan",
+                                  'Catatan',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : "-",
+                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : '-',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -776,7 +786,7 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
               )));
   }
 
-  showBottomDialog(BuildContext context, DetailSalesOrderController controller) {
+  Future<void> showBottomDialog(BuildContext context, DetailSalesOrderController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -805,18 +815,18 @@ class DetailSalesOrder extends GetView<DetailSalesOrderController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
+                    'Apakah kamu yakin ingin melakukan pembatalan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukan pembatalan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/sad_face_flatline.svg",
+                    'images/sad_face_flatline.svg',
                   ),
                 ),
                 Container(

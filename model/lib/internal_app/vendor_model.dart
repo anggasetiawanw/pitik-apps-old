@@ -31,16 +31,16 @@ class VendorModel {
 
   static VendorModel toResponseModel(Map<String, dynamic> map) {
     return VendorModel(
-        id: map['id'],
-        name: map['name'],
-        vendorName: map['vendorName'],
-        priceBasis: map['priceBasis'],
-        status: map['status'],
-        city: Mapper.child<Location>(map["city"]),
-        district: Mapper.child<Location>(map["district"]),
-        province: Mapper.child<Location>(map["province"]),
-        purchasableProducts: Mapper.children<OperationUnitModel>(map['purchasableProducts']),
-        type: map['type'],
+      id: map['id'],
+      name: map['name'],
+      vendorName: map['vendorName'],
+      priceBasis: map['priceBasis'],
+      status: map['status'],
+      city: Mapper.child<Location>(map["city"]),
+      district: Mapper.child<Location>(map["district"]),
+      province: Mapper.child<Location>(map["province"]),
+      purchasableProducts: Mapper.children<OperationUnitModel>(map['purchasableProducts']),
+      type: map['type'],
     );
   }
 }

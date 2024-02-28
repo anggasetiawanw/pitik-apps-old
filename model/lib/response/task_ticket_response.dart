@@ -9,18 +9,14 @@ import 'package:model/task_ticket_model.dart';
 
 @SetupModel
 class TaskTicketResponse {
+  int? count;
 
-    int? count;
+  @IsChildren()
+  List<TaskTicket?> data;
 
-    @IsChildren()
-    List<TaskTicket?> data;
+  TaskTicketResponse({this.count, this.data = const []});
 
-    TaskTicketResponse({this.count, this.data = const []});
-
-    static TaskTicketResponse toResponseModel(Map<String, dynamic> map) {
-        return TaskTicketResponse(
-            count: map['count'],
-            data: Mapper.children<TaskTicket>(map['data'])
-        );
-    }
+  static TaskTicketResponse toResponseModel(Map<String, dynamic> map) {
+    return TaskTicketResponse(count: map['count'], data: Mapper.children<TaskTicket>(map['data']));
+  }
 }

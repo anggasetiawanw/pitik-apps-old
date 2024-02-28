@@ -6,7 +6,6 @@
 //  * @desc [description]
 //  */
 
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:mobile_flutter/engine/model/customer.dart';
@@ -86,11 +85,11 @@
 //                                 child: Text(
 //                               customer.lastestVisit!.leadStatus == ""
 //                                   ? ""
-//                                   : customer.lastestVisit!.leadStatus == "Belum" 
+//                                   : customer.lastestVisit!.leadStatus == "Belum"
 //                                       ? "Belum"
 //                                       : customer.lastestVisit!.leadStatus == "Akan"
 //                                           ? "Akan"
-//                                           : customer.lastestVisit!.leadStatus == "Pernah" 
+//                                           : customer.lastestVisit!.leadStatus == "Pernah"
 //                                               ? "Pernah"
 //                                               : "Rutin",
 //                               style: customer.lastestVisit!.leadStatus == ""

@@ -7,15 +7,12 @@ import '../engine_library.dart';
 
 @SetupModel
 class BuildingResponse {
+  @IsChildren()
+  List<Building?> data;
 
-    @IsChildren()
-    List<Building?> data;
+  BuildingResponse({this.data = const []});
 
-    BuildingResponse({this.data = const []});
-
-    static BuildingResponse toResponseModel(Map<String, dynamic> map) {
-        return BuildingResponse(
-            data: Mapper.children<Building>(map['data'])
-        );
-    }
+  static BuildingResponse toResponseModel(Map<String, dynamic> map) {
+    return BuildingResponse(data: Mapper.children<Building>(map['data']));
+  }
 }

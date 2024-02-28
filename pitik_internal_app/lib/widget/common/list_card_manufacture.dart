@@ -4,13 +4,13 @@ import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/manufacture_model.dart';
-import 'package:pitik_internal_app/widget/common/manufacture_status.dart';
+import 'manufacture_status.dart';
 
 class CardListManufacture extends StatelessWidget {
   const CardListManufacture({
-    super.key,
     required this.onTap,
     required this.manufacture,
+    super.key,
   });
   final Function() onTap;
   final ManufactureModel manufacture;
@@ -38,14 +38,14 @@ class CardListManufacture extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${manufacture.input!.name}",
+                        '${manufacture.input!.name}',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${manufacture.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}",
+                        '${manufacture.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -64,11 +64,11 @@ class CardListManufacture extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Sumber: ",
+                  'Sumber: ',
                   style: AppTextStyle.greyTextStyle,
                 ),
                 Text(
-                  "${manufacture.operationUnit!.operationUnitName}",
+                  '${manufacture.operationUnit!.operationUnitName}',
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                 )
               ],
@@ -79,11 +79,11 @@ class CardListManufacture extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "SKU: ",
+                  'SKU: ',
                   style: AppTextStyle.greyTextStyle,
                 ),
                 Text(
-                  "${manufacture.input!.productItems![0]!.name} Ekor",
+                  '${manufacture.input!.productItems![0]!.name} Ekor',
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                 )
               ],
@@ -94,11 +94,11 @@ class CardListManufacture extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Jumlah Ekor: ",
+                  'Jumlah Ekor: ',
                   style: AppTextStyle.greyTextStyle,
                 ),
                 Text(
-                  "${manufacture.input!.productItems![0]!.quantity} Ekor",
+                  '${manufacture.input!.productItems![0]!.quantity} Ekor',
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                 )
               ],
@@ -110,11 +110,11 @@ class CardListManufacture extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Total: ",
+                    'Total: ',
                     style: AppTextStyle.greyTextStyle,
                   ),
                   Text(
-                    "${manufacture.input!.productItems![0]!.weight} Kg",
+                    '${manufacture.input!.productItems![0]!.weight} Kg',
                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                   )
                 ],
@@ -124,15 +124,15 @@ class CardListManufacture extends StatelessWidget {
               height: 6,
             ),
             Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dibuat Oleh: ",
+                  'Dibuat Oleh: ',
                   style: AppTextStyle.greyTextStyle,
                 ),
                 Expanded(
                   child: Text(
-                    "${manufacture.createdBy}",
+                    '${manufacture.createdBy}',
                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
                   ),

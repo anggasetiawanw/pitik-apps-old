@@ -4,13 +4,14 @@ import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/terminate_model.dart';
-import 'package:pitik_internal_app/widget/common/transfer_terminate.dart';
+import 'transfer_terminate.dart';
 
 class CardListTerminate extends StatelessWidget {
   const CardListTerminate({
-    super.key,
     required this.onTap,
-    required this.terminateModel, required this.isApproved,
+    required this.terminateModel,
+    required this.isApproved,
+    super.key,
   });
   final Function() onTap;
   final TerminateModel terminateModel;
@@ -40,14 +41,14 @@ class CardListTerminate extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${terminateModel.product!.productItem!.name}",
+                        '${terminateModel.product!.productItem!.name}',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${terminateModel.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}",
+                        '${terminateModel.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -57,7 +58,10 @@ class CardListTerminate extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                TerminateStatus(terminateStatus: terminateModel.status, isApproved: isApproved,),
+                TerminateStatus(
+                  terminateStatus: terminateModel.status,
+                  isApproved: isApproved,
+                ),
               ],
             ),
             const SizedBox(
@@ -66,12 +70,12 @@ class CardListTerminate extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Sumber: ",
+                  'Sumber: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${terminateModel.operationUnit!.operationUnitName}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${terminateModel.operationUnit!.operationUnitName}',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -81,12 +85,12 @@ class CardListTerminate extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Jumlah Ekor: ",
+                  'Jumlah Ekor: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${terminateModel.product!.productItem!.quantity} Ekor",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${terminateModel.product!.productItem!.quantity} Ekor',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -96,12 +100,12 @@ class CardListTerminate extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Total Kg: ",
+                  'Total Kg: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${terminateModel.product!.productItem!.weight} Kg",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${terminateModel.product!.productItem!.weight} Kg',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),
@@ -111,12 +115,12 @@ class CardListTerminate extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Dibuat: ",
+                  'Dibuat: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${terminateModel.createdBy}",
-                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium,fontSize: 12),
+                  '${terminateModel.createdBy}',
+                  style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
             ),

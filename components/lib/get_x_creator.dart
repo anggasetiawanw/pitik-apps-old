@@ -37,142 +37,142 @@ import 'spinner_search/spinner_search_controller.dart';
 import 'suggest_field/suggest_field_controller.dart';
 import 'time_picker/time_picker_controller.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 class GetXCreator {
+  static EditFieldController putEditFieldController(String tag) {
+    return Get.put(EditFieldController(tag: tag), tag: tag);
+  }
 
-    static EditFieldController putEditFieldController(String tag) {
-        return Get.put(EditFieldController(tag: tag), tag: tag);
-    }
+  static EditAreaFieldController putEditAreaFieldController(String tag) {
+    return Get.put(EditAreaFieldController(tag: tag), tag: tag);
+  }
 
-    static EditAreaFieldController putEditAreaFieldController(String tag) {
-        return Get.put(EditAreaFieldController(tag: tag), tag: tag);
-    }
+  static PasswordFieldController putPasswordFieldController(String tag) {
+    return Get.put(PasswordFieldController(tag: tag), tag: tag);
+  }
 
-    static PasswordFieldController putPasswordFieldController(String tag) {
-        return Get.put(PasswordFieldController(tag: tag), tag: tag);
-    }
+  static ButtonFillController putButtonFillController(String tag) {
+    return Get.put(ButtonFillController(tag: tag), tag: tag);
+  }
 
+  static ButtonOutlineController putButtonOutlineController(String tag) {
+    return Get.put(ButtonOutlineController(tag: tag), tag: tag);
+  }
 
-    static ButtonFillController putButtonFillController(String tag) {
-        return Get.put(ButtonFillController(tag: tag), tag: tag);
-    }
+  static SpinnerFieldController putSpinnerFieldController<T>(String tag) {
+    return Get.put(SpinnerFieldController<T>(tag: tag), tag: tag);
+  }
 
-    static ButtonOutlineController putButtonOutlineController(String tag) {
-        return Get.put(ButtonOutlineController(tag: tag), tag: tag);
-    }
+  static SpinnerMultiFieldController putSpinnerMultiFieldController<T>(String tag) {
+    return Get.put(SpinnerMultiFieldController<T>(tag: tag), tag: tag);
+  }
 
-    static SpinnerFieldController putSpinnerFieldController<T>(String tag) {
-        return Get.put(SpinnerFieldController<T>(tag: tag), tag: tag);
-    }
+  static CardSensorController putCardSensorController(String tag, BuildContext context) {
+    return Get.put(CardSensorController(tag: tag, context: context), tag: tag);
+  }
 
-    static SpinnerMultiFieldController putSpinnerMultiFieldController<T>(String tag) {
-        return Get.put(SpinnerMultiFieldController<T>(tag: tag), tag: tag);
-    }
+  static CardCameraController putCardCameraController(String tag, BuildContext context) {
+    return Get.put(CardCameraController(tag: tag, context: context), tag: tag);
+  }
 
-    static CardSensorController putCardSensorController(String tag, BuildContext context) {
-        return Get.put(CardSensorController(tag: tag, context: context), tag: tag);
-    }
-    static CardCameraController putCardCameraController(String tag, BuildContext context) {
-        return Get.put(CardCameraController(tag: tag, context: context), tag: tag);
-    }
+  static CardFloorController putCardFloorController(String tag, BuildContext context) {
+    return Get.put(CardFloorController(tag: tag, context: context), tag: tag);
+  }
 
-    static CardFloorController putCardFloorController(String tag, BuildContext context) {
-        return Get.put(CardFloorController(tag: tag, context: context), tag: tag);
-    }
+  static EditFieldQRController putEditFieldQRController(String tag) {
+    return Get.put(EditFieldQRController(tag: tag), tag: tag);
+  }
 
-    static EditFieldQRController putEditFieldQRController(String tag) {
-        return Get.put(EditFieldQRController(tag: tag), tag: tag);
-    }
+  static ExpandableDeviceController putAccordionDeviceController(String tag, BuildContext context) {
+    return Get.put(ExpandableDeviceController(tag: tag, context: context), tag: tag);
+  }
 
-    static ExpandableDeviceController putAccordionDeviceController(String tag, BuildContext context) {
-        return Get.put(ExpandableDeviceController(tag: tag, context: context), tag: tag);
-    }
+  static ExpandableMonitorRealTimeController putAccordionMonitorRealTimeController(String tag, BuildContext context) {
+    return Get.put(ExpandableMonitorRealTimeController(tag: tag, context: context), tag: tag);
+  }
 
-    static ExpandableMonitorRealTimeController putAccordionMonitorRealTimeController(String tag, BuildContext context) {
-        return Get.put(ExpandableMonitorRealTimeController(tag: tag, context: context), tag: tag);
-    }
+  static ExpandableController putAccordionController(String tag) {
+    return Get.put(ExpandableController(tag: tag), tag: tag);
+  }
 
-    static ExpandableController putAccordionController(String tag) {
-        return Get.put(ExpandableController(tag: tag), tag: tag);
-    }
+  static ItemDecreaseTemperatureController putItemDecreaseController(String tag, BuildContext context) {
+    return Get.put(ItemDecreaseTemperatureController(tag: tag, context: context), tag: tag);
+  }
 
-    static ItemDecreaseTemperatureController putItemDecreaseController(String tag, BuildContext context) {
-        return Get.put(ItemDecreaseTemperatureController(tag: tag, context: context), tag: tag);
-    }
+  static DateTimeFieldController putDateTimeFieldController(String tag) {
+    return Get.put(DateTimeFieldController(tag: tag), tag: tag);
+  }
 
-    static DateTimeFieldController putDateTimeFieldController(String tag) {
-        return Get.put(DateTimeFieldController(tag: tag), tag: tag);
-    }
+  static SwitchButtonController putSwitchButtonController(String tag) {
+    return Get.put(SwitchButtonController(tag: tag), tag: tag);
+  }
 
-    static SwitchButtonController putSwitchButtonController(String tag) {
-        return Get.put(SwitchButtonController(tag: tag), tag: tag);
-    }
+  static GraphViewController putGraphViewController(String tag) {
+    return Get.put(GraphViewController(tag: tag), tag: tag);
+  }
 
-    static GraphViewController putGraphViewController(String tag) {
-        return Get.put(GraphViewController(tag: tag), tag: tag);
-    }
+  static TimePickerController putTimePickerController(String tag) {
+    return Get.put(TimePickerController(tag: tag), tag: tag);
+  }
 
-    static TimePickerController putTimePickerController(String tag) {
-        return Get.put(TimePickerController(tag: tag), tag: tag);
-    }
+  static ItemHistoricalSmartCameraController putHistoricalSmartCameraController(String tag, BuildContext context) {
+    return Get.put(ItemHistoricalSmartCameraController(tag: tag, context: context), tag: tag);
+  }
 
-    static ItemHistoricalSmartCameraController putHistoricalSmartCameraController(String tag, BuildContext context) {
-        return Get.put(ItemHistoricalSmartCameraController(tag: tag, context: context), tag: tag);
-    }
+  static ItemTakePictureCameraController putItemTakePictureController(String tag, BuildContext context) {
+    return Get.put(ItemTakePictureCameraController(tag: tag, context: context), tag: tag);
+  }
 
-    static ItemTakePictureCameraController putItemTakePictureController(String tag, BuildContext context) {
-        return Get.put(ItemTakePictureCameraController(tag: tag, context: context), tag: tag);
-    }
+  static MediaFieldController putMediaFieldController(String tag) {
+    return Get.put(MediaFieldController(tag: tag), tag: tag);
+  }
 
-    static MediaFieldController putMediaFieldController(String tag) {
-        return Get.put(MediaFieldController(tag: tag), tag: tag);
-    }
+  static SpinnerSearchController putSpinnerSearchController<T>(String tag) {
+    return Get.put(SpinnerSearchController<T>(tag: tag), tag: tag);
+  }
 
-    static SpinnerSearchController putSpinnerSearchController<T>(String tag) {
-        return Get.put(SpinnerSearchController<T>(tag: tag), tag: tag);
-    }
+  static SuggestFieldController putSuggestFieldController<T>(String tag) {
+    return Get.put(SuggestFieldController<T>(tag: tag), tag: tag);
+  }
 
-    static SuggestFieldController putSuggestFieldController<T>(String tag) {
-        return Get.put(SuggestFieldController<T>(tag: tag), tag: tag);
-    }
+  static EditFieldTwoRowController putEditFieldTwoRowController(String tag) {
+    return Get.put(EditFieldTwoRowController(tag: tag), tag: tag);
+  }
 
-    static EditFieldTwoRowController putEditFieldTwoRowController(String tag) {
-        return Get.put(EditFieldTwoRowController(tag: tag), tag: tag);
-    }
-    static StockOpnameTwoFieldController putStockOpnameTwoField<T>(String tag) {
-        return Get.put(StockOpnameTwoFieldController(tag: tag), tag: tag);
-    }
-    static StockOpnameFieldController putStockOpnameField<T>(String tag) {
-        return Get.put(StockOpnameFieldController(tag: tag), tag: tag);
-    }
+  static StockOpnameTwoFieldController putStockOpnameTwoField<T>(String tag) {
+    return Get.put(StockOpnameTwoFieldController(tag: tag), tag: tag);
+  }
 
-    static TableFieldController putTableFieldController(String tag) {
-        return Get.put(TableFieldController(tag: tag), tag: tag);
-    }
+  static StockOpnameFieldController putStockOpnameField<T>(String tag) {
+    return Get.put(StockOpnameFieldController(tag: tag), tag: tag);
+  }
 
-    static MultipleFormFieldController putMultipleFormFieldController<T>(String tag) {
-        return Get.put(MultipleFormFieldController<T>(tag: tag), tag: tag);
-    }
-    static SwitchLinearController putSwitchLinearController(String tag) {
-        return Get.put(SwitchLinearController(tag: tag), tag: tag);
-    }
+  static TableFieldController putTableFieldController(String tag) {
+    return Get.put(TableFieldController(tag: tag), tag: tag);
+  }
 
-    static MultipleDynamicFormFieldController putMultipleDynamicFormFieldController<T>(String tag) {
-        return Get.put(MultipleDynamicFormFieldController<T>(tag: tag), tag: tag);
-    }
+  static MultipleFormFieldController putMultipleFormFieldController<T>(String tag) {
+    return Get.put(MultipleFormFieldController<T>(tag: tag), tag: tag);
+  }
 
-    static CheckBoxController putCheckBoxFieldController<T>(String tag) {
-        return Get.put(CheckBoxController(tag: tag), tag: tag);
-    }
+  static SwitchLinearController putSwitchLinearController(String tag) {
+    return Get.put(SwitchLinearController(tag: tag), tag: tag);
+  }
 
-    static SearchBarController putSearchBarController(String tag) {
-        return Get.put(SearchBarController(tag: tag), tag: tag);
-    }
+  static MultipleDynamicFormFieldController putMultipleDynamicFormFieldController<T>(String tag) {
+    return Get.put(MultipleDynamicFormFieldController<T>(tag: tag), tag: tag);
+  }
+
+  static CheckBoxController putCheckBoxFieldController<T>(String tag) {
+    return Get.put(CheckBoxController(tag: tag), tag: tag);
+  }
+
+  static SearchBarController putSearchBarController(String tag) {
+    return Get.put(SearchBarController(tag: tag), tag: tag);
+  }
 /*
     static SkuCardPurchaseController putSkuCardPurchaseController(String tag, BuildContext context) {
         return Get.put(SkuCardPurchaseController(tag: tag, context: context), tag: tag);

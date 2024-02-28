@@ -2,24 +2,21 @@
 
 import '../engine_library.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 @SetupModel
-class User{
+class User {
+  String? username;
+  String? password;
 
-    String? username;
-    String? password;
+  User({this.username, this.password});
 
-    User({this.username, this.password});
-
-    static User toResponseModel(Map<String, dynamic> map) {
-        return User(
-            username: map['username'],
-            password: map['password'],
-        );
-    }
+  static User toResponseModel(Map<String, dynamic> map) {
+    return User(
+      username: map['username'],
+      password: map['password'],
+    );
+  }
 }

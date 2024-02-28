@@ -13,7 +13,7 @@ class VendorListResponse {
   VendorListResponse({this.code, required this.data});
 
   static VendorListResponse toResponseModel(Map<String, dynamic> map) => VendorListResponse(
-      code: map['code'],
-      data: Mapper.children<VendorModel>(map['data']),
-  );
+        code: map['code'],
+        data: Mapper.children<VendorModel>(map['data']),
+      );
 }

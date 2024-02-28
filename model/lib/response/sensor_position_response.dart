@@ -7,15 +7,12 @@ import '../sensor_model.dart';
 
 @SetupModel
 class SensorPositionResponse {
+  @IsChildren()
+  List<Sensor?> data;
 
-    @IsChildren()
-    List<Sensor?> data;
+  SensorPositionResponse({this.data = const []});
 
-    SensorPositionResponse({this.data = const []});
-
-    static SensorPositionResponse toResponseModel(Map<String, dynamic> map) {
-        return SensorPositionResponse(
-            data: Mapper.children<Sensor>(map['data'])
-        );
-    }
+  static SensorPositionResponse toResponseModel(Map<String, dynamic> map) {
+    return SensorPositionResponse(data: Mapper.children<Sensor>(map['data']));
+  }
 }

@@ -9,19 +9,15 @@ import 'package:model/farm_projection/farm_projection_component_detail_model.dar
 
 @SetupModel
 class FarmProjectionComponent {
+  @IsChild()
+  FarmProjectionComponentDetail? current;
 
-    @IsChild()
-    FarmProjectionComponentDetail? current;
+  @IsChild()
+  FarmProjectionComponentDetail? projected;
 
-    @IsChild()
-    FarmProjectionComponentDetail? projected;
+  FarmProjectionComponent({this.current, this.projected});
 
-    FarmProjectionComponent({this.current, this.projected});
-
-    static FarmProjectionComponent toResponseModel(Map<String, dynamic> map) {
-        return FarmProjectionComponent(
-            current: Mapper.child<FarmProjectionComponentDetail>(map['current']),
-            projected: Mapper.child<FarmProjectionComponentDetail>(map['projected'])
-        );
-    }
+  static FarmProjectionComponent toResponseModel(Map<String, dynamic> map) {
+    return FarmProjectionComponent(current: Mapper.child<FarmProjectionComponentDetail>(map['current']), projected: Mapper.child<FarmProjectionComponentDetail>(map['projected']));
+  }
 }

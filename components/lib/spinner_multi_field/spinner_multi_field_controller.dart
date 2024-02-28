@@ -2,11 +2,9 @@
 
 import 'package:get/get.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 class SpinnerMultiFieldController<T> extends GetxController {
   String tag;

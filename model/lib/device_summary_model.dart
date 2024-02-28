@@ -3,58 +3,54 @@
 import '../engine_library.dart';
 import 'sensor_data_model.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 @SetupModel
-class DeviceSummary{
+class DeviceSummary {
+  @IsChild()
+  SensorData? temperature;
 
-    @IsChild()
-    SensorData? temperature;
+  @IsChild()
+  SensorData? relativeHumidity;
 
-    @IsChild()
-    SensorData? relativeHumidity;
+  @IsChild()
+  SensorData? ammonia;
 
-    @IsChild()
-    SensorData? ammonia;
+  @IsChild()
+  SensorData? heatStressIndex;
 
-    @IsChild()
-    SensorData? heatStressIndex;
+  @IsChild()
+  SensorData? wind;
 
-    @IsChild()
-    SensorData? wind;
+  @IsChild()
+  SensorData? lights;
 
-    @IsChild()
-    SensorData? lights;
+  String? id;
+  String? coopCodeId;
+  String? deviceId;
 
-    String? id;
-    String? coopCodeId;
-    String? deviceId;
+  DeviceSummary({this.temperature, this.relativeHumidity, this.ammonia, this.heatStressIndex, this.wind, this.lights, this.id, this.coopCodeId, this.deviceId});
 
-    DeviceSummary({this.temperature, this.relativeHumidity, this.ammonia, this.heatStressIndex, this.wind, this.lights, this.id, this.coopCodeId, this.deviceId});
+  static DeviceSummary toResponseModel(Map<String, dynamic> map) {
+    return DeviceSummary(
+      temperature: Mapper.child<SensorData>(map['temperature']),
+      relativeHumidity: Mapper.child<SensorData>(map['relativeHumidity']),
+      ammonia: Mapper.child<SensorData>(map['ammonia']),
+      heatStressIndex: Mapper.child<SensorData>(map['heatStressIndex']),
+      wind: Mapper.child<SensorData>(map['wind']),
+      lights: Mapper.child<SensorData>(map['lights']),
+      id: map['id'],
+      coopCodeId: map['coopCodeId'],
+      deviceId: map['deviceId'],
+    );
+  }
 
-    static DeviceSummary toResponseModel(Map<String, dynamic> map) {
-        return DeviceSummary(
-            temperature: Mapper.child<SensorData>(map['temperature']),
-            relativeHumidity: Mapper.child<SensorData>(map['relativeHumidity']),
-            ammonia: Mapper.child<SensorData>(map['ammonia']),
-            heatStressIndex: Mapper.child<SensorData>(map['heatStressIndex']),
-            wind: Mapper.child<SensorData>(map['wind']),
-            lights: Mapper.child<SensorData>(map['lights']),
-            id: map['id'],
-            coopCodeId: map['coopCodeId'],
-            deviceId: map['deviceId'],
-        );
+  bool isNullObject() {
+    if (temperature == null && relativeHumidity == null && ammonia == null && heatStressIndex == null && wind == null && lights == null) {
+      return true;
     }
-
-    bool isNullObject(){
-        if(temperature == null && relativeHumidity == null && ammonia == null
-            && heatStressIndex == null && wind == null && lights == null){
-            return true;
-        }
-        return false;
-    }
+    return false;
+  }
 }

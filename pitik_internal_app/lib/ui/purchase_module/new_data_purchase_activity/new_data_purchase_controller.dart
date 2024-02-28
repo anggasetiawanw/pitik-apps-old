@@ -20,13 +20,13 @@ import 'package:model/internal_app/vendor_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase/sku_card_purchase.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase/sku_card_purchase_controller.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase_internal/sku_card_purchase_internal.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase_internal/sku_card_purchase_internal_controller.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/internal_controller_creator.dart';
+import '../../../widget/sku_card_purchase/sku_card_purchase.dart';
+import '../../../widget/sku_card_purchase/sku_card_purchase_controller.dart';
+import '../../../widget/sku_card_purchase_internal/sku_card_purchase_internal.dart';
+import '../../../widget/sku_card_purchase_internal/sku_card_purchase_internal_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -37,7 +37,7 @@ class NewDataPurchaseController extends GetxController {
   NewDataPurchaseController({required this.context});
 
   var isLoading = false.obs;
-  var status = "".obs;
+  var status = ''.obs;
   var isInternal = false.obs;
   late ButtonFill iyaVisitButton;
   late ButtonOutline tidakVisitButton;
@@ -50,14 +50,14 @@ class NewDataPurchaseController extends GetxController {
   Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
 
   late SpinnerField spinnerTypeSource = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("typeSumberPembelian"),
-      label: "Jenis Sumber*",
-      hint: "Pilih salah satu",
-      alertText: "Jenis sumber harus dipilih!",
-      items: const {"Jagal External": false, "Vendor": false},
+      controller: GetXCreator.putSpinnerFieldController('typeSumberPembelian'),
+      label: 'Jenis Sumber*',
+      hint: 'Pilih salah satu',
+      alertText: 'Jenis sumber harus dipilih!',
+      items: const {'Jagal External': false, 'Vendor': false},
       onSpinnerSelected: (text) {
         if (text.isNotEmpty) {
-          if (text == "Vendor") {
+          if (text == 'Vendor') {
             getListSourceVendor();
           } else {
             getListJagalExternal();
@@ -66,15 +66,15 @@ class NewDataPurchaseController extends GetxController {
       });
 
   late SpinnerField spinnerSource = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("sumberPembelian"),
-      label: "Sumber*",
-      hint: "Pilih salah satu",
-      alertText: "Sumber harus dipilih!",
+      controller: GetXCreator.putSpinnerFieldController('sumberPembelian'),
+      label: 'Sumber*',
+      hint: 'Pilih salah satu',
+      alertText: 'Sumber harus dipilih!',
       items: const {},
       onSpinnerSelected: (text) {
         if (text.isNotEmpty) {
           spinnerDestination.controller.enable();
-          if (spinnerTypeSource.controller.textSelected.value == "Vendor") {
+          if (spinnerTypeSource.controller.textSelected.value == 'Vendor') {
             VendorModel? vendorSelected;
             vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
             if (vendorSelected!.type == AppStrings.INTERNAL) {
@@ -95,17 +95,26 @@ class NewDataPurchaseController extends GetxController {
       });
 
   late SpinnerField spinnerDestination = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("tujuanPembelian"),
-    label: "Tujuan*",
-    hint: "Pilih salah satu",
-    alertText: "Tujuan harus dipilih!",
+    controller: GetXCreator.putSpinnerFieldController('tujuanPembelian'),
+    label: 'Tujuan*',
+    hint: 'Pilih salah satu',
+    alertText: 'Tujuan harus dipilih!',
     items: const {},
     onSpinnerSelected: (text) {},
   );
 
-  EditField efTotalKG = EditField(controller: GetXCreator.putEditFieldController("efTotalKGPO"), label: "Total/Global(Kg)*", hint: "Ketik di sini", alertText: "Total Kg harus diisi", textUnit: "Kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+  EditField efTotalKG = EditField(
+      controller: GetXCreator.putEditFieldController('efTotalKGPO'),
+      label: 'Total/Global(Kg)*',
+      hint: 'Ketik di sini',
+      alertText: 'Total Kg harus diisi',
+      textUnit: 'Kg',
+      maxInput: 20,
+      inputType: TextInputType.number,
+      onTyping: (value, editField) {});
 
-  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemark"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efRemark =
+      EditField(controller: GetXCreator.putEditFieldController('efRemark'), label: 'Catatan', hint: 'Ketik disini', alertText: '', textUnit: '', maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   late SkuCardPurchase skuCard;
   late SkuCardPurchaseInternal skuCardInternal;
@@ -119,22 +128,22 @@ class NewDataPurchaseController extends GetxController {
     spinnerDestination.controller.disable();
     spinnerSource.controller.disable();
     skuCard = SkuCardPurchase(
-      controller: InternalControllerCreator.putSkuCardPurchaseController("skuPurchase", context),
+      controller: InternalControllerCreator.putSkuCardPurchaseController('skuPurchase', context),
     );
 
-    skuCardInternal = SkuCardPurchaseInternal(controller: InternalControllerCreator.putSkuCardPurchaseInternalController("skuInternalPuchar", context));
+    skuCardInternal = SkuCardPurchaseInternal(controller: InternalControllerCreator.putSkuCardPurchaseInternalController('skuInternalPuchar', context));
 
     tidakVisitButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("tidakPurchase"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('tidakPurchase'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
 
     iyaVisitButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("iyaPurchase"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('iyaPurchase'),
+      label: 'Ya',
       onClick: () {
         Get.back();
         savePurchase();
@@ -145,11 +154,11 @@ class NewDataPurchaseController extends GetxController {
 
   @override
   void onReady() {
-    Get.find<SkuCardPurchaseController>(tag: "skuPurchase").idx.listen((p0) {
+    Get.find<SkuCardPurchaseController>(tag: 'skuPurchase').idx.listen((p0) {
       generateListProduct(p0);
     });
 
-    Get.find<SkuCardPurchaseInternalController>(tag: "skuInternalPuchar").idx.listen((p0) {
+    Get.find<SkuCardPurchaseInternalController>(tag: 'skuInternalPuchar').idx.listen((p0) {
       generateListProductInternal(p0);
     });
     skuCard.controller.invisibleCard();
@@ -182,7 +191,7 @@ class NewDataPurchaseController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var vendor in (body as VendorListResponse).data) {
                 mapList[vendor!.vendorName!] = false;
               }
@@ -192,7 +201,7 @@ class NewDataPurchaseController extends GetxController {
               Timer(const Duration(milliseconds: 500), () {
                 spinnerSource.controller
                   ..generateItems(mapList)
-                  ..setTextSelected("")
+                  ..setTextSelected('')
                   ..hideLoading()
                   ..enable()
                   ..refresh();
@@ -200,8 +209,8 @@ class NewDataPurchaseController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -211,8 +220,8 @@ class NewDataPurchaseController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -230,9 +239,9 @@ class NewDataPurchaseController extends GetxController {
     Service.push(
         service: ListApi.getListJagalExternal,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, "JAGAL", "EXTERNAL"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, 'JAGAL', 'EXTERNAL'],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -242,15 +251,15 @@ class NewDataPurchaseController extends GetxController {
           Timer(const Duration(milliseconds: 500), () {
             spinnerSource.controller
               ..generateItems(mapList)
-              ..setTextSelected("")
+              ..setTextSelected('')
               ..hideLoading()
               ..enable()
               ..refresh();
           });
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -258,8 +267,8 @@ class NewDataPurchaseController extends GetxController {
           );
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -280,7 +289,7 @@ class NewDataPurchaseController extends GetxController {
         context: context,
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -291,8 +300,8 @@ class NewDataPurchaseController extends GetxController {
             spinnerDestination.controller.generateItems(mapList);
             spinnerDestination.controller.refresh();
             timeEnd = DateTime.now();
-            Duration totalTime = timeEnd.difference(timeStart);
-            Constant.trackWithMap("Render_Time", {'Page': "Buat_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+            final Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackWithMap('Render_Time', {'Page': 'Buat_Pembelian', 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
           });
 
           for (var result in body.data) {
@@ -300,8 +309,8 @@ class NewDataPurchaseController extends GetxController {
           }
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -310,8 +319,8 @@ class NewDataPurchaseController extends GetxController {
           spinnerDestination.controller.hideLoading();
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -334,7 +343,7 @@ class NewDataPurchaseController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategories.value.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
@@ -349,8 +358,8 @@ class NewDataPurchaseController extends GetxController {
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
@@ -373,7 +382,7 @@ class NewDataPurchaseController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategories.value.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
@@ -387,8 +396,8 @@ class NewDataPurchaseController extends GetxController {
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
@@ -401,10 +410,10 @@ class NewDataPurchaseController extends GetxController {
   }
 
   void savePurchase() {
-    List ret = validation();
+    final List<dynamic> ret = validation();
     if (ret[0]) {
       isLoading.value = true;
-      Purchase purchasePayload = generatePayload();
+      final Purchase purchasePayload = generatePayload();
       Service.push(
         service: ListApi.createPurchase,
         context: context,
@@ -414,10 +423,10 @@ class NewDataPurchaseController extends GetxController {
           Get.back();
         }, onResponseFail: (code, message, body, id, packet) {
           isLoading.value = false;
-          Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         }, onResponseError: (exception, stacktrace, id, packet) {
           isLoading.value = false;
-          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
         }, onTokenInvalid: () {
           Constant.invalidResponse();
         }),
@@ -426,20 +435,20 @@ class NewDataPurchaseController extends GetxController {
   }
 
   Purchase generatePayload() {
-    List<Products?> listProductPayload = [];
+    final List<Products?> listProductPayload = [];
 
     VendorModel? vendorSelected;
     OperationUnitModel? jagalSelected;
-    if (spinnerTypeSource.controller.textSelected.value == "Vendor") {
+    if (spinnerTypeSource.controller.textSelected.value == 'Vendor') {
       vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
     } else {
       jagalSelected = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spinnerSource.controller.textSelected.value);
     }
-    if (vendorSelected?.type == AppStrings.INTERNAL && spinnerTypeSource.controller.textSelected.value == "Vendor") {
+    if (vendorSelected?.type == AppStrings.INTERNAL && spinnerTypeSource.controller.textSelected.value == 'Vendor') {
       for (int i = 0; i < skuCardInternal.controller.index.value.length; i++) {
-        int whichItem = skuCardInternal.controller.index.value[i];
-        var listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        final int whichItem = skuCardInternal.controller.index.value[i];
+        final listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
+        final Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
           quantity: skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
@@ -449,9 +458,9 @@ class NewDataPurchaseController extends GetxController {
       }
     } else {
       for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
-        int whichItem = skuCard.controller.index.value[i];
-        var listProductTemp = skuCard.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        final int whichItem = skuCard.controller.index.value[i];
+        final listProductTemp = skuCard.controller.listSku.value.values.toList();
+        final Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
           quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
@@ -461,12 +470,12 @@ class NewDataPurchaseController extends GetxController {
       }
     }
 
-    OperationUnitModel? destinationPurchaseSelected = listDestinationPurchase.value.firstWhereOrNull(
+    final OperationUnitModel? destinationPurchaseSelected = listDestinationPurchase.value.firstWhereOrNull(
       (element) => element!.operationUnitName == spinnerDestination.controller.textSelected.value,
     );
 
     return Purchase(
-      vendorId:  vendorSelected?.id,
+      vendorId: vendorSelected?.id,
       jagalId: jagalSelected?.id,
       operationUnitId: destinationPurchaseSelected!.id!,
       products: listProductPayload,
@@ -476,30 +485,30 @@ class NewDataPurchaseController extends GetxController {
     );
   }
 
-  List validation() {
-    List ret = [true, ""];
+  List<dynamic> validation() {
+    List<dynamic> ret = [true, ''];
 
     if (spinnerSource.controller.textSelected.value.isEmpty) {
       spinnerSource.controller.showAlert();
       Scrollable.ensureVisible(spinnerSource.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (spinnerDestination.controller.textSelected.value.isEmpty) {
       spinnerDestination.controller.showAlert();
       Scrollable.ensureVisible(spinnerDestination.controller.formKey.currentContext!);
 
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (efTotalKG.getInput().isEmpty) {
       efTotalKG.controller.showAlert();
       Scrollable.ensureVisible(efTotalKG.controller.formKey.currentContext!);
 
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
-    if (spinnerTypeSource.controller.textSelected.value == "Vendor") {
+    if (spinnerTypeSource.controller.textSelected.value == 'Vendor') {
       VendorModel? vendorSelected;
       vendorSelected = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spinnerSource.controller.textSelected.value);
-      if (vendorSelected!.type == "EXTERNAL") {
+      if (vendorSelected!.type == 'EXTERNAL') {
         ret = skuCard.controller.validation();
       } else {
         skuCardInternal.controller.validation();

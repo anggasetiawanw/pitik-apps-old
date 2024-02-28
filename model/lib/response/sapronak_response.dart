@@ -7,15 +7,12 @@ import '../sapronak_model.dart';
 
 @SetupModel
 class SapronakResponse {
+  @IsChildren()
+  List<Sapronak?> data;
 
-    @IsChildren()
-    List<Sapronak?> data;
+  SapronakResponse({this.data = const []});
 
-    SapronakResponse({this.data = const []});
-
-    static SapronakResponse toResponseModel(Map<String, dynamic> map) {
-        return SapronakResponse(
-            data: Mapper.children<Sapronak>(map['data'])
-        );
-    }
+  static SapronakResponse toResponseModel(Map<String, dynamic> map) {
+    return SapronakResponse(data: Mapper.children<Sapronak>(map['data']));
+  }
 }

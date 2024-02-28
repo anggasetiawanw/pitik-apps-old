@@ -11,9 +11,9 @@ import 'package:global_variable/global_variable.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/purchase_model.dart';
 import 'package:model/response/internal_app/purchase_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -33,10 +33,10 @@ class DetailPurchaseController extends GetxController {
   var sumPriceMin = 0.0.obs;
   var sumPriceMax = 0.0.obs;
   late ButtonFill editButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("editPurchase"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('editPurchase'),
+      label: 'Edit',
       onClick: () {
-        Constant.track("Click_Edit_Pembelian");
+        Constant.track('Click_Edit_Pembelian');
         Get.toNamed(RoutePage.purchaseEditPage, arguments: purchaseDetail.value)!.then((value) {
           isLoading.value = true;
           Timer(const Duration(milliseconds: 500), () {
@@ -45,8 +45,8 @@ class DetailPurchaseController extends GetxController {
         });
       });
   late ButtonOutline cancelButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("cancelPurchase"),
-    label: "Batal",
+    controller: GetXCreator.putButtonOutlineController('cancelPurchase'),
+    label: 'Batal',
     onClick: () => null,
   );
 
@@ -61,8 +61,8 @@ class DetailPurchaseController extends GetxController {
     purchaseDetail.value = Get.arguments as Purchase;
     getDetailPurchase();
     boNoCancel = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("tidakVisit"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('tidakVisit'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -73,10 +73,9 @@ class DetailPurchaseController extends GetxController {
   void onReady() {
     super.onReady();
     bfYesCancel = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesCancel"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesCancel'),
+      label: 'Ya',
       onClick: () {
-
         cancelPurchase(context);
       },
     );
@@ -91,12 +90,12 @@ class DetailPurchaseController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               purchaseDetail.value = (body as PurchaseResponse).data;
-              getTotalQuantity((body).data);
-              purchaseDetail.value!.status == "CONFIRMED" ? editButton.controller.disable() : editButton.controller.enable();
+              getTotalQuantity(body.data);
+              purchaseDetail.value!.status == 'CONFIRMED' ? editButton.controller.disable() : editButton.controller.enable();
               isLoading.value = false;
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackWithMap("Render_Time", {'Page': "Detail_Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackWithMap('Render_Time', {'Page': 'Detail_Pembelian', 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
             },
             onResponseFail: (code, message, body, id, packet) {},
             onResponseError: (exception, stacktrace, id, packet) {},
@@ -128,9 +127,9 @@ class DetailPurchaseController extends GetxController {
   }
 
   void cancelPurchase(BuildContext context) {
-    String purchaseid = purchaseDetail.value!.id!;
+    final String purchaseid = purchaseDetail.value!.id!;
     isLoading.value = true;
-    Constant.trackWithMap("Click_Batal_Pembelian", {"Status": "${purchaseDetail.value!.status}"});
+    Constant.trackWithMap('Click_Batal_Pembelian', {'Status': '${purchaseDetail.value!.status}'});
     Service.push(
         service: ListApi.cancelPurchase,
         context: context,
@@ -141,27 +140,27 @@ class DetailPurchaseController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
               isLoading.value = false;
-              Constant.trackWithMap("Click_Batal_Pembelian", {"error": "${(body).error!.message}"});
+              Constant.trackWithMap('Click_Batal_Pembelian', {'error': '${body.error!.message}'});
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
 
-              Constant.trackWithMap("Click_Batal_Pembelian", {"error": exception});
+              Constant.trackWithMap('Click_Batal_Pembelian', {'error': exception});
               //  isLoading.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));

@@ -29,8 +29,9 @@ import 'package:model/response/internal_app/operation_units_response.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
 import 'package:model/response/internal_app/purchase_list_response.dart';
 import 'package:model/response/internal_app/vendor_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 enum BodyQueryPurhcase { token, auth, xAppId, page, limit, code, createdDate, productCategoryId, productItemId, operationUnitId, vendorId, jagalId, status, source }
 
@@ -51,7 +52,7 @@ class PurchaseController extends GetxController {
   ScrollController scrollController = ScrollController();
   RxList<dynamic> bodyGeneralPurhcase = RxList<dynamic>(List.generate(BodyQueryPurhcase.values.length, (index) => null));
 
-  scrollListener() async {
+  Future<void> scrollListener() async {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         isLoadMore.value = true;
@@ -64,7 +65,7 @@ class PurchaseController extends GetxController {
   Timer? debounce;
   RxBool isFilter = false.obs;
   RxBool isSearch = false.obs;
-  RxString searchValue = "".obs;
+  RxString searchValue = ''.obs;
   Rx<Map<String, String>> listFilter = Rx<Map<String, String>>({});
   RxList<CategoryModel?> listCategory = RxList<CategoryModel>([]);
   RxList<Products?> listProduct = RxList<Products>([]);
@@ -75,73 +76,73 @@ class PurchaseController extends GetxController {
   late SearchBarField sbSearch;
 
   DateTimeField dtTanggalPembelian = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("dtTanggalPembelian"),
-      label: "Tanggal Pembelian",
-      hint: "dd MM yyyy",
-      alertText: "",
+      controller: GetXCreator.putDateTimeFieldController('dtTanggalPembelian'),
+      label: 'Tanggal Pembelian',
+      hint: 'dd MM yyyy',
+      alertText: '',
       flag: 1,
       onDateTimeSelected: (date, dateField) {
-        dateField.controller.setTextSelected(DateFormat("dd MMM yyyy", 'id').format(date));
+        dateField.controller.setTextSelected(DateFormat('dd MMM yyyy', 'id').format(date));
       });
 
   late SpinnerField spCategory = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spCategoryFilter"),
-      label: "Kategori SKU",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerFieldController('spCategoryFilter'),
+      label: 'Kategori SKU',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {},
       onSpinnerSelected: (value) {
         if (listCategory.isNotEmpty) {
-          CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
+          final CategoryModel? selectCategory = listCategory.firstWhereOrNull((element) => element!.name! == value);
           if (selectCategory != null) {
             getSku(selectCategory.id!);
           }
         }
       });
-  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSkuFilter"), label: "SKU", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spSku = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spSkuFilter'), label: 'SKU', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
   SpinnerField spStatus = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spStatusFilter"),
-      label: "Status",
-      hint: "Pilih Salah Satu",
-      alertText: "",
+      controller: GetXCreator.putSpinnerFieldController('spStatusFilter'),
+      label: 'Status',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
       items: const {
-        "Draft": false,
-        "Terkonfirmasi": false,
-        "Diterima": false,
-        "Dibatalkan": false,
+        'Draft': false,
+        'Terkonfirmasi': false,
+        'Diterima': false,
+        'Dibatalkan': false,
       },
       onSpinnerSelected: (value) {});
 
-  SpinnerField spTujuan = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spTujuanFilterPembelian"), label: "Tujuan", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spTujuan = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spTujuanFilterPembelian'), label: 'Tujuan', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
   late SpinnerField spJenisSumber = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spJenisSumberFilterPembelian"),
-      label: "Jenis Sumber",
-      hint: "Pilih Salah Satu",
-      alertText: "",
-      items: const {"Jagal Eksternal": false, "Vendor": false},
+      controller: GetXCreator.putSpinnerFieldController('spJenisSumberFilterPembelian'),
+      label: 'Jenis Sumber',
+      hint: 'Pilih Salah Satu',
+      alertText: '',
+      items: const {'Jagal Eksternal': false, 'Vendor': false},
       onSpinnerSelected: (value) {
         if (value.isNotEmpty) {
-          if (value == "Vendor") {
+          if (value == 'Vendor') {
             getListSourceVendor();
           } else {
             getListJagalExternal();
           }
         }
       });
-  SpinnerField spSumber = SpinnerField(controller: GetXCreator.putSpinnerFieldController("spSumberFilterPembelian"), label: "Sumber", hint: "Pilih Salah Satu", alertText: "", items: const {}, onSpinnerSelected: (value) {});
+  SpinnerField spSumber = SpinnerField(controller: GetXCreator.putSpinnerFieldController('spSumberFilterPembelian'), label: 'Sumber', hint: 'Pilih Salah Satu', alertText: '', items: const {}, onSpinnerSelected: (value) {});
 
-  late ButtonFill btKormasiFilter = ButtonFill(controller: GetXCreator.putButtonFillController("btKormasiFilter"), label: "Konfirmasi Filter", onClick: () => saveFilter());
+  late ButtonFill btKormasiFilter = ButtonFill(controller: GetXCreator.putButtonFillController('btKormasiFilter'), label: 'Konfirmasi Filter', onClick: () => saveFilter());
 
-  late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController("btBersihkanFilter"), label: "Bersihkan Filter", onClick: () => clearFilter());
+  late ButtonOutline btBersihkanFilter = ButtonOutline(controller: GetXCreator.putButtonOutlineController('btBersihkanFilter'), label: 'Bersihkan Filter', onClick: () => clearFilter());
 
   @override
   void onInit() {
     timeStart = DateTime.now();
     super.onInit();
     sbSearch = SearchBarField(
-      controller: GetXCreator.putSearchBarController("purhcaseSearchBar"),
-      items: const ["Nomor PO"],
+      controller: GetXCreator.putSearchBarController('purhcaseSearchBar'),
+      items: const ['Nomor PO'],
       onTyping: (value, control) => searchOrder(value),
       onCategorySelected: (value) {},
       addPrefixDropdown: false,
@@ -178,11 +179,11 @@ class PurchaseController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
-                for (var result in (body).data) {
+                for (var result in body.data) {
                   listProduct.add(result);
                 }
                 spSku.controller.generateItems(mapList);
@@ -192,10 +193,10 @@ class PurchaseController extends GetxController {
               }
             },
             onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }
@@ -210,7 +211,7 @@ class PurchaseController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var vendor in (body as VendorListResponse).data) {
                 mapList[vendor!.vendorName!] = false;
               }
@@ -220,7 +221,7 @@ class PurchaseController extends GetxController {
               Timer(const Duration(milliseconds: 100), () {
                 spSumber.controller
                   ..generateItems(mapList)
-                  ..setTextSelected("")
+                  ..setTextSelected('')
                   ..hideLoading()
                   ..enable()
                   ..refresh();
@@ -228,8 +229,8 @@ class PurchaseController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -239,8 +240,8 @@ class PurchaseController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -258,9 +259,9 @@ class PurchaseController extends GetxController {
     Service.push(
         service: ListApi.getListJagalExternal,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, "JAGAL", "EXTERNAL"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, 'JAGAL', 'EXTERNAL'],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -270,15 +271,15 @@ class PurchaseController extends GetxController {
           Timer(const Duration(milliseconds: 100), () {
             spSumber.controller
               ..generateItems(mapList)
-              ..setTextSelected("")
+              ..setTextSelected('')
               ..hideLoading()
               ..enable()
               ..refresh();
           });
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -287,8 +288,8 @@ class PurchaseController extends GetxController {
           spSumber.controller.hideLoading();
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -309,7 +310,7 @@ class PurchaseController extends GetxController {
         context: context,
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -323,8 +324,8 @@ class PurchaseController extends GetxController {
           spTujuan.controller.refresh();
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -333,8 +334,8 @@ class PurchaseController extends GetxController {
           spTujuan.controller.hideLoading();
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -349,7 +350,7 @@ class PurchaseController extends GetxController {
   void getCategorySku() {
     spCategory.controller.disable();
     spCategory.controller.showLoading();
-    spCategory.controller.setTextSelected("Loading...");
+    spCategory.controller.setTextSelected('Loading...');
     Service.push(
       service: ListApi.getCategories,
       context: context,
@@ -359,43 +360,43 @@ class PurchaseController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategory.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
             spCategory.controller.enable();
-            if (listFilter.value["Kategori"] != null) {
-              spCategory.controller.setTextSelected(listFilter.value["Kategori"]!);
+            if (listFilter.value['Kategori'] != null) {
+              spCategory.controller.setTextSelected(listFilter.value['Kategori']!);
             } else {
-              spCategory.controller.setTextSelected("");
+              spCategory.controller.setTextSelected('');
             }
             spCategory.controller.hideLoading();
             spCategory.controller.generateItems(mapList);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onResponseError: (exception, stacktrace, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi KesalahanInternal",
+              'Pesan',
+              'Terjadi KesalahanInternal',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
               backgroundColor: Colors.red,
             );
             spCategory.controller.disable();
-            spCategory.controller.setTextSelected("");
+            spCategory.controller.setTextSelected('');
             spCategory.controller.hideLoading();
           },
           onTokenInvalid: Constant.invalidResponse()),
@@ -420,7 +421,7 @@ class PurchaseController extends GetxController {
     showFilter();
   }
 
-  showFilter() {
+  Future<dynamic> showFilter() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
@@ -508,25 +509,25 @@ class PurchaseController extends GetxController {
       sbSearch.controller.clearText();
       listFilter.value.clear();
       if (dtTanggalPembelian.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Tanggal Pembelian"] = dtTanggalPembelian.controller.textSelected.value;
+        listFilter.value['Tanggal Pembelian'] = dtTanggalPembelian.controller.textSelected.value;
       }
       if (spStatus.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Status"] = spStatus.controller.textSelected.value;
+        listFilter.value['Status'] = spStatus.controller.textSelected.value;
       }
       if (spCategory.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Kategori"] = spCategory.controller.textSelected.value;
+        listFilter.value['Kategori'] = spCategory.controller.textSelected.value;
       }
       if (spSku.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["SKU"] = spSku.controller.textSelected.value;
+        listFilter.value['SKU'] = spSku.controller.textSelected.value;
       }
       if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Jenis Sumber"] = spJenisSumber.controller.textSelected.value;
+        listFilter.value['Jenis Sumber'] = spJenisSumber.controller.textSelected.value;
       }
       if (spSumber.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Sumber"] = spSumber.controller.textSelected.value;
+        listFilter.value['Sumber'] = spSumber.controller.textSelected.value;
       }
       if (spTujuan.controller.textSelected.value.isNotEmpty) {
-        listFilter.value["Destination"] = spTujuan.controller.textSelected.value;
+        listFilter.value['Destination'] = spTujuan.controller.textSelected.value;
       }
 
       listFilter.refresh();
@@ -558,14 +559,14 @@ class PurchaseController extends GetxController {
   void clearFilter() {
     listFilter.value.clear();
     listFilter.refresh();
-    dtTanggalPembelian.controller.setTextSelected("");
-    spStatus.controller.setTextSelected("");
-    spCategory.controller.setTextSelected("");
-    spSku.controller.setTextSelected("");
+    dtTanggalPembelian.controller.setTextSelected('');
+    spStatus.controller.setTextSelected('');
+    spCategory.controller.setTextSelected('');
+    spSku.controller.setTextSelected('');
     spSku.controller.disable();
-    spJenisSumber.controller.setTextSelected("");
-    spSumber.controller.setTextSelected("");
-    spTujuan.controller.setTextSelected("");
+    spJenisSumber.controller.setTextSelected('');
+    spSumber.controller.setTextSelected('');
+    spTujuan.controller.setTextSelected('');
     Get.back();
     isFilter.value = false;
     isSearch.value = false;
@@ -576,30 +577,30 @@ class PurchaseController extends GetxController {
 
   void removeOneFilter(String key) {
     switch (key) {
-      case "Tanggal Pembelian":
-        dtTanggalPembelian.controller.setTextSelected("");
+      case 'Tanggal Pembelian':
+        dtTanggalPembelian.controller.setTextSelected('');
         break;
-      case "Status":
-        spStatus.controller.setTextSelected("");
+      case 'Status':
+        spStatus.controller.setTextSelected('');
         break;
-      case "Kategori":
-        spCategory.controller.setTextSelected("");
-        spSku.controller.setTextSelected("");
-        listFilter.value.remove("SKU");
+      case 'Kategori':
+        spCategory.controller.setTextSelected('');
+        spSku.controller.setTextSelected('');
+        listFilter.value.remove('SKU');
         break;
-      case "SKU":
-        spSku.controller.setTextSelected("");
+      case 'SKU':
+        spSku.controller.setTextSelected('');
         break;
-      case "Jenis Sumber":
-        spSumber.controller.setTextSelected("");
-        spJenisSumber.controller.setTextSelected("");
-        listFilter.value.remove("Sumber");
+      case 'Jenis Sumber':
+        spSumber.controller.setTextSelected('');
+        spJenisSumber.controller.setTextSelected('');
+        listFilter.value.remove('Sumber');
         break;
-      case "Sumber":
-        spSumber.controller.setTextSelected("");
+      case 'Sumber':
+        spSumber.controller.setTextSelected('');
         break;
-      case "Destination":
-        spTujuan.controller.setTextSelected("");
+      case 'Destination':
+        spTujuan.controller.setTextSelected('');
         break;
 
       default:
@@ -649,7 +650,7 @@ class PurchaseController extends GetxController {
     VendorModel? vendorSelect;
 
     if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
-      if (spJenisSumber.controller.textSelected.value == "Jagal Eksternal") {
+      if (spJenisSumber.controller.textSelected.value == 'Jagal Eksternal') {
         jagalSelect = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
       } else {
         vendorSelect = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spSumber.controller.textSelected.value);
@@ -658,22 +659,22 @@ class PurchaseController extends GetxController {
 
     String? status;
     switch (spStatus.controller.textSelected.value) {
-      case "Draft":
-        status = "DRAFT";
+      case 'Draft':
+        status = 'DRAFT';
         break;
-      case "Terkonfirmasi":
-        status = "CONFIRMED";
+      case 'Terkonfirmasi':
+        status = 'CONFIRMED';
         break;
-      case "Diterima":
-        status = "RECEIVED";
+      case 'Diterima':
+        status = 'RECEIVED';
         break;
-      case "Dibatalkan":
-        status = "CANCELLED";
+      case 'Dibatalkan':
+        status = 'CANCELLED';
         break;
       default:
     }
 
-    String? date = dtTanggalPembelian.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPembelian.getLastTimeSelected());
+    final String? date = dtTanggalPembelian.controller.textSelected.value.isEmpty ? null : DateFormat('yyyy-MM-dd').format(dtTanggalPembelian.getLastTimeSelected());
     bodyGeneralPurhcase[BodyQueryPurhcase.createdDate.index] = date;
     bodyGeneralPurhcase[BodyQueryPurhcase.productCategoryId.index] = categorySelect?.id;
     bodyGeneralPurhcase[BodyQueryPurhcase.productItemId.index] = productSelect?.id;
@@ -683,15 +684,17 @@ class PurchaseController extends GetxController {
     bodyGeneralPurhcase[BodyQueryPurhcase.status.index] = status;
     bodyGeneralPurhcase[BodyQueryPurhcase.source.index] = spJenisSumber.controller.textSelected.value.isEmpty
         ? null
-        : spJenisSumber.controller.textSelected.value == "Jagal Eksternal"
-            ? "JAGAL"
-            : "VENDOR";
+        : spJenisSumber.controller.textSelected.value == 'Jagal Eksternal'
+            ? 'JAGAL'
+            : 'VENDOR';
     getListPurchase();
   }
 
   void searchOrder(String text) {
+    if (debounce?.isActive ?? false) {
+      debounce?.cancel();
+    }
     if (text.isNotEmpty) {
-      if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = true;
         isFilter.value = false;
@@ -702,7 +705,6 @@ class PurchaseController extends GetxController {
         getListPurchase();
       });
     } else {
-      if (debounce?.isActive ?? false) debounce?.cancel();
       debounce = Timer(const Duration(milliseconds: 500), () {
         isSearch.value = false;
         isFilter.value = false;
@@ -745,13 +747,13 @@ class PurchaseController extends GetxController {
               }
               isLoading.value = false;
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              GlobalVar.trackWithMap("Render_Time", {'Page': "Pembelian", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+              final Duration totalTime = timeEnd.difference(timeStart);
+              GlobalVar.trackWithMap('Render_Time', {'Page': 'Pembelian', 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -761,8 +763,8 @@ class PurchaseController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

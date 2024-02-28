@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,15 +6,14 @@ import 'package:get/get.dart';
 ///@create date 18/12/2023
 
 class FarmPerformanceActualController extends GetxController {
-    BuildContext context;
-    FarmPerformanceActualController({required this.context});
-
+  BuildContext context;
+  FarmPerformanceActualController({required this.context});
 }
 
 class FarmPerformanceActualBinding extends Bindings {
-    BuildContext context;
-    FarmPerformanceActualBinding({required this.context});
+  BuildContext context;
+  FarmPerformanceActualBinding({required this.context});
 
-    @override
-    void dependencies() => Get.lazyPut<FarmPerformanceActualController>(() => FarmPerformanceActualController(context: context));
+  @override
+  void dependencies() => Get.lazyPut<FarmPerformanceActualController>(() => FarmPerformanceActualController(context: context));
 }

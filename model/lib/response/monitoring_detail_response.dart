@@ -7,15 +7,12 @@ import '../engine_library.dart';
 
 @SetupModel
 class MonitoringDetailResponse {
+  @IsChild()
+  CoopPerformance? data;
 
-    @IsChild()
-    CoopPerformance? data;
+  MonitoringDetailResponse({this.data});
 
-    MonitoringDetailResponse({this.data});
-
-    static MonitoringDetailResponse toResponseModel(Map<String, dynamic> map) {
-        return MonitoringDetailResponse(
-            data: Mapper.child<CoopPerformance>(map['data'])
-        );
-    }
+  static MonitoringDetailResponse toResponseModel(Map<String, dynamic> map) {
+    return MonitoringDetailResponse(data: Mapper.child<CoopPerformance>(map['data']));
+  }
 }

@@ -13,10 +13,10 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/order_request.dart';
 import 'package:model/response/internal_app/order_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/so_status.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/so_status.dart';
+import '../../../utils/route.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -42,8 +42,8 @@ class DetailSalesOrderController extends GetxController {
   var isDeliveryPrice = false.obs;
   var priceDelivery = 0.obs;
   late ButtonFill editButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("OrderEdit"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('OrderEdit'),
+      label: 'Edit',
       onClick: () => Get.toNamed(RoutePage.editDataSalesOrder, arguments: orderDetail.value)!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -51,8 +51,8 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
   late ButtonFill bookStockButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bookStock"),
-      label: "Pesan Stock",
+      controller: GetXCreator.putButtonFillController('bookStock'),
+      label: 'Pesan Stock',
       onClick: () => Get.toNamed(RoutePage.newBookStock, arguments: [orderDetail.value, false])!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -60,8 +60,8 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
   late ButtonFill sendButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("sent"),
-      label: "Kirim",
+      controller: GetXCreator.putButtonFillController('sent'),
+      label: 'Kirim',
       onClick: () => Get.toNamed(RoutePage.assignToDriver, arguments: orderDetail.value)!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -69,8 +69,8 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
   late ButtonFill editDriver = ButtonFill(
-      controller: GetXCreator.putButtonFillController("editDriver"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('editDriver'),
+      label: 'Edit',
       onClick: () => Get.toNamed(RoutePage.assignToDriver, arguments: orderDetail.value)!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -78,8 +78,8 @@ class DetailSalesOrderController extends GetxController {
             });
           }));
   late ButtonOutline cancelButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("cancelOrder"),
-    label: "Batal",
+    controller: GetXCreator.putButtonOutlineController('cancelOrder'),
+    label: 'Batal',
     onClick: () => null,
   );
 
@@ -87,8 +87,8 @@ class DetailSalesOrderController extends GetxController {
   late ButtonOutline boNoCancel;
 
   late ButtonFill alocatedButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("alocatedButton"),
-      label: "Alokasikan",
+      controller: GetXCreator.putButtonFillController('alocatedButton'),
+      label: 'Alokasikan',
       onClick: () => Get.toNamed(RoutePage.newBookStock, arguments: [orderDetail.value, true])!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -97,8 +97,8 @@ class DetailSalesOrderController extends GetxController {
           }));
 
   late ButtonFill konfirmasiButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("konfirmasiButton"),
-      label: "Konfirmasi",
+      controller: GetXCreator.putButtonFillController('konfirmasiButton'),
+      label: 'Konfirmasi',
       onClick: () => Get.toNamed(RoutePage.assignToDriver, arguments: orderDetail.value)!.then((value) {
             isLoading.value = true;
             Timer(const Duration(milliseconds: 500), () {
@@ -118,8 +118,8 @@ class DetailSalesOrderController extends GetxController {
     isScRelation.value = Constant.isScRelation.value;
     getDetailOrder();
     boNoCancel = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("tidakVisit"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('tidakVisit'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -130,8 +130,8 @@ class DetailSalesOrderController extends GetxController {
   void onReady() {
     super.onReady();
     bfYesCancel = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesCancel"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesCancel'),
+      label: 'Ya',
       onClick: () {
         cancelOrder(context);
       },
@@ -147,17 +147,17 @@ class DetailSalesOrderController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               orderDetail.value = (body as OrderResponse).data;
-              getTotalQuantity((body).data);
+              getTotalQuantity(body.data);
               isLoading.value = false;
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Detail_Penjualan", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Detail_Penjualan', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -171,7 +171,7 @@ class DetailSalesOrderController extends GetxController {
   }
 
   void cancelOrder(BuildContext context) {
-    String orderId = orderDetail.value!.id!;
+    final String orderId = orderDetail.value!.id!;
     isLoading.value = true;
     Service.push(
         service: ListApi.cancelOrder,
@@ -187,27 +187,27 @@ class DetailSalesOrderController extends GetxController {
                   : orderDetail.value!.status! == EnumSO.allocated
                       ? ListApi.pathCancelAllocated(orderId)
                       : ListApi.pathCancelOrder(orderId),
-          ""
+          ''
         ],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
           isLoading.value = false;
           Get.back();
-          Constant.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value!.category!, "Before Status": orderDetail.value!.status!, "After Status": body.data['status']});
+          Constant.trackWithMap('Click_Button_Batal_Penjualan', {'Category_Penjualan': orderDetail.value!.category!, 'Before Status': orderDetail.value!.status!, 'After Status': body.data['status']});
         }, onResponseFail: (code, message, body, id, packet) {
           isLoading.value = false;
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
             backgroundColor: Colors.red,
           );
-          Constant.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status": orderDetail.value?.status, "Error": message});
+          Constant.trackWithMap('Click_Button_Batal_Penjualan', {'Category_Penjualan': orderDetail.value?.category, 'Before Status': orderDetail.value?.status, 'Error': message});
         }, onResponseError: (exception, stacktrace, id, packet) {
           isLoading.value = false;
-          Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
-          Constant.trackWithMap("Click_Button_Batal_Penjualan", {"Category_Penjualan": orderDetail.value?.category, "Before Status": orderDetail.value?.status, "Error": exception});
+          Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+          Constant.trackWithMap('Click_Button_Batal_Penjualan', {'Category_Penjualan': orderDetail.value?.category, 'Before Status': orderDetail.value?.status, 'Error': exception});
         }, onTokenInvalid: () {
           Constant.invalidResponse();
         }));
@@ -224,7 +224,11 @@ class DetailSalesOrderController extends GetxController {
     sumPrice.value = 0;
     isDeliveryPrice.value = data!.deliveryFee != null && data.deliveryFee != 0;
     priceDelivery.value = data.deliveryFee ?? 0;
-    if (orderDetail.value!.status == EnumSO.booked || orderDetail.value!.status == EnumSO.readyToDeliver || orderDetail.value!.status == EnumSO.onDelivery || orderDetail.value!.status == EnumSO.delivered || orderDetail.value!.status == EnumSO.rejected) {
+    if (orderDetail.value!.status == EnumSO.booked ||
+        orderDetail.value!.status == EnumSO.readyToDeliver ||
+        orderDetail.value!.status == EnumSO.onDelivery ||
+        orderDetail.value!.status == EnumSO.delivered ||
+        orderDetail.value!.status == EnumSO.rejected) {
       for (var product in data.products!) {
         if (product!.returnWeight == null) {
           if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
@@ -239,10 +243,10 @@ class DetailSalesOrderController extends GetxController {
           if (orderDetail.value!.returnStatus == EnumSO.returnedPartial) {
             if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
               sumChick.value += product.quantity! - product.returnQuantity!;
-              sumKg.value += (product.weight! - product.returnWeight!);
+              sumKg.value += product.weight! - product.returnWeight!;
               sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
             } else {
-              sumKg.value += (product.weight! - product.returnWeight!);
+              sumKg.value += product.weight! - product.returnWeight!;
               sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
             }
           } else {
@@ -280,8 +284,8 @@ class DetailSalesOrderController extends GetxController {
             sumPriceMin.value += product.price! * (product.minValue! * (product.quantity! - product.returnQuantity!));
             sumPriceMax.value += product.price! * (product.maxValue! * (product.quantity! - product.returnQuantity!));
           } else {
-            sumNeededMin.value += (product.weight! - product.returnWeight!);
-            sumNeededMax.value += (product.weight! - product.returnWeight!);
+            sumNeededMin.value += product.weight! - product.returnWeight!;
+            sumNeededMax.value += product.weight! - product.returnWeight!;
             sumPriceMin.value += (product.weight! - product.returnWeight!) * product.price!;
             sumPriceMax.value += (product.weight! - product.returnWeight!) * product.price!;
           }
@@ -292,7 +296,7 @@ class DetailSalesOrderController extends GetxController {
 
   void cancelBooked() {
     isLoading.value = true;
-    OrderRequest orderPayload = generatePayload();
+    final OrderRequest orderPayload = generatePayload();
     Service.push(
       service: ListApi.editSalesOrder,
       context: context,
@@ -303,10 +307,10 @@ class DetailSalesOrderController extends GetxController {
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),
