@@ -5,7 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/setup_reset/reset_time_controller.dart';
+import 'reset_time_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -16,7 +16,7 @@ class ResetTime extends GetView<ResetTimeController> {
 
   @override
   Widget build(BuildContext context) {
-    ResetTimeController controller = Get.put(ResetTimeController(context: context));
+    final ResetTimeController controller = Get.put(ResetTimeController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -31,7 +31,7 @@ class ResetTime extends GetView<ResetTimeController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Reset Waktu",
+          'Reset Waktu',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -57,15 +57,15 @@ class ResetTime extends GetView<ResetTimeController> {
                     Expanded(
                       child: Obx(() => controller.isEdit.isTrue
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfSaveResetTime"),
-                              label: "Simpan",
+                              controller: GetXCreator.putButtonFillController('bfSaveResetTime'),
+                              label: 'Simpan',
                               onClick: () {
                                 showBottomDialog(context, controller);
                               },
                             )
                           : ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfEditResetTime"),
-                              label: "Edit",
+                              controller: GetXCreator.putButtonFillController('bfEditResetTime'),
+                              label: 'Edit',
                               onClick: () {
                                 controller.isEdit.value = true;
                                 controller.loadData(controller.controllerData);
@@ -103,17 +103,17 @@ class ResetTime extends GetView<ResetTimeController> {
                             decoration: BoxDecoration(color: GlobalVar.blueLights, borderRadius: BorderRadius.circular(8)),
                             child: Row(
                               children: [
-                                SvgPicture.asset("images/information_blue_icon.svg"),
+                                SvgPicture.asset('images/information_blue_icon.svg'),
                                 const SizedBox(
                                   width: 8,
                                 ),
                                 const Expanded(
                                     child: Text(
-                                  "Saat ini menggunakan waktu bawaan ",
+                                  'Saat ini menggunakan waktu bawaan ',
                                   style: TextStyle(color: GlobalVar.black, fontSize: 14),
                                   overflow: TextOverflow.clip,
                                 )),
-                                Text("${controller.controllerData.onlineTime}", style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)
+                                Text('${controller.controllerData.onlineTime}', style: const TextStyle(color: GlobalVar.black, fontSize: 14), overflow: TextOverflow.clip)
                               ],
                             ),
                           ),
@@ -130,7 +130,7 @@ class ResetTime extends GetView<ResetTimeController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, ResetTimeController controller) {
+  Future showBottomDialog(BuildContext context, ResetTimeController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -161,18 +161,18 @@ class ResetTime extends GetView<ResetTimeController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

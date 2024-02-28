@@ -17,7 +17,7 @@ class AlarmSetup extends GetView<AlarmSetupController> {
 
   @override
   Widget build(BuildContext context) {
-    AlarmSetupController controller = Get.put(AlarmSetupController(context: context));
+    final AlarmSetupController controller = Get.put(AlarmSetupController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -32,7 +32,7 @@ class AlarmSetup extends GetView<AlarmSetupController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Alarm",
+          'Alarm',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -58,15 +58,15 @@ class AlarmSetup extends GetView<AlarmSetupController> {
                     Expanded(
                       child: Obx(() => controller.isEdit.isTrue
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfSaveGrowthDay"),
-                              label: "Simpan",
+                              controller: GetXCreator.putButtonFillController('bfSaveGrowthDay'),
+                              label: 'Simpan',
                               onClick: () {
                                 showBottomDialog(context, controller);
                               },
                             )
                           : ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfEditGrowthDay"),
-                              label: "Edit",
+                              controller: GetXCreator.putButtonFillController('bfEditGrowthDay'),
+                              label: 'Edit',
                               onClick: () {
                                 controller.isEdit.value = true;
                                 controller.loadData(controller.controllerData);
@@ -112,7 +112,7 @@ class AlarmSetup extends GetView<AlarmSetupController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, AlarmSetupController controller) {
+  Future showBottomDialog(BuildContext context, AlarmSetupController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -143,18 +143,18 @@ class AlarmSetup extends GetView<AlarmSetupController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

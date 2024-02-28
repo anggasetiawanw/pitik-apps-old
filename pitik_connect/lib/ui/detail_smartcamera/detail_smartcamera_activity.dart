@@ -56,14 +56,14 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                   ),
                                   DefaultTextStyle(
                                     style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                    child: const Text("Edit"),
+                                    child: const Text('Edit'),
                                   ),
                                 ],
                               ),
                               onTap: () {
-                                GlobalVar.track("Click_option_menu_edit_camera");
+                                GlobalVar.track('Click_option_menu_edit_camera');
                                 Get.back();
-                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, "edit"])!.then((value) {
+                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, 'edit'])!.then((value) {
                                   controller.isLoading.value = true;
                                   controller.sensorCameras.value.clear();
                                   Timer(const Duration(milliseconds: 500), () {
@@ -81,15 +81,15 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                   ),
                                   DefaultTextStyle(
                                     style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                    child: const Text("Ubah Nama"),
+                                    child: const Text('Ubah Nama'),
                                   ),
                                 ],
                               ),
                               onTap: () {
-                                GlobalVar.track("Click_option_menu_rename");
+                                GlobalVar.track('Click_option_menu_rename');
                                 Get.back();
-                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, "rename"])!.then((value) {
-                                  value == null ? controller.deviceUpdatedName.value = "" : controller.deviceUpdatedName.value = value[0]["backValue"];
+                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, 'rename'])!.then((value) {
+                                  value == null ? controller.deviceUpdatedName.value = '' : controller.deviceUpdatedName.value = value[0]['backValue'];
                                   controller.isLoading.value = true;
                                   controller.sensorCameras.value.clear();
                                   Timer(const Duration(milliseconds: 500), () {
@@ -103,7 +103,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                     Align(
                       alignment: const Alignment(1, -1),
                       child: Image.asset(
-                        "images/triangle_icon.png",
+                        'images/triangle_icon.png',
                         height: 17,
                         width: 17,
                       ),
@@ -124,20 +124,20 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
         ),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Obx(() => controller.deviceUpdatedName.value == ""
+        title: Obx(() => controller.deviceUpdatedName.value == ''
             ? Text(
-                "${controller.device.deviceName}",
+                '${controller.device.deviceName}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )
             : Text(
-                "${controller.deviceUpdatedName}",
+                '${controller.deviceUpdatedName}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )),
         actions: [
           if (GlobalVar.canModifyInfrasturucture()) ...[
             GestureDetector(
               onTap: () {
-                GlobalVar.track("Click_option_menu");
+                GlobalVar.track('Click_option_menu');
                 showButtonDialog(context, controller);
               },
               child: Container(
@@ -145,7 +145,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                 height: 32,
                 width: 32,
                 margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                child: SvgPicture.asset("images/dot_icon.svg"),
+                child: SvgPicture.asset('images/dot_icon.svg'),
               ),
             ),
           ]
@@ -160,7 +160,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
           controller: controller.scrollCameraController,
           itemCount: controller.isLoadMore.isTrue ? controller.sensorCameras.value.length + 1 : controller.sensorCameras.value.length,
           itemBuilder: (context, index) {
-            int length = controller.sensorCameras.value.length;
+            final int length = controller.sensorCameras.value.length;
             if (index >= length) {
               return const Column(
                 children: [
@@ -181,7 +181,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                   camera: controller.sensorCameras.value[index],
                   indeksCamera: index,
                   onTap: () {
-                    GlobalVar.track("Click_card_camera");
+                    GlobalVar.track('Click_card_camera');
                     Get.toNamed(RoutePage.historySmartCameraPage, arguments: [false, controller.sensorCameras.value[index], controller.coop, index])!.then((value) {
                       controller.isLoading.value = true;
                       controller.sensorCameras.value.clear();
@@ -219,10 +219,10 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("takePicture"),
-                      label: "Ambil Gambar",
+                      controller: GetXCreator.putButtonFillController('takePicture'),
+                      label: 'Ambil Gambar',
                       onClick: () {
-                        GlobalVar.track("Click_button_ambil_gambar");
+                        GlobalVar.track('Click_button_ambil_gambar');
                         controller.takePictureSmartCamera();
                       },
                     )),
@@ -253,12 +253,12 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                       margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                       child: Column(
                         children: [
-                          SvgPicture.asset("images/empty_icon.svg"),
+                          SvgPicture.asset('images/empty_icon.svg'),
                           const SizedBox(
                             height: 17,
                           ),
                           Text(
-                            "Data Camera Belum Ada",
+                            'Data Camera Belum Ada',
                             textAlign: TextAlign.center,
                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                           )
@@ -278,7 +278,7 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(child: Text("Detail Gambar ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
+                                Expanded(child: Text('Detail Gambar ', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
                               ],
                             ),
                             const SizedBox(
@@ -291,10 +291,10 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                                     children: [
                                       Expanded(
                                           child: Text(
-                                        "Total Kamera",
+                                        'Total Kamera',
                                         style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                       )),
-                                      Text("${controller.totalCamera}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
+                                      Text('${controller.totalCamera}', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
                                     ],
                                   )),
                           ]),
@@ -305,11 +305,11 @@ class DetailSmartCamera extends GetView<DetailSmartCameraController> {
                           decoration: BoxDecoration(color: GlobalVar.blueLights, borderRadius: BorderRadius.circular(8)),
                           child: Row(
                             children: [
-                              SvgPicture.asset("images/information_blue_icon.svg"),
+                              SvgPicture.asset('images/information_blue_icon.svg'),
                               const SizedBox(
                                 width: 8,
                               ),
-                              Expanded(child: Text("Silahkan ambil gambar terlebih dahulu", style: GlobalVar.blueTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
+                              Expanded(child: Text('Silahkan ambil gambar terlebih dahulu', style: GlobalVar.blueTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
                             ],
                           ),
                         ),

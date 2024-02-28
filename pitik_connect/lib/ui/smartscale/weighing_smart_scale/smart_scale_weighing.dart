@@ -8,7 +8,7 @@ import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/smartscale/weighing_smart_scale/smart_scale_weighing_controller.dart';
+import 'smart_scale_weighing_controller.dart';
 
 /// @author DICKY
 /// @email <dicky.maulana@pitik.idd>
@@ -44,15 +44,15 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                   if (controller.isTimeout.isFalse) ...[
                                     Container(width: 24, height: 24, decoration: const BoxDecoration(color: GlobalVar.green, shape: BoxShape.circle)),
                                     const SizedBox(width: 8),
-                                    Text("Sudah siap timbang!", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                    Text('Sudah siap timbang!', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                   ] else ...[
                                     Container(width: 24, height: 24, decoration: const BoxDecoration(color: GlobalVar.red, shape: BoxShape.circle)),
                                     const SizedBox(width: 8),
-                                    Text("Belum siap timbang!", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
+                                    Text('Belum siap timbang!', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                                   ]
                                 ],
                               ),
-                              Text("Baterai: ${controller.batteryStatus.value}%", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange))
+                              Text('Baterai: ${controller.batteryStatus.value}%', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange))
                             ],
                           ),
                           Padding(
@@ -65,10 +65,10 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Waktu Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                    Text('Waktu Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                     const SizedBox(height: 4),
                                     Text(
-                                        "Mulai Timbang ${Convert.getYear(controller.startWeighingTime)}/${Convert.getMonthNumber(controller.startWeighingTime)}/${Convert.getDay(controller.startWeighingTime)} - ${Convert.getHour(controller.startWeighingTime)}.${Convert.getMinute(controller.startWeighingTime)}",
+                                        'Mulai Timbang ${Convert.getYear(controller.startWeighingTime)}/${Convert.getMonthNumber(controller.startWeighingTime)}/${Convert.getDay(controller.startWeighingTime)} - ${Convert.getHour(controller.startWeighingTime)}.${Convert.getMinute(controller.startWeighingTime)}',
                                         style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                   ],
                                 ),
@@ -129,12 +129,12 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
                                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                     SizedBox(
                                       width: 40,
-                                      child: Text("No", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                      child: Text('No', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ),
                                     const SizedBox(width: 8),
-                                    Expanded(child: Text("Jumlah Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
+                                    Expanded(child: Text('Jumlah Ayam', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
                                     const SizedBox(width: 8),
-                                    Expanded(child: Text("Timbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
+                                    Expanded(child: Text('Timbangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black))),
                                     const SizedBox(width: 40),
                                   ]))
                             ] else ...[
@@ -163,7 +163,7 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Text("Timbang Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
+        title: Text('Timbang Ayam', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
       );
 
   Widget bottomNavBar() => Align(
@@ -180,10 +180,10 @@ class SmartScaleWeighingActivity extends GetView<SmartScaleWeighingController> {
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                   child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("submitSmartScaleWeighing"),
-                      label: "Selesai",
+                      controller: GetXCreator.putButtonFillController('submitSmartScaleWeighing'),
+                      label: 'Selesai',
                       onClick: () {
-                        GlobalVar.track("Click_button_submit_timbang_ayam");
+                        GlobalVar.track('Click_button_submit_timbang_ayam');
                         controller.saveSmartScaleWeighing();
                       }))
             ]))

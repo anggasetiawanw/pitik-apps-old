@@ -2,16 +2,24 @@ name: pitik_internal_app
 version: 5.2.1+122
 publish_to: none
 description: Pitik Internal App for manage downstream team
-environment: 
+environment:
   sdk: '>=3.0.0 <4.0.0'
-dependencies: 
+dependencies:
+  flutter:
+    sdk: flutter
   autocomplete_textfield: ^2.0.1
   build_runner: ^2.4.4
   built_value_generator: ^8.5.0
   chucker_flutter: ^1.5.1
+  components:
+    path: ../components
   cupertino_icons: ^1.0.2
+  dao_impl:
+    path: ../dao_impl
   device_info_plus: ^9.1.1
   dropdown_button2: ^2.1.2
+  engine:
+    path: ../engine
   file_picker: ^5.3.0
   firebase_analytics: ^10.4.3
   firebase_auth: ^4.6.0
@@ -28,6 +36,10 @@ dependencies:
   flutter_svg: ^2.0.0+1
   get: ^4.6.5
   getwidget: ^4.0.0
+  global_variable:
+    path: ../global_variable
+  google_plus_code:
+    git: https://github.com/anggasetiawanw/google_plus_code.git
   google_sign_in: ^6.1.0
   http: ^1.1.0
   image: ^4.0.17
@@ -38,6 +50,8 @@ dependencies:
   mask_text_input_formatter: ^2.5.0
   mixpanel_flutter: ^2.1.1
   mobile_number: ^2.1.1
+  model:
+    path: ../model
   open_store: ^0.5.0
   package_info_plus: ^5.0.1
   path: ^1.8.3
@@ -55,99 +69,87 @@ dependencies:
   sqflite: ^2.3.2
   syncfusion_flutter_charts: ^22.2.12
   url_launcher: ^6.1.12
-  components: 
-    path: ../components
-  dao_impl: 
-    path: ../dao_impl
-  engine: 
-    path: ../engine
-  flutter: 
+
+dev_dependencies:
+  flutter_test:
     sdk: flutter
-  global_variable: 
-    path: ../global_variable
-  google_plus_code: 
-    git: https://github.com/anggasetiawanw/google_plus_code.git
-  model: 
-    path: ../model
-dev_dependencies: 
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   pubspec_dependency_sorter: ^1.0.4
-  flutter_test: 
-    sdk: flutter
-flavorizr: 
-  app: 
-    android: 
+
+flavorizr:
+  app:
+    android:
       flavorDimensions: flavor-type
-  flavors: 
-    prod: 
-      app: 
+  flavors:
+    prod:
+      app:
         name: Pitik Internal App
-      android: 
+      android:
         applicationId: id.pitik.mobile.mobile_flutter
         icon: images/launcher_pitik.png
-        resValues: 
-          uri: 
+        resValues:
+          uri:
             type: string
             value: https://api.pitik.id/
-          crashlytic: 
+          crashlytic:
             type: string
             value: PRODUCTION
-        firebase: 
+        firebase:
           config: android/app/src/prod/google-services.json
-      ios: 
+      ios:
         bundleId: id.pitik.mobile.mobileFlutter
         icon: ios/config/Launcher.png
-        variables: 
-          uri: 
+        variables:
+          uri:
             value: https://api.pitik.id/
-          crashlytic: 
+          crashlytic:
             value: PRODUCTION
-        firebase: 
+        firebase:
           config: ios/config/prod/GoogleService-Info.plist
-    dev: 
-      app: 
+    dev:
+      app:
         name: Pitik Internal App - Staging
-      android: 
+      android:
         applicationId: id.pitik.mobile.mobile_flutter.staging
         icon: ios/config/staging_launcher.png
-        resValues: 
-          uri: 
+        resValues:
+          uri:
             type: string
             value: https://api.pitik.dev/
-          crashlytic: 
+          crashlytic:
             type: string
             value: STAGING
-        firebase: 
+        firebase:
           config: android/app/src/dev/google-services.json
-      ios: 
+      ios:
         bundleId: id.pitik.mobile.mobileFlutter.staging
         icon: images/launcher_pitik.png
-        variables: 
-          uri: 
+        variables:
+          uri:
             value: https://api.pitik.dev/
-          crashlytic: 
+          crashlytic:
             value: STAGING
-        firebase: 
+        firebase:
           config: ios/config/dev/GoogleService-Info.plist
-flutter_icons: 
+flutter_icons:
   image_path: images/launcher_pitik.png
   android: true
   ios: true
-flutter: 
-  assets: 
+flutter:
+  assets:
     - images/
     - json/
     - shorebird.yaml
-  fonts: 
-    - 
+  fonts:
+    -
       family: Montserrat_Bold
-      fonts: 
-        - 
+      fonts:
+        -
           asset: font/montserrat_bold.ttf
-    - 
+    -
       family: Montserrat_Medium
-      fonts: 
-        - 
+      fonts:
+        -
           asset: font/montserrat_medium.ttf
   uses-material-design: true

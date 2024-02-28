@@ -53,7 +53,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              GlobalVar.track("Click_option_menu_edit_kandang");
+                              GlobalVar.track('Click_option_menu_edit_kandang');
                               Get.back();
                               Get.toNamed(RoutePage.createCoopPage, arguments: [RegisterCoopController.MODIFY_COOP, controller.coopDetail])!.then((value) {
                                 controller.isLoading.value = true;
@@ -74,7 +74,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                 DefaultTextStyle(
                                   style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                   child: const Text(
-                                    "Edit Kandang",
+                                    'Edit Kandang',
                                   ),
                                 ),
                               ],
@@ -85,7 +85,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              GlobalVar.track("Click_option_menu_edit_lantai");
+                              GlobalVar.track('Click_option_menu_edit_lantai');
                               Get.back();
                               Get.toNamed(RoutePage.createCoopPage, arguments: [RegisterCoopController.MODIFY_FLOOR, controller.coopDetail])!.then((value) {
                                 controller.isLoading.value = true;
@@ -103,7 +103,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                 const SizedBox(width: 8),
                                 DefaultTextStyle(
                                   style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                  child: const Text("Edit Lantai"),
+                                  child: const Text('Edit Lantai'),
                                 ),
                                 const SizedBox(height: 12),
                               ],
@@ -114,7 +114,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                   Align(
                     alignment: const Alignment(1, -1),
                     child: Image.asset(
-                      "images/triangle_icon.png",
+                      'images/triangle_icon.png',
                       height: 17,
                       width: 17,
                     ),
@@ -136,18 +136,18 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
         centerTitle: true,
         title: Obx(() => controller.isLoading.isTrue
             ? Text(
-                "${controller.coop.name} - ${controller.coop.room!.name}",
+                '${controller.coop.name} - ${controller.coop.room!.name}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )
             : Text(
-                "${controller.coopDetail.coopName} - ${controller.coopDetail.room!.name}",
+                '${controller.coopDetail.coopName} - ${controller.coopDetail.room!.name}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )),
         actions: [
           if (GlobalVar.canModifyInfrasturucture()) ...[
             GestureDetector(
               onTap: () {
-                GlobalVar.track("Click_option_menus");
+                GlobalVar.track('Click_option_menus');
                 showButtonDialog(context, controller);
               },
               child: Container(
@@ -155,7 +155,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                 height: 32,
                 width: 32,
                 margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                child: SvgPicture.asset("images/dot_icon.svg"),
+                child: SvgPicture.asset('images/dot_icon.svg'),
               ),
             )
           ]
@@ -182,16 +182,16 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
               controller: tabController.controller,
               tabs: const [
                 Tab(
-                  text: "Smart Monitoring",
+                  text: 'Smart Monitoring',
                 ),
                 Tab(
-                  text: "Smart Controller",
+                  text: 'Smart Controller',
                 ),
                 Tab(
-                  text: "Smart Camera",
+                  text: 'Smart Camera',
                 ),
                 Tab(
-                  text: "Smart Scale",
+                  text: 'Smart Scale',
                 )
               ],
               labelColor: GlobalVar.primaryOrange,
@@ -212,7 +212,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
           controller: controller.scrollMonitorController,
           itemCount: controller.isLoadMore.isTrue ? controller.smartMonitordevices.value.length + 1 : controller.smartMonitordevices.value.length,
           itemBuilder: (context, index) {
-            int length = controller.smartMonitordevices.value.length;
+            final int length = controller.smartMonitordevices.value.length;
             if (index >= length) {
               return const Column(
                 children: [
@@ -232,7 +232,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                 CardListSmartMonitor(
                   device: controller.smartMonitordevices.value[index],
                   onTap: () {
-                    GlobalVar.track("Click_Button_Smart_Monitoring");
+                    GlobalVar.track('Click_Button_Smart_Monitoring');
                     Get.toNamed(RoutePage.detailSmartMonitorPage, arguments: [controller.coopDetail, controller.smartMonitordevices.value[index]])!.then((value) {
                       controller.isLoading.value = true;
                       controller.smartMonitordevices.value.clear();
@@ -260,7 +260,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
           controller: controller.scrollController,
           itemCount: controller.isLoadMore.isTrue ? controller.smartControllerdevices.value.length + 1 : controller.smartControllerdevices.value.length,
           itemBuilder: (context, index) {
-            int length = controller.smartControllerdevices.value.length;
+            final int length = controller.smartControllerdevices.value.length;
             if (index >= length) {
               return const Column(
                 children: [
@@ -280,7 +280,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                 CardListSmartController(
                   device: controller.smartControllerdevices.value[index],
                   onTap: () {
-                    GlobalVar.track("Click_Button_Smart_Controller");
+                    GlobalVar.track('Click_Button_Smart_Controller');
                     Get.toNamed(RoutePage.detailSmartControllerPage, arguments: [controller.coopDetail, controller.smartControllerdevices.value[index]])!.then((value) {
                       controller.isLoading.value = true;
                       controller.smartMonitordevices.value.clear();
@@ -307,7 +307,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
         controller: controller.scrollCameraController,
         itemCount: controller.isLoadMore.isTrue ? controller.smartCameradevices.value.length + 1 : controller.smartCameradevices.value.length,
         itemBuilder: (context, index) {
-          int length = controller.smartCameradevices.value.length;
+          final int length = controller.smartCameradevices.value.length;
           if (index >= length) {
             return const Column(
               children: [
@@ -326,9 +326,9 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
             children: [
               CardListSmartCamera(
                 device: controller.smartCameradevices.value[index],
-                imagesPath: "images/smartcamera_icon.svg",
+                imagesPath: 'images/smartcamera_icon.svg',
                 onTap: () {
-                  GlobalVar.track("Click_Button_Smart_Camera");
+                  GlobalVar.track('Click_Button_Smart_Camera');
                   Get.toNamed(RoutePage.detailSmartCameraPage, arguments: [controller.smartCameradevices.value[index], controller.coopDetail])!.then((value) {
                     controller.isLoading.value = true;
                     controller.smartMonitordevices.value.clear();
@@ -353,7 +353,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
         controller: controller.scrollScaleController,
         itemCount: controller.isLoadMore.isTrue ? controller.smartScaledevices.value.length + 1 : controller.smartScaledevices.value.length,
         itemBuilder: (context, index) {
-          int length = controller.smartScaledevices.value.length;
+          final int length = controller.smartScaledevices.value.length;
           if (index >= length) {
             return const Column(
               children: [
@@ -372,9 +372,9 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
             children: [
               CardListSmartScale(
                 device: controller.smartScaledevices.value[index],
-                imagesPath: "images/smartscale_icon.svg",
+                imagesPath: 'images/smartscale_icon.svg',
                 onTap: () {
-                  GlobalVar.track("Click_Button_Smart_Scale");
+                  GlobalVar.track('Click_Button_Smart_Scale');
                   Get.toNamed(RoutePage.listSmartScalePage, arguments: [controller.smartScaledevices.value[index], controller.coopDetail])!.then((value) {
                     controller.isLoading.value = true;
                     controller.smartMonitordevices.value.clear();
@@ -394,7 +394,7 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
       );
     }
 
-    showBottomDialog(BuildContext context, DashboardDeviceController controller) {
+    Future showBottomDialog(BuildContext context, DashboardDeviceController controller) {
       return showModalBottomSheet(
           isScrollControlled: true,
           useRootNavigator: true,
@@ -424,9 +424,9 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      GlobalVar.track("Click_add_smart_monitoring");
+                      GlobalVar.track('Click_add_smart_monitoring');
                       Get.back();
-                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Monitoring"])!.then((value) {
+                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, 'Smart Monitoring'])!.then((value) {
                         controller.isLoading.value = true;
                         Timer(const Duration(milliseconds: 500), () {
                           controller.smartMonitordevices.value.clear();
@@ -437,16 +437,16 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                       });
                     },
                     child: const MenuBottomSheet(
-                      title: "Smart Monitoring",
-                      subTitle: "Monitoring lingkungan kandang seperti Suhu, kelembaban, amonia, angin dan cahaya",
-                      imagesPath: "images/smartmonitoring_icon.svg",
+                      title: 'Smart Monitoring',
+                      subTitle: 'Monitoring lingkungan kandang seperti Suhu, kelembaban, amonia, angin dan cahaya',
+                      imagesPath: 'images/smartmonitoring_icon.svg',
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      GlobalVar.track("Click_add_smart_controller");
+                      GlobalVar.track('Click_add_smart_controller');
                       Get.back();
-                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Controller"])!.then((value) {
+                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, 'Smart Controller'])!.then((value) {
                         controller.isLoading.value = true;
                         Timer(const Duration(milliseconds: 500), () {
                           controller.smartMonitordevices.value.clear();
@@ -457,16 +457,16 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                       });
                     },
                     child: const MenuBottomSheet(
-                      title: "Smart Controller",
-                      subTitle: "Kontrol peralatan di kandang seperti kipas, pemanas, pendingin dan alarm",
-                      imagesPath: "images/smartcontroller_icon.svg",
+                      title: 'Smart Controller',
+                      subTitle: 'Kontrol peralatan di kandang seperti kipas, pemanas, pendingin dan alarm',
+                      imagesPath: 'images/smartcontroller_icon.svg',
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      GlobalVar.track("Click_add_smart_camera");
+                      GlobalVar.track('Click_add_smart_camera');
                       Get.back();
-                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, "Smart Camera"])!.then((value) {
+                      Get.toNamed(RoutePage.registerDevicePage, arguments: [controller.coopDetail, 'Smart Camera'])!.then((value) {
                         controller.isLoading.value = true;
                         Timer(const Duration(milliseconds: 500), () {
                           controller.smartMonitordevices.value.clear();
@@ -477,9 +477,9 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                       });
                     },
                     child: const MenuBottomSheet(
-                      title: "Smart Camera",
-                      subTitle: "Pantau kondisi lingkungan kandang secara langsung dengan mudah",
-                      imagesPath: "images/smartcamera_icon.svg",
+                      title: 'Smart Camera',
+                      subTitle: 'Pantau kondisi lingkungan kandang secara langsung dengan mudah',
+                      imagesPath: 'images/smartcamera_icon.svg',
                     ),
                   ),
                   const SizedBox(
@@ -510,10 +510,10 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("createDevice"),
-                      label: "Tambah Alat",
+                      controller: GetXCreator.putButtonFillController('createDevice'),
+                      label: 'Tambah Alat',
                       onClick: () {
-                        GlobalVar.track("Click_button_tambah_alat");
+                        GlobalVar.track('Click_button_tambah_alat');
                         showBottomDialog(context, controller);
                       },
                     )),
@@ -555,12 +555,12 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                     margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                     child: Column(
                                       children: [
-                                        SvgPicture.asset("images/empty_icon.svg"),
+                                        SvgPicture.asset('images/empty_icon.svg'),
                                         const SizedBox(
                                           height: 17,
                                         ),
                                         Text(
-                                          "Belum ada alat terpasang di lantai ini",
+                                          'Belum ada alat terpasang di lantai ini',
                                           textAlign: TextAlign.center,
                                           style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                         )
@@ -579,12 +579,12 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                   margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 17,
                                       ),
                                       Text(
-                                        "Belum ada alat terpasang di lantai ini",
+                                        'Belum ada alat terpasang di lantai ini',
                                         textAlign: TextAlign.center,
                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                       )
@@ -602,12 +602,12 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                   margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 17,
                                       ),
                                       Text(
-                                        "Belum ada alat terpasang di lantai ini",
+                                        'Belum ada alat terpasang di lantai ini',
                                         textAlign: TextAlign.center,
                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                       )
@@ -625,12 +625,12 @@ class DashboardDevice extends GetView<DashboardDeviceController> {
                                   margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 17,
                                       ),
                                       Text(
-                                        "Belum ada alat terpasang di lantai ini",
+                                        'Belum ada alat terpasang di lantai ini',
                                         textAlign: TextAlign.center,
                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                       )

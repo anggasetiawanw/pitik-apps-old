@@ -117,7 +117,7 @@ class LoginController extends GetxController {
 
   Future<void> _sendFirebaseTokenToServer(Auth auth) async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    final Map<dynamic,dynamic> deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
+    final Map<dynamic, dynamic> deviceInfo = (await DeviceInfoPlugin().deviceInfo).data;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Service.push(

@@ -26,7 +26,7 @@ class DetailSmartControllerController extends GetxController {
   var pageSmartController = 1.obs;
   var pageSmartCamera = 1.obs;
   var limit = 10.obs;
-  var deviceUpdatedName = "".obs;
+  var deviceUpdatedName = ''.obs;
   late DateTime timeStart;
 
   late Coop coop;
@@ -46,13 +46,13 @@ class DetailSmartControllerController extends GetxController {
 
   var isLoading = false.obs;
   late EditField efBuildingName =
-      EditField(controller: GetXCreator.putEditFieldController("efBuildingName"), label: "Kandang", hint: "Ketik Disini", alertText: "Nama Kandang", textUnit: "", inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efBuildingName'), label: 'Kandang', hint: 'Ketik Disini', alertText: 'Nama Kandang', textUnit: '', inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
   late SpinnerField spBuildingType = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
-      label: "Jenis Kandang",
-      hint: "Pilih Salah Satu",
-      alertText: "Jenis Kandang harus dipilih!",
-      items: const {"Open House": false, "Semi House": false, "Close House": false},
+      controller: GetXCreator.putSpinnerFieldController('spBuildingType'),
+      label: 'Jenis Kandang',
+      hint: 'Pilih Salah Satu',
+      alertText: 'Jenis Kandang harus dipilih!',
+      items: const {'Open House': false, 'Semi House': false, 'Close House': false},
       onSpinnerSelected: (value) {});
 
   @override
@@ -73,17 +73,17 @@ class DetailSmartControllerController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as DetailControllerResponse).data != null) {
-                deviceController = (body).data;
+                deviceController = body.data;
               }
-              DateTime timeEnd = DateTime.now();
-              GlobalVar.sendRenderTimeMixpanel("Open_smart_controller_page", timeStart, timeEnd);
+              final DateTime timeEnd = DateTime.now();
+              GlobalVar.sendRenderTimeMixpanel('Open_smart_controller_page', timeStart, timeEnd);
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),

@@ -48,9 +48,9 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                GlobalVar.track("Click_option_menu_edit_monitoring");
+                                GlobalVar.track('Click_option_menu_edit_monitoring');
                                 Get.back();
-                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, "edit"])!.then((value) {
+                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, 'edit'])!.then((value) {
                                   controller.isLoading.value = true;
                                   Timer(const Duration(milliseconds: 500), () {
                                     controller.getLatestDataSmartMonitor();
@@ -65,18 +65,18 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                                   ),
                                   DefaultTextStyle(
                                     style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                    child: const Text("Edit"),
+                                    child: const Text('Edit'),
                                   ),
                                 ],
                               ),
                             ),
                             GestureDetector(
                               onTap: () {
-                                GlobalVar.track("Click_option_menu_rename");
+                                GlobalVar.track('Click_option_menu_rename');
                                 Get.back();
-                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, "rename"])!.then((value) {
+                                Get.toNamed(RoutePage.modifySmartMonitorPage, arguments: [controller.coop, controller.device, 'rename'])!.then((value) {
                                   controller.isLoading.value = true;
-                                  value == null ? controller.deviceUpdatedName.value = "" : controller.deviceUpdatedName.value = value[0]["backValue"];
+                                  value == null ? controller.deviceUpdatedName.value = '' : controller.deviceUpdatedName.value = value[0]['backValue'];
                                   Timer(const Duration(milliseconds: 500), () {
                                     controller.getLatestDataSmartMonitor();
                                   });
@@ -90,7 +90,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                                   ),
                                   DefaultTextStyle(
                                     style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
-                                    child: const Text("Ubah Nama"),
+                                    child: const Text('Ubah Nama'),
                                   ),
                                 ],
                               ),
@@ -100,7 +100,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                     Align(
                       alignment: const Alignment(1, -1),
                       child: Image.asset(
-                        "images/triangle_icon.png",
+                        'images/triangle_icon.png',
                         height: 17,
                         width: 17,
                       ),
@@ -121,20 +121,20 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
         ),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Obx(() => controller.deviceUpdatedName.value == ""
+        title: Obx(() => controller.deviceUpdatedName.value == ''
             ? Text(
-                "${controller.device.deviceName}",
+                '${controller.device.deviceName}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )
             : Text(
-                "${controller.deviceUpdatedName}",
+                '${controller.deviceUpdatedName}',
                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
               )),
         actions: [
           if (GlobalVar.canModifyInfrasturucture()) ...[
             GestureDetector(
               onTap: () {
-                GlobalVar.track("Click_option_menu");
+                GlobalVar.track('Click_option_menu');
                 showButtonDialog(context, controller);
               },
               child: Container(
@@ -142,7 +142,7 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                 height: 32,
                 width: 32,
                 margin: const EdgeInsets.only(right: 20, top: 13, bottom: 13),
-                child: SvgPicture.asset("images/dot_icon.svg"),
+                child: SvgPicture.asset('images/dot_icon.svg'),
               ),
             )
           ]
@@ -152,73 +152,73 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
 
     Widget customExpandable(String headerText, String icon, SensorData sensorData) {
       return ExpandableDevice(
-        controller: GetXCreator.putAccordionDeviceController("smartMonitorCard$headerText", context),
+        controller: GetXCreator.putAccordionDeviceController('smartMonitorCard$headerText', context),
         headerText: "${headerText[0].toUpperCase()}${headerText.substring(1)}",
-        value: "${sensorData.value!}",
-        valueTextColor: sensorData.status == "good"
+        value: '${sensorData.value!}',
+        valueTextColor: sensorData.status == 'good'
             ? 0xFF14CB82
-            : sensorData.status == "bad"
+            : sensorData.status == 'bad'
                 ? 0xFFDD1E25
                 : 0xFF2C2B2B,
         icon: icon,
-        unitValue: headerText == "temperature" ? "°C" : sensorData.uom!,
+        unitValue: headerText == 'temperature' ? '°C' : sensorData.uom!,
         onExpand: (bool isExpand) {
           if (!isExpand) {
-            headerText == "temperature"
-                ? GlobalVar.track("Click_Suhu")
-                : headerText == "Kelembaban"
-                    ? GlobalVar.track("Click_Kelembaban")
-                    : headerText == "Heat Stress"
-                        ? GlobalVar.track("Click_Heat_Stress")
-                        : headerText == "Kecepatan Angin"
-                            ? GlobalVar.track("Click_Kecepatan_Angin")
-                            : headerText == "Lampu"
-                                ? GlobalVar.track("Click_Cahaya")
-                                : headerText == "Amonia"
-                                    ? GlobalVar.track("Click_Ammonia")
-                                    : "";
+            headerText == 'temperature'
+                ? GlobalVar.track('Click_Suhu')
+                : headerText == 'Kelembaban'
+                    ? GlobalVar.track('Click_Kelembaban')
+                    : headerText == 'Heat Stress'
+                        ? GlobalVar.track('Click_Heat_Stress')
+                        : headerText == 'Kecepatan Angin'
+                            ? GlobalVar.track('Click_Kecepatan_Angin')
+                            : headerText == 'Lampu'
+                                ? GlobalVar.track('Click_Cahaya')
+                                : headerText == 'Amonia'
+                                    ? GlobalVar.track('Click_Ammonia')
+                                    : '';
           } else {
             // controller.getHistoricalData(headerText);
           }
         },
-        targetLabel: headerText == "temperature"
-            ? "Target"
-            : headerText == "Kelembaban"
-                ? "Target"
-                : headerText == "Heat Stress"
-                    ? ""
-                    : headerText == "Kecepatan Angin"
-                        ? ""
-                        : headerText == "Lampu"
-                            ? ""
-                            : headerText == "Amonia"
-                                ? "Standard"
-                                : "",
-        averageLabel: headerText == "temperature"
-            ? "Rata-Rata"
-            : headerText == "Kelembaban"
-                ? "Rata-Rata"
-                : headerText == "Heat Stress"
-                    ? "Siklus Sekarang"
-                    : headerText == "Kecepatan Angin"
-                        ? "Siklus Sekarang"
-                        : headerText == "Lampu"
-                            ? "Siklus Sekarang"
-                            : headerText == "Amonia"
-                                ? "Mics-amonia"
-                                : "",
+        targetLabel: headerText == 'temperature'
+            ? 'Target'
+            : headerText == 'Kelembaban'
+                ? 'Target'
+                : headerText == 'Heat Stress'
+                    ? ''
+                    : headerText == 'Kecepatan Angin'
+                        ? ''
+                        : headerText == 'Lampu'
+                            ? ''
+                            : headerText == 'Amonia'
+                                ? 'Standard'
+                                : '',
+        averageLabel: headerText == 'temperature'
+            ? 'Rata-Rata'
+            : headerText == 'Kelembaban'
+                ? 'Rata-Rata'
+                : headerText == 'Heat Stress'
+                    ? 'Siklus Sekarang'
+                    : headerText == 'Kecepatan Angin'
+                        ? 'Siklus Sekarang'
+                        : headerText == 'Lampu'
+                            ? 'Siklus Sekarang'
+                            : headerText == 'Amonia'
+                                ? 'Mics-amonia'
+                                : '',
         device: controller.device,
-        sensorType: headerText == "temperature"
-            ? "temperature"
-            : headerText == "Heat Stress"
-                ? "heatStressIndex"
-                : headerText == "Kecepatan Angin"
-                    ? "wind"
-                    : headerText == "Lampu"
-                        ? "lights"
-                        : headerText == "Amonia"
-                            ? "ammonia"
-                            : "relativeHumidity",
+        sensorType: headerText == 'temperature'
+            ? 'temperature'
+            : headerText == 'Heat Stress'
+                ? 'heatStressIndex'
+                : headerText == 'Kecepatan Angin'
+                    ? 'wind'
+                    : headerText == 'Lampu'
+                        ? 'lights'
+                        : headerText == 'Amonia'
+                            ? 'ammonia'
+                            : 'relativeHumidity',
       );
     }
 
@@ -240,12 +240,12 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                       margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                       child: Column(
                         children: [
-                          SvgPicture.asset("images/empty_icon.svg"),
+                          SvgPicture.asset('images/empty_icon.svg'),
                           const SizedBox(
                             height: 17,
                           ),
                           Text(
-                            "Data Smart Monitor Belum Ada",
+                            'Data Smart Monitor Belum Ada',
                             textAlign: TextAlign.center,
                             style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                           )
@@ -258,12 +258,12 @@ class DetailSmartMonitor extends GetView<DetailSmartMonitorController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            controller.deviceSummary!.temperature != null ? customExpandable("temperature", "images/temperature_icon.svg", controller.deviceSummary!.temperature!) : Container(),
-                            controller.deviceSummary!.relativeHumidity != null ? customExpandable("Kelembaban", "images/humidity_icon.svg", controller.deviceSummary!.relativeHumidity!) : Container(),
-                            controller.deviceSummary!.ammonia != null ? customExpandable("Amonia", "images/amonia_icon.svg", controller.deviceSummary!.ammonia!) : Container(),
-                            controller.deviceSummary!.heatStressIndex != null ? customExpandable("Heat Stress", "images/heater_icon.svg", controller.deviceSummary!.heatStressIndex!) : Container(),
-                            controller.deviceSummary!.wind != null ? customExpandable("Kecepatan Angin", "images/wind_icon.svg", controller.deviceSummary!.wind!) : Container(),
-                            controller.deviceSummary!.lights != null ? customExpandable("Lampu", "images/lamp_icon.svg", controller.deviceSummary!.lights!) : Container(),
+                            controller.deviceSummary!.temperature != null ? customExpandable('temperature', 'images/temperature_icon.svg', controller.deviceSummary!.temperature!) : Container(),
+                            controller.deviceSummary!.relativeHumidity != null ? customExpandable('Kelembaban', 'images/humidity_icon.svg', controller.deviceSummary!.relativeHumidity!) : Container(),
+                            controller.deviceSummary!.ammonia != null ? customExpandable('Amonia', 'images/amonia_icon.svg', controller.deviceSummary!.ammonia!) : Container(),
+                            controller.deviceSummary!.heatStressIndex != null ? customExpandable('Heat Stress', 'images/heater_icon.svg', controller.deviceSummary!.heatStressIndex!) : Container(),
+                            controller.deviceSummary!.wind != null ? customExpandable('Kecepatan Angin', 'images/wind_icon.svg', controller.deviceSummary!.wind!) : Container(),
+                            controller.deviceSummary!.lights != null ? customExpandable('Lampu', 'images/lamp_icon.svg', controller.deviceSummary!.lights!) : Container(),
                           ],
                         ),
                       ),

@@ -42,28 +42,28 @@ class GrowthSetupController extends GetxController {
   late ButtonFill bfSaveGrowthDay;
   late ButtonFill bfEditGrowthDay;
   late EditField efTargetTemp = EditField(
-      controller: GetXCreator.putEditFieldController("efTargetTemp"),
-      label: "Target Suhu Hari Ini",
-      hint: "Ketik disini",
-      alertText: "Target Suhu Hari Ini harus di isi",
-      textUnit: "°C",
+      controller: GetXCreator.putEditFieldController('efTargetTemp'),
+      label: 'Target Suhu Hari Ini',
+      hint: 'Ketik disini',
+      alertText: 'Target Suhu Hari Ini harus di isi',
+      textUnit: '°C',
       inputType: TextInputType.number,
       maxInput: 4,
       onTyping: (value, control) {});
   late EditField efAge =
-      EditField(controller: GetXCreator.putEditFieldController("efAge"), label: "Umur", hint: "Ketik disini", alertText: "Umur harus di isi", textUnit: "Hari", inputType: TextInputType.number, maxInput: 3, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efAge'), label: 'Umur', hint: 'Ketik disini', alertText: 'Umur harus di isi', textUnit: 'Hari', inputType: TextInputType.number, maxInput: 3, onTyping: (value, control) {});
   late EditField efTempDayFirst = EditField(
-      controller: GetXCreator.putEditFieldController("efTempDayFirst"),
-      label: "Suhu Hari 1",
-      hint: "Ketik disini",
-      alertText: "Suhu Hari 1 Ini harus di isi",
-      textUnit: "°C",
+      controller: GetXCreator.putEditFieldController('efTempDayFirst'),
+      label: 'Suhu Hari 1',
+      hint: 'Ketik disini',
+      alertText: 'Suhu Hari 1 Ini harus di isi',
+      textUnit: '°C',
       inputType: TextInputType.number,
       maxInput: 4,
       onTyping: (value, control) {});
   late Expandable expandable = Expandable(
-      controller: GetXCreator.putAccordionController("expandableReduceTemperature"),
-      headerText: "Pengurangan Suhu",
+      controller: GetXCreator.putAccordionController('expandableReduceTemperature'),
+      headerText: 'Pengurangan Suhu',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [itemDecreaseTemperture],
@@ -78,37 +78,37 @@ class GrowthSetupController extends GetxController {
     device = Get.arguments[0];
     controllerData = Get.arguments[1];
     bfNoEditGrowthDay = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("bfNoEditGrowthDay"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('bfNoEditGrowthDay'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesEditGrowthDay = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesEditGrowthDay"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesEditGrowthDay'),
+      label: 'Ya',
       onClick: () {
         setGrowthDay();
       },
     );
     bfSaveGrowthDay = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfSaveGrowthDay"),
-      label: "Simpan",
+      controller: GetXCreator.putButtonFillController('bfSaveGrowthDay'),
+      label: 'Simpan',
       onClick: () {},
     );
     bfEditGrowthDay = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfEditGrowthDay"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('bfEditGrowthDay'),
+      label: 'Edit',
       onClick: () {},
     );
-    itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController("itemDecreaseTemperature", context));
+    itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController('itemDecreaseTemperature', context));
     getDetailGrowthDay();
   }
 
   @override
   void onClose() {
     super.onClose();
-    Get.delete<ExpandableController>(tag: "expandableReduceTemperature");
+    Get.delete<ExpandableController>(tag: 'expandableReduceTemperature');
   }
 
   @override
@@ -117,7 +117,7 @@ class GrowthSetupController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // getDetailGrowthDay();
     });
-    itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController("itemDecreaseTemperature", context));
+    itemDecreaseTemperture = ItemDecreaseTemperature(controller: GetXCreator.putItemDecreaseController('itemDecreaseTemperature', context));
   }
 
   /// The function `loadData` populates a list and sets input values based on the
@@ -134,9 +134,9 @@ class GrowthSetupController extends GetxController {
         list.value.add(result!);
       }
     }
-    efAge.setInput("${growthDay.growthDay}");
-    efTargetTemp.setInput("${growthDay.requestTemperature}");
-    efTempDayFirst.setInput("${growthDay.temperature}");
+    efAge.setInput('${growthDay.growthDay}');
+    efTargetTemp.setInput('${growthDay.requestTemperature}');
+    efTempDayFirst.setInput('${growthDay.temperature}');
     if (isEdit.isTrue) {
       efAge.controller.enable();
       efTargetTemp.controller.enable();
@@ -151,8 +151,8 @@ class GrowthSetupController extends GetxController {
       itemDecreaseTemperture.controller.addCard();
     }
     for (int i = 0; i < list.value.length; i++) {
-      itemDecreaseTemperture.controller.efDayTotal.value[i].setInput("${list.value[i].day!}");
-      itemDecreaseTemperture.controller.efDecreaseTemp.value[i].setInput("${list.value[i].reduction!}");
+      itemDecreaseTemperture.controller.efDayTotal.value[i].setInput('${list.value[i].day!}');
+      itemDecreaseTemperture.controller.efDecreaseTemp.value[i].setInput('${list.value[i].reduction!}');
       if (isEdit.isTrue) {
         itemDecreaseTemperture.controller.efDayTotal.value[i].controller.enable();
         itemDecreaseTemperture.controller.efDecreaseTemp.value[i].controller.enable();
@@ -179,8 +179,8 @@ class GrowthSetupController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -197,15 +197,15 @@ class GrowthSetupController extends GetxController {
   /// growth day and handles the response accordingly.
   void setGrowthDay() {
     Get.back();
-    List ret = validationEdit();
+    final List ret = validationEdit();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        GrowthDay payload = generatePayloadSetGrowthDay();
+        final GrowthDay payload = generatePayloadSetGrowthDay();
         Service.push(
           service: ListApi.setController,
           context: context,
-          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "growth-day", device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
+          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', 'growth-day', device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Get.back();
@@ -213,37 +213,37 @@ class GrowthSetupController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
 
   List validationEdit() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (efTargetTemp.getInput().isEmpty) {
       efTargetTemp.controller.showAlert();
       Scrollable.ensureVisible(efTargetTemp.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (efAge.getInput().isEmpty) {
       efAge.controller.showAlert();
       Scrollable.ensureVisible(efAge.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (efTempDayFirst.getInput().isEmpty) {
       efTempDayFirst.controller.showAlert();
       Scrollable.ensureVisible(efTempDayFirst.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     ret = itemDecreaseTemperture.controller.validation();
 
@@ -251,13 +251,13 @@ class GrowthSetupController extends GetxController {
   }
 
   GrowthDay generatePayloadSetGrowthDay() {
-    List<TemperatureReduction?> temperatureReductions = [];
+    final List<TemperatureReduction?> temperatureReductions = [];
     for (int i = 0; i < itemDecreaseTemperture.controller.itemCount.value; i++) {
-      int whichItem = itemDecreaseTemperture.controller.index.value[i];
+      final int whichItem = itemDecreaseTemperture.controller.index.value[i];
       temperatureReductions.add(
-          TemperatureReduction(day: (itemDecreaseTemperture.controller.efDayTotal.value[whichItem].getInputNumber())!.toInt(), reduction: itemDecreaseTemperture.controller.efDecreaseTemp.value[whichItem].getInputNumber(), group: "${whichItem + 1}"));
+          TemperatureReduction(day: itemDecreaseTemperture.controller.efDayTotal.value[whichItem].getInputNumber()!.toInt(), reduction: itemDecreaseTemperture.controller.efDecreaseTemp.value[whichItem].getInputNumber(), group: '${whichItem + 1}'));
     }
-    return GrowthDay(deviceId: controllerData.deviceId, requestTemperature: efTargetTemp.getInputNumber(), growthDay: (efAge.getInputNumber())!.toInt(), temperature: efTempDayFirst.getInputNumber(), temperatureReduction: temperatureReductions);
+    return GrowthDay(deviceId: controllerData.deviceId, requestTemperature: efTargetTemp.getInputNumber(), growthDay: efAge.getInputNumber()!.toInt(), temperature: efTempDayFirst.getInputNumber(), temperatureReduction: temperatureReductions);
   }
 }
 

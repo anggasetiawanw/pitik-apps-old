@@ -10,7 +10,7 @@ import 'apis/user_api.dart';
 ///@create date 11/09/2023
 
 class ApiMapping extends ApiMappingList {
-  Map<String, Type> apiMapping = {"api": API, "userApi": UserApi, "smartScaleApi": SmartScaleApi};
+  Map<String, Type> apiMapping = {'api': API, 'userApi': UserApi, 'smartScaleApi': SmartScaleApi};
 
   @override
   Type getApiMapping(String apiKey) {

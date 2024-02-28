@@ -34,7 +34,7 @@ class DashboardLamp extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Lampu",
+          'Lampu',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -72,7 +72,7 @@ class DashboardLamp extends StatelessWidget {
                                 color: controller.lamps.value[index].error == false ? GlobalVar.iconHomeBg : const Color(0xFFFBB8A4),
                                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4), bottomRight: Radius.circular(4), bottomLeft: Radius.circular(4))),
                             child: Center(
-                              child: controller.lamps.value[index].error == false ? SvgPicture.asset("images/lamp_icon.svg") : SvgPicture.asset("images/lamp_icon_error.svg"),
+                              child: controller.lamps.value[index].error == false ? SvgPicture.asset('images/lamp_icon.svg') : SvgPicture.asset('images/lamp_icon_error.svg'),
                             ),
                           ),
                           Expanded(
@@ -92,8 +92,8 @@ class DashboardLamp extends StatelessWidget {
                                       ),
                                       DeviceStatus(
                                         status: controller.lamps.value[index].status!,
-                                        activeString: "Aktif",
-                                        inactiveString: "Non-Aktif",
+                                        activeString: 'Aktif',
+                                        inactiveString: 'Non-Aktif',
                                       ),
                                     ],
                                   ),

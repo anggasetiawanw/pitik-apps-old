@@ -5,7 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/register_coop/register_coop_controller.dart';
+import 'register_coop_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -16,7 +16,7 @@ class RegisterCoop extends GetView<RegisterCoopController> {
 
   @override
   Widget build(BuildContext context) {
-    RegisterCoopController controller = Get.put(RegisterCoopController(context: context));
+    final RegisterCoopController controller = Get.put(RegisterCoopController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -24,7 +24,7 @@ class RegisterCoop extends GetView<RegisterCoopController> {
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                GlobalVar.track("Click_button_back");
+                GlobalVar.track('Click_button_back');
                 Navigator.of(context).pop();
               }),
           shape: const RoundedRectangleBorder(
@@ -34,11 +34,11 @@ class RegisterCoop extends GetView<RegisterCoopController> {
           centerTitle: true,
           title: Obx(() => controller.coop.value.coopName == null
               ? Text(
-                  "Buat Kandang",
+                  'Buat Kandang',
                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 )
               : Text(
-                  "${controller.coop.value.coopName}",
+                  '${controller.coop.value.coopName}',
                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 )));
     }
@@ -62,8 +62,8 @@ class RegisterCoop extends GetView<RegisterCoopController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveDevice"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveDevice'),
+                      label: 'Simpan',
                       onClick: () {
                         showBottomDialog(context, controller);
                       },
@@ -102,7 +102,7 @@ class RegisterCoop extends GetView<RegisterCoopController> {
                           ),
                           Obx(() => controller.coop.value.coopName == null
                               ? const Text(
-                                  "Detail Lantai",
+                                  'Detail Lantai',
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                                 )
                               : Container()),
@@ -119,7 +119,7 @@ class RegisterCoop extends GetView<RegisterCoopController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, RegisterCoopController controller) {
+  Future showBottomDialog(BuildContext context, RegisterCoopController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -150,18 +150,18 @@ class RegisterCoop extends GetView<RegisterCoopController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

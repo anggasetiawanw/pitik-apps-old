@@ -46,24 +46,24 @@ class DashboardDeviceController extends GetxController {
   var isLoading = false.obs;
 
   late EditField efBuildingName =
-      EditField(controller: GetXCreator.putEditFieldController("efBuildingName"), label: "Kandang", hint: "Ketik Disini", alertText: "Nama Kandang", textUnit: "", inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efBuildingName'), label: 'Kandang', hint: 'Ketik Disini', alertText: 'Nama Kandang', textUnit: '', inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
   late SpinnerField spBuildingType = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
-      label: "Jenis Kandang",
-      hint: "Pilih Salah Satu",
-      alertText: "Jenis Kandang harus dipilih!",
-      items: const {"Open House": false, "Semi House": false, "Close House": false},
+      controller: GetXCreator.putSpinnerFieldController('spBuildingType'),
+      label: 'Jenis Kandang',
+      hint: 'Pilih Salah Satu',
+      alertText: 'Jenis Kandang harus dipilih!',
+      items: const {'Open House': false, 'Semi House': false, 'Close House': false},
       onSpinnerSelected: (value) {});
   late ButtonFill bfCreateDevice = ButtonFill(
-    controller: GetXCreator.putButtonFillController("createDevice"),
-    label: "Tambah Alat",
+    controller: GetXCreator.putButtonFillController('createDevice'),
+    label: 'Tambah Alat',
     onClick: () {},
   );
 
   @override
   void onInit() {
     super.onInit();
-    GlobalVar.track("Open_lantai_page");
+    GlobalVar.track('Open_lantai_page');
     coop = Get.arguments;
     isLoading.value = true;
     getDetailRoom();
@@ -90,30 +90,30 @@ class DashboardDeviceController extends GetxController {
               coopDetail = (body as RoomDetailResponse).data!;
               if (coopDetail.room!.devices.isNotEmpty) {
                 for (var result in body.data!.room!.devices) {
-                  if (result!.deviceType == "SMART_MONITORING") {
+                  if (result!.deviceType == 'SMART_MONITORING') {
                     smartMonitordevices.value.add(result);
                   }
-                  if (result.deviceType == "SMART_CONTROLLER") {
+                  if (result.deviceType == 'SMART_CONTROLLER') {
                     smartControllerdevices.value.add(result);
                   }
-                  if (result.deviceType == "SMART_CAMERA") {
+                  if (result.deviceType == 'SMART_CAMERA') {
                     smartCameradevices.value.add(result);
                   }
-                  if (result.deviceType == "SMART_SCALE") {
+                  if (result.deviceType == 'SMART_SCALE') {
                     result.roomId = coopDetail.room!.id;
                     smartScaledevices.value.add(result);
                   }
                 }
               }
-              DateTime timeEnd = DateTime.now();
-              GlobalVar.sendRenderTimeMixpanel("Open_dashboard_device", timeStart, timeEnd);
+              final DateTime timeEnd = DateTime.now();
+              GlobalVar.sendRenderTimeMixpanel('Open_dashboard_device', timeStart, timeEnd);
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),

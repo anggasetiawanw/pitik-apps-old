@@ -1,8 +1,8 @@
+import 'package:dao_impl/offline_body/smart_scale_body.dart';
 import 'package:dao_impl/smart_scale_impl.dart';
-import 'package:get/get.dart';
 import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
-import 'package:dao_impl/offline_body/smart_scale_body.dart';
+import 'package:get/get.dart';
 
 import '../../api_mapping/api_mapping.dart';
 

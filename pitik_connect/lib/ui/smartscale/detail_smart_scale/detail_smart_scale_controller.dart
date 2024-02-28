@@ -29,7 +29,7 @@ class DetailSmartScaleController extends GetxController {
   late Coop coop;
   late CustomDialog dialog;
 
-  Rx<SmartScale> smartScale = (SmartScale()).obs;
+  Rx<SmartScale> smartScale = SmartScale().obs;
   var isLoading = false.obs;
 
   @override
@@ -72,13 +72,13 @@ class DetailSmartScaleController extends GetxController {
   }
 
   String getStartWeighing() {
-    DateTime startWeighingTime = Convert.getDatetime(smartScale.value.startDate!);
-    return "${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}";
+    final DateTime startWeighingTime = Convert.getDatetime(smartScale.value.startDate!);
+    return '${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}';
   }
 
   String getEndWeighing() {
-    DateTime endWeighingTime = Convert.getDatetime(smartScale.value.executionDate!);
-    return "${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}";
+    final DateTime endWeighingTime = Convert.getDatetime(smartScale.value.executionDate!);
+    return '${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}';
   }
 
   /// The function `rescale()` displays a dialog box with a message asking the
@@ -87,7 +87,7 @@ class DetailSmartScaleController extends GetxController {
     dialog
         .listener(CustomDialogListener(
             onDialogOk: (BuildContext context, int id, List<dynamic> packet) {
-              GlobalVar.track("Click_smart_rescale");
+              GlobalVar.track('Click_smart_rescale');
               Get.offNamed(RoutePage.weighingSmartScalePage, arguments: [coop, smartScale.value]);
             },
             onDialogCancel: (BuildContext context, int id, List<dynamic> packet) {}))
@@ -110,7 +110,7 @@ class DetailSmartScaleController extends GetxController {
         if (auth != null)
           {
             Service.push(
-                apiKey: "smartScaleApi",
+                apiKey: 'smartScaleApi',
                 service: ListApi.getSmartScaleDetail,
                 context: context,
                 body: [auth.token, auth.id, ListApi.pathSmartScaleForDetailAndUpdate(id)],
@@ -123,8 +123,8 @@ class DetailSmartScaleController extends GetxController {
                     onResponseFail: (code, message, body, id, packet) {
                       isLoading.value = false;
                       Get.snackbar(
-                        "Pesan",
-                        "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                        'Pesan',
+                        'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                         snackPosition: SnackPosition.TOP,
                         colorText: Colors.white,
                         duration: const Duration(seconds: 5),
@@ -149,11 +149,11 @@ class DetailSmartScaleController extends GetxController {
   /// Returns:
   ///   a boolean value.
   bool isThisDay() {
-    DateTime executionDateTime = Convert.getDatetime(smartScale.value.executionDate!);
-    String executionDate = '${Convert.getYear(executionDateTime)}/${Convert.getMonthNumber(executionDateTime)}/${Convert.getDay(executionDateTime)}';
+    final DateTime executionDateTime = Convert.getDatetime(smartScale.value.executionDate!);
+    final String executionDate = '${Convert.getYear(executionDateTime)}/${Convert.getMonthNumber(executionDateTime)}/${Convert.getDay(executionDateTime)}';
 
-    DateTime now = DateTime.now();
-    String nowDate = '${Convert.getYear(now)}/${Convert.getMonthNumber(now)}/${Convert.getDay(now)}';
+    final DateTime now = DateTime.now();
+    final String nowDate = '${Convert.getYear(now)}/${Convert.getMonthNumber(now)}/${Convert.getDay(now)}';
 
     return executionDate == nowDate;
   }

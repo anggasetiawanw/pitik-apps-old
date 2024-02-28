@@ -17,7 +17,7 @@ class CoolerSetup extends GetView<CoolerSetupController> {
 
   @override
   Widget build(BuildContext context) {
-    CoolerSetupController controller = Get.put(CoolerSetupController(context: context));
+    final CoolerSetupController controller = Get.put(CoolerSetupController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -32,7 +32,7 @@ class CoolerSetup extends GetView<CoolerSetupController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Pendingin",
+          'Pendingin',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -58,15 +58,15 @@ class CoolerSetup extends GetView<CoolerSetupController> {
                     Expanded(
                       child: Obx(() => controller.isEdit.isTrue
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfSaveGrowthDay"),
-                              label: "Simpan",
+                              controller: GetXCreator.putButtonFillController('bfSaveGrowthDay'),
+                              label: 'Simpan',
                               onClick: () {
                                 showBottomDialog(context, controller);
                               },
                             )
                           : ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfEditGrowthDay"),
-                              label: "Edit",
+                              controller: GetXCreator.putButtonFillController('bfEditGrowthDay'),
+                              label: 'Edit',
                               onClick: () {
                                 controller.isLoading.value = true;
                                 controller.isEdit.value = true;
@@ -114,7 +114,7 @@ class CoolerSetup extends GetView<CoolerSetupController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, CoolerSetupController controller) {
+  Future showBottomDialog(BuildContext context, CoolerSetupController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -145,18 +145,18 @@ class CoolerSetup extends GetView<CoolerSetupController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

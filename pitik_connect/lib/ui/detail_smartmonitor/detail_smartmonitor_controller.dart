@@ -21,7 +21,7 @@ class DetailSmartMonitorController extends GetxController {
 
   ScrollController scrollController = ScrollController();
   Rx<List<GraphLine>> historicalList = Rx<List<GraphLine>>([]);
-  var deviceUpdatedName = "".obs;
+  var deviceUpdatedName = ''.obs;
 
   var isLoadMore = false.obs;
   var pageSmartMonitor = 1.obs;
@@ -63,15 +63,15 @@ class DetailSmartMonitorController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if (!(body as LatestConditionResponse).data!.isNullObject()) {
-                deviceSummary = (body).data;
+                deviceSummary = body.data;
               }
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),

@@ -5,7 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/detail_smartcamera/take_picture_result/take_picture_result_controller.dart';
+import 'take_picture_result_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -30,7 +30,7 @@ class TakePictureResult extends GetView<TakePictureResultController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Ambil Gambar",
+          'Ambil Gambar',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -41,7 +41,7 @@ class TakePictureResult extends GetView<TakePictureResultController> {
         controller: controller.scrollCameraController,
         itemCount: controller.isLoadMore.isTrue ? controller.recordImages.value.length + 1 : controller.recordImages.value.length,
         itemBuilder: (context, index) {
-          int length = controller.recordImages.value.length;
+          final int length = controller.recordImages.value.length;
           if (index >= length) {
             return const Column(
               children: [
@@ -62,7 +62,7 @@ class TakePictureResult extends GetView<TakePictureResultController> {
                 title: Column(
                   children: [
                     ItemTakePictureCamera(
-                      controller: GetXCreator.putItemTakePictureController("ItemTakePictureCamera$index", context),
+                      controller: GetXCreator.putItemTakePictureController('ItemTakePictureCamera$index', context),
                       recordCamera: controller.recordImages.value[index],
                       index: index,
                       onOptionTap: () {
@@ -100,12 +100,12 @@ class TakePictureResult extends GetView<TakePictureResultController> {
                         margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                         child: Column(
                           children: [
-                            SvgPicture.asset("images/empty_icon.svg"),
+                            SvgPicture.asset('images/empty_icon.svg'),
                             const SizedBox(
                               height: 17,
                             ),
                             Text(
-                              "Data Camera Belum Ada",
+                              'Data Camera Belum Ada',
                               textAlign: TextAlign.center,
                               style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                             )
@@ -125,7 +125,7 @@ class TakePictureResult extends GetView<TakePictureResultController> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(child: Text("Detail Gambar ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
+                                  Expanded(child: Text('Detail Gambar ', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
                                 ],
                               ),
                               const SizedBox(
@@ -138,10 +138,10 @@ class TakePictureResult extends GetView<TakePictureResultController> {
                                       children: [
                                         Expanded(
                                             child: Text(
-                                          "Total Gambar",
+                                          'Total Gambar',
                                           style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                         )),
-                                        Text("${controller.totalCamera}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
+                                        Text('${controller.totalCamera}', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
                                       ],
                                     ))
                             ]),

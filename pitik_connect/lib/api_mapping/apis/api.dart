@@ -8,6 +8,8 @@ import 'package:engine/request/annotation/request/patch.dart';
 import 'package:engine/request/annotation/request/post.dart';
 import 'package:engine/request/base_api.dart';
 import 'package:model/error/error.dart';
+// ignore: unused_import
+import 'package:model/password_model.dart';
 import 'package:model/response/camera_detail_response.dart';
 import 'package:model/response/camera_list_response.dart';
 import 'package:model/response/cooler_response.dart';
@@ -15,6 +17,7 @@ import 'package:model/response/coop_detail_response.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:model/response/detail_controller_response.dart';
 import 'package:model/response/device_detail_response.dart';
+import 'package:model/response/fan_detail_response.dart';
 import 'package:model/response/fan_list_response.dart';
 import 'package:model/response/growth_day_response.dart';
 import 'package:model/response/historical_data_response.dart';
@@ -22,9 +25,6 @@ import 'package:model/response/home_response.dart';
 import 'package:model/response/latest_condition_response.dart';
 import 'package:model/response/profile_response.dart';
 import 'package:model/response/room_detail_response.dart';
-import 'package:model/response/fan_detail_response.dart';
-// ignore: unused_import
-import 'package:model/password_model.dart';
 
 ///@author DICKY
 ///@email <dicky.maulana@pitik.idd>
@@ -45,8 +45,8 @@ class API {
   ///   xAppId (String): The xAppId parameter is a header parameter that
   /// represents the application ID. It is used to identify the application making
   /// the API request.
-  @GET(value: "v2/b2b/farm-infrastructure/home", as: HomeRespone, error: ErrorResponse)
-  void getHomeData(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId) {}
+  @GET(value: 'v2/b2b/farm-infrastructure/home', as: HomeRespone, error: ErrorResponse)
+  void getHomeData(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId) {}
 
   /// The function creates a farm infrastructure for a cooperative in a B2B
   /// system.
@@ -66,8 +66,8 @@ class API {
   /// details such as the name of the farm, location, type of infrastructure, and
   /// any other relevant information needed for the creation process.
   @JSON(isPlaint: true)
-  @POST(value: "v2/b2b/farm-infrastructure/coops", as: HomeRespone, error: ErrorResponse)
-  void createCoopInfrastructure(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/b2b/farm-infrastructure/coops', as: HomeRespone, error: ErrorResponse)
+  void createCoopInfrastructure(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   /// The function "getDetailRoom" is a GET request that retrieves detailed
   /// information about a room, with authorization and header parameters.
@@ -88,7 +88,7 @@ class API {
   /// typically used in the URL of the API endpoint to specify the specific
   /// resource you want to access.
   @GET(value: GET.PATH_PARAMETER, as: RoomDetailResponse, error: ErrorResponse)
-  void getDetailRoom(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDetailRoom(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function "getCoops" is a GET request that retrieves a list of coops,
   /// with authorization, ID, and app ID headers, and a path parameter.
@@ -108,7 +108,7 @@ class API {
   /// combination with the base URL of the API to form the complete URL for the
   /// request.
   @GET(value: GET.PATH_PARAMETER, as: CoopListResponse, error: ErrorResponse)
-  void getCoops(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getCoops(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function `getDetailCoop` is a GET request that retrieves detailed
   /// information about a cooperative, with authorization, ID, app ID, and a path
@@ -128,7 +128,7 @@ class API {
   /// or identifier of the resource you want to retrieve. It is typically used in
   /// RESTful APIs to specify the unique identifier of a resource in the URL.
   @GET(value: GET.PATH_PARAMETER, as: CoopDetailResponse, error: ErrorResponse)
-  void getDetailCoop(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDetailCoop(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function modifies the floor infrastructure using the provided parameters
   /// and authorization headers.
@@ -153,7 +153,7 @@ class API {
   /// infrastructure.
   @JSON(isPlaint: true)
   @PATCH(value: PATCH.PATH_PARAMETER, error: ErrorResponse)
-  void modifyInfrastructure(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void modifyInfrastructure(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// The function `registerDevice` is used to register an IoT device with the
   /// specified authorization, X-ID, X-APP-ID, and parameters.
@@ -175,7 +175,7 @@ class API {
   /// information needed for registration.
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, as: HomeRespone, error: ErrorResponse)
-  void registerDevice(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params, @Path() String path) {}
+  void registerDevice(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params, @Path() String path) {}
 
   /// The function "getDetailSmartMonitoring" is a GET request that retrieves
   /// device details for smart monitoring, with authorization, X-ID, X-APP-ID
@@ -196,7 +196,7 @@ class API {
   /// or endpoint that you want to access in your API. It is typically used to
   /// specify a resource or entity that you want to retrieve or interact with.
   @GET(value: GET.PATH_PARAMETER, as: DeviceDetailResponse, error: ErrorResponse)
-  void getDetailSmartMonitoring(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDetailSmartMonitoring(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function modifies a device using the provided authorization, xid,
   /// xAppId, path, and params.
@@ -221,7 +221,7 @@ class API {
   /// modifying the device.
   @JSON(isPlaint: true)
   @PATCH(value: PATCH.PATH_PARAMETER, as: DeviceDetailResponse, error: ErrorResponse)
-  void modifyDevice(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void modifyDevice(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// The function "getLatestCondition" is a GET request that retrieves the latest
   /// condition with the specified headers and path parameter.
@@ -241,7 +241,7 @@ class API {
   /// or endpoint that you want to access in your API. It is typically used to
   /// specify a resource or a specific action that you want to perform.
   @GET(value: GET.PATH_PARAMETER, as: LatestConditionResponse, error: ErrorResponse)
-  void getLatestCondition(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getLatestCondition(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function `getHistoricalData` is a GET request that retrieves historical
   /// data based on the provided parameters.
@@ -265,7 +265,7 @@ class API {
   /// you provided. It seems to be missing or incomplete. Could you please provide
   /// more information about the "path" parameter?
   @GET(value: GET.PATH_PARAMETER, as: HistoricalDataResponse, error: ErrorResponse)
-  void getHistoricalData(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("sensorType") String sensorType, @Query("days") int day, @Path() String path) {}
+  void getHistoricalData(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('sensorType') String sensorType, @Query('days') int day, @Path() String path) {}
 
   /// The function `getRecordImages` is a GET request that retrieves camera detail
   /// images with the specified authorization, X-ID, X-APP-ID, path, page, and
@@ -293,7 +293,7 @@ class API {
   /// of records to be returned in a single response. It determines the number of
   /// items to be displayed per page or request.
   @GET(value: GET.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
-  void getRecordImages(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("\$page") int page, @Query("\$limit") int limit, @Query("roomId") String roomId) {}
+  void getRecordImages(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Query('\$page') int page, @Query('\$limit') int limit, @Query('roomId') String roomId) {}
 
   /// This function is a GET request that retrieves a list of camera data with the
   /// specified headers and path parameter.
@@ -314,7 +314,7 @@ class API {
   /// combination with the base URL of the API to form the complete URL for the
   /// request.
   @GET(value: GET.PATH_PARAMETER, as: CameraListResponse, error: ErrorResponse)
-  void getListDataCamera(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getListDataCamera(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function "takePictureSmartCamera" is a POST request that takes in
   /// authorization, xid, xAppId, params, and path as parameters and returns a
@@ -339,7 +339,7 @@ class API {
   /// the picture needs to be taken.
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, as: CameraDetailResponse, error: ErrorResponse)
-  void takePictureSmartCamera(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params, @Path() String path) {}
+  void takePictureSmartCamera(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params, @Path() String path) {}
 
   /// The function "changePassword" is used to send a PATCH request to update the
   /// password with the provided headers and parameters.
@@ -362,7 +362,7 @@ class API {
   /// password to be changed.
   @JSON(isPlaint: true)
   @PATCH(value: PATCH.PATH_PARAMETER, as: ProfileResponse, error: ErrorResponse)
-  void changePassword(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void changePassword(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// The function "getDetailSmartController" is a GET request that retrieves
   /// detailed information using the provided headers and path parameter.
@@ -379,7 +379,7 @@ class API {
   /// of the URL path. It is used to specify a specific resource or entity that
   /// the client wants to retrieve or interact with.
   @GET(value: GET.PATH_PARAMETER, as: DetailControllerResponse, error: ErrorResponse)
-  void getDetailSmartController(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDetailSmartController(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function `getDataGrowthDay` is a GET request that retrieves data related
   /// to growth day, with authorization, ID, and app ID headers, and a path
@@ -399,7 +399,7 @@ class API {
   /// combination with the base URL of the API to form the complete URL for the
   /// request.
   @GET(value: GET.PATH_PARAMETER, as: GrowthDayResponse, error: ErrorResponse)
-  void getDataGrowthDay(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDataGrowthDay(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function sets a controller using the provided authorization, xid,
   /// xAppId, path, and params.
@@ -424,7 +424,7 @@ class API {
   /// the operation.
   @JSON(isPlaint: true)
   @PATCH(value: PATCH.PATH_PARAMETER, as: DeviceDetailResponse, error: ErrorResponse)
-  void setController(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void setController(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// The function "getFanData" is a GET request that retrieves fan data using the
   /// provided authorization, xId, xAppId, and path parameters.
@@ -445,7 +445,7 @@ class API {
   /// combination with the base URL of the API to form the complete URL for the
   /// request.
   @GET(value: GET.PATH_PARAMETER, as: FanListResponse, error: ErrorResponse)
-  void getFanData(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getFanData(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The function "getFanDetail" is a GET request that retrieves fan details
   /// using the provided headers and path parameter.
@@ -466,7 +466,7 @@ class API {
   /// used in the URL of the API endpoint to specify the resource you want to
   /// access.
   @GET(value: GET.PATH_PARAMETER, as: FanDetailResponse, error: ErrorResponse)
-  void getFanDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getFanDetail(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// The getCoolerData function is a GET request that retrieves cooler data using
   /// the provided headers and path parameter.
@@ -486,5 +486,5 @@ class API {
   /// specify a specific resource or endpoint on the server that you want to
   /// retrieve data from.
   @GET(value: GET.PATH_PARAMETER, as: CoolerResponse, error: ErrorResponse)
-  void getCoolerData(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getCoolerData(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 }

@@ -14,7 +14,7 @@ Future<void> main() async {
   ChuckerFlutter.showOnRelease = true;
 
   initializeReflectable();
-  initPlatformState();
+  await initPlatformState();
   Service.setApiMapping(ApiMapping());
   runApp(const PitikApplication());
 }

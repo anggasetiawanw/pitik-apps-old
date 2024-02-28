@@ -38,14 +38,14 @@ class TakePictureResultController extends GetxController {
   bool isTakePicture = false;
 
   late DateTimeField dtftakePicture = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("dtftakePicture"),
-    label: "Jam Ambil Gambar",
-    hint: "Pilih Jam Ambil Gambar",
+    controller: GetXCreator.putDateTimeFieldController('dtftakePicture'),
+    label: 'Jam Ambil Gambar',
+    hint: 'Pilih Jam Ambil Gambar',
     flag: DateTimeField.ALL_FLAG,
-    alertText: "Jam Ambil Gambar harus di isi",
+    alertText: 'Jam Ambil Gambar harus di isi',
     onDateTimeSelected: (DateTime time, dateField) {
-      GlobalVar.track("Click_time_filter");
-      dtftakePicture.controller.setTextSelected("${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}");
+      GlobalVar.track('Click_time_filter');
+      dtftakePicture.controller.setTextSelected('${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}');
     },
   );
 
@@ -63,7 +63,7 @@ class TakePictureResultController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    GlobalVar.track("Open_ambil_gambar_page");
+    GlobalVar.track('Open_ambil_gambar_page');
     if (Platform.isAndroid) {
       platform = TargetPlatform.android;
     } else {

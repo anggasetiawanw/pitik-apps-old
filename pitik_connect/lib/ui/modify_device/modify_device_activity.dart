@@ -18,7 +18,7 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
 
   @override
   Widget build(BuildContext context) {
-    ModifyDeviceController controller = Get.put(ModifyDeviceController(context: context));
+    final ModifyDeviceController controller = Get.put(ModifyDeviceController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -33,7 +33,7 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          controller.action == "edit" ? "Edit ${controller.deviceType.value}" : "Ubah Nama ${controller.deviceType.value}",
+          controller.action == 'edit' ? 'Edit ${controller.deviceType.value}' : 'Ubah Nama ${controller.deviceType.value}',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -58,8 +58,8 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveDevice"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveDevice'),
+                      label: 'Simpan',
                       onClick: () {
                         showBottomDialog(context, controller);
                       },
@@ -101,11 +101,11 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
                           const SizedBox(
                             height: 18,
                           ),
-                          if (controller.deviceType.value == RegisterDeviceController.SMART_MONITORING && controller.action == "edit") ...[
-                            const Text("Detail Sensor", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                          if (controller.deviceType.value == RegisterDeviceController.SMART_MONITORING && controller.action == 'edit') ...[
+                            const Text('Detail Sensor', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                             controller.cardSensor,
-                          ] else if (controller.deviceType.value == RegisterDeviceController.SMART_CAMERA && controller.action == "edit") ...[
-                            const Text("Detail Camera", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                          ] else if (controller.deviceType.value == RegisterDeviceController.SMART_CAMERA && controller.action == 'edit') ...[
+                            const Text('Detail Camera', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                             controller.cardCamera,
                           ],
                           const SizedBox(
@@ -120,7 +120,7 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, ModifyDeviceController controller) {
+  Future showBottomDialog(BuildContext context, ModifyDeviceController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -151,18 +151,18 @@ class ModifyDevice extends GetView<ModifyDeviceController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

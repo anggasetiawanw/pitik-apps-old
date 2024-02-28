@@ -6,7 +6,7 @@ import 'package:components/global_var.dart';
 import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/smartscale/detail_smart_scale/detail_smart_scale_controller.dart';
+import 'detail_smart_scale_controller.dart';
 
 /// @author DICKY
 /// @email <dicky.maulana@pitik.idd>
@@ -34,12 +34,12 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                             child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Text("Detail Timbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                                  Text('Detail Timbangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                                   const SizedBox(height: 16),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Mulai Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                      Text('Mulai Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                       Text(controller.getStartWeighing(), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ],
                                   ),
@@ -47,7 +47,7 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Selesai Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                      Text('Selesai Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                                       Text(controller.getEndWeighing(), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ],
                                   ),
@@ -55,24 +55,24 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Total Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                      Text("${controller.getTotalChicken()} Ekor", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                      Text('Total Ayam', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                      Text('${controller.getTotalChicken()} Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ],
                                   ),
                                   const SizedBox(height: 8),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Total Tonase", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                      Text("${controller.getTonase().toStringAsFixed(2)} kg", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                      Text('Total Tonase', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                      Text('${controller.getTonase().toStringAsFixed(2)} kg', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ],
                                   ),
                                   const SizedBox(height: 8),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Berat Rata-Rata", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                      Text("${controller.getAverageWeight().toStringAsFixed(2)} kg", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                                      Text('Berat Rata-Rata', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                      Text('${controller.getAverageWeight().toStringAsFixed(2)} kg', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                                     ],
                                   )
                                 ]))),
@@ -82,9 +82,9 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("No", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("Jumlah Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("Timbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('No', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('Jumlah Ayam', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('Timbangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                             ],
                           ),
                         ),
@@ -95,9 +95,9 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${i + 1}", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                Text("${controller.smartScale.value.records[i]!.count} Ekor", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                                Text("${controller.smartScale.value.records[i]!.weight!.toStringAsFixed(2)} kg", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                Text('${i + 1}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                Text('${controller.smartScale.value.records[i]!.count} Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                                Text('${controller.smartScale.value.records[i]!.weight!.toStringAsFixed(2)} kg', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                               ],
                             ),
                           ),
@@ -115,7 +115,7 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Text("Data Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
+        title: Text('Data Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
       );
 
   Widget bottomNavBar() => Align(
@@ -130,6 +130,6 @@ class DetailSmartScaleActivity extends GetView<DetailSmartScaleController> {
             ),
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child:
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Expanded(child: ButtonFill(controller: GetXCreator.putButtonFillController("submitSmartScaleWeighing"), label: "Timbang Ulang", onClick: () => controller.rescale()))]))
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Expanded(child: ButtonFill(controller: GetXCreator.putButtonFillController('submitSmartScaleWeighing'), label: 'Timbang Ulang', onClick: () => controller.rescale()))]))
       ]));
 }

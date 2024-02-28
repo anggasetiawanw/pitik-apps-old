@@ -5,7 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/register_account/register_account_controller.dart';
+import 'register_account_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -16,7 +16,7 @@ class RegisterAccount extends GetView<RegisterAccountController> {
 
   @override
   Widget build(BuildContext context) {
-    RegisterAccountController controller = Get.put(RegisterAccountController(context: context));
+    final RegisterAccountController controller = Get.put(RegisterAccountController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -32,7 +32,7 @@ class RegisterAccount extends GetView<RegisterAccountController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Daftar Akun",
+          'Daftar Akun',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -57,8 +57,8 @@ class RegisterAccount extends GetView<RegisterAccountController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveAccount"),
-                      label: "Buat Akun",
+                      controller: GetXCreator.putButtonFillController('saveAccount'),
+                      label: 'Buat Akun',
                       onClick: () {
                         showBottomDialog(context, controller);
                       },
@@ -109,7 +109,7 @@ class RegisterAccount extends GetView<RegisterAccountController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, RegisterAccountController controller) {
+  Future showBottomDialog(BuildContext context, RegisterAccountController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -140,17 +140,17 @@ class RegisterAccount extends GetView<RegisterAccountController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 12),
-                  child: SvgPicture.asset("images/launcher_logo_pitik_connect.svg", width: 148, height: 148),
+                  child: SvgPicture.asset('images/launcher_logo_pitik_connect.svg', width: 148, height: 148),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 16),

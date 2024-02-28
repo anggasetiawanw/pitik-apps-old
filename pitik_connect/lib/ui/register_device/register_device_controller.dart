@@ -30,41 +30,41 @@ class RegisterDeviceController extends GetxController {
   BuildContext context;
   RegisterDeviceController({required this.context});
 
-  static const String SMART_MONITORING = "Smart Monitoring";
-  static const String SMART_CONTROLLER = "Smart Controller";
-  static const String SMART_CAMERA = "Smart Camera";
+  static const String SMART_MONITORING = 'Smart Monitoring';
+  static const String SMART_CONTROLLER = 'Smart Controller';
+  static const String SMART_CAMERA = 'Smart Camera';
   ScrollController scrollController = ScrollController();
   Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
 
   var isLoading = false.obs;
   var isFirstLoad = true.obs;
-  Rx<String> deviceType = "".obs;
-  Rx<String> prefixMacAddress = "".obs;
+  Rx<String> deviceType = ''.obs;
+  Rx<String> prefixMacAddress = ''.obs;
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
 
   late ButtonFill bfYesRegDevice;
   late ButtonOutline boNoRegDevice;
   late EditField efDeviceType = EditField(
-      controller: GetXCreator.putEditFieldController("efDeviceType"), label: "Jenis Alat", hint: "Ketik disini", alertText: "Jenis Alat harus di isi", textUnit: "", inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
+      controller: GetXCreator.putEditFieldController('efDeviceType'), label: 'Jenis Alat', hint: 'Ketik disini', alertText: 'Jenis Alat harus di isi', textUnit: '', inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
 
   late EditField efCoop =
-      EditField(controller: GetXCreator.putEditFieldController("efCoop"), label: "Kandang", hint: "Ketik disini", alertText: "Kandang harus di isi", textUnit: "", inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efCoop'), label: 'Kandang', hint: 'Ketik disini', alertText: 'Kandang harus di isi', textUnit: '', inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
 
   late EditField efFloor =
-      EditField(controller: GetXCreator.putEditFieldController("efFloor"), label: "Lantai", hint: "Ketik disini", alertText: "Lantai harus di isi", textUnit: "", inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efFloor'), label: 'Lantai', hint: 'Ketik disini', alertText: 'Lantai harus di isi', textUnit: '', inputType: TextInputType.text, maxInput: 100, onTyping: (value, control) {});
 
   late EditFieldQR efMacAddress = EditFieldQR(
-    controller: GetXCreator.putEditFieldQRController("efMacAddress"),
-    label: "Kode Alat",
-    hint: "AA:AA:AA:AA:AA:AA:AA:AA",
-    alertText: "Kode Alat Tidak Sesuai",
-    textUnit: "",
+    controller: GetXCreator.putEditFieldQRController('efMacAddress'),
+    label: 'Kode Alat',
+    hint: 'AA:AA:AA:AA:AA:AA:AA:AA',
+    alertText: 'Kode Alat Tidak Sesuai',
+    textUnit: '',
     textPrefix: deviceType.value == SMART_MONITORING
-        ? "SMHUB_"
+        ? 'SMHUB_'
         : deviceType.value == SMART_CONTROLLER
-            ? "SCCON_"
-            : "SROPI_",
+            ? 'SCCON_'
+            : 'SROPI_',
     isMacAddres: true,
     inputType: TextInputType.text,
     maxInput: 23,
@@ -90,21 +90,21 @@ class RegisterDeviceController extends GetxController {
     coop = Get.arguments[0];
     deviceType.value = Get.arguments[1];
     prefixMacAddress.value = deviceType.value == SMART_MONITORING
-        ? "SMHUB_"
+        ? 'SMHUB_'
         : deviceType.value == SMART_CONTROLLER
-            ? "SCCON_"
-            : "SROPI_";
+            ? 'SCCON_'
+            : 'SROPI_';
     efDeviceType.setInput(deviceType.value);
     efCoop.setInput(coop.coopName!);
     efFloor.setInput(coop.room!.name!);
     efDeviceType.controller.disable();
     efCoop.controller.disable();
     efFloor.controller.disable();
-    cardSensor = CardSensor(controller: GetXCreator.putCardSensorController("cardSensorController", context));
-    cardCamera = CardCamera(controller: GetXCreator.putCardCameraController("cardCameraController", context));
+    cardSensor = CardSensor(controller: GetXCreator.putCardSensorController('cardSensorController', context));
+    cardCamera = CardCamera(controller: GetXCreator.putCardCameraController('cardCameraController', context));
     boNoRegDevice = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoRegDevice"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoRegDevice'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -117,11 +117,11 @@ class RegisterDeviceController extends GetxController {
     /// argument "Open_form_smart_controller_page". Otherwise, it calls the
     /// `track` function with the argument "Open_form_smart_camera_page".
     deviceType.value == SMART_MONITORING
-        ? GlobalVar.track("Open_form_smart_monitoring_page")
+        ? GlobalVar.track('Open_form_smart_monitoring_page')
         : deviceType.value == SMART_CONTROLLER
-            ? GlobalVar.track("Open_form_smart_controller_page")
-            : GlobalVar.track("Open_form_smart_camera_page");
-    DateTime timeEnd = DateTime.now();
+            ? GlobalVar.track('Open_form_smart_controller_page')
+            : GlobalVar.track('Open_form_smart_camera_page');
+    final DateTime timeEnd = DateTime.now();
     GlobalVar.sendRenderTimeMixpanel(
         "Open_form_${deviceType.value == SMART_MONITORING ? "smart_monitoring" : deviceType.value == SMART_CONTROLLER ? "smart_controller" : "smart_camera"}_page",
         timeStart,
@@ -131,24 +131,24 @@ class RegisterDeviceController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    Get.find<CardSensorController>(tag: "cardSensorController").numberList.listen((p0) {});
-    Get.find<CardCameraController>(tag: "cardCameraController").numberList.listen((p0) {});
+    Get.find<CardSensorController>(tag: 'cardSensorController').numberList.listen((p0) {});
+    Get.find<CardCameraController>(tag: 'cardCameraController').numberList.listen((p0) {});
     if (deviceType.value == SMART_MONITORING) {
       cardSensor.controller.visibleCard();
-      cardSensor.controller.setPrefixDevice("ATC_");
+      cardSensor.controller.setPrefixDevice('ATC_');
     } else if (deviceType.value == SMART_CAMERA) {
       cardCamera.controller.visibleCard();
-      cardCamera.controller.setPrefixDevice("BRD_");
+      cardCamera.controller.setPrefixDevice('BRD_');
     }
     bfYesRegDevice = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesRegDevice"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesRegDevice'),
+      label: 'Ya',
       onClick: () {
         deviceType.value == SMART_MONITORING
-            ? GlobalVar.track("Click_button_simpan")
+            ? GlobalVar.track('Click_button_simpan')
             : deviceType.value == SMART_CONTROLLER
-                ? GlobalVar.track("Click_button_simpan")
-                : GlobalVar.track("Click_button_simpan");
+                ? GlobalVar.track('Click_button_simpan')
+                : GlobalVar.track('Click_button_simpan');
         registerDevice();
       },
     );
@@ -170,20 +170,20 @@ class RegisterDeviceController extends GetxController {
             Row(
               children: [
                 SvgPicture.asset(
-                  "images/information_blue_icon.svg",
+                  'images/information_blue_icon.svg',
                   height: 24,
                   width: 24,
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  "Informasi",
+                  'Informasi',
                   style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Text(
-              "Kamu bisa mendaftarkan alat dengan dua cara, yaitu mengisi manual dengan mengetik menggunakan huruf kapital A-F dan angka 0-9 atau bisa scan QRCODE yang tertera pada masing-masing alat.",
+              'Kamu bisa mendaftarkan alat dengan dua cara, yaitu mengisi manual dengan mengetik menggunakan huruf kapital A-F dan angka 0-9 atau bisa scan QRCODE yang tertera pada masing-masing alat.',
               style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
             ),
             const SizedBox(height: 16),
@@ -198,10 +198,10 @@ class RegisterDeviceController extends GetxController {
                 SizedBox(
                   width: 100,
                   child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("Dialog"),
-                      label: "OK",
+                      controller: GetXCreator.putButtonFillController('Dialog'),
+                      label: 'OK',
                       onClick: () => {
-                            GlobalVar.track("Click_button_ok_popup"),
+                            GlobalVar.track('Click_button_ok_popup'),
                             isFirstLoad.value = false,
                             Get.back(),
                           }),
@@ -218,11 +218,11 @@ class RegisterDeviceController extends GetxController {
   /// response accordingly.
   void registerDevice() {
     Get.back();
-    List ret = validation();
+    final List ret = validation();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        Device payload = generatePayloadRegisterDevice();
+        final Device payload = generatePayloadRegisterDevice();
         Service.push(
           service: ListApi.registerDevice,
           context: context,
@@ -232,10 +232,10 @@ class RegisterDeviceController extends GetxController {
             GlobalVar.xAppId,
             Mapper.asJsonString(payload),
             ListApi.pathRegisterDevice(deviceType.value == SMART_MONITORING
-                ? "smart-monitoring"
+                ? 'smart-monitoring'
                 : deviceType.value == SMART_CAMERA
-                    ? "smart-camera"
-                    : "smart-controller")
+                    ? 'smart-camera'
+                    : 'smart-controller')
           ],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
@@ -244,27 +244,27 @@ class RegisterDeviceController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
 
   List validation() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (efMacAddress.getInput().isEmpty) {
       efMacAddress.controller.showAlert();
       Scrollable.ensureVisible(efMacAddress.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (deviceType.value == RegisterDeviceController.SMART_MONITORING) {
       ret = cardSensor.controller.validation();
@@ -276,28 +276,28 @@ class RegisterDeviceController extends GetxController {
   }
 
   Device generatePayloadRegisterDevice() {
-    List<Sensor?> sensors = [];
+    final List<Sensor?> sensors = [];
     if (deviceType.value == SMART_MONITORING) {
       for (int i = 0; i < cardSensor.controller.itemCount.value; i++) {
-        int whichItem = cardSensor.controller.index.value[i];
-        sensors.add(Sensor(sensorCode: "${cardSensor.controller.efSensorId.value[whichItem].getTextPrefix()}${cardSensor.controller.efSensorId.value[whichItem].getInput()}", sensorType: "XIAOMI_SENSOR"));
+        final int whichItem = cardSensor.controller.index.value[i];
+        sensors.add(Sensor(sensorCode: "${cardSensor.controller.efSensorId.value[whichItem].getTextPrefix()}${cardSensor.controller.efSensorId.value[whichItem].getInput()}", sensorType: 'XIAOMI_SENSOR'));
       }
     } else if (deviceType.value == SMART_CAMERA) {
       for (int i = 0; i < cardCamera.controller.itemCount.value; i++) {
-        int whichItem = cardCamera.controller.index.value[i];
+        final int whichItem = cardCamera.controller.index.value[i];
         sensors.add(Sensor(sensorCode: "${cardCamera.controller.efCameraId.value[whichItem].getTextPrefix()}${cardCamera.controller.efCameraId.value[whichItem].getInput()}"));
       }
     }
 
     return Device(
         deviceType: deviceType.value == SMART_MONITORING
-            ? "SMART_MONITORING"
+            ? 'SMART_MONITORING'
             : deviceType.value == SMART_CONTROLLER
-                ? "SMART_CONTROLLER"
-                : "SMART_CAMERA",
+                ? 'SMART_CONTROLLER'
+                : 'SMART_CAMERA',
         coopId: coop.coopId,
         roomId: coop.room!.id,
-        mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ""),
+        mac: efMacAddress.getInput().replaceAll(prefixMacAddress.value, ''),
         sensors: sensors);
   }
 }

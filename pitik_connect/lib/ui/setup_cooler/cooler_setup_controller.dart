@@ -36,30 +36,30 @@ class CoolerSetupController extends GetxController {
   late ButtonFill bfYesSetCooler;
   late ButtonOutline boNoSetCooler;
   late EditField efTargetTempColler = EditField(
-      controller: GetXCreator.putEditFieldController("efTargetTempColler"),
-      label: "Target Suhu",
-      hint: "Ketik disini",
-      alertText: "Target Suhuharus di isi",
-      textUnit: "°C",
+      controller: GetXCreator.putEditFieldController('efTargetTempColler'),
+      label: 'Target Suhu',
+      hint: 'Ketik disini',
+      alertText: 'Target Suhuharus di isi',
+      textUnit: '°C',
       inputType: TextInputType.number,
       maxInput: 4,
       onTyping: (value, control) {});
   late TimePickerField tmPickerDurationCoolerOn = TimePickerField(
-    controller: GetXCreator.putTimePickerController("tmPickerDurationOnCooler"),
-    label: "Durasi Nyala",
-    hint: "00:00:00",
+    controller: GetXCreator.putTimePickerController('tmPickerDurationOnCooler'),
+    label: 'Durasi Nyala',
+    hint: '00:00:00',
     flag: TimePickerField.TIME_HOURS_AND_MINUTES,
-    alertText: "Durasi Nyala harus di isi",
+    alertText: 'Durasi Nyala harus di isi',
     onTimeSelected: (String time) {
       tmPickerDurationCoolerOn.controller.setTextSelected(time);
     },
   );
   late TimePickerField tmPickerCoolerOffDuration = TimePickerField(
-    controller: GetXCreator.putTimePickerController("tmPickerFanOffDurationCooler"),
-    label: "Durasi Mati",
-    hint: "00:00:00",
+    controller: GetXCreator.putTimePickerController('tmPickerFanOffDurationCooler'),
+    label: 'Durasi Mati',
+    hint: '00:00:00',
     flag: TimePickerField.TIME_HOURS_AND_MINUTES,
-    alertText: "Durasi Mati harus di isi",
+    alertText: 'Durasi Mati harus di isi',
     onTimeSelected: (String time) {
       tmPickerCoolerOffDuration.controller.setTextSelected(time);
     },
@@ -72,15 +72,15 @@ class CoolerSetupController extends GetxController {
     controllerData = Get.arguments[1];
     isLoading.value = true;
     boNoSetCooler = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoSetCooler"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoSetCooler'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesSetCooler = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesSetCooler"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesSetCooler'),
+      label: 'Ya',
       onClick: () {
         settingCooler();
       },
@@ -100,19 +100,19 @@ class CoolerSetupController extends GetxController {
     Service.push(
         service: ListApi.getCoolerData,
         context: context,
-        body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', "cooler/detail", device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
+        body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', 'cooler/detail', device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as CoolerResponse).data != null) {
-                loadData((body).data!);
+                loadData(body.data!);
               }
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -120,8 +120,8 @@ class CoolerSetupController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -140,9 +140,9 @@ class CoolerSetupController extends GetxController {
   /// type DeviceSetting. It contains properties such as temperatureTarget,
   /// onlineDuration, offlineDuration, and isEdit.
   void loadData(DeviceSetting deviceSetting) {
-    efTargetTempColler.setInput("${deviceSetting.temperatureTarget}");
-    tmPickerDurationCoolerOn.controller.setTextSelected("${deviceSetting.onlineDuration}");
-    tmPickerCoolerOffDuration.controller.setTextSelected("${deviceSetting.offlineDuration}");
+    efTargetTempColler.setInput('${deviceSetting.temperatureTarget}');
+    tmPickerDurationCoolerOn.controller.setTextSelected('${deviceSetting.onlineDuration}');
+    tmPickerCoolerOffDuration.controller.setTextSelected('${deviceSetting.offlineDuration}');
 
     if (isEdit.isTrue) {
       efTargetTempColler.controller.enable();
@@ -159,15 +159,15 @@ class CoolerSetupController extends GetxController {
   /// and handling the response from the server.
   void settingCooler() {
     Get.back();
-    List ret = validationEdit();
+    final List ret = validationEdit();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        DeviceSetting payload = generatePayloadFanSetup();
+        final DeviceSetting payload = generatePayloadFanSetup();
         Service.push(
           service: ListApi.setController,
           context: context,
-          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "cooler/detail", device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
+          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', 'cooler/detail', device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Get.back();
@@ -175,16 +175,16 @@ class CoolerSetupController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
@@ -196,22 +196,22 @@ class CoolerSetupController extends GetxController {
   /// Returns:
   ///   a list containing two elements: a boolean value and an empty string.
   List validationEdit() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (efTargetTempColler.getInput().isEmpty) {
       efTargetTempColler.controller.showAlert();
       Scrollable.ensureVisible(efTargetTempColler.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (tmPickerDurationCoolerOn.getLastTimeSelectedText().isEmpty) {
       tmPickerDurationCoolerOn.controller.showAlert();
       Scrollable.ensureVisible(tmPickerDurationCoolerOn.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (tmPickerCoolerOffDuration.getLastTimeSelectedText().isEmpty) {
       tmPickerCoolerOffDuration.controller.showAlert();
       Scrollable.ensureVisible(tmPickerCoolerOffDuration.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     return ret;
   }

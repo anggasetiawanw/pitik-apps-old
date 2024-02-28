@@ -34,7 +34,7 @@ class DashboardFan extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Kipas",
+          'Kipas',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -79,7 +79,7 @@ class DashboardFan extends StatelessWidget {
                               height: 40,
                               decoration: const BoxDecoration(color: GlobalVar.iconHomeBg, borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4), bottomRight: Radius.circular(4), bottomLeft: Radius.circular(4))),
                               child: Center(
-                                child: SvgPicture.asset("images/fan_icon.svg"),
+                                child: SvgPicture.asset('images/fan_icon.svg'),
                               ),
                             ),
                             Expanded(
@@ -97,7 +97,7 @@ class DashboardFan extends StatelessWidget {
                                         const SizedBox(
                                           width: 24,
                                         ),
-                                        DeviceStatus(status: controller.fans.value[index].status!, activeString: "Aktif", inactiveString: "Non-Aktif"),
+                                        DeviceStatus(status: controller.fans.value[index].status!, activeString: 'Aktif', inactiveString: 'Non-Aktif'),
                                       ],
                                     ),
                                     const SizedBox(

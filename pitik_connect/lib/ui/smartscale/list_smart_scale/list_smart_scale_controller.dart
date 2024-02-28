@@ -74,7 +74,7 @@ class ListSmartScaleController extends GetxController {
 
           this.dateFilter.value = dateFilter;
           Service.push(
-              apiKey: "smartScaleApi",
+              apiKey: 'smartScaleApi',
               service: ListApi.getListSmartScale,
               context: context,
               body: [auth.token, auth.id, pageSmartScale.value, limit.value, device.roomId, this.dateFilter.value == '' ? null : this.dateFilter.value],

@@ -40,14 +40,14 @@ class BerandaController extends GetxController {
   Rx<List<Map>> module = Rx<List<Map>>([]);
   Rx<List<Coop>> coops = Rx<List<Coop>>([]);
   List<SimCard> simCard = <SimCard>[];
-  String mixpanelValue = "";
+  String mixpanelValue = '';
 
   //Tracking Variable
   double? latitude = 0;
   double? longitude = 0;
-  String? deviceTracking = "";
-  String? phoneCarrier = "No Simcard";
-  String? osVersion = "";
+  String? deviceTracking = '';
+  String? phoneCarrier = 'No Simcard';
+  String? osVersion = '';
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
 
@@ -56,22 +56,22 @@ class BerandaController extends GetxController {
   Rx<bool> isAscending = true.obs;
 
   late ButtonOutline boAddDevice = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("boAddDevice"),
-    label: "Tambah Alat",
+    controller: GetXCreator.putButtonOutlineController('boAddDevice'),
+    label: 'Tambah Alat',
     onClick: () {
       Get.toNamed(RoutePage.registerDevicePage);
     },
   );
 
   late ButtonOutline boOrderDevice = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("boPesanAlat"),
-    label: "Pesan Alat",
+    controller: GetXCreator.putButtonOutlineController('boPesanAlat'),
+    label: 'Pesan Alat',
     onClick: () {},
   );
 
   late ButtonFill bfAddCoop = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfAddCoop"),
-    label: "Buat Kandang",
+    controller: GetXCreator.putButtonFillController('bfAddCoop'),
+    label: 'Buat Kandang',
     onClick: () {
       Get.toNamed(RoutePage.createCoopPage, arguments: RegisterCoopController.CREATE_COOP);
     },
@@ -91,7 +91,7 @@ class BerandaController extends GetxController {
   }
 
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     super.onInit();
     timeStart = DateTime.now();
     isLoading.value = true;
@@ -120,7 +120,7 @@ class BerandaController extends GetxController {
     // } else if (Platform.isIOS) {
     //     phoneCarrier = "No Simcard";
     // }
-    initMixpanel();
+    await initMixpanel();
   }
 
   /// The `initMixpanel` function initializes the Mixpanel analytics library,
@@ -134,8 +134,8 @@ class BerandaController extends GetxController {
       await FlLocation.getLocation(timeLimit: timeLimit).then((position) async {
         if (position.isMock) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, Gps Mock Detected",
+            'Pesan',
+            'Terjadi Kesalahan, Gps Mock Detected',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -148,36 +148,36 @@ class BerandaController extends GetxController {
       });
     }
 
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       deviceTracking = androidInfo.model;
       osVersion = Platform.operatingSystemVersion;
     } else {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       deviceTracking = iosInfo.model;
       osVersion = Platform.operatingSystem;
     }
 
     GlobalVar.mixpanel = await Mixpanel.init(F.tokenMixpanel, trackAutomaticEvents: true);
     GlobalVar.mixpanel!.registerSuperProperties({
-      "Phone_Number": GlobalVar.profileUser!.phoneNumber,
-      "Username": GlobalVar.profileUser!.phoneNumber,
-      "Location": "$latitude,$longitude",
-      "Device": deviceTracking,
-      "Phone_Carrier": phoneCarrier,
-      "OS": osVersion,
+      'Phone_Number': GlobalVar.profileUser!.phoneNumber,
+      'Username': GlobalVar.profileUser!.phoneNumber,
+      'Location': '$latitude,$longitude',
+      'Device': deviceTracking,
+      'Phone_Carrier': phoneCarrier,
+      'OS': osVersion,
     });
     GlobalVar.mixpanel!.identify(GlobalVar.profileUser!.phoneNumber!);
 
-    GlobalVar.mixpanel!.getPeople().set("\$name", GlobalVar.profileUser!.phoneNumber!);
-    GlobalVar.mixpanel!.getPeople().set("\$email", GlobalVar.profileUser!.email!);
+    GlobalVar.mixpanel!.getPeople().set('\$name', GlobalVar.profileUser!.phoneNumber!);
+    GlobalVar.mixpanel!.getPeople().set('\$email', GlobalVar.profileUser!.email!);
 
-    GlobalVar.trackWithMap("Open_Beranda", {'Day_Value': 0});
+    GlobalVar.trackWithMap('Open_Beranda', {'Day_Value': 0});
 
     timeEnd = DateTime.now();
-    Duration totalTime = timeEnd.difference(timeStart);
-    GlobalVar.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+    final Duration totalTime = timeEnd.difference(timeStart);
+    GlobalVar.trackWithMap('Render_Time', {'Page': 'Beranda', 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
   }
 
   /// The function `getDataCoops` makes an API call to retrieve data for coops and
@@ -203,8 +203,8 @@ class BerandaController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -213,8 +213,8 @@ class BerandaController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -236,14 +236,14 @@ class BerandaController extends GetxController {
   /// Returns:
   ///   an Rx object that contains a list of Coop objects.
   Rx<List<Coop>> ascendingListByStatus(List<Coop?>? coops) {
-    Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
+    final Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
     for (var result in coops!) {
-      if (result!.room!.status == "active") {
+      if (result!.room!.status == 'active') {
         coopAscending.value.add(result);
       }
     }
     for (var result in coops) {
-      if (result!.room!.status == "inactive") {
+      if (result!.room!.status == 'inactive') {
         coopAscending.value.add(result);
       }
     }
@@ -260,14 +260,14 @@ class BerandaController extends GetxController {
   /// Returns:
   ///   an Rx object that contains a list of Coop objects.
   Rx<List<Coop>> descendingListByStatus(List<Coop?>? coops) {
-    Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
+    final Rx<List<Coop>> coopAscending = Rx<List<Coop>>([]);
     for (var result in coops!) {
-      if (result!.room!.status == "inactive") {
+      if (result!.room!.status == 'inactive') {
         coopAscending.value.add(result);
       }
     }
     for (var result in coops) {
-      if (result!.room!.status == "active") {
+      if (result!.room!.status == 'active') {
         coopAscending.value.add(result);
       }
     }
@@ -283,9 +283,9 @@ class BerandaController extends GetxController {
   Future<void> setPreferences() async {
     final SharedPreferences pref = await prefs;
     if (isAscending.value) {
-      pref.setBool('isAscending', false);
+      await pref.setBool('isAscending', false);
     } else {
-      pref.setBool('isAscending', true);
+      await pref.setBool('isAscending', true);
     }
 
     isAscendingPref = prefs.then((SharedPreferences prefs) {

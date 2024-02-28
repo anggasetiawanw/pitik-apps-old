@@ -37,23 +37,23 @@ class LampSetupController extends GetxController {
   late ButtonFill bfEditSettingFan;
 
   late DateTimeField dtfLampOn = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("dtfLampOn"),
-    label: "Waktu Nyala",
-    hint: "00:00",
+    controller: GetXCreator.putDateTimeFieldController('dtfLampOn'),
+    label: 'Waktu Nyala',
+    hint: '00:00',
     flag: DateTimeField.TIME_FLAG,
-    alertText: "Durasi Nyala harus di isi",
+    alertText: 'Durasi Nyala harus di isi',
     onDateTimeSelected: (DateTime time, dateField) {
-      dtfLampOn.controller.setTextSelected("${time.hour}:${time.minute}");
+      dtfLampOn.controller.setTextSelected('${time.hour}:${time.minute}');
     },
   );
   late DateTimeField dtfLampOff = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("dtfLampOff"),
-    label: "Waktu Mati",
-    hint: "00: 00",
+    controller: GetXCreator.putDateTimeFieldController('dtfLampOff'),
+    label: 'Waktu Mati',
+    hint: '00: 00',
     flag: DateTimeField.TIME_FLAG,
-    alertText: "Durasi Mati harus di isi",
+    alertText: 'Durasi Mati harus di isi',
     onDateTimeSelected: (DateTime time, dateField) {
-      dtfLampOff.controller.setTextSelected("${time.hour}:${time.minute}");
+      dtfLampOff.controller.setTextSelected('${time.hour}:${time.minute}');
     },
   );
 
@@ -66,28 +66,28 @@ class LampSetupController extends GetxController {
     controllerData = Get.arguments[2];
     if (Get.arguments != null) {
       if (isEdit.isTrue) {
-        dtfLampOn.controller.setTextSelected("${lamp.onlineTime}");
-        dtfLampOff.controller.setTextSelected("${lamp.offlineTime}");
+        dtfLampOn.controller.setTextSelected('${lamp.onlineTime}');
+        dtfLampOff.controller.setTextSelected('${lamp.offlineTime}');
         dtfLampOn.controller.enable();
         dtfLampOff.controller.enable();
       } else {
-        dtfLampOn.controller.setTextSelected("${lamp.onlineTime}");
-        dtfLampOff.controller.setTextSelected("${lamp.offlineTime}");
+        dtfLampOn.controller.setTextSelected('${lamp.onlineTime}');
+        dtfLampOff.controller.setTextSelected('${lamp.offlineTime}');
         dtfLampOn.controller.disable();
         dtfLampOff.controller.disable();
       }
     }
 
     boNoSettingLamp = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoRegBuilding"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoRegBuilding'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesSetingLamp = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesSetingLamp"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesSetingLamp'),
+      label: 'Ya',
       onClick: () {
         settingLamp();
       },
@@ -98,13 +98,13 @@ class LampSetupController extends GetxController {
   void onReady() {
     super.onReady();
     bfSaveSetingLamp = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfSaveSetingLamp"),
-      label: "Simpan",
+      controller: GetXCreator.putButtonFillController('bfSaveSetingLamp'),
+      label: 'Simpan',
       onClick: () {},
     );
     bfEditSettingFan = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfEditSettingFan"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('bfEditSettingFan'),
+      label: 'Edit',
       onClick: () {},
     );
   }
@@ -113,15 +113,15 @@ class LampSetupController extends GetxController {
   /// handling the response from the server.
   void settingLamp() {
     Get.back();
-    List ret = validationEdit();
+    final List ret = validationEdit();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        DeviceSetting payload = generatePayloadLampSetup();
+        final DeviceSetting payload = generatePayloadLampSetup();
         Service.push(
           service: ListApi.setController,
           context: context,
-          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "lamp", device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
+          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', 'lamp', device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Get.back();
@@ -129,16 +129,16 @@ class LampSetupController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
@@ -161,17 +161,17 @@ class LampSetupController extends GetxController {
   /// whether the validation was successful or not. The second element is an empty
   /// string.
   List validationEdit() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (dtfLampOff.getLastTimeSelectedText().isEmpty) {
       dtfLampOff.controller.showAlert();
       Scrollable.ensureVisible(dtfLampOff.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (dtfLampOn.getLastTimeSelectedText().isEmpty) {
       dtfLampOn.controller.showAlert();
       Scrollable.ensureVisible(dtfLampOn.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     return ret;
   }
@@ -180,13 +180,13 @@ class LampSetupController extends GetxController {
   /// based on the value of `isEdit` and then sets `isLoading` to false.
   void loadPage() {
     if (isEdit.isTrue) {
-      dtfLampOn.controller.setTextSelected("${lamp.onlineTime}");
-      dtfLampOff.controller.setTextSelected("${lamp.offlineTime}");
+      dtfLampOn.controller.setTextSelected('${lamp.onlineTime}');
+      dtfLampOff.controller.setTextSelected('${lamp.offlineTime}');
       dtfLampOn.controller.enable();
       dtfLampOff.controller.enable();
     } else {
-      dtfLampOn.controller.setTextSelected("${lamp.onlineTime}");
-      dtfLampOff.controller.setTextSelected("${lamp.offlineTime}");
+      dtfLampOn.controller.setTextSelected('${lamp.onlineTime}');
+      dtfLampOff.controller.setTextSelected('${lamp.offlineTime}');
       dtfLampOn.controller.disable();
       dtfLampOff.controller.disable();
     }

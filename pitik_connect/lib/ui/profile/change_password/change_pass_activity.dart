@@ -7,9 +7,9 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/profile/change_password/change_password_controller.dart';
 
 import '../../../route.dart';
+import 'change_password_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -41,13 +41,13 @@ class ChangePassword extends GetView<ChangePasswordController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Ubah Kata Sandi",
+          'Ubah Kata Sandi',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
     }
 
-    showBottomDialog(BuildContext context, ChangePasswordController controller) {
+    Future showBottomDialog(BuildContext context, ChangePasswordController controller) {
       return showModalBottomSheet(
           isScrollControlled: true,
           useRootNavigator: true,
@@ -78,18 +78,18 @@ class ChangePassword extends GetView<ChangePasswordController> {
                   Container(
                     margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                     child: Text(
-                      "Apakah kamu yakin data yang dimasukan sudah benar?",
+                      'Apakah kamu yakin data yang dimasukan sudah benar?',
                       style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                    child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                    child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 24),
                     child: SvgPicture.asset(
-                      "images/ask_bottom_sheet_1.svg",
+                      'images/ask_bottom_sheet_1.svg',
                     ),
                   ),
                   Container(
@@ -135,8 +135,8 @@ class ChangePassword extends GetView<ChangePasswordController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveChangePassword"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveChangePassword'),
+                      label: 'Simpan',
                       onClick: () {
                         showBottomDialog(context, controller);
                       },
@@ -175,12 +175,12 @@ class ChangePassword extends GetView<ChangePasswordController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Kata Sandi Baru",
+                          'Kata Sandi Baru',
                           style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Perubahan kata sandi diperlukan untuk meningkatkan keamanan Akun Anda. Kata sandi baru Anda harus menggunakan kombinasi huruf dan angka yang unik dengan jumlah karakter minimum 6 dan maksimum 20.",
+                          'Perubahan kata sandi diperlukan untuk meningkatkan keamanan Akun Anda. Kata sandi baru Anda harus menggunakan kombinasi huruf dan angka yang unik dengan jumlah karakter minimum 6 dan maksimum 20.',
                           style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                         ),
                         controller.efOldPassword,

@@ -21,7 +21,7 @@ class DashboardActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<DashboardController>(
       builder: (controller) {
-        showBottomDialog(BuildContext context, DashboardController controller) {
+        Future showBottomDialog(BuildContext context, DashboardController controller) {
           return showModalBottomSheet(
               isScrollControlled: true,
               useRootNavigator: true,
@@ -52,34 +52,34 @@ class DashboardActivity extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (GlobalVar.canModifyInfrasturucture()) {
-                            GlobalVar.track("Click_buat_kandang");
+                            GlobalVar.track('Click_buat_kandang');
                             Get.back();
                             Get.toNamed(RoutePage.createCoopPage, arguments: RegisterCoopController.CREATE_COOP);
                           }
                         },
                         child: MenuBottomSheet(
-                          title: "Buat Kandang",
-                          subTitle: "Dapat membuat kandang yang terdiri dari beberapa lantai",
-                          imagesPath: GlobalVar.canModifyInfrasturucture() ? "images/building_icon.svg" : "images/building_disable_icon.svg",
+                          title: 'Buat Kandang',
+                          subTitle: 'Dapat membuat kandang yang terdiri dari beberapa lantai',
+                          imagesPath: GlobalVar.canModifyInfrasturucture() ? 'images/building_icon.svg' : 'images/building_disable_icon.svg',
                           enable: GlobalVar.canModifyInfrasturucture() ? true : false,
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           if (!GlobalVar.isEmptyCoop && GlobalVar.canModifyInfrasturucture()) {
-                            GlobalVar.track("Click_buat_lantai");
+                            GlobalVar.track('Click_buat_lantai');
                             Get.back();
                             Get.toNamed(RoutePage.createFloorPage);
                           }
                         },
                         child: MenuBottomSheet(
-                          title: "Buat Lantai",
-                          subTitle: "Dapat membuat lantai pada kandang tertentu",
+                          title: 'Buat Lantai',
+                          subTitle: 'Dapat membuat lantai pada kandang tertentu',
                           imagesPath: GlobalVar.isEmptyCoop
-                              ? "images/floor_disable_icon.svg"
+                              ? 'images/floor_disable_icon.svg'
                               : GlobalVar.canModifyInfrasturucture()
-                                  ? "images/floor_icon.svg"
-                                  : "images/floor_disable_icon.svg",
+                                  ? 'images/floor_icon.svg'
+                                  : 'images/floor_disable_icon.svg',
                           enable: GlobalVar.isEmptyCoop
                               ? false
                               : GlobalVar.canModifyInfrasturucture()
@@ -116,11 +116,11 @@ class DashboardActivity extends StatelessWidget {
               width: 64,
               child: FloatingActionButton(
                   onPressed: () {
-                    GlobalVar.track("Click_navbar_plus");
+                    GlobalVar.track('Click_navbar_plus');
                     showBottomDialog(context, controller);
                   },
                   backgroundColor: GlobalVar.primaryOrange,
-                  child: SvgPicture.asset("images/add_white_icon.svg", fit: BoxFit.cover, width: 32, height: 32)),
+                  child: SvgPicture.asset('images/add_white_icon.svg', fit: BoxFit.cover, width: 32, height: 32)),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: Container(
@@ -140,20 +140,20 @@ class DashboardActivity extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       controller.changeTabIndex(0);
-                      GlobalVar.track("Click_navbar_beranda");
+                      GlobalVar.track('Click_navbar_beranda');
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          controller.tabIndex == 0 ? "images/beranda_on_icon.svg" : "images/beranda_off_icon.svg",
+                          controller.tabIndex == 0 ? 'images/beranda_on_icon.svg' : 'images/beranda_off_icon.svg',
                           height: 24,
                           width: 24,
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Beranda", style: controller.tabIndex == 0 ? GlobalVar.primaryTextStyle.copyWith(fontWeight: GlobalVar.medium) : GlobalVar.greyLightTextStyle.copyWith(fontWeight: GlobalVar.medium)),
+                        Text('Beranda', style: controller.tabIndex == 0 ? GlobalVar.primaryTextStyle.copyWith(fontWeight: GlobalVar.medium) : GlobalVar.greyLightTextStyle.copyWith(fontWeight: GlobalVar.medium)),
                       ],
                     ),
                   ),
@@ -186,16 +186,16 @@ class DashboardActivity extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       controller.changeTabIndex(1);
-                      GlobalVar.track("Click_navbar_profile");
+                      GlobalVar.track('Click_navbar_profile');
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(controller.tabIndex == 1 ? "images/profile_on_icon.svg" : "images/profile_off_icon.svg", height: 24, width: 24),
+                        SvgPicture.asset(controller.tabIndex == 1 ? 'images/profile_on_icon.svg' : 'images/profile_off_icon.svg', height: 24, width: 24),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("Profil", style: controller.tabIndex == 1 ? GlobalVar.primaryTextStyle.copyWith(fontWeight: GlobalVar.medium) : GlobalVar.greyLightTextStyle.copyWith(fontWeight: GlobalVar.medium)),
+                        Text('Profil', style: controller.tabIndex == 1 ? GlobalVar.primaryTextStyle.copyWith(fontWeight: GlobalVar.medium) : GlobalVar.greyLightTextStyle.copyWith(fontWeight: GlobalVar.medium)),
                       ],
                     ),
                   ),

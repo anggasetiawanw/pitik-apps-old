@@ -21,11 +21,11 @@ class ForgetPasswordController extends GetxController {
   var isLoading = false.obs;
 
   late EditField efNoHp = EditField(
-      controller: GetXCreator.putEditFieldController("efNoHpForgetPassword"),
-      label: "Nomor Handphone",
-      hint: "08xxxx",
-      alertText: "Nomer Handphone Tidak Boleh Kosong",
-      textUnit: "",
+      controller: GetXCreator.putEditFieldController('efNoHpForgetPassword'),
+      label: 'Nomor Handphone',
+      hint: '08xxxx',
+      alertText: 'Nomer Handphone Tidak Boleh Kosong',
+      textUnit: '',
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {});
@@ -46,10 +46,10 @@ class ForgetPasswordController extends GetxController {
 
   /// The function `openWhatsApp()` opens WhatsApp and sends a message with a
   /// forgotten password request, using the provided contact number.
-  void openWhatsApp() async {
-    var contact = "+6281280709907";
-    var androidUrl = "whatsapp://send?phone=$contact&Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi')}";
+  Future<void> openWhatsApp() async {
+    const contact = '+6281280709907';
+    final androidUrl = 'whatsapp://send?phone=$contact&Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi';
+    final iosUrl = "https://wa.me/$contact?text=${Uri.parse('Saya lupa kata sandi untuk Akun ${efNoHp.getInput()}. Minta tolong untuk melakukan penggantian kata sandi')}";
     try {
       if (Platform.isIOS) {
         await launchUrl(Uri.parse(iosUrl));
@@ -58,8 +58,8 @@ class ForgetPasswordController extends GetxController {
       }
     } on Exception {
       Get.snackbar(
-        "Pesan",
-        "Aplikasi WhatsApp Tidak Terinstall",
+        'Pesan',
+        'Aplikasi WhatsApp Tidak Terinstall',
         snackPosition: SnackPosition.TOP,
         colorText: Colors.white,
         backgroundColor: Colors.red,

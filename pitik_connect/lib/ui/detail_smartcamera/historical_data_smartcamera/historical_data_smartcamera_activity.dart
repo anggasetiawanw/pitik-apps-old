@@ -31,7 +31,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Kamera ${controller.indeksCamera}",
+          'Kamera ${controller.indeksCamera}',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -42,7 +42,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
         controller: controller.scrollCameraController,
         itemCount: controller.isLoadMore.isTrue ? controller.recordImages.value.length + 1 : controller.recordImages.value.length,
         itemBuilder: (context, index) {
-          int length = controller.recordImages.value.length;
+          final int length = controller.recordImages.value.length;
           if (index >= length) {
             return const Column(
               children: [
@@ -61,7 +61,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                 title: Column(
                   children: [
                     ItemHistoricalSmartCamera(
-                      controller: GetXCreator.putHistoricalSmartCameraController("ItemHistoricalSmartCamera$index}", context),
+                      controller: GetXCreator.putHistoricalSmartCameraController('ItemHistoricalSmartCamera$index}', context),
                       recordCamera: controller.recordImages.value[index],
                       index: index,
                       onOptionTap: () {
@@ -88,7 +88,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                           ),
                           borderRadius: BorderRadius.circular(8)),
                       child: SvgPicture.asset(
-                        "images/dot_primary_orange_icon.svg",
+                        'images/dot_primary_orange_icon.svg',
                         height: 24,
                         width: 24,
                       ),
@@ -98,7 +98,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                         PopupMenuItem(
                           value: 'Bagikan',
                           child: Text(
-                            "Bagikan",
+                            'Bagikan',
                             style: GlobalVar.blackTextStyle.copyWith(fontSize: 14),
                           ),
                         ),
@@ -112,11 +112,11 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                       ];
                     },
                     onSelected: (String value) {
-                      if (value == "Bagikan") {
-                        GlobalVar.track("Click_option_menu_bagikan");
+                      if (value == 'Bagikan') {
+                        GlobalVar.track('Click_option_menu_bagikan');
                         controller.setContentShare(controller.recordImages.value[index], false);
                       } else {
-                        GlobalVar.track("Click_option_menu_download");
+                        GlobalVar.track('Click_option_menu_download');
                         controller.setContentShare(controller.recordImages.value[index], true);
                       }
                     },
@@ -150,12 +150,12 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                         margin: const EdgeInsets.only(left: 56, right: 56, bottom: 32, top: 186),
                         child: Column(
                           children: [
-                            SvgPicture.asset("images/empty_icon.svg"),
+                            SvgPicture.asset('images/empty_icon.svg'),
                             const SizedBox(
                               height: 17,
                             ),
                             Text(
-                              "Data Camera Belum Ada",
+                              'Data Camera Belum Ada',
                               textAlign: TextAlign.center,
                               style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                             )
@@ -175,7 +175,7 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(child: Text("Detail Gambar ", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
+                                  Expanded(child: Text('Detail Gambar ', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium))),
                                 ],
                               ),
                               const SizedBox(
@@ -188,10 +188,10 @@ class HistoricalDataSmartCamera extends GetView<HistoricalDataSmartCameraControl
                                       children: [
                                         Expanded(
                                             child: Text(
-                                          "Total Gambar",
+                                          'Total Gambar',
                                           style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                         )),
-                                        Text("${controller.totalCamera}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
+                                        Text('${controller.totalCamera}', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium), overflow: TextOverflow.clip)
                                       ],
                                     ))
                             ]),

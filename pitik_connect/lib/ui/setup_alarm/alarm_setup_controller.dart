@@ -34,20 +34,20 @@ class AlarmSetupController extends GetxController {
   late ButtonFill bfYesSetAlarm;
   late ButtonOutline boNoSetAlarm;
   late EditField efDiffHotTemp = EditField(
-      controller: GetXCreator.putEditFieldController("efDiffHotTemp"),
-      label: "Perbedaan Suhu Panas",
-      hint: "Ketik disini",
-      alertText: "Perbedaan Suhu Panas harus di isi",
-      textUnit: "°C",
+      controller: GetXCreator.putEditFieldController('efDiffHotTemp'),
+      label: 'Perbedaan Suhu Panas',
+      hint: 'Ketik disini',
+      alertText: 'Perbedaan Suhu Panas harus di isi',
+      textUnit: '°C',
       inputType: TextInputType.number,
       maxInput: 4,
       onTyping: (value, control) {});
   late EditField efDiffColdTemp = EditField(
-      controller: GetXCreator.putEditFieldController("efDiffColdTemp"),
-      label: "Perbedaan Suhu Dingin",
-      hint: "Ketik disini",
-      alertText: "Perbedaan Suhu Dingin harus di isi",
-      textUnit: "°C",
+      controller: GetXCreator.putEditFieldController('efDiffColdTemp'),
+      label: 'Perbedaan Suhu Dingin',
+      hint: 'Ketik disini',
+      alertText: 'Perbedaan Suhu Dingin harus di isi',
+      textUnit: '°C',
       inputType: TextInputType.number,
       maxInput: 4,
       onTyping: (value, control) {});
@@ -59,15 +59,15 @@ class AlarmSetupController extends GetxController {
     device = Get.arguments[0];
     controllerData = Get.arguments[1];
     boNoSetAlarm = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoSetAlarm"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoSetAlarm'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesSetAlarm = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesSetAlarm"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesSetAlarm'),
+      label: 'Ya',
       onClick: () {
         setAlarm();
       },
@@ -83,8 +83,8 @@ class AlarmSetupController extends GetxController {
   /// the controller. It likely has properties such as "hot" and "cold" which
   /// represent temperature values.
   void loadData(ControllerData controllerData) {
-    efDiffHotTemp.setInput("${controllerData.hot}");
-    efDiffColdTemp.setInput("${controllerData.cold}");
+    efDiffHotTemp.setInput('${controllerData.hot}');
+    efDiffColdTemp.setInput('${controllerData.cold}');
     if (isEdit.isTrue) {
       efDiffHotTemp.controller.enable();
       efDiffColdTemp.controller.enable();
@@ -99,15 +99,15 @@ class AlarmSetupController extends GetxController {
   /// handles the response accordingly.
   void setAlarm() {
     Get.back();
-    List ret = validationEdit();
+    final List ret = validationEdit();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        DeviceSetting payload = generatePayloadSetAlarm();
+        final DeviceSetting payload = generatePayloadSetAlarm();
         Service.push(
           service: ListApi.setController,
           context: context,
-          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "alarm", device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
+          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', 'alarm', device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Get.back();
@@ -115,16 +115,16 @@ class AlarmSetupController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
@@ -138,17 +138,17 @@ class AlarmSetupController extends GetxController {
   ///   The function `validationEdit()` returns a list containing two elements: a
   /// boolean value and an empty string.
   List validationEdit() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (efDiffHotTemp.getInput().isEmpty) {
       efDiffHotTemp.controller.showAlert();
       Scrollable.ensureVisible(efDiffHotTemp.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     if (efDiffColdTemp.getInput().isEmpty) {
       efDiffColdTemp.controller.showAlert();
       Scrollable.ensureVisible(efDiffColdTemp.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     return ret;
   }

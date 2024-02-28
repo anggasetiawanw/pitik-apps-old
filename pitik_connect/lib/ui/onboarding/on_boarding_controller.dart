@@ -26,8 +26,8 @@ class OnBoardingController extends GetxController {
   var boardingIndeks = 0.obs;
 
   late ButtonFill bfNext = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfNext"),
-    label: "Lanjut",
+    controller: GetXCreator.putButtonFillController('bfNext'),
+    label: 'Lanjut',
     onClick: () {
       if (boardingIndeks < 3) {
         boardingIndeks++;
@@ -35,8 +35,8 @@ class OnBoardingController extends GetxController {
     },
   );
   late ButtonFill bfStart = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfStart"),
-    label: "Mulai",
+    controller: GetXCreator.putButtonFillController('bfStart'),
+    label: 'Mulai',
     onClick: () {
       setPreferences();
       Get.offNamed(RoutePage.loginPage);
@@ -44,11 +44,11 @@ class OnBoardingController extends GetxController {
   );
   late ButtonOutline boNoRegBuilding;
   late EditField efNoHp = EditField(
-      controller: GetXCreator.putEditFieldController("efNoHpForgetPassword"),
-      label: "Nomor Handphone",
-      hint: "08xxxx",
-      alertText: "Nomer Handphone Tidak Boleh Kosong",
-      textUnit: "",
+      controller: GetXCreator.putEditFieldController('efNoHpForgetPassword'),
+      label: 'Nomor Handphone',
+      hint: '08xxxx',
+      alertText: 'Nomer Handphone Tidak Boleh Kosong',
+      textUnit: '',
       inputType: TextInputType.number,
       maxInput: 20,
       onTyping: (value, control) {});

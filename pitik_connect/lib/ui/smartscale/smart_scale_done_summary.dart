@@ -21,7 +21,7 @@ class SmartScaleDoneSummary extends StatelessWidget {
   SmartScale data;
   Coop coop;
   DateTime startWeighingTime;
-  SmartScaleDoneSummary({super.key, required this.data, required this.coop, required this.startWeighingTime});
+  SmartScaleDoneSummary({required this.data, required this.coop, required this.startWeighingTime, super.key});
 
   int _getTotalChicken() {
     int count = 0;
@@ -62,24 +62,24 @@ class SmartScaleDoneSummary extends StatelessWidget {
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               ListView(shrinkWrap: true, children: [
                 Image.asset(
-                  "images/check_orange_icon.gif",
+                  'images/check_orange_icon.gif',
                   height: 150,
                   width: 150,
                 ),
-                Text("Timbang ayam telah selesai, berikut adalah rangkumannya", textAlign: TextAlign.center, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)),
+                Text('Timbang ayam telah selesai, berikut adalah rangkumannya', textAlign: TextAlign.center, style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)),
                 const SizedBox(height: 24),
                 Container(
                     decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.grayBackground),
                     child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text("Hasil Penimbangan", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                          Text('Hasil Penimbangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                           const SizedBox(height: 16),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Mulai Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}",
+                              Text('Mulai Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}',
                                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                             ],
                           ),
@@ -87,8 +87,8 @@ class SmartScaleDoneSummary extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Selesai Timbang", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}",
+                              Text('Selesai Timbang', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}',
                                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                             ],
                           ),
@@ -96,42 +96,42 @@ class SmartScaleDoneSummary extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Total Ayam", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("${_getTotalChicken()} Ekor", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                              Text('Total Ayam', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('${_getTotalChicken()} Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                             ],
                           ),
                           const SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Total Tonase", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("${_getTonase().toStringAsFixed(2)} kg", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                              Text('Total Tonase', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('${_getTonase().toStringAsFixed(2)} kg', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                             ],
                           ),
                           const SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Berat Rata-Rata", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
-                              Text("${_getAverageWeight().toStringAsFixed(2)} kg", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                              Text('Berat Rata-Rata', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
+                              Text('${_getAverageWeight().toStringAsFixed(2)} kg', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                             ],
                           ),
                           const SizedBox(height: 16),
                           ButtonOutline(
-                              controller: GetXCreator.putButtonOutlineController("copySmartScaleSummary"),
-                              label: "Salin",
+                              controller: GetXCreator.putButtonOutlineController('copySmartScaleSummary'),
+                              label: 'Salin',
                               isHaveIcon: true,
                               imageAsset: 'images/copy_orange_icon.svg',
                               onClick: () => Clipboard.setData(ClipboardData(
-                                      text: "Hasil Data timbang Kandang ${coop.coopName} _ Lantai ${coop.room!.level}\n"
-                                          "Waktu Mulai\t ${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}\n"
-                                          "Waktu Selesai\t ${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}\n"
-                                          "Total Ayam\t ${_getTotalChicken()} Ekor\n"
-                                          "Total Tonase\t ${_getTonase().toStringAsFixed(2)} kg\n"
-                                          "Berat Rata-rata\t ${_getAverageWeight().toStringAsFixed(2)} kg"))
+                                      text: 'Hasil Data timbang Kandang ${coop.coopName} _ Lantai ${coop.room!.level}\n'
+                                          'Waktu Mulai\t ${Convert.getYear(startWeighingTime)}/${Convert.getMonthNumber(startWeighingTime)}/${Convert.getDay(startWeighingTime)} - ${Convert.getHour(startWeighingTime)}.${Convert.getMinute(startWeighingTime)}\n'
+                                          'Waktu Selesai\t ${Convert.getYear(endWeighingTime)}/${Convert.getMonthNumber(endWeighingTime)}/${Convert.getDay(endWeighingTime)} - ${Convert.getHour(endWeighingTime)}.${Convert.getMinute(endWeighingTime)}\n'
+                                          'Total Ayam\t ${_getTotalChicken()} Ekor\n'
+                                          'Total Tonase\t ${_getTonase().toStringAsFixed(2)} kg\n'
+                                          'Berat Rata-rata\t ${_getAverageWeight().toStringAsFixed(2)} kg'))
                                   .then((value) => Get.snackbar(
-                                        "Pesan",
-                                        "Berhasil menyalin..!",
+                                        'Pesan',
+                                        'Berhasil menyalin..!',
                                         snackPosition: SnackPosition.TOP,
                                         colorText: Colors.white,
                                         backgroundColor: GlobalVar.primaryOrange,
@@ -141,10 +141,10 @@ class SmartScaleDoneSummary extends StatelessWidget {
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: ButtonFill(
-                        controller: GetXCreator.putButtonFillController("btnSmartScaleSummaryClose"),
-                        label: "Tutup",
+                        controller: GetXCreator.putButtonFillController('btnSmartScaleSummaryClose'),
+                        label: 'Tutup',
                         onClick: () {
-                          ListSmartScaleController controllerListSmartScale = Get.find<ListSmartScaleController>();
+                          final ListSmartScaleController controllerListSmartScale = Get.find<ListSmartScaleController>();
                           controllerListSmartScale.pageSmartScale.value = 1;
                           controllerListSmartScale.getSmartScaleListData(isPull: true);
                           Get.back();

@@ -28,7 +28,7 @@ class LicenseScreen extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Lisensi",
+          'Lisensi',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -42,7 +42,7 @@ class LicenseScreen extends StatelessWidget {
             headerText: title,
             child: RichText(
                 text: TextSpan(children: [
-              TextSpan(text: "$text\n", style: GlobalVar.blackTextStyle),
+              TextSpan(text: '$text\n', style: GlobalVar.blackTextStyle),
               TextSpan(
                 text: url,
                 style: const TextStyle(
@@ -70,10 +70,10 @@ class LicenseScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(margin: const EdgeInsets.only(top: 16), child: Text("Credit Penggunaan Aset Visual", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500))),
-              customExpandale("Icon", "Seluruh Icon (symbol) dalam aplikasi ini menggunakan lisensi gratis dari:", "https://remixicon.com/"),
-              customExpandale("Illustrasi", "Penggunaan illustrasi pada aplikasi ini seluruhnya menggunakan lisensi dari:", "https://www.manypixels.co/"),
-              customExpandale("Font", "Penggunaan font pada aplikasi ini menggunakan lisensi gratis dari:", "https://fonts.google.com/"),
+              Container(margin: const EdgeInsets.only(top: 16), child: Text('Credit Penggunaan Aset Visual', style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500))),
+              customExpandale('Icon', 'Seluruh Icon (symbol) dalam aplikasi ini menggunakan lisensi gratis dari:', 'https://remixicon.com/'),
+              customExpandale('Illustrasi', 'Penggunaan illustrasi pada aplikasi ini seluruhnya menggunakan lisensi dari:', 'https://www.manypixels.co/'),
+              customExpandale('Font', 'Penggunaan font pada aplikasi ini menggunakan lisensi gratis dari:', 'https://fonts.google.com/'),
             ],
           ),
         ),

@@ -25,12 +25,12 @@ class LoginActivity extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.bottomRight,
-            child: SvgPicture.asset("images/logo_welcome.svg"),
+            child: SvgPicture.asset('images/logo_welcome.svg'),
           ),
           SingleChildScrollView(
               child: Column(
             children: [
-              SvgPicture.asset("images/welcome_user.svg", width: MediaQuery.of(context).size.width),
+              SvgPicture.asset('images/welcome_user.svg', width: MediaQuery.of(context).size.width),
               Column(
                 children: [
                   Container(
@@ -47,7 +47,7 @@ class LoginActivity extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("Lupa Kata Sandi ?", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange)),
+                              Text('Lupa Kata Sandi ?', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: GlobalVar.primaryOrange)),
                             ],
                           ),
                         ),
@@ -70,11 +70,11 @@ class LoginActivity extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                "Dengan kamu menekan tombol Sign In,",
+                                'Dengan kamu menekan tombol Sign In,',
                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 10),
                               ),
                               Text(
-                                "berarti kamu setuju dengan",
+                                'berarti kamu setuju dengan',
                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 10),
                               ),
                               RichText(
@@ -82,23 +82,23 @@ class LoginActivity extends StatelessWidget {
                                   style: GlobalVar.greyTextStyle.copyWith(fontSize: 10),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: "Kebijakan Privasi",
+                                      text: 'Kebijakan Privasi',
                                       style: GlobalVar.primaryTextStyle.copyWith(fontSize: 10),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           Get.toNamed(RoutePage.privacyPage, arguments: false);
                                         },
                                     ),
-                                    const TextSpan(text: " serta"),
+                                    const TextSpan(text: ' serta'),
                                     TextSpan(
-                                      text: " Syarat & Ketentuan",
+                                      text: ' Syarat & Ketentuan',
                                       style: GlobalVar.primaryTextStyle.copyWith(fontSize: 10),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           Get.toNamed(RoutePage.termPage);
                                         },
                                     ),
-                                    const TextSpan(text: " kami"),
+                                    const TextSpan(text: ' kami'),
                                   ],
                                 ),
                               ),

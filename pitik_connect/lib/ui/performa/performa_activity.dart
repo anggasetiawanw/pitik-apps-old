@@ -29,7 +29,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
     _getAppVersion();
   }
 
-  void _getAppVersion() async {
+  Future<void> _getAppVersion() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     final version = packageInfo.version;
@@ -58,7 +58,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              "images/pitik_avatar.svg",
+              'images/pitik_avatar.svg',
               width: 64,
               height: 64,
             ),
@@ -69,7 +69,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Kun",
+                  'Kun',
                   style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 16),
                   overflow: TextOverflow.clip,
                 ),
@@ -77,7 +77,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                   height: 4,
                 ),
                 Text(
-                  "Robert.Kuncoro@pitik.id",
+                  'Robert.Kuncoro@pitik.id',
                   style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
                   overflow: TextOverflow.clip,
                 ),
@@ -91,14 +91,14 @@ class _PerformaActivityState extends State<PerformaActivity> {
     Widget header() {
       return Stack(
         children: [
-          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
+          SizedBox(width: Get.width, child: Image.asset('images/header_bg.png')),
           Container(
             margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Selamat Datang\nDi Internal App!",
+                  'Selamat Datang\nDi Internal App!',
                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 ),
                 // Container(
@@ -160,7 +160,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    "images/logout_icon.svg",
+                    'images/logout_icon.svg',
                     height: 22,
                     width: 20,
                   ),
@@ -168,7 +168,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
                     width: 18,
                   ),
                   Text(
-                    "Logout",
+                    'Logout',
                     style: GlobalVar.blackTextStyle,
                   )
                 ],
@@ -179,7 +179,7 @@ class _PerformaActivityState extends State<PerformaActivity> {
               child: Align(
             alignment: Alignment.bottomCenter,
             child: Text(
-              "V $_version",
+              'V $_version',
               style: GlobalVar.greyTextStyle,
             ),
           )),

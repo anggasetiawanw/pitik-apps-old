@@ -38,8 +38,8 @@ class SmartScaleApi {
   /// room for which you want to retrieve the smart scale data.
   ///   date (String): The "date" parameter is used to specify the date for which
   /// you want to retrieve the list of smart scale data.
-  @GET(value: "v2/b2b/weighing", as: ListSmartScaleResponse, error: ErrorResponse)
-  void getListSmartScale(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("roomId") String roomId, @Query("date") String date) {}
+  @GET(value: 'v2/b2b/weighing', as: ListSmartScaleResponse, error: ErrorResponse)
+  void getListSmartScale(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Query('\$page') int page, @Query('\$limit') int limit, @Query('roomId') String roomId, @Query('date') String date) {}
 
   /// The function "getSmartScaleDetail" is a GET request that retrieves
   /// SmartScale details using the provided authorization, X-ID, and path
@@ -57,7 +57,7 @@ class SmartScaleApi {
   /// API endpoint. It is typically used to provide additional information or
   /// context for the API request.
   @GET(value: GET.PATH_PARAMETER, as: SmartScaleResponse, error: ErrorResponse)
-  void getSmartScaleDetail(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Path() String path) {}
+  void getSmartScaleDetail(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Path() String path) {}
 
   /// The function saves data from a smart scale to a B2B weighing endpoint.
   ///
@@ -71,9 +71,9 @@ class SmartScaleApi {
   /// purposes in the API request.
   ///   params (String): The "params" parameter is a string that contains the data
   /// to be saved for the smart scale.
-  @POST(value: "v2/b2b/weighing", error: ErrorResponse)
+  @POST(value: 'v2/b2b/weighing', error: ErrorResponse)
   @JSON(isPlaint: true)
-  void saveSmartScale(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("params") String params) {}
+  void saveSmartScale(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Parameter('params') String params) {}
 
   /// The function `updateSmartScale` is used to send a PATCH request to update a
   /// smart scale with the given parameters.
@@ -96,5 +96,5 @@ class SmartScaleApi {
   /// identify a specific resource or endpoint.
   @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
   @JSON(isPlaint: true)
-  void updateSmartScale(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Parameter("params") String params, @Path() String path) {}
+  void updateSmartScale(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Parameter('params') String params, @Path() String path) {}
 }

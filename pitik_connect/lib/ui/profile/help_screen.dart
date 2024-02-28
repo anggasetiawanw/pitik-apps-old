@@ -25,7 +25,7 @@ class HelpScreen extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Bantuan",
+          'Bantuan',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -66,16 +66,16 @@ class HelpScreen extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  "Bantuan\nPitik Digital Indonesia",
+                  'Bantuan\nPitik Digital Indonesia',
                   style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
               ),
-              customWidget(27, "images/help_location.svg", "Icon 5 Business Park Blok G5 - G6, Jl. BSD Raya Utama, Sampora, Kec. Cisauk, Kabupaten Tangerang, Banten 15345"),
-              customWidget(32, "images/help_call.svg", "(+62) 812 8070 9907"),
-              customWidget(16, "images/help_email.svg", "info@pitik.id"),
-              customWidget(16, "images/help_ig.svg", "@pitikdigital"),
-              customWidget(16, "images/help_in.svg", "Pitik Digital Indonesia")
+              customWidget(27, 'images/help_location.svg', 'Icon 5 Business Park Blok G5 - G6, Jl. BSD Raya Utama, Sampora, Kec. Cisauk, Kabupaten Tangerang, Banten 15345'),
+              customWidget(32, 'images/help_call.svg', '(+62) 812 8070 9907'),
+              customWidget(16, 'images/help_email.svg', 'info@pitik.id'),
+              customWidget(16, 'images/help_ig.svg', '@pitikdigital'),
+              customWidget(16, 'images/help_in.svg', 'Pitik Digital Indonesia')
             ],
           ),
         ),

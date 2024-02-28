@@ -13,10 +13,10 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const String text =
-        "Pitik Digital Indonesia adalah perusahaan berbasis teknologi yang hadir untuk memajukan dan mensejahterakan peternak ayam di Indonesia. Kami percaya bahwa inovasi teknologi yang kami kembangkan dapat meningkatkan produktivitas dan efisiensi operasi peternakan di Indonesia. Selain itu, kami juga membantu para peternak untuk mendapatkan pasokan sapronak yang lebih baik dengan harga kompetitif, memberikan akses permodalan, dan memberikan dukungan penjualan agar pada akhirnya masyarakat Indonesia dapat mengkonsumsi daging ayam dengan kualitas yang lebih baik dan harga yang lebih terjangkau.";
-    const String visi = "Meningkatkan kesejahteraan dan memajukan peternak ayam di Indonesia melalui penyediaan teknologi yang unggul dan model bisnis yang transparan dan saling menguntungkan";
+        'Pitik Digital Indonesia adalah perusahaan berbasis teknologi yang hadir untuk memajukan dan mensejahterakan peternak ayam di Indonesia. Kami percaya bahwa inovasi teknologi yang kami kembangkan dapat meningkatkan produktivitas dan efisiensi operasi peternakan di Indonesia. Selain itu, kami juga membantu para peternak untuk mendapatkan pasokan sapronak yang lebih baik dengan harga kompetitif, memberikan akses permodalan, dan memberikan dukungan penjualan agar pada akhirnya masyarakat Indonesia dapat mengkonsumsi daging ayam dengan kualitas yang lebih baik dan harga yang lebih terjangkau.';
+    const String visi = 'Meningkatkan kesejahteraan dan memajukan peternak ayam di Indonesia melalui penyediaan teknologi yang unggul dan model bisnis yang transparan dan saling menguntungkan';
     const String misi =
-        "Memberikan dukungan kepada peternak Indonesia untuk seluruh aktivitas produksi ayam, mulai dari penyediaan sapronak berkualitas, mendorong inovasi teknologi produksi, dan juga membantu penjualan hasil panen dengan skema yang lebih transparan dan harga yang lebih kompetitif";
+        'Memberikan dukungan kepada peternak Indonesia untuk seluruh aktivitas produksi ayam, mulai dari penyediaan sapronak berkualitas, mendorong inovasi teknologi produksi, dan juga membantu penjualan hasil panen dengan skema yang lebih transparan dan harga yang lebih kompetitif';
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -31,7 +31,7 @@ class AboutUsScreen extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Tentang Kami",
+          'Tentang Kami',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -45,7 +45,7 @@ class AboutUsScreen extends StatelessWidget {
             headerText: title,
             child: RichText(
                 text: TextSpan(children: [
-              TextSpan(text: "$text\n", style: GlobalVar.blackTextStyle),
+              TextSpan(text: '$text\n', style: GlobalVar.blackTextStyle),
             ]))),
       );
     }
@@ -64,7 +64,7 @@ class AboutUsScreen extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  "Tentang Kami\nPitik Digital Indonesia",
+                  'Tentang Kami\nPitik Digital Indonesia',
                   style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
@@ -76,8 +76,8 @@ class AboutUsScreen extends StatelessWidget {
                   style: GlobalVar.blackTextStyle.copyWith(fontSize: 12),
                 ),
               ),
-              customExpandable("Visi Kami", visi),
-              customExpandable("Misi Kami", misi),
+              customExpandable('Visi Kami', visi),
+              customExpandable('Misi Kami', misi),
             ],
           ),
         ),

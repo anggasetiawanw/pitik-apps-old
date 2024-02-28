@@ -17,7 +17,7 @@ class LampSetup extends GetView<LampSetupController> {
 
   @override
   Widget build(BuildContext context) {
-    LampSetupController controller = Get.put(LampSetupController(context: context));
+    final LampSetupController controller = Get.put(LampSetupController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -32,7 +32,7 @@ class LampSetup extends GetView<LampSetupController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Lampu",
+          'Lampu',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -58,15 +58,15 @@ class LampSetup extends GetView<LampSetupController> {
                     Expanded(
                       child: Obx(() => controller.isEdit.isTrue
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfSaveSetingLamp"),
-                              label: "Simpan",
+                              controller: GetXCreator.putButtonFillController('bfSaveSetingLamp'),
+                              label: 'Simpan',
                               onClick: () {
                                 showBottomDialog(context, controller);
                               },
                             )
                           : ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfEditSettingFan"),
-                              label: "Edit",
+                              controller: GetXCreator.putButtonFillController('bfEditSettingFan'),
+                              label: 'Edit',
                               onClick: () {
                                 controller.isEdit.value = true;
                                 controller.isLoading.value = true;
@@ -113,7 +113,7 @@ class LampSetup extends GetView<LampSetupController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, LampSetupController controller) {
+  Future showBottomDialog(BuildContext context, LampSetupController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -144,18 +144,18 @@ class LampSetup extends GetView<LampSetupController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

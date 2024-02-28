@@ -39,34 +39,34 @@ class LoginController extends GetxController {
   late Future<bool> isFirstLogin;
 
   late EditField efNoHp = EditField(
-      controller: GetXCreator.putEditFieldController("efNoHp"),
-      label: "Nomor Handphone",
-      hint: "08xxxx",
-      alertText: "Nomer Handphone Harus Di Isi",
-      textUnit: "",
+      controller: GetXCreator.putEditFieldController('efNoHp'),
+      label: 'Nomor Handphone',
+      hint: '08xxxx',
+      alertText: 'Nomer Handphone Harus Di Isi',
+      textUnit: '',
       inputType: TextInputType.number,
       maxInput: 20,
       action: TextInputAction.next,
       onTyping: (value, control) {});
   late PasswordField efPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efPassword"),
-    label: "Password",
-    hint: "Ketik Kata Sandi",
-    alertText: "Password Harus Di Isi",
+    controller: GetXCreator.putPasswordFieldController('efPassword'),
+    label: 'Password',
+    hint: 'Ketik Kata Sandi',
+    alertText: 'Password Harus Di Isi',
     action: TextInputAction.done,
     maxInput: 20,
     onTyping: (value) {},
   );
   late ButtonFill bfLogin = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfLogin"),
-    label: "Masuk",
+    controller: GetXCreator.putButtonFillController('bfLogin'),
+    label: 'Masuk',
     onClick: () {
       getAuth();
     },
   );
   late ButtonOutline boRegister = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("bfRegister"),
-    label: "Daftar",
+    controller: GetXCreator.putButtonOutlineController('bfRegister'),
+    label: 'Daftar',
     onClick: () {
       Get.offNamed(RoutePage.registerAccountPage);
     },
@@ -78,12 +78,12 @@ class LoginController extends GetxController {
   Future<void> getAuth() async {
     if (validation()) {
       isLoading.value = true;
-      String appId = FirebaseRemoteConfig.instance.getString("appId");
+      String appId = FirebaseRemoteConfig.instance.getString('appId');
       if (appId.isEmpty) {
-        appId = FirebaseRemoteConfig.instance.getString("appId");
+        appId = FirebaseRemoteConfig.instance.getString('appId');
       }
       if (await XAppIdImpl().getById(appId) == null) {
-        XAppIdImpl().save(XAppId(appId: appId));
+        await XAppIdImpl().save(XAppId(appId: appId));
       }
       GlobalVar.xAppId = appId;
 
@@ -102,8 +102,8 @@ class LoginController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -112,8 +112,8 @@ class LoginController extends GetxController {
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -170,26 +170,26 @@ class LoginController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) async {
               isLoading.value = false;
-              ProfileImpl().save((body as ProfileResponse).data);
+              await ProfileImpl().save((body as ProfileResponse).data);
               GlobalVar.profileUser = body.data;
               isFirstLogin = prefs.then((SharedPreferences prefs) {
                 return prefs.getBool('isFirstLogin') ?? true;
               });
               if (await isFirstLogin) {
-                Get.toNamed(RoutePage.privacyPage, arguments: true);
+                await Get.toNamed(RoutePage.privacyPage, arguments: true);
               } else {
-                if (action == "DEFAULT_PASSWORD") {
+                if (action == 'DEFAULT_PASSWORD') {
                   showInformation();
                 } else {
-                  Get.offAllNamed(RoutePage.homePage);
+                  await Get.offAllNamed(RoutePage.homePage);
                 }
               }
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -198,8 +198,8 @@ class LoginController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -221,20 +221,20 @@ class LoginController extends GetxController {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      "images/error_icon.svg",
+                      'images/error_icon.svg',
                       height: 24,
                       width: 24,
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "Perhatian!",
+                      'Perhatian!',
                       style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "Kata Sandi bawaan harus segera ganti",
+                  'Kata Sandi bawaan harus segera ganti',
                   style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                 ),
                 Row(
@@ -247,7 +247,7 @@ class LoginController extends GetxController {
                     ),
                     SizedBox(
                       width: 100,
-                      child: ButtonFill(controller: GetXCreator.putButtonFillController("Dialog"), label: "OK", onClick: () => {Get.offAllNamed(RoutePage.changePassPage, arguments: true)}),
+                      child: ButtonFill(controller: GetXCreator.putButtonFillController('Dialog'), label: 'OK', onClick: () => {Get.offAllNamed(RoutePage.changePassPage, arguments: true)}),
                     ),
                   ],
                 ),

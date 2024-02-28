@@ -32,10 +32,10 @@ class ChangePasswordController extends GetxController {
   late ButtonFill bfYesRegBuilding;
   late ButtonOutline boNoRegBuilding;
   late PasswordField efOldPassword = PasswordField(
-      controller: GetXCreator.putPasswordFieldController("efOldPassword"),
-      label: "Kata sandi saat ini",
-      hint: "Tulis kata sandi saat ini",
-      alertText: "Kata sandi saat ini tidak boleh kosong",
+      controller: GetXCreator.putPasswordFieldController('efOldPassword'),
+      label: 'Kata sandi saat ini',
+      hint: 'Tulis kata sandi saat ini',
+      alertText: 'Kata sandi saat ini tidak boleh kosong',
       maxInput: 20,
       onTyping: (value) {
         if (value.isEmpty) {
@@ -43,14 +43,14 @@ class ChangePasswordController extends GetxController {
         }
       });
   late PasswordField efNewPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efNewPassword"),
-    label: "Kata sandi baru",
-    hint: "Tulis kata sandi baru",
-    alertText: "Kata sandi baru tidak boleh kosong",
+    controller: GetXCreator.putPasswordFieldController('efNewPassword'),
+    label: 'Kata sandi baru',
+    hint: 'Tulis kata sandi baru',
+    alertText: 'Kata sandi baru tidak boleh kosong',
     maxInput: 29,
     onTyping: (value) {
-      RegExp regexLength = RegExp(r'^.{7,}$');
-      RegExp regexPassword = RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])');
+      final RegExp regexLength = RegExp(r'^.{7,}$');
+      final RegExp regexPassword = RegExp(r'^(?=.*?[a-zA-Z])(?=.*?[0-9])');
       if (value.isEmpty) {
         efNewPassword.controller.showAlert();
         efNewPassword.controller.hideAlertLength();
@@ -73,10 +73,10 @@ class ChangePasswordController extends GetxController {
     },
   );
   late PasswordField efConfNewPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efConfNewPassword"),
-    label: "Konfirmasi kata sandi baru",
-    hint: "Konfirmasi kata sandi",
-    alertText: "Konfirmasi kata sandi tidak boleh kosong",
+    controller: GetXCreator.putPasswordFieldController('efConfNewPassword'),
+    label: 'Konfirmasi kata sandi baru',
+    hint: 'Konfirmasi kata sandi',
+    alertText: 'Konfirmasi kata sandi tidak boleh kosong',
     maxInput: 20,
     onTyping: (value) {
       if (value.isEmpty) {
@@ -91,15 +91,15 @@ class ChangePasswordController extends GetxController {
     isFromLogin = Get.arguments;
     // isLoading.value = true;
     boNoRegBuilding = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoRegBuilding"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoRegBuilding'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesRegBuilding = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesRegBuilding"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesRegBuilding'),
+      label: 'Ya',
       onClick: () {
         changePassword();
       },
@@ -114,25 +114,25 @@ class ChangePasswordController extends GetxController {
   ///   The function `validation()` returns a list containing two elements: a
   /// boolean value and an empty string.
   List validation() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (efOldPassword.getInput().isEmpty) {
       efOldPassword.controller.showAlert();
       Scrollable.ensureVisible(efOldPassword.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     } else if (efNewPassword.getInput().isEmpty) {
       efNewPassword.controller.showAlert();
       Scrollable.ensureVisible(efNewPassword.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     } else if (efConfNewPassword.getInput().isEmpty) {
-      efConfNewPassword.alertText = "Password Harus Di Isi";
+      efConfNewPassword.alertText = 'Password Harus Di Isi';
       efConfNewPassword.controller.showAlert();
       Scrollable.ensureVisible(efConfNewPassword.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     } else if (efConfNewPassword.getInput() != efNewPassword.getInput()) {
-      efConfNewPassword.alertText = "Konfirmasi kata sandi salah";
+      efConfNewPassword.alertText = 'Konfirmasi kata sandi salah';
       efConfNewPassword.controller.showAlert();
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     return ret;
   }
@@ -151,11 +151,11 @@ class ChangePasswordController extends GetxController {
   /// handling different response scenarios.
   void changePassword() {
     Get.back();
-    List ret = validation();
+    final List ret = validation();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        Password payload = generatePayload();
+        final Password payload = generatePayload();
         Service.push(
           service: ListApi.changePassword,
           context: context,
@@ -171,16 +171,16 @@ class ChangePasswordController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }

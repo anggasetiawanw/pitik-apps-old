@@ -46,14 +46,14 @@ class HistoricalDataSmartCameraController extends GetxController {
   late int indeksCamera = 0;
 
   late DateTimeField dtftakePicture = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("dtftakePicture"),
-    label: "Jam Ambil Gambar",
-    hint: "Pilih Jam Ambil Gambar",
+    controller: GetXCreator.putDateTimeFieldController('dtftakePicture'),
+    label: 'Jam Ambil Gambar',
+    hint: 'Pilih Jam Ambil Gambar',
     flag: DateTimeField.ALL_FLAG,
-    alertText: "Jam Ambil Gambar harus di isi",
+    alertText: 'Jam Ambil Gambar harus di isi',
     onDateTimeSelected: (DateTime time, dateField) {
-      GlobalVar.track("Click_time_filter");
-      dtftakePicture.controller.setTextSelected("${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}");
+      GlobalVar.track('Click_time_filter');
+      dtftakePicture.controller.setTextSelected('${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}');
     },
   );
 
@@ -72,7 +72,7 @@ class HistoricalDataSmartCameraController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    GlobalVar.track("Open_ambil_gambar_page");
+    GlobalVar.track('Open_ambil_gambar_page');
     if (Platform.isAndroid) {
       platform = TargetPlatform.android;
     } else {
@@ -136,8 +136,8 @@ class HistoricalDataSmartCameraController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -229,11 +229,11 @@ class HistoricalDataSmartCameraController extends GetxController {
   /// Returns:
   ///   a `Future<bool>`.
   Future<bool> isValidUrl(Uri imageUrl) async {
-    var response = await http.get(imageUrl);
+    final response = await http.get(imageUrl);
     if (response.statusCode != 200) {
       Get.snackbar(
-        "Pesan",
-        "Gambar belum tersedia!",
+        'Pesan',
+        'Gambar belum tersedia!',
         snackPosition: SnackPosition.BOTTOM,
         colorText: Colors.white,
         duration: const Duration(seconds: 5),

@@ -38,37 +38,37 @@ class SmartScaleWeighingController extends GetxController {
   late Coop coop;
 
   var isLoading = false.obs;
-  var weighingValue = "".obs;
-  var batteryStatus = "".obs;
+  var weighingValue = ''.obs;
+  var batteryStatus = ''.obs;
   var isTimeout = true.obs;
   var numberList = 0.obs;
 
   RxList<int> index = RxList<int>([]);
   RxList<int> numberLabel = RxList<int>([]);
-  Rx<SmartScale?> smartScaleData = (SmartScale()).obs;
+  Rx<SmartScale?> smartScaleData = SmartScale().obs;
   RxMap<int, SmartScaleRecord> smartScaleRecords = <int, SmartScaleRecord>{}.obs;
   RxMap<int, Widget> smartScaleDataWidget = <int, Widget>{}.obs;
   RxMap<int, Widget> smartScaleDataWidgetNumber = <int, Widget>{}.obs;
   BluetoothLeService? bluetoothLeService;
 
   final EditField totalWeighingField = EditField(
-      controller: GetXCreator.putEditFieldController("totalWeighingFieldSmartScale"),
-      label: "Jumlah Ditimbang",
-      hint: "Ketik disini..!",
-      alertText: "Harus isi jumlah ditimbang..!",
-      textUnit: "Ekor",
+      controller: GetXCreator.putEditFieldController('totalWeighingFieldSmartScale'),
+      label: 'Jumlah Ditimbang',
+      hint: 'Ketik disini..!',
+      alertText: 'Harus isi jumlah ditimbang..!',
+      textUnit: 'Ekor',
       inputType: TextInputType.number,
       maxInput: 10,
       onTyping: (text, editField) {});
 
   final EditField outstandingTotalWeighingField = EditField(
-      controller: GetXCreator.putEditFieldController("outstandingTotalWeighingFieldSmartScale"), label: "Sisa Belum Ditimbang", hint: "", alertText: "", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
+      controller: GetXCreator.putEditFieldController('outstandingTotalWeighingFieldSmartScale'), label: 'Sisa Belum Ditimbang', hint: '', alertText: '', textUnit: 'Ekor', inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
 
   final EditField totalChicken = EditField(
-      controller: GetXCreator.putEditFieldController("totalChickenField"), label: "Jumlah Ayam", hint: "Ketik disini..!", alertText: "Harus diisi..!", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
+      controller: GetXCreator.putEditFieldController('totalChickenField'), label: 'Jumlah Ayam', hint: 'Ketik disini..!', alertText: 'Harus diisi..!', textUnit: 'Ekor', inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
 
   final EditField totalWeighing =
-      EditField(controller: GetXCreator.putEditFieldController("totalWeighingField"), label: "Total Timbang", hint: "", alertText: "", textUnit: "kg", inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
+      EditField(controller: GetXCreator.putEditFieldController('totalWeighingField'), label: 'Total Timbang', hint: '', alertText: '', textUnit: 'kg', inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
 
   void _setOutstandingWeighing() {
     if (totalWeighingField.getInput() != '') {
@@ -99,7 +99,7 @@ class SmartScaleWeighingController extends GetxController {
       totalChicken.controller.showAlert();
     } else {
       index.add(numberList.value);
-      int idx = numberList.value;
+      final int idx = numberList.value;
 
       SmartScaleRecord smartScaleRecord;
       if (dataParam != null) {
@@ -109,9 +109,9 @@ class SmartScaleWeighingController extends GetxController {
       }
       smartScaleRecords.putIfAbsent(idx, () => smartScaleRecord);
 
-      final EditField totalChick = EditField(controller: GetXCreator.putEditFieldController("totalChickenAdd$idx"), label: "", hint: "", alertText: "", textUnit: "Ekor", inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
+      final EditField totalChick = EditField(controller: GetXCreator.putEditFieldController('totalChickenAdd$idx'), label: '', hint: '', alertText: '', textUnit: 'Ekor', inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
 
-      final EditField totalWeight = EditField(controller: GetXCreator.putEditFieldController("totalWeighingAdd$idx"), label: "", hint: "", alertText: "", textUnit: "kg", inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
+      final EditField totalWeight = EditField(controller: GetXCreator.putEditFieldController('totalWeighingAdd$idx'), label: '', hint: '', alertText: '', textUnit: 'kg', inputType: TextInputType.number, maxInput: 10, onTyping: (text, editField) {});
 
       totalChick.controller.invisibleLabel();
       totalWeight.controller.invisibleLabel();
@@ -241,21 +241,21 @@ class SmartScaleWeighingController extends GetxController {
                         Padding(
                             padding: const EdgeInsets.only(top: 24),
                             child: Align(
-                                alignment: Alignment.centerLeft, child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
-                        Align(alignment: Alignment.centerLeft, child: Text("Apakah kamu yakin data yang dimasukan sudah benar?", style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))),
-                        Padding(padding: const EdgeInsets.only(top: 24), child: SvgPicture.asset("images/ask_bottom_sheet_1.svg")),
+                                alignment: Alignment.centerLeft, child: Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
+                        Align(alignment: Alignment.centerLeft, child: Text('Apakah kamu yakin data yang dimasukan sudah benar?', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))),
+                        Padding(padding: const EdgeInsets.only(top: 24), child: SvgPicture.asset('images/ask_bottom_sheet_1.svg')),
                         Padding(
                             padding: const EdgeInsets.only(top: 24, bottom: 32),
                             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Expanded(
                                   child: ButtonFill(
-                                      controller: GetXCreator.putButtonFillController("bfYesSaveSmartScaleWeighing"),
-                                      label: "Ya",
+                                      controller: GetXCreator.putButtonFillController('bfYesSaveSmartScaleWeighing'),
+                                      label: 'Ya',
                                       onClick: () {
                                         Navigator.pop(context);
 
                                         // before check is edit or not
-                                        bool isEdit = smartScaleData.value!.id != null;
+                                        final bool isEdit = smartScaleData.value!.id != null;
 
                                         if (isEdit) {
                                           SmartScaleImpl().getById(smartScaleData.value!.id!).then((record) async {
@@ -274,7 +274,7 @@ class SmartScaleWeighingController extends GetxController {
                                               smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
                                               smartScaleData.value!.updatedDate = Convert.getStringIso(DateTime.now());
                                               smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
-                                              smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+                                              smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
 
                                               _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
                                             }
@@ -285,19 +285,19 @@ class SmartScaleWeighingController extends GetxController {
                                           smartScaleData.value!.roomId = coop.room!.id;
                                           smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
                                           smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
-                                          smartScaleData.value!.expiredDate = DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now());
+                                          smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
 
                                           _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
                                         }
                                       })),
                               const SizedBox(width: 16),
-                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("boNoSaveSmartScaleWeighing"), label: "Tidak", onClick: () => Navigator.pop(context)))
+                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController('boNoSaveSmartScaleWeighing'), label: 'Tidak', onClick: () => Navigator.pop(context)))
                             ]))
                       ]))));
         } else {
           Get.snackbar(
-            "Pesan",
-            "Data timbang masih kosong, silahkan isi data timbang dahulu..!",
+            'Pesan',
+            'Data timbang masih kosong, silahkan isi data timbang dahulu..!',
             snackPosition: SnackPosition.TOP,
             colorText: Colors.white,
             duration: const Duration(seconds: 5),
@@ -320,7 +320,7 @@ class SmartScaleWeighingController extends GetxController {
   void _pushSmartScaleData(Auth auth, bool isEdit, SmartScale? data) {
     isLoading.value = true;
     Service.push(
-        apiKey: "smartScaleApi",
+        apiKey: 'smartScaleApi',
         service: isEdit ? ListApi.updateSmartScale : ListApi.saveSmartScale,
         context: context,
         body: [auth.token, auth.id, Mapper.asJsonString(data), isEdit ? ListApi.pathSmartScaleForDetailAndUpdate(smartScaleData.value!.id!) : null],
@@ -332,8 +332,8 @@ class SmartScaleWeighingController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Koneksi terputus. Data akan terupdate jika koneksi kembali.",
+                'Pesan',
+                'Koneksi terputus. Data akan terupdate jika koneksi kembali.',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -346,8 +346,8 @@ class SmartScaleWeighingController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               _saveSmartScaleToDb(data, 0);
               Get.snackbar(
-                "Pesan",
-                "Koneksi terputus. Data akan terupdate jika koneksi kembali.",
+                'Pesan',
+                'Koneksi terputus. Data akan terupdate jika koneksi kembali.',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),

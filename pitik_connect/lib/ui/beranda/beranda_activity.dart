@@ -25,14 +25,14 @@ class BerandaActivity extends StatelessWidget {
     Widget header() {
       return Stack(
         children: [
-          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
+          SizedBox(width: Get.width, child: Image.asset('images/header_bg.png')),
           Container(
             margin: const EdgeInsets.only(left: 16, right: 16, top: 42),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Selamat Datang\nDi Pitik Connect!",
+                  'Selamat Datang\nDi Pitik Connect!',
                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 ),
                 Container(
@@ -57,7 +57,7 @@ class BerandaActivity extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(right: 8, left: 8),
-              child: Text("Daftar Kandang", style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold)),
+              child: Text('Daftar Kandang', style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold)),
             ),
             SizedBox(
               height: 36,
@@ -75,7 +75,7 @@ class BerandaActivity extends StatelessWidget {
                       decoration: const BoxDecoration(color: GlobalVar.iconHomeBg, borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4), bottomRight: Radius.circular(4), bottomLeft: Radius.circular(4))),
                       child: Center(
                         child: SvgPicture.asset(
-                          "images/filter_icon.svg",
+                          'images/filter_icon.svg',
                           width: 16,
                           height: 12,
                         ),
@@ -106,7 +106,7 @@ class BerandaActivity extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  GlobalVar.track("Click_card_lantai");
+                  GlobalVar.track('Click_card_lantai');
                   Get.toNamed(RoutePage.dashboardDevicePage, arguments: controller.coops.value[index])!.then((value) {
                     controller.isLoading.value = true;
                     controller.coops.value.clear();
@@ -129,7 +129,7 @@ class BerandaActivity extends StatelessWidget {
                             height: 40,
                             decoration: const BoxDecoration(color: GlobalVar.iconHomeBg, borderRadius: BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4), bottomRight: Radius.circular(4), bottomLeft: Radius.circular(4))),
                             child: Center(
-                              child: SvgPicture.asset("images/building_icon.svg"),
+                              child: SvgPicture.asset('images/building_icon.svg'),
                             ),
                           ),
                           Expanded(
@@ -204,9 +204,9 @@ class BerandaActivity extends StatelessWidget {
                                 Row(children: [
                                   Padding(
                                     padding: const EdgeInsets.all(6),
-                                    child: SvgPicture.asset("images/error_icon.svg", fit: BoxFit.cover, width: 24, height: 24),
+                                    child: SvgPicture.asset('images/error_icon.svg', fit: BoxFit.cover, width: 24, height: 24),
                                   ),
-                                  Text("Perhatian", style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium))
+                                  Text('Perhatian', style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium))
                                 ]),
                                 const SizedBox(
                                   height: 4,
@@ -214,7 +214,7 @@ class BerandaActivity extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 6, right: 6),
                                   child: Text(
-                                    "Kamu belum memiliki Kandang aktif dalam Peternakan kamu. yuk buat kandang!",
+                                    'Kamu belum memiliki Kandang aktif dalam Peternakan kamu. yuk buat kandang!',
                                     textAlign: TextAlign.left,
                                     style: GlobalVar.greyTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium),
                                   ),
@@ -242,12 +242,12 @@ class BerandaActivity extends StatelessWidget {
                                   width: double.infinity,
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 17,
                                       ),
                                       Text(
-                                        "Kamu belum memiliki Kandang aktif dalam Peternakan kamu. yuk buat kandang!",
+                                        'Kamu belum memiliki Kandang aktif dalam Peternakan kamu. yuk buat kandang!',
                                         textAlign: TextAlign.center,
                                         style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                                       )

@@ -24,29 +24,29 @@ class RegisterAccountController extends GetxController {
   late ButtonOutline boNoRegDevice;
 
   late SpinnerField spOrganization =
-      SpinnerField(controller: GetXCreator.putSpinnerFieldController("spOrganization"), label: "Organisasi/Perusahaan", hint: "Pilih Salah Satu", alertText: "Organisasi/Perusahaan harus dipilih!", items: const {}, onSpinnerSelected: (value) {});
+      SpinnerField(controller: GetXCreator.putSpinnerFieldController('spOrganization'), label: 'Organisasi/Perusahaan', hint: 'Pilih Salah Satu', alertText: 'Organisasi/Perusahaan harus dipilih!', items: const {}, onSpinnerSelected: (value) {});
   late EditField efName =
-      EditField(controller: GetXCreator.putEditFieldController("efName"), label: "Nama Lengkap", hint: "Ketik disini", alertText: "Nama Lengkap harus di isi", textUnit: "", inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
+      EditField(controller: GetXCreator.putEditFieldController('efName'), label: 'Nama Lengkap', hint: 'Ketik disini', alertText: 'Nama Lengkap harus di isi', textUnit: '', inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
   late EditField efEmail = EditField(
-      controller: GetXCreator.putEditFieldController("efEmail"), label: "E-mail", hint: "Ketik disini", alertText: "E-mail Lengkap harus di isi", textUnit: "", inputType: TextInputType.emailAddress, maxInput: 20, onTyping: (value, control) {});
+      controller: GetXCreator.putEditFieldController('efEmail'), label: 'E-mail', hint: 'Ketik disini', alertText: 'E-mail Lengkap harus di isi', textUnit: '', inputType: TextInputType.emailAddress, maxInput: 20, onTyping: (value, control) {});
 
   late EditField efPhoneNumber = EditField(
-      controller: GetXCreator.putEditFieldController("efPhoneNumber"), label: "Nomor Hp", hint: "08xxxxx", alertText: "Nomor Hp Lengkap harus di isi", textUnit: "", inputType: TextInputType.phone, maxInput: 20, onTyping: (value, control) {});
+      controller: GetXCreator.putEditFieldController('efPhoneNumber'), label: 'Nomor Hp', hint: '08xxxxx', alertText: 'Nomor Hp Lengkap harus di isi', textUnit: '', inputType: TextInputType.phone, maxInput: 20, onTyping: (value, control) {});
 
   late PasswordField efPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efPassword"),
-    label: "Kata Sandi",
-    hint: "Ketik Kata Sandi",
-    alertText: "Password Harus Di Isi",
+    controller: GetXCreator.putPasswordFieldController('efPassword'),
+    label: 'Kata Sandi',
+    hint: 'Ketik Kata Sandi',
+    alertText: 'Password Harus Di Isi',
     maxInput: 20,
     onTyping: (value) {},
   );
 
   late PasswordField efConfirmPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efConfirmPassword"),
-    label: "Konfirmasi Kata Sandi",
-    hint: "Ketik Kata Sandi",
-    alertText: "Konfirmasi Password Harus Di Isi",
+    controller: GetXCreator.putPasswordFieldController('efConfirmPassword'),
+    label: 'Konfirmasi Kata Sandi',
+    hint: 'Ketik Kata Sandi',
+    alertText: 'Konfirmasi Password Harus Di Isi',
     maxInput: 20,
     onTyping: (value) {},
   );
@@ -56,8 +56,8 @@ class RegisterAccountController extends GetxController {
     super.onInit();
     // isLoading.value = true;
     boNoRegDevice = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoRegDevice"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoRegDevice'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -68,8 +68,8 @@ class RegisterAccountController extends GetxController {
   void onReady() {
     super.onReady();
     bfYesRegDevice = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesRegDevice"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesRegDevice'),
+      label: 'Ya',
       onClick: () {},
     );
   }

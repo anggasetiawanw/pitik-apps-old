@@ -38,15 +38,15 @@ class _SplashActivityState extends State<SplashActivity> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var permissionGPS = await Permission.location.request();
+      final permissionGPS = await Permission.location.request();
       if (Platform.isIOS) {
         // GpsUtil.on();
       } else {
         // var permissionPhoneAccess = await handlePermissionPhoneAccess();
         if (permissionGPS.isDenied) {
-          Get.snackbar("Alert", "This Apps Need Location Permission", duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
+          Get.snackbar('Alert', 'This Apps Need Location Permission', duration: const Duration(seconds: 5), snackPosition: SnackPosition.BOTTOM, colorText: Colors.white, backgroundColor: GlobalVar.red);
         } else if (await Permission.locationWhenInUse.isDenied) {
-          Get.snackbar("Info", "Enable Location, Please!", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
+          Get.snackbar('Info', 'Enable Location, Please!', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
         } /*else if(!permissionPhoneAccess) {
                     Get.snackbar("Alert", "Enable Phone Access, Please!", snackPosition: SnackPosition.BOTTOM,
                         duration: const Duration(seconds: 5), colorText: Colors.white, backgroundColor: GlobalVar.red);
@@ -59,32 +59,32 @@ class _SplashActivityState extends State<SplashActivity> {
       Timer(
         const Duration(seconds: 2),
         () async {
-          Auth? auth = await AuthImpl().get();
-          Profile? userProfile = await ProfileImpl().get();
+          final Auth? auth = await AuthImpl().get();
+          final Profile? userProfile = await ProfileImpl().get();
           XAppId? xAppId = await XAppIdImpl().get();
           if (auth == null || userProfile == null) {
             isFirstRun = prefs.then((SharedPreferences prefs) {
               return prefs.getBool('isFirstRun') ?? true;
             });
             if (await isFirstRun) {
-              Get.offNamed(RoutePage.onBoardingPage);
+              await Get.offNamed(RoutePage.onBoardingPage);
             } else {
-              Get.offNamed(RoutePage.loginPage);
+              await Get.offNamed(RoutePage.loginPage);
             }
           } else {
             GlobalVar.auth = auth;
             GlobalVar.profileUser = userProfile;
-            String appId = FirebaseRemoteConfig.instance.getString("appId");
+            final String appId = FirebaseRemoteConfig.instance.getString('appId');
             if (xAppId != null && (appId.isNotEmpty && xAppId.appId != appId)) {
               xAppId.appId = appId;
-              XAppIdImpl().save(xAppId);
+              await XAppIdImpl().save(xAppId);
               GlobalVar.xAppId = xAppId.appId;
             } else if (xAppId != null) {
               GlobalVar.xAppId = xAppId.appId;
             } else {
               xAppId = XAppId();
               xAppId.appId = appId;
-              XAppIdImpl().save(xAppId);
+              await XAppIdImpl().save(xAppId);
               GlobalVar.xAppId = appId;
             }
 
@@ -92,9 +92,9 @@ class _SplashActivityState extends State<SplashActivity> {
               return prefs.getBool('isFirstLogin') ?? true;
             });
             if (await isFirstLogin) {
-              Get.toNamed(RoutePage.privacyPage, arguments: true);
+              await Get.toNamed(RoutePage.privacyPage, arguments: true);
             } else {
-              Get.offNamed(RoutePage.homePage);
+              await Get.offNamed(RoutePage.homePage);
             }
           }
         },
@@ -111,7 +111,7 @@ class _SplashActivityState extends State<SplashActivity> {
         child: SizedBox(
           height: 192,
           width: 192,
-          child: SvgPicture.asset("images/white_logo.svg"),
+          child: SvgPicture.asset('images/white_logo.svg'),
         ),
       ),
     );

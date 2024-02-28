@@ -2,7 +2,7 @@ import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/profile/privacy_screen_controller.dart';
+import 'privacy_screen_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -53,7 +53,7 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Kebijakan Privasi",
+          'Kebijakan Privasi',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -76,7 +76,7 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                 children: [
                   Center(
                     child: Text(
-                      "Kebijakan Privasi\nPitik Digital Indonesia",
+                      'Kebijakan Privasi\nPitik Digital Indonesia',
                       style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                       textAlign: TextAlign.center,
                     ),
@@ -85,7 +85,7 @@ class PrivacyScreen extends GetView<PrivacyScreenController> {
                     margin: const EdgeInsets.only(top: 4),
                     child: Center(
                       child: Text(
-                        "Terakhir di perbarui 17 Des 2022 - 10:00",
+                        'Terakhir di perbarui 17 Des 2022 - 10:00',
                         style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
                       ),
                     ),

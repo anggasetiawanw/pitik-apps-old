@@ -26,15 +26,15 @@ class OnBoarding extends GetView<OnBoardingController> {
           children: [
             Row(
               children: [
-                Obx(() => controller.boardingIndeks.value == 0 ? SvgPicture.asset("images/dot_elipse_orange.svg") : SvgPicture.asset("images/dot_grey.svg")),
+                Obx(() => controller.boardingIndeks.value == 0 ? SvgPicture.asset('images/dot_elipse_orange.svg') : SvgPicture.asset('images/dot_grey.svg')),
                 const SizedBox(
                   width: 5,
                 ),
-                Obx(() => controller.boardingIndeks.value == 1 ? SvgPicture.asset("images/dot_elipse_orange.svg") : SvgPicture.asset("images/dot_grey.svg")),
+                Obx(() => controller.boardingIndeks.value == 1 ? SvgPicture.asset('images/dot_elipse_orange.svg') : SvgPicture.asset('images/dot_grey.svg')),
                 const SizedBox(
                   width: 5,
                 ),
-                Obx(() => controller.boardingIndeks.value == 2 ? SvgPicture.asset("images/dot_elipse_orange.svg") : SvgPicture.asset("images/dot_grey.svg")),
+                Obx(() => controller.boardingIndeks.value == 2 ? SvgPicture.asset('images/dot_elipse_orange.svg') : SvgPicture.asset('images/dot_grey.svg')),
               ],
             ),
             Obx(() => controller.boardingIndeks.value < 2
@@ -45,8 +45,8 @@ class OnBoarding extends GetView<OnBoardingController> {
                     },
                     child: Row(
                       children: [
-                        const Text("Lewati"),
-                        SvgPicture.asset("images/arrow_right_black.svg"),
+                        const Text('Lewati'),
+                        SvgPicture.asset('images/arrow_right_black.svg'),
                       ],
                     ),
                   )
@@ -104,10 +104,10 @@ class OnBoarding extends GetView<OnBoardingController> {
                     children: [
                       const SizedBox(height: 60),
                       Obx(() => controller.boardingIndeks.value == 0
-                          ? Image.asset("images/onboarding_1.png")
+                          ? Image.asset('images/onboarding_1.png')
                           : controller.boardingIndeks.value == 1
-                              ? Image.asset("images/onboarding_2.png")
-                              : Image.asset("images/onboarding_3.png")),
+                              ? Image.asset('images/onboarding_2.png')
+                              : Image.asset('images/onboarding_3.png')),
                     ],
                   ),
                 ),
@@ -116,18 +116,18 @@ class OnBoarding extends GetView<OnBoardingController> {
                   children: [
                     const SizedBox(height: 420),
                     Obx(() => controller.boardingIndeks.value == 0
-                        ? Text("Pemantauan Real-time", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)
+                        ? Text('Pemantauan Real-time', style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)
                         : controller.boardingIndeks.value == 1
-                            ? Text("Kontrol Jarak Jauh", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)
-                            : Text("Notifikasi Penting", style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
+                            ? Text('Kontrol Jarak Jauh', style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)
+                            : Text('Notifikasi Penting', style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
                     const SizedBox(height: 16),
                     Obx(() => controller.boardingIndeks.value == 0
-                        ? Text("Dapatkan pemantauan langsung dari kandang ternak Anda kapan saja dan di mana saja. Pantau kondisi lingkungan, suhu, kelembaban, dan lainnya secara real-time.",
+                        ? Text('Dapatkan pemantauan langsung dari kandang ternak Anda kapan saja dan di mana saja. Pantau kondisi lingkungan, suhu, kelembaban, dan lainnya secara real-time.',
                             style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.normal), textAlign: TextAlign.center)
                         : controller.boardingIndeks.value == 1
-                            ? Text(" Melalui aplikasi ini, Anda bisa mengontrol berbagai aspek kandang seperti pemberian pakan, pengaturan suhu, pencahayaan, dan lainnya secara jarak jauh.",
+                            ? Text(' Melalui aplikasi ini, Anda bisa mengontrol berbagai aspek kandang seperti pemberian pakan, pengaturan suhu, pencahayaan, dan lainnya secara jarak jauh.',
                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.normal), textAlign: TextAlign.center)
-                            : Text("Tetap up-to-date dengan status kandang Anda melalui notifikasi langsung ke ponsel Anda. Dapatkan pemberitahuan tentang perubahan suhu yang tiba-tiba, level pakan yang rendah, dan informasi penting lainnya.",
+                            : Text('Tetap up-to-date dengan status kandang Anda melalui notifikasi langsung ke ponsel Anda. Dapatkan pemberitahuan tentang perubahan suhu yang tiba-tiba, level pakan yang rendah, dan informasi penting lainnya.',
                                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.normal), textAlign: TextAlign.center)),
                     const SizedBox(height: 20),
                     bottomNavBar(),

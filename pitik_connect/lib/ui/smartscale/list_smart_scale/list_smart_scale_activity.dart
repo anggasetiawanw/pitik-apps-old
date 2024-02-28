@@ -22,13 +22,13 @@ import 'list_smart_scale_controller.dart';
 
 class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
   final DateTimeField dateFilter = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("filterListSmartScale"),
-      label: "Pilih Tanggal",
-      hint: "2023/08/15",
-      alertText: "Tanggal harus pilih..!",
+      controller: GetXCreator.putDateTimeFieldController('filterListSmartScale'),
+      label: 'Pilih Tanggal',
+      hint: '2023/08/15',
+      alertText: 'Tanggal harus pilih..!',
       flag: DateTimeField.DATE_FLAG,
       onDateTimeSelected: (dateTime, dateField) {
-        dateField.controller.setTextSelected("${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}");
+        dateField.controller.setTextSelected('${Convert.getYear(dateTime)}-${Convert.getMonthNumber(dateTime)}-${Convert.getDay(dateTime)}');
       });
 
   @override
@@ -64,9 +64,9 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(height: 17),
-                                      Text("Belum ada data timbang pada lantai ini", textAlign: TextAlign.center, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium))
+                                      Text('Belum ada data timbang pada lantai ini', textAlign: TextAlign.center, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium))
                                     ],
                                   ),
                                 )
@@ -87,9 +87,9 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
   Widget filterContainer(BuildContext context) => Padding(
       padding: const EdgeInsets.only(left: 16, right: 16),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text("Daftar Timbang", style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+        Text('Daftar Timbang', style: GlobalVar.subTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
         GestureDetector(
-            child: SvgPicture.asset("images/filter_orange_icon.svg", width: 36, height: 36),
+            child: SvgPicture.asset('images/filter_orange_icon.svg', width: 36, height: 36),
             onTap: () => showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
@@ -106,15 +106,15 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                           Padding(padding: const EdgeInsets.only(top: 16), child: Container(width: 60, height: 4, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: GlobalVar.outlineColor))),
                           Padding(
                               padding: const EdgeInsets.only(top: 24, bottom: 24),
-                              child: Align(alignment: Alignment.centerLeft, child: Text("Filter Daftar Timbang", style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
+                              child: Align(alignment: Alignment.centerLeft, child: Text('Filter Daftar Timbang', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
                           dateFilter,
                           Padding(
                               padding: const EdgeInsets.only(top: 32, bottom: 32),
                               child: ButtonFill(
-                                  controller: GetXCreator.putButtonFillController("buttonFilterListSmartScale"),
-                                  label: "Konfirmasi Filter",
+                                  controller: GetXCreator.putButtonFillController('buttonFilterListSmartScale'),
+                                  label: 'Konfirmasi Filter',
                                   onClick: () {
-                                    if (dateFilter.controller.textSelected.value == "") {
+                                    if (dateFilter.controller.textSelected.value == '') {
                                       dateFilter.controller.showAlert();
                                     } else {
                                       Navigator.pop(context);
@@ -131,7 +131,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
-        title: Text("Smart Scale", style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
+        title: Text('Smart Scale', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium)),
       );
 
   Widget bottomNavBar() => Align(
@@ -152,10 +152,10 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
               children: [
                 Expanded(
                     child: ButtonFill(
-                  controller: GetXCreator.putButtonFillController("ChickenWeightingButton"),
-                  label: "Timbang Ayam",
+                  controller: GetXCreator.putButtonFillController('ChickenWeightingButton'),
+                  label: 'Timbang Ayam',
                   onClick: () {
-                    GlobalVar.track("Click_button_timbang_ayam");
+                    GlobalVar.track('Click_button_timbang_ayam');
                     Get.toNamed(RoutePage.weighingSmartScalePage, arguments: [controller.coop])!.then((value) {
                       controller.isLoading.value = true;
                       controller.smartScaleList.clear();
@@ -177,7 +177,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
           controller: controller.scrollController,
           itemCount: controller.isLoadMore.isTrue ? controller.smartScaleList.length + 1 : controller.smartScaleList.length,
           itemBuilder: (context, index) {
-            int length = controller.smartScaleList.length;
+            final int length = controller.smartScaleList.length;
             if (index >= length) {
               return const Column(
                 children: [
@@ -198,7 +198,7 @@ class ListSmartScaleActivity extends GetView<ListSmartScaleController> {
                   smartScale: controller.smartScaleList[index],
                   indeksCamera: index,
                   onTap: () async {
-                    GlobalVar.track("Click_card_smart_scale_detail");
+                    GlobalVar.track('Click_card_smart_scale_detail');
                     await Get.toNamed(RoutePage.detailSmartScalePage, arguments: [controller.coop, controller.smartScaleList[index]!.id]);
 
                     controller.isLoading.value = true;

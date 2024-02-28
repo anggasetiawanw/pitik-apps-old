@@ -3,8 +3,8 @@ import 'package:components/global_var.dart';
 import 'package:engine/util/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/route.dart';
-import 'package:pitik_connect/ui/beranda/beranda_controller.dart';
+import 'route.dart';
+import 'ui/beranda/beranda_controller.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

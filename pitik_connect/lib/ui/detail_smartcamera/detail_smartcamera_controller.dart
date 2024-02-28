@@ -35,7 +35,7 @@ class DetailSmartCameraController extends GetxController {
   var isLoading = false.obs;
   var pageSmartCamera = 1.obs;
   var totalCamera = 0.obs;
-  var deviceUpdatedName = "".obs;
+  var deviceUpdatedName = ''.obs;
   var limit = 10.obs;
   late Device device;
   late Coop coop;
@@ -54,15 +54,15 @@ class DetailSmartCameraController extends GetxController {
   }
 
   late ButtonFill bfTakePicture = ButtonFill(
-    controller: GetXCreator.putButtonFillController("takePicture"),
-    label: "Ambil Gambar",
+    controller: GetXCreator.putButtonFillController('takePicture'),
+    label: 'Ambil Gambar',
     onClick: () {},
   );
   @override
   void onInit() {
     super.onInit();
     timeStart = DateTime.now();
-    GlobalVar.track("Open_smart_camera_page");
+    GlobalVar.track('Open_smart_camera_page');
     device = Get.arguments[0];
     coop = Get.arguments[1];
     isLoading.value = true;
@@ -92,15 +92,15 @@ class DetailSmartCameraController extends GetxController {
                 }
                 totalCamera.value = sensorCameras.value.length;
               }
-              DateTime timeEnd = DateTime.now();
-              GlobalVar.sendRenderTimeMixpanel("Open_smart_camera_page", timeStart, timeEnd);
+              final DateTime timeEnd = DateTime.now();
+              GlobalVar.sendRenderTimeMixpanel('Open_smart_camera_page', timeStart, timeEnd);
               isLoading.value = false;
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -143,16 +143,16 @@ class DetailSmartCameraController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = false;
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
             },
             onTokenInvalid: () => GlobalVar.invalidResponse()),
       );
     } catch (e, st) {
-      Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+      Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
     }
   }
 }

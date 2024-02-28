@@ -22,12 +22,12 @@ class PrivacyScreenController extends GetxController {
   var showBtnApprove = false.obs;
 
   late ButtonFill bfAgree = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfAgree"),
-    label: "Saya Setuju",
+    controller: GetXCreator.putButtonFillController('bfAgree'),
+    label: 'Saya Setuju',
     onClick: () async {
       final SharedPreferences pref = await prefs;
       isFirstLogin = pref.setBool('isFirstLogin', false);
-      Get.offAllNamed(RoutePage.homePage);
+      await Get.offAllNamed(RoutePage.homePage);
     },
   );
   scrollListener() async {

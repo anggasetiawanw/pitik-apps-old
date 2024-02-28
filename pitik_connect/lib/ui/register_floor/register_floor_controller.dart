@@ -43,15 +43,15 @@ class RegisterFloorController extends GetxController {
   late ButtonFill bfYesRegBuilding;
   late ButtonOutline boNoRegBuilding;
   late SpinnerField spBuilding = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("spBuilding"),
-      label: "Kandang",
-      hint: "Pilih Salah Satu",
-      alertText: "Kandang harus dipilih!",
+      controller: GetXCreator.putSpinnerFieldController('spBuilding'),
+      label: 'Kandang',
+      hint: 'Pilih Salah Satu',
+      alertText: 'Kandang harus dipilih!',
       items: const {},
       onSpinnerSelected: (value) {
-        if (value != "") {
-          Coop? selectedCoop = coops.value.firstWhere((element) => element.name! == value);
-          getDetailCoop(selectedCoop);
+        if (value != '') {
+          final Coop? selectedCoop = coops.value.firstWhere((element) => element.name! == value);
+          getDetailCoop(selectedCoop!);
         }
       });
 
@@ -61,18 +61,18 @@ class RegisterFloorController extends GetxController {
   void onInit() {
     super.onInit();
     timeStart = DateTime.now();
-    GlobalVar.track("Open_form_lantai_page");
-    cardFloor = CardFloor(controller: GetXCreator.putCardFloorController("cardFloorController", context));
+    GlobalVar.track('Open_form_lantai_page');
+    cardFloor = CardFloor(controller: GetXCreator.putCardFloorController('cardFloorController', context));
     boNoRegBuilding = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoRegBuilding"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoRegBuilding'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesRegBuilding = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesRegBuilding"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesRegBuilding'),
+      label: 'Ya',
       onClick: () {
         addRooms();
       },
@@ -83,7 +83,7 @@ class RegisterFloorController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    Get.find<CardFloorController>(tag: "cardFloorController").numberList.listen((p0) {
+    Get.find<CardFloorController>(tag: 'cardFloorController').numberList.listen((p0) {
       // generateListProduct(p0);
     });
     cardFloor.controller.visibleCard();
@@ -110,20 +110,20 @@ class RegisterFloorController extends GetxController {
                   coops.value.add(result as Coop);
                 }
               }
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var product in body.data) {
                 mapList[product!.name!] = false;
               }
               spBuilding.controller.generateItems(mapList);
               isLoading.value = false;
-              DateTime timeEnd = DateTime.now();
-              GlobalVar.sendRenderTimeMixpanel("Open_create_floor", timeStart, timeEnd);
+              final DateTime timeEnd = DateTime.now();
+              GlobalVar.sendRenderTimeMixpanel('Open_create_floor', timeStart, timeEnd);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -151,7 +151,7 @@ class RegisterFloorController extends GetxController {
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               detailCoop = (body as CoopDetailResponse).data!;
-              if ((body).data!.rooms!.isNotEmpty) {
+              if (body.data!.rooms!.isNotEmpty) {
                 rooms.value.clear();
                 for (var result in body.data!.rooms!) {
                   rooms.value.add(result as Room);
@@ -162,8 +162,8 @@ class RegisterFloorController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -194,12 +194,12 @@ class RegisterFloorController extends GetxController {
   /// to modify infrastructure, and handles the response accordingly.
   void addRooms() {
     Get.back();
-    List ret = validation();
+    final List ret = validation();
     if (ret[0]) {
       isLoading.value = true;
       timeStart = DateTime.now();
       try {
-        Coop payload = generatePayload();
+        final Coop payload = generatePayload();
         Service.push(
           service: ListApi.modifyInfrastructure,
           context: context,
@@ -208,48 +208,48 @@ class RegisterFloorController extends GetxController {
               onResponseDone: (code, message, body, id, packet) {
                 Get.offAllNamed(RoutePage.homePage);
                 isLoading.value = false;
-                DateTime timeEnd = DateTime.now();
-                GlobalVar.sendRenderTimeMixpanel("Create_floor", timeStart, timeEnd);
+                final DateTime timeEnd = DateTime.now();
+                GlobalVar.sendRenderTimeMixpanel('Create_floor', timeStart, timeEnd);
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     } else {
       if (ret[1] != null) {
         if ((ret[1] as String).isNotEmpty) {
-          Get.snackbar("Pesan", "Duplikat Item Produk, ${ret[1]}", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+          Get.snackbar('Pesan', 'Duplikat Item Produk, ${ret[1]}', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
         }
       }
     }
   }
 
   List validation() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (spBuilding.controller.textSelected.value.isEmpty) {
       spBuilding.controller.showAlert();
       Scrollable.ensureVisible(spBuilding.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
     ret = cardFloor.controller.validation();
     return ret;
   }
 
   Coop generatePayload() {
-    List<Room?> rooms = [];
+    final List<Room?> rooms = [];
     for (int i = 0; i < cardFloor.controller.itemCount.value; i++) {
-      int whichItem = cardFloor.controller.index.value[i];
-      rooms.add(Room(name: cardFloor.controller.efFloorName.value[whichItem].getInput(), level: (i + 1)));
+      final int whichItem = cardFloor.controller.index.value[i];
+      rooms.add(Room(name: cardFloor.controller.efFloorName.value[whichItem].getInput(), level: i + 1));
     }
     return Coop(coopName: spBuilding.controller.textSelected.value, coopType: detailCoop.coopType, rooms: rooms, farmId: GlobalVar.farm!.id);
   }

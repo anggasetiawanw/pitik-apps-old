@@ -36,13 +36,13 @@ class ResetTimeController extends GetxController {
   late ButtonFill bfSaveResetTime;
   late ButtonFill bfEditResetTime;
   late DateTimeField dtfLampReset = DateTimeField(
-      controller: GetXCreator.putDateTimeFieldController("dtfLampReset"),
-      label: "Waktu",
-      hint: "00:00:00",
+      controller: GetXCreator.putDateTimeFieldController('dtfLampReset'),
+      label: 'Waktu',
+      hint: '00:00:00',
       flag: DateTimeField.TIME_FLAG,
-      alertText: "Durasi Nyala harus di isi",
+      alertText: 'Durasi Nyala harus di isi',
       onDateTimeSelected: (DateTime time, dateField) {
-        dtfLampReset.controller.setTextSelected("${time.hour}:${time.minute}:${time.second}");
+        dtfLampReset.controller.setTextSelected('${time.hour}:${time.minute}:${time.second}');
       });
 
   @override
@@ -52,28 +52,28 @@ class ResetTimeController extends GetxController {
     device = Get.arguments[0];
     controllerData = Get.arguments[1];
     boNoResetTime = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("boNoResetTime"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('boNoResetTime'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
     );
     bfYesResetTime = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfYesResetTime"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('bfYesResetTime'),
+      label: 'Ya',
       onClick: () {
         resetTime();
       },
     );
 
     bfSaveResetTime = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfSaveResetTime"),
-      label: "Simpan",
+      controller: GetXCreator.putButtonFillController('bfSaveResetTime'),
+      label: 'Simpan',
       onClick: () {},
     );
     bfEditResetTime = ButtonFill(
-      controller: GetXCreator.putButtonFillController("bfEditResetTime"),
-      label: "Edit",
+      controller: GetXCreator.putButtonFillController('bfEditResetTime'),
+      label: 'Edit',
       onClick: () {},
     );
     loadData(controllerData);
@@ -83,15 +83,15 @@ class ResetTimeController extends GetxController {
   /// handles the response accordingly.
   void resetTime() {
     Get.back();
-    List ret = validationEdit();
+    final List ret = validationEdit();
     if (ret[0]) {
       isLoading.value = true;
       try {
-        DeviceSetting payload = generatePayloadResetTime();
+        final DeviceSetting payload = generatePayloadResetTime();
         Service.push(
           service: ListApi.setController,
           context: context,
-          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', "alarm", device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
+          body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId, ListApi.pathSetController('v2/b2b/iot-devices/smart-controller/coop/', 'alarm', device.deviceSummary!.coopCodeId!), Mapper.asJsonString(payload)],
           listener: ResponseListener(
               onResponseDone: (code, message, body, id, packet) {
                 Get.back();
@@ -99,16 +99,16 @@ class ResetTimeController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 isLoading.value = false;
-                Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+                Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
               },
               onTokenInvalid: () => GlobalVar.invalidResponse()),
         );
       } catch (e, st) {
-        Get.snackbar("ERROR", "Error : $e \n Stacktrace->$st", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
+        Get.snackbar('ERROR', 'Error : $e \n Stacktrace->$st', snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5), backgroundColor: const Color(0xFFFF0000), colorText: Colors.white);
       }
     }
   }
@@ -121,12 +121,12 @@ class ResetTimeController extends GetxController {
   /// first element is a boolean value (`true` or `false`) and the second element
   /// is an empty string (`""`).
   List validationEdit() {
-    List ret = [true, ""];
+    List ret = [true, ''];
 
     if (dtfLampReset.getLastTimeSelectedText().isEmpty) {
       dtfLampReset.controller.showAlert();
       Scrollable.ensureVisible(dtfLampReset.controller.formKey.currentContext!);
-      return ret = [false, ""];
+      return ret = [false, ''];
     }
 
     return ret;
@@ -148,7 +148,7 @@ class ResetTimeController extends GetxController {
   ///   controllerData (ControllerData): An object of type ControllerData, which
   /// contains information about the controller's online time.
   void loadData(ControllerData controllerData) {
-    dtfLampReset.controller.setTextSelected("${controllerData.onlineTime}");
+    dtfLampReset.controller.setTextSelected('${controllerData.onlineTime}');
     if (isEdit.isTrue) {
       dtfLampReset.controller.enable();
     } else {

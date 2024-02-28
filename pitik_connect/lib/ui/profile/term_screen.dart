@@ -25,7 +25,7 @@ class TermScreen extends StatelessWidget {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Syarat & Ketentuan",
+          'Syarat & Ketentuan',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -45,7 +45,7 @@ class TermScreen extends StatelessWidget {
             children: [
               Center(
                 child: Text(
-                  "Syarat & Ketentuan\nPitik Digital Indonesia",
+                  'Syarat & Ketentuan\nPitik Digital Indonesia',
                   style: GlobalVar.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
@@ -54,7 +54,7 @@ class TermScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 4),
                 child: Center(
                   child: Text(
-                    "Terakhir di perbarui 20 Des 2022 - 10:00",
+                    'Terakhir di perbarui 20 Des 2022 - 10:00',
                     style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
                   ),
                 ),

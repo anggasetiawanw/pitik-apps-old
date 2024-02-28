@@ -17,7 +17,7 @@ class HeaterSetup extends GetView<HeaterSetupController> {
 
   @override
   Widget build(BuildContext context) {
-    HeaterSetupController controller = Get.put(HeaterSetupController(context: context));
+    final HeaterSetupController controller = Get.put(HeaterSetupController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -32,7 +32,7 @@ class HeaterSetup extends GetView<HeaterSetupController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Pemanas",
+          'Pemanas',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -58,15 +58,15 @@ class HeaterSetup extends GetView<HeaterSetupController> {
                     Expanded(
                       child: Obx(() => controller.isEdit.isTrue
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfSaveHeaterSetup"),
-                              label: "Simpan",
+                              controller: GetXCreator.putButtonFillController('bfSaveHeaterSetup'),
+                              label: 'Simpan',
                               onClick: () {
                                 showBottomDialog(context, controller);
                               },
                             )
                           : ButtonFill(
-                              controller: GetXCreator.putButtonFillController("bfEditHeaterSetup"),
-                              label: "Edit",
+                              controller: GetXCreator.putButtonFillController('bfEditHeaterSetup'),
+                              label: 'Edit',
                               onClick: () {
                                 controller.isEdit.value = true;
                                 controller.isLoading.value = true;
@@ -112,7 +112,7 @@ class HeaterSetup extends GetView<HeaterSetupController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, HeaterSetupController controller) {
+  Future showBottomDialog(BuildContext context, HeaterSetupController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -143,18 +143,18 @@ class HeaterSetup extends GetView<HeaterSetupController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

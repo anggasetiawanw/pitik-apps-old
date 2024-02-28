@@ -31,7 +31,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
     _getAppVersion();
   }
 
-  void _getAppVersion() async {
+  Future<void> _getAppVersion() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     final version = packageInfo.version;
@@ -60,7 +60,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              "images/pitik_avatar.svg",
+              'images/pitik_avatar.svg',
               width: 64,
               height: 64,
             ),
@@ -71,7 +71,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${GlobalVar.profileUser!.name}",
+                  '${GlobalVar.profileUser!.name}',
                   style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold, fontSize: 16),
                   overflow: TextOverflow.clip,
                 ),
@@ -79,7 +79,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                   height: 4,
                 ),
                 Text(
-                  "${GlobalVar.profileUser!.role}",
+                  '${GlobalVar.profileUser!.role}',
                   style: GlobalVar.greyTextStyle.copyWith(fontSize: 12),
                   overflow: TextOverflow.clip,
                 ),
@@ -93,14 +93,14 @@ class _ProfileActivityState extends State<ProfileActivity> {
     Widget header() {
       return Stack(
         children: [
-          SizedBox(width: Get.width, child: Image.asset("images/header_bg.png")),
+          SizedBox(width: Get.width, child: Image.asset('images/header_bg.png')),
           Container(
             margin: const EdgeInsets.only(left: 16, right: 16, top: 42),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Selamat Datang\nDi Pitik Connect!",
+                  'Selamat Datang\nDi Pitik Connect!',
                   style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
                 ),
                 // Container(
@@ -154,7 +154,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 title,
                 style: GlobalVar.blackTextStyle.copyWith(fontSize: 14),
               ),
-              if (title != "Logout") ...[const Spacer(), SvgPicture.asset("images/arrow_profile.svg")]
+              if (title != 'Logout') ...[const Spacer(), SvgPicture.asset('images/arrow_profile.svg')]
             ],
           ),
         ),
@@ -178,20 +178,20 @@ class _ProfileActivityState extends State<ProfileActivity> {
                       thickness: 1.6,
                     ),
                   ),
-                  listComponent(() => Get.toNamed(RoutePage.changePassPage, arguments: false), "images/key_icon.svg", "Ubah Kata Sandi"),
-                  listComponent(() => Get.toNamed(RoutePage.privacyPage, arguments: false), "images/privacy.svg", "Kebijakan Privasi"),
-                  listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
-                  listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
-                  listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
-                  listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
-                  listComponent(() => GlobalVar.invalidResponse(), "images/logout_icon.svg", "Logout"),
+                  listComponent(() => Get.toNamed(RoutePage.changePassPage, arguments: false), 'images/key_icon.svg', 'Ubah Kata Sandi'),
+                  listComponent(() => Get.toNamed(RoutePage.privacyPage, arguments: false), 'images/privacy.svg', 'Kebijakan Privasi'),
+                  listComponent(() => Get.toNamed(RoutePage.termPage), 'images/term.svg', 'Syarat & Ketentuan'),
+                  listComponent(() => Get.toNamed(RoutePage.aboutUsPage), 'images/about_us.svg', 'Tentang Kami'),
+                  listComponent(() => Get.toNamed(RoutePage.helpPage), 'images/help.svg', 'Bantuan'),
+                  listComponent(() => Get.toNamed(RoutePage.licensePage), 'images/license.svg', 'Lisensi'),
+                  listComponent(() => GlobalVar.invalidResponse(), 'images/logout_icon.svg', 'Logout'),
                   const SizedBox(
                     height: 16,
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      "V $_version",
+                      'V $_version',
                       style: GlobalVar.greyTextStyle,
                     ),
                   ),

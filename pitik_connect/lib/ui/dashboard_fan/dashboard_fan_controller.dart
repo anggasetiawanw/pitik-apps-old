@@ -28,22 +28,22 @@ class DashboardFanController extends GetxController {
   late ControllerData controllerData;
 
   late ButtonOutline boAddDevice = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("boAddDevice"),
-    label: "Tambah Alat",
+    controller: GetXCreator.putButtonOutlineController('boAddDevice'),
+    label: 'Tambah Alat',
     onClick: () {
       Get.toNamed(RoutePage.registerDevicePage);
     },
   );
 
   late ButtonOutline boOrderDevice = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("boPesanAlat"),
-    label: "Pesan Alat",
+    controller: GetXCreator.putButtonOutlineController('boPesanAlat'),
+    label: 'Pesan Alat',
     onClick: () {},
   );
 
   late ButtonFill bfAddCoop = ButtonFill(
-    controller: GetXCreator.putButtonFillController("bfAddCoop"),
-    label: "Buat Kandang",
+    controller: GetXCreator.putButtonFillController('bfAddCoop'),
+    label: 'Buat Kandang',
     onClick: () {
       Get.toNamed(RoutePage.createCoopPage);
     },
@@ -64,11 +64,11 @@ class DashboardFanController extends GetxController {
     Service.push(
         service: ListApi.getFanData,
         context: context,
-        body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', "fan", device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
+        body: [GlobalVar.auth!.token!, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDeviceData('v2/b2b/iot-devices/smart-controller/coop/', 'fan', device.deviceSummary!.coopCodeId!, device.deviceSummary!.deviceId!)],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as FanListResponse).data!.isNotEmpty) {
-                for (var result in (body).data!) {
+                for (var result in body.data!) {
                   fans.value.add(result as DeviceSetting);
                 }
               }
@@ -77,8 +77,8 @@ class DashboardFanController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -86,8 +86,8 @@ class DashboardFanController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

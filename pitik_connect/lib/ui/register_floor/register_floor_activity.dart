@@ -5,7 +5,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_connect/ui/register_floor/register_floor_controller.dart';
+import 'register_floor_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -16,7 +16,7 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
 
   @override
   Widget build(BuildContext context) {
-    RegisterFloorController controller = Get.put(RegisterFloorController(context: context));
+    final RegisterFloorController controller = Get.put(RegisterFloorController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -31,7 +31,7 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Buat Lantai",
+          'Buat Lantai',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -56,10 +56,10 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveDevice"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveDevice'),
+                      label: 'Simpan',
                       onClick: () {
-                        GlobalVar.track("Click_simpan_lantai");
+                        GlobalVar.track('Click_simpan_lantai');
                         showBottomDialog(context, controller);
                       },
                     )),
@@ -93,7 +93,7 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
                             height: 18,
                           ),
                           const Text(
-                            "Detail Lantai",
+                            'Detail Lantai',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                           controller.cardFloor,
@@ -109,7 +109,7 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, RegisterFloorController controller) {
+  Future showBottomDialog(BuildContext context, RegisterFloorController controller) {
     return showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
@@ -140,18 +140,18 @@ class RegisterFLoor extends GetView<RegisterFloorController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/ask_bottom_sheet_1.svg",
+                    'images/ask_bottom_sheet_1.svg',
                   ),
                 ),
                 Container(

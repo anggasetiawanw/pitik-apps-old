@@ -34,7 +34,7 @@ class ForgetPassword extends GetView<ForgetPasswordController> {
         backgroundColor: GlobalVar.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Lupa Kata Sandi",
+          'Lupa Kata Sandi',
           style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium),
         ),
       );
@@ -59,8 +59,8 @@ class ForgetPassword extends GetView<ForgetPasswordController> {
                   children: [
                     Expanded(
                         child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveChangePassword"),
-                      label: "Kirim",
+                      controller: GetXCreator.putButtonFillController('saveChangePassword'),
+                      label: 'Kirim',
                       onClick: () {
                         if (controller.validation()) {
                           controller.openWhatsApp();
@@ -82,7 +82,7 @@ class ForgetPassword extends GetView<ForgetPasswordController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Ada masalah ?",
+                'Ada masalah ?',
                 style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
               ),
               GestureDetector(
@@ -90,7 +90,7 @@ class ForgetPassword extends GetView<ForgetPasswordController> {
                     Get.toNamed(RoutePage.helpPage);
                   },
                   child: Text(
-                    "Bantuan",
+                    'Bantuan',
                     style: GlobalVar.primaryTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                   )),
               const SizedBox(
@@ -120,12 +120,12 @@ class ForgetPassword extends GetView<ForgetPasswordController> {
                         height: 64,
                       ),
                       Text(
-                        "Jangan Sampai Lupa!",
+                        'Jangan Sampai Lupa!',
                         style: GlobalVar.primaryTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "Masukan nomor hp kamu pada di kolom bawah untuk konfirmasi lupa kata sandi.",
+                        'Masukan nomor hp kamu pada di kolom bawah untuk konfirmasi lupa kata sandi.',
                         style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium),
                       ),
                       const SizedBox(
