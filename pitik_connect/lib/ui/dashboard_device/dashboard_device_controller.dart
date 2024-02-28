@@ -1,4 +1,3 @@
-
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/edit_field/edit_field.dart';
 import 'package:components/get_x_creator.dart';
@@ -19,134 +18,122 @@ import 'package:model/response/room_detail_response.dart';
 ///@create date 14/07/23
 
 class DashboardDeviceController extends GetxController {
-    BuildContext context;
-    DashboardDeviceController({required this.context});
+  BuildContext context;
+  DashboardDeviceController({required this.context});
 
-    ScrollController scrollController = ScrollController();
-    Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
-    Rx<List<Device>> smartMonitordevices = Rx<List<Device>>([]);
-    Rx<List<Device>> smartControllerdevices = Rx<List<Device>>([]);
-    Rx<List<Device>> smartCameradevices = Rx<List<Device>>([]);
-    Rx<List<Device>> smartScaledevices = Rx<List<Device>>([]);
+  ScrollController scrollController = ScrollController();
+  Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
+  Rx<List<Device>> smartMonitordevices = Rx<List<Device>>([]);
+  Rx<List<Device>> smartControllerdevices = Rx<List<Device>>([]);
+  Rx<List<Device>> smartCameradevices = Rx<List<Device>>([]);
+  Rx<List<Device>> smartScaledevices = Rx<List<Device>>([]);
 
-    var isLoadMore = false.obs;
-    var pageSmartMonitor = 1.obs;
-    var pageSmartController = 1.obs;
-    var pageSmartCamera = 1.obs;
-    var limit = 10.obs;
-    late DateTime timeStart;
+  var isLoadMore = false.obs;
+  var pageSmartMonitor = 1.obs;
+  var pageSmartController = 1.obs;
+  var pageSmartCamera = 1.obs;
+  var limit = 10.obs;
+  late DateTime timeStart;
 
-    late Coop coop;
-    late Coop coopDetail;
+  late Coop coop;
+  late Coop coopDetail;
 
-    ScrollController scrollMonitorController = ScrollController();
-    ScrollController scrollSmartConController = ScrollController();
-    ScrollController scrollCameraController = ScrollController();
-    ScrollController scrollScaleController = ScrollController();
+  ScrollController scrollMonitorController = ScrollController();
+  ScrollController scrollSmartConController = ScrollController();
+  ScrollController scrollCameraController = ScrollController();
+  ScrollController scrollScaleController = ScrollController();
 
-    var isLoading = false.obs;
+  var isLoading = false.obs;
 
-    late EditField efBuildingName = EditField(
-        controller: GetXCreator.putEditFieldController("efBuildingName"),
-        label: "Kandang",
-        hint: "Ketik Disini",
-        alertText: "Nama Kandang",
-        textUnit: "",
-        inputType: TextInputType.text,
-        maxInput: 20,
-        onTyping: (value, control) {}
-    );
-    late SpinnerField spBuildingType = SpinnerField(
-        controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
-        label: "Jenis Kandang",
-        hint: "Pilih Salah Satu",
-        alertText: "Jenis Kandang harus dipilih!",
-        items: const {"Open House": false, "Semi House": false, "Close House": false},
-        onSpinnerSelected: (value) {
-        }
-    );
-    late ButtonFill bfCreateDevice = ButtonFill(
-        controller: GetXCreator.putButtonFillController("createDevice"),
-        label: "Tambah Alat", onClick: () {},
-    );
+  late EditField efBuildingName =
+      EditField(controller: GetXCreator.putEditFieldController("efBuildingName"), label: "Kandang", hint: "Ketik Disini", alertText: "Nama Kandang", textUnit: "", inputType: TextInputType.text, maxInput: 20, onTyping: (value, control) {});
+  late SpinnerField spBuildingType = SpinnerField(
+      controller: GetXCreator.putSpinnerFieldController("spBuildingType"),
+      label: "Jenis Kandang",
+      hint: "Pilih Salah Satu",
+      alertText: "Jenis Kandang harus dipilih!",
+      items: const {"Open House": false, "Semi House": false, "Close House": false},
+      onSpinnerSelected: (value) {});
+  late ButtonFill bfCreateDevice = ButtonFill(
+    controller: GetXCreator.putButtonFillController("createDevice"),
+    label: "Tambah Alat",
+    onClick: () {},
+  );
 
-    @override
-    void onInit() {
-        super.onInit();
-        GlobalVar.track("Open_lantai_page");
-        coop = Get.arguments;
-        isLoading.value = true;
-        getDetailRoom();
+  @override
+  void onInit() {
+    super.onInit();
+    GlobalVar.track("Open_lantai_page");
+    coop = Get.arguments;
+    isLoading.value = true;
+    getDetailRoom();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    if (!GlobalVar.canModifyInfrasturucture()) {
+      bfCreateDevice.controller.disable();
     }
+  }
 
-
-    @override
-    void onReady() {
-        super.onReady();
-        if(!GlobalVar.canModifyInfrasturucture()){
-            bfCreateDevice.controller.disable();
-        }
-    }
-
-    /// The function `getDetailRoom` retrieves the details of a room and populates
-    /// different lists based on the device type.
-    void getDetailRoom(){
-        timeStart = DateTime.now();
-        Service.push(
-            service: ListApi.getDetailRoom,
-            context: context,
-            body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDetailRoom(coop.id!, coop.room!.id!)],
-            listener: ResponseListener(
-                onResponseDone: (code, message, body, id, packet) {
-                    coopDetail = (body as RoomDetailResponse).data!;
-                    if (coopDetail.room!.devices.isNotEmpty){
-                        for (var result in body.data!.room!.devices) {
-                            if(result!.deviceType == "SMART_MONITORING") {
-                                smartMonitordevices.value.add(result);
-                            }
-                            if(result.deviceType == "SMART_CONTROLLER") {
-                                smartControllerdevices.value.add(result);
-                            }
-                            if(result.deviceType == "SMART_CAMERA") {
-                                smartCameradevices.value.add(result);
-                            }
-                            if (result.deviceType == "SMART_SCALE") {
-                                result.roomId = coopDetail.room!.id;
-                                smartScaledevices.value.add(result);
-                            }
-                        }
-                    }
-                    DateTime timeEnd = DateTime.now();
-                    GlobalVar.sendRenderTimeMixpanel("Open_dashboard_device", timeStart, timeEnd);
-                    isLoading.value = false;
-                },
-                onResponseFail: (code, message, body, id, packet) {
-                    isLoading.value = false;
-                    Get.snackbar(
-                        "Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                        snackPosition: SnackPosition.TOP,
-                        colorText: Colors.white,
-                        duration: const Duration(seconds: 5),
-                        backgroundColor: Colors.red,
-                    );
-                },
-                onResponseError: (exception, stacktrace, id, packet) {
-                    isLoading.value = false;
-
-                }, onTokenInvalid: () => GlobalVar.invalidResponse())
-        );
-    }
-
+  /// The function `getDetailRoom` retrieves the details of a room and populates
+  /// different lists based on the device type.
+  void getDetailRoom() {
+    timeStart = DateTime.now();
+    Service.push(
+        service: ListApi.getDetailRoom,
+        context: context,
+        body: [GlobalVar.auth!.token, GlobalVar.auth!.id, GlobalVar.xAppId!, ListApi.pathDetailRoom(coop.id!, coop.room!.id!)],
+        listener: ResponseListener(
+            onResponseDone: (code, message, body, id, packet) {
+              coopDetail = (body as RoomDetailResponse).data!;
+              if (coopDetail.room!.devices.isNotEmpty) {
+                for (var result in body.data!.room!.devices) {
+                  if (result!.deviceType == "SMART_MONITORING") {
+                    smartMonitordevices.value.add(result);
+                  }
+                  if (result.deviceType == "SMART_CONTROLLER") {
+                    smartControllerdevices.value.add(result);
+                  }
+                  if (result.deviceType == "SMART_CAMERA") {
+                    smartCameradevices.value.add(result);
+                  }
+                  if (result.deviceType == "SMART_SCALE") {
+                    result.roomId = coopDetail.room!.id;
+                    smartScaledevices.value.add(result);
+                  }
+                }
+              }
+              DateTime timeEnd = DateTime.now();
+              GlobalVar.sendRenderTimeMixpanel("Open_dashboard_device", timeStart, timeEnd);
+              isLoading.value = false;
+            },
+            onResponseFail: (code, message, body, id, packet) {
+              isLoading.value = false;
+              Get.snackbar(
+                "Pesan",
+                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                snackPosition: SnackPosition.TOP,
+                colorText: Colors.white,
+                duration: const Duration(seconds: 5),
+                backgroundColor: Colors.red,
+              );
+            },
+            onResponseError: (exception, stacktrace, id, packet) {
+              isLoading.value = false;
+            },
+            onTokenInvalid: () => GlobalVar.invalidResponse()));
+  }
 }
 
 class DashboardDeviceBindings extends Bindings {
-    BuildContext context;
+  BuildContext context;
 
-    DashboardDeviceBindings({required this.context});
+  DashboardDeviceBindings({required this.context});
 
-    @override
-    void dependencies() {
-        Get.lazyPut(() => DashboardDeviceController(context: context));
-    }
+  @override
+  void dependencies() {
+    Get.lazyPut(() => DashboardDeviceController(context: context));
+  }
 }
-

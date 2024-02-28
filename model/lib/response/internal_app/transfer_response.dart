@@ -3,15 +3,12 @@ import 'package:model/internal_app/transfer_model.dart';
 
 @SetupModel
 class TransferResponse {
-    int? code;
-    TransferModel? data;
+  int? code;
+  TransferModel? data;
 
-    TransferResponse({this.code, required this.data});
+  TransferResponse({this.code, required this.data});
 
-    static TransferResponse toResponseModel(Map<String, dynamic> map) {
-        return TransferResponse(
-            code: map['code'],
-            data: Mapper.child<TransferModel>(map['data'])
-        );
-    }
+  static TransferResponse toResponseModel(Map<String, dynamic> map) {
+    return TransferResponse(code: map['code'], data: Mapper.child<TransferModel>(map['data']));
+  }
 }

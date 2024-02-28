@@ -1,4 +1,3 @@
-
 import 'engine_library.dart';
 
 /*
@@ -7,18 +6,13 @@ import 'engine_library.dart';
 
 @SetupModel
 class ApproveCoop {
+  String? id;
+  String? farmingCycleId;
+  bool? isApproved;
 
-    String? id;
-    String? farmingCycleId;
-    bool? isApproved;
+  ApproveCoop({this.id, this.farmingCycleId, this.isApproved});
 
-    ApproveCoop({this.id, this.farmingCycleId, this.isApproved});
-
-    static ApproveCoop toResponseModel(Map<String, dynamic> map) {
-        return ApproveCoop(
-            id: map['id'],
-            farmingCycleId: map['farmingCycleId'],
-            isApproved: map['isApproved']
-        );
-    }
+  static ApproveCoop toResponseModel(Map<String, dynamic> map) {
+    return ApproveCoop(id: map['id'], farmingCycleId: map['farmingCycleId'], isApproved: map['isApproved']);
+  }
 }

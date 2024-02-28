@@ -10,8 +10,8 @@ import 'package:model/error/error.dart';
 import 'package:model/internal_app/category_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/product_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../api_mapping/list_api.dart';
+import '../../utils/constant.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -56,19 +56,19 @@ class SkuCardPurchaseInternalController extends GetxController {
     addCard();
   }
 
-  addCard() {
+  void addCard() {
     index.value.add(idx.value);
-    int numberList = idx.value;
+    final int numberList = idx.value;
     spinnerCategories.value.add(
       SpinnerField(
-          controller: GetXCreator.putSpinnerFieldController("spin${numberList}SKUInternal"),
-          label: "Kategori SKU*",
-          hint: "Pilih Salah Satu",
-          alertText: "Kategori SKU harus dipilih!",
+          controller: GetXCreator.putSpinnerFieldController('spin${numberList}SKUInternal'),
+          label: 'Kategori SKU*',
+          hint: 'Pilih Salah Satu',
+          alertText: 'Kategori SKU harus dipilih!',
           items: const {},
           onSpinnerSelected: (value) {
             if (listCategories.value.isNotEmpty) {
-              CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value);
+              final CategoryModel? selectCategory = listCategories.value.firstWhereOrNull((element) => element!.name! == value);
               if (value == AppStrings.AYAM_UTUH || value == AppStrings.BRANGKAS || value == AppStrings.KARKAS || value == AppStrings.LIVE_BIRD) {
                 // editFieldJumlahAyam.value[numberList].controller.enable();
                 spinnerSku.value[numberList].controller.visibleSpinner();
@@ -82,10 +82,10 @@ class SkuCardPurchaseInternalController extends GetxController {
                 editFieldHarga.value[numberList].controller.visibleField();
               }
 
-              spinnerSku.value[numberList].controller.textSelected.value = "";
-              editFieldJumlahAyam.value[numberList].setInput("");
-              editFieldKebutuhan.value[numberList].setInput("");
-              editFieldHarga.value[numberList].setInput("");
+              spinnerSku.value[numberList].controller.textSelected.value = '';
+              editFieldJumlahAyam.value[numberList].setInput('');
+              editFieldKebutuhan.value[numberList].setInput('');
+              editFieldHarga.value[numberList].setInput('');
               getSku(selectCategory!, numberList);
             }
           }),
@@ -93,27 +93,29 @@ class SkuCardPurchaseInternalController extends GetxController {
 
     spinnerSku.value.add(
       SpinnerField(
-          controller: GetXCreator.putSpinnerFieldController("size${numberList}SKUInternal"),
-          label: "SKU*",
-          hint: "Pilih Salah Satu",
-          alertText: "Ukuran harus dipilih!",
+          controller: GetXCreator.putSpinnerFieldController('size${numberList}SKUInternal'),
+          label: 'SKU*',
+          hint: 'Pilih Salah Satu',
+          alertText: 'Ukuran harus dipilih!',
           items: const {},
           onSpinnerSelected: (value) {
-           if (listCategories.value.isNotEmpty) {
-              if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS || spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
-                editFieldJumlahAyam.value[numberList].setInput("");
-                editFieldHarga.value[numberList].setInput("");
+            if (listCategories.value.isNotEmpty) {
+              if (spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.AYAM_UTUH ||
+                  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.BRANGKAS ||
+                  spinnerCategories.value[numberList].controller.textSelected.value == AppStrings.KARKAS) {
+                editFieldJumlahAyam.value[numberList].setInput('');
+                editFieldHarga.value[numberList].setInput('');
               }
             }
           }),
     );
 
     editFieldJumlahAyam.value.add(EditField(
-        controller: GetXCreator.putEditFieldController("editJumlah${numberList}SKUInternal"),
-        label: "Jumlah Ekor*",
-        hint: "Ketik di sini",
-        alertText: "Kolom Ini Harus Di Isi",
-        textUnit: "Ekor",
+        controller: GetXCreator.putEditFieldController('editJumlah${numberList}SKUInternal'),
+        label: 'Jumlah Ekor*',
+        hint: 'Ketik di sini',
+        alertText: 'Kolom Ini Harus Di Isi',
+        textUnit: 'Ekor',
         inputType: TextInputType.number,
         maxInput: 20,
         onTyping: (value, control) {
@@ -122,11 +124,11 @@ class SkuCardPurchaseInternalController extends GetxController {
         }));
 
     editFieldKebutuhan.value.add(EditField(
-        controller: GetXCreator.putEditFieldController("editJenis${numberList}SKUInternal"),
-        label: "Jumlah Kebutuhan*",
-        hint: "Ketik di sini",
-        alertText: "Kolom Ini Harus Di Isi",
-        textUnit: "Kg",
+        controller: GetXCreator.putEditFieldController('editJenis${numberList}SKUInternal'),
+        label: 'Jumlah Kebutuhan*',
+        hint: 'Ketik di sini',
+        alertText: 'Kolom Ini Harus Di Isi',
+        textUnit: 'Kg',
         inputType: TextInputType.number,
         maxInput: 20,
         onTyping: (value, control) {
@@ -135,11 +137,11 @@ class SkuCardPurchaseInternalController extends GetxController {
         }));
 
     editFieldHarga.value.add(EditField(
-        controller: GetXCreator.putEditFieldController("editharga${numberList}SKUInternal"),
-        label: "Harga",
-        hint: "Ketik di sini",
-        alertText: "Kolom Ini Harus Di Isi",
-        textUnit: "/Kg",
+        controller: GetXCreator.putEditFieldController('editharga${numberList}SKUInternal'),
+        label: 'Harga',
+        hint: 'Ketik di sini',
+        alertText: 'Kolom Ini Harus Di Isi',
+        textUnit: '/Kg',
         textPrefix: AppStrings.PREFIX_CURRENCY_IDR,
         inputType: TextInputType.number,
         maxInput: 20,
@@ -155,21 +157,24 @@ class SkuCardPurchaseInternalController extends GetxController {
     idx.value++;
   }
 
-  refreshtotalPurchase() {
+  void refreshtotalPurchase() {
     sumNeededMin.value = 0;
     sumNeededMax.value = 0;
     sumChick.value = 0;
     sumPriceMax.value = 0;
     sumPriceMin.value = 0;
     for (var idx in index.value) {
-      if (spinnerCategories.value[idx].controller.textSelected.value == AppStrings.LIVE_BIRD || spinnerCategories.value[idx].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS|| spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
-        List<Products?> listSkuSelect = listSku.value[idx]!;
+      if (spinnerCategories.value[idx].controller.textSelected.value == AppStrings.LIVE_BIRD ||
+          spinnerCategories.value[idx].controller.textSelected.value == AppStrings.AYAM_UTUH ||
+          spinnerCategories.value[idx].controller.textSelected.value == AppStrings.BRANGKAS ||
+          spinnerCategories.value[idx].controller.textSelected.value == AppStrings.KARKAS) {
+        final List<Products?> listSkuSelect = listSku.value[idx]!;
         if (listSkuSelect.isNotEmpty) {
-          Products? selectProduct = listSkuSelect.firstWhereOrNull(
+          final Products? selectProduct = listSkuSelect.firstWhereOrNull(
             (element) => element?.name == spinnerSku.value[idx].controller.textSelected.value,
           );
-          double minValue = (selectProduct?.minValue ?? 0) * (mapSumChick[idx] ?? 0);
-          double maxValue = (selectProduct?.maxValue ?? 0) * (mapSumChick[idx] ?? 0);
+          final double minValue = (selectProduct?.minValue ?? 0) * (mapSumChick[idx] ?? 0);
+          final double maxValue = (selectProduct?.maxValue ?? 0) * (mapSumChick[idx] ?? 0);
           sumNeededMin.value += minValue;
           sumNeededMax.value += maxValue;
           sumChick.value += (mapSumChick[idx] ?? 0).toInt();
@@ -185,7 +190,7 @@ class SkuCardPurchaseInternalController extends GetxController {
     }
   }
 
-  removeCard(int idx) {
+  void removeCard(int idx) {
     index.value.removeWhere((item) => item == idx);
     itemCount.value = index.value.length;
 
@@ -196,16 +201,16 @@ class SkuCardPurchaseInternalController extends GetxController {
     refreshtotalPurchase();
   }
 
-  setMaplist(List<CategoryModel?> map) {
+  void setMaplist(List<CategoryModel?> map) {
     listCategories.value = map;
   }
 
-  List validation() {
+  List<dynamic> validation() {
     bool isValid = true;
-    String error = "";
+    String error = '';
     final temp = <String>[];
     for (int i = 0; i < index.value.length; i++) {
-      int whichItem = index.value[i];
+      final int whichItem = index.value[i];
       if (spinnerCategories.value[whichItem].controller.textSelected.value.isEmpty) {
         spinnerCategories.value[whichItem].controller.showAlert();
         Scrollable.ensureVisible(spinnerCategories.value[whichItem].controller.formKey.currentContext!);
@@ -220,39 +225,41 @@ class SkuCardPurchaseInternalController extends GetxController {
         return [isValid, error];
       }
 
-      if (spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.LIVE_BIRD || spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH || spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS|| spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.KARKAS) {
+      if (spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.LIVE_BIRD ||
+          spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.AYAM_UTUH ||
+          spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.BRANGKAS ||
+          spinnerSku.value[whichItem].controller.textSelected.value == AppStrings.KARKAS) {
         if (editFieldJumlahAyam.value[whichItem].getInput().isEmpty) {
           editFieldJumlahAyam.value[whichItem].controller.showAlert();
           Scrollable.ensureVisible(editFieldJumlahAyam.value[whichItem].controller.formKey.currentContext!);
           isValid = false;
           return [isValid, error];
-        }      
+        }
         if (editFieldKebutuhan.value[whichItem].getInput().isEmpty) {
-        editFieldKebutuhan.value[whichItem].controller.setAlertText("Kolom Ini Harus Di Isi");
-        editFieldKebutuhan.value[whichItem].controller.showAlert();
-        Scrollable.ensureVisible(editFieldKebutuhan.value[whichItem].controller.formKey.currentContext!);
-        isValid = false;
-        return [isValid, error];
+          editFieldKebutuhan.value[whichItem].controller.setAlertText('Kolom Ini Harus Di Isi');
+          editFieldKebutuhan.value[whichItem].controller.showAlert();
+          Scrollable.ensureVisible(editFieldKebutuhan.value[whichItem].controller.formKey.currentContext!);
+          isValid = false;
+          return [isValid, error];
+        }
       }
-      }
-
 
       if (temp.contains(spinnerCategories.value[whichItem].controller.textSelected.value)) {
         for (int j = 0; j < index.value.length; j++) {
-          int whereItem = index.value[j];
+          final int whereItem = index.value[j];
           if ((spinnerCategories.value[whereItem].controller.textSelected.value == spinnerCategories.value[whichItem].controller.textSelected.value) && (whereItem != whichItem)) {
             if (spinnerSku.value[whereItem].controller.textSelected.value == spinnerSku.value[whichItem].controller.textSelected.value) {
               error = spinnerSku.value[whichItem].controller.textSelected.value;
               spinnerSku.value[whichItem].controller
-                ..alertText.value = "Duplikat Jenis Ukuran  $error"
+                ..alertText.value = 'Duplikat Jenis Ukuran  $error'
                 ..showAlert();
 
               spinnerSku.value[whereItem].controller
-                ..alertText.value = "Duplikat Jenis Ukuran $error"
+                ..alertText.value = 'Duplikat Jenis Ukuran $error'
                 ..showAlert();
               Scrollable.ensureVisible(spinnerSku.value[whichItem].controller.formKey.currentContext!);
 
-              Get.snackbar("Alert", "Duplikat Jenis Ukuran  $error", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Duplikat Jenis Ukuran  $error', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
               isValid = false;
               return [isValid, error];
             } else {
@@ -280,13 +287,13 @@ class SkuCardPurchaseInternalController extends GetxController {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
                 listSku.value.update(idx, (value) => body.data, ifAbsent: () => body.data);
 
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
 
                 spinnerSku.value[idx].controller
-                  ..textSelected.value = ""
+                  ..textSelected.value = ''
                   ..generateItems(mapList)
                   ..enable();
               } else {
@@ -303,12 +310,12 @@ class SkuCardPurchaseInternalController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }
@@ -325,7 +332,7 @@ class SkuCardPurchaseInternalController extends GetxController {
               if ((body as ProductListResponse).data[0]!.uom.runtimeType != Null) {
                 listSku.value.update(idx, (value) => body.data, ifAbsent: () => body.data);
 
-                Map<String, bool> mapList = {};
+                final Map<String, bool> mapList = {};
                 for (var product in body.data) {
                   mapList[product!.name!] = false;
                 }
@@ -347,12 +354,12 @@ class SkuCardPurchaseInternalController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onResponseError: (exception, stacktrace, id, packet) {
               isLoadApi.value = false;
               spinnerSku.value[idx].controller.hideLoading();
-              Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
+              Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, duration: const Duration(seconds: 5), colorText: Colors.white);
             },
             onTokenInvalid: () {}));
   }

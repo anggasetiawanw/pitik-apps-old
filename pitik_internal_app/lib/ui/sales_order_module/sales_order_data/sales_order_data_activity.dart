@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/sales_order_module/sales_order_data/sales_order_data_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
-import 'package:pitik_internal_app/widget/common/list_card_order.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/custom_appbar.dart';
+import '../../../widget/common/list_card_order.dart';
+import '../../../widget/common/loading.dart';
+import 'sales_order_data_controller.dart';
 
 class SalesOrderPage extends StatelessWidget {
   const SalesOrderPage({super.key});
@@ -57,10 +58,10 @@ class SalesOrderPage extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
-                  text: "Outbound",
+                  text: 'Outbound',
                 ),
                 Tab(
-                  text: "Inbound",
+                  text: 'Inbound',
                 ),
               ],
               labelColor: AppColors.primaryOrange,
@@ -75,7 +76,7 @@ class SalesOrderPage extends StatelessWidget {
     }
 
     Widget filterList() {
-      List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+      final List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
       return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: listFilter.length,
@@ -120,7 +121,7 @@ class SalesOrderPage extends StatelessWidget {
                   controller: controller.scrollControllerOutbound,
                   itemCount: controller.isLoadMore.isTrue ? controller.orderListOutbound.length + 1 : controller.orderListOutbound.length,
                   itemBuilder: (context, index) {
-                    int length = controller.orderListOutbound.length;
+                    final int length = controller.orderListOutbound.length;
                     if (index >= length) {
                       return const Column(
                         children: [
@@ -180,7 +181,7 @@ class SalesOrderPage extends StatelessWidget {
                   controller: controller.scrollControllerInbound,
                   itemCount: controller.isLoadMore.isTrue ? controller.orderListInbound.length + 1 : controller.orderListInbound.length,
                   itemBuilder: (context, index) {
-                    int length = controller.orderListInbound.length;
+                    final int length = controller.orderListInbound.length;
                     if (index >= length) {
                       return const Column(
                         children: [
@@ -233,7 +234,7 @@ class SalesOrderPage extends StatelessWidget {
             child: Column(
               children: [
                 CustomAppbar(
-                  title: "Penjualan",
+                  title: 'Penjualan',
                   onBack: () => Navigator.of(context).pop(),
                   isFlat: true,
                 ),
@@ -249,7 +250,7 @@ class SalesOrderPage extends StatelessWidget {
                           width: 32,
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
-                          child: SvgPicture.asset("images/filter_line.svg"),
+                          child: SvgPicture.asset('images/filter_line.svg'),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -283,7 +284,7 @@ class SalesOrderPage extends StatelessWidget {
                                     margin: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Center(
                                       child: Text(
-                                        controller.isFilter.isTrue || controller.isSearch.isTrue ? "Data Penjualan Outbound Tidak Ada" : "Data Penjualan Outbound Belum Ada",
+                                        controller.isFilter.isTrue || controller.isSearch.isTrue ? 'Data Penjualan Outbound Tidak Ada' : 'Data Penjualan Outbound Belum Ada',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                         textAlign: TextAlign.center,
                                       ),
@@ -300,7 +301,7 @@ class SalesOrderPage extends StatelessWidget {
                                   margin: const EdgeInsets.symmetric(horizontal: 16),
                                   child: Center(
                                     child: Text(
-                                      controller.isFilter.isTrue || controller.isSearch.isTrue ? "Data Penjualan Outbound Tidak Ada" :  "Data Penjualan Inbound Belum Ada",
+                                      controller.isFilter.isTrue || controller.isSearch.isTrue ? 'Data Penjualan Outbound Tidak Ada' : 'Data Penjualan Inbound Belum Ada',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                       textAlign: TextAlign.center,
                                     ),

@@ -7,15 +7,12 @@ import '../engine_library.dart';
 
 @SetupModel
 class DateMonitoringResponse {
+  @IsChildren()
+  List<CoopPerformance?> data;
 
-    @IsChildren()
-    List<CoopPerformance?> data;
+  DateMonitoringResponse({this.data = const []});
 
-    DateMonitoringResponse({this.data = const []});
-
-    static DateMonitoringResponse toResponseModel(Map<String, dynamic> map) {
-        return DateMonitoringResponse(
-            data: Mapper.children<CoopPerformance>(map['data'])
-        );
-    }
+  static DateMonitoringResponse toResponseModel(Map<String, dynamic> map) {
+    return DateMonitoringResponse(data: Mapper.children<CoopPerformance>(map['data']));
+  }
 }

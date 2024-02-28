@@ -9,15 +9,12 @@ import 'package:model/farm_actual/farm_actual_model.dart';
 
 @SetupModel
 class FarmActualResponse {
+  @IsChild()
+  FarmActual? data;
 
-    @IsChild()
-    FarmActual? data;
+  FarmActualResponse({this.data});
 
-    FarmActualResponse({this.data});
-
-    static FarmActualResponse toResponseModel(Map<String, dynamic> map) {
-        return FarmActualResponse(
-            data: Mapper.child<FarmActual>(map['data'])
-        );
-    }
+  static FarmActualResponse toResponseModel(Map<String, dynamic> map) {
+    return FarmActualResponse(data: Mapper.child<FarmActual>(map['data']));
+  }
 }

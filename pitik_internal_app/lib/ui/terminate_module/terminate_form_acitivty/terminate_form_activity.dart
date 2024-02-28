@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/terminate_module/terminate_form_acitivty/terminate_form_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import 'terminate_form_controller.dart';
 
 class TerminateFormActivity extends StatelessWidget {
   const TerminateFormActivity({super.key});
@@ -29,7 +30,7 @@ class TerminateFormActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Form Pemusnahan",
+          'Form Pemusnahan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -51,14 +52,14 @@ class TerminateFormActivity extends StatelessWidget {
             children: [
               Expanded(
                   child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveButton"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveButton'),
+                      label: 'Simpan',
                       onClick: () {
-                        Constant.track("Click_Simpan_Pemusnahan");
+                        Constant.track('Click_Simpan_Pemusnahan');
                         if (controller.isEdit.isTrue) {
-                          controller.updateTerminate("DRAFT");
+                          controller.updateTerminate('DRAFT');
                         } else {
-                          controller.createTerminate("DRAFT");
+                          controller.createTerminate('DRAFT');
                         }
                       })),
               const SizedBox(
@@ -66,8 +67,8 @@ class TerminateFormActivity extends StatelessWidget {
               ),
               Expanded(
                   child: ButtonOutline(
-                      controller: GetXCreator.putButtonOutlineController("confirmButtin"),
-                      label: "Konfirmasi",
+                      controller: GetXCreator.putButtonOutlineController('confirmButtin'),
+                      label: 'Konfirmasi',
                       onClick: () {
                         _showBottomDialog(context, controller);
                       }))
@@ -109,7 +110,9 @@ class TerminateFormActivity extends StatelessWidget {
                                               controller.mediaField.controller.fileName.isNotEmpty ? controller.mediaUploadData.value.url! : controller.terminateModel!.imageLink!,
                                               fit: BoxFit.fill,
                                               loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                                if (loadingProgress == null) return child;
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
                                                 return Center(
                                                   child: CircularProgressIndicator(
                                                     color: AppColors.primaryOrange,
@@ -151,7 +154,7 @@ class TerminateFormActivity extends StatelessWidget {
         ));
   }
 
-  _showBottomDialog(BuildContext context, TerminateFormController controller) {
+  Future<void> _showBottomDialog(BuildContext context, TerminateFormController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -180,18 +183,18 @@ class TerminateFormActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

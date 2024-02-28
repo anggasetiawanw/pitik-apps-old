@@ -8,14 +8,11 @@ import 'package:model/farm_projection/farm_projection_component_model.dart';
 
 @SetupModel
 class FarmProjectionDetail {
+  FarmProjectionComponent? topGraph;
 
-    FarmProjectionComponent? topGraph;
+  FarmProjectionDetail({this.topGraph});
 
-    FarmProjectionDetail({this.topGraph});
-
-    static FarmProjectionDetail toResponseModel(Map<String, dynamic> map) {
-        return FarmProjectionDetail(
-            topGraph: Mapper.child<FarmProjectionComponent>(map['topGraph'])
-        );
-    }
+  static FarmProjectionDetail toResponseModel(Map<String, dynamic> map) {
+    return FarmProjectionDetail(topGraph: Mapper.child<FarmProjectionComponent>(map['topGraph']));
+  }
 }

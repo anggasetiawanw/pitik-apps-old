@@ -17,14 +17,15 @@ import 'package:model/auth_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/user_google_model.dart';
 import 'package:model/x_app_model.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
 import 'package:restart_app/restart_app.dart';
+
+import '../../utils/constant.dart';
+import '../../utils/route.dart';
 
 class SplashController extends GetxController {
   var isUpdated = false.obs;
 
-  String pushNotificationPayload = "";
+  String pushNotificationPayload = '';
   @override
   void onInit() {
     super.onInit();
@@ -32,7 +33,7 @@ class SplashController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  Future<void> onReady() async {
     super.onReady();
     await UpdaterCodeMagic().checkForUpdate(
       isAvailable: (isAvailable) {
@@ -52,29 +53,29 @@ class SplashController extends GetxController {
     Timer(
       const Duration(seconds: 1),
       () async {
-        Auth? auth = await AuthImpl().get();
-        UserGoogle? userGoogle = await UserGoogleImpl().get();
-        Profile? userProfile = await ProfileImpl().get();
+        final Auth? auth = await AuthImpl().get();
+        final UserGoogle? userGoogle = await UserGoogleImpl().get();
+        final Profile? userProfile = await ProfileImpl().get();
         XAppId? xAppId = await XAppIdImpl().get();
         if (auth == null || userGoogle == null || userProfile == null) {
-          Get.offNamed(RoutePage.loginPage);
+          await Get.offNamed(RoutePage.loginPage);
         } else {
           Constant.auth = auth;
           Constant.profileUser = userProfile;
-          String appId = FirebaseRemoteConfig.instance.getString("appId");
+          final String appId = FirebaseRemoteConfig.instance.getString('appId');
           if (xAppId != null && (appId.isNotEmpty && xAppId.appId != appId)) {
             xAppId.appId = appId;
-            XAppIdImpl().save(xAppId);
+            await XAppIdImpl().save(xAppId);
             Constant.xAppId = xAppId.appId;
           } else if (xAppId != null) {
             Constant.xAppId = xAppId.appId;
           } else {
             xAppId = XAppId();
             xAppId.appId = appId;
-            XAppIdImpl().save(xAppId);
+            await XAppIdImpl().save(xAppId);
             Constant.xAppId = appId;
           }
-          Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
+          await Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
         }
       },
     );
@@ -93,20 +94,20 @@ class SplashController extends GetxController {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      "images/success_checkin.svg",
+                      'images/success_checkin.svg',
                       height: 24,
                       width: 24,
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "Information!",
+                      'Information!',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "Update aplikasi berhasil, silahkan restart aplikasi",
+                  'Update aplikasi berhasil, silahkan restart aplikasi',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
                 ),
                 Row(
@@ -114,11 +115,11 @@ class SplashController extends GetxController {
                   children: [
                     SizedBox(
                       width: 120,
-                      child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("ButtonOutlineDialog"), label: "Tutup", onClick: () => Get.back()),
+                      child: ButtonOutline(controller: GetXCreator.putButtonOutlineController('ButtonOutlineDialog'), label: 'Tutup', onClick: () => Get.back()),
                     ),
                     SizedBox(
                       width: 120,
-                      child: ButtonFill(controller: GetXCreator.putButtonFillController("Dialog"), label: "Restart", onClick: () => Restart.restartApp()),
+                      child: ButtonFill(controller: GetXCreator.putButtonFillController('Dialog'), label: 'Restart', onClick: () => Restart.restartApp()),
                     ),
                   ],
                 ),

@@ -3,13 +3,13 @@ import 'package:model/internal_app/customer_model.dart';
 
 @SetupModel
 class ListCustomerResponse {
-    int? code;
-    List<Customer?> data;
+  int? code;
+  List<Customer?> data;
 
-    ListCustomerResponse({this.code, required this.data});
+  ListCustomerResponse({this.code, required this.data});
 
-    static ListCustomerResponse toResponseModel(Map<String, dynamic> map) => ListCustomerResponse(
+  static ListCustomerResponse toResponseModel(Map<String, dynamic> map) => ListCustomerResponse(
         code: map['code'],
         data: Mapper.children<Customer>(map['data']),
-    );
+      );
 }

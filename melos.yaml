@@ -1,17 +1,127 @@
-name: basecleanflutter
+name: melos_pitik_apps_command
 
 packages:
-  - ./**
-
+    - ./**
 command:
-  bootstrap:
-    runPubGetInParallel: false
+    bootstrap:
+        runPubGetInParallel: false
 
 scripts:
-  # build runner build
-  build_all:
-    run: dart pub global run melos exec --depends-on="build_runner" "flutter packages pub run build_runner build"
-    description: build_runner build all modules.
-  generate-assets:
-    run: melos exec --scope="*pitil_asset*" -- "fluttergen"
-    description: "Generate asset for UI Kit Package"
+    # build runner build
+    force-build-all:
+        run: dart pub global run melos exec --depends-on="build_runner" "flutter packages pub run build_runner build --delete-conflicting-outputs"
+        description: build_runner build all modules.
+
+    force-build-internal:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" --depends-on="build_runner" "flutter packages pub run build_runner build --delete-conflicting-outputs"
+        description: build_runner build pitik internal app module.
+
+    force-build-connect:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" --depends-on="build_runner" "flutter packages pub run build_runner build --delete-conflicting-outputs"
+        description: build_runner build pitik connect app module.
+
+    force-build-ppl:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" --depends-on="build_runner" "flutter packages pub run build_runner build --delete-conflicting-outputs"
+        description: build_runner build pitik app module.
+
+    #Generate Assets
+    generate-assets:
+        run: melos exec --scope="*pitil_asset*" -- "fluttergen"
+        description: "Generate asset for UI Kit Package"
+
+    #format
+    format-all:
+        run: dart pub global run melos exec -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for all packages"
+    format-component:
+        run: dart pub global run melos exec --scope="*components*" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for components packages"
+    format-commonpage:
+        run: dart pub global run melos exec --scope="*common_page*" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for common-page packages"
+    format-core:
+        run: dart pub global run melos exec --scope="*engine*,*model*,*dao_impl*,*pitik_asset*" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for core packages"
+    format-internal:
+        run: dart pub global run melos exec --scope="*pitik_internal_app" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for internal packages"
+    format-connect:
+        run: dart pub global run melos exec --scope="*pitik_connect*" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for connect packages"
+    format-ppl:
+        run: dart pub global run melos exec --scope="*pitik_ppl_app*" -- "dart format . --fix --line-length 250 && dart fix --apply"
+        description: "Run dart format and dart fix for ppl packages"
+
+    #Analyze
+    analyze:
+        run: dart pub global run melos exec --flutter -- "flutter analyze --no-pub --suppress-analytics"
+        description: Run analyze.
+
+    analyze-internal:
+        run: dart pub global run melos exec --scope="*pitik_internal_app*" --flutter -- "flutter analyze --no-pub --suppress-analytics"
+        description: Run analyze internal app.
+
+    analyze-connect:
+        run: dart pub global run melos exec --scope="*pitik_connect*" --flutter -- "flutter analyze --no-pub --suppress-analytics"
+        description: Run analyze connect app.
+
+    analyze-ppl:
+        run: dart pub global run melos exec --scope="*pitik_ppl_app*" --flutter -- "flutter analyze --no-pub --suppress-analytics"
+        description: Run analyze ppl app.
+
+    #pub get each app
+    pub-get-internal:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" "flutter pub get"
+        description: pub get domain module.
+
+    pub-get-connect:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" "flutter pub get"
+        description: pub get app module.
+
+    pub-get-ppl:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" "flutter pub get"
+        description: pub get shared module.
+
+    #pub get each app
+    bundle-dev-internal-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" "shorebird release android --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle Internal module.
+    bundle-dev-internal-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" "flutter build ipa --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle Internal module.
+
+    bundle-dev-connect-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" "shorebird release android --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle Connect module.
+    bundle-dev-connect-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" "flutter build ipa --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle Connect module.
+
+    bundle-dev-ppl-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" "shorebird release android --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle ppl module.
+    bundle-dev-ppl-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" "flutter build ipa --flavor dev -t lib/main_dev.dart"
+        description: Build Dev Bundle ppl module.
+
+    #pub get each app
+    bundle-prod-internal-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" "shorebird release android --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production internal module.
+    bundle-prod-internal-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_internal_app*" "flutter build ipa --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production internal module.
+
+    bundle-prod-connect-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" "shorebird release android --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production Connect module.
+    bundle-prod-connect-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_connect*" "flutter build ipa --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production Connect module.
+
+    bundle-prod-ppl-and:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" "shorebird release android --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production PPL module.
+    bundle-prod-ppl-ios:
+        run: dart pub global run melos exec --fail-fast --scope="*pitik_ppl_app*" "flutter build ipa --flavor prod -t lib/main_prod.dart"
+        description: Build Bundle Production PPL module.

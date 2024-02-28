@@ -3,26 +3,20 @@
 import '../device_setting_model.dart';
 import 'package:model/engine_library.dart';
 
-/**
- *@author Robertus Mahardhi Kuncoro
- *@email <robert.kuncoro@pitik.id>
- *@create date 10/10/23
- */
+/// @author Robertus Mahardhi Kuncoro
+/// @email <robert.kuncoro@pitik.id>
+/// @create date 10/10/23
 
 @SetupModel
 class FanDetailResponse {
+  int code;
 
-    int code;
+  @IsChild()
+  DeviceSetting? data;
 
-    @IsChild()
-    DeviceSetting? data;
+  FanDetailResponse({required this.code, required this.data});
 
-    FanDetailResponse({required this.code, required this.data});
-
-    static FanDetailResponse toResponseModel(Map<String, dynamic> map) {
-        return FanDetailResponse(
-            code: map['code'],
-            data: Mapper.child<DeviceSetting>(map['data'])
-        );
-    }
+  static FanDetailResponse toResponseModel(Map<String, dynamic> map) {
+    return FanDetailResponse(code: map['code'], data: Mapper.child<DeviceSetting>(map['data']));
+  }
 }

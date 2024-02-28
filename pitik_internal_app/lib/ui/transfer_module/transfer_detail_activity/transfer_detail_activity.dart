@@ -8,11 +8,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/transfer_module/transfer_detail_activity/transfer_detail_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/transfer_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/transfer_status.dart';
+import 'transfer_detail_controller.dart';
 
 class TransferDetailActivity extends StatelessWidget {
   const TransferDetailActivity({super.key});
@@ -34,7 +35,7 @@ class TransferDetailActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Transfer",
+          'Detail Transfer',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -57,11 +58,11 @@ class TransferDetailActivity extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (controller.transferModel.status == "DRAFT") ...[
+                  if (controller.transferModel.status == 'DRAFT') ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("editTransferss"),
-                            label: "Edit",
+                            controller: GetXCreator.putButtonFillController('editTransferss'),
+                            label: 'Edit',
                             onClick: () {
                               Get.toNamed(RoutePage.transferForm, arguments: [controller.transferModel, true])!.then((value) {
                                 controller.isLoading.value = true;
@@ -73,22 +74,22 @@ class TransferDetailActivity extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "CONFIRMED" && (Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue || Constant.isShopKepper.isTrue)) ...[
+                  ] else if (controller.transferModel.status == 'CONFIRMED' && (Constant.isScRelation.isTrue || Constant.isOpsLead.isTrue || Constant.isShopKepper.isTrue)) ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("pesanStock"),
-                            label: "Pesan Stock",
+                            controller: GetXCreator.putButtonFillController('pesanStock'),
+                            label: 'Pesan Stock',
                             onClick: () {
                               _showBottomDialogSend(context, controller);
                             })),
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "BOOKED" && Constant.isScFleet.isTrue) ...[
+                  ] else if (controller.transferModel.status == 'BOOKED' && Constant.isScFleet.isTrue) ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("Kirim Transfer"),
-                            label: "Kirim",
+                            controller: GetXCreator.putButtonFillController('Kirim Transfer'),
+                            label: 'Kirim',
                             onClick: () {
                               Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, false])!.then((value) {
                                 controller.isLoading.value = true;
@@ -100,11 +101,11 @@ class TransferDetailActivity extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  ] else if (controller.transferModel.status == "READY_TO_DELIVER"&& Constant.isScFleet.isTrue) ...[
+                  ] else if (controller.transferModel.status == 'READY_TO_DELIVER' && Constant.isScFleet.isTrue) ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("editTransfer"),
-                            label: "Edit",
+                            controller: GetXCreator.putButtonFillController('editTransfer'),
+                            label: 'Edit',
                             onClick: () {
                               Get.toNamed(RoutePage.transferDriver, arguments: [controller.transferModel, true])!.then((value) {
                                 controller.isLoading.value = true;
@@ -119,8 +120,8 @@ class TransferDetailActivity extends StatelessWidget {
                   ],
                   Expanded(
                       child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("cancelTranfer"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('cancelTranfer'),
+                          label: 'Batal',
                           onClick: () {
                             _showBottomDialogCancel(context, controller);
                           })),
@@ -164,14 +165,14 @@ class TransferDetailActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Transfer",
+                        'Informasi Transfer',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.transferModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -187,15 +188,15 @@ class TransferDetailActivity extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.transferModel.sourceOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.transferModel.sourceOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Tujuan", "${controller.transferModel.targetOperationUnit!.operationUnitName}"),
+            infoDetailHeader('Tujuan', '${controller.transferModel.targetOperationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            controller.transferModel.driver != null ? infoDetailHeader("Driver", "${controller.transferModel.driver!.fullName}") : const SizedBox(),
+            controller.transferModel.driver != null ? infoDetailHeader('Driver', '${controller.transferModel.driver!.fullName}') : const SizedBox(),
           ],
         ),
       );
@@ -240,7 +241,7 @@ class TransferDetailActivity extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.symmetric(vertical: 16),
                               child: Text(
-                                "Detail SKU",
+                                'Detail SKU',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -250,7 +251,7 @@ class TransferDetailActivity extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                               decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                               child: Text(
-                                "${controller.transferModel.products![0]!.name}",
+                                '${controller.transferModel.products![0]!.name}',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -270,17 +271,17 @@ class TransferDetailActivity extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  infoDetailSKU("SKU", "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
+                                  infoDetailSKU('SKU', "${controller.transferModel.products![0]!.productItems![0] != null ? controller.transferModel.products![0]!.productItems![0]!.name : "null"}"),
                                   if (controller.transferModel.products![0]!.productItems![0]!.quantity != null && controller.transferModel.products![0]!.productItems![0]!.quantity != 0) ...[
                                     const SizedBox(
                                       height: 14,
                                     ),
-                                    infoDetailSKU("Jumlah Ekor", "${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor"),
+                                    infoDetailSKU('Jumlah Ekor', '${controller.transferModel.products![0]!.productItems![0]!.quantity} Ekor'),
                                   ],
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  controller.transferModel.products![0]!.productItems != null ? infoDetailSKU("Total", "${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg") : const SizedBox(),
+                                  controller.transferModel.products![0]!.productItems != null ? infoDetailSKU('Total', '${controller.transferModel.products![0]!.productItems![0]!.weight!} Kg') : const SizedBox(),
                                 ],
                               ),
                             ),
@@ -300,14 +301,14 @@ class TransferDetailActivity extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan",
+                                  'Catatan',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : "-",
+                                  controller.transferModel.remarks != null ? Uri.decodeFull(controller.transferModel.remarks!) : '-',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -325,14 +326,14 @@ class TransferDetailActivity extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Catatan",
+                                    'Catatan',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     height: 16,
                                   ),
                                   Text(
-                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : "-",
+                                    controller.transferModel.driverRemarks != null ? Uri.decodeFull(controller.transferModel.driverRemarks!) : '-',
                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                   )
                                 ],
@@ -342,13 +343,13 @@ class TransferDetailActivity extends StatelessWidget {
                         ],
                       ),
                     ),
-                    controller.transferModel.status == "CANCELLED" || controller.transferModel.status == "RECEIVED" || controller.transferModel.status == "DELIVERED" ? const SizedBox() : bottomNavbar()
+                    controller.transferModel.status == 'CANCELLED' || controller.transferModel.status == 'RECEIVED' || controller.transferModel.status == 'DELIVERED' ? const SizedBox() : bottomNavbar()
                   ],
                 ),
         ));
   }
 
-  _showBottomDialogCancel(BuildContext context, TransferDetailController controller) {
+  Future<dynamic> _showBottomDialogCancel(BuildContext context, TransferDetailController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -377,18 +378,18 @@ class TransferDetailActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
+                    'Apakah kamu yakin ingin melakukan pembatalan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukan pembatalan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/cancel_icon.svg",
+                    'images/cancel_icon.svg',
                   ),
                 ),
                 Container(
@@ -413,7 +414,7 @@ class TransferDetailActivity extends StatelessWidget {
         });
   }
 
-  _showBottomDialogSend(BuildContext context, TransferDetailController controller) {
+  Future<dynamic> _showBottomDialogSend(BuildContext context, TransferDetailController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -442,18 +443,18 @@ class TransferDetailActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin untuk melakukan pemesanan stok?",
+                    'Apakah kamu yakin untuk melakukan pemesanan stok?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang akan dipesan stok sudah sesuai", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang akan dipesan stok sudah sesuai', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/stock_icon.svg",
+                    'images/stock_icon.svg',
                   ),
                 ),
                 Container(

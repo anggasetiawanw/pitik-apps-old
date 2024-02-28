@@ -9,17 +9,17 @@ import 'main.reflectable.dart';
  */
 
 void main() {
-    F.appFlavor = Flavor.DEV;
-    initializeReflectable();
-    runApp(const ModelGeneratorMain());
-    ModelGenerator().build(['smart_scale_response.json']);
+  F.appFlavor = Flavor.DEV;
+  initializeReflectable();
+  runApp(const ModelGeneratorMain());
+  ModelGenerator().build(['smart_scale_response.json']);
 }
 
 class ModelGeneratorMain extends StatelessWidget {
-    const ModelGeneratorMain({super.key});
+  const ModelGeneratorMain({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-        return const MaterialApp();
-    }
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp();
+  }
 }

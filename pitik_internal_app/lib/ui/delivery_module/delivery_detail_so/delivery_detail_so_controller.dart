@@ -13,10 +13,10 @@ import 'package:global_variable/global_variable.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:model/response/internal_app/order_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/so_status.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/so_status.dart';
+import '../../../utils/route.dart';
 
 class DeliveryDetailSOController extends GetxController {
   BuildContext context;
@@ -29,10 +29,10 @@ class DeliveryDetailSOController extends GetxController {
   var priceDelivery = 0.0.obs;
   var isSendItem = false.obs;
   late ButtonFill confirmButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("confirmButtonasd"),
-      label: "Terkirim",
+      controller: GetXCreator.putButtonFillController('confirmButtonasd'),
+      label: 'Terkirim',
       onClick: () {
-        Constant.track("Click_Terkirim_Pengiriman_Sales_Order");
+        Constant.track('Click_Terkirim_Pengiriman_Sales_Order');
         Get.toNamed(RoutePage.deliveryConfirmSO, arguments: order)!.then((value) {
           isLoading.value = true;
           Timer(const Duration(milliseconds: 500), () {
@@ -42,27 +42,27 @@ class DeliveryDetailSOController extends GetxController {
       });
 
   late ButtonFill yesSendItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesSendItemasd"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesSendItemasd'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Kirim_Barang_Pengiriman_Sales_Order");
+        Constant.track('Click_Kirim_Barang_Pengiriman_Sales_Order');
         Get.back();
         isLoading.value = true;
         sendItem();
       });
 
   ButtonOutline noSendItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noSendItemasd"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noSendItemasd'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
 
   late ButtonFill yesRejectItem = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesRejectItemasd"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesRejectItemasd'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Ditolak_Pengiriman_Sales_Order");
+        Constant.track('Click_Ditolak_Pengiriman_Sales_Order');
         Get.back();
         Get.toNamed(RoutePage.deliveryRejectSO, arguments: order)!.then((value) {
           isLoading.value = true;
@@ -73,19 +73,20 @@ class DeliveryDetailSOController extends GetxController {
       });
 
   ButtonOutline noRejectItem = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noRejectItemasd"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noRejectItemasd'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
 
-  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkDeliverySOdds"), label: "Catatan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
+  EditField efRemark = EditField(
+      controller: GetXCreator.putEditFieldController('efRemarkDeliverySOdds'), label: 'Catatan', hint: 'Ketik disini', alertText: '', textUnit: '', maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
 
   late Order order;
   late DateTime createdDate;
 
-    DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -97,7 +98,7 @@ class DeliveryDetailSOController extends GetxController {
     } else {
       priceDelivery.value = 0;
     }
-    if(order.status == EnumSO.readyToDeliver){
+    if (order.status == EnumSO.readyToDeliver) {
       isSendItem.value = true;
     }
   }
@@ -122,8 +123,8 @@ class DeliveryDetailSOController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 duration: const Duration(seconds: 5),
@@ -142,7 +143,7 @@ class DeliveryDetailSOController extends GetxController {
     sumPrice.value = 0;
     for (var product in data!.products!) {
       if (product!.returnWeight == null) {
-        if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
+        if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
           sumChick.value += product.quantity!;
           sumKg.value += product.weight!;
           sumPrice.value += product.weight! * product.price!;
@@ -151,37 +152,37 @@ class DeliveryDetailSOController extends GetxController {
           sumPrice.value += product.weight! * product.price!;
         }
       } else {
-        if(order.returnStatus == EnumSO.returnedPartial){
-            if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+        if (order.returnStatus == EnumSO.returnedPartial) {
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
             sumChick.value += product.quantity! - product.returnQuantity!;
-            sumKg.value += (product.weight! - product.returnWeight!);
+            sumKg.value += product.weight! - product.returnWeight!;
             sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-            } else {
-            sumKg.value += (product.weight! - product.returnWeight!);
+          } else {
+            sumKg.value += product.weight! - product.returnWeight!;
             sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
-            }
+          }
         } else {
-            if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS|| product.category!.name! == AppStrings.KARKAS) {
-                sumChick.value += product.returnQuantity!;
-                sumKg.value += product.returnWeight!;
-                sumPrice.value += product.returnWeight! * product.price!;
-            } else {
-                sumKg.value += product.returnWeight!;
-                sumPrice.value += product.returnWeight! * product.price!;
-            }
+          if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS || product.category!.name! == AppStrings.KARKAS) {
+            sumChick.value += product.returnQuantity!;
+            sumKg.value += product.returnWeight!;
+            sumPrice.value += product.returnWeight! * product.price!;
+          } else {
+            sumKg.value += product.returnWeight!;
+            sumPrice.value += product.returnWeight! * product.price!;
+          }
         }
       }
     }
     timeEnd = DateTime.now();
-    Duration totalTime = timeEnd.difference(timeStart);
-    Constant.trackRenderTime("Detail_Pengiriman_Sales_Order", totalTime);
+    final Duration totalTime = timeEnd.difference(timeStart);
+    Constant.trackRenderTime('Detail_Pengiriman_Sales_Order', totalTime);
   }
 
   void sendItem() {
     Service.push(
         service: ListApi.deliveryPickupSO,
         context: context,
-        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDeliverySOPickup(order.id!), isSendItem.isTrue ? Mapper.asJsonString(Order(driverRemarks: Uri.encodeFull(efRemark.getInput()))) : ""],
+        body: [Constant.auth!.token, Constant.auth!.id, Constant.xAppId!, ListApi.pathDeliverySOPickup(order.id!), isSendItem.isTrue ? Mapper.asJsonString(Order(driverRemarks: Uri.encodeFull(efRemark.getInput()))) : ''],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Get.back();
@@ -189,8 +190,8 @@ class DeliveryDetailSOController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -200,8 +201,8 @@ class DeliveryDetailSOController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

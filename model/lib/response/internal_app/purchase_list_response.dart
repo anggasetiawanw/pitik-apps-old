@@ -13,7 +13,7 @@ class ListPurchaseResponse {
   ListPurchaseResponse({this.code, required this.data});
 
   static ListPurchaseResponse toResponseModel(Map<String, dynamic> map) => ListPurchaseResponse(
-      code: map['code'],
-      data: Mapper.children<Purchase>(map['data']),
-  );
+        code: map['code'],
+        data: Mapper.children<Purchase>(map['data']),
+      );
 }

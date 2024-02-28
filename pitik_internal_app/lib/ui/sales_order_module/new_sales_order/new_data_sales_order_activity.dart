@@ -6,9 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/sales_order_module/new_sales_order/new_data_sales_order_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import 'new_data_sales_order_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -56,11 +57,11 @@ class NewDataSalesOrder extends StatelessWidget {
             children: [
               Expanded(
                 child: ButtonFill(
-                  controller: GetXCreator.putButtonFillController("saveDataSalesOrder"),
-                  label: "Simpan",
+                  controller: GetXCreator.putButtonFillController('saveDataSalesOrder'),
+                  label: 'Simpan',
                   onClick: () {
-                    Constant.trackWithMap("Click_Simpan_Penjualan", {"Jenis_Penjualan": controller.produkType.value, "Category_Penjualan": controller.isInbound.isTrue ? "INBOUND" : "OUTBOUND"});
-                    controller.status.value = "DRAFT";
+                    Constant.trackWithMap('Click_Simpan_Penjualan', {'Jenis_Penjualan': controller.produkType.value, 'Category_Penjualan': controller.isInbound.isTrue ? 'INBOUND' : 'OUTBOUND'});
+                    controller.status.value = 'DRAFT';
                     controller.saveOrder();
                   },
                 ),
@@ -68,10 +69,10 @@ class NewDataSalesOrder extends StatelessWidget {
               const SizedBox(width: 16),
               Expanded(
                 child: ButtonOutline(
-                  controller: GetXCreator.putButtonOutlineController("confirmDataSalesOrder"),
-                  label: "Konfirmasi",
+                  controller: GetXCreator.putButtonOutlineController('confirmDataSalesOrder'),
+                  label: 'Konfirmasi',
                   onClick: () {
-                    controller.status.value = "CONFIRMED";
+                    controller.status.value = 'CONFIRMED';
                     _showBottomDialog(context, controller);
                   },
                 ),
@@ -93,7 +94,7 @@ class NewDataSalesOrder extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: const Text("SKU")),
+                  Container(margin: const EdgeInsets.symmetric(horizontal: 16), child: const Text('SKU')),
                 ],
               ),
             ),
@@ -144,9 +145,9 @@ class NewDataSalesOrder extends StatelessWidget {
                             controller.isInbound.isTrue ? controller.spSumber : const SizedBox(),
                             controller.spinnerCustomer,
                             controller.spinnerOrderType,
-                            Obx(() => controller.produkType.value == "Non-LB" ? controller.skuCard : cardSKULB()),
+                            Obx(() => controller.produkType.value == 'Non-LB' ? controller.skuCard : cardSKULB()),
                             Obx(
-                              () => controller.produkType.value == "Non-LB" ? const SizedBox() : controller.skuCardRemark,
+                              () => controller.produkType.value == 'Non-LB' ? const SizedBox() : controller.skuCardRemark,
                             ),
                             if (controller.isInbound.isFalse) ...[
                               controller.dtDeliveryDate,
@@ -161,7 +162,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Biaya Pengiriman",
+                                        'Biaya Pengiriman',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       ),
                                       controller.deliveryPrice
@@ -169,7 +170,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                   ),
                                   if (controller.isDeliveryPrice.isTrue) ...[
                                     Text(
-                                      "Biaya Pengiriman Rp 10.000",
+                                      'Biaya Pengiriman Rp 10.000',
                                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                     ),
                                   ]
@@ -186,14 +187,14 @@ class NewDataSalesOrder extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Obx(
-                                  () => controller.produkType.value == "Non-LB"
+                                  () => controller.produkType.value == 'Non-LB'
                                       ? Column(
                                           children: [
                                             Row(
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Penjualan",
+                                                    'Total Penjualan',
                                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                                     overflow: TextOverflow.clip,
                                                   ),
@@ -207,13 +208,15 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Kg",
+                                                    'Total Kg',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.skuCard.controller.sumNeededMax.value - controller.skuCard.controller.sumNeededMin.value == 0 ? "${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCard.controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                                  controller.skuCard.controller.sumNeededMax.value - controller.skuCard.controller.sumNeededMin.value == 0
+                                                      ? '${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                                      : '${controller.skuCard.controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.skuCard.controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                   overflow: TextOverflow.clip,
                                                 ),
@@ -226,13 +229,13 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Ekor",
+                                                    'Total Ekor',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Obx(() => Text(
-                                                      "${controller.skuCard.controller.sumChick.value} Ekor",
+                                                      '${controller.skuCard.controller.sumChick.value} Ekor',
                                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                       overflow: TextOverflow.clip,
                                                     )),
@@ -246,12 +249,13 @@ class NewDataSalesOrder extends StatelessWidget {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      "Biaya Pengiriman",
+                                                      'Biaya Pengiriman',
                                                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                       overflow: TextOverflow.clip,
                                                     ),
                                                   ),
-                                                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                                  Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.priceDelivery.value),
+                                                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                                 ],
                                               ),
                                             ],
@@ -262,14 +266,14 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Rp",
+                                                    'Total Rp',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Text(
                                                     controller.skuCard.controller.sumPriceMax.value - controller.skuCard.controller.sumPriceMin.value == 0
-                                                        ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value + controller.priceDelivery.value)
+                                                        ? NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value + controller.priceDelivery.value)
                                                         : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.skuCard.controller.sumPriceMax.value + controller.priceDelivery.value)}",
                                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip),
@@ -283,7 +287,7 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Penjualan",
+                                                    'Total Penjualan',
                                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                                     overflow: TextOverflow.clip,
                                                   ),
@@ -297,13 +301,15 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Kg",
+                                                    'Total Kg',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.sumNeededMax.value - controller.sumNeededMin.value == 0 ? "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                                  controller.sumNeededMax.value - controller.sumNeededMin.value == 0
+                                                      ? '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                                      : '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                   overflow: TextOverflow.clip,
                                                 ),
@@ -316,13 +322,13 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Ekor",
+                                                    'Total Ekor',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Obx(() => Text(
-                                                      "${controller.sumChick.value} Ekor",
+                                                      '${controller.sumChick.value} Ekor',
                                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                       overflow: TextOverflow.clip,
                                                     )),
@@ -336,12 +342,13 @@ class NewDataSalesOrder extends StatelessWidget {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      "Biaya Pengiriman",
+                                                      'Biaya Pengiriman',
                                                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                       overflow: TextOverflow.clip,
                                                     ),
                                                   ),
-                                                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.priceDelivery.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                                  Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.priceDelivery.value),
+                                                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                                 ],
                                               ),
                                             ],
@@ -352,14 +359,14 @@ class NewDataSalesOrder extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    "Total Rp",
+                                                    'Total Rp',
                                                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip,
                                                   ),
                                                 ),
                                                 Text(
                                                     controller.sumPriceMax.value - controller.sumPriceMin.value == 0
-                                                        ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
+                                                        ? NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)
                                                         : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value + controller.priceDelivery.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value + controller.priceDelivery.value)}",
                                                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                                     overflow: TextOverflow.clip),
@@ -380,7 +387,7 @@ class NewDataSalesOrder extends StatelessWidget {
         ));
   }
 
-  _showBottomDialog(BuildContext context, NewDataSalesOrderController controller) {
+  Future<void> _showBottomDialog(BuildContext context, NewDataSalesOrderController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -409,18 +416,18 @@ class NewDataSalesOrder extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

@@ -1,4 +1,3 @@
-
 // ignore_for_file: must_be_immutable
 
 import 'package:components/table_field/table_field_controller.dart';
@@ -10,15 +9,15 @@ import 'package:get/get.dart';
 ///@create date 07/10/2023
 
 class TableField extends StatelessWidget {
-    TableFieldController controller;
-    TableField({super.key, required this.controller});
+  TableFieldController controller;
+  TableField({super.key, required this.controller});
 
-    TableFieldController getController() {
-        return Get.find(tag: controller.tag);
-    }
+  TableFieldController getController() {
+    return Get.find(tag: controller.tag);
+  }
 
-    @override
-    Widget build(BuildContext context) {
-        return Obx(() => controller.layout.value);
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => controller.layout.value);
+  }
 }

@@ -16,38 +16,39 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/report.dart';
 import 'package:model/response/dailly_report_response.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
+import '../../../api_mapping/api_mapping.dart';
 
 class DailyReportHomeController extends GetxController {
-    BuildContext context;
-    DailyReportHomeController({required this.context});
+  BuildContext context;
+  DailyReportHomeController({required this.context});
 
-    var isLoadingList = false.obs;
-    ScrollController scrollController = ScrollController();
+  var isLoadingList = false.obs;
+  ScrollController scrollController = ScrollController();
 
-    Coop? coop;
-    var isPulletIn = false.obs;
-    RxBool isLoading = false.obs;
-    RxList<Report?> reportList = <Report?>[].obs;
+  Coop? coop;
+  var isPulletIn = false.obs;
+  RxBool isLoading = false.obs;
+  RxList<Report?> reportList = <Report?>[].obs;
 
-    @override
-    void onInit() {
-        super.onInit();
-        coop = Get.arguments[0];
+  @override
+  void onInit() {
+    super.onInit();
+    coop = Get.arguments[0];
 
-        if (Get.arguments.length > 1) {
-            isPulletIn.value = Get.arguments[1];
-        }
+    if (Get.arguments.length > 1) {
+      isPulletIn.value = Get.arguments[1];
     }
+  }
 
-    @override
-    void onReady() {
-        super.onReady();
-        getDailyReport();
-    }
+  @override
+  void onReady() {
+    super.onReady();
+    getDailyReport();
+  }
 
-    void getDailyReport() => AuthImpl().get().then((auth) => {
-        if (auth != null){
+  void getDailyReport() => AuthImpl().get().then((auth) => {
+        if (auth != null)
+          {
             Service.push(
                 apiKey: ApiMapping.taskApi,
                 service: ListApi.getDailyReport,
@@ -55,41 +56,41 @@ class DailyReportHomeController extends GetxController {
                 body: ['Bearer ${auth.token}', auth.id, ListApi.pathDailyReport(coop!.farmingCycleId!)],
                 listener: ResponseListener(
                     onResponseDone: (code, message, body, id, packet) {
-                        reportList.clear();
-                        reportList.addAll((body as DailyReportResponse).data);
-                        isLoadingList.value = false;
+                      reportList.clear();
+                      reportList.addAll((body as DailyReportResponse).data);
+                      isLoadingList.value = false;
                     },
                     onResponseFail: (code, message, body, id, packet) {
-                        Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red,
-                        );
-                        isLoading.value = false;
+                      Get.snackbar(
+                        'Pesan',
+                        'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                      );
+                      isLoading.value = false;
                     },
                     onResponseError: (exception, stacktrace, id, packet) {
-                        Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
-                            snackPosition: SnackPosition.TOP,
-                            colorText: Colors.white,
-                            backgroundColor: Colors.red,
-                        );
-                        isLoading.value = false;
+                      Get.snackbar(
+                        'Pesan',
+                        'Terjadi Kesalahan Internal',
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                        backgroundColor: Colors.red,
+                      );
+                      isLoading.value = false;
                     },
                     onTokenInvalid: () => GlobalVar.invalidResponse()))
-        } else {
-            GlobalVar.invalidResponse()
-        }
-    });
+          }
+        else
+          {GlobalVar.invalidResponse()}
+      });
 }
 
 class DailyReportHomeBindings extends Bindings {
-    BuildContext context;
-    DailyReportHomeBindings({required this.context});
+  BuildContext context;
+  DailyReportHomeBindings({required this.context});
 
-    @override
-    void dependencies() => Get.lazyPut(() => DailyReportHomeController(context: context));
+  @override
+  void dependencies() => Get.lazyPut(() => DailyReportHomeController(context: context));
 }

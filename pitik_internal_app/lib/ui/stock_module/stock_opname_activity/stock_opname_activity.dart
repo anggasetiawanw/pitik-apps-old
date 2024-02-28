@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_opname_activity/stock_opname_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import 'stock_opname_controller.dart';
 
 class StockOpnameActivity extends StatelessWidget {
   const StockOpnameActivity({super.key});
@@ -29,7 +30,7 @@ class StockOpnameActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Stock Opname",
+          'Stock Opname',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -51,14 +52,14 @@ class StockOpnameActivity extends StatelessWidget {
             children: [
               Expanded(
                   child: ButtonFill(
-                      controller: GetXCreator.putButtonFillController("saveButton"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveButton'),
+                      label: 'Simpan',
                       onClick: () {
-                        Constant.track("Click_Simpan_Stock_Opname");
+                        Constant.track('Click_Simpan_Stock_Opname');
                         if (controller.isEdit.isTrue) {
-                          controller.updateStock("DRAFT");
+                          controller.updateStock('DRAFT');
                         } else {
-                          controller.createStockOpname("DRAFT");
+                          controller.createStockOpname('DRAFT');
                         }
                       })),
               const SizedBox(
@@ -66,8 +67,8 @@ class StockOpnameActivity extends StatelessWidget {
               ),
               Expanded(
                   child: ButtonOutline(
-                      controller: GetXCreator.putButtonOutlineController("confirmButtin"),
-                      label: "Konfirmasi",
+                      controller: GetXCreator.putButtonOutlineController('confirmButtin'),
+                      label: 'Konfirmasi',
                       onClick: () {
                         _showBottomDialog(context, controller);
                       }))
@@ -97,16 +98,17 @@ class StockOpnameActivity extends StatelessWidget {
                           children: [
                             controller.sourceStock,
                             if (controller.listStockField.value.isNotEmpty) ...controller.listStockField.value,
-                            if(controller.efTotal.controller.showField.isTrue) Container(
-                                margin: const EdgeInsets.only(top: 16),
-                                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(color: AppColors.outlineColor, width: 1),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: controller.efTotal),
+                            if (controller.efTotal.controller.showField.isTrue)
+                              Container(
+                                  margin: const EdgeInsets.only(top: 16),
+                                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(color: AppColors.outlineColor, width: 1),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: controller.efTotal),
                             const SizedBox(
                               height: 100,
                             )
@@ -120,7 +122,7 @@ class StockOpnameActivity extends StatelessWidget {
         ));
   }
 
-  _showBottomDialog(BuildContext context, StockOpnameController controller) {
+  Future<void> _showBottomDialog(BuildContext context, StockOpnameController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -149,18 +151,18 @@ class StockOpnameActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

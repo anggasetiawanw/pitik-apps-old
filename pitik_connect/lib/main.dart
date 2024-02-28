@@ -35,8 +35,6 @@ class PitikApplication extends StatelessWidget {
       // getPages: AppRoutes.page,
     );
   }
-
-
 }
 
 Future<void> initPlatformState() async {

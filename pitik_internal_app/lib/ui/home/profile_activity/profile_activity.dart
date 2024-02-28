@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pitik_internal_app/flavors.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../flavors.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 class ProfileActivity extends StatefulWidget {
   const ProfileActivity({super.key});
@@ -28,7 +28,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
     _getAppVersion();
   }
 
-  void _getAppVersion() async {
+  Future<void> _getAppVersion() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     final version = packageInfo.version;
@@ -58,7 +58,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              "images/pitik_avatar.svg",
+              'images/pitik_avatar.svg',
               width: 64,
               height: 64,
             ),
@@ -70,7 +70,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${Constant.profileUser!.fullName}",
+                    '${Constant.profileUser!.fullName}',
                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold, fontSize: 16),
                     overflow: TextOverflow.clip,
                   ),
@@ -78,13 +78,13 @@ class _ProfileActivityState extends State<ProfileActivity> {
                     height: 4,
                   ),
                   Text(
-                    "${Constant.profileUser!.email}",
+                    '${Constant.profileUser!.email}',
                     style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,
                   ),
                   if (Constant.profileUser != null && Constant.profileUser!.roles != null && Constant.profileUser!.roles!.isNotEmpty)
                     Text(
-                      Constant.profileUser!.roles!.map((element) => element!.name).toList().join(", "),
+                      Constant.profileUser!.roles!.map((element) => element!.name).toList().join(', '),
                       style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.clip,
                     ),
@@ -117,7 +117,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 title,
                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
               ),
-              if (title != "Logout") ...[const Spacer(), SvgPicture.asset("images/arrow_profile.svg")]
+              if (title != 'Logout') ...[const Spacer(), SvgPicture.asset('images/arrow_profile.svg')]
             ],
           ),
         ),
@@ -129,7 +129,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //   header(),
-          Image.asset("images/header_ios.png"),
+          Image.asset('images/header_ios.png'),
           //   Flexible(
           //     child: ListView(
           //       children: [
@@ -145,26 +145,26 @@ class _ProfileActivityState extends State<ProfileActivity> {
               child: SingleChildScrollView(
             child: Column(
               children: [
-                Obx(() => Constant.isDeveloper.isTrue || F.appFlavor == Flavor.DEV ? listComponent(() => Get.toNamed(RoutePage.developer), "images/branch_icon.svg", "Developer Option") : const SizedBox()),
+                Obx(() => Constant.isDeveloper.isTrue || F.appFlavor == Flavor.DEV ? listComponent(() => Get.toNamed(RoutePage.developer), 'images/branch_icon.svg', 'Developer Option') : const SizedBox()),
                 Obx(() => Constant.isChangeBranch.isTrue
                     ? listComponent(() {
                         Get.toNamed(RoutePage.changeBranch);
-                        Constant.track("Click Profile Change Branch");
-                      }, "images/branch_icon.svg", "Ganti Branch")
+                        Constant.track('Click Profile Change Branch');
+                      }, 'images/branch_icon.svg', 'Ganti Branch')
                     : const SizedBox()),
-                listComponent(() => Get.toNamed(RoutePage.privacyPage), "images/privacy.svg", "Kebijakan Privasi"),
-                listComponent(() => Get.toNamed(RoutePage.termPage), "images/term.svg", "Syarat & Ketentuan"),
-                listComponent(() => Get.toNamed(RoutePage.aboutUsPage), "images/about_us.svg", "Tentang Kami"),
-                listComponent(() => Get.toNamed(RoutePage.helpPage), "images/help.svg", "Bantuan"),
-                listComponent(() => Get.toNamed(RoutePage.licensePage), "images/license.svg", "Lisensi"),
-                listComponent(Constant.invalidResponse(), "images/logout_icon.svg", "Logout"),
+                listComponent(() => Get.toNamed(RoutePage.privacyPage), 'images/privacy.svg', 'Kebijakan Privasi'),
+                listComponent(() => Get.toNamed(RoutePage.termPage), 'images/term.svg', 'Syarat & Ketentuan'),
+                listComponent(() => Get.toNamed(RoutePage.aboutUsPage), 'images/about_us.svg', 'Tentang Kami'),
+                listComponent(() => Get.toNamed(RoutePage.helpPage), 'images/help.svg', 'Bantuan'),
+                listComponent(() => Get.toNamed(RoutePage.licensePage), 'images/license.svg', 'Lisensi'),
+                listComponent(Constant.invalidResponse(), 'images/logout_icon.svg', 'Logout'),
               ],
             ),
           )),
           Align(
             alignment: Alignment.bottomCenter,
             child: Text(
-              "V $_version",
+              'V $_version',
               style: AppTextStyle.grayTextStyle,
             ),
           ),

@@ -11,42 +11,40 @@ import 'package:model/internal_app/sales_person_model.dart';
 
 @SetupModel
 class VisitCustomer {
-    String? id;
+  String? id;
 
-    @IsChild()
-    SalesPerson? salesperson;
+  @IsChild()
+  SalesPerson? salesperson;
 
-    String? createdDate;
-    String? leadStatus;
-    String? prospect;
-    bool? orderIssue;
-    
-    @IsChildren()
-    List<OrderIssueCategories?>? orderIssueCategories;
-    
-    String? remarks;
-    double? latitude;
-    double? longitude;
+  String? createdDate;
+  String? leadStatus;
+  String? prospect;
+  bool? orderIssue;
 
-    @IsChildren()
-    List<Products?>? products;
+  @IsChildren()
+  List<OrderIssueCategories?>? orderIssueCategories;
 
-    VisitCustomer({this.id, this.salesperson, this.createdDate, this.leadStatus, this.prospect, this.products, this.latitude,
-                   this.longitude,this.orderIssue,this.remarks, this.orderIssueCategories});
+  String? remarks;
+  double? latitude;
+  double? longitude;
 
-    static VisitCustomer toResponseModel(Map<String, dynamic> map) {
-        return VisitCustomer(
-            id: map['id'],
-            salesperson: Mapper.child<SalesPerson>(map['salesperson']),
-            createdDate: map['createdDate'],
-            leadStatus: map['leadStatus'],
-            prospect: map['prospect'],
-            products: Mapper.children<Products>(map['products']),
-            orderIssueCategories: Mapper.children<OrderIssueCategories>(map['orderIssueCategories']),
-            latitude: map["latitude"],
-            longitude: map["longitude"],
-            orderIssue: map["orderIssue"],
-            remarks: map['remarks']
-        );
-    }
+  @IsChildren()
+  List<Products?>? products;
+
+  VisitCustomer({this.id, this.salesperson, this.createdDate, this.leadStatus, this.prospect, this.products, this.latitude, this.longitude, this.orderIssue, this.remarks, this.orderIssueCategories});
+
+  static VisitCustomer toResponseModel(Map<String, dynamic> map) {
+    return VisitCustomer(
+        id: map['id'],
+        salesperson: Mapper.child<SalesPerson>(map['salesperson']),
+        createdDate: map['createdDate'],
+        leadStatus: map['leadStatus'],
+        prospect: map['prospect'],
+        products: Mapper.children<Products>(map['products']),
+        orderIssueCategories: Mapper.children<OrderIssueCategories>(map['orderIssueCategories']),
+        latitude: map["latitude"],
+        longitude: map["longitude"],
+        orderIssue: map["orderIssue"],
+        remarks: map['remarks']);
+  }
 }

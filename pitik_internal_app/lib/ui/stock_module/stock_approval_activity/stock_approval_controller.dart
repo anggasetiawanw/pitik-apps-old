@@ -14,9 +14,9 @@ import 'package:global_variable/text_style.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/stock_status.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/enum/stock_status.dart';
 
 class StockApprovalController extends GetxController {
   BuildContext context;
@@ -26,18 +26,17 @@ class StockApprovalController extends GetxController {
   var isLoading = false.obs;
   var isSelectedBox = false.obs;
 
-  EditField efName = EditField(controller: GetXCreator.putEditFieldController("efName"), label: "Disetujui dan Diperiksa Oleh", hint: "", alertText: "", textUnit: "", maxInput: 50, onTyping: (value, editField) {});
+  EditField efName = EditField(controller: GetXCreator.putEditFieldController('efName'), label: 'Disetujui dan Diperiksa Oleh', hint: '', alertText: '', textUnit: '', maxInput: 50, onTyping: (value, editField) {});
 
-  EditField efMail = EditField(controller: GetXCreator.putEditFieldController("efEmail"), label: "Email", hint: "", alertText: "", textUnit: "", maxInput: 50, onTyping: (value, editField) {});
+  EditField efMail = EditField(controller: GetXCreator.putEditFieldController('efEmail'), label: 'Email', hint: '', alertText: '', textUnit: '', maxInput: 50, onTyping: (value, editField) {});
 
-  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController("confirmedButton"), label: "Konfirmasi", onClick: () => _showBottomDialog());
+  late ButtonFill btConfirmed = ButtonFill(controller: GetXCreator.putButtonFillController('confirmedButton'), label: 'Konfirmasi', onClick: () => _showBottomDialog());
 
-  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController("btYesStockApp"), label: "Ya", onClick: () => updateStock(EnumStock.finished));
-  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController("BtNoSTock"), label: "Tidak", onClick: () => Get.back());
+  late ButtonFill btYes = ButtonFill(controller: GetXCreator.putButtonFillController('btYesStockApp'), label: 'Ya', onClick: () => updateStock(EnumStock.finished));
+  late ButtonOutline btNo = ButtonOutline(controller: GetXCreator.putButtonOutlineController('BtNoSTock'), label: 'Tidak', onClick: () => Get.back());
 
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
-
+  DateTime timeEnd = DateTime.now();
 
   @override
   void onInit() {
@@ -55,8 +54,8 @@ class StockApprovalController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    efName.setInput(Constant.profileUser!.fullName ?? "");
-    efMail.setInput(Constant.profileUser!.email ?? "");
+    efName.setInput(Constant.profileUser!.fullName ?? '');
+    efMail.setInput(Constant.profileUser!.email ?? '');
   }
 
   void getDetailStock() {
@@ -68,15 +67,15 @@ class StockApprovalController extends GetxController {
             onResponseDone: (code, message, body, id, packet) {
               opnameModel = body.data;
               isLoading.value = false;
-                timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                Constant.trackRenderTime("Approval_Stock_Opname", totalTime);
+              timeEnd = DateTime.now();
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Approval_Stock_Opname', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -86,8 +85,8 @@ class StockApprovalController extends GetxController {
             onResponseError: (exception, stacktrace, id, packet) {
               isLoading.value = true;
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -98,7 +97,7 @@ class StockApprovalController extends GetxController {
   }
 
   void updateStock(String status) {
-    Constant.track("Click_Setujui_Stock_Opname");
+    Constant.track('Click_Setujui_Stock_Opname');
     Get.back();
     isLoading.value = true;
     Service.push(
@@ -112,8 +111,8 @@ class StockApprovalController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -124,8 +123,8 @@ class StockApprovalController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -137,7 +136,7 @@ class StockApprovalController extends GetxController {
   }
 
   OpnameModel generatePayload(String status) {
-    List<Products?> products = [];
+    final List<Products?> products = [];
 
     for (var product in opnameModel.products!) {
       for (var item in product!.productItems!) {
@@ -155,7 +154,7 @@ class StockApprovalController extends GetxController {
     );
   }
 
-  _showBottomDialog() {
+  Future<void> _showBottomDialog() {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: Get.context!,
@@ -184,18 +183,18 @@ class StockApprovalController extends GetxController {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin menyetujui data ini?",
+                    'Apakah kamu yakin ingin menyetujui data ini?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang ada sudah bener, sebelum memberi persetujuan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang ada sudah bener, sebelum memberi persetujuan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/approve_image.svg",
+                    'images/approve_image.svg',
                   ),
                 ),
                 Container(

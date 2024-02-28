@@ -7,18 +7,14 @@ import '../realization_model.dart';
 
 @SetupModel
 class RealizationResponse {
+  int? code;
 
-    int? code;
+  @IsChildren()
+  List<Realization?> data;
 
-    @IsChildren()
-    List<Realization?> data;
+  RealizationResponse({this.code, this.data = const []});
 
-    RealizationResponse({this.code, this.data = const []});
-
-    static RealizationResponse toResponseModel(Map<String, dynamic> map) {
-        return RealizationResponse(
-            code: map['code'],
-            data: Mapper.children<Realization>(map['data'])
-        );
-    }
+  static RealizationResponse toResponseModel(Map<String, dynamic> map) {
+    return RealizationResponse(code: map['code'], data: Mapper.children<Realization>(map['data']));
+  }
 }

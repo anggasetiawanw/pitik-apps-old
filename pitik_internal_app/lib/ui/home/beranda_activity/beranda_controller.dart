@@ -17,13 +17,13 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/internal_app/profile_response.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/flavors.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/deeplink_mapping_argument.dart';
-import 'package:pitik_internal_app/utils/enum/role.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/api_mapping.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../flavors.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/deeplink_mapping_argument.dart';
+import '../../../utils/enum/role.dart';
+import '../../../utils/route.dart';
 
 class BerandaController extends GetxController {
   BuildContext context;
@@ -32,26 +32,26 @@ class BerandaController extends GetxController {
   var isLoading = false.obs;
   RxBool isInit = true.obs;
   Rx<List<String?>> listRole = Rx<List<String?>>([]);
-  Rx<List<Map>> module = Rx<List<Map>>([]);
-  final List<Map> modules = [
-    {"iconPath": "images/pembelian_icon.svg", "nameModule": "Purchase Order", "nameIcon": "Pembelian", "homeRoute": RoutePage.purchasePage}, // Number 0
-    {"iconPath": "images/penerimaan_icon.svg", "nameModule": "Goods Received", "nameIcon": "Penerimaan", "homeRoute": RoutePage.receivePage}, // Number 1
-    {"iconPath": "images/penjualan_icon.svg", "nameModule": "Sales Order", "nameIcon": "Penjualan", "homeRoute": RoutePage.salesOrderPage}, // Number 2
-    {"iconPath": "images/customer_icon.svg", "nameModule": "Customer", "nameIcon": "Customer", "homeRoute": RoutePage.homePageCustomer}, // Number 3
-    {"iconPath": "images/pengiriman_icon.svg", "nameModule": "Delivery", "nameIcon": "Pengiriman", "homeRoute": RoutePage.homePageDelivery}, // Number 4
-    {"iconPath": "images/persediaan_icon.svg", "nameModule": "Stock", "nameIcon": "Persediaan", "homeRoute": RoutePage.homeStock}, // Number 5
-    {"iconPath": "images/transfer_icon.svg", "nameModule": "Internal Transfer", "nameIcon": "Transfer", "homeRoute": RoutePage.homeTransfer}, // Number 6
-    {"iconPath": "images/manufaktur_icon.svg", "nameModule": "Manufacturing Order", "nameIcon": "Manufaktur", "homeRoute": RoutePage.homeManufacture}, // Number 7
-    {"iconPath": "images/pemusnahan_icon.svg", "nameModule": "Stock Disposal", "nameIcon": "Pemusnahan", "homeRoute": RoutePage.homeTerminate}, // Number 8
+  Rx<List<Map<dynamic, dynamic>>> module = Rx<List<Map<dynamic, dynamic>>>([]);
+  final List<Map<dynamic, dynamic>> modules = [
+    {'iconPath': 'images/pembelian_icon.svg', 'nameModule': 'Purchase Order', 'nameIcon': 'Pembelian', 'homeRoute': RoutePage.purchasePage}, // Number 0
+    {'iconPath': 'images/penerimaan_icon.svg', 'nameModule': 'Goods Received', 'nameIcon': 'Penerimaan', 'homeRoute': RoutePage.receivePage}, // Number 1
+    {'iconPath': 'images/penjualan_icon.svg', 'nameModule': 'Sales Order', 'nameIcon': 'Penjualan', 'homeRoute': RoutePage.salesOrderPage}, // Number 2
+    {'iconPath': 'images/customer_icon.svg', 'nameModule': 'Customer', 'nameIcon': 'Customer', 'homeRoute': RoutePage.homePageCustomer}, // Number 3
+    {'iconPath': 'images/pengiriman_icon.svg', 'nameModule': 'Delivery', 'nameIcon': 'Pengiriman', 'homeRoute': RoutePage.homePageDelivery}, // Number 4
+    {'iconPath': 'images/persediaan_icon.svg', 'nameModule': 'Stock', 'nameIcon': 'Persediaan', 'homeRoute': RoutePage.homeStock}, // Number 5
+    {'iconPath': 'images/transfer_icon.svg', 'nameModule': 'Internal Transfer', 'nameIcon': 'Transfer', 'homeRoute': RoutePage.homeTransfer}, // Number 6
+    {'iconPath': 'images/manufaktur_icon.svg', 'nameModule': 'Manufacturing Order', 'nameIcon': 'Manufaktur', 'homeRoute': RoutePage.homeManufacture}, // Number 7
+    {'iconPath': 'images/pemusnahan_icon.svg', 'nameModule': 'Stock Disposal', 'nameIcon': 'Pemusnahan', 'homeRoute': RoutePage.homeTerminate}, // Number 8
   ];
 
-  String mixpanelValue = "";
+  String mixpanelValue = '';
   //Tracking Variable
   double? latitude = 0;
   double? longitude = 0;
-  String? deviceTracking = "";
-  String? phoneCarrier = "No Simcard";
-  String? osVersion = "";
+  String? deviceTracking = '';
+  String? phoneCarrier = 'No Simcard';
+  String? osVersion = '';
   DateTime timeStart = DateTime.now();
   DateTime timeEnd = DateTime.now();
   RxInt countUnreadNotifications = 0.obs;
@@ -69,14 +69,14 @@ class BerandaController extends GetxController {
   }
 
   @override
-  void onReady() async {
+  Future<void> onReady() async {
     super.onReady();
     await checkVersion.check(context);
     getRole();
     getUnreadNotif();
   }
 
-  void refreshHome(BuildContext context) async{
+  Future<void> refreshHome(BuildContext context) async {
     isLoading.value = true;
     await checkVersion.check(context);
     getRole();
@@ -104,12 +104,12 @@ class BerandaController extends GetxController {
     if (Platform.isAndroid) {
       // final hasPermission = await handlePermissionPhoneAccess();
       // if (hasPermission) {
-      initMobileNumberState();
+      await initMobileNumberState();
       // }
     } else if (Platform.isIOS) {
-      phoneCarrier = "No Simcard";
+      phoneCarrier = 'No Simcard';
     }
-    initMixpanel();
+    await initMixpanel();
   }
 
   /// The `initMixpanel` function initializes the Mixpanel analytics library,
@@ -123,8 +123,8 @@ class BerandaController extends GetxController {
       await FlLocation.getLocation(timeLimit: timeLimit).then((position) async {
         if (position.isMock) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, Gps Mock Detected",
+            'Pesan',
+            'Terjadi Kesalahan, Gps Mock Detected',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -137,40 +137,40 @@ class BerandaController extends GetxController {
       });
     }
 
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       deviceTracking = androidInfo.model;
       osVersion = Platform.operatingSystemVersion;
     } else {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      final IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       deviceTracking = iosInfo.model;
       osVersion = Platform.operatingSystem;
     }
 
     Constant.mixpanel = await Mixpanel.init(F.tokenMixpanel, trackAutomaticEvents: true);
     Constant.mixpanel!.registerSuperProperties({
-      "Phone_Number": Constant.profileUser!.phoneNumber,
-      "Username": Constant.profileUser!.phoneNumber,
-      "Location": "$latitude,$longitude",
-      "Device": deviceTracking,
-      "Phone_Carrier": phoneCarrier,
-      "OS": osVersion,
-      "Role": Constant.profileUser?.roles?.map((e) => e?.name).toList(),
+      'Phone_Number': Constant.profileUser!.phoneNumber,
+      'Username': Constant.profileUser!.phoneNumber,
+      'Location': '$latitude,$longitude',
+      'Device': deviceTracking,
+      'Phone_Carrier': phoneCarrier,
+      'OS': osVersion,
+      'Role': Constant.profileUser?.roles?.map((e) => e?.name).toList(),
     });
     Constant.mixpanel!.identify(Constant.profileUser!.phoneNumber!);
 
-    Constant.mixpanel!.getPeople().set("\$name", Constant.profileUser!.phoneNumber!);
-    Constant.mixpanel!.getPeople().set("\$email", Constant.profileUser!.email!);
+    Constant.mixpanel!.getPeople().set('\$name', Constant.profileUser!.phoneNumber!);
+    Constant.mixpanel!.getPeople().set('\$email', Constant.profileUser!.email!);
 
     GlobalVar.mixpanel = Constant.mixpanel;
 
-    Constant.trackWithMap("Open_Beranda", {'Day_Value': 0});
+    Constant.trackWithMap('Open_Beranda', {'Day_Value': 0});
   }
 
   void checkRoleBranch() {
-    String role = FirebaseRemoteConfig.instance.getString("role_change");
-    List<String> roles = role.split(",");
+    final String role = FirebaseRemoteConfig.instance.getString('role_change');
+    final List<String> roles = role.split(',');
     for (var role in Constant.profileUser!.roles!) {
       for (var roleBranch in roles) {
         if (role!.name == roleBranch) {
@@ -225,8 +225,8 @@ class BerandaController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -236,8 +236,8 @@ class BerandaController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -248,7 +248,7 @@ class BerandaController extends GetxController {
             onTokenInvalid: Constant.invalidResponse()));
   }
 
-  void assignModule() async {
+  Future<void> assignModule() async {
     module.value.clear();
     for (var element in modules) {
       if (listRole.value.contains(element['nameModule'])) {
@@ -263,17 +263,19 @@ class BerandaController extends GetxController {
       isInit.value = false;
 
       timeEnd = DateTime.now();
-      Duration totalTime = timeEnd.difference(timeStart);
-      Constant.trackWithMap("Render_Time", {'Page': "Beranda", 'value': "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds"});
+      final Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackWithMap('Render_Time', {'Page': 'Beranda', 'value': '${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds'});
     }
     isLoading.value = false;
   }
+
   void checkDeepLink() {
     if (Constant.pushNotifPayload.isNotEmpty) {
       DeepLinkUtils.process(Constant.pushNotifPayload.value).then((value) => refreshHome(context));
     }
   }
-   void getUnreadNotif() {
+
+  void getUnreadNotif() {
     Service.push(
         apiKey: ApiMapping.userApi,
         service: ListApi.countUnreadNotifications,
@@ -281,13 +283,13 @@ class BerandaController extends GetxController {
         body: [Constant.auth!.token, Constant.auth!.id],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              countUnreadNotifications.value = (body.data);
+              countUnreadNotifications.value = body.data;
             },
             onResponseFail: (code, message, body, id, packet) {
-              Get.snackbar("Pesan", "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}", snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+              Get.snackbar('Pesan', 'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
             },
             onResponseError: (exception, stacktrace, id, packet) {
-              Get.snackbar("Pesan", "Terjadi Kesalahan Internal", snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
+              Get.snackbar('Pesan', 'Terjadi Kesalahan Internal', snackPosition: SnackPosition.TOP, colorText: Colors.white, backgroundColor: Colors.red);
             },
             onTokenInvalid: () => Constant.invalidResponse()));
   }

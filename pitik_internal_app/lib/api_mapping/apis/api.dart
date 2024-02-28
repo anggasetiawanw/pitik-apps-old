@@ -56,7 +56,7 @@ class API {
   ///   params (String): The parameters to be sent to the server.
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, as: CheckInResponse, error: ErrorResponse)
-  void visitCheckin(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void visitCheckin(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// It creates a new visit.
   ///
@@ -67,7 +67,7 @@ class API {
   ///   params (String): The parameters to be sent to the server.
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void createNewVisit(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void createNewVisit(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// `getListVisitById` is a `GET` request that returns a `VisitCustomerResponse` object or an `Error` object
   ///
@@ -76,7 +76,7 @@ class API {
   ///   xId (String): The ID of the user
   ///   path (String): The path of the request.
   @GET(value: GET.PATH_PARAMETER, as: VisitCustomerResponse, error: ErrorResponse)
-  void getListVisitById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getListVisitById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// `getListVisit` is a GET request that returns a `ListVisitCustomerResponse` object or an `Error`
   /// object
@@ -86,7 +86,7 @@ class API {
   ///   xId (String): The ID of the user who is making the request.
   ///   path (String): The path of the API.
   @GET(value: GET.PATH_PARAMETER, as: ListVisitCustomerResponse, error: ErrorResponse)
-  void getListVisit(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Path() String path) {}
+  void getListVisit(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('\$page') int page, @Query('\$limit') int limit, @Path() String path) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
   /// provinces, with authorization and X-ID headers.
@@ -100,11 +100,11 @@ class API {
   /// the GET request. It is likely used to identify a specific user or device
   /// making the request. The purpose of this header may vary depending on the
   /// specific implementation of the API.
-  @GET(value: "v2/provinces", as: LocationListResponse, error: ErrorResponse)
+  @GET(value: 'v2/provinces', as: LocationListResponse, error: ErrorResponse)
   void getProvince(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
   ) {}
 
   /// `getCity` is a GET request to `v2/cities` with a query parameter `provinceId` and returns a
@@ -112,16 +112,16 @@ class API {
   ///
   /// Args:
   ///   provinceId (String): The province ID.
-  @GET(value: "v2/cities", as: LocationListResponse, error: ErrorResponse)
-  void getCity(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("provinceId") String provinceId) {}
+  @GET(value: 'v2/cities', as: LocationListResponse, error: ErrorResponse)
+  void getCity(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('provinceId') String provinceId) {}
 
   /// `getDistrict` is a GET request to `v2/districts` that returns a `DistrictListResponse` or an `Error`
   /// object
   ///
   /// Args:
   ///   cityId (String): The city ID for which you want to get the districts.
-  @GET(value: "v2/districts", as: LocationListResponse, error: ErrorResponse)
-  void getDistrict(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("cityId") String cityId) {}
+  @GET(value: 'v2/districts', as: LocationListResponse, error: ErrorResponse)
+  void getDistrict(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('cityId') String cityId) {}
 
   /// This function sends a GET request to retrieve order issue categories with
   /// authorization and X-ID headers.
@@ -135,11 +135,11 @@ class API {
   ///   xId (String): The xId parameter is a custom header that is used to
   /// identify a specific request or transaction. It is typically used for
   /// tracking purposes or to provide additional context for the request.
-  @GET(value: "v2/sales/order-issue-categories/", as: OrderIssueResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/order-issue-categories/', as: OrderIssueResponse, error: ErrorResponse)
   void getOrderIssueCategories(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
   ) {}
 
   /// This function sends a GET request to retrieve a list of product categories
@@ -154,8 +154,8 @@ class API {
   /// identify a specific client or user making the API request. It is likely that
   /// this value is generated by the client or user and is used by the server to
   /// track and manage requests from different clients or users.
-  @GET(value: "v2/sales/product-categories/", as: CategoryListResponse, error: ErrorResponse)
-  void getCategories(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId) {}
+  @GET(value: 'v2/sales/product-categories/', as: CategoryListResponse, error: ErrorResponse)
+  void getCategories(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId) {}
 
   /// This function sends a GET request to retrieve a list of products based on a
   /// specified category ID, with authorization and X-ID headers.
@@ -170,8 +170,8 @@ class API {
   /// is used to filter the products by their category. It is an optional
   /// parameter that can be passed in the request URL to retrieve a list of
   /// products that belong to a specific category.
-  @GET(value: "v2/sales/products/", as: ProductListResponse, error: ErrorResponse)
-  void getProductById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("categoryId") String categoryId) {}
+  @GET(value: 'v2/sales/products/', as: ProductListResponse, error: ErrorResponse)
+  void getProductById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('categoryId') String categoryId) {}
 
   /// This function sends a GET request to retrieve a list of salespeople with the
   /// specified user type, page number, and limit.
@@ -194,8 +194,8 @@ class API {
   ///   limit (int): The "limit" parameter is used to specify the maximum number
   /// of results to be returned in a single page of the response. It is used for
   /// pagination purposes.
-  @GET(value: "v2/fms-users", as: SalespersonListResponse, error: ErrorResponse)
-  void getSalesList(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("userTypes") String userType, @Query("\$page") int page, @Query("\$limit") int limit) {}
+  @GET(value: 'v2/fms-users', as: SalespersonListResponse, error: ErrorResponse)
+  void getSalesList(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('userTypes') String userType, @Query('\$page') int page, @Query('\$limit') int limit) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
   /// purchase orders with authorization and pagination parameters.
@@ -215,22 +215,22 @@ class API {
   ///   limit (int): The "limit" parameter is used to specify the maximum number
   /// of items to be returned in a single page of the response. It is used for
   /// pagination purposes.
-  @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/purchase-orders', as: ListPurchaseResponse, error: ErrorResponse)
   void getPurchaseOrderList(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("code") String code,
-    @Query("createdDate") String createdDate,
-    @Query("productCategoryId") String productCategoryId,
-    @Query("productItemId") String productItemId,
-    @Query("operationUnitId") String operationUnitId,
-    @Query("vendorId") String vendorId,
-    @Query("jagalId") String jagalId,
-    @Query("status") String status,
-    @Query("source") String source,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('code') String code,
+    @Query('createdDate') String createdDate,
+    @Query('productCategoryId') String productCategoryId,
+    @Query('productItemId') String productItemId,
+    @Query('operationUnitId') String operationUnitId,
+    @Query('vendorId') String vendorId,
+    @Query('jagalId') String jagalId,
+    @Query('status') String status,
+    @Query('source') String source,
   ) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of
@@ -254,25 +254,25 @@ class API {
   /// orders based on their status. It is a string parameter that can take values
   /// like "draft", "open", "closed", "cancelled", etc. depending on the possible
   /// status values defined in the API documentation.
-  @GET(value: "v2/sales/purchase-orders", as: ListPurchaseResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/purchase-orders', as: ListPurchaseResponse, error: ErrorResponse)
   void getGoodReceiptPOList(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("status") String statusConfirmed,
-    @Query("status") String statusReceived,
-    @Query("withinProductionTeam") String withinProductionTeam,
-    @Query("createdDate") String createdDate,
-    @Query("productCategoryId") String productCategoryId,
-    @Query("productItemId") String productItemId,
-    @Query("operationUnitId") String operationUnitId,
-    @Query("vendorId") String vendorId,
-    @Query("jagalId") String jagalId,
-    @Query("status") String status,
-    @Query("source") String source,
-    @Query("code") String code,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('status') String statusConfirmed,
+    @Query('status') String statusReceived,
+    @Query('withinProductionTeam') String withinProductionTeam,
+    @Query('createdDate') String createdDate,
+    @Query('productCategoryId') String productCategoryId,
+    @Query('productItemId') String productItemId,
+    @Query('operationUnitId') String operationUnitId,
+    @Query('vendorId') String vendorId,
+    @Query('jagalId') String jagalId,
+    @Query('status') String status,
+    @Query('source') String source,
+    @Query('code') String code,
   ) {}
 
   /// This is a Dart function that retrieves details of a purchase by its ID, with
@@ -291,7 +291,7 @@ class API {
   /// resource in a RESTful API. For example, if the URL is "/purchases/123",
   /// "123" would be the path parameter that identifies the specific purchase
   @GET(value: GET.PATH_PARAMETER, as: PurchaseResponse, error: ErrorResponse)
-  void detailPurchaseById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailPurchaseById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// This function cancels a purchase with the given authorization, xId, and path
   /// parameters.
@@ -310,7 +310,7 @@ class API {
   /// extracted from the URL path and passed as an argument to the method.
   @JSON()
   @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-  void cancelPurchase(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void cancelPurchase(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// This function sends a GET request to retrieve a list of vendors with a
   /// specified status, using authorization and X-ID headers.
@@ -328,8 +328,8 @@ class API {
   /// passed in the URL to filter the list of vendors based on their status. The
   /// value of this parameter can be "active", "inactive", or "all" to retrieve
   /// vendors with the corresponding status.
-  @GET(value: "v2/sales/vendors", as: VendorListResponse, error: ErrorResponse)
-  void getListVendors(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status) {}
+  @GET(value: 'v2/sales/vendors', as: VendorListResponse, error: ErrorResponse)
+  void getListVendors(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('status') String status) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
@@ -343,8 +343,8 @@ class API {
   /// identify a specific resource or operation in the API. It is usually a unique
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
-  @GET(value: "v2/sales/operation-units", as: ListOperationUnitsResponse, error: ErrorResponse)
-  void getListJagalExternal(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("type") String type, @Query("category") String category) {}
+  @GET(value: 'v2/sales/operation-units', as: ListOperationUnitsResponse, error: ErrorResponse)
+  void getListJagalExternal(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('status') String status, @Query('type') String type, @Query('category') String category) {}
 
   /// This function creates a purchase order with authorization, x-id, and
   /// parameters.
@@ -363,8 +363,8 @@ class API {
   /// of each item, and the total cost of the order. The format of the string may
   /// depend on the
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/purchase-orders", as: PurchaseResponse, error: ErrorResponse)
-  void createPurchase(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/purchase-orders', as: PurchaseResponse, error: ErrorResponse)
+  void createPurchase(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   /// This is a Dart function for editing a purchase with JSON data and
   /// authorization headers.
@@ -385,7 +385,7 @@ class API {
   /// relevant information needed to update the purchase.
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-  void editPurchase(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void editPurchase(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of sales
   /// orders with authorization, X-ID, page, and limit parameters.
@@ -402,9 +402,22 @@ class API {
   /// "limit" parameter to paginate through a large set of results.
   ///   limit (int): The "limit" parameter is used to specify the maximum number
   /// of results that should be returned in a single page of the sales order list.
-  @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
-  void getListOrders(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("status") String statusDraft, @Query("status") String statusConfirmed, @Query("status") String statusBooked, @Query("status") String statusReadyDeliver, @Query("status") String statusDelivered, @Query("status") String statusCancel, @Query("status") String statusRejected,
-      @Query("status") String statusOnDelivery, @Query("status") String statusAllocated) {}
+  @GET(value: 'v2/sales/sales-orders', as: SalesOrderListResponse, error: ErrorResponse)
+  void getListOrders(
+      @Header('Authorization') String authorization,
+      @Header('X-ID') String xId,
+      @Header('X-APP-ID') String xAppId,
+      @Query('\$page') int page,
+      @Query('\$limit') int limit,
+      @Query('status') String statusDraft,
+      @Query('status') String statusConfirmed,
+      @Query('status') String statusBooked,
+      @Query('status') String statusReadyDeliver,
+      @Query('status') String statusDelivered,
+      @Query('status') String statusCancel,
+      @Query('status') String statusRejected,
+      @Query('status') String statusOnDelivery,
+      @Query('status') String statusAllocated) {}
 
   /// This is a Dart function that sends a GET request to retrieve a list of sales
   /// orders with authorization, X-ID, page, and limit parameters.
@@ -421,44 +434,44 @@ class API {
   /// "limit" parameter to paginate through a large set of results.
   ///   limit (int): The "limit" parameter is used to specify the maximum number
   /// of results that should be returned in a single page of the sales order list.
-  @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/sales-orders', as: SalesOrderListResponse, error: ErrorResponse)
   void getListOrdersFilter(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("customerId") String customerId,
-    @Query("salespersonId") String salesPersonId,
-    @Query("driverId") String driverId,
-    @Query("status") String status,
-    @Query("code") String code,
-    @Query("sameBranch") bool sameBranch,
-    @Query("withinProductionTeam") bool withinProductionTeam,
-    @Query("customerCityId") int customerCityId,
-    @Query("customerProvinceId") int customerProvinceId,
-    @Query("customerName") String customerName,
-    @Query("date") String date,
-    @Query("minQuantityRange") int minQuantityRange,
-    @Query("maxQuantityRange") int maxRangeQuantity,
-    @Query("createdBy") String createdBy,
-    @Query("category") String category,
-    @Query("withinSalesTeam") String withinSalesTeam,
-    @Query("operationUnitId") String operationUnitId,
-    @Query("productItemId") String productItemId,
-    @Query("productCategoryId") String productCategoryId,
-    @Query("status") String statusDraft,
-    @Query("status") String statusConfirmed,
-    @Query("status") String statusBooked,
-    @Query("status") String statusReadyDeliver,
-    @Query("status") String statusDelivered,
-    @Query("status") String statusCancel,
-    @Query("status") String statusRejected,
-    @Query("status") String statusOnDelivery,
-    @Query("status") String statusAllocated,
-    @Query("branchId") String branchId,
-    @Query("minDeliveryTime") String minDeliveryTime,
-    @Query("maxDeliveryTime") String maxDeliveryTime,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('customerId') String customerId,
+    @Query('salespersonId') String salesPersonId,
+    @Query('driverId') String driverId,
+    @Query('status') String status,
+    @Query('code') String code,
+    @Query('sameBranch') bool sameBranch,
+    @Query('withinProductionTeam') bool withinProductionTeam,
+    @Query('customerCityId') int customerCityId,
+    @Query('customerProvinceId') int customerProvinceId,
+    @Query('customerName') String customerName,
+    @Query('date') String date,
+    @Query('minQuantityRange') int minQuantityRange,
+    @Query('maxQuantityRange') int maxRangeQuantity,
+    @Query('createdBy') String createdBy,
+    @Query('category') String category,
+    @Query('withinSalesTeam') String withinSalesTeam,
+    @Query('operationUnitId') String operationUnitId,
+    @Query('productItemId') String productItemId,
+    @Query('productCategoryId') String productCategoryId,
+    @Query('status') String statusDraft,
+    @Query('status') String statusConfirmed,
+    @Query('status') String statusBooked,
+    @Query('status') String statusReadyDeliver,
+    @Query('status') String statusDelivered,
+    @Query('status') String statusCancel,
+    @Query('status') String statusRejected,
+    @Query('status') String statusOnDelivery,
+    @Query('status') String statusAllocated,
+    @Query('branchId') String branchId,
+    @Query('minDeliveryTime') String minDeliveryTime,
+    @Query('maxDeliveryTime') String maxDeliveryTime,
   ) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
@@ -473,8 +486,9 @@ class API {
   /// identify a specific resource or operation in the API. It is usually a unique
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
-  @GET(value: "v2/sales/operation-units", as: ListOperationUnitsResponse, error: ErrorResponse)
-  void getListOperationUnits(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category, @Query("withinProductionTeam") String withinProductionTeam, @Query("\$limit") int limit) {}
+  @GET(value: 'v2/sales/operation-units', as: ListOperationUnitsResponse, error: ErrorResponse)
+  void getListOperationUnits(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('status') String status, @Query('category') String category,
+      @Query('withinProductionTeam') String withinProductionTeam, @Query('\$limit') int limit) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
@@ -488,8 +502,8 @@ class API {
   /// identify a specific resource or operation in the API. It is usually a unique
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
-  @GET(value: "v2/sales/operation-units", as: ListOperationUnitsResponse, error: ErrorResponse)
-  void getListDestionTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("status") String status, @Query("category") String category) {}
+  @GET(value: 'v2/sales/operation-units', as: ListOperationUnitsResponse, error: ErrorResponse)
+  void getListDestionTransfer(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('status') String status, @Query('category') String category) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of sales
   /// orders with specific parameters.
@@ -518,26 +532,24 @@ class API {
   /// parameter. You may want to remove it or use a different parameter name if
   /// you need to pass additional information related to the status of the sales
   /// orders.
-  @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/sales-orders', as: SalesOrderListResponse, error: ErrorResponse)
   void getGoodReceiptsOrderList(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("grStatus") String grStatusReceived,
-    @Query("grStatus") String grStatusRejected,
-    @Query("category") String category,
-    @Query("withinProductionTeam") bool withinProductionTeam,
-    @Query("date") String date,
-    @Query("productCategoryId") String productCategoryId,
-    @Query("productItemId") String productItemId,
-    @Query("operationUnitId") String operationUnitId,
-    @Query("status") String status,
-    @Query("returnStatus") String returnStatus,
-    @Query("code") String code,
-
-
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('grStatus') String grStatusReceived,
+    @Query('grStatus') String grStatusRejected,
+    @Query('category') String category,
+    @Query('withinProductionTeam') bool withinProductionTeam,
+    @Query('date') String date,
+    @Query('productCategoryId') String productCategoryId,
+    @Query('productItemId') String productItemId,
+    @Query('operationUnitId') String operationUnitId,
+    @Query('status') String status,
+    @Query('returnStatus') String returnStatus,
+    @Query('code') String code,
   ) {}
 
   /// This is a Dart function that cancels an order using HTTP PUT method with
@@ -559,7 +571,7 @@ class API {
   /// extracted from the URL path and passed as an argument to the method.
   // @JSON(isPlaint: true)
   @POST(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-  void cancelOrder(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void cancelOrder(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// `createCustomer` is a POST request to `/sales/customers` with a `Authorization` header and a `X-ID`
   /// header, and a `params` parameter
@@ -569,8 +581,8 @@ class API {
   ///   xid (String): The ID of the customer to be created.
   ///   params (String): The parameters to be sent to the server.
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/manufactures", as: ManufactureResponse, error: ErrorResponse)
-  void createManufacture(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/manufactures', as: ManufactureResponse, error: ErrorResponse)
+  void createManufacture(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   /// It updates a customer by id.
   ///
@@ -581,7 +593,7 @@ class API {
   ///   params (String): The parameters to be sent to the server.
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, as: ManufactureResponse, error: ErrorResponse)
-  void updateManufactureById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void updateManufactureById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// `getListCustomer` is a GET request to `/sales/customers` that returns a `ListCustomerResponse` or an
   /// `Error` and has two headers and two parameters
@@ -592,13 +604,13 @@ class API {
   ///   page (String): The page number of the list.
   ///   limit (String): The number of items to return.
   ///
-  @GET(value: "v2/sales/manufactures", as: ListManufactureResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/manufactures', as: ListManufactureResponse, error: ErrorResponse)
   void getListManufacture(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
   ) {}
 
   /// `detailCustomerById` is a `GET` request that returns a `CustomerResponse` object or an `Error`
@@ -609,7 +621,7 @@ class API {
   ///   xId (String): The header value of X-ID
   ///   path (String): The path of the request.
   @GET(value: GET.PATH_PARAMETER, as: ManufactureResponse, error: ErrorResponse)
-  void detailManufactureById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailManufactureById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
@@ -624,10 +636,10 @@ class API {
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
   @GET(value: GET.PATH_PARAMETER, as: ListStockAggregateResponse, error: ErrorResponse)
-  void getListStockAggregateByUnit(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getListStockAggregateByUnit(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   @GET(value: GET.PATH_PARAMETER, as: ListStockAggregateResponse, error: ErrorResponse)
-  void getLatestStockOpname(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Query("productCategoryId") String productCategoryId) {}
+  void getLatestStockOpname(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Query('productCategoryId') String productCategoryId) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
   /// customer responses and error responses related to sales operations.
@@ -642,7 +654,7 @@ class API {
   /// identifier that is assigned to a particular request or session. In this
   /// case, it is being used as a header parameter for authentication purposes.
   @GET(value: GET.PATH_PARAMETER, as: ListManufactureOutputResponse, error: ErrorResponse)
-  void getListManufactureOutput(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getListManufactureOutput(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// This function creates a sales order using authorization, X-ID, and
   /// parameters.
@@ -660,8 +672,8 @@ class API {
   /// information. The format of the string may depend on the API's
   /// specifications.
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/sales-orders", as: OrderResponse, error: ErrorResponse)
-  void createSalesOrder(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/sales-orders', as: OrderResponse, error: ErrorResponse)
+  void createSalesOrder(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   /// This function retrieves details of an order by its ID, with authorization
   /// and error handling.
@@ -679,40 +691,40 @@ class API {
   /// of the order that the user wants to retrieve details for. The actual value
   /// of the path variable will be passed as an argument when the method is called
   @GET(value: GET.PATH_PARAMETER, as: OrderResponse, error: ErrorResponse)
-  void detailOrderById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailOrderById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
-  @POST(value: "v2/upload", as: MediaUploadResponse, error: ErrorResponse)
+  @POST(value: 'v2/upload', as: MediaUploadResponse, error: ErrorResponse)
   @Multipart()
-  void uploadImage(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("folder") String folder, @Parameter("file") File file) {}
+  void uploadImage(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('folder') String folder, @Parameter('file') File file) {}
 
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/stock-disposals", as: TerminateResponse, error: ErrorResponse)
-  void createTerminate(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/stock-disposals', as: TerminateResponse, error: ErrorResponse)
+  void createTerminate(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, as: TerminateResponse, error: ErrorResponse)
-  void updateTerminateById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void updateTerminateById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
-  @GET(value: "v2/sales/stock-disposals", as: ListTerminateResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/stock-disposals', as: ListTerminateResponse, error: ErrorResponse)
   void getListTerminate(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
   ) {}
 
   @GET(value: GET.PATH_PARAMETER, as: TerminateResponse, error: ErrorResponse)
-  void detailTerminateById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailTerminateById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   ///
-  @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/internal-transfers', as: ListTransferResponse, error: ErrorResponse)
   void getListInternalTransfer(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
   ) {}
 
   /// This is a Dart function that makes a GET request to retrieve a list of
@@ -738,24 +750,24 @@ class API {
   /// passed in the API request to filter the results based on the status of the
   /// internal transfers. It is a string parameter that can have one of the
   /// following values: "draft", "submitted", "approved", "rejected", "canceled",
-  @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/internal-transfers', as: ListTransferResponse, error: ErrorResponse)
   void getGoodReceiptTransferList(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("status") String statusReceived,
-    @Query("status") String statusDelivered,
-    @Query("withinProductionTeam") String withinProductionTeam,
-    @Query("createdDate") String createdDate,
-    @Query("productCategoryId") String productCategoryId,
-    @Query("productItemId") String productItemId,
-    @Query("sourceOperationUnitId") String operationUnitId,
-    @Query("targetOperationUnitId") String vendorId,
-    @Query("status") String status,
-    @Query("code") String code,
-    @Query("source") String source,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('status') String statusReceived,
+    @Query('status') String statusDelivered,
+    @Query('withinProductionTeam') String withinProductionTeam,
+    @Query('createdDate') String createdDate,
+    @Query('productCategoryId') String productCategoryId,
+    @Query('productItemId') String productItemId,
+    @Query('sourceOperationUnitId') String operationUnitId,
+    @Query('targetOperationUnitId') String vendorId,
+    @Query('status') String status,
+    @Query('code') String code,
+    @Query('source') String source,
   ) {}
 
   /// This function creates a goods received record using a POST request with
@@ -774,8 +786,8 @@ class API {
   /// any relevant purchase order or supplier information. The exact format and
   /// contents of the "params" string
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/goods-received", error: ErrorResponse)
-  void createGoodReceived(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/goods-received', error: ErrorResponse)
+  void createGoodReceived(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   /// `detailCustomerById` is a `GET` request that returns a `CustomerResponse` object or an `Error`
   /// object
@@ -785,47 +797,47 @@ class API {
   ///   xId (String): The header value of X-ID
   ///   path (String): The path of the request.
   @GET(value: GET.PATH_PARAMETER, as: TransferResponse, error: ErrorResponse)
-  void getDetailTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void getDetailTransfer(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/internal-transfers", error: ErrorResponse)
-  void createTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/internal-transfers', error: ErrorResponse)
+  void createTransfer(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, as: TransferResponse, error: ErrorResponse)
-  void updateTransferById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void updateTransferById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void transferEditStatus(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void transferEditStatus(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void transferStatusDriver(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void transferStatusDriver(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
-  @GET(value: "v2/fms-users", as: ListDriverResponse, error: ErrorResponse)
-  void getListDriver(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("userType") String userType, @Query("\$page") int page, @Query("\$limit") int limit) {}
+  @GET(value: 'v2/fms-users', as: ListDriverResponse, error: ErrorResponse)
+  void getListDriver(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('userType') String userType, @Query('\$page') int page, @Query('\$limit') int limit) {}
 
   @JSON(isPlaint: true)
-  @POST(value: "v2/sales/stock-opnames", as: OpnameResponse, error: ErrorResponse)
-  void createStockOpname(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Parameter("params") String params) {}
+  @POST(value: 'v2/sales/stock-opnames', as: OpnameResponse, error: ErrorResponse)
+  void createStockOpname(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Parameter('params') String params) {}
 
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, as: OpnameResponse, error: ErrorResponse)
-  void updateOpnameById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void updateOpnameById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
-  @GET(value: "v2/sales/stock-opnames", as: ListOpnameResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/stock-opnames', as: ListOpnameResponse, error: ErrorResponse)
   void getListOpname(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("operationUnitId") String operationUnitId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('operationUnitId') String operationUnitId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
   ) {}
 
   @GET(value: GET.PATH_PARAMETER, as: OpnameResponse, error: ErrorResponse)
-  void detailOpnameById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailOpnameById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
   /// This is a Dart function for booking stock sales orders with authorization,
   /// ID, path, and parameters as inputs.
@@ -849,7 +861,7 @@ class API {
   /// requirements of the method and the API it belongs to.
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void bookStockSalesOrder(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void bookStockSalesOrder(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// This function edits a sales order using the provided parameters and
   /// authorization headers.
@@ -872,7 +884,7 @@ class API {
   /// on the specific requirements
   @JSON(isPlaint: true)
   @PUT(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-  void editSalesOrder(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void editSalesOrder(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// This is a Dart function for cancelling a purchase with authorization, ID,
   /// path, and parameters as inputs.
@@ -893,7 +905,7 @@ class API {
   /// specific format and content of this parameter would depend on the
   /// requirements of the API being used.
   @POST(value: PUT.PATH_PARAMETER, error: ErrorResponse)
-  void cancelGr(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void cancelGr(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
   /// This is a Dart function that retrieves details of a received item by its ID,
   /// with authorization and error handling.
@@ -911,46 +923,48 @@ class API {
   /// parameter will be extracted from the URL at runtime and passed as an
   /// argument to the
   @GET(value: GET.PATH_PARAMETER, as: GoodReceiveReponse, error: ErrorResponse)
-  void detailReceivedById(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Path() String path) {}
+  void detailReceivedById(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Path() String path) {}
 
-  @GET(value: "v2/sales/sales-orders", as: SalesOrderListResponse, error: ErrorResponse)
-  void getDeliveryListSO(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("driverId") String driverId, @Query("status") String readyToDeliver, @Query("status") String onDelivery, @Query("status") String delivered, @Query("status") String rejected) {}
+  @GET(value: 'v2/sales/sales-orders', as: SalesOrderListResponse, error: ErrorResponse)
+  void getDeliveryListSO(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('\$page') int page, @Query('\$limit') int limit, @Query('driverId') String driverId,
+      @Query('status') String readyToDeliver, @Query('status') String onDelivery, @Query('status') String delivered, @Query('status') String rejected) {}
 
-  @GET(value: "v2/sales/internal-transfers", as: ListTransferResponse, error: ErrorResponse)
-  void getDeliveryListTransfer(@Header("Authorization") String authorization, @Header("X-ID") String xId, @Header("X-APP-ID") String xAppId, @Query("\$page") int page, @Query("\$limit") int limit, @Query("driverId") String driverId, @Query("status") String readyToDeliver, @Query("status") String onDelivery, @Query("status") String delivered, @Query("status") String received) {}
-
-  @JSON(isPlaint: true)
-  @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void deliveryPickupSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  @GET(value: 'v2/sales/internal-transfers', as: ListTransferResponse, error: ErrorResponse)
+  void getDeliveryListTransfer(@Header('Authorization') String authorization, @Header('X-ID') String xId, @Header('X-APP-ID') String xAppId, @Query('\$page') int page, @Query('\$limit') int limit, @Query('driverId') String driverId,
+      @Query('status') String readyToDeliver, @Query('status') String onDelivery, @Query('status') String delivered, @Query('status') String received) {}
 
   @JSON(isPlaint: true)
   @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
-  void deliveryConfirmSO(@Header("Authorization") String authorization, @Header("X-ID") String xid, @Header("X-APP-ID") String xAppId, @Path() String path, @Parameter("params") String params) {}
+  void deliveryPickupSO(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
 
-  @GET(value: "v2/branches", as: ListBranchResponse, error: ErrorResponse)
+  @JSON(isPlaint: true)
+  @POST(value: POST.PATH_PARAMETER, error: ErrorResponse)
+  void deliveryConfirmSO(@Header('Authorization') String authorization, @Header('X-ID') String xid, @Header('X-APP-ID') String xAppId, @Path() String path, @Parameter('params') String params) {}
+
+  @GET(value: 'v2/branches', as: ListBranchResponse, error: ErrorResponse)
   void getBranch(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xid,
-    @Header("X-APP-ID") String xAppId,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xid,
+    @Header('X-APP-ID') String xAppId,
   ) {}
 
-  @GET(value: "v2/sales/stock-opnames", as: ListOpnameResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/stock-opnames', as: ListOpnameResponse, error: ErrorResponse)
   void getListOpnameJob(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("status") String confirmed,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('status') String confirmed,
   ) {}
 
-  @GET(value: "v2/sales/stock-disposals", as: ListTerminateResponse, error: ErrorResponse)
+  @GET(value: 'v2/sales/stock-disposals', as: ListTerminateResponse, error: ErrorResponse)
   void getListTerminateJob(
-    @Header("Authorization") String authorization,
-    @Header("X-ID") String xId,
-    @Header("X-APP-ID") String xAppId,
-    @Query("\$page") int page,
-    @Query("\$limit") int limit,
-    @Query("status") String booked,
+    @Header('Authorization') String authorization,
+    @Header('X-ID') String xId,
+    @Header('X-APP-ID') String xAppId,
+    @Query('\$page') int page,
+    @Query('\$limit') int limit,
+    @Query('status') String booked,
   ) {}
 }

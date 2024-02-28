@@ -26,121 +26,94 @@ final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 final Future<SharedPreferences> _prefFirstLogin = SharedPreferences.getInstance();
 
 class SplashScreenController extends GetxController {
+  var isUpdated = false.obs;
 
-    var isUpdated = false.obs;
+  late Future<bool> isFirstRun;
+  late Future<bool> isFirstLogin;
+  late String pushNotificationPayload;
 
-    late Future<bool> isFirstRun;
-    late Future<bool> isFirstLogin;
-    late String pushNotificationPayload;
+  @override
+  void onInit() {
+    super.onInit();
+    pushNotificationPayload = Get.arguments ?? '';
+  }
 
-    @override
-    void onInit() {
-        super.onInit();
-        pushNotificationPayload = Get.arguments ?? '';
-    }
-
-    @override
-    void onReady() async {
-        super.onReady();
-        await UpdaterCodeMagic().checkForUpdate(
-            isAvailable: (isAvailable) {
-                if(isAvailable){
-                    isUpdated.value = true;
-                } else {
-                    runSplash();
-                }
-            } ,
-            isReadyToRestart: (isReadyToRestart) => Timer(const Duration(seconds: 1), () => showInformation()),
-        );
-    }
-
-    void runSplash() async {
-        Auth? auth = await AuthImpl().get();
-        Profile? userProfile = await ProfileImpl().get();
-
-        if (auth == null || userProfile == null ) {
-            isFirstRun = _prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstRun') ?? true);
-            if (await isFirstRun) {
-                Get.offNamed(RoutePage.boardingPage);
-            } else {
-                Get.offNamed(RoutePage.loginPage);
-            }
+  @override
+  Future<void> onReady() async {
+    super.onReady();
+    await UpdaterCodeMagic().checkForUpdate(
+      isAvailable: (isAvailable) {
+        if (isAvailable) {
+          isUpdated.value = true;
         } else {
-            GlobalVar.auth = auth;
-            GlobalVar.profileUser = userProfile;
-
-            isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
-            if (await isFirstLogin) {
-                Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, pushNotificationPayload]);
-            } else {
-                Get.offNamed(Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, arguments: pushNotificationPayload);
-            }
+          runSplash();
         }
-    }
-
-    void showInformation() => Get.dialog(
-        Center(
-            child: Container(
-                width: 300,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        Row(
-                            children: [
-                                SvgPicture.asset(
-                                    "images/check_password.svg",
-                                    height: 24,
-                                    width: 24,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                    "Information!",
-                                    style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none),
-                                ),
-                            ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                            "Pembaruan aplikasi berhasil, silahkan restart aplikasi" ,
-                            style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                                SizedBox(
-                                    width: 100,
-                                    child: ButtonOutline(
-                                        controller:
-                                        GetXCreator.putButtonOutlineController("btnOutlineDialogCodeMagicClose"),
-                                        label: "Tutup",
-                                        onClick: () => Get.back()
-
-                                    )
-                                ),
-                                SizedBox(
-                                    width: 100,
-                                    child: ButtonFill(
-                                        controller:
-                                        GetXCreator.putButtonFillController("btnFillDialogCodeMagicRestart"),
-                                        label: "Restart",
-                                        onClick: () => Restart.restartApp()
-                                    )
-                                )
-                            ]
-                        )
-                    ]
-                )
-            )
-        ),
-        barrierDismissible: false
+      },
+      isReadyToRestart: (isReadyToRestart) => Timer(const Duration(seconds: 1), () => showInformation()),
     );
+  }
+
+  Future<void> runSplash() async {
+    final Auth? auth = await AuthImpl().get();
+    final Profile? userProfile = await ProfileImpl().get();
+
+    if (auth == null || userProfile == null) {
+      isFirstRun = _prefs.then((SharedPreferences prefs) => prefs.getBool('isFirstRun') ?? true);
+      if (await isFirstRun) {
+        await Get.offNamed(RoutePage.boardingPage);
+      } else {
+        await Get.offNamed(RoutePage.loginPage);
+      }
+    } else {
+      GlobalVar.auth = auth;
+      GlobalVar.profileUser = userProfile;
+
+      isFirstLogin = _prefFirstLogin.then((SharedPreferences prefs) => prefs.getBool('isFirstLogin') ?? true);
+      if (await isFirstLogin) {
+        await Get.toNamed(RoutePage.privacyPage, arguments: [true, Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, pushNotificationPayload]);
+      } else {
+        await Get.offNamed(Convert.isUsePplApps(userProfile.userType ?? '') ? RoutePage.coopList : RoutePage.farmingDashboard, arguments: pushNotificationPayload);
+      }
+    }
+  }
+
+  void showInformation() => Get.dialog(
+      Center(
+          child: Container(
+              width: 300,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'images/check_password.svg',
+                      height: 24,
+                      width: 24,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Information!',
+                      style: GlobalVar.blackTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, decoration: TextDecoration.none),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Pembaruan aplikasi berhasil, silahkan restart aplikasi',
+                  style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  SizedBox(width: 100, child: ButtonOutline(controller: GetXCreator.putButtonOutlineController('btnOutlineDialogCodeMagicClose'), label: 'Tutup', onClick: () => Get.back())),
+                  SizedBox(width: 100, child: ButtonFill(controller: GetXCreator.putButtonFillController('btnFillDialogCodeMagicRestart'), label: 'Restart', onClick: () => Restart.restartApp()))
+                ])
+              ]))),
+      barrierDismissible: false);
 }
 
 class SplashScreenBindings extends Bindings {
-    SplashScreenBindings();
+  SplashScreenBindings();
 
-    @override
-    void dependencies() => Get.lazyPut(() => SplashScreenController());
+  @override
+  void dependencies() => Get.lazyPut(() => SplashScreenController());
 }

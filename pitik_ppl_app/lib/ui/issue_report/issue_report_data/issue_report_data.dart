@@ -6,15 +6,15 @@ import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pitik_ppl_app/route.dart';
-import 'package:pitik_ppl_app/ui/issue_report/issue_report_data/issue_report_data_controller.dart';
+import '../../../route.dart';
+import 'issue_report_data_controller.dart';
 
 class IssueReportActivity extends StatelessWidget {
   const IssueReportActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    IssueReportDataController controller = Get.put(IssueReportDataController(context: context));
+    final IssueReportDataController controller = Get.put(IssueReportDataController(context: context));
     return Obx(() => Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
@@ -40,12 +40,12 @@ class IssueReportActivity extends StatelessWidget {
                       ? Center(
                           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Image.asset(
-                            "images/issue_not_found.png",
+                            'images/issue_not_found.png',
                             width: 200,
                             height: 200,
                           ),
                           Text(
-                            "Belum ada isu yang di tampilkan",
+                            'Belum ada isu yang di tampilkan',
                             style: GlobalVar.greyTextStyle,
                           )
                         ]))
@@ -59,20 +59,20 @@ class IssueReportActivity extends StatelessWidget {
                                 titleBorderColor: GlobalVar.outlineColor,
                                 titleBackgroundColorCollapse: Colors.white,
                                 titleBackgroundColorExpand: Colors.white,
-                                controller: GetXCreator.putAccordionController("accordion_issue_report_$index"),
-                                headerText: "null",
+                                controller: GetXCreator.putAccordionController('accordion_issue_report_$index'),
+                                headerText: 'null',
                                 titleWidget: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset("images/issue_report_icon.svg", width: 32, height: 32),
+                                    SvgPicture.asset('images/issue_report_icon.svg', width: 32, height: 32),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("Hari Ke-${controller.issueList[index]?.dayNum}", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
+                                        Text('Hari Ke-${controller.issueList[index]?.dayNum}', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
                                         const SizedBox(height: 8),
-                                        Text("Kategori:", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
-                                        Text("${controller.issueList[index]?.text}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                        Text('Kategori:', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                        Text('${controller.issueList[index]?.text}', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                       ],
                                     ),
                                     Column(
@@ -89,7 +89,7 @@ class IssueReportActivity extends StatelessWidget {
                                           ),
                                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                           child: const Text(
-                                            "Baru",
+                                            'Baru',
                                             style: TextStyle(fontSize: 12, color: Color(0xFF198BDB)),
                                           ),
                                         ),
@@ -102,11 +102,11 @@ class IssueReportActivity extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                   child: Column(
                                     children: [
-                                      Text("Deskripsi", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
+                                      Text('Deskripsi', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
                                       const SizedBox(height: 8),
-                                      Text("${controller.issueList[index]?.description}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                      Text('${controller.issueList[index]?.description}', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                       const SizedBox(height: 16),
-                                      Text("Foto", style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
+                                      Text('Foto', style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.medium)),
                                       const SizedBox(height: 8),
                                       Column(
                                           children: controller.issueList[index]?.photoValue

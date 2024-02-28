@@ -9,15 +9,12 @@ import 'package:model/left_over_model.dart';
 
 @SetupModel
 class LeftOverResponse {
+  @IsChild()
+  LeftOver? data;
 
-    @IsChild()
-    LeftOver? data;
+  LeftOverResponse({this.data});
 
-    LeftOverResponse({this.data});
-
-    static LeftOverResponse toResponseModel(Map<String, dynamic> map) {
-        return LeftOverResponse(
-            data: Mapper.child<LeftOver>(map['data'])
-        );
-    }
+  static LeftOverResponse toResponseModel(Map<String, dynamic> map) {
+    return LeftOverResponse(data: Mapper.child<LeftOver>(map['data']));
+  }
 }

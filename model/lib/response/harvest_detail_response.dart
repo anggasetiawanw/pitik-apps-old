@@ -9,15 +9,12 @@ import 'package:model/harvest_model.dart';
 
 @SetupModel
 class HarvestDetailResponse {
+  @IsChild()
+  Harvest? data;
 
-    @IsChild()
-    Harvest? data;
+  HarvestDetailResponse({this.data});
 
-    HarvestDetailResponse({this.data});
-
-    static HarvestDetailResponse toResponseModel(Map<String, dynamic> map) {
-        return HarvestDetailResponse(
-            data: Mapper.child<Harvest>(map['data'])
-        );
-    }
+  static HarvestDetailResponse toResponseModel(Map<String, dynamic> map) {
+    return HarvestDetailResponse(data: Mapper.child<Harvest>(map['data']));
+  }
 }

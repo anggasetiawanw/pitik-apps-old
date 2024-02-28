@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/transfer_module/transfer_form_acitivty/transfer_form_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import 'transfer_form_controller.dart';
 
 class TransferFormActivity extends StatelessWidget {
   const TransferFormActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final TransferFormController controller =
-        Get.put(TransferFormController(context: context));
+    final TransferFormController controller = Get.put(TransferFormController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -25,15 +25,13 @@ class TransferFormActivity extends StatelessWidget {
               Navigator.pop(context);
             }),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Form Transfer",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+          'Form Transfer',
+          style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
     }
@@ -45,14 +43,8 @@ class TransferFormActivity extends StatelessWidget {
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Color.fromARGB(20, 158, 157, 157),
-                  blurRadius: 5,
-                  offset: Offset(0.75, 0.0))
-            ],
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+            boxShadow: [BoxShadow(color: Color.fromARGB(20, 158, 157, 157), blurRadius: 5, offset: Offset(0.75, 0.0))],
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           ),
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: Row(
@@ -60,15 +52,14 @@ class TransferFormActivity extends StatelessWidget {
             children: [
               Expanded(
                   child: ButtonFill(
-                      controller:
-                          GetXCreator.putButtonFillController("saveButton"),
-                      label: "Simpan",
+                      controller: GetXCreator.putButtonFillController('saveButton'),
+                      label: 'Simpan',
                       onClick: () {
-                        Constant.track("Click_Simpan_Transfer");
+                        Constant.track('Click_Simpan_Transfer');
                         if (controller.isEdit.isTrue) {
-                          controller.updateTransfer("DRAFT");
+                          controller.updateTransfer('DRAFT');
                         } else {
-                          controller.createTransfer("DRAFT");
+                          controller.createTransfer('DRAFT');
                         }
                       })),
               const SizedBox(
@@ -76,9 +67,8 @@ class TransferFormActivity extends StatelessWidget {
               ),
               Expanded(
                   child: ButtonOutline(
-                      controller: GetXCreator.putButtonOutlineController(
-                          "confirmButtin"),
-                      label: "Konfirmasi",
+                      controller: GetXCreator.putButtonOutlineController('confirmButtin'),
+                      label: 'Konfirmasi',
                       onClick: () {
                         _showBottomDialog(context, controller);
                       }))
@@ -94,39 +84,43 @@ class TransferFormActivity extends StatelessWidget {
         preferredSize: const Size.fromHeight(60),
         child: appBar(),
       ),
-      body: Obx(() => controller.isLoading.isTrue ? const Center(child: ProgressLoading(),) : Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      controller.sourceField,
-                      controller.destinationField,
-                      controller.categorySKUField,
-                      controller.skuField,
-                      controller.amountField,
-                      controller.totalField,
-                      controller.efRemark,
-                      const SizedBox(
-                              height: 120,
-                            ),
-                      MediaQuery.of(context).viewInsets.bottom > 0.0
-                          ? const SizedBox(
-                              height: 120,
-                            )
-                          : const SizedBox()
-                    ],
+      body: Obx(() => controller.isLoading.isTrue
+          ? const Center(
+              child: ProgressLoading(),
+            )
+          : Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        controller.sourceField,
+                        controller.destinationField,
+                        controller.categorySKUField,
+                        controller.skuField,
+                        controller.amountField,
+                        controller.totalField,
+                        controller.efRemark,
+                        const SizedBox(
+                          height: 120,
+                        ),
+                        MediaQuery.of(context).viewInsets.bottom > 0.0
+                            ? const SizedBox(
+                                height: 120,
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              bottomNavbar()
-            ],
-          )),
+                bottomNavbar()
+              ],
+            )),
     );
   }
 
-  _showBottomDialog(BuildContext context, TransferFormController controller) {
+  Future<dynamic> _showBottomDialog(BuildContext context, TransferFormController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -155,21 +149,18 @@ class TransferFormActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
-                    style: AppTextStyle.primaryTextStyle
-                        .copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
+                    style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text(
-                      "Pastikan semua data yang kamu masukan semua sudah benar",
-                      style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

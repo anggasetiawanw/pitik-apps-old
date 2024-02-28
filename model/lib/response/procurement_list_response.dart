@@ -7,15 +7,12 @@ import '../procurement_model.dart';
 
 @SetupModel
 class ProcurementListResponse {
+  @IsChildren()
+  List<Procurement?> data;
 
-    @IsChildren()
-    List<Procurement?> data;
+  ProcurementListResponse({this.data = const []});
 
-    ProcurementListResponse({this.data = const []});
-
-    static ProcurementListResponse toResponseModel(Map<String, dynamic> map) {
-        return ProcurementListResponse(
-            data: Mapper.children<Procurement>(map['data'])
-        );
-    }
+  static ProcurementListResponse toResponseModel(Map<String, dynamic> map) {
+    return ProcurementListResponse(data: Mapper.children<Procurement>(map['data']));
+  }
 }

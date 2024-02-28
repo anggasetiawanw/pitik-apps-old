@@ -4,7 +4,7 @@ import 'package:global_variable/convert.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/order_model.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+import 'order_status.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -15,7 +15,7 @@ class CardListOrder extends StatelessWidget {
   final bool isSoPage;
   final Function() onTap;
 
-  const CardListOrder({super.key, required this.order, required this.onTap, this.isSoPage = false});
+  const CardListOrder({required this.order, required this.onTap, super.key, this.isSoPage = false});
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,14 @@ class CardListOrder extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Penjualan ${order.category}",
+                          'Penjualan ${order.category}',
                           style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                         ),
                         const SizedBox(
                           height: 4,
                         ),
                         Text(
-                          "${order.code} - ${Convert.getDateFormat(order.createdDate!)}",
+                          '${order.code} - ${Convert.getDateFormat(order.createdDate!)}',
                           style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                           overflow: TextOverflow.clip,
                         ),
@@ -69,7 +69,7 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Customer : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Customer : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
                       "${order.customer == null ? "-" : order.customer?.businessName}",
@@ -85,9 +85,9 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Kategori : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Kategori : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
-                    order.type == "LB" ? "LB" : "Non LB",
+                    order.type == 'LB' ? 'LB' : 'Non LB',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -99,9 +99,9 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Sumber : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Sumber : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
-                    order.operationUnit?.operationUnitName == null ? "-" : "${order.operationUnit?.operationUnitName}",
+                    order.operationUnit?.operationUnitName == null ? '-' : '${order.operationUnit?.operationUnitName}',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -113,14 +113,14 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("SKU : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('SKU : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
                       order.products!.isEmpty
-                          ? "-"
+                          ? '-'
                           : order.products!.length > 1
-                              ? "${order.products![0]!.name} and ${order.products!.length - 1} lainnya"
-                              : "${order.products![0]!.name}",
+                              ? '${order.products![0]!.name} and ${order.products!.length - 1} lainnya'
+                              : '${order.products![0]!.name}',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -133,9 +133,9 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Total Ekor : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Total Ekor : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Text(
-                    order.totalQuantity == null ? "-" : "${order.totalQuantity} Ekor",
+                    order.totalQuantity == null ? '-' : '${order.totalQuantity} Ekor',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -147,10 +147,10 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Dibuat Oleh : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Dibuat Oleh : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
-                      order.userCreator?.email == null ? "-" : "${order.userCreator?.email}",
+                      order.userCreator?.email == null ? '-' : '${order.userCreator?.email}',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.clip,
                     ),
@@ -163,10 +163,10 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tanggal Pengiriman : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Tanggal Pengiriman : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
-                     order.deliveryTime !=null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(order.deliveryTime!)) :"-",
+                      order.deliveryTime != null ? DateFormat('dd MMM yyyy').format(Convert.getDatetime(order.deliveryTime!)) : '-',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.clip,
                     ),
@@ -179,10 +179,10 @@ class CardListOrder extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Sales Branch : ", style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
+                  Text('Sales Branch : ', style: AppTextStyle.subTextStyle.copyWith(fontSize: 12), overflow: TextOverflow.clip),
                   Expanded(
                     child: Text(
-                      order.salesperson == null ? "-" : "${order.salesperson?.branch?.name}",
+                      order.salesperson == null ? '-' : '${order.salesperson?.branch?.name}',
                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                       overflow: TextOverflow.clip,
                     ),

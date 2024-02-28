@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/error/error.dart';
 import 'package:model/notification.dart';
-import 'package:pitik_internal_app/api_mapping/api_mapping.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/deeplink_mapping_argument.dart';
+import '../../api_mapping/api_mapping.dart';
+import '../../api_mapping/list_api.dart';
+import '../../utils/constant.dart';
+import '../../utils/deeplink_mapping_argument.dart';
 
 class NotificationController extends GetxController {
   BuildContext context;
@@ -37,7 +37,7 @@ class NotificationController extends GetxController {
     getListNotification();
   }
 
-  scrollListener() async {
+  void scrollListener() {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         isLoadMore.value = true;
@@ -59,7 +59,7 @@ class NotificationController extends GetxController {
                   body: [
                     'Bearer ${auth.token}',
                     auth.id,
-                    "",
+                    '',
                   ],
                   listener: ResponseListener(
                       onResponseDone: (code, message, body, id, packet) {
@@ -69,8 +69,8 @@ class NotificationController extends GetxController {
                       },
                       onResponseFail: (code, message, body, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                          'Pesan',
+                          'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -79,8 +79,8 @@ class NotificationController extends GetxController {
                       },
                       onResponseError: (exception, stacktrace, id, packet) {
                         Get.snackbar(
-                          "Pesan",
-                          "Terjadi Kesalahan Internal",
+                          'Pesan',
+                          'Terjadi Kesalahan Internal',
                           snackPosition: SnackPosition.TOP,
                           colorText: Colors.white,
                           backgroundColor: Colors.red,
@@ -104,7 +104,7 @@ class NotificationController extends GetxController {
                     apiKey: ApiMapping.userApi,
                     service: ListApi.updateNotification,
                     context: context,
-                    body: ['Bearer ${auth.token}', auth.id, "v2/notifications/read/${notificationList[index].id}", ""],
+                    body: ['Bearer ${auth.token}', auth.id, 'v2/notifications/read/${notificationList[index].id}', ''],
                     listener: ResponseListener(
                         onResponseDone: (code, message, body, id, packet) {
                           notificationList[index].isRead = true;
@@ -116,8 +116,8 @@ class NotificationController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             backgroundColor: Colors.red,
@@ -126,8 +126,8 @@ class NotificationController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan Internal",
+                            'Pesan',
+                            'Terjadi Kesalahan Internal',
                             snackPosition: SnackPosition.TOP,
                             colorText: Colors.white,
                             backgroundColor: Colors.red,
@@ -147,7 +147,7 @@ class NotificationController extends GetxController {
         apiKey: ApiMapping.userApi,
         service: ListApi.notifications,
         context: context,
-        body: [Constant.auth!.token, Constant.auth!.id, page, limit, "internal"],
+        body: [Constant.auth!.token, Constant.auth!.id, page, limit, 'internal'],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if (body.data.isNotEmpty) {
@@ -169,8 +169,8 @@ class NotificationController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -178,8 +178,8 @@ class NotificationController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,

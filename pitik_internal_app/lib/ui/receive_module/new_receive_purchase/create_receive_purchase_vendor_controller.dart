@@ -17,13 +17,13 @@ import 'package:model/internal_app/product_model.dart';
 import 'package:model/internal_app/purchase_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/purchase_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/internal_controller_creator.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase/sku_card_purchase.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase/sku_card_purchase_controller.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase_internal/sku_card_purchase_internal.dart';
-import 'package:pitik_internal_app/widget/sku_card_purchase_internal/sku_card_purchase_internal_controller.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/internal_controller_creator.dart';
+import '../../../widget/sku_card_purchase/sku_card_purchase.dart';
+import '../../../widget/sku_card_purchase/sku_card_purchase_controller.dart';
+import '../../../widget/sku_card_purchase_internal/sku_card_purchase_internal.dart';
+import '../../../widget/sku_card_purchase_internal/sku_card_purchase_internal_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -51,32 +51,48 @@ class CreateGrPurchaseController extends GetxController {
   late SkuCardPurchaseInternal skuCardInternal;
 
   late ButtonOutline cancelButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("cancelPurchase"),
-    label: "Batal",
+    controller: GetXCreator.putButtonOutlineController('cancelPurchase'),
+    label: 'Batal',
     onClick: () => null,
   );
-  EditField efRemark = EditField(controller: GetXCreator.putEditFieldController("efRemarkGR POVENDFOR"), label: "Catatan Penerimaan", hint: "Ketik disini", alertText: "", textUnit: "", maxInput: 500, inputType: TextInputType.multiline, height: 160, onTyping: (value, editField) {});
-  EditField efTotalKG = EditField(controller: GetXCreator.putEditFieldController("efTotalKGPOGRVENDOR"), label: "Total/Global(Kg)*", hint: "Ketik di sini", alertText: "Total Kg harus diisi", textUnit: "Kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+  EditField efRemark = EditField(
+      controller: GetXCreator.putEditFieldController('efRemarkGR POVENDFOR'),
+      label: 'Catatan Penerimaan',
+      hint: 'Ketik disini',
+      alertText: '',
+      textUnit: '',
+      maxInput: 500,
+      inputType: TextInputType.multiline,
+      height: 160,
+      onTyping: (value, editField) {});
+  EditField efTotalKG = EditField(
+      controller: GetXCreator.putEditFieldController('efTotalKGPOGRVENDOR'),
+      label: 'Total/Global(Kg)*',
+      hint: 'Ketik di sini',
+      alertText: 'Total Kg harus diisi',
+      textUnit: 'Kg',
+      maxInput: 20,
+      inputType: TextInputType.number,
+      onTyping: (value, editField) {});
 
   late ButtonFill bfYesGrPurchase;
   late ButtonOutline boNoGrPurchase;
 
-
-    DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeStart = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onInit() {
     super.onInit();
     purchaseDetail.value = Get.arguments as Purchase;
     isLoading.value = true;
     skuCard = SkuCardPurchase(
-      controller: InternalControllerCreator.putSkuCardPurchaseController("skuGrPurchase", context),
+      controller: InternalControllerCreator.putSkuCardPurchaseController('skuGrPurchase', context),
     );
-    skuCardInternal = SkuCardPurchaseInternal(controller: InternalControllerCreator.putSkuCardPurchaseInternalController("skuInternalPuchar", context));
+    skuCardInternal = SkuCardPurchaseInternal(controller: InternalControllerCreator.putSkuCardPurchaseInternalController('skuInternalPuchar', context));
 
     boNoGrPurchase = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noGrPurchase"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noGrPurchase'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -98,17 +114,17 @@ class CreateGrPurchaseController extends GetxController {
       isInternal.value = false;
     }
     super.onReady();
-    Get.find<SkuCardPurchaseController>(tag: "skuGrPurchase").itemCount.listen((p0) {
+    Get.find<SkuCardPurchaseController>(tag: 'skuGrPurchase').itemCount.listen((p0) {
       generateListProduct(p0);
     });
-    Get.find<SkuCardPurchaseInternalController>(tag: "skuInternalPuchar").idx.listen((p0) {
+    Get.find<SkuCardPurchaseInternalController>(tag: 'skuInternalPuchar').idx.listen((p0) {
       generateListProductInternal(p0);
     });
     bfYesGrPurchase = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesGrPurchase"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesGrPurchase'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Konfirmasi_Penerimaan_Pembelian");
+        Constant.track('Click_Konfirmasi_Penerimaan_Pembelian');
         saveGrPurchase();
       },
     );
@@ -177,20 +193,22 @@ class CreateGrPurchaseController extends GetxController {
             Row(
               children: [
                 SvgPicture.asset(
-                  "images/failed_checkin.svg",
+                  'images/failed_checkin.svg',
                   height: 24,
                   width: 24,
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  "Perhatian !",
+                  'Perhatian !',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.bold, decoration: TextDecoration.none),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Text(
-              skuCard.controller.sumChick.value > sumChick.value ? "Jumlah Ekor Melebihi Permintaan Pembelian, Apakah Kamu Yakin Ingin Melanjutkan Penerimaan?" : "Jumlah Ekor Kurang dari Permintaan Pembelian, Apakah Kamu Yakin Ingin Melanjutkan Penerimaan?",
+              skuCard.controller.sumChick.value > sumChick.value
+                  ? 'Jumlah Ekor Melebihi Permintaan Pembelian, Apakah Kamu Yakin Ingin Melanjutkan Penerimaan?'
+                  : 'Jumlah Ekor Kurang dari Permintaan Pembelian, Apakah Kamu Yakin Ingin Melanjutkan Penerimaan?',
               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.normal, decoration: TextDecoration.none),
             ),
             const SizedBox(height: 16),
@@ -204,7 +222,7 @@ class CreateGrPurchaseController extends GetxController {
                 ),
                 SizedBox(
                   width: 100,
-                  child: ButtonFill(controller: GetXCreator.putButtonFillController("Dialog"), label: "OK", onClick: () => {Get.back(), saveGrPurchase()}),
+                  child: ButtonFill(controller: GetXCreator.putButtonFillController('Dialog'), label: 'OK', onClick: () => {Get.back(), saveGrPurchase()}),
                 ),
               ],
             ),
@@ -215,7 +233,7 @@ class CreateGrPurchaseController extends GetxController {
   }
 
   bool isValid() {
-    List ret = validation();
+    final List<dynamic> ret = validation();
     if (ret[0]) {
       isOutStandingQuantity.value = false;
       return true;
@@ -226,7 +244,7 @@ class CreateGrPurchaseController extends GetxController {
 
   void saveGrPurchase() {
     isLoading.value = true;
-    Purchase purchasePayload = generatePayload();
+    final Purchase purchasePayload = generatePayload();
     Service.push(
       service: ListApi.createGoodReceived,
       context: context,
@@ -237,10 +255,10 @@ class CreateGrPurchaseController extends GetxController {
         Get.back();
       }, onResponseFail: (code, message, body, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', (body as ErrorResponse).error!.message!, snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
       }, onResponseError: (exception, stacktrace, id, packet) {
         isLoading.value = false;
-        Get.snackbar("Alert", "Terjadi kesalahan internal", snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Alert', 'Terjadi kesalahan internal', snackPosition: SnackPosition.TOP, duration: const Duration(seconds: 5), backgroundColor: Colors.red, colorText: Colors.white);
       }, onTokenInvalid: () {
         Constant.invalidResponse();
       }),
@@ -249,8 +267,8 @@ class CreateGrPurchaseController extends GetxController {
     Get.back();
   }
 
-  List validation() {
-    List ret = [true, ""];
+  List<dynamic> validation() {
+    List<dynamic> ret = [true, ''];
     if (purchaseDetail.value!.vendor!.type == AppStrings.INTERNAL) {
       ret = skuCardInternal.controller.validation();
     } else {
@@ -260,18 +278,18 @@ class CreateGrPurchaseController extends GetxController {
       efTotalKG.controller.showAlert();
       Scrollable.ensureVisible(efTotalKG.controller.formKey.currentContext!);
 
-      ret = [false, ""];
+      ret = [false, ''];
     }
     return ret;
   }
 
   Purchase generatePayload() {
-    List<Products?> listProductPayload = [];
+    final List<Products?> listProductPayload = [];
     if (purchaseDetail.value!.vendor!.type == AppStrings.INTERNAL) {
       for (int i = 0; i < skuCardInternal.controller.itemCount.value; i++) {
-        int whichItem = skuCardInternal.controller.index.value[i];
-        var listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        final int whichItem = skuCardInternal.controller.index.value[i];
+        final listProductTemp = skuCardInternal.controller.listSku.value.values.toList();
+        final Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCardInternal.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
           quantity: skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCardInternal.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
@@ -281,13 +299,13 @@ class CreateGrPurchaseController extends GetxController {
       }
     } else {
       for (int i = 0; i < skuCard.controller.itemCount.value; i++) {
-        int whichItem = skuCard.controller.index.value[i];
-        var listProductTemp = skuCard.controller.listSku.value.values.toList();
-        Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
+        final int whichItem = skuCard.controller.index.value[i];
+        final listProductTemp = skuCard.controller.listSku.value.values.toList();
+        final Products? productSelected = listProductTemp[whichItem].firstWhereOrNull((element) => element!.name! == skuCard.controller.spinnerSku.value[whichItem].controller.textSelected.value);
         listProductPayload.add(Products(
           productItemId: productSelected!.id,
           quantity: skuCard.controller.editFieldJumlahAyam.value[whichItem].getInput().isEmpty ? null : skuCard.controller.editFieldJumlahAyam.value[whichItem].getInputNumber()!.toInt(),
-          price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber()??0,
+          price: skuCard.controller.editFieldHarga.value[whichItem].getInputNumber() ?? 0,
           weight: skuCard.controller.editFieldKebutuhan.value[whichItem].getInputNumber() ?? 0,
         ));
       }
@@ -310,7 +328,7 @@ class CreateGrPurchaseController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategories.value.add(result);
             }
-            Map<String, bool> mapListValue = {};
+            final Map<String, bool> mapListValue = {};
             for (var product in body.data) {
               mapListValue[product!.name!] = false;
             }
@@ -325,13 +343,13 @@ class CreateGrPurchaseController extends GetxController {
             isLoading.value = false;
 
             timeEnd = DateTime.now();
-            Duration totalTime = timeEnd.difference(timeStart);
-            Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
+            final Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime('Buat_Penerimaan_Pembelian', totalTime);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,
@@ -355,7 +373,7 @@ class CreateGrPurchaseController extends GetxController {
             for (var result in (body as CategoryListResponse).data) {
               listCategories.value.add(result);
             }
-            Map<String, bool> mapList = {};
+            final Map<String, bool> mapList = {};
             for (var product in body.data) {
               mapList[product!.name!] = false;
             }
@@ -368,13 +386,13 @@ class CreateGrPurchaseController extends GetxController {
             this.mapList.value = mapList;
             isLoading.value = false;
             timeEnd = DateTime.now();
-            Duration totalTime = timeEnd.difference(timeStart);
-            Constant.trackRenderTime("Buat_Penerimaan_Pembelian", totalTime);
+            final Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime('Buat_Penerimaan_Pembelian', totalTime);
           },
           onResponseFail: (code, message, body, id, packet) {
             Get.snackbar(
-              "Pesan",
-              "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+              'Pesan',
+              'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
               snackPosition: SnackPosition.TOP,
               duration: const Duration(seconds: 5),
               colorText: Colors.white,

@@ -4,8 +4,8 @@ import 'package:engine/util/mapper/mapper.dart';
 import 'package:get/get.dart';
 import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/terminate_model.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import 'constant.dart';
+import 'route.dart';
 
 class DeepLinkUtils {
   static Future<void> process(String pushNotificationPayload) async {
@@ -14,17 +14,17 @@ class DeepLinkUtils {
       if (payload['request'] != null) {
         payload = jsonDecode(payload['request']);
       }
-      Constant.pushNotifPayload.value = "";
+      Constant.pushNotifPayload.value = '';
       switch (payload['target']) {
-        case "id.pitik.mobile.mobile_flutter.detail_disposal":
-          TerminateModel? terminateModel = Mapper.child<TerminateModel>(payload['additionalParameters']["disposal"]);
+        case 'id.pitik.mobile.mobile_flutter.detail_disposal':
+          final TerminateModel? terminateModel = Mapper.child<TerminateModel>(payload['additionalParameters']['disposal']);
           if (terminateModel != null) {
             // _readNotif(payload['id']);
             await Get.toNamed(RoutePage.terminateDetail, arguments: terminateModel);
           }
           break;
-        case "id.pitik.mobile.mobile_flutter.detail_opname":
-          OpnameModel? opnameModel = Mapper.child<OpnameModel>(payload['additionalParameters']["opname"]);
+        case 'id.pitik.mobile.mobile_flutter.detail_opname':
+          final OpnameModel? opnameModel = Mapper.child<OpnameModel>(payload['additionalParameters']['opname']);
           if (opnameModel != null) {
             // _readNotif(payload['id']);
             await Get.toNamed(RoutePage.stockDetail, arguments: opnameModel);
@@ -35,7 +35,6 @@ class DeepLinkUtils {
       }
     }
   }
-  // TODO : For Future if `ID` of Notification has been implemented
 //   static void _readNotif(String id) {
 //     Service.push(
 //         apiKey: ApiMapping.userApi,

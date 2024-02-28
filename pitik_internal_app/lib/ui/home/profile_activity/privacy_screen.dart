@@ -16,44 +16,53 @@ class PrivacyScreen extends StatelessWidget {
               Navigator.pop(context);
             }),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
         ),
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Kebijakan Privasi",
-          style: AppTextStyle.whiteTextStyle
-              .copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
+          'Kebijakan Privasi',
+          style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
     }
+
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60),
-            child: appBar(),
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: appBar(),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              Center(
+                child: Text(
+                  'Kebijakan Privasi\nPitik Digital Indonesia',
+                  style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 4),
+                child: Center(
+                  child: Text(
+                    'Terakhir di perbarui 17 Des 2022 - 10:00',
+                    style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 32),
+                child: Html(data: AppStrings.privacyPolicy),
+              )
+            ],
+          ),
         ),
-        body: SingleChildScrollView(
-            child: Container(
-                padding: const EdgeInsets.only(top: 16),
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(children: [
-                    Center(
-                        child: Text("Kebijakan Privasi\nPitik Digital Indonesia",style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(top:4),
-                      child: Center(child: 
-                      Text("Terakhir di perbarui 17 Des 2022 - 10:00", style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),),),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(top: 32),
-                        child: Html(data: AppStrings.privacyPolicy),
-                    )
-              ],),
-            ),
-        ),
+      ),
     );
   }
 }

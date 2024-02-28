@@ -5,14 +5,14 @@ import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/transfer_model.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
-import 'package:pitik_internal_app/widget/common/transfer_status.dart';
+import 'order_status.dart';
+import 'transfer_status.dart';
 
 class CardListDelivery extends StatelessWidget {
   const CardListDelivery({
-    super.key,
     required this.isPenjualan,
     required this.onTap,
+    super.key,
     this.order,
     this.transferModel,
   });
@@ -45,14 +45,14 @@ class CardListDelivery extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${isPenjualan ? order!.customer?.businessName : transferModel!.targetOperationUnit!.operationUnitName}",
+                        '${isPenjualan ? order!.customer?.businessName : transferModel!.targetOperationUnit!.operationUnitName}',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        isPenjualan ? "${order!.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}" : "${transferModel!.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}",
+                        isPenjualan ? '${order!.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}' : '${transferModel!.code} - ${created.day} ${DateFormat.MMM().format(created)} ${created.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                       )
                     ],
@@ -77,11 +77,11 @@ class CardListDelivery extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Sumber: ",
+                  'Sumber: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  isPenjualan ? "${order!.operationUnit?.operationUnitName}" : "${transferModel!.sourceOperationUnit!.operationUnitName}",
+                  isPenjualan ? '${order!.operationUnit?.operationUnitName}' : '${transferModel!.sourceOperationUnit!.operationUnitName}',
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],
@@ -92,15 +92,15 @@ class CardListDelivery extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "SKU: ",
+                  'SKU: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Expanded(
                   child: Text(
                     isPenjualan
                         ? order!.products!.length > 1
-                            ? "${order!.products![0]!.name} and ${order!.products!.length - 1} lainnya"
-                            : "${order!.products![0]!.name}"
+                            ? '${order!.products![0]!.name} and ${order!.products!.length - 1} lainnya'
+                            : '${order!.products![0]!.name}'
                         : "${transferModel!.products!.isNotEmpty ? transferModel!.products![0]!.productItems != null ? transferModel!.products![0]!.productItems![0]!.name : "null" : "-"}",
                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                     overflow: TextOverflow.ellipsis,
@@ -114,11 +114,11 @@ class CardListDelivery extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Dibuat oleh: ",
+                  'Dibuat oleh: ',
                   style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                 ),
                 Text(
-                  "${transferModel?.createdBy}",
+                  '${transferModel?.createdBy}',
                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 12),
                 )
               ],

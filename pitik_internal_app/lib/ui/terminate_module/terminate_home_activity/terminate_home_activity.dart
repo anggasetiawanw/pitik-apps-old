@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/terminate_module/terminate_home_activity/terminate_home_controller.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/list_card_terminate.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/route.dart';
+import '../../../widget/common/list_card_terminate.dart';
+import '../../../widget/common/loading.dart';
+import 'terminate_home_controller.dart';
 
 class TerminateHomeAcitivity extends StatelessWidget {
   const TerminateHomeAcitivity({super.key});
@@ -28,7 +29,7 @@ class TerminateHomeAcitivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Pemusnahan",
+          'Pemusnahan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -52,7 +53,7 @@ class TerminateHomeAcitivity extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             child: Center(
                               child: Text(
-                                "Pemusnahan Belum Ada Data!",
+                                'Pemusnahan Belum Ada Data!',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                                 textAlign: TextAlign.center,
                               ),
@@ -69,7 +70,7 @@ class TerminateHomeAcitivity extends StatelessWidget {
                                 controller: controller.scrollController,
                                 itemCount: controller.isLoadMore.isTrue ? controller.listTerminate.value.length + 1 : controller.listTerminate.value.length,
                                 itemBuilder: (context, index) {
-                                  int length = controller.listTerminate.value.length;
+                                  final int length = controller.listTerminate.value.length;
                                   if (index >= length) {
                                     return const Column(
                                       children: [

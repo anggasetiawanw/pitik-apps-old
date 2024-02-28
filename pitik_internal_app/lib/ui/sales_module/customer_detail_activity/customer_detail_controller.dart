@@ -13,9 +13,9 @@ import 'package:model/internal_app/customer_model.dart';
 import 'package:model/internal_app/visit_customer_model.dart';
 import 'package:model/response/internal_app/customer_response.dart';
 import 'package:model/response/internal_app/visit_list_customer_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 class CustomerDetailController extends GetxController {
   BuildContext context;
@@ -37,18 +37,18 @@ class CustomerDetailController extends GetxController {
   var limit = 10.obs;
 
   late ButtonFill kunjunganButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("kunjunganDetail"),
-      label: "Kunjungan",
+      controller: GetXCreator.putButtonFillController('kunjunganDetail'),
+      label: 'Kunjungan',
       onClick: () {
-        Constant.track("Click_Kunjungan_Customer");
+        Constant.track('Click_Kunjungan_Customer');
         Get.toNamed(RoutePage.visitCustomer, arguments: [RoutePage.fromDetailCustomer, customerDetail.value])!.then((value) => getData());
       });
 
   late ButtonOutline editButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("editDetail"),
-      label: "Edit",
+      controller: GetXCreator.putButtonOutlineController('editDetail'),
+      label: 'Edit',
       onClick: () {
-        Constant.track("Click_Edit_Customer");
+        Constant.track('Click_Edit_Customer');
         Get.toNamed(RoutePage.editCustomer, arguments: customerDetail.value)!.then((value) {
           Timer(const Duration(milliseconds: 100), () {
             getData();
@@ -59,8 +59,8 @@ class CustomerDetailController extends GetxController {
   late ButtonFill iyaArchiveButton;
 
   ButtonOutline tidakArchiveButton = ButtonOutline(
-    controller: GetXCreator.putButtonOutlineController("tidakArchive"),
-    label: "Tidak",
+    controller: GetXCreator.putButtonOutlineController('tidakArchive'),
+    label: 'Tidak',
     onClick: () => Get.back(),
   );
 
@@ -79,14 +79,14 @@ class CustomerDetailController extends GetxController {
     super.onReady();
     getData();
     getTime(false);
-    iyaArchiveButton = ButtonFill(controller: GetXCreator.putButtonFillController("IyaArchive"), label: "Ya", onClick: () => archivedCustomer(context));
+    iyaArchiveButton = ButtonFill(controller: GetXCreator.putButtonFillController('IyaArchive'), label: 'Ya', onClick: () => archivedCustomer(context));
   }
 
   void archivedCustomer(BuildContext context) {
-    String custId = customerDetail.value!.id!;
+    final String custId = customerDetail.value!.id!;
     isLoadingDetails.value = true;
     if (customerDetail.value!.isArchived! == true) {
-      Constant.track("Click_Unarchive_Customer");
+      Constant.track('Click_Unarchive_Customer');
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
@@ -106,8 +106,8 @@ class CustomerDetailController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -116,8 +116,8 @@ class CustomerDetailController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
+                            'Pesan',
+                            'Terjadi kesalahan internal',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -133,8 +133,8 @@ class CustomerDetailController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {},
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -144,7 +144,7 @@ class CustomerDetailController extends GetxController {
               },
               onTokenInvalid: Constant.invalidResponse()));
     } else {
-      Constant.track("Click_Archive_Customer");
+      Constant.track('Click_Archive_Customer');
       Service.push(
           apiKey: 'userApi',
           service: ListApi.archiveCustomer,
@@ -164,8 +164,8 @@ class CustomerDetailController extends GetxController {
                         },
                         onResponseFail: (code, message, body, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                            'Pesan',
+                            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -174,8 +174,8 @@ class CustomerDetailController extends GetxController {
                         },
                         onResponseError: (exception, stacktrace, id, packet) {
                           Get.snackbar(
-                            "Pesan",
-                            "Terjadi kesalahan internal",
+                            'Pesan',
+                            'Terjadi kesalahan internal',
                             snackPosition: SnackPosition.TOP,
                             duration: const Duration(seconds: 5),
                             colorText: Colors.white,
@@ -191,8 +191,8 @@ class CustomerDetailController extends GetxController {
               onResponseFail: (code, message, body, id, packet) {},
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -221,7 +221,7 @@ class CustomerDetailController extends GetxController {
 
   void getData() {
     try {
-      String custId = customer.value!.id!;
+      final String custId = customer.value!.id!;
       isLoadingKunjungan.value = true;
       isLoadingDetails.value = true;
       visitCustomer.value.clear();
@@ -236,13 +236,13 @@ class CustomerDetailController extends GetxController {
                 getTime(true);
                 isLoadingDetails.value = false;
                 timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                Constant.trackRenderTime("Detail_Customer", totalTime);
+                final Duration totalTime = timeEnd.difference(timeStart);
+                Constant.trackRenderTime('Detail_Customer', totalTime);
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -253,8 +253,8 @@ class CustomerDetailController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -278,8 +278,8 @@ class CustomerDetailController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -288,8 +288,8 @@ class CustomerDetailController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -300,8 +300,8 @@ class CustomerDetailController extends GetxController {
               onTokenInvalid: Constant.invalidResponse()));
     } catch (e) {
       Get.snackbar(
-        "Pesan",
-        "Terjadi kesalahan internal",
+        'Pesan',
+        'Terjadi kesalahan internal',
         snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 5),
         colorText: Colors.white,
@@ -310,11 +310,11 @@ class CustomerDetailController extends GetxController {
     }
   }
 
-  addItems() async {
+  Future<void> addItems() async {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         page.value++;
-        String custId = customerDetail.value!.id!;
+        final String custId = customerDetail.value!.id!;
         Service.push(
             service: ListApi.getListVisit,
             context: context,
@@ -327,8 +327,8 @@ class CustomerDetailController extends GetxController {
               isLoadingKunjungan.value = false;
             }, onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -336,8 +336,8 @@ class CustomerDetailController extends GetxController {
               );
             }, onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

@@ -12,8 +12,8 @@ extension PurhcaseReceiveController on ReceiveController {
     bodyGeneralPurhcase[BodyQueryPurhcase.xAppId.index] = Constant.xAppId;
     bodyGeneralPurhcase[BodyQueryPurhcase.page.index] = pagePurchase.value;
     bodyGeneralPurhcase[BodyQueryPurhcase.limit.index] = limit.value;
-    bodyGeneralPurhcase[BodyQueryPurhcase.statusConfirmed.index] = "CONFIRMED";
-    bodyGeneralPurhcase[BodyQueryPurhcase.statusReceived.index] = "RECEIVED";
+    bodyGeneralPurhcase[BodyQueryPurhcase.statusConfirmed.index] = 'CONFIRMED';
+    bodyGeneralPurhcase[BodyQueryPurhcase.statusReceived.index] = 'RECEIVED';
     bodyGeneralPurhcase[BodyQueryPurhcase.withinProductionTeam.index] = AppStrings.TRUE_LOWERCASE;
   }
 
@@ -38,7 +38,7 @@ extension PurhcaseReceiveController on ReceiveController {
     showFilter();
   }
 
-  scrollPurchaseListener() async {
+  void scrollPurchaseListener() {
     scrollPurchaseController.addListener(() {
       if (scrollPurchaseController.position.maxScrollExtent == scrollPurchaseController.position.pixels) {
         isLoadMore.value = true;
@@ -76,7 +76,7 @@ extension PurhcaseReceiveController on ReceiveController {
     VendorModel? vendorSelect;
 
     if (spJenisSumber.controller.textSelected.value.isNotEmpty) {
-      if (spJenisSumber.controller.textSelected.value == "Jagal Eksternal") {
+      if (spJenisSumber.controller.textSelected.value == 'Jagal Eksternal') {
         jagalSelect = listSourceJagal.value.firstWhereOrNull((element) => element!.operationUnitName == spSumber.controller.textSelected.value);
       } else {
         vendorSelect = listSourceVendor.value.firstWhereOrNull((element) => element!.vendorName == spSumber.controller.textSelected.value);
@@ -85,24 +85,24 @@ extension PurhcaseReceiveController on ReceiveController {
 
     String? status;
     switch (spStatus.controller.textSelected.value) {
-      case "Terkonfirmasi":
-        status = "CONFIRMED";
+      case 'Terkonfirmasi':
+        status = 'CONFIRMED';
         break;
-      case "Diterima":
-        status = "RECEIVED";
+      case 'Diterima':
+        status = 'RECEIVED';
         break;
-      case "Dibatalkan":
-        status = "CANCELLED";
+      case 'Dibatalkan':
+        status = 'CANCELLED';
         break;
       default:
     }
 
-    if(status != null){
-        bodyGeneralPurhcase[BodyQueryPurhcase.statusConfirmed.index] = null;
-        bodyGeneralPurhcase[BodyQueryPurhcase.statusReceived.index] = null;
+    if (status != null) {
+      bodyGeneralPurhcase[BodyQueryPurhcase.statusConfirmed.index] = null;
+      bodyGeneralPurhcase[BodyQueryPurhcase.statusReceived.index] = null;
     }
 
-    String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalFilterReceive.getLastTimeSelected());
+    final String? date = dtTanggalFilterReceive.controller.textSelected.value.isEmpty ? null : DateFormat('yyyy-MM-dd').format(dtTanggalFilterReceive.getLastTimeSelected());
     bodyGeneralPurhcase[BodyQueryPurhcase.createdDate.index] = date;
     bodyGeneralPurhcase[BodyQueryPurhcase.productCategoryId.index] = categorySelect?.id;
     bodyGeneralPurhcase[BodyQueryPurhcase.productItemId.index] = productSelect?.id;
@@ -112,9 +112,9 @@ extension PurhcaseReceiveController on ReceiveController {
     bodyGeneralPurhcase[BodyQueryPurhcase.status.index] = status;
     bodyGeneralPurhcase[BodyQueryPurhcase.source.index] = spJenisSumber.controller.textSelected.value.isEmpty
         ? null
-        : spJenisSumber.controller.textSelected.value == "Jagal Eksternal"
-            ? "JAGAL"
-            : "VENDOR";
+        : spJenisSumber.controller.textSelected.value == 'Jagal Eksternal'
+            ? 'JAGAL'
+            : 'VENDOR';
     isLoadingPurchase.value = true;
     getListPurchase();
   }
@@ -129,7 +129,7 @@ extension PurhcaseReceiveController on ReceiveController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var vendor in (body as VendorListResponse).data) {
                 mapList[vendor!.vendorName!] = false;
               }
@@ -139,7 +139,7 @@ extension PurhcaseReceiveController on ReceiveController {
               Timer(const Duration(milliseconds: 100), () {
                 spSumber.controller
                   ..generateItems(mapList)
-                  ..setTextSelected("")
+                  ..setTextSelected('')
                   ..hideLoading()
                   ..enable()
                   // ignore: invalid_use_of_protected_member
@@ -148,8 +148,8 @@ extension PurhcaseReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -159,8 +159,8 @@ extension PurhcaseReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -178,9 +178,9 @@ extension PurhcaseReceiveController on ReceiveController {
     Service.push(
         service: ListApi.getListJagalExternal,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, "JAGAL", "EXTERNAL"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, 'JAGAL', 'EXTERNAL'],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -190,7 +190,7 @@ extension PurhcaseReceiveController on ReceiveController {
           Timer(const Duration(milliseconds: 100), () {
             spSumber.controller
               ..generateItems(mapList)
-              ..setTextSelected("")
+              ..setTextSelected('')
               ..hideLoading()
               ..enable()
               // ignore: invalid_use_of_protected_member
@@ -198,8 +198,8 @@ extension PurhcaseReceiveController on ReceiveController {
           });
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -208,8 +208,8 @@ extension PurhcaseReceiveController on ReceiveController {
           spSumber.controller.hideLoading();
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -230,7 +230,7 @@ extension PurhcaseReceiveController on ReceiveController {
         context: context,
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(onResponseDone: (code, message, body, id, packet) {
-          Map<String, bool> mapList = {};
+          final Map<String, bool> mapList = {};
           for (var customer in (body as ListOperationUnitsResponse).data) {
             mapList[customer!.operationUnitName!] = false;
           }
@@ -245,8 +245,8 @@ extension PurhcaseReceiveController on ReceiveController {
           spTujuan.controller.refresh();
         }, onResponseFail: (code, message, body, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+            'Pesan',
+            'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -255,8 +255,8 @@ extension PurhcaseReceiveController on ReceiveController {
           spTujuan.controller.hideLoading();
         }, onResponseError: (exception, stacktrace, id, packet) {
           Get.snackbar(
-            "Pesan",
-            "Terjadi Kesalahan Internal",
+            'Pesan',
+            'Terjadi Kesalahan Internal',
             snackPosition: SnackPosition.TOP,
             duration: const Duration(seconds: 5),
             colorText: Colors.white,
@@ -295,8 +295,8 @@ extension PurhcaseReceiveController on ReceiveController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -307,8 +307,8 @@ extension PurhcaseReceiveController on ReceiveController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

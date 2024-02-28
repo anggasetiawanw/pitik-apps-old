@@ -2,15 +2,16 @@ import 'package:components/global_var.dart';
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pitik_ppl_app/ui/self_registration/add_operator_self_registration/add_operator_self_registration_controller.dart';
-import 'package:pitik_ppl_app/utils/widgets/custom_appbar.dart';
+
+import '../../../utils/widgets/custom_appbar.dart';
+import 'add_operator_self_registration_controller.dart';
 
 class AddOperatorSelfRegistration extends StatelessWidget {
   const AddOperatorSelfRegistration({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AddOperatorSelfRegistrationController controller = Get.put(AddOperatorSelfRegistrationController(context: context));
+    final AddOperatorSelfRegistrationController controller = Get.put(AddOperatorSelfRegistrationController(context: context));
     return Obx(
       () => controller.isLoading.isTrue
           ? const Scaffold(
@@ -21,7 +22,7 @@ class AddOperatorSelfRegistration extends StatelessWidget {
               ),
             )
           : Scaffold(
-              appBar: PreferredSize(preferredSize: const Size.fromHeight(60), child: CustomAppbar(title: "Tambah Operator Kandang", onBack: () => Get.back())),
+              appBar: PreferredSize(preferredSize: const Size.fromHeight(60), child: CustomAppbar(title: 'Tambah Operator Kandang', onBack: () => Get.back())),
               bottomNavigationBar: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
@@ -50,14 +51,14 @@ class AddOperatorSelfRegistration extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Kandang Penugasan",
+                              'Kandang Penugasan',
                               style: GlobalVar.blackTextStyle.copyWith(fontWeight: GlobalVar.bold),
                             ),
                             const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${controller.coop.coopName}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium)),
+                                Text('${controller.coop.coopName}', style: GlobalVar.blackTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium)),
                                 Text("Chickin ${controller.coop.startDate == null || controller.coop.startDate!.isEmpty ? '-' : Convert.getDate(controller.coop.startDate)}", style: GlobalVar.greyTextStyle.copyWith(fontSize: 10)),
                               ],
                             ),

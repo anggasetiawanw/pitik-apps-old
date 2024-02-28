@@ -7,8 +7,8 @@ import 'package:model/internal_app/order_model.dart';
 import 'package:model/internal_app/transfer_model.dart';
 import 'package:model/response/internal_app/sales_order_list_response.dart';
 import 'package:model/response/internal_app/transfer_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 class DeliveryHomeController extends GetxController {
   BuildContext context;
@@ -49,12 +49,12 @@ class DeliveryHomeController extends GetxController {
     countApi++;
     if (countApi == 2) {
       timeEnd = DateTime.now();
-      Duration totalTime = timeEnd.difference(timeStart);
-      Constant.trackRenderTime("Delivery_Home", totalTime);
+      final Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackRenderTime('Delivery_Home', totalTime);
     }
   }
 
-  salesScrollListener() async {
+  Future<void> salesScrollListener() async {
     scrollControllerSales.addListener(() {
       if (scrollControllerSales.position.maxScrollExtent == scrollControllerSales.position.pixels) {
         isLoadMoreSales.value = true;
@@ -75,10 +75,10 @@ class DeliveryHomeController extends GetxController {
           pageSales.value,
           limitSales.value,
           Constant.profileUser!.id,
-          "READY_TO_DELIVER",
-          "ON_DELIVERY",
-          "DELIVERED",
-          "REJECTED",
+          'READY_TO_DELIVER',
+          'ON_DELIVERY',
+          'DELIVERED',
+          'REJECTED',
         ],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
@@ -103,8 +103,8 @@ class DeliveryHomeController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadingSales.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -113,8 +113,8 @@ class DeliveryHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -125,7 +125,7 @@ class DeliveryHomeController extends GetxController {
             onTokenInvalid: Constant.invalidResponse()));
   }
 
-  transferScrollListener() async {
+  void transferScrollListener() {
     scrollControllerTransfer.addListener(() {
       if (scrollControllerTransfer.position.maxScrollExtent == scrollControllerTransfer.position.pixels) {
         isLoadMoreTransfer.value = true;
@@ -139,7 +139,7 @@ class DeliveryHomeController extends GetxController {
     Service.push(
         service: ListApi.getDeliveryListTransfer,
         context: Get.context!,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limitTransfer.value, Constant.profileUser!.id, "READY_TO_DELIVER", "ON_DELIVERY", "DELIVERED", "RECEIVED"],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, pageTransfer.value, limitTransfer.value, Constant.profileUser!.id, 'READY_TO_DELIVER', 'ON_DELIVERY', 'DELIVERED', 'RECEIVED'],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               if ((body as ListTransferResponse).data.isNotEmpty) {
@@ -163,8 +163,8 @@ class DeliveryHomeController extends GetxController {
             onResponseFail: (code, message, body, id, packet) {
               isLoadingSales.value = false;
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -173,8 +173,8 @@ class DeliveryHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

@@ -26,7 +26,7 @@ extension OutboundOrderController on SalesOrderController {
   }
 
   void shopkeeperBodyGeneralOutbound(List<dynamic> bodyGeneral) {
-    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = "true";
+    bodyGeneral[BodyQuerySales.withinProductionTeam.index] = 'true';
     bodyGeneral[BodyQuerySales.status3.index] = EnumSO.booked;
     bodyGeneral[BodyQuerySales.status4.index] = EnumSO.readyToDeliver;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
@@ -51,7 +51,7 @@ extension OutboundOrderController on SalesOrderController {
   }
 
   void salesLeadBodyGeneralOutbound(List<dynamic> bodyGeneral) {
-    bodyGeneral[BodyQuerySales.withSalesTeam.index] = "true";
+    bodyGeneral[BodyQuerySales.withSalesTeam.index] = 'true';
     bodyGeneral[BodyQuerySales.createdBy.index] = Constant.profileUser?.id;
     bodyGeneral[BodyQuerySales.status1.index] = EnumSO.draft;
     bodyGeneral[BodyQuerySales.status2.index] = EnumSO.confirmed;
@@ -84,7 +84,6 @@ extension OutboundOrderController on SalesOrderController {
     bodyGeneral[BodyQuerySales.status8.index] = EnumSO.onDelivery;
     bodyGeneral[BodyQuerySales.status5.index] = EnumSO.delivered;
     bodyGeneral[BodyQuerySales.status7.index] = EnumSO.rejected;
-
   }
 
   ResponseListener responOutbound() {
@@ -116,8 +115,8 @@ extension OutboundOrderController on SalesOrderController {
           if (isInit) {
             isInit = false;
             timeEnd = DateTime.now();
-            Duration totalTime = timeEnd.difference(timeStart);
-            Constant.trackRenderTime("Penjualan", totalTime);
+            final Duration totalTime = timeEnd.difference(timeStart);
+            Constant.trackRenderTime('Penjualan', totalTime);
           }
         },
         onResponseFail: (code, message, body, id, packet) {
@@ -145,7 +144,7 @@ extension OutboundOrderController on SalesOrderController {
     if (Constant.isScFleet.isTrue) {
       scFleetBodyGeneralOutbound(bodyGeneralOutbound);
     }
-    if (selectedValue.value == "Customer") {
+    if (selectedValue.value == 'Customer') {
       bodyGeneralOutbound[BodyQuerySales.customerName.index] = searchValue.value;
     } else {
       bodyGeneralOutbound[BodyQuerySales.code.index] = searchValue.value;
@@ -158,110 +157,110 @@ extension OutboundOrderController on SalesOrderController {
     Location? provinceSelect;
 
     if (spProvince.controller.textSelected.value.isNotEmpty) {
-        if(province.isNotEmpty) {
-            provinceSelect = province.firstWhereOrNull(
-                (element) => element!.provinceName == spProvince.controller.textSelected.value,
-            );
-        }
+      if (province.isNotEmpty) {
+        provinceSelect = province.firstWhereOrNull(
+          (element) => element!.provinceName == spProvince.controller.textSelected.value,
+        );
+      }
     }
 
     Location? citySelect;
     if (spCity.controller.textSelected.value.isNotEmpty) {
-        if(city.isNotEmpty) {
-            citySelect = city.firstWhereOrNull(
-                (element) => element!.cityName == spCity.controller.textSelected.value,
-            );
-        }
+      if (city.isNotEmpty) {
+        citySelect = city.firstWhereOrNull(
+          (element) => element!.cityName == spCity.controller.textSelected.value,
+        );
+      }
     }
 
     SalesPerson? salesSelect;
     if (spCreatedBy.controller.textSelected.value.isNotEmpty) {
-        if(listSalesperson.isNotEmpty) {
-            salesSelect = listSalesperson.firstWhereOrNull(
-                (element) => element!.email == spCreatedBy.controller.textSelected.value,
-            );
-        }
+      if (listSalesperson.isNotEmpty) {
+        salesSelect = listSalesperson.firstWhereOrNull(
+          (element) => element!.email == spCreatedBy.controller.textSelected.value,
+        );
+      }
     }
 
     CategoryModel? categorySelect;
     if (spCategory.controller.textSelected.value.isNotEmpty) {
-        if(listCategory.isNotEmpty) {
-            categorySelect = listCategory.firstWhereOrNull(
-                (element) => element!.name == spCategory.controller.textSelected.value,
-            );
-        }
+      if (listCategory.isNotEmpty) {
+        categorySelect = listCategory.firstWhereOrNull(
+          (element) => element!.name == spCategory.controller.textSelected.value,
+        );
+      }
     }
 
     Products? productSelect;
     if (spSku.controller.textSelected.value.isNotEmpty) {
-        if(listProduct.isNotEmpty) {
-            productSelect = listProduct.firstWhereOrNull(
-                (element) => element!.name == spSku.controller.textSelected.value,
-            );
-        }
+      if (listProduct.isNotEmpty) {
+        productSelect = listProduct.firstWhereOrNull(
+          (element) => element!.name == spSku.controller.textSelected.value,
+        );
+      }
     }
 
     OperationUnitModel? operationUnitSelect;
     if (spSource.controller.textSelected.value.isNotEmpty) {
-        if(listOperationUnits.isNotEmpty) {
-            operationUnitSelect = listOperationUnits.firstWhereOrNull(
-                (element) => element!.operationUnitName == spSource.controller.textSelected.value,
-            );
-        }
+      if (listOperationUnits.isNotEmpty) {
+        operationUnitSelect = listOperationUnits.firstWhereOrNull(
+          (element) => element!.operationUnitName == spSource.controller.textSelected.value,
+        );
+      }
     }
     Branch? branchSelect;
     if (spSalesBranch.controller.textSelected.value.isNotEmpty) {
-        if(listBranch.isNotEmpty) {
-            branchSelect = listBranch.firstWhereOrNull(
-                (element) => element!.name == spSalesBranch.controller.textSelected.value,
-            );
-        }
+      if (listBranch.isNotEmpty) {
+        branchSelect = listBranch.firstWhereOrNull(
+          (element) => element!.name == spSalesBranch.controller.textSelected.value,
+        );
+      }
     }
 
     String? status;
     switch (spStatus.controller.textSelected.value) {
-      case "Draft":
-        status = "DRAFT";
+      case 'Draft':
+        status = 'DRAFT';
         break;
-      case "Terkonfirmasi":
-        status = "CONFIRMED";
+      case 'Terkonfirmasi':
+        status = 'CONFIRMED';
         break;
-      case "Teralokasi":
-        status = "ALLOCATED";
+      case 'Teralokasi':
+        status = 'ALLOCATED';
         break;
-      case "Dipesan":
-        status = "BOOKED";
+      case 'Dipesan':
+        status = 'BOOKED';
         break;
-      case "Siap Dikirim":
-        status = "READY_TO_DELIVER";
+      case 'Siap Dikirim':
+        status = 'READY_TO_DELIVER';
         break;
-      case "Perjalanan":
-        status = "ON_DELIVERY";
+      case 'Perjalanan':
+        status = 'ON_DELIVERY';
         break;
-      case "Terkirim":
-        status = "DELIVERED";
+      case 'Terkirim':
+        status = 'DELIVERED';
         break;
-      case "Ditolak":
-        status = "REJECTED";
+      case 'Ditolak':
+        status = 'REJECTED';
         break;
-      case "Batal":
-        status = "CANCELLED";
+      case 'Batal':
+        status = 'CANCELLED';
         break;
       default:
     }
-    String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat("yyyy-MM-dd").format(dtTanggalPenjualan.getLastTimeSelected());
+    final String? date = dtTanggalPenjualan.controller.textSelected.value.isEmpty ? null : DateFormat('yyyy-MM-dd').format(dtTanggalPenjualan.getLastTimeSelected());
     resetAllBodyValue(bodyGeneralOutbound);
     setGeneralheader(pageOutbound.value, limit.value, EnumSO.outbound, bodyGeneralOutbound);
     String? minDeliveryDate;
     String? maxDeliveryDate;
     if (dtDeliveryTimeMax.controller.textSelected.value.isNotEmpty && dtDeliveryTimeMin.controller.textSelected.value.isNotEmpty) {
-      DateTime deliveryDate = dfTanggalPengiriman.getLastTimeSelected();
-      DateTime deliveryTimeMin = dtDeliveryTimeMin.getLastTimeSelected();
+      final DateTime deliveryDate = dfTanggalPengiriman.getLastTimeSelected();
+      final DateTime deliveryTimeMin = dtDeliveryTimeMin.getLastTimeSelected();
       minDeliveryDate = Convert.getStringIso(DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTimeMin.hour, deliveryTimeMin.minute));
-      DateTime deliveryTimeMax = dtDeliveryTimeMax.getLastTimeSelected();
+      final DateTime deliveryTimeMax = dtDeliveryTimeMax.getLastTimeSelected();
       maxDeliveryDate = Convert.getStringIso(DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTimeMax.hour, deliveryTimeMax.minute));
     } else if (dtDeliveryTimeMax.controller.textSelected.value.isEmpty && dtDeliveryTimeMin.controller.textSelected.value.isEmpty && dfTanggalPengiriman.controller.textSelected.value.isNotEmpty) {
-      DateTime deliveryDate = dfTanggalPengiriman.getLastTimeSelected();
+      final DateTime deliveryDate = dfTanggalPengiriman.getLastTimeSelected();
       minDeliveryDate = Convert.getStringIso(DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, 0, 0));
       maxDeliveryDate = Convert.getStringIso(DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, 23, 59));
     }
@@ -285,16 +284,16 @@ extension OutboundOrderController on SalesOrderController {
       } else {
         bodyGeneralOutbound[BodyQuerySales.salesPersonId.index] = Constant.profileUser?.id;
       }
-    } else if ((Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue)) {
+    } else if (Constant.isShopKepper.isTrue || Constant.isOpsLead.isTrue) {
       if (status == null) {
         shopkeeperBodyGeneralOutbound(bodyGeneralOutbound);
       }
-      bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = "true";
+      bodyGeneralOutbound[BodyQuerySales.withinProductionTeam.index] = 'true';
     } else if (Constant.isSalesLead.isTrue) {
       if (status == null) {
         salesLeadBodyGeneralOutbound(bodyGeneralOutbound);
       }
-      bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = "true";
+      bodyGeneralOutbound[BodyQuerySales.withSalesTeam.index] = 'true';
     }
     if (Constant.isScRelation.isTrue) {
       if (status == null) {

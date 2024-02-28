@@ -10,13 +10,14 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_detail_activity/stock_detail_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/stock_status.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/stock_status.dart';
 import 'package:screenshot/screenshot.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/enum/stock_status.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/stock_status.dart';
+import 'stock_detail_controller.dart';
 
 class StockDetailActivity extends StatelessWidget {
   const StockDetailActivity({super.key});
@@ -38,7 +39,7 @@ class StockDetailActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Stock Opname",
+          'Detail Stock Opname',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -61,8 +62,8 @@ class StockDetailActivity extends StatelessWidget {
               if (controller.opnameModel.status == EnumStock.draft) ...[
                 Expanded(
                     child: ButtonFill(
-                        controller: GetXCreator.putButtonFillController("editButton"),
-                        label: "Edit",
+                        controller: GetXCreator.putButtonFillController('editButton'),
+                        label: 'Edit',
                         onClick: () {
                           Get.toNamed(RoutePage.stockOpname, arguments: [controller.opnameModel, true, null])!.then((value) {
                             controller.isLoading.value = true;
@@ -76,8 +77,8 @@ class StockDetailActivity extends StatelessWidget {
                 ),
                 Expanded(
                     child: ButtonOutline(
-                        controller: GetXCreator.putButtonOutlineController("cancelButton"),
-                        label: "Batal",
+                        controller: GetXCreator.putButtonOutlineController('cancelButton'),
+                        label: 'Batal',
                         onClick: () {
                           _showBottomDialog(context, controller);
                         })),
@@ -88,7 +89,8 @@ class StockDetailActivity extends StatelessWidget {
                     width: 16,
                   ),
                   Expanded(child: controller.btTolak)
-                ] else const SizedBox(),
+                ] else
+                  const SizedBox(),
               ]
             ],
           ),
@@ -128,14 +130,14 @@ class StockDetailActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Stock Opname",
+                        'Informasi Stock Opname',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.opnameModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.opnameModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
@@ -146,7 +148,7 @@ class StockDetailActivity extends StatelessWidget {
                   width: 16,
                 ),
                 StockStatus(
-                  stockStatus: "${controller.opnameModel.status}",
+                  stockStatus: '${controller.opnameModel.status}',
                   isApprove: controller.opnameModel.reviewer != null ? true : false,
                 ),
               ],
@@ -154,7 +156,7 @@ class StockDetailActivity extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.opnameModel.operationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.opnameModel.operationUnit!.operationUnitName}'),
           ],
         ),
       );
@@ -164,7 +166,7 @@ class StockDetailActivity extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(top: 16),
         child: Expandable(
-            controller: GetXCreator.putAccordionController("${product.name!}Detail"),
+            controller: GetXCreator.putAccordionController('${product.name!}Detail'),
             headerText: product.name!,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +190,7 @@ class StockDetailActivity extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Jumlah sebelum",
+                                  'Jumlah sebelum',
                                   style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                 ),
                                 const SizedBox(
@@ -196,7 +198,7 @@ class StockDetailActivity extends StatelessWidget {
                                 ),
                                 if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
                                   Text(
-                                    item.previousQuantity == null ? "-" : "${item.previousQuantity ?? 0} ${product.quantityUOM}",
+                                    item.previousQuantity == null ? '-' : '${item.previousQuantity ?? 0} ${product.quantityUOM}',
                                     style: item.previousQuantity == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                         : item.previousQuantity == 0
@@ -207,7 +209,7 @@ class StockDetailActivity extends StatelessWidget {
                                   )
                                 ] else
                                   Text(
-                                    item.previousWeight == null ? "-" : "${item.previousWeight ?? 0} ${product.weightUOM}",
+                                    item.previousWeight == null ? '-' : '${item.previousWeight ?? 0} ${product.weightUOM}',
                                     style: item.previousWeight == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                         : item.previousWeight == 0
@@ -225,7 +227,7 @@ class StockDetailActivity extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Jumlah Sesudah",
+                                  'Jumlah Sesudah',
                                   style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                                 ),
                                 const SizedBox(
@@ -233,7 +235,7 @@ class StockDetailActivity extends StatelessWidget {
                                 ),
                                 if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
                                   Text(
-                                    "${item.quantity ?? 0} ${product.quantityUOM}",
+                                    '${item.quantity ?? 0} ${product.quantityUOM}',
                                     style: item.quantity == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                         : item.quantity == 0
@@ -244,7 +246,7 @@ class StockDetailActivity extends StatelessWidget {
                                   )
                                 ] else
                                   Text(
-                                    "${item.weight ?? 0} ${product.weightUOM}",
+                                    '${item.weight ?? 0} ${product.weightUOM}',
                                     style: item.weight == null
                                         ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                         : item.weight == 0
@@ -264,7 +266,7 @@ class StockDetailActivity extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Jumlah Selisih",
+                              'Jumlah Selisih',
                               style: AppTextStyle.subTextStyle.copyWith(fontSize: 12),
                             ),
                             const SizedBox(
@@ -273,14 +275,14 @@ class StockDetailActivity extends StatelessWidget {
                             if (product.name == AppStrings.LIVE_BIRD || product.name == AppStrings.AYAM_UTUH || product.name == AppStrings.BRANGKAS || product.name == AppStrings.KARKAS) ...[
                               Text(
                                   item.previousQuantity == null && item.quantity == null
-                                      ? "-"
+                                      ? '-'
                                       : item.quantity! > item.previousQuantity!
-                                          ? "> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM}"
+                                          ? '> ${item.quantity! - item.previousQuantity!} ${product.quantityUOM}'
                                           : item.quantity! < item.previousQuantity!
-                                              ? "< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM}"
+                                              ? '< ${item.previousQuantity! - item.quantity!} ${product.quantityUOM}'
                                               : item.previousQuantity! - item.quantity! == 0
-                                                  ? "-"
-                                                  : "-",
+                                                  ? '-'
+                                                  : '-',
                                   style: item.previousQuantity == null && item.quantity == null
                                       ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                       : item.quantity! > item.previousQuantity!
@@ -293,14 +295,14 @@ class StockDetailActivity extends StatelessWidget {
                             ] else
                               Text(
                                 item.weight == null && item.previousWeight == null
-                                    ? "-"
+                                    ? '-'
                                     : item.weight! > item.previousWeight!
-                                        ? "> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}"
+                                        ? '> ${item.weight! - item.previousQuantity!} ${product.quantityUOM ?? product.weightUOM}'
                                         : item.weight! < item.previousWeight!
-                                            ? "< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}"
+                                            ? '< ${item.previousQuantity! - item.weight!} ${product.quantityUOM ?? product.weightUOM}'
                                             : item.previousQuantity! - item.weight! == 0
-                                                ? "-"
-                                                : "-",
+                                                ? '-'
+                                                : '-',
                                 style: item.weight == null && item.previousWeight == null
                                     ? AppTextStyle.blackTextStyle.copyWith(fontSize: 12, fontWeight: AppTextStyle.medium)
                                     : item.weight! > item.previousWeight!
@@ -368,38 +370,39 @@ class StockDetailActivity extends StatelessWidget {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                            Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.parse(controller.opnameModel.confirmedDate ?? DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()))), style: AppTextStyle.blackTextStyle.copyWith()),
+                                            Text('Berita Acara', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                            Text(DateFormat('dd MMM yyyy HH:mm', 'id').format(DateTime.parse(controller.opnameModel.confirmedDate ?? DateFormat('dd MMM yyyy HH:mm', 'id').format(DateTime.now()))),
+                                                style: AppTextStyle.blackTextStyle.copyWith()),
                                           ],
                                         ),
                                         const SizedBox(
                                           height: 16,
                                         ),
-                                        Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        Text('Disetujui dan diperiksa oleh', style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        Text("${controller.opnameModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                        Text('${controller.opnameModel.reviewer!.fullName}', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                                         const SizedBox(
                                           height: 16,
                                         ),
-                                        Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                        Text('Email', style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        Text("${controller.opnameModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                        Text('${controller.opnameModel.reviewer!.email}', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                                         const SizedBox(
                                           height: 16,
                                         ),
                                         Row(
                                           children: [
-                                            SvgPicture.asset("images/checkbox_fill.svg"),
+                                            SvgPicture.asset('images/checkbox_fill.svg'),
                                             const SizedBox(
                                               width: 8,
                                             ),
                                             Expanded(
                                                 child: Text(
-                                              "Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname",
+                                              'Saya dengan teliti dan sadar sudah memeriksa hasil Stock Opname',
                                               style: AppTextStyle.blackTextStyle,
                                               overflow: TextOverflow.clip,
                                             )),
@@ -411,7 +414,7 @@ class StockDetailActivity extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.only(top: 16),
                                 child: Text(
-                                  "Detail SKU",
+                                  'Detail SKU',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                 ),
                               ),
@@ -428,14 +431,14 @@ class StockDetailActivity extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Total/Global(kg)",
+                                      'Total/Global(kg)',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                     ),
                                     const SizedBox(
                                       height: 16,
                                     ),
                                     Text(
-                                      "${(controller.opnameModel.totalWeight ?? 0)} Kg",
+                                      '${controller.opnameModel.totalWeight ?? 0} Kg',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
                                     ),
                                   ],
@@ -455,7 +458,7 @@ class StockDetailActivity extends StatelessWidget {
         ));
   }
 
-  _showBottomDialog(BuildContext context, StockDetailController controller) {
+  Future<void> _showBottomDialog(BuildContext context, StockDetailController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -484,18 +487,18 @@ class StockDetailActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
+                    'Apakah kamu yakin ingin melakukan pembatalan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukan pembatalan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/cancel_icon.svg",
+                    'images/cancel_icon.svg',
                   ),
                 ),
                 Container(

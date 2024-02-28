@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/stock_module/stock_home_activity/stock_home_controller.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/list_card_stock.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../../utils/route.dart';
+import '../../../widget/common/list_card_stock.dart';
+import '../../../widget/common/loading.dart';
+import 'stock_home_controller.dart';
 
 class StockHomeActivity extends GetView<StockHomeController> {
   const StockHomeActivity({super.key});
@@ -31,7 +32,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Persediaan",
+          'Persediaan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -56,10 +57,10 @@ class StockHomeActivity extends GetView<StockHomeController> {
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
-                  text: "Stock Opname",
+                  text: 'Stock Opname',
                 ),
                 Tab(
-                  text: "Persediaan",
+                  text: 'Persediaan',
                 )
               ],
               labelColor: AppColors.primaryOrange,
@@ -113,19 +114,19 @@ class StockHomeActivity extends GetView<StockHomeController> {
             ],
           ),
           if (pieData.y1 == AppStrings.LIVE_BIRD || pieData.y1 == AppStrings.AYAM_UTUH || pieData.y1 == AppStrings.BRANGKAS || pieData.y1 == AppStrings.KARKAS) ...[
-            listExpand("Total Ekor", "${pieData.y == 0 ? "-" : pieData.y} Ekor"),
+            listExpand('Total Ekor', "${pieData.y == 0 ? "-" : pieData.y} Ekor"),
             // const SizedBox(
             //   height: 4,
             // ),
             // listExpand("Total Kg", "${pieData.y2.toInt() == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
           ] else
-            listExpand("Total Kg", "${pieData.y2 == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
+            listExpand('Total Kg', "${pieData.y2 == 0 ? "-" : pieData.y2.toStringAsFixed(2)} Kg"),
         ],
       );
     }
 
     Widget generateLegend(List<ChartData> data) {
-      List<ChartData> dataSort = List.from(data);
+      final List<ChartData> dataSort = List.from(data);
       dataSort.sort((a, b) => a.x.compareTo(b.x));
       return Column(
         children: dataSort.map((e) => detailListExpand(e)).toList(),
@@ -162,14 +163,14 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        SvgPicture.asset("images/empty_icon.svg"),
+                                                        SvgPicture.asset('images/empty_icon.svg'),
                                                         const SizedBox(
                                                           height: 16,
                                                         ),
                                                         Container(
                                                           margin: const EdgeInsets.symmetric(horizontal: 16),
                                                           child: Text(
-                                                            "Belum ada data,\nsilahkan pilih sumber\nterlebih dahulu",
+                                                            'Belum ada data,\nsilahkan pilih sumber\nterlebih dahulu',
                                                             style: AppTextStyle.greyTextStyle.copyWith(
                                                               fontSize: 12,
                                                             ),
@@ -192,7 +193,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                         controller: controller.scrollController,
                                                         itemCount: controller.isLoadMore.isTrue ? controller.listOpname.value.length + 1 : controller.listOpname.value.length,
                                                         itemBuilder: (context, index) {
-                                                          int length = controller.listOpname.value.length;
+                                                          final int length = controller.listOpname.value.length;
                                                           if (index >= length) {
                                                             return const Column(
                                                               children: [
@@ -242,7 +243,7 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.outlineColor)),
                                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                             Text(
-                                              "Filter Persediaan",
+                                              'Filter Persediaan',
                                               style: AppTextStyle.blackTextStyle.copyWith(
                                                 fontWeight: AppTextStyle.bold,
                                               ),
@@ -264,14 +265,14 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        SvgPicture.asset("images/empty_icon.svg"),
+                                                        SvgPicture.asset('images/empty_icon.svg'),
                                                         const SizedBox(
                                                           height: 16,
                                                         ),
                                                         Container(
                                                           margin: const EdgeInsets.symmetric(horizontal: 16),
                                                           child: Text(
-                                                            "Belum ada data,\nsilahkan pilih sumber\nterlebih dahulu yang tersedia \n",
+                                                            'Belum ada data,\nsilahkan pilih sumber\nterlebih dahulu yang tersedia \n',
                                                             style: AppTextStyle.greyTextStyle.copyWith(
                                                               fontSize: 12,
                                                             ),
@@ -287,13 +288,13 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
-                                                          "Prosentase Persediaan",
+                                                          'Prosentase Persediaan',
                                                           style: AppTextStyle.blackTextStyle.copyWith(
                                                             fontWeight: AppTextStyle.bold,
                                                           ),
                                                         ),
                                                         Text(
-                                                          "Total Global : ${controller.totalWeightGlobal.toStringAsFixed(2)} Kg",
+                                                          'Total Global : ${controller.totalWeightGlobal.toStringAsFixed(2)} Kg',
                                                           style: AppTextStyle.blackTextStyle.copyWith(
                                                             fontWeight: AppTextStyle.medium,
                                                           ),
@@ -309,7 +310,12 @@ class StockHomeActivity extends GetView<StockHomeController> {
                                                                 BarSeries<ChartData, String>(
                                                                   dataSource: controller.chartData.value,
                                                                   xValueMapper: (ChartData data, _) => data.x,
-                                                                  yValueMapper: (ChartData data, _) => controller.categoryStock.controller.textSelected.value == AppStrings.LIVE_BIRD || controller.categoryStock.controller.textSelected.value == AppStrings.AYAM_UTUH || controller.categoryStock.controller.textSelected.value == AppStrings.BRANGKAS || controller.categoryStock.controller.textSelected.value == AppStrings.KARKAS ? data.y : data.y2,
+                                                                  yValueMapper: (ChartData data, _) => controller.categoryStock.controller.textSelected.value == AppStrings.LIVE_BIRD ||
+                                                                          controller.categoryStock.controller.textSelected.value == AppStrings.AYAM_UTUH ||
+                                                                          controller.categoryStock.controller.textSelected.value == AppStrings.BRANGKAS ||
+                                                                          controller.categoryStock.controller.textSelected.value == AppStrings.KARKAS
+                                                                      ? data.y
+                                                                      : data.y2,
                                                                   pointColorMapper: (ChartData data, _) => data.color,
                                                                   dataLabelMapper: (ChartData data, _) => data.x,
                                                                   name: controller.chartData.value[0].y1, //         ),

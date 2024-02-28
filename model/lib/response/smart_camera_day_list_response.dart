@@ -9,15 +9,12 @@ import 'package:model/smart_camera/smart_camera_day_model.dart';
 
 @SetupModel
 class SmartCameraDayListResponse {
+  @IsChildren()
+  List<SmartCameraDay?> data;
 
-    @IsChildren()
-    List<SmartCameraDay?> data;
+  SmartCameraDayListResponse({this.data = const []});
 
-    SmartCameraDayListResponse({this.data = const []});
-
-    static SmartCameraDayListResponse toResponseModel(Map<String, dynamic> map) {
-        return SmartCameraDayListResponse(
-            data: Mapper.children<SmartCameraDay>(map['data'])
-        );
-    }
+  static SmartCameraDayListResponse toResponseModel(Map<String, dynamic> map) {
+    return SmartCameraDayListResponse(data: Mapper.children<SmartCameraDay>(map['data']));
+  }
 }

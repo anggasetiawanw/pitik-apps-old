@@ -9,19 +9,19 @@ import 'package:get/get.dart';
 import 'package:model/error/error.dart';
 import 'package:model/internal_app/transfer_model.dart';
 import 'package:model/response/internal_app/transfer_list_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
 
 class TransferHomeController extends GetxController {
   BuildContext context;
   TransferHomeController({required this.context});
 
   late ButtonFill createTransfer = ButtonFill(
-      controller: GetXCreator.putButtonFillController("createTransfer"),
-      label: "Buat Transfer",
+      controller: GetXCreator.putButtonFillController('createTransfer'),
+      label: 'Buat Transfer',
       onClick: () {
-        Constant.track("Click_Buat_Transfer");
+        Constant.track('Click_Buat_Transfer');
         Get.toNamed(RoutePage.transferForm, arguments: [null, false])!.then((value) {
           isLoading.value = true;
           listTransfer.value.clear();
@@ -41,7 +41,7 @@ class TransferHomeController extends GetxController {
   var isLoading = false.obs;
   var isLoadMore = false.obs;
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
+  DateTime timeEnd = DateTime.now();
   @override
   void onReady() {
     super.onReady();
@@ -51,7 +51,7 @@ class TransferHomeController extends GetxController {
     scrollListener();
   }
 
-  scrollListener() async {
+  Future<dynamic> scrollListener() async {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
         isLoadMore.value = true;
@@ -61,7 +61,7 @@ class TransferHomeController extends GetxController {
     });
   }
 
-  void pullRefresh(){
+  void pullRefresh() {
     isLoading.value = true;
     listTransfer.value.clear();
     page.value = 1;
@@ -92,14 +92,14 @@ class TransferHomeController extends GetxController {
                   isLoading.value = false;
                 }
               }
-                timeEnd = DateTime.now();
-                Duration totalTime = timeEnd.difference(timeStart);
-                Constant.trackRenderTime("Data_Transfer", totalTime);
+              timeEnd = DateTime.now();
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Data_Transfer', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -110,8 +110,8 @@ class TransferHomeController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, $stacktrace",
+                'Pesan',
+                'Terjadi Kesalahan, $stacktrace',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,

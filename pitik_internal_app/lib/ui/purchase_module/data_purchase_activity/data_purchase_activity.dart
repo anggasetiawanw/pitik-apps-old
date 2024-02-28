@@ -10,12 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/purchase_module/data_purchase_activity/data_purchase_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
-import 'package:pitik_internal_app/widget/common/list_card_purchase.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/custom_appbar.dart';
+import '../../../widget/common/list_card_purchase.dart';
+import '../../../widget/common/loading.dart';
+import 'data_purchase_controller.dart';
 
 class PurchasePage extends StatefulWidget {
   const PurchasePage({super.key});
@@ -48,10 +49,10 @@ class _PurchasePageState extends State<PurchasePage> {
             children: [
               Expanded(
                 child: ButtonFill(
-                  controller: GetXCreator.putButtonFillController("dataBaruHome"),
-                  label: "Buat Pembelian",
+                  controller: GetXCreator.putButtonFillController('dataBaruHome'),
+                  label: 'Buat Pembelian',
                   onClick: () {
-                    Constant.track("Click_Buat_Pembelian");
+                    Constant.track('Click_Buat_Pembelian');
                     Get.toNamed(RoutePage.newDataPurchase)!.then((value) {
                       controller.isLoading.value = true;
                       controller.purchaseList.value.clear();
@@ -71,7 +72,7 @@ class _PurchasePageState extends State<PurchasePage> {
     }
 
     Widget filterList() {
-      List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
+      final List<MapEntry<String, String>> listFilter = controller.listFilter.value.entries.toList();
       return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: listFilter.length,
@@ -108,7 +109,7 @@ class _PurchasePageState extends State<PurchasePage> {
               child: Column(
                 children: [
                   CustomAppbar(
-                    title: "Pembelian",
+                    title: 'Pembelian',
                     onBack: () => Navigator.of(context).pop(),
                     isFlat: true,
                   ),
@@ -124,7 +125,7 @@ class _PurchasePageState extends State<PurchasePage> {
                             width: 32,
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: AppColors.primaryLight),
-                            child: SvgPicture.asset("images/filter_line.svg"),
+                            child: SvgPicture.asset('images/filter_line.svg'),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -148,7 +149,7 @@ class _PurchasePageState extends State<PurchasePage> {
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           child: Center(
                             child: Text(
-                              "Data Purchase Belum Ada",
+                              'Data Purchase Belum Ada',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
                               textAlign: TextAlign.center,
                             ),
@@ -167,7 +168,7 @@ class _PurchasePageState extends State<PurchasePage> {
                                 controller: controller.scrollController,
                                 itemCount: controller.isLoadMore.isTrue ? controller.purchaseList.value.length + 1 : controller.purchaseList.value.length,
                                 itemBuilder: (context, index) {
-                                  int length = controller.purchaseList.value.length;
+                                  final int length = controller.purchaseList.value.length;
                                   if (index >= length) {
                                     return const Column(
                                       children: [
@@ -181,7 +182,7 @@ class _PurchasePageState extends State<PurchasePage> {
                                       CardListPurchase(
                                         purchase: controller.purchaseList.value[index]!,
                                         onTap: () {
-                                            Constant.track("Click_Detail_Pembelian");
+                                          Constant.track('Click_Detail_Pembelian');
                                           Get.toNamed(RoutePage.purchaseDetailPage, arguments: controller.purchaseList.value[index]!)!.then((value) {
                                             controller.isLoading.value = true;
                                             controller.purchaseList.value.clear();

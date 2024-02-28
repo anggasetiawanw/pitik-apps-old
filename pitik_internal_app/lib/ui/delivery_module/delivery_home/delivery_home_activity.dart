@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
-import 'package:pitik_internal_app/ui/delivery_module/delivery_home/delivery_home_controller.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/list_card_delivery.dart';
-import 'package:pitik_internal_app/widget/common/list_card_order.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/controllers/tab_detail_controller.dart';
+
+import '../../../utils/route.dart';
+import '../../../widget/common/list_card_delivery.dart';
+import '../../../widget/common/list_card_order.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/controllers/tab_detail_controller.dart';
+import 'delivery_home_controller.dart';
 
 class DeliveryHomeActivity extends StatelessWidget {
   DeliveryHomeActivity({super.key});
@@ -31,7 +32,7 @@ class DeliveryHomeActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Pengiriman",
+          'Pengiriman',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -56,10 +57,10 @@ class DeliveryHomeActivity extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(
-                  text: "Penjualan",
+                  text: 'Penjualan',
                 ),
                 Tab(
-                  text: "Transfer",
+                  text: 'Transfer',
                 )
               ],
               labelColor: AppColors.primaryOrange,
@@ -95,14 +96,14 @@ class DeliveryHomeActivity extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 16,
                                       ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(horizontal: 16),
                                         child: Text(
-                                          "Belum ada data",
+                                          'Belum ada data',
                                           style: AppTextStyle.greyTextStyle.copyWith(
                                             fontSize: 12,
                                           ),
@@ -116,7 +117,7 @@ class DeliveryHomeActivity extends StatelessWidget {
                                   controller: controller.scrollControllerSales,
                                   itemCount: controller.isLoadMoreSales.isTrue ? controller.listSalesOrder.value.length + 1 : controller.listSalesOrder.value.length,
                                   itemBuilder: (context, index) {
-                                    int length = controller.listSalesOrder.value.length;
+                                    final int length = controller.listSalesOrder.value.length;
                                     if (index >= length) {
                                       return const SizedBox(
                                         height: 120,
@@ -158,14 +159,14 @@ class DeliveryHomeActivity extends StatelessWidget {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset("images/empty_icon.svg"),
+                                      SvgPicture.asset('images/empty_icon.svg'),
                                       const SizedBox(
                                         height: 16,
                                       ),
                                       Container(
                                         margin: const EdgeInsets.symmetric(horizontal: 16),
                                         child: Text(
-                                          "Belum ada data",
+                                          'Belum ada data',
                                           style: AppTextStyle.greyTextStyle.copyWith(
                                             fontSize: 12,
                                           ),
@@ -179,7 +180,7 @@ class DeliveryHomeActivity extends StatelessWidget {
                                   controller: controller.scrollControllerTransfer,
                                   itemCount: controller.isLoadMoreTransfer.isTrue ? controller.listTransfer.value.length + 1 : controller.listTransfer.value.length,
                                   itemBuilder: (context, index) {
-                                    int length = controller.listTransfer.value.length;
+                                    final int length = controller.listTransfer.value.length;
                                     if (index >= length) {
                                       return const SizedBox(
                                         height: 120,

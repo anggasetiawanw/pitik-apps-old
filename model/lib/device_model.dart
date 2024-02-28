@@ -4,50 +4,47 @@ import '../engine_library.dart';
 import 'device_summary_model.dart';
 import 'sensor_model.dart';
 
-/**
- * @author DICKY
- * @email <dicky.maulana@pitik.id>
- * @create date 14/09/2023
- */
+/// @author DICKY
+/// @email <dicky.maulana@pitik.id>
+/// @create date 14/09/2023
 
 @SetupModel
-class Device{
+class Device {
+  String? id;
+  String? deviceName;
+  String? deviceType;
+  String? deviceId;
+  String? coopId;
+  String? roomId;
+  String? mac;
+  String? status;
+  int? sensorCount;
 
-    String? id;
-    String? deviceName;
-    String? deviceType;
-    String? deviceId;
-    String? coopId;
-    String? roomId;
-    String? mac;
-    String? status;
-    int? sensorCount;
+  @IsChildren()
+  List<Sensor?> sensors;
 
-    @IsChildren()
-    List<Sensor?> sensors;
+  @IsChild()
+  DeviceSummary? deviceSummary;
 
-    @IsChild()
-    DeviceSummary? deviceSummary;
+  Device({this.id, this.deviceName, this.deviceType, this.sensors = const [], this.coopId, this.roomId, this.status, this.mac, this.deviceId, this.deviceSummary, this.sensorCount});
 
-    Device({this.id, this.deviceName,this.deviceType, this.sensors = const [], this.coopId, this.roomId, this.status, this.mac, this.deviceId, this.deviceSummary, this.sensorCount});
-
-    static Device toResponseModel(Map<String, dynamic> map) {
-        if(map['status'] is bool) {
-            map['status'] = map['status'].toString();
-        }
-
-        return Device(
-            id: map['id'],
-            deviceName: map['deviceName'],
-            deviceType: map['deviceType'],
-            coopId: map['coopId'],
-            roomId: map['roomId'],
-            status: map['status'],
-            mac: map['mac'],
-            deviceId: map['deviceId'],
-            sensorCount: map['sensorCount'],
-            sensors: Mapper.children<Sensor>(map['sensors']),
-            deviceSummary: Mapper.child<DeviceSummary>(map['deviceSummary']),
-        );
+  static Device toResponseModel(Map<String, dynamic> map) {
+    if (map['status'] is bool) {
+      map['status'] = map['status'].toString();
     }
+
+    return Device(
+      id: map['id'],
+      deviceName: map['deviceName'],
+      deviceType: map['deviceType'],
+      coopId: map['coopId'],
+      roomId: map['roomId'],
+      status: map['status'],
+      mac: map['mac'],
+      deviceId: map['deviceId'],
+      sensorCount: map['sensorCount'],
+      sensors: Mapper.children<Sensor>(map['sensors']),
+      deviceSummary: Mapper.child<DeviceSummary>(map['deviceSummary']),
+    );
+  }
 }

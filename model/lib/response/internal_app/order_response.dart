@@ -7,16 +7,12 @@ import 'package:model/internal_app/order_model.dart';
 
 @SetupModel
 class OrderResponse {
-
   int code;
   Order? data;
 
   OrderResponse({required this.code, required this.data});
 
   static OrderResponse toResponseModel(Map<String, dynamic> map) {
-    return OrderResponse(
-        code: map['code'],
-        data: Mapper.child<Order>(map['data'])
-    );
+    return OrderResponse(code: map['code'], data: Mapper.child<Order>(map['data']));
   }
 }

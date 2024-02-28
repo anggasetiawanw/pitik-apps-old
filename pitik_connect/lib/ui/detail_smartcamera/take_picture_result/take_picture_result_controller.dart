@@ -14,83 +14,77 @@ import 'package:model/record_model.dart';
 ///@create date 28/08/23
 
 class TakePictureResultController extends GetxController {
-    BuildContext context;
-    TakePictureResultController({required this.context});
+  BuildContext context;
+  TakePictureResultController({required this.context});
 
-    ScrollController scrollController = ScrollController();
-    Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
-    Rx<List<RecordCamera>> recordImages = Rx<List<RecordCamera>>([]);
+  ScrollController scrollController = ScrollController();
+  Rx<Map<String, bool>> mapList = Rx<Map<String, bool>>({});
+  Rx<List<RecordCamera>> recordImages = Rx<List<RecordCamera>>([]);
 
-    var isLoading = false.obs;
-    var isLoadMore = false.obs;
-    var pageSmartMonitor = 1.obs;
-    var pageSmartController = 1.obs;
-    var pageSmartCamera = 1.obs;
-    var limit = 10.obs;
-    var totalCamera = 0.obs;
+  var isLoading = false.obs;
+  var isLoadMore = false.obs;
+  var pageSmartMonitor = 1.obs;
+  var pageSmartController = 1.obs;
+  var pageSmartCamera = 1.obs;
+  var limit = 10.obs;
+  var totalCamera = 0.obs;
 
-    late RecordCamera record;
-    late Coop coop;
+  late RecordCamera record;
+  late Coop coop;
 
-    late String localPath;
-    late bool permissionReady;
-    late TargetPlatform? platform;
-    bool isTakePicture = false;
+  late String localPath;
+  late bool permissionReady;
+  late TargetPlatform? platform;
+  bool isTakePicture = false;
 
-    late DateTimeField dtftakePicture = DateTimeField(
-        controller: GetXCreator.putDateTimeFieldController(
-            "dtftakePicture"),
-        label: "Jam Ambil Gambar",
-        hint: "Pilih Jam Ambil Gambar",
-        flag: DateTimeField.ALL_FLAG,
-        alertText: "Jam Ambil Gambar harus di isi", onDateTimeSelected: (DateTime time, dateField) {
-        GlobalVar.track("Click_time_filter");
-        dtftakePicture.controller.setTextSelected("${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}");
+  late DateTimeField dtftakePicture = DateTimeField(
+    controller: GetXCreator.putDateTimeFieldController("dtftakePicture"),
+    label: "Jam Ambil Gambar",
+    hint: "Pilih Jam Ambil Gambar",
+    flag: DateTimeField.ALL_FLAG,
+    alertText: "Jam Ambil Gambar harus di isi",
+    onDateTimeSelected: (DateTime time, dateField) {
+      GlobalVar.track("Click_time_filter");
+      dtftakePicture.controller.setTextSelected("${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}");
     },
-    );
+  );
 
-    ScrollController scrollCameraController = ScrollController();
+  ScrollController scrollCameraController = ScrollController();
 
-    scrollPurchaseListener() async {
-        scrollCameraController.addListener(() {
-            if (scrollCameraController.position.maxScrollExtent == scrollCameraController.position.pixels) {
-                isLoadMore.value = true;
-                pageSmartMonitor++;
-            }
-        });
+  scrollPurchaseListener() async {
+    scrollCameraController.addListener(() {
+      if (scrollCameraController.position.maxScrollExtent == scrollCameraController.position.pixels) {
+        isLoadMore.value = true;
+        pageSmartMonitor++;
+      }
+    });
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    GlobalVar.track("Open_ambil_gambar_page");
+    if (Platform.isAndroid) {
+      platform = TargetPlatform.android;
+    } else {
+      platform = TargetPlatform.iOS;
     }
+    isTakePicture = Get.arguments[0];
+    coop = Get.arguments[2];
 
-    @override
-    void onInit() {
-        super.onInit();
-        GlobalVar.track("Open_ambil_gambar_page");
-        if (Platform.isAndroid) {
-            platform = TargetPlatform.android;
-        } else {
-            platform = TargetPlatform.iOS;
-        }
-        isTakePicture = Get.arguments[0];
-        coop = Get.arguments[2];
-
-        recordImages.value.clear();
-        recordImages = Get.arguments[1];
-        totalCamera.value = recordImages.value.length;
-
-    }
-
-
-
-
+    recordImages.value.clear();
+    recordImages = Get.arguments[1];
+    totalCamera.value = recordImages.value.length;
+  }
 }
 
 class TakePictureResultBindings extends Bindings {
-    BuildContext context;
+  BuildContext context;
 
-    TakePictureResultBindings({required this.context});
+  TakePictureResultBindings({required this.context});
 
-    @override
-    void dependencies() {
-        Get.lazyPut(() => TakePictureResultController(context: context));
-    }
+  @override
+  void dependencies() {
+    Get.lazyPut(() => TakePictureResultController(context: context));
+  }
 }
-

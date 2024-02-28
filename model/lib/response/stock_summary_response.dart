@@ -9,18 +9,14 @@ import 'package:model/stock_summary_model.dart';
 
 @SetupModel
 class StockSummaryResponse {
+  int? code;
 
-    int? code;
+  @IsChild()
+  StockSummary? data;
 
-    @IsChild()
-    StockSummary? data;
+  StockSummaryResponse({this.code, this.data});
 
-    StockSummaryResponse({this.code, this.data});
-
-    static StockSummaryResponse toResponseModel(Map<String, dynamic> map) {
-        return StockSummaryResponse(
-            code: map['code'],
-            data: Mapper.child<StockSummary>(map['data'])
-        );
-    }
+  static StockSummaryResponse toResponseModel(Map<String, dynamic> map) {
+    return StockSummaryResponse(code: map['code'], data: Mapper.child<StockSummary>(map['data']));
+  }
 }

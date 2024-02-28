@@ -19,8 +19,8 @@ import 'package:model/internal_app/order_model.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/internal_app/list_driver_response.dart';
 import 'package:model/response/internal_app/order_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -41,10 +41,10 @@ class AssignDriverController extends GetxController {
   var isSwitchOn = false.obs;
 
   late SpinnerSearch spinnerDriver = SpinnerSearch(
-    controller: GetXCreator.putSpinnerSearchController("driverList"),
-    label: "Driver*",
-    hint: "Pilih salah satu",
-    alertText: "Driver harus dipilih!",
+    controller: GetXCreator.putSpinnerSearchController('driverList'),
+    label: 'Driver*',
+    hint: 'Pilih salah satu',
+    alertText: 'Driver harus dipilih!',
     items: const {},
     onSpinnerSelected: (text) {},
   );
@@ -56,18 +56,18 @@ class AssignDriverController extends GetxController {
   Rx<List<Profile?>> listDriver = Rx<List<Profile?>>([]);
 
   DateTimeField dtDeliveryDate = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("DeliveryDateSo"),
-    label: "Tanggal Pengiriman*",
-    hint: "dd/mm/yyyy",
-    alertText: "Tanggal Pengiriman harus dipilih!",
+    controller: GetXCreator.putDateTimeFieldController('DeliveryDateSo'),
+    label: 'Tanggal Pengiriman*',
+    hint: 'dd/mm/yyyy',
+    alertText: 'Tanggal Pengiriman harus dipilih!',
     onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getDay(date)}/${Convert.getMonthNumber(date)}/${Convert.getYear(date)}'),
     flag: 1,
   );
   DateTimeField dtDeliveryTime = DateTimeField(
-    controller: GetXCreator.putDateTimeFieldController("deliveryTimeSo"),
-    label: "Waktu Pengiriman",
-    hint: "hh:mm",
-    alertText: "Waktu Pengiriman harus dipilih!",
+    controller: GetXCreator.putDateTimeFieldController('deliveryTimeSo'),
+    label: 'Waktu Pengiriman',
+    hint: 'hh:mm',
+    alertText: 'Waktu Pengiriman harus dipilih!',
     onDateTimeSelected: (date, dateField) => dateField.controller.setTextSelected('${Convert.getHour(date)}:${Convert.getMinute(date)}'),
     flag: 2,
   );
@@ -81,8 +81,8 @@ class AssignDriverController extends GetxController {
     orderDetail.value = Get.arguments as Order;
     isLoading.value = true;
     boNoAssign = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("noAssign"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('noAssign'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       },
@@ -94,17 +94,16 @@ class AssignDriverController extends GetxController {
     getListDriver();
     super.onReady();
     bfYesAssign = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesAssign"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesAssign'),
+      label: 'Ya',
       onClick: () {
-
         assignToDriver();
       },
     );
     if (orderDetail.value!.deliveryTime != null) {
-      dtDeliveryDate.controller.setTextSelected(DateFormat("dd/MM/yyyy").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)));
+      dtDeliveryDate.controller.setTextSelected(DateFormat('dd/MM/yyyy').format(Convert.getDatetime(orderDetail.value!.deliveryTime!)));
       dtDeliveryDate.controller.disable();
-      String time = DateFormat("HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) != "00:00" ? DateFormat("HH:mm").format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) : "";
+      final String time = DateFormat('HH:mm').format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) != '00:00' ? DateFormat('HH:mm').format(Convert.getDatetime(orderDetail.value!.deliveryTime!)) : '';
       dtDeliveryTime.controller.setTextSelected(time);
     }
     getTotalQuantity(orderDetail.value);
@@ -122,8 +121,8 @@ class AssignDriverController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -155,10 +154,10 @@ class AssignDriverController extends GetxController {
       } else {
         if (product.category!.name! == AppStrings.LIVE_BIRD || product.category!.name! == AppStrings.AYAM_UTUH || product.category!.name! == AppStrings.BRANGKAS) {
           sumChick.value += product.quantity! - product.returnQuantity!;
-          sumKg.value += (product.weight! - product.returnWeight!);
+          sumKg.value += product.weight! - product.returnWeight!;
           sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
         } else {
-          sumKg.value += (product.weight! - product.returnWeight!);
+          sumKg.value += product.weight! - product.returnWeight!;
           sumPrice.value += (product.weight! - product.returnWeight!) * product.price!;
         }
       }
@@ -172,10 +171,10 @@ class AssignDriverController extends GetxController {
     Service.push(
         service: ListApi.getListDriver,
         context: context,
-        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, "driver", 1, 0],
+        body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, 'driver', 1, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var units in (body as ListDriverResponse).data) {
                 mapList[units!.fullName!] = false;
               }
@@ -194,13 +193,13 @@ class AssignDriverController extends GetxController {
                 ..enable()
                 ..hideLoading();
               timeEnd = DateTime.now();
-              Duration totalTime = timeEnd.difference(timeStart);
-              Constant.trackRenderTime("Assign_Driver_Penjualan", totalTime);
+              final Duration totalTime = timeEnd.difference(timeStart);
+              Constant.trackRenderTime('Assign_Driver_Penjualan', totalTime);
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -210,8 +209,8 @@ class AssignDriverController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -223,17 +222,17 @@ class AssignDriverController extends GetxController {
   }
 
   void assignToDriver() {
-    Profile? driverSelected = listDriver.value.firstWhereOrNull(
+    final Profile? driverSelected = listDriver.value.firstWhereOrNull(
       (element) => element!.fullName == spinnerDriver.controller.textSelected.value,
     );
     DateTime? resultDate;
-    if (dtDeliveryTime.getLastTimeSelectedText() != "00:00" && dtDeliveryTime.getLastTimeSelectedText() != "") {
-      DateTime deliveryDate = DateFormat("dd/MM/yyyy").parse(dtDeliveryDate.getLastTimeSelectedText());
-      DateFormat deliveryTime = DateFormat("HH:mm");
+    if (dtDeliveryTime.getLastTimeSelectedText() != '00:00' && dtDeliveryTime.getLastTimeSelectedText() != '') {
+      final DateTime deliveryDate = DateFormat('dd/MM/yyyy').parse(dtDeliveryDate.getLastTimeSelectedText());
+      final DateFormat deliveryTime = DateFormat('HH:mm');
       resultDate = DateTime(deliveryDate.year, deliveryDate.month, deliveryDate.day, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).hour, deliveryTime.parse(dtDeliveryTime.getLastTimeSelectedText()).minute);
     }
 
-    Order orderRequest = Order(
+    final Order orderRequest = Order(
       driverId: driverSelected!.id!,
       deliveryTime: resultDate != null ? Convert.getStringIso(resultDate) : orderDetail.value!.deliveryTime,
       withDeliveryFee: orderDetail.value!.deliveryFee != null ? false : true,
@@ -245,34 +244,33 @@ class AssignDriverController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId, ListApi.pathOrderSetDriver(orderDetail.value!.id!), Mapper.asJsonString(orderRequest)],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-                Constant.track("Click_Button_Kirim_Penjualan");
+              Constant.track('Click_Button_Kirim_Penjualan');
               Get.back();
               isLoading.value = false;
-
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
-              Constant.trackWithMap("Click_Button_Kirim_Penjualan", {"error": (body).error!.message!});
+              Constant.trackWithMap('Click_Button_Kirim_Penjualan', {'error': body.error!.message!});
               isLoading.value = false;
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
               );
 
-              Constant.trackWithMap("Click_Button_Kirim_Penjualan", {"error": exception});
+              Constant.trackWithMap('Click_Button_Kirim_Penjualan', {'error': exception});
               isLoading.value = false;
             },
             onTokenInvalid: Constant.invalidResponse()));

@@ -8,12 +8,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/terminate_module/terminate_detail_activity/terminate_detail_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/utils/enum/terminate_status.dart';
-import 'package:pitik_internal_app/utils/route.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/transfer_terminate.dart';
+
+import '../../../utils/constant.dart';
+import '../../../utils/enum/terminate_status.dart';
+import '../../../utils/route.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/transfer_terminate.dart';
+import 'terminate_detail_controller.dart';
 
 class TerminateDetailActivity extends StatelessWidget {
   const TerminateDetailActivity({super.key});
@@ -35,7 +36,7 @@ class TerminateDetailActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Pemusnahan",
+          'Detail Pemusnahan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -61,8 +62,8 @@ class TerminateDetailActivity extends StatelessWidget {
                   if (controller.terminateModel.status == EnumTerminateStatus.draft) ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("editManufacture"),
-                            label: "Edit",
+                            controller: GetXCreator.putButtonFillController('editManufacture'),
+                            label: 'Edit',
                             onClick: () {
                               Get.toNamed(RoutePage.terminateForm, arguments: [controller.terminateModel, true])!.then((value) {
                                 controller.isLoading.value = true;
@@ -76,16 +77,16 @@ class TerminateDetailActivity extends StatelessWidget {
                     ),
                     Expanded(
                         child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("cancelTerminate"),
-                            label: "Batal",
+                            controller: GetXCreator.putButtonOutlineController('cancelTerminate'),
+                            label: 'Batal',
                             onClick: () {
                               _showBottomDialogCancel(context, controller);
                             }))
                   ] else if (controller.terminateModel.status == EnumTerminateStatus.confirmed) ...[
                     Expanded(
                         child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("pesanStock"),
-                            label: "Pesan Stock",
+                            controller: GetXCreator.putButtonFillController('pesanStock'),
+                            label: 'Pesan Stock',
                             onClick: () {
                               _showBottomDialogOrderStock(context, controller);
                             })),
@@ -94,8 +95,8 @@ class TerminateDetailActivity extends StatelessWidget {
                     ),
                     Expanded(
                         child: ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController("cancelTerminate"),
-                            label: "Batal",
+                            controller: GetXCreator.putButtonOutlineController('cancelTerminate'),
+                            label: 'Batal',
                             onClick: () {
                               _showBottomDialogCancel(context, controller);
                             }))
@@ -109,8 +110,8 @@ class TerminateDetailActivity extends StatelessWidget {
                     ] else ...[
                       Expanded(
                           child: ButtonOutline(
-                              controller: GetXCreator.putButtonOutlineController("cancelTerminate"),
-                              label: "Batal",
+                              controller: GetXCreator.putButtonOutlineController('cancelTerminate'),
+                              label: 'Batal',
                               onClick: () {
                                 _showBottomDialogCancel(context, controller);
                               }))
@@ -156,27 +157,27 @@ class TerminateDetailActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Pemusnahan",
+                        'Informasi Pemusnahan',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.terminateModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.terminateModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
                     ],
                   ),
                 ),
-                TerminateStatus(terminateStatus: controller.terminateModel.status,isApproved: controller.terminateModel.reviewer != null ? true : false),
+                TerminateStatus(terminateStatus: controller.terminateModel.status, isApproved: controller.terminateModel.reviewer != null ? true : false),
               ],
             ),
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.terminateModel.operationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.terminateModel.operationUnit!.operationUnitName}'),
           ],
         ),
       );
@@ -230,38 +231,39 @@ class TerminateDetailActivity extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("Berita Acara", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
-                                          Text(DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.parse(controller.terminateModel.reviewedDate ?? DateFormat("dd MMM yyyy HH:mm", "id").format(DateTime.now()))), style: AppTextStyle.blackTextStyle.copyWith()),
+                                          Text('Berita Acara', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700)),
+                                          Text(DateFormat('dd MMM yyyy HH:mm', 'id').format(DateTime.parse(controller.terminateModel.reviewedDate ?? DateFormat('dd MMM yyyy HH:mm', 'id').format(DateTime.now()))),
+                                              style: AppTextStyle.blackTextStyle.copyWith()),
                                         ],
                                       ),
                                       const SizedBox(
                                         height: 16,
                                       ),
-                                      Text("Disetujui dan diperiksa oleh", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                      Text('Disetujui dan diperiksa oleh', style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      Text("${controller.terminateModel.reviewer!.fullName}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                      Text('${controller.terminateModel.reviewer!.fullName}', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                                       const SizedBox(
                                         height: 16,
                                       ),
-                                      Text("Email", style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
+                                      Text('Email', style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12)),
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      Text("${controller.terminateModel.reviewer!.email}", style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
+                                      Text('${controller.terminateModel.reviewer!.email}', style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium)),
                                       const SizedBox(
                                         height: 16,
                                       ),
                                       Row(
                                         children: [
-                                          SvgPicture.asset("images/checkbox_fill.svg"),
+                                          SvgPicture.asset('images/checkbox_fill.svg'),
                                           const SizedBox(
                                             width: 8,
                                           ),
                                           Expanded(
                                               child: Text(
-                                            "Saya dengan teliti dan sadar sudah memeriksa hasil Pemusnahan",
+                                            'Saya dengan teliti dan sadar sudah memeriksa hasil Pemusnahan',
                                             style: AppTextStyle.blackTextStyle,
                                             overflow: TextOverflow.clip,
                                           )),
@@ -273,7 +275,7 @@ class TerminateDetailActivity extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.symmetric(vertical: 16),
                               child: Text(
-                                "Detail SKU",
+                                'Detail SKU',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -283,7 +285,7 @@ class TerminateDetailActivity extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                               decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                               child: Text(
-                                "${controller.terminateModel.product!.productItem!.name}",
+                                '${controller.terminateModel.product!.productItem!.name}',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -303,15 +305,15 @@ class TerminateDetailActivity extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  infoDetailSKU("Kategori SKU", "${controller.terminateModel.product!.name}"),
+                                  infoDetailSKU('Kategori SKU', '${controller.terminateModel.product!.name}'),
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU("Jumlah Ekor", "${controller.terminateModel.product!.productItem!.quantity} Ekor") : const SizedBox(),
+                                  controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU('Jumlah Ekor', '${controller.terminateModel.product!.productItem!.quantity} Ekor') : const SizedBox(),
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  infoDetailSKU("Total", "${controller.terminateModel.product!.productItem!.weight} Kg"),
+                                  infoDetailSKU('Total', '${controller.terminateModel.product!.productItem!.weight} Kg'),
                                 ],
                               ),
                             ),
@@ -322,7 +324,9 @@ class TerminateDetailActivity extends StatelessWidget {
                               controller.terminateModel.imageLink!,
                               fit: BoxFit.fill,
                               loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
                                 return Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.primaryOrange,
@@ -344,14 +348,14 @@ class TerminateDetailActivity extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Catatan Penolakan",
+                                      'Catatan Penolakan',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                     ),
                                     const SizedBox(
                                       height: 16,
                                     ),
                                     Text(
-                                      "-",
+                                      '-',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
                                     ),
                                   ],
@@ -365,13 +369,15 @@ class TerminateDetailActivity extends StatelessWidget {
                         ),
                       ),
                     ),
-                    controller.terminateModel.status == EnumTerminateStatus.draft || controller.terminateModel.status == EnumTerminateStatus.confirmed || controller.terminateModel.status == EnumTerminateStatus.booked ? bottomNavbar() : const SizedBox(),
+                    controller.terminateModel.status == EnumTerminateStatus.draft || controller.terminateModel.status == EnumTerminateStatus.confirmed || controller.terminateModel.status == EnumTerminateStatus.booked
+                        ? bottomNavbar()
+                        : const SizedBox(),
                   ],
                 ),
         ));
   }
 
-  _showBottomDialogCancel(BuildContext context, TerminateDetailController controller) {
+  Future<void> _showBottomDialogCancel(BuildContext context, TerminateDetailController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -400,18 +406,18 @@ class TerminateDetailActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
+                    'Apakah kamu yakin ingin melakukan pembatalan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukan pembatalan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/cancel_icon.svg",
+                    'images/cancel_icon.svg',
                   ),
                 ),
                 Container(
@@ -436,8 +442,7 @@ class TerminateDetailActivity extends StatelessWidget {
         });
   }
 
-
-  _showBottomDialogOrderStock(BuildContext context, TerminateDetailController controller) {
+  Future<void> _showBottomDialogOrderStock(BuildContext context, TerminateDetailController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -466,18 +471,18 @@ class TerminateDetailActivity extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin untuk melakukan pemesanan stok?",
+                    'Apakah kamu yakin untuk melakukan pemesanan stok?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang akan dipesan stok sudah sesuai", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang akan dipesan stok sudah sesuai', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/stock_icon.svg",
+                    'images/stock_icon.svg',
                   ),
                 ),
                 Container(

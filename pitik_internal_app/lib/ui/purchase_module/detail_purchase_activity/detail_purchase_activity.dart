@@ -8,11 +8,12 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/purchase_module/detail_purchase_activity/detail_purchase_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/lead_status.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/purchase_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/lead_status.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/purchase_status.dart';
+import 'detail_purchase_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -23,7 +24,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
 
   @override
   Widget build(BuildContext context) {
-    DetailPurchaseController controller = Get.put(DetailPurchaseController(context: context));
+    final DetailPurchaseController controller = Get.put(DetailPurchaseController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -39,7 +40,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Pembelian",
+          'Detail Pembelian',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -64,14 +65,14 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Detail Pembelian",
+                  'Detail Pembelian',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                 ),
                 PurchaseStatus(purchaseStatus: controller.purchaseDetail.value!.status),
               ],
             ),
             Text(
-              "${controller.purchaseDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}",
+              '${controller.purchaseDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}',
               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
               overflow: TextOverflow.clip,
             ),
@@ -81,13 +82,13 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Jenis Sumber", style: AppTextStyle.subTextStyle.copyWith(fontSize: 10), overflow: TextOverflow.clip),
+                Text('Jenis Sumber', style: AppTextStyle.subTextStyle.copyWith(fontSize: 10), overflow: TextOverflow.clip),
                 Text(
                   controller.purchaseDetail.value!.vendor != null
-                      ? "Vendor"
+                      ? 'Vendor'
                       : controller.purchaseDetail.value!.jagal != null
-                          ? "Jagal Eksternal"
-                          : "",
+                          ? 'Jagal Eksternal'
+                          : '',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.clip,
                 ),
@@ -100,7 +101,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sumber",
+                  'Sumber',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
@@ -118,13 +119,13 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Tujuan",
+                  'Tujuan',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? "-",
+                  controller.purchaseDetail.value!.operationUnit!.operationUnitName ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -156,7 +157,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
               width: 8,
             ),
             isLeadStatus
-                ? LeadStatus(leadStatus:controller.purchaseDetail.value?.status)
+                ? LeadStatus(leadStatus: controller.purchaseDetail.value?.status)
                 : Expanded(
                     flex: 2,
                     child: Text(
@@ -179,11 +180,11 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
             headerText: products.name!,
             child: Column(
               children: [
-                listDetail("Kategori SKU", products.category != null ? products.category!.name! : "-", false),
-                listDetail("SKU", products.name != null ? "${products.name}" : "-", false),
-                if (products.quantity != 0) listDetail("Jumlah Ekor", "${products.quantity ?? "-"} Ekor", false),
-                if (products.weight != 0) listDetail("Kebutuhan", "${products.weight ?? "-"}Kg", false),
-                if (products.price != null) listDetail("Harga ", "${products.price == 0 ? "-" : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} "} /Kg", false),
+                listDetail('Kategori SKU', products.category != null ? products.category!.name! : '-', false),
+                listDetail('SKU', products.name != null ? '${products.name}' : '-', false),
+                if (products.quantity != 0) listDetail('Jumlah Ekor', "${products.quantity ?? "-"} Ekor", false),
+                if (products.weight != 0) listDetail('Kebutuhan', "${products.weight ?? "-"}Kg", false),
+                if (products.price != null) listDetail('Harga ', "${products.price == 0 ? "-" : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(products.price!)} "} /Kg", false),
               ],
             )),
       );
@@ -210,45 +211,45 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    controller.purchaseDetail.value!.status == "CONFIRMED"
+                    controller.purchaseDetail.value!.status == 'CONFIRMED'
                         ? Expanded(
                             child: controller.editButton,
                           )
-                        : controller.purchaseDetail.value!.status == "DRAFT"
+                        : controller.purchaseDetail.value!.status == 'DRAFT'
                             ? Expanded(
                                 child: controller.editButton,
                               )
                             : const SizedBox(),
-                    if (controller.purchaseDetail.value!.status == "DRAFT") ...[
+                    if (controller.purchaseDetail.value!.status == 'DRAFT') ...[
                       const SizedBox(
                         width: 16,
                       ),
                       Expanded(
                           child: ButtonOutline(
-                        controller: GetXCreator.putButtonOutlineController("batalPembelian"),
-                        label: "Batal",
+                        controller: GetXCreator.putButtonOutlineController('batalPembelian'),
+                        label: 'Batal',
                         onClick: () {
                           _showBottomDialogCancel(context, controller);
                         },
                       ))
-                    ] else if (controller.purchaseDetail.value!.status == "CONFIRMED") ...[
+                    ] else if (controller.purchaseDetail.value!.status == 'CONFIRMED') ...[
                       const SizedBox(
                         width: 16,
                       ),
                       Expanded(
                         child: ButtonOutline(
-                          controller: GetXCreator.putButtonOutlineController("batalPembelian"),
-                          label: "Batal",
+                          controller: GetXCreator.putButtonOutlineController('batalPembelian'),
+                          label: 'Batal',
                           onClick: () {
                             _showBottomDialogCancel(context, controller);
                           },
                         ),
                       )
-                    ] else if (controller.purchaseDetail.value!.status == "RECEIVED") ...[
+                    ] else if (controller.purchaseDetail.value!.status == 'RECEIVED') ...[
                       Expanded(
                           child: ButtonFill(
-                        controller: GetXCreator.putButtonFillController("batalPembelian"),
-                        label: "Batal",
+                        controller: GetXCreator.putButtonFillController('batalPembelian'),
+                        label: 'Batal',
                         onClick: () {
                           _showBottomDialogCancel(context, controller);
                         },
@@ -286,11 +287,11 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                             height: 20,
                           ),
                           Text(
-                            "Detail SKU",
+                            'Detail SKU',
                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                             overflow: TextOverflow.clip,
                           ),
-                          controller.purchaseDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.purchaseDetail.value!.products as List<Products?>),
+                          controller.purchaseDetail.value!.products == null ? const Text(' ') : listExpandadle(controller.purchaseDetail.value!.products as List<Products?>),
                           Container(
                             padding: const EdgeInsets.all(10),
                             margin: const EdgeInsets.only(top: 16),
@@ -306,7 +307,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Pembelian",
+                                        'Total Pembelian',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -320,13 +321,15 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Kg",
+                                        'Total Kg',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
                                     Text(
-                                      controller.sumNeededMax.value - controller.sumNeededMin.value == 0 ? "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                      controller.sumNeededMax.value - controller.sumNeededMin.value == 0
+                                          ? '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                          : '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       overflow: TextOverflow.clip,
                                     ),
@@ -340,13 +343,13 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Ekor",
+                                          'Total Ekor',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Obx(() => Text(
-                                            "${controller.sumChick.value} Ekor",
+                                            '${controller.sumChick.value} Ekor',
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           )),
@@ -360,7 +363,7 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Rp",
+                                        'Total Rp',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -368,8 +371,8 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                                     Text(
                                         controller.sumPriceMax.value - controller.sumPriceMin.value == 0
                                             ? controller.sumPriceMin.value == 0
-                                                ? "Rp - "
-                                                : NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)
+                                                ? 'Rp - '
+                                                : NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.sumPriceMin.value)
                                             : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value)}",
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip),
@@ -390,14 +393,14 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Total/Global(kg)",
+                                  'Total/Global(kg)',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  "${(controller.purchaseDetail.value!.totalWeight ?? 0)} Kg",
+                                  '${controller.purchaseDetail.value!.totalWeight ?? 0} Kg',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14),
                                 ),
                               ],
@@ -417,14 +420,14 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan",
+                                  'Catatan',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.purchaseDetail.value!.remarks != null ? Uri.decodeFull(controller.purchaseDetail.value!.remarks!) : "-",
+                                  controller.purchaseDetail.value!.remarks != null ? Uri.decodeFull(controller.purchaseDetail.value!.remarks!) : '-',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -439,14 +442,14 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                   )),
             Obx(() => controller.isLoading.isTrue
                 ? const SizedBox()
-                : controller.purchaseDetail.value!.status == "CANCELLED"
+                : controller.purchaseDetail.value!.status == 'CANCELLED'
                     ? const SizedBox()
                     : bottomNavBar()),
           ],
         ));
   }
 
-  _showBottomDialogCancel(BuildContext context, DetailPurchaseController controller) {
+  Future<void> _showBottomDialogCancel(BuildContext context, DetailPurchaseController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -475,18 +478,18 @@ class DetailPurchase extends GetView<DetailPurchaseController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin ingin melakukan pembatalan?",
+                    'Apakah kamu yakin ingin melakukan pembatalan?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan data aman sebelum melakukan pembatalan", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan data aman sebelum melakukan pembatalan', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/cancel_icon.svg",
+                    'images/cancel_icon.svg',
                   ),
                 ),
                 Container(

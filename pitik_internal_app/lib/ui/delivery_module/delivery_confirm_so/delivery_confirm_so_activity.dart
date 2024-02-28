@@ -8,11 +8,11 @@ import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/custom_appbar.dart';
-import 'package:pitik_internal_app/widget/common/info_detail_header.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/common/custom_appbar.dart';
+import '../../../widget/common/info_detail_header.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/order_status.dart';
 
 import 'delivery_confirm_so_controller.dart';
 
@@ -41,14 +41,14 @@ class DeliveryConfirmSO extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Pengiriman",
+                        'Informasi Pengiriman',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                       )
                     ],
@@ -65,37 +65,37 @@ class DeliveryConfirmSO extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            InfoDetailHeader(title: "Sumber", name: controller.order.operationUnit!.operationUnitName!),
+            InfoDetailHeader(title: 'Sumber', name: controller.order.operationUnit!.operationUnitName!),
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Tujuan", name: controller.order.customer!.businessName!),
+            InfoDetailHeader(title: 'Tujuan', name: controller.order.customer!.businessName!),
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Dibuat Oleh", name: controller.order.userCreator?.email ?? "-"),
+            InfoDetailHeader(title: 'Dibuat Oleh', name: controller.order.userCreator?.email ?? '-'),
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Sales Branch", name: controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
+            InfoDetailHeader(title: 'Sales Branch', name: controller.order.salesperson == null ? '-' : '${controller.order.salesperson?.branch?.name}'),
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Driver", name: "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
+            InfoDetailHeader(title: 'Driver', name: "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
             const SizedBox(
               height: 8,
             ),
-            InfoDetailHeader(title: "Target Pengiriman", name: controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
+            InfoDetailHeader(title: 'Target Pengiriman', name: controller.order.deliveryTime != null ? DateFormat('dd MMM yyyy').format(Convert.getDatetime(controller.order.deliveryTime!)) : '-'),
             const SizedBox(
               height: 8,
             ),
             InfoDetailHeader(
-              title: "Waktu Pengiriman",
+              title: 'Waktu Pengiriman',
               name: controller.order.deliveryTime != null
-                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
-                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
-                      : "-"
-                  : "-",
+                  ? DateFormat('HH:mm').format(Convert.getDatetime(controller.order.deliveryTime!)) != '00:00'
+                      ? DateFormat('HH:mm').format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : '-'
+                  : '-',
             ),
           ],
         ),
@@ -126,17 +126,17 @@ class DeliveryConfirmSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}deliveadsasdasdaw;uj;"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}deliveadsasdasdaw;uj;'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != null && products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
@@ -144,36 +144,36 @@ class DeliveryConfirmSO extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uj;asdasdaasdasdasdasdasas"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}delivew;uj;asdasdaasdasdasdasdasas'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != null && products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
       } else {
-        if (controller.order.returnStatus == "FULL") {
+        if (controller.order.returnStatus == 'FULL') {
           return Container(
             margin: const EdgeInsets.only(top: 16),
             child: Expandable(
-                controller: GetXCreator.putAccordionController("sku${products.name}delivewaabccxzzc"),
-                headerText: "${products.name}",
+                controller: GetXCreator.putAccordionController('sku${products.name}delivewaabccxzzc'),
+                headerText: '${products.name}',
                 child: Column(
                   children: [
-                    if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                    if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                    if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.returnQuantity!)} Ekor"),
-                    if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                    if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                    if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.returnWeight!} Kg"),
-                    if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                    if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                    if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                    if (products.returnQuantity != null) infoDetailSku('Jumlah Ekor', '${products.returnQuantity!} Ekor'),
+                    if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                    if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                    if (products.returnWeight != null) infoDetailSku('Kebutuhan', '${products.returnWeight!} Kg'),
+                    if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                   ],
                 )),
           );
@@ -182,17 +182,17 @@ class DeliveryConfirmSO extends StatelessWidget {
             return Container(
               margin: const EdgeInsets.only(top: 16),
               child: Expandable(
-                  controller: GetXCreator.putAccordionController("sku${products.name}delivewaabc123123"),
-                  headerText: "${products.name}",
+                  controller: GetXCreator.putAccordionController('sku${products.name}delivewaabc123123'),
+                  headerText: '${products.name}',
                   child: Column(
                     children: [
-                      if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                      if (products.returnQuantity != null) infoDetailSku("Jumlah Ekor", "${(products.quantity! - products.returnQuantity!)} Ekor"),
-                      if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                      if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                      if (products.returnWeight != null) infoDetailSku("Kebutuhan", "${products.weight! - products.returnWeight!} Kg"),
-                      if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                      if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                      if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                      if (products.returnQuantity != null) infoDetailSku('Jumlah Ekor', '${products.quantity! - products.returnQuantity!} Ekor'),
+                      if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                      if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                      if (products.returnWeight != null) infoDetailSku('Kebutuhan', '${products.weight! - products.returnWeight!} Kg'),
+                      if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                     ],
                   )),
             );
@@ -233,7 +233,7 @@ class DeliveryConfirmSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Penjualan",
+                    'Total Penjualan',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                     overflow: TextOverflow.clip,
                   ),
@@ -247,13 +247,13 @@ class DeliveryConfirmSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Kg",
+                    'Total Kg',
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
                   ),
                 ),
                 Text(
-                  "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                  '${controller.sumKg.value.toStringAsFixed(2)}kg',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                   overflow: TextOverflow.clip,
                 ),
@@ -267,13 +267,13 @@ class DeliveryConfirmSO extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Total Ekor",
+                      'Total Ekor',
                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                       overflow: TextOverflow.clip,
                     ),
                   ),
                   Obx(() => Text(
-                        "${controller.sumChick.value} Ekor",
+                        '${controller.sumChick.value} Ekor',
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                         overflow: TextOverflow.clip,
                       )),
@@ -288,12 +288,13 @@ class DeliveryConfirmSO extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Biaya Pengiriman",
+                      'Biaya Pengiriman',
                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                       overflow: TextOverflow.clip,
                     ),
                   ),
-                  Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.order.deliveryFee), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                  Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.order.deliveryFee),
+                      style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                 ],
               )
             ],
@@ -304,12 +305,13 @@ class DeliveryConfirmSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Rp",
+                    'Total Rp',
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
                   ),
                 ),
-                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + (controller.order.deliveryFee ?? 0))), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + (controller.order.deliveryFee ?? 0))),
+                    style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
               ],
             )
           ],
@@ -322,7 +324,7 @@ class DeliveryConfirmSO extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: CustomAppbar(
-            title: "Detail Pengiriman",
+            title: 'Detail Pengiriman',
             onBack: () {
               Get.back();
             }),
@@ -344,18 +346,18 @@ class DeliveryConfirmSO extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          "Detail SKU",
+                          'Detail SKU',
                           style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
                         ),
                         Column(
                           children: controller.order.products!.map((e) => customExpandalbe(e!)).toList(),
                         ),
-                        if (controller.order.type! == "LB") ...[
+                        if (controller.order.type! == 'LB') ...[
                           const SizedBox(
                             height: 16,
                           ),
                           Text(
-                            "Detail Catatan",
+                            'Detail Catatan',
                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                             overflow: TextOverflow.clip,
                           ),
@@ -375,13 +377,13 @@ class DeliveryConfirmSO extends StatelessWidget {
                                   decoration: BoxDecoration(color: controller.isSuccessCheckin.isTrue ? const Color(0xFFECFDF3) : const Color(0xFFFEF3F2), borderRadius: BorderRadius.circular(6)),
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(controller.isSuccessCheckin.isTrue ? "images/success_checkin.svg" : "images/failed_checkin.svg", height: 14),
+                                      SvgPicture.asset(controller.isSuccessCheckin.isTrue ? 'images/success_checkin.svg' : 'images/failed_checkin.svg', height: 14),
                                       const SizedBox(
                                         width: 10,
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.isSuccessCheckin.isTrue ? "Selamat kamu berhasil melakukan Check in" : "Checkin Gagal ${controller.error.value}, coba Kembali",
+                                          controller.isSuccessCheckin.isTrue ? 'Selamat kamu berhasil melakukan Check in' : 'Checkin Gagal ${controller.error.value}, coba Kembali',
                                           style: TextStyle(color: controller.isSuccessCheckin.isTrue ? const Color(0xFF12B76A) : const Color(0xFFF04438), fontSize: 10),
                                           overflow: TextOverflow.clip,
                                         ),

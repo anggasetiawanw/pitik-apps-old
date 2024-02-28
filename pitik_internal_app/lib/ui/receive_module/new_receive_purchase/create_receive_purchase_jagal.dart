@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/receive_module/new_receive_purchase/create_receive_purchase_jagal_controller.dart';
-import 'package:pitik_internal_app/ui/receive_module/new_receive_purchase/create_receive_purchase_vendor_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/purchase_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/purchase_status.dart';
+import 'create_receive_purchase_jagal_controller.dart';
+import 'create_receive_purchase_vendor_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -21,7 +22,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
 
   @override
   Widget build(BuildContext context) {
-    CreateGrPurchaseJagalController controller = Get.put(CreateGrPurchaseJagalController(context: context));
+    final CreateGrPurchaseJagalController controller = Get.put(CreateGrPurchaseJagalController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -37,7 +38,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Form Penerimaan Jagal",
+          'Form Penerimaan Jagal',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -62,14 +63,14 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Detail Pembelian",
+                  'Detail Pembelian',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                 ),
                 PurchaseStatus(purchaseStatus: controller.purchaseDetail.value!.status),
               ],
             ),
             Text(
-              "${controller.purchaseDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}",
+              '${controller.purchaseDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year}',
               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
               overflow: TextOverflow.clip,
             ),
@@ -80,13 +81,13 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sumber",
+                  'Sumber',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.purchaseDetail.value!.operationUnit!.type ?? "-",
+                  controller.purchaseDetail.value!.operationUnit!.type ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -98,7 +99,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Tujuan",
+                  'Tujuan',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
@@ -134,20 +135,20 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    controller.purchaseDetail.value!.status == "CONFIRMED"
+                    controller.purchaseDetail.value!.status == 'CONFIRMED'
                         ? Expanded(
                             child: ButtonFill(
-                            controller: GetXCreator.putButtonFillController("saveGRPurchase"),
-                            label: "Simpan",
+                            controller: GetXCreator.putButtonFillController('saveGRPurchase'),
+                            label: 'Simpan',
                             onClick: () {
                               controller.isValid() ? showBottomDialog(context, controller) : null;
                             },
                           ))
-                        : controller.purchaseDetail.value!.status == "RECEIVED"
+                        : controller.purchaseDetail.value!.status == 'RECEIVED'
                             ? Expanded(
                                 child: ButtonFill(
-                                controller: GetXCreator.putButtonFillController("cancelGRPurchase"),
-                                label: "Batal",
+                                controller: GetXCreator.putButtonFillController('cancelGRPurchase'),
+                                label: 'Batal',
                                 onClick: () {
                                   controller.isValid() ? showBottomDialog(context, controller) : null;
                                 },
@@ -194,7 +195,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             child: Text(
-              "${products.name}",
+              '${products.name}',
               style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
             ),
           ),
@@ -214,11 +215,11 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
             ),
             child: Column(
               children: [
-                infoDetailSku("Kategori SKU", "${products.category!.name}"),
-                infoDetailSku("SKU", "${products.name}"),
-                products.quantity != 0 ? infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor") : const SizedBox(),
-                if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight!} Kg"),
-                infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                infoDetailSku('Kategori SKU', '${products.category!.name}'),
+                infoDetailSku('SKU', '${products.name}'),
+                products.quantity != 0 ? infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor') : const SizedBox(),
+                if (products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight!} Kg'),
+                infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
               ],
             ),
           ),
@@ -249,7 +250,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                             height: 20,
                           ),
                           Text(
-                            "Detail SKU",
+                            'Detail SKU',
                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                             overflow: TextOverflow.clip,
                           ),
@@ -281,7 +282,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Pembelian",
+                                        'Total Pembelian',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -295,13 +296,15 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Kg",
+                                        'Total Kg',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
                                     Text(
-                                      controller.sumNeededMax.value - controller.sumNeededMin.value == 0 ? "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg" : "${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg",
+                                      controller.sumNeededMax.value - controller.sumNeededMin.value == 0
+                                          ? '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg'
+                                          : '${controller.sumNeededMin.value.toStringAsFixed(2)} Kg - ${controller.sumNeededMax.value.toStringAsFixed(2)} Kg',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       overflow: TextOverflow.clip,
                                     ),
@@ -315,13 +318,13 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Ekor",
+                                          'Total Ekor',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Obx(() => Text(
-                                            "${controller.sumChick.value} Ekor",
+                                            '${controller.sumChick.value} Ekor',
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           )),
@@ -335,13 +338,17 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Rp",
+                                        'Total Rp',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(controller.sumPriceMax.value - controller.sumPriceMin.value == 0 ? NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value) : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value)}",
-                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(
+                                        controller.sumPriceMax.value - controller.sumPriceMin.value == 0
+                                            ? NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.sumPriceMin.value)
+                                            : "${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMin.value)} - ${NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPriceMax.value)}",
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
+                                        overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
@@ -360,7 +367,7 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
         ));
   }
 
-  showBottomDialog(BuildContext context, CreateGrPurchaseJagalController controller) {
+  Future<void> showBottomDialog(BuildContext context, CreateGrPurchaseJagalController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -389,18 +396,18 @@ class CreateGrPurchaseJagal extends GetView<CreateGrPurchaseController> {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/order_status.dart';
 
 import 'delivert_return_controller.dart';
 
@@ -16,7 +16,7 @@ class DeliveryRejectSO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeliveryRejectSOController controller = Get.put(DeliveryRejectSOController(context: context));
+    final DeliveryRejectSOController controller = Get.put(DeliveryRejectSOController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -31,7 +31,7 @@ class DeliveryRejectSO extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Pengiriman",
+          'Detail Pengiriman',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -68,14 +68,14 @@ class DeliveryRejectSO extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Informasi Pengiriman",
+                      'Informasi Pengiriman',
                       style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     Text(
-                      "${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                      '${controller.order.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                       style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                     )
                   ],
@@ -86,37 +86,37 @@ class DeliveryRejectSO extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.order.operationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.order.operationUnit!.operationUnitName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Tujuan", "${controller.order.customer!.businessName}"),
+            infoDetailHeader('Tujuan', '${controller.order.customer!.businessName}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Dibuat Oleh", controller.order.userCreator?.email ?? "-"),
+            infoDetailHeader('Dibuat Oleh', controller.order.userCreator?.email ?? '-'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Sales Branch", controller.order.salesperson == null ? "-" : "${controller.order.salesperson?.branch?.name}"),
+            infoDetailHeader('Sales Branch', controller.order.salesperson == null ? '-' : '${controller.order.salesperson?.branch?.name}'),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Driver", "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
+            infoDetailHeader('Driver', "${controller.order.driver == null ? "-" : controller.order.driver!.fullName}"),
             const SizedBox(
               height: 8,
             ),
-            infoDetailHeader("Target Pengiriman", controller.order.deliveryTime != null ? DateFormat("dd MMM yyyy").format(Convert.getDatetime(controller.order.deliveryTime!)) : "-"),
+            infoDetailHeader('Target Pengiriman', controller.order.deliveryTime != null ? DateFormat('dd MMM yyyy').format(Convert.getDatetime(controller.order.deliveryTime!)) : '-'),
             const SizedBox(
               height: 8,
             ),
             infoDetailHeader(
-              "Waktu Pengiriman",
+              'Waktu Pengiriman',
               controller.order.deliveryTime != null
-                  ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!)) != "00:00"
-                      ? DateFormat("HH:mm").format(Convert.getDatetime(controller.order.deliveryTime!))
-                      : "-"
-                  : "-",
+                  ? DateFormat('HH:mm').format(Convert.getDatetime(controller.order.deliveryTime!)) != '00:00'
+                      ? DateFormat('HH:mm').format(Convert.getDatetime(controller.order.deliveryTime!))
+                      : '-'
+                  : '-',
             ),
           ],
         ),
@@ -139,7 +139,7 @@ class DeliveryRejectSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Penjualan",
+                    'Total Penjualan',
                     style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                     overflow: TextOverflow.clip,
                   ),
@@ -153,13 +153,13 @@ class DeliveryRejectSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Kg",
+                    'Total Kg',
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
                   ),
                 ),
                 Text(
-                  "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                  '${controller.sumKg.value.toStringAsFixed(2)}kg',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                   overflow: TextOverflow.clip,
                 ),
@@ -173,13 +173,13 @@ class DeliveryRejectSO extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "Total Ekor",
+                      'Total Ekor',
                       style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                       overflow: TextOverflow.clip,
                     ),
                   ),
                   Obx(() => Text(
-                        "${controller.sumChick.value} Ekor",
+                        '${controller.sumChick.value} Ekor',
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                         overflow: TextOverflow.clip,
                       )),
@@ -193,12 +193,12 @@ class DeliveryRejectSO extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Total Rp",
+                    'Total Rp',
                     style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                     overflow: TextOverflow.clip,
                   ),
                 ),
-                Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.sumPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
               ],
             )
           ],
@@ -218,8 +218,8 @@ class DeliveryRejectSO extends StatelessWidget {
             ),
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: ButtonFill(
-                controller: GetXCreator.putButtonFillController("COnfirmeddd"),
-                label: "Konfirmasi",
+                controller: GetXCreator.putButtonFillController('COnfirmeddd'),
+                label: 'Konfirmasi',
                 onClick: () {
                   _showBottomDialogSend(context, controller);
                 }),
@@ -249,7 +249,7 @@ class DeliveryRejectSO extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          "Detail SKU",
+                          'Detail SKU',
                           style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold),
                         ),
                         const SizedBox(
@@ -271,7 +271,7 @@ class DeliveryRejectSO extends StatelessWidget {
     );
   }
 
-  _showBottomDialogSend(BuildContext context, DeliveryRejectSOController controller) {
+  Future<void> _showBottomDialogSend(BuildContext context, DeliveryRejectSOController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -300,13 +300,13 @@ class DeliveryRejectSO extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 24),

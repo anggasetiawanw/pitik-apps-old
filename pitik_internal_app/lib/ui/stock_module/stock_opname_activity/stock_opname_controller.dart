@@ -17,8 +17,8 @@ import 'package:model/internal_app/opname_model.dart';
 import 'package:model/internal_app/product_model.dart';
 import 'package:model/response/internal_app/category_list_response.dart';
 import 'package:model/response/internal_app/operation_units_response.dart';
-import 'package:pitik_internal_app/api_mapping/list_api.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../api_mapping/list_api.dart';
+import '../../../utils/constant.dart';
 
 class StockOpnameController extends GetxController {
   BuildContext context;
@@ -33,14 +33,14 @@ class StockOpnameController extends GetxController {
   Rx<List<StockOpnameField>> listStockField = Rx<List<StockOpnameField>>([]);
 
   late SpinnerField sourceStock = SpinnerField(
-      controller: GetXCreator.putSpinnerFieldController("stockSourceOpname"),
-      label: "Sumber*",
-      hint: "Pilih salah satu",
-      alertText: "Sumber harus dipilih!",
+      controller: GetXCreator.putSpinnerFieldController('stockSourceOpname'),
+      label: 'Sumber*',
+      hint: 'Pilih salah satu',
+      alertText: 'Sumber harus dipilih!',
       items: const {},
       onSpinnerSelected: (value) {
         if (listOperationUnits.value.isNotEmpty) {
-          OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
+          final OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull((element) => element!.operationUnitName == value);
           if (selectSource != null) {
             efTotal.controller.visibleField();
             showWidget(selectSource.purchasableProducts!, false);
@@ -48,31 +48,32 @@ class StockOpnameController extends GetxController {
         }
       });
 
-  EditField efTotal = EditField(controller: GetXCreator.putEditFieldController("efTOtal"), label: "Total/Global(kg)*", hint: "ketik disini", alertText: "Total harus diisi", textUnit: "kg", maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
+  EditField efTotal = EditField(
+      controller: GetXCreator.putEditFieldController('efTOtal'), label: 'Total/Global(kg)*', hint: 'ketik disini', alertText: 'Total harus diisi', textUnit: 'kg', maxInput: 20, inputType: TextInputType.number, onTyping: (value, editField) {});
   late ButtonFill yesButton = ButtonFill(
-      controller: GetXCreator.putButtonFillController("yesButton"),
-      label: "Ya",
+      controller: GetXCreator.putButtonFillController('yesButton'),
+      label: 'Ya',
       onClick: () {
-        Constant.track("Click_Konfirmasi_Stock_Opname");
+        Constant.track('Click_Konfirmasi_Stock_Opname');
         if (isEdit.isTrue) {
           Get.back();
-          updateStock("CONFIRMED");
+          updateStock('CONFIRMED');
         } else {
           Get.back();
-          createStockOpname("CONFIRMED");
+          createStockOpname('CONFIRMED');
         }
       });
 
   ButtonOutline noButton = ButtonOutline(
-      controller: GetXCreator.putButtonOutlineController("No Button"),
-      label: "Tidak",
+      controller: GetXCreator.putButtonOutlineController('No Button'),
+      label: 'Tidak',
       onClick: () {
         Get.back();
       });
 
   DateTime timeStart = DateTime.now();
-    DateTime timeEnd = DateTime.now();
-    int countApi = 0;
+  DateTime timeEnd = DateTime.now();
+  int countApi = 0;
 
   @override
   void onInit() {
@@ -106,13 +107,13 @@ class StockOpnameController extends GetxController {
     }
   }
 
-  void countingApi(){
+  void countingApi() {
     countApi++;
-    if(countApi == 3){
+    if (countApi == 3) {
       isLoading.value = false;
       timeEnd = DateTime.now();
-        Duration totalTime = timeEnd.difference(timeStart);
-        Constant.trackRenderTime("Form_Stock_Opname", totalTime);
+      final Duration totalTime = timeEnd.difference(timeStart);
+      Constant.trackRenderTime('Form_Stock_Opname', totalTime);
     }
   }
 
@@ -123,7 +124,7 @@ class StockOpnameController extends GetxController {
         body: [Constant.auth!.token!, Constant.auth!.id, Constant.xAppId!, AppStrings.TRUE_LOWERCASE, AppStrings.INTERNAL, AppStrings.TRUE_LOWERCASE, 0],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
-              Map<String, bool> mapList = {};
+              final Map<String, bool> mapList = {};
               for (var units in (body as ListOperationUnitsResponse).data) {
                 mapList[units!.operationUnitName!] = false;
               }
@@ -135,8 +136,8 @@ class StockOpnameController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -146,8 +147,8 @@ class StockOpnameController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -176,8 +177,8 @@ class StockOpnameController extends GetxController {
             },
             onResponseFail: (code, message, body, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                'Pesan',
+                'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -187,8 +188,8 @@ class StockOpnameController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi kesalahan internal",
+                'Pesan',
+                'Terjadi kesalahan internal',
                 snackPosition: SnackPosition.TOP,
                 duration: const Duration(seconds: 5),
                 colorText: Colors.white,
@@ -213,8 +214,8 @@ class StockOpnameController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -224,8 +225,8 @@ class StockOpnameController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -251,8 +252,8 @@ class StockOpnameController extends GetxController {
               },
               onResponseFail: (code, message, body, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${(body as ErrorResponse).error!.message}',
                   snackPosition: SnackPosition.TOP,
                   duration: const Duration(seconds: 5),
                   colorText: Colors.white,
@@ -262,8 +263,8 @@ class StockOpnameController extends GetxController {
               },
               onResponseError: (exception, stacktrace, id, packet) {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi kesalahan internal",
+                  'Pesan',
+                  'Terjadi kesalahan internal',
                   duration: const Duration(seconds: 5),
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
@@ -275,7 +276,7 @@ class StockOpnameController extends GetxController {
     }
   }
 
-  showWidget(List<Products?> items, bool isEdit) {
+  void showWidget(List<Products?> items, bool isEdit) {
     listStockField.value.clear();
     int idx = 0;
     if (isEdit) {
@@ -298,7 +299,7 @@ class StockOpnameController extends GetxController {
   }
 
   bool validation(String status) {
-    bool ret = true;
+    const bool ret = true;
     if (sourceStock.controller.textSelected.value.isEmpty) {
       sourceStock.controller.showAlert();
       Scrollable.ensureVisible(sourceStock.controller.formKey.currentContext!);
@@ -314,14 +315,14 @@ class StockOpnameController extends GetxController {
   }
 
   OpnameModel generatePayload(String status) {
-    List<Products?> products = [];
-    OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull(
+    final List<Products?> products = [];
+    final OperationUnitModel? selectSource = listOperationUnits.value.firstWhereOrNull(
       (element) => element!.operationUnitName == sourceStock.controller.textSelected.value,
     );
     for (var stock in listStockField.value) {
-      Products? purchaseProduct = selectSource!.purchasableProducts!.firstWhereOrNull((element) => element!.name == stock.title);
+      final Products? purchaseProduct = selectSource!.purchasableProducts!.firstWhereOrNull((element) => element!.name == stock.title);
       for (var item in stock.controller.efSku.value) {
-        Products? productItem = purchaseProduct!.productItems!.firstWhereOrNull((element) => element!.name == item.controller.tag);
+        final Products? productItem = purchaseProduct!.productItems!.firstWhereOrNull((element) => element!.name == item.controller.tag);
         products.add(
           Products(
             productItemId: productItem!.id,

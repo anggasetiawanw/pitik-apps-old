@@ -3,16 +3,17 @@ import 'package:get/get.dart';
 import 'package:global_variable/colors.dart';
 import 'package:global_variable/text_style.dart';
 import 'package:intl/intl.dart';
-import 'package:pitik_internal_app/ui/terminate_module/terminate_rejected_activity/terminate_rejected_controller.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/transfer_terminate.dart';
+
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/transfer_terminate.dart';
+import 'terminate_rejected_controller.dart';
 
 class TerminateRejectedActivity extends StatelessWidget {
   const TerminateRejectedActivity({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TerminateRejectedController controller = Get.put(TerminateRejectedController(context: context));
+    final TerminateRejectedController controller = Get.put(TerminateRejectedController(context: context));
     Widget appBar() {
       return AppBar(
         elevation: 0,
@@ -27,7 +28,7 @@ class TerminateRejectedActivity extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Tolak Pemusnahan",
+          'Tolak Pemusnahan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -85,27 +86,27 @@ class TerminateRejectedActivity extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Informasi Pemusnahan",
+                        'Informasi Pemusnahan',
                         style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.medium, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
-                        "${controller.terminateModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}",
+                        '${controller.terminateModel.code} - ${controller.createdDate.day} ${DateFormat.MMM().format(controller.createdDate)} ${controller.createdDate.year}',
                         style: AppTextStyle.greyTextStyle.copyWith(fontSize: 10),
                         overflow: TextOverflow.clip,
                       )
                     ],
                   ),
                 ),
-                TerminateStatus(terminateStatus: controller.terminateModel.status,isApproved: controller.terminateModel.reviewer != null ? true : false),
+                TerminateStatus(terminateStatus: controller.terminateModel.status, isApproved: controller.terminateModel.reviewer != null ? true : false),
               ],
             ),
             const SizedBox(
               height: 16,
             ),
-            infoDetailHeader("Sumber", "${controller.terminateModel.operationUnit!.operationUnitName}"),
+            infoDetailHeader('Sumber', '${controller.terminateModel.operationUnit!.operationUnitName}'),
           ],
         ),
       );
@@ -148,7 +149,7 @@ class TerminateRejectedActivity extends StatelessWidget {
                             Container(
                               margin: const EdgeInsets.symmetric(vertical: 16),
                               child: Text(
-                                "Detail SKU",
+                                'Detail SKU',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w700),
                               ),
                             ),
@@ -158,7 +159,7 @@ class TerminateRejectedActivity extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                               decoration: const BoxDecoration(color: AppColors.headerSku, borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
                               child: Text(
-                                "${controller.terminateModel.product!.productItem!.name}",
+                                '${controller.terminateModel.product!.productItem!.name}',
                                 style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -178,15 +179,15 @@ class TerminateRejectedActivity extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  infoDetailSKU("Kategori SKU", "${controller.terminateModel.product!.name}"),
+                                  infoDetailSKU('Kategori SKU', '${controller.terminateModel.product!.name}'),
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU("Jumlah Ekor", "${controller.terminateModel.product!.productItem!.quantity} Ekor") : const SizedBox(),
+                                  controller.terminateModel.product!.productItem!.quantity != null ? infoDetailSKU('Jumlah Ekor', '${controller.terminateModel.product!.productItem!.quantity} Ekor') : const SizedBox(),
                                   const SizedBox(
                                     height: 14,
                                   ),
-                                  infoDetailSKU("Total", "${controller.terminateModel.product!.productItem!.weight} Kg"),
+                                  infoDetailSKU('Total', '${controller.terminateModel.product!.productItem!.weight} Kg'),
                                 ],
                               ),
                             ),
@@ -197,7 +198,9 @@ class TerminateRejectedActivity extends StatelessWidget {
                               controller.terminateModel.imageLink!,
                               fit: BoxFit.fill,
                               loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) return child;
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
                                 return Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.primaryOrange,

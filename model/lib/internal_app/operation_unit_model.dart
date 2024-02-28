@@ -1,4 +1,3 @@
-
 import 'package:model/engine_library.dart';
 import 'package:model/internal_app/place_model.dart';
 import 'package:model/internal_app/product_model.dart';
@@ -12,56 +11,57 @@ import 'jagal_model.dart';
 
 @SetupModel
 class OperationUnitModel {
-    String? id;
-    String? operationUnitName;
-    String? type;
-    String? category;
-    String? plusCode;
-    double? latitude;
-    double? totalStockWeight;
-    double? longitude;
-    bool? status;
+  String? id;
+  String? operationUnitName;
+  String? type;
+  String? category;
+  String? plusCode;
+  double? latitude;
+  double? totalStockWeight;
+  double? longitude;
+  bool? status;
 
-    @IsChild()
-    Location? city;
+  @IsChild()
+  Location? city;
 
-    @IsChild()
-    Location? district;
+  @IsChild()
+  Location? district;
 
-    @IsChild()
-    Location? province;
+  @IsChild()
+  Location? province;
 
-    @IsChild()
-    BranchModel? branch;
+  @IsChild()
+  BranchModel? branch;
 
-    @IsChild()
-    JagalModel? jagalData;
+  @IsChild()
+  JagalModel? jagalData;
 
-    @IsChildren()
-    List<Products?>? purchasableProducts;
+  @IsChildren()
+  List<Products?>? purchasableProducts;
 
-  OperationUnitModel({this.id, this.operationUnitName, this.type, this.city, this.district, this.province, this.status, this.latitude, this.longitude, this.plusCode, this.category, this.branch, this.jagalData,this.purchasableProducts, this.totalStockWeight});
+  OperationUnitModel(
+      {this.id, this.operationUnitName, this.type, this.city, this.district, this.province, this.status, this.latitude, this.longitude, this.plusCode, this.category, this.branch, this.jagalData, this.purchasableProducts, this.totalStockWeight});
 
   static OperationUnitModel toResponseModel(Map<String, dynamic> map) {
-    if(map['totalStockWeight'] is int) {
+    if (map['totalStockWeight'] is int) {
       map['totalStockWeight'] = map['totalStockWeight'].toDouble();
     }
     return OperationUnitModel(
-        id: map['id'],
-        operationUnitName: map['operationUnitName'],
-        type: map['type'],
-        plusCode: map['plusCode'],
-        latitude: map['latitude'],
-        longitude: map['longitude'],
-        status: map['isArchived'],
-        city: Mapper.child<Location>(map["city"]),
-        district: Mapper.child<Location>(map["district"]),
-        province: Mapper.child<Location>(map["province"]),
-        branch: Mapper.child<BranchModel>(map["branch"]),
-        jagalData: Mapper.child<JagalModel>(map["jagalData"]),
-        purchasableProducts: Mapper.children<Products>(map["purchasableProducts"]),
-        category: map["category"],
-        totalStockWeight: map["totalStockWeight"],
+      id: map['id'],
+      operationUnitName: map['operationUnitName'],
+      type: map['type'],
+      plusCode: map['plusCode'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      status: map['isArchived'],
+      city: Mapper.child<Location>(map["city"]),
+      district: Mapper.child<Location>(map["district"]),
+      province: Mapper.child<Location>(map["province"]),
+      branch: Mapper.child<BranchModel>(map["branch"]),
+      jagalData: Mapper.child<JagalModel>(map["jagalData"]),
+      purchasableProducts: Mapper.children<Products>(map["purchasableProducts"]),
+      category: map["category"],
+      totalStockWeight: map["totalStockWeight"],
     );
   }
 }

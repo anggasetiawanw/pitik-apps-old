@@ -7,10 +7,11 @@ import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:intl/intl.dart';
 import 'package:model/internal_app/product_model.dart';
-import 'package:pitik_internal_app/ui/sales_order_module/new_assign_to_driver/assign_driver_controller.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
-import 'package:pitik_internal_app/widget/common/loading.dart';
-import 'package:pitik_internal_app/widget/common/order_status.dart';
+
+import '../../../utils/constant.dart';
+import '../../../widget/common/loading.dart';
+import '../../../widget/common/order_status.dart';
+import 'assign_driver_controller.dart';
 
 ///@author Robertus Mahardhi Kuncoro
 ///@email <robert.kuncoro@pitik.id>
@@ -21,7 +22,7 @@ class AssignDriverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AssignDriverController controller = Get.put(AssignDriverController(context: context));
+    final AssignDriverController controller = Get.put(AssignDriverController(context: context));
 
     Widget appBar() {
       return AppBar(
@@ -37,7 +38,7 @@ class AssignDriverPage extends StatelessWidget {
         backgroundColor: AppColors.primaryOrange,
         centerTitle: true,
         title: Text(
-          "Detail Penjualan",
+          'Detail Penjualan',
           style: AppTextStyle.whiteTextStyle.copyWith(fontSize: 16, fontWeight: AppTextStyle.medium),
         ),
       );
@@ -67,17 +68,17 @@ class AssignDriverPage extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}${products.id}ASSSIGN DRIVERR"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}${products.id}ASSSIGN DRIVERR'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.category?.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.category?.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.category?.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
@@ -85,17 +86,17 @@ class AssignDriverPage extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 16),
           child: Expandable(
-              controller: GetXCreator.putAccordionController("sku${products.name}delivew;uasdasdasdaj;"),
-              headerText: "${products.name}",
+              controller: GetXCreator.putAccordionController('sku${products.name}delivew;uasdasdasdaj;'),
+              headerText: '${products.name}',
               child: Column(
                 children: [
-                  if (products.category?.name != null) infoDetailSku("Kategori SKU", "${products.category?.name}"),
-                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? "Kategori SKU" : "SKU", "${products.name}"),
-                  if (products.quantity != null && products.quantity != 0) infoDetailSku("Jumlah Ekor", "${products.quantity} Ekor"),
-                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku("Jenis Potong", Constant.getTypePotongan(products.cutType!)),
-                  if (products.numberOfCuts != null && products.cutType == "REGULAR" && Constant.havePotongan(products.name)) infoDetailSku("Potongan", "${products.numberOfCuts} Potong"),
-                  if (products.weight != null && products.weight != 0) infoDetailSku("Kebutuhan", "${products.weight} Kg"),
-                  if (products.price != null) infoDetailSku("Harga", "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
+                  if (products.category?.name != null) infoDetailSku('Kategori SKU', '${products.category?.name}'),
+                  if (products.name != null) infoDetailSku(products.productCategoryId != null ? 'Kategori SKU' : 'SKU', '${products.name}'),
+                  if (products.quantity != null && products.quantity != 0) infoDetailSku('Jumlah Ekor', '${products.quantity} Ekor'),
+                  if (products.cutType != null && Constant.havePotongan(products.name)) infoDetailSku('Jenis Potong', Constant.getTypePotongan(products.cutType!)),
+                  if (products.numberOfCuts != null && products.cutType == 'REGULAR' && Constant.havePotongan(products.name)) infoDetailSku('Potongan', '${products.numberOfCuts} Potong'),
+                  if (products.weight != null && products.weight != 0) infoDetailSku('Kebutuhan', '${products.weight} Kg'),
+                  if (products.price != null) infoDetailSku('Harga', "${Convert.toCurrency("${products.price}", "Rp. ", ".")}/Kg"),
                 ],
               )),
         );
@@ -124,8 +125,8 @@ class AssignDriverPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ButtonFill(
-                    controller: GetXCreator.putButtonFillController("assignDriver"),
-                    label: "Kirim",
+                    controller: GetXCreator.putButtonFillController('assignDriver'),
+                    label: 'Kirim',
                     onClick: () {
                       if (controller.spinnerDriver.controller.textSelected.isEmpty) {
                         controller.spinnerDriver.controller.showAlert();
@@ -160,32 +161,32 @@ class AssignDriverPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Informasi Penjualan",
+                  'Informasi Penjualan',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                 ),
-                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? "", returnStatus: controller.orderDetail.value!.returnStatus ?? "", grStatus: controller.orderDetail.value!.grStatus),
+                OrderStatus(orderStatus: controller.orderDetail.value!.status ?? '', returnStatus: controller.orderDetail.value!.returnStatus ?? '', grStatus: controller.orderDetail.value!.grStatus),
               ],
             ),
             Text(
-              "${controller.orderDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year} ",
+              '${controller.orderDetail.value!.code} - ${createdDate.day} ${DateFormat.MMM().format(createdDate)} ${createdDate.year} ',
               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
               overflow: TextOverflow.clip,
             ),
             const SizedBox(
               height: 16,
             ),
-            controller.orderDetail.value!.status == "READY_TO_DELIVER" || controller.orderDetail.value!.status == "BOOKED"
+            controller.orderDetail.value!.status == 'READY_TO_DELIVER' || controller.orderDetail.value!.status == 'BOOKED'
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Sumber",
+                        'Sumber',
                         style: AppTextStyle.subTextStyle.copyWith(
                           fontSize: 10,
                         ),
                       ),
                       Text(
-                        controller.orderDetail.value!.operationUnit!.operationUnitName ?? "-",
+                        controller.orderDetail.value!.operationUnit!.operationUnitName ?? '-',
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                       ),
                     ],
@@ -198,13 +199,13 @@ class AssignDriverPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Tujuan",
+                  'Tujuan',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.customer!.businessName ?? "-",
+                  controller.orderDetail.value!.customer!.businessName ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                 ),
               ],
@@ -216,13 +217,13 @@ class AssignDriverPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Kategori",
+                  'Kategori',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.products!.isEmpty ? "-" : controller.orderDetail.value!.products!.map((e) => e!.category!.name.toString()).reduce((a, b) => '$a , $b'),
+                  controller.orderDetail.value!.products!.isEmpty ? '-' : controller.orderDetail.value!.products!.map((e) => e!.category!.name.toString()).reduce((a, b) => '$a , $b'),
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -235,13 +236,13 @@ class AssignDriverPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Dibuat Oleh",
+                  'Dibuat Oleh',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value?.userCreator?.email ?? "-",
+                  controller.orderDetail.value?.userCreator?.email ?? '-',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -254,13 +255,13 @@ class AssignDriverPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sales Branch",
+                  'Sales Branch',
                   style: AppTextStyle.subTextStyle.copyWith(
                     fontSize: 10,
                   ),
                 ),
                 Text(
-                  controller.orderDetail.value!.salesperson == null ? "-" : "${controller.orderDetail.value!.salesperson?.branch?.name}",
+                  controller.orderDetail.value!.salesperson == null ? '-' : '${controller.orderDetail.value!.salesperson?.branch?.name}',
                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -269,18 +270,18 @@ class AssignDriverPage extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            controller.orderDetail.value!.status == "READY_TO_DELIVER"
+            controller.orderDetail.value!.status == 'READY_TO_DELIVER'
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Driver",
+                        'Driver',
                         style: AppTextStyle.subTextStyle.copyWith(
                           fontSize: 10,
                         ),
                       ),
                       Text(
-                        controller.orderDetail.value!.driver!.fullName ?? "-",
+                        controller.orderDetail.value!.driver!.fullName ?? '-',
                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 10),
                       ),
                     ],
@@ -320,17 +321,17 @@ class AssignDriverPage extends StatelessWidget {
                             height: 20,
                           ),
                           Text(
-                            "Detail SKU",
+                            'Detail SKU',
                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                             overflow: TextOverflow.clip,
                           ),
-                          controller.orderDetail.value!.products == null ? const Text(" ") : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
-                          if (controller.orderDetail.value!.type! == "LB") ...[
+                          controller.orderDetail.value!.products == null ? const Text(' ') : listExpandadle(controller.orderDetail.value!.products as List<Products?>),
+                          if (controller.orderDetail.value!.type! == 'LB') ...[
                             const SizedBox(
                               height: 16,
                             ),
                             Text(
-                              "Detail Catatan",
+                              'Detail Catatan',
                               style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                               overflow: TextOverflow.clip,
                             ),
@@ -351,7 +352,7 @@ class AssignDriverPage extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Penjualan",
+                                        'Total Penjualan',
                                         style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.bold),
                                         overflow: TextOverflow.clip,
                                       ),
@@ -365,13 +366,13 @@ class AssignDriverPage extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Kg",
+                                        'Total Kg',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
                                     Text(
-                                      "${controller.sumKg.value.toStringAsFixed(2)}kg",
+                                      '${controller.sumKg.value.toStringAsFixed(2)}kg',
                                       style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                       overflow: TextOverflow.clip,
                                     ),
@@ -385,13 +386,13 @@ class AssignDriverPage extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Total Ekor",
+                                          'Total Ekor',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Obx(() => Text(
-                                            "${controller.sumChick.value} Ekor",
+                                            '${controller.sumChick.value} Ekor',
                                             style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                             overflow: TextOverflow.clip,
                                           )),
@@ -406,13 +407,14 @@ class AssignDriverPage extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Biaya Pengiriman",
+                                          'Biaya Pengiriman',
                                           style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                           overflow: TextOverflow.clip,
                                         ),
                                       ),
                                       Obx(
-                                        () => Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(controller.deliveryPrice.value), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                        () => Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(controller.deliveryPrice.value),
+                                            style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                       ),
                                     ],
                                   ),
@@ -424,12 +426,13 @@ class AssignDriverPage extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Total Rp",
+                                        'Total Rp',
                                         style: AppTextStyle.subTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium),
                                         overflow: TextOverflow.clip,
                                       ),
                                     ),
-                                    Text(NumberFormat.currency(locale: 'id', symbol: "Rp ", decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.deliveryPrice.value)), style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
+                                    Text(NumberFormat.currency(locale: 'id', symbol: 'Rp ', decimalDigits: 2).format(Convert.roundPrice(controller.sumPrice.value + controller.deliveryPrice.value)),
+                                        style: AppTextStyle.blackTextStyle.copyWith(fontSize: 14, fontWeight: AppTextStyle.medium), overflow: TextOverflow.clip),
                                   ],
                                 )
                               ],
@@ -449,14 +452,14 @@ class AssignDriverPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Catatan",
+                                  'Catatan',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Text(
-                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : "-",
+                                  controller.orderDetail.value!.remarks != null ? Uri.decodeFull(controller.orderDetail.value!.remarks!) : '-',
                                   style: AppTextStyle.blackTextStyle.copyWith(fontSize: 12),
                                 )
                               ],
@@ -480,7 +483,7 @@ class AssignDriverPage extends StatelessWidget {
         ));
   }
 
-  showBottomDialog(BuildContext context, AssignDriverController controller) {
+  Future<dynamic> showBottomDialog(BuildContext context, AssignDriverController controller) {
     return showModalBottomSheet(
         backgroundColor: Colors.transparent,
         context: context,
@@ -509,18 +512,18 @@ class AssignDriverPage extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 24, left: 16, right: 73),
                   child: Text(
-                    "Apakah kamu yakin data yang dimasukan sudah benar?",
+                    'Apakah kamu yakin data yang dimasukan sudah benar?',
                     style: AppTextStyle.primaryTextStyle.copyWith(fontSize: 21, fontWeight: AppTextStyle.bold),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 8, left: 16, right: 52),
-                  child: const Text("Pastikan semua data yang kamu masukan semua sudah benar", style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
+                  child: const Text('Pastikan semua data yang kamu masukan semua sudah benar', style: TextStyle(color: Color(0xFF9E9D9D), fontSize: 12)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 24),
                   child: SvgPicture.asset(
-                    "images/visit_customer.svg",
+                    'images/visit_customer.svg',
                   ),
                 ),
                 Container(

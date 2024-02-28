@@ -13,7 +13,7 @@ class SalesOrderListResponse {
   SalesOrderListResponse({this.code, required this.data});
 
   static SalesOrderListResponse toResponseModel(Map<String, dynamic> map) => SalesOrderListResponse(
-    code: map['code'],
-    data: Mapper.children<Order>(map['data']),
-  );
+        code: map['code'],
+        data: Mapper.children<Order>(map['data']),
+      );
 }

@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:pitik_internal_app/utils/constant.dart';
+import '../../../utils/constant.dart';
 
 class DashboardController extends GetxController {
   var tabIndex = 0.obs;
   var isOpslead = false.obs;
   var isExpanded = false.obs;
-  String pushNotificationPayload = "";
+  String pushNotificationPayload = '';
   void changeTabIndex(int index) {
     tabIndex.value = index;
     if (index == 1) {

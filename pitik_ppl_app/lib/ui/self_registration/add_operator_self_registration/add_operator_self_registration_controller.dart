@@ -18,8 +18,9 @@ import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/profile.dart';
-import 'package:pitik_ppl_app/api_mapping/api_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../api_mapping/api_mapping.dart';
 
 class AddOperatorSelfRegistrationController extends GetxController {
   BuildContext context;
@@ -28,61 +29,61 @@ class AddOperatorSelfRegistrationController extends GetxController {
   RxBool isLoading = false.obs;
 
   EditField efHandphoneNumber = EditField(
-    controller: GetXCreator.putEditFieldController("efHandphoneNumber"),
-    label: "Username (No. Handphone & No. WhatsApp)*",
-    hint: "08xxxxxxxxxxxxx",
-    alertText: "Nomor handphone Wa harus diisi",
-    textUnit: "",
+    controller: GetXCreator.putEditFieldController('efHandphoneNumber'),
+    label: 'Username (No. Handphone & No. WhatsApp)*',
+    hint: '08xxxxxxxxxxxxx',
+    alertText: 'Nomor handphone Wa harus diisi',
+    textUnit: '',
     maxInput: 20,
     inputType: TextInputType.number,
     onTyping: (value, controller) {},
   );
 
   EditField efOperatorName = EditField(
-    controller: GetXCreator.putEditFieldController("efOperatorName"),
-    label: "Nama Operator*",
-    hint: "Ketik disini",
-    alertText: "Nama Operator harus diisi",
-    textUnit: "",
+    controller: GetXCreator.putEditFieldController('efOperatorName'),
+    label: 'Nama Operator*',
+    hint: 'Ketik disini',
+    alertText: 'Nama Operator harus diisi',
+    textUnit: '',
     maxInput: 20,
     onTyping: (value, controller) {},
   );
 
   SpinnerField efTask = SpinnerField(
-    controller: GetXCreator.putSpinnerFieldController("efTask"),
-    label: "Tugas*",
-    hint: "Pilih disini",
-    alertText: "Tugas harus diisi",
+    controller: GetXCreator.putSpinnerFieldController('efTask'),
+    label: 'Tugas*',
+    hint: 'Pilih disini',
+    alertText: 'Tugas harus diisi',
     items: const {
-      "Kepala Kandang": false,
-      "Anak Kandang": false,
+      'Kepala Kandang': false,
+      'Anak Kandang': false,
     },
     onSpinnerSelected: (value) {},
   );
 
   PasswordField efPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efPassword"),
-    label: "Kata Sandi*",
-    hint: "Ketik disini",
-    alertText: "Kata Sandi harus diisi",
+    controller: GetXCreator.putPasswordFieldController('efPassword'),
+    label: 'Kata Sandi*',
+    hint: 'Ketik disini',
+    alertText: 'Kata Sandi harus diisi',
     maxInput: 20,
     onTyping: (value) {},
   );
 
   late PasswordField efConfirmPassword = PasswordField(
-    controller: GetXCreator.putPasswordFieldController("efConfirmPassword"),
-    label: "Konfirmasi Kata Sandi*",
-    hint: "Ketik disini",
-    alertText: "Konfirmasi Kata Sandi harus diisi",
+    controller: GetXCreator.putPasswordFieldController('efConfirmPassword'),
+    label: 'Konfirmasi Kata Sandi*',
+    hint: 'Ketik disini',
+    alertText: 'Konfirmasi Kata Sandi harus diisi',
     maxInput: 20,
     onTyping: (value) {
-      efConfirmPassword.controller.alertText.value = "Konfirmasi Kata Sandi harus diisi";
+      efConfirmPassword.controller.alertText.value = 'Konfirmasi Kata Sandi harus diisi';
     },
   );
 
   late ButtonFill btnSubmit = ButtonFill(
-    controller: GetXCreator.putButtonFillController("btnSubmit"),
-    label: "Buat Akun",
+    controller: GetXCreator.putButtonFillController('btnSubmit'),
+    label: 'Buat Akun',
     onClick: () {
       if (validation()) {
         submit();
@@ -126,7 +127,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
     }
 
     if (efPassword.getInput() != efConfirmPassword.getInput()) {
-      efConfirmPassword.controller.alertText.value = "Kata Sandi tidak sama";
+      efConfirmPassword.controller.alertText.value = 'Kata Sandi tidak sama';
       efConfirmPassword.controller.showAlert();
       efConfirmPassword.controller.update();
       isValid = false;
@@ -161,7 +162,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
                           const SizedBox(height: 16),
                           Text('Apakah yakin data yang kamu masukan sudah benar?', style: TextStyle(color: GlobalVar.primaryOrange, fontSize: 21, fontWeight: GlobalVar.bold)),
                           const SizedBox(height: 16),
-                          Text("Kandang ${coop.coopName}", style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
+                          Text('Kandang ${coop.coopName}', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.bold)),
                           const SizedBox(height: 8),
                           Container(
                             margin: const EdgeInsets.only(left: 16),
@@ -170,7 +171,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Username/No. Handphone", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                    Text('Username/No. Handphone', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                     const SizedBox(width: 8),
                                     Text(efHandphoneNumber.getInput(), style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold)),
                                   ],
@@ -179,7 +180,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Nama Operator", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                    Text('Nama Operator', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                     const SizedBox(width: 8),
                                     Text(efOperatorName.getInput(), style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold)),
                                   ],
@@ -188,7 +189,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Tugas", style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
+                                    Text('Tugas', style: GlobalVar.greyTextStyle.copyWith(fontSize: 12)),
                                     const SizedBox(width: 8),
                                     Text(efTask.controller.textSelected.value, style: GlobalVar.greyTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold)),
                                   ],
@@ -201,14 +202,14 @@ class AddOperatorSelfRegistrationController extends GetxController {
                             children: [
                               Expanded(
                                   child: ButtonFill(
-                                      controller: GetXCreator.putButtonFillController("YakinAddOp"),
-                                      label: "Yakin",
+                                      controller: GetXCreator.putButtonFillController('YakinAddOp'),
+                                      label: 'Yakin',
                                       onClick: () {
                                         Get.back();
                                         addOperator(auth.token!, auth.id!);
                                       })),
                               const SizedBox(width: 8),
-                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController("TidakYakinAddOperator"), label: "Tidak Yakin", onClick: () => Get.back())),
+                              Expanded(child: ButtonOutline(controller: GetXCreator.putButtonOutlineController('TidakYakinAddOperator'), label: 'Tidak Yakin', onClick: () => Get.back())),
                             ],
                           ),
                         ],
@@ -229,13 +230,13 @@ class AddOperatorSelfRegistrationController extends GetxController {
         apiKey: ApiMapping.api,
         service: ListApi.addOperator,
         context: context,
-        body: ['Bearer $token', id, "v2/self-registration/coop-operator", Mapper.asJsonString(generatePayload())],
+        body: ['Bearer $token', id, 'v2/self-registration/coop-operator', Mapper.asJsonString(generatePayload())],
         listener: ResponseListener(
             onResponseDone: (code, message, body, id, packet) {
               Get.off(
                 TransactionSuccessActivity(
-                  keyPage: "addOperator",
-                  message: "Selamat kamu berhasil melakukan penugasan kepada operator kandang",
+                  keyPage: 'addOperator',
+                  message: 'Selamat kamu berhasil melakukan penugasan kepada operator kandang',
                   showButtonHome: false,
                   onTapClose: () {
                     Get.back();
@@ -246,29 +247,30 @@ class AddOperatorSelfRegistrationController extends GetxController {
               );
             },
             onResponseFail: (code, message, body, id, packet) {
-              if ((body as ErrorResponse).error!.name == "BAD_REQUEST_SELF_REGISTRATION_1") {
+              if ((body as ErrorResponse).error!.name == 'BAD_REQUEST_SELF_REGISTRATION_1') {
                 CustomDialog(Get.context!, Dialogs.YES_OPTION)
-                    .title("Perhatian!")
+                    .title('Perhatian!')
                     .message(
-                      "${(body).error!.message}",
+                      '${body.error!.message}',
                     )
-                    .titleButtonOk("Penugasan")
+                    .titleButtonOk('Penugasan')
                     .listener(CustomDialogListener(
                         onDialogOk: (context, idx, list) {
                           Get.back();
                         },
                         onDialogCancel: (context, idx, list) {}))
                     .show();
-              } else if ((body).error!.name == "BAD_REQUEST_SELF_REGISTRATION_2") {
+              } else if (body.error!.name == 'BAD_REQUEST_SELF_REGISTRATION_2') {
                 CustomDialog(context, Dialogs.YES_OPTION)
-                    .title("Perhatian!")
+                    .title('Perhatian!')
                     .message(
-                      "${(body).error!.message}",
+                      '${body.error!.message}',
                     )
-                    .titleButtonOk("Chat WA")
+                    .titleButtonOk('Chat WA')
                     .listener(CustomDialogListener(
                         onDialogOk: (context, idx, list) async {
-                          final String getUrl = "https://api.whatsapp.com/send?phone=6281280709907&text=saya ${GlobalVar.profileUser?.fullName} pemilik kandang ${coop.coopName}. Mohon bantuannya untuk membuat akun operator kandang saya karena saya telah memiliki >10 operator kandang. Terima kasih.";
+                          final String getUrl =
+                              'https://api.whatsapp.com/send?phone=6281280709907&text=saya ${GlobalVar.profileUser?.fullName} pemilik kandang ${coop.coopName}. Mohon bantuannya untuk membuat akun operator kandang saya karena saya telah memiliki >10 operator kandang. Terima kasih.';
                           final Uri url = Uri.parse(Uri.encodeFull(getUrl));
                           if (!await launchUrl(
                             url,
@@ -282,8 +284,8 @@ class AddOperatorSelfRegistrationController extends GetxController {
                     .show();
               } else {
                 Get.snackbar(
-                  "Pesan",
-                  "Terjadi Kesalahan, ${(body).error!.message}",
+                  'Pesan',
+                  'Terjadi Kesalahan, ${body.error!.message}',
                   snackPosition: SnackPosition.TOP,
                   colorText: Colors.white,
                   backgroundColor: Colors.red,
@@ -295,8 +297,8 @@ class AddOperatorSelfRegistrationController extends GetxController {
             },
             onResponseError: (exception, stacktrace, id, packet) {
               Get.snackbar(
-                "Pesan",
-                "Terjadi Kesalahan Internal",
+                'Pesan',
+                'Terjadi Kesalahan Internal',
                 snackPosition: SnackPosition.TOP,
                 colorText: Colors.white,
                 backgroundColor: Colors.red,
@@ -309,7 +311,7 @@ class AddOperatorSelfRegistrationController extends GetxController {
   }
 
   Profile generatePayload() {
-    Profile profile = Profile();
+    final Profile profile = Profile();
     profile.farmingCycleId = coop.farmingCycleId;
     profile.fullName = efOperatorName.getInput();
     profile.phoneNumber = efHandphoneNumber.getInput();
