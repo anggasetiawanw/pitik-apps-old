@@ -26,7 +26,7 @@ scripts:
 
     #Generate Assets
     generate-assets:
-        run: melos exec --scope="*pitil_asset*" -- "fluttergen"
+        run: melos exec --scope="*pitik_asset*" -- "fluttergen"
         description: "Generate asset for UI Kit Package"
 
     #format
