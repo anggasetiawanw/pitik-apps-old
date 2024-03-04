@@ -11,6 +11,7 @@ class PitikTextStyle {
     TextDecoration? decoration,
     double? height,
     double? letterSpacing,
+    String fontFamily = 'Montserrat_Medium',
   }) =>
       TextStyle(
         fontSize: fontSize * 1.sp,
@@ -19,6 +20,7 @@ class PitikTextStyle {
         decoration: decoration,
         height: height,
         letterSpacing: letterSpacing,
+        fontFamily:fontFamily
       );
 
   static TextStyle custom({
@@ -206,7 +208,7 @@ class PitikTextStyle {
         decoration: decoration,
         height: 0.12.h,
       );
-      
+
   static TextStyle bodyXs({
     Color? color,
     FontWeight fontWeight = FontWeight.w500,

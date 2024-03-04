@@ -85,7 +85,7 @@ class PitikColors {
   static final Color accentPrimary60 = accentPrimary.shade100;
   static final Color accentPrimary40 = accentPrimary.shade50;
   static final Color accentPrimary20 = accentPrimary.shade500;
-  
+
   //accentSecondary Color
   static final Color accentSecondary100 = accentSecondary.shade300;
   static final Color accentSecondary80 = accentSecondary.shade200;
