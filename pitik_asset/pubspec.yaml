@@ -12,6 +12,7 @@ dependencies:
     lottie: ^2.7.0
     flutter_svg: ^2.0.9
     flutter_screenutil: ^5.9.0
+    extended_image: ^8.2.0
 
 dev_dependencies:
     flutter_test:
@@ -26,7 +27,7 @@ dev_dependencies:
 flutter:
     assets:
         - assets/animations/
-        - assets/icons/
+        - assets/svg/
         - assets/images/
     uses-material-design: true
 
