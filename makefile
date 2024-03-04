@@ -59,7 +59,7 @@ bundle-dev-connect-and:
 bundle-dev-connect-ios:
 	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos bundle-dev-connect-ios
 bundle-dev-ppl-and:
-	@melos proc-dev-ppl-and
+	@melos proc-ppl && make -C pitik_ppl_app/ sb-build-dev
 bundle-dev-ppl-ios:
 	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-dev-ppl-ios
 
@@ -73,7 +73,7 @@ bundle-prod-connect-and:
 bundle-prod-connect-ios:
 	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos bundle-prod-connect-ios
 bundle-prod-ppl-and:
-	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-prod-ppl-and
+	@melos proc-ppl && make -C pitik_ppl_app/ sb-build-prod
 bundle-prod-ppl-ios:
 	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-prod-ppl-ios
 
