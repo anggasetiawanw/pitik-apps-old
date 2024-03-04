@@ -1,8 +1,8 @@
 import 'package:components/global_var.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import '../../../route.dart';
 import '../dashboard_common.dart';
 import 'farming_dashboard_controller.dart';
@@ -96,86 +96,84 @@ class FarmingDashboardActivity extends GetView<FarmingDashboardController> {
                     }
                   }),
             )),
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle.light.copyWith(statusBarColor: GlobalVar.primaryLight),
-            child: SafeArea(
-                child: Stack(children: <Widget>[
-              Positioned(top: 0, left: 0, right: 0, child: Container(height: 150, decoration: const BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), color: GlobalVar.primaryLight))),
-              Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 6),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, mainAxisSize: MainAxisSize.max, children: [
-                        controller.isLoadingFarmList.isTrue
-                            ? Image.asset('images/coop_lazy_loading.gif')
-                            : GestureDetector(
-                                onTap: () => controller.showCoopList(),
-                                child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.redBackground),
-                                    child: Row(
-                                      children: [
-                                        Text('${controller.coopList[controller.coopSelected.value]!.coopName ?? '- '} (Hari ${controller.coopList[controller.coopSelected.value]!.day ?? '-'})',
-                                            style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
-                                        const SizedBox(width: 16),
-                                        SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
-                                      ],
-                                    )),
-                              ),
-                        GestureDetector(
-                            onTap: () => Get.toNamed(RoutePage.notification),
-                            child: SizedBox(
-                                width: 50,
-                                height: 34,
-                                child: Stack(children: [
-                                  Positioned(left: 16, top: 5, child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)),
-                                  controller.countUnreadNotifications.value > 0
-                                      ? Container(
-                                          decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: GlobalVar.red),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(4),
-                                            child: Text('${controller.countUnreadNotifications.value}', style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
-                                          ),
-                                        )
-                                      : const SizedBox()
-                                ])))
-                      ]))),
-              Positioned(
-                top: 58,
-                left: 16,
-                right: 16,
-                child: controller.profileTab.isTrue ? const SizedBox() : Text('Halo ${GlobalVar.profileUser!.fullName}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
-              ),
-              Positioned.fill(
-                  top: 90,
-                  left: controller.performTab.isFalse ? 16 : 0,
-                  right: controller.performTab.isFalse ? 16 : 0,
-                  child: controller.isLoading.isTrue
-                      ? Image.asset(
-                          'images/card_height_450_lazy.gif',
-                          height: 400,
-                          width: 450,
-                        )
-                      : (controller.homeTab.isTrue
-                          ? controller.generateHomeWidget()
-                          : // to home
-                          controller.performTab.isTrue
-                              ? controller.generatePerformWidget()
-                              : // to history
-                              controller.monitorTab.isTrue
-                                  ? controller.generateMonitorWidget()
-                                  : // to monitor
-                                  DashboardCommon.generateProfileWidget(addMenu: [
-                                      {
-                                        'title': 'Operator Kandang',
-                                        'image': 'images/user-add-line.svg',
-                                        'status': false,
-                                        'function': () => Get.toNamed(RoutePage.dashboardSelfRegistration, arguments: [controller.coopList[controller.coopSelected.value]])
-                                      },
-                                    ]) // to profile
-                      ))
-            ])))));
+        body: SafeArea(
+            child: Stack(children: <Widget>[
+          Positioned(top: 0, left: 0, right: 0, child: Container(height: 150, decoration: const BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), color: GlobalVar.primaryLight))),
+          Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 6),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, mainAxisSize: MainAxisSize.max, children: [
+                    controller.isLoadingFarmList.isTrue
+                        ? Image.asset('images/coop_lazy_loading.gif')
+                        : GestureDetector(
+                            onTap: () => controller.showCoopList(),
+                            child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.redBackground),
+                                child: Row(
+                                  children: [
+                                    Text('${controller.coopList[controller.coopSelected.value]!.coopName ?? '- '} (Hari ${controller.coopList[controller.coopSelected.value]!.day ?? '-'})',
+                                        style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
+                                    const SizedBox(width: 16),
+                                    SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
+                                  ],
+                                )),
+                          ),
+                    GestureDetector(
+                        onTap: () => Get.toNamed(RoutePage.notification),
+                        child: SizedBox(
+                            width: 50,
+                            height: 34,
+                            child: Stack(children: [
+                              Positioned(left: 16, top: 5, child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)),
+                              controller.countUnreadNotifications.value > 0
+                                  ? Container(
+                                      decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: GlobalVar.red),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Text('${controller.countUnreadNotifications.value}', style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white)),
+                                      ),
+                                    )
+                                  : const SizedBox()
+                            ])))
+                  ]))),
+          Positioned(
+            top: 58,
+            left: 16,
+            right: 16,
+            child: controller.profileTab.isTrue ? const SizedBox() : Text('Halo ${GlobalVar.profileUser!.fullName}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
+          ),
+          Positioned.fill(
+              top: 90,
+              left: controller.performTab.isFalse ? 16 : 0,
+              right: controller.performTab.isFalse ? 16 : 0,
+              child: controller.isLoading.isTrue
+                  ? Image.asset(
+                      'images/card_height_450_lazy.gif',
+                      height: 400,
+                      width: 450,
+                    )
+                  : (controller.homeTab.isTrue
+                      ? controller.generateHomeWidget()
+                      : // to home
+                      controller.performTab.isTrue
+                          ? controller.generatePerformWidget()
+                          : // to history
+                          controller.monitorTab.isTrue
+                              ? controller.generateMonitorWidget()
+                              : // to monitor
+                              DashboardCommon.generateProfileWidget(addMenu: [
+                                  {
+                                    'title': 'Operator Kandang',
+                                    'image': 'images/user-add-line.svg',
+                                    'status': false,
+                                    'function': () => Get.toNamed(RoutePage.dashboardSelfRegistration, arguments: [controller.coopList[controller.coopSelected.value]])
+                                  },
+                                ]) // to profile
+                  ))
+        ]))));
   }
 }

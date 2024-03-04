@@ -162,7 +162,7 @@ class LayerDashboardActivity extends GetView<LayerDashboardController> {
                           ? controller.generateHistoryWidget()
                           : // to history
                           controller.monitorTab.isTrue
-                              ? controller.generateMonitorWidget()
+                              ? controller.generateMonitorWidgetStock()
                               : // to monitor
                               DashboardCommon.generateProfileWidget() // to profile
                   ))

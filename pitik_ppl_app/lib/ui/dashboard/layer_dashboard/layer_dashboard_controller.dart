@@ -18,9 +18,9 @@ import 'package:model/monitoring.dart';
 import 'package:model/population.dart';
 import 'package:model/profile.dart';
 import 'package:model/response/monitoring_performance_response.dart';
+
 import '../../../route.dart';
 import '../../../utils/deeplink_mapping_arguments.dart';
-
 import '../dashboard_common.dart';
 
 ///@author DICKY
@@ -217,7 +217,7 @@ class LayerDashboardController extends GetxController {
     monitorTab.value = true;
     profileTab.value = false;
 
-    detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
+    // detailSmartMonitor.controller.getInitialLatestDataSmartMonitor();
   }
 
   void toProfile() {
@@ -534,6 +534,17 @@ class LayerDashboardController extends GetxController {
   }
 
   Widget generateHistoryWidget() => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('images/empty_icon.svg'),
+            const SizedBox(height: 8),
+            Text('Data Kosong,\nFitur dalam pengembangan', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), textAlign: TextAlign.center),
+          ],
+        ),
+      );
+
+  Widget generateMonitorWidgetStock() => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
