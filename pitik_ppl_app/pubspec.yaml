@@ -1,123 +1,119 @@
 name: pitik_ppl_app
-version: 1.3.45+503
+version: 1.3.46+504
 publish_to: none
 description: Pitik - Smart Broiler Farming
-environment: 
-  sdk: '>=3.1.2 <4.0.0'
-dependencies: 
-  app_settings: ^5.0.0
-  autocomplete_textfield: ^2.0.1
-  build_runner: ^2.4.4
-  built_value_generator: ^8.5.0
-  chucker_flutter: ^1.5.1
-  cupertino_icons: ^1.0.2
-  device_info_plus: ^9.0.3
-  dio: ^5.3.2
-  dropdown_button2: ^2.1.2
-  file_picker: ^5.3.0
-  firebase_core: ^2.12.0
-  firebase_crashlytics: ^3.3.0
-  firebase_messaging: ^14.6.0
-  firebase_remote_config: ^4.2.0
-  fl_location: ^2.0.0+1
-  flutter_flavorizr: ^2.1.5
-  flutter_html: ^3.0.0-beta.2
-  flutter_local_notifications: ^15.1.1
-  flutter_masked_text2: ^0.9.1
-  flutter_picker: ^2.1.0
-  flutter_reactive_ble: ^5.2.0
-  flutter_svg: ^2.0.0+1
-  get: ^4.6.5
-  getwidget: ^4.0.0
-  google_places_flutter: ^2.0.8
-  http: ^1.1.0
-  image: ^4.0.17
-  image_picker: ^1.0.2
-  internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.0
-  lottie: ^2.3.2
-  mask_text_input_formatter: ^2.5.0
-  mixpanel_flutter: ^2.1.1
-  mobile_number: ^2.1.1
-  package_info_plus: ^5.0.1
-  path_provider: ^2.1.0
-  pdf: ^3.10.7
-  permission_handler: ^11.0.0
-  qr_code_scanner: ^1.0.1
-  reflectable: ^4.0.5
-  restart_app: ^1.2.1
-  share_plus: ^7.1.0
-  shared_preferences: ^2.2.0
-  shorebird_code_push: ^1.1.0
-  sqflite: ^2.2.8+3
-  syncfusion_flutter_charts: ^22.2.12
-  url_launcher: ^6.1.12
-  common_page: 
-    path: ../common_page
-  components: 
-    path: ../components
-  dao_impl: 
-    path: ../dao_impl
-  engine: 
-    path: ../engine
-  flutter: 
-    sdk: flutter
-  model: 
-    path: ../model
-dev_dependencies: 
-  flutter_launcher_icons: ^0.13.1
-  pubspec_dependency_sorter: ^1.0.4
-  flutter_test: 
-    sdk: flutter
-flutter_icons: 
-  android: launcher_icon
-  image_path: images/pitik_launcher.png
-  ios: true
-flavorizr: 
-  flutter_lints: ^2.0.0
-  app: 
-    android: 
-      flavorDimensions: flavor-type
-  flavors: 
-    prod: 
-      app: 
-        name: Pitik - Smart Broiler Farming
-      android: 
-        applicationId: id.pitik.mobile
-        icon: images/pitik_launcher.png
-        firebase: 
-          config: android/app/src/prod/google-services.json
-      ios: 
-        bundleId: id.pitik.mobile
-        icon: images/pitik_launcher.png
-        firebase: 
-          config: ios/config/prod/GoogleService-Info.plist
-    dev: 
-      app: 
-        name: Pitik - Smart Broiler Farming (Staging)
-      android: 
-        applicationId: id.pitik.mobilestaging
-        icon: images/pitik_launcher.png
-        firebase: 
-          config: android/app/src/dev/google-services.json
-      ios: 
-        bundleId: id.pitik.mobilestaging
-        icon: images/pitik_launcher.png
-        firebase: 
-          config: ios/config/dev/GoogleService-Info.plist
-flutter: 
-  assets: 
-    - images/
-    - shorebird.yaml
-  fonts: 
-    - 
-      family: Montserrat_Bold
-      fonts: 
-        - 
-          asset: font/montserrat_bold.ttf
-    - 
-      family: Montserrat_Medium
-      fonts: 
-        - 
-          asset: font/montserrat_medium.ttf
-  uses-material-design: true
+environment:
+    sdk: ">=3.1.2 <4.0.0"
+dependencies:
+    app_settings: ^5.0.0
+    autocomplete_textfield: ^2.0.1
+    build_runner: ^2.4.4
+    built_value_generator: ^8.5.0
+    chucker_flutter: ^1.5.1
+    cupertino_icons: ^1.0.2
+    device_info_plus: ^9.0.3
+    dio: ^5.3.2
+    dropdown_button2: ^2.1.2
+    file_picker: ^5.3.0
+    firebase_core: ^2.12.0
+    firebase_crashlytics: ^3.3.0
+    firebase_messaging: ^14.6.0
+    firebase_remote_config: ^4.2.0
+    fl_location: ^2.0.0+1
+    flutter_flavorizr: ^2.1.5
+    flutter_html: ^3.0.0-beta.2
+    flutter_local_notifications: ^15.1.1
+    flutter_masked_text2: ^0.9.1
+    flutter_picker: ^2.1.0
+    flutter_reactive_ble: ^5.2.0
+    flutter_svg: ^2.0.0+1
+    get: ^4.6.5
+    getwidget: ^4.0.0
+    google_places_flutter: ^2.0.8
+    http: ^1.1.0
+    image: ^4.0.17
+    image_picker: ^1.0.2
+    internet_connection_checker: ^1.0.0+1
+    intl: ^0.18.0
+    lottie: ^2.3.2
+    mask_text_input_formatter: ^2.5.0
+    mixpanel_flutter: ^2.1.1
+    mobile_number: ^2.1.1
+    package_info_plus: ^5.0.1
+    path_provider: ^2.1.0
+    pdf: ^3.10.7
+    permission_handler: ^11.0.0
+    qr_code_scanner: ^1.0.1
+    reflectable: ^4.0.5
+    restart_app: ^1.2.1
+    share_plus: ^7.1.0
+    shared_preferences: ^2.2.0
+    shorebird_code_push: ^1.1.0
+    sqflite: ^2.2.8+3
+    syncfusion_flutter_charts: ^22.2.12
+    url_launcher: ^6.1.12
+    common_page:
+        path: ../common_page
+    components:
+        path: ../components
+    dao_impl:
+        path: ../dao_impl
+    engine:
+        path: ../engine
+    flutter:
+        sdk: flutter
+    model:
+        path: ../model
+dev_dependencies:
+    flutter_launcher_icons: ^0.13.1
+    pubspec_dependency_sorter: ^1.0.4
+    flutter_test:
+        sdk: flutter
+flutter_icons:
+    android: launcher_icon
+    image_path: images/pitik_launcher.png
+    ios: true
+flavorizr:
+    flutter_lints: ^2.0.0
+    app:
+        android:
+            flavorDimensions: flavor-type
+    flavors:
+        prod:
+            app:
+                name: Pitik - Smart Broiler Farming
+            android:
+                applicationId: id.pitik.mobile
+                icon: images/pitik_launcher.png
+                firebase:
+                    config: android/app/src/prod/google-services.json
+            ios:
+                bundleId: id.pitik.mobile
+                icon: images/pitik_launcher.png
+                firebase:
+                    config: ios/config/prod/GoogleService-Info.plist
+        dev:
+            app:
+                name: Pitik - Smart Broiler Farming (Staging)
+            android:
+                applicationId: id.pitik.mobilestaging
+                icon: images/pitik_launcher.png
+                firebase:
+                    config: android/app/src/dev/google-services.json
+            ios:
+                bundleId: id.pitik.mobilestaging
+                icon: images/pitik_launcher.png
+                firebase:
+                    config: ios/config/dev/GoogleService-Info.plist
+flutter:
+    assets:
+        - images/
+        - shorebird.yaml
+    fonts:
+        - family: Montserrat_Bold
+          fonts:
+              - asset: font/montserrat_bold.ttf
+        - family: Montserrat_Medium
+          fonts:
+              - asset: font/montserrat_medium.ttf
+    uses-material-design: true

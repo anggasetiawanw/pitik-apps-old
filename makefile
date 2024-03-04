@@ -59,7 +59,7 @@ bundle-dev-connect-and:
 bundle-dev-connect-ios:
 	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos bundle-dev-connect-ios
 bundle-dev-ppl-and:
-	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-dev-ppl-and
+	@melos proc-dev-ppl-and
 bundle-dev-ppl-ios:
 	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-dev-ppl-ios
 

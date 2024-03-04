@@ -6,6 +6,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import 'pullet_in_controller.dart';
 
 ///@author DICKY
@@ -44,7 +45,7 @@ class PulletInActivity extends GetView<PulletInController> {
                                         children: [
                                           SvgPicture.asset('images/checkbox_circle_green.svg'),
                                           const SizedBox(width: 8),
-                                          Text('Kamu sudah selesai melakukan Pullet In', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.green))
+                                          Expanded(child: Text('Kamu sudah selesai melakukan Pullet In', style: GlobalVar.blackTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.green, overflow: TextOverflow.clip)))
                                         ],
                                       ),
                                     ),

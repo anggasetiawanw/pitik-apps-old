@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
@@ -26,6 +28,7 @@ import 'package:model/product_model.dart';
 import 'package:model/report.dart';
 import 'package:model/response/internal_app/media_upload_response.dart';
 import 'package:model/response/products_response.dart';
+
 import '../../../api_mapping/api_mapping.dart';
 
 ///@author DICKY
@@ -53,6 +56,7 @@ class LayerDailyReportFormController extends GetxController {
   var isFeed = true.obs;
   var totalCount = 0.obs;
   var totalWeightCount = 0.0.obs;
+  Timer? debounce;
 
   // for Chicken Production
   EditField efWeight =
@@ -744,45 +748,56 @@ class LayerDailyReportFormController extends GetxController {
 
   void getFeedBrand({String? keyword}) {
     if (keyword != null && keyword.length > 3) {
-      AuthImpl().get().then((auth) => {
-            if (auth != null)
-              {
-                Service.push(
-                    apiKey: 'productReportApi',
-                    service: ListApi.getProducts,
-                    context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, keyword, 'PAKAN', null, 1, 100],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) => _setupSuggestBrand(field: feedSuggestField, productList: (body as ProductsResponse).data),
-                        onResponseFail: (code, message, body, id, packet) {},
-                        onResponseError: (exception, stacktrace, id, packet) {},
-                        onTokenInvalid: () => GlobalVar.invalidResponse()))
-              }
-            else
-              {GlobalVar.invalidResponse()}
-          });
+      if (debounce?.isActive ?? false) {
+        debounce?.cancel();
+      }
+
+      debounce = Timer(const Duration(milliseconds: 500), () {
+        AuthImpl().get().then((auth) => {
+              if (auth != null)
+                {
+                  Service.push(
+                      apiKey: 'productReportApi',
+                      service: ListApi.getProducts,
+                      context: Get.context!,
+                      body: ['Bearer ${auth.token}', auth.id, keyword, 'PAKAN', null, 1, 100],
+                      listener: ResponseListener(
+                          onResponseDone: (code, message, body, id, packet) => _setupSuggestBrand(field: feedSuggestField, productList: (body as ProductsResponse).data),
+                          onResponseFail: (code, message, body, id, packet) {},
+                          onResponseError: (exception, stacktrace, id, packet) {},
+                          onTokenInvalid: () => GlobalVar.invalidResponse()))
+                }
+              else
+                {GlobalVar.invalidResponse()}
+            });
+      });
     }
   }
 
   void getOvkBrand({String? keyword}) {
     if (keyword != null && keyword.length > 3) {
-      AuthImpl().get().then((auth) => {
-            if (auth != null)
-              {
-                Service.push(
-                    apiKey: 'productReportApi',
-                    service: ListApi.getProducts,
-                    context: Get.context!,
-                    body: ['Bearer ${auth.token}', auth.id, keyword, 'OVK', null, 1, 100],
-                    listener: ResponseListener(
-                        onResponseDone: (code, message, body, id, packet) => _setupSuggestBrand(field: ovkSuggestField, productList: (body as ProductsResponse).data, isFeed: false),
-                        onResponseFail: (code, message, body, id, packet) {},
-                        onResponseError: (exception, stacktrace, id, packet) {},
-                        onTokenInvalid: () => GlobalVar.invalidResponse()))
-              }
-            else
-              {GlobalVar.invalidResponse()}
-          });
+      if (debounce?.isActive ?? false) {
+        debounce?.cancel();
+      }
+      debounce = Timer(const Duration(milliseconds: 500), () {
+        AuthImpl().get().then((auth) => {
+              if (auth != null)
+                {
+                  Service.push(
+                      apiKey: 'productReportApi',
+                      service: ListApi.getProducts,
+                      context: Get.context!,
+                      body: ['Bearer ${auth.token}', auth.id, keyword, 'OVK', null, 1, 100],
+                      listener: ResponseListener(
+                          onResponseDone: (code, message, body, id, packet) => _setupSuggestBrand(field: ovkSuggestField, productList: (body as ProductsResponse).data, isFeed: false),
+                          onResponseFail: (code, message, body, id, packet) {},
+                          onResponseError: (exception, stacktrace, id, packet) {},
+                          onTokenInvalid: () => GlobalVar.invalidResponse()))
+                }
+              else
+                {GlobalVar.invalidResponse()}
+            });
+      });
     }
   }
 
