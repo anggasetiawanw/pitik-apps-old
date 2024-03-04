@@ -64,6 +64,8 @@ dependencies:
         sdk: flutter
     model:
         path: ../model
+    pitik_asset:
+        path: ../pitik_asset
 dev_dependencies:
     flutter_launcher_icons: ^0.13.1
     pubspec_dependency_sorter: ^1.0.4

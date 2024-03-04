@@ -31,13 +31,13 @@ class PitikTheme {
           ),
 
           appBarTheme: const AppBarTheme(
-            color: PitikColors.bgPrimary,
+            color: PitikColors.primary,
             foregroundColor: PitikColors.bgSecondary,
             elevation: 0,
             scrolledUnderElevation: 0,
             centerTitle: false,
             systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
+              statusBarColor: PitikColors.primary,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark,
             ),

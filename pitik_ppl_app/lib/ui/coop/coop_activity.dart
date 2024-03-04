@@ -3,6 +3,7 @@ import 'package:components/progress_loading/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import 'coop_controller.dart';
 
 ///@author DICKY
@@ -45,6 +46,7 @@ class CoopActivity extends GetView<CoopController> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
                 controller: controller.tabController,
                 indicatorColor: GlobalVar.primaryOrange,
                 labelColor: GlobalVar.primaryOrange,

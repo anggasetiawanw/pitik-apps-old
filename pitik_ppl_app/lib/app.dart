@@ -3,6 +3,8 @@ import 'package:components/global_var.dart';
 import 'package:engine/util/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pitik_asset/pitik_asset.dart';
+
 import 'route.dart';
 import 'ui/coop/coop_controller.dart';
 
@@ -15,7 +17,8 @@ class App extends StatelessWidget {
     GlobalVar.setContext(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Montserrat_Medium', scaffoldBackgroundColor: Colors.white),
+      //   theme: ThemeData(fontFamily: 'Montserrat_Medium', scaffoldBackgroundColor: Colors.white),
+      theme: PitikTheme.light(ThemeData.light()).themeData,
       navigatorObservers: [ChuckerFlutter.navigatorObserver],
       initialRoute: AppRoutes.initial,
       initialBinding: CoopBindings(context: context),
