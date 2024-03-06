@@ -10,6 +10,7 @@ class SearchBarController extends GetxController {
   FocusNode focusNode = FocusNode();
   List<String> items = [];
   TextEditingController textSearch = TextEditingController();
+  RxBool isShowAccordion = false.obs;
 
   void clearText() => textSearch.clear();
   String getSearchText() => textSearch.text;
@@ -32,6 +33,8 @@ class SearchBarController extends GetxController {
   }
 
   void generateItem(List<String> items) => this.items = items;
+  void showAccordion() => isShowAccordion.value = true;
+  void hideAccordion() => isShowAccordion.value = false;
 }
 
 class SearchBarBindings extends Bindings {

@@ -13,9 +13,11 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
+import 'package:engine/util/check_version.dart';
 import 'package:engine/util/convert.dart';
 import 'package:engine/util/gps_util.dart';
 import 'package:engine/util/mapper/mapper.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -42,15 +44,41 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
 
   late TabController tabController;
   late String pushNotificationPayload;
-  late SearchBarField searchCoopBarField;
+  late SearchBarField searchCoopBarField = SearchBarField(
+    controller: GetXCreator.putSearchBarController('searchCoopBarField'),
+    hint: 'Cari kandang',
+    items: const ['Semua', 'Broiler', 'Layer'],
+    onTyping: (text, field) {
+      coopFilteredList.clear();
+      if (text.isEmpty) {
+        coopFilteredList.addAll(coopList);
+      } else {
+        for (var element in coopList) {
+          if (element!.coopName!.toLowerCase().contains(text.toLowerCase())) {
+            coopFilteredList.add(element);
+          }
+        }
+      }
+      coopFilteredList.refresh();
+    },
+    onCategorySelected: (text) => generateCoopList(tabController.index == 0),
+  );
 
   int startTime = DateTime.now().millisecondsSinceEpoch;
+
+  CheckVersion checkVersion = CheckVersion(
+    appStoreId: F.appStoreId,
+    androidAppBundleId: F.androidAppBundleId,
+  );
+
+  RxBool justLayer = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     _initMixpanel();
-
+    checkVersion.check(context);
+    justLayer.value = FirebaseRemoteConfig.instance.getBool('just_layer');
     // Start offline automation
     OfflineAutomation().putWithRequest(SmartScaleImpl(), ServicePeripheral(keyMap: 'smartScaleApi', requestBody: SmartScaleBody(), baseUrl: ApiMapping().getBaseUrl())).launch();
 
@@ -62,37 +90,21 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
         generateCoopList(false);
       }
     });
-
-    searchCoopBarField = SearchBarField(
-      controller: GetXCreator.putSearchBarController('searchCoopBarField'),
-      hint: 'Cari kandang',
-      items: const ['Semua', 'Broiler', 'Layer'],
-      onTyping: (text, field) {
-        coopFilteredList.clear();
-        if (text.isEmpty) {
-          coopFilteredList.addAll(coopList);
-        } else {
-          for (var element in coopList) {
-            if (element!.coopName!.toLowerCase().contains(text.toLowerCase())) {
-              coopFilteredList.add(element);
-            }
-          }
-        }
-
-        coopFilteredList.refresh();
-      },
-      onCategorySelected: (text) => generateCoopList(tabController.index == 0),
-    );
-    searchCoopBarField.controller.setSelectedValue('Semua');
-    generateCoopList(true);
   }
 
   @override
   void onReady() {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (justLayer.value) {
+        searchCoopBarField.controller.hideAccordion();
+        searchCoopBarField.controller.setSelectedValue('Layer');
+        generateCoopList(true);
+      } else {
+        searchCoopBarField.controller.setSelectedValue('Semua');
+        generateCoopList(true);
+      }
       _launchDeeplink();
-
       // track render page time
       GlobalVar.trackWithMap('Render_time', {'value': Convert.getRenderTime(startTime: startTime), 'Page': 'Coop_List'});
     });
@@ -177,10 +189,14 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
   }
 
   String? _getFarmCategory() {
-    if (searchCoopBarField.controller.selectedValue.value != 'Broiler' && searchCoopBarField.controller.selectedValue.value != 'Layer') {
-      return null;
+    if (justLayer.value) {
+      return 'LAYER';
     } else {
-      return searchCoopBarField.controller.selectedValue.value.toUpperCase();
+      if (searchCoopBarField.controller.selectedValue.value != 'Broiler' && searchCoopBarField.controller.selectedValue.value != 'Layer') {
+        return null;
+      } else {
+        return searchCoopBarField.controller.selectedValue.value.toUpperCase();
+      }
     }
   }
 
@@ -414,7 +430,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                   ]))),
                       coop.isActionNeeded != null && coop.isActionNeeded!
                           ? ButtonFill(
-                              controller: GetXCreator.putButtonFillController('btnCoopActionNeeded'),
+                              controller: GetXCreator.putButtonFillController('btnCoopActionNeeded${coop.id}'),
                               label: 'Cek Laporan Harian',
                               onClick: () => Get.toNamed(RoutePage.dailyReport, arguments: [coop, coop.farmCategory == 'LAYER' ? true : false])!.then((value) => _refreshCoopList()))
                           : const SizedBox()

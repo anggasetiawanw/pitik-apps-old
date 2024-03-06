@@ -64,4 +64,26 @@ class F {
         return '5c4078b77ef73b0bc10c277cba6512eb';
     }
   }
+
+  static String get appStoreId {
+    switch (appFlavor) {
+      case Flavor.PROD:
+        return 'com.pitik.pitik';
+      case Flavor.DEV:
+        return 'com.pitik.pitik';
+      default:
+        return '';
+    }
+  }
+
+  static String get androidAppBundleId {
+    switch (appFlavor) {
+      case Flavor.PROD:
+        return 'id.pitik.mobile';
+      case Flavor.DEV:
+        return 'id.pitik.mobile';
+      default:
+        return 'id.pitik.mobile';
+    }
+  }
 }

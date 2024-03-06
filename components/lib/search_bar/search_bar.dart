@@ -27,6 +27,7 @@ class SearchBarField extends StatelessWidget {
       if (controller.items.isNotEmpty) {
         controller.selectedValue.value = items[0];
       }
+      controller.isShowAccordion.value = addPrefixDropdown;
       onInit = false;
     }
 
@@ -41,8 +42,8 @@ class SearchBarField extends StatelessWidget {
             contentPadding: const EdgeInsets.only(left: 4.0),
             hintText: hint ?? "Cari ${controller.selectedValue.value}",
             hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-            suffixIcon: addPrefixDropdown ? Padding(padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8), child: SvgPicture.asset("images/search_icon.svg")) : null,
-            prefixIcon: addPrefixDropdown
+            suffixIcon: controller.isShowAccordion.value ? Padding(padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8), child: SvgPicture.asset("images/search_icon.svg")) : null,
+            prefixIcon: controller.isShowAccordion.value
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: SizedBox(
