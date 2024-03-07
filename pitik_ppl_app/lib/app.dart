@@ -16,8 +16,8 @@ class App extends StatelessWidget {
     StreamInternetConnection.init();
     GlobalVar.setContext(context);
     return GetMaterialApp(
+      title: 'Pitik Smart Broiler App',
       debugShowCheckedModeBanner: false,
-      //   theme: ThemeData(fontFamily: 'Montserrat_Medium', scaffoldBackgroundColor: Colors.white),
       theme: PitikTheme.light(ThemeData.light()).themeData,
       navigatorObservers: [ChuckerFlutter.navigatorObserver],
       initialRoute: AppRoutes.initial,
