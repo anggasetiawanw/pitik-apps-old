@@ -47,8 +47,18 @@ class CheckVersion {
           mustBeUpdate = true;
           forceUpdate = true;
         } else if (int.parse(verPlay[0]) == int.parse(verCurr[0])) {
-          if (int.parse(verPlay[1]) > int.parse(verCurr[1])) {
-            mustBeUpdate = true;
+          if (int.parse(verSuggestion[1]) == int.parse(verPlay[1])) {
+            if (int.parse(verSuggestion[1]) > int.parse(verCurr[1])) {
+              mustBeUpdate = true;
+              forceUpdate = true;
+            }
+          } else if (int.parse(verSuggestion[1]) < int.parse(verPlay[1])) {
+            if (int.parse(verPlay[1]) - int.parse(verCurr[1]) > 1) {
+              mustBeUpdate = true;
+              forceUpdate = true;
+            } else if (int.parse(verPlay[1]) - int.parse(verCurr[1]) > 0) {
+              mustBeUpdate = true;
+            }
           }
         }
       }
