@@ -247,14 +247,14 @@ class LayerDashboardController extends GetxController {
                 const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.only(left: 32),
-                  child: Text('Hari ${coop.day ?? '-'}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)),
+                  child: Text('Pullet In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
+                      style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)),
                 ),
                 const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.only(left: 32),
-                  child: Text('Pullet In ${startDate == null ? '-' : '${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}'}',
-                      style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)),
-                )
+                  child: Text('Hari ${startDate == null ? '-' : Convert.getRangeDateToNow(startDate)}', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: Colors.white)),
+                ),
               ])
             ],
           ),

@@ -365,7 +365,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                       const SizedBox(height: 12),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         Expanded(child: Text(coop.coopName ?? '-', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black), overflow: TextOverflow.clip)),
-                        _isCoopNew(coop) ? const SizedBox() : Text('Hari ${coop.day}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
+                        _isCoopNew(coop) ? const SizedBox() : Text('${coop.week} Minggu', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.bold, color: GlobalVar.black)),
                       ]),
                       Text('${coop.coopDistrict ?? '-'}, ${coop.coopCity ?? '-'}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText), overflow: TextOverflow.clip),
                       const SizedBox(height: 12),
@@ -375,7 +375,7 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
                                 "${coop.farmCategory == null || coop.farmCategory!.isEmpty ? '- ' : _isBroiler(coop) ? 'DOC-In' : 'Pullet in'} ${Convert.getYear(startDate)}-${Convert.getMonthNumber(startDate)}-${Convert.getDay(startDate)}",
                                 style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
                             : const SizedBox(),
-                        coop.week != null ? Text('${coop.week} Minggu', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)) : const SizedBox()
+                        startDate != null ? Text('Hari ${Convert.getRangeDateToNow(startDate)}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black)) : const SizedBox()
                       ]),
                       const SizedBox(height: 16),
                       _isCoopNew(coop)

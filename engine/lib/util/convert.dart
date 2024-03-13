@@ -325,4 +325,9 @@ class Convert {
     Duration totalTime = DateTime.now().difference(DateTime.fromMicrosecondsSinceEpoch(startTime * 1000));
     return "${totalTime.inHours} hours : ${totalTime.inMinutes} minutes : ${totalTime.inSeconds} seconds : ${totalTime.inMilliseconds} miliseconds";
   }
+
+  static int getRangeDateToNow(DateTime startDate) {
+    Duration totalTime = DateTime.now().difference(startDate);
+    return totalTime.inDays;
+  }
 }

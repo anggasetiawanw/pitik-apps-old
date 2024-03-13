@@ -113,7 +113,7 @@ class LayerDashboardActivity extends GetView<LayerDashboardController> {
                           decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.redBackground),
                           child: Row(
                             children: [
-                              Text('${controller.coop.coopName} (Hari ${controller.coop.day})', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
+                              Text('${controller.coop.coopName} (${controller.coop.week} Minggu)', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
                               const SizedBox(width: 16),
                               SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
                             ],
