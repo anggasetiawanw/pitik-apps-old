@@ -7,10 +7,7 @@ import 'package:components/get_x_creator.dart';
 import 'package:components/global_var.dart';
 import 'package:components/search_bar/search_bar.dart';
 import 'package:dao_impl/auth_impl.dart';
-import 'package:dao_impl/offline_body/smart_scale_body.dart';
-import 'package:dao_impl/smart_scale_impl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:engine/offlinecapability/offline_automation.dart';
 import 'package:engine/request/service.dart';
 import 'package:engine/request/transport/interface/response_listener.dart';
 import 'package:engine/util/check_version.dart';
@@ -26,7 +23,6 @@ import 'package:model/coop_model.dart';
 import 'package:model/response/coop_list_response.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../../api_mapping/api_mapping.dart';
 import '../../flavors.dart';
 import '../../route.dart';
 
@@ -80,7 +76,8 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
     checkVersion.check(context);
     justLayer.value = FirebaseRemoteConfig.instance.getBool('just_layer');
     // Start offline automation
-    OfflineAutomation().putWithRequest(SmartScaleImpl(), ServicePeripheral(keyMap: 'smartScaleApi', requestBody: SmartScaleBody(), baseUrl: ApiMapping().getBaseUrl())).launch();
+    //SCALE TEAR OFF
+    // OfflineAutomation().putWithRequest(SmartScaleImpl(), ServicePeripheral(keyMap: 'smartScaleApi', requestBody: SmartScaleBody(), baseUrl: ApiMapping().getBaseUrl())).launch();
 
     tabController = TabController(vsync: this, length: 2);
     tabController.addListener(() {

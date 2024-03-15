@@ -18,11 +18,11 @@ import 'package:engine/util/mapper/mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/list_smart_scale_response.dart';
 import 'package:model/smart_scale/smart_scale_model.dart';
+
 import '../../api_mapping/api_mapping.dart';
 import '../../route.dart';
 
@@ -137,7 +137,8 @@ class DashboardCommon {
               controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
               controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map((entry) => entry.value).toList();
               controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
-              controller.smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
+              //SCALE TEAR OFF
+              //   controller.smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
             }
           });
         } else {
@@ -145,7 +146,8 @@ class DashboardCommon {
           controller.smartScaleData.value!.farmingCycleId = coop.farmingCycleId;
           controller.smartScaleData.value!.details = controller.smartScaleRecords.entries.map((entry) => entry.value).toList();
           controller.smartScaleData.value!.date = Convert.getStringIso(DateTime.now());
-          controller.smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
+          //SCALE TEAR OFF
+          //   controller.smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
         }
 
         final ListSmartScaleResponse bodyRequest = ListSmartScaleResponse(data: [controller.smartScaleData.value!]);

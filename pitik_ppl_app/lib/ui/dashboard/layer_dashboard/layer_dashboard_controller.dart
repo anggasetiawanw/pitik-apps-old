@@ -271,7 +271,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text('${monitoring.value.performance!.hdp == null ? '-' : monitoring.value.performance!.hdp!.actual!.toStringAsFixed(1)}%',
+                    Text('${monitoring.value.performance!.hdp == null ? '-' : monitoring.value.performance!.hdp!.actual!.toStringAsFixed(2)}%',
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16, fontWeight: GlobalVar.bold, color: monitoring.value.performance!.hdp != null && monitoring.value.performance!.hdp!.actual! > monitoring.value.performance!.hdp!.standard! ? GlobalVar.green : GlobalVar.red)),
                     Text(' / ${monitoring.value.performance!.hdp == null ? '-' : monitoring.value.performance?.hdp?.standard}%', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
@@ -297,7 +297,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text('${monitoring.value.performance!.eggWeight == null ? '-' : monitoring.value.performance!.eggWeight!.actual!.toStringAsFixed(1)}gr',
+                    Text('${monitoring.value.performance!.eggWeight == null ? '-' : monitoring.value.performance!.eggWeight!.actual!.toStringAsFixed(2)}gr',
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: GlobalVar.bold,
@@ -326,7 +326,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text('${monitoring.value.performance!.eggMass == null ? '-' : monitoring.value.performance!.eggMass!.actual!.toStringAsFixed(1)}gr',
+                    Text('${monitoring.value.performance!.eggMass == null ? '-' : monitoring.value.performance!.eggMass!.actual!.toStringAsFixed(2)}gr',
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: GlobalVar.bold,
@@ -354,7 +354,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text(monitoring.value.performance!.feedIntake == null ? '-' : monitoring.value.performance!.feedIntake!.actual!.toStringAsFixed(1),
+                    Text(monitoring.value.performance!.feedIntake == null ? '-' : monitoring.value.performance!.feedIntake!.actual!.toStringAsFixed(2),
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: GlobalVar.bold,
@@ -383,7 +383,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text('${monitoring.value.performance!.mortality == null ? '-' : monitoring.value.performance!.mortality!.actual!.toStringAsFixed(1)}%',
+                    Text('${monitoring.value.performance!.mortality == null ? '-' : monitoring.value.performance!.mortality!.actual!.toStringAsFixed(2)}%',
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16,
                             fontWeight: GlobalVar.bold,
@@ -411,7 +411,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text(monitoring.value.performance!.bw == null ? '-' : monitoring.value.performance!.bw!.actual!.toStringAsFixed(1),
+                    Text(monitoring.value.performance!.bw == null ? '-' : monitoring.value.performance!.bw!.actual!.toStringAsFixed(2),
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16, fontWeight: GlobalVar.bold, color: monitoring.value.performance!.bw != null && monitoring.value.performance!.bw!.actual! > monitoring.value.performance!.bw!.standard! ? GlobalVar.green : GlobalVar.red)),
                     Text(' / ${monitoring.value.performance!.bw == null ? '-' : monitoring.value.performance?.bw?.standard}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))
@@ -433,7 +433,7 @@ class LayerDashboardController extends GetxController {
                 ),
                 Row(
                   children: [
-                    Text(monitoring.value.performance!.fcr == null ? '-' : monitoring.value.performance!.fcr!.actual!.toStringAsFixed(1),
+                    Text(monitoring.value.performance!.fcr == null ? '-' : monitoring.value.performance!.fcr!.actual!.toStringAsFixed(2),
                         style: GlobalVar.whiteTextStyle.copyWith(
                             fontSize: 16, fontWeight: GlobalVar.bold, color: monitoring.value.performance!.fcr != null && monitoring.value.performance!.fcr!.actual! > monitoring.value.performance!.fcr!.standard! ? GlobalVar.green : GlobalVar.red)),
                     Text(' / ${monitoring.value.performance!.fcr == null ? '-' : monitoring.value.performance?.fcr?.standard}', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.black))

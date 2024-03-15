@@ -61,7 +61,21 @@ bundle-dev-connect-ios:
 bundle-dev-ppl-and:
 	@melos proc-ppl && make -C pitik_ppl_app/ sb-build-dev
 bundle-dev-ppl-ios:
-	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-dev-ppl-ios
+	@melos bundle-dev-ppl-ios
+
+#for build patch staging
+patch-dev-internal-and:
+	@melos pub-get-internal && @melos force_build_internal && @melos generate-assets  && @melos patch-dev-internal-and
+patch-dev--internalios:
+	@melos pub-get-internal && @melos force_build_internal && @melos generate-assets  && @melos patch-dev-internal-ios
+patch-dev-connect-and:
+	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos patch-dev-connect-and
+patch-dev-connect-ios:
+	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos patch-dev-connect-ios
+patch-dev-ppl-and:
+	@melos proc-ppl && make -C pitik_ppl_app/ sb-patch-dev
+patch-dev-ppl-ios:
+	@melos patch-dev-ppl-ios
 
 #for build bundle prod
 bundle-prod-internal-and:

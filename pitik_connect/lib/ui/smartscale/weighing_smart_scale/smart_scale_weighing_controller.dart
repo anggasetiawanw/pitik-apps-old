@@ -274,7 +274,8 @@ class SmartScaleWeighingController extends GetxController {
                                               smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
                                               smartScaleData.value!.updatedDate = Convert.getStringIso(DateTime.now());
                                               smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
-                                              smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
+                                           //SCALE TEAR OFF
+                                            //   smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
 
                                               _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
                                             }
@@ -285,7 +286,8 @@ class SmartScaleWeighingController extends GetxController {
                                           smartScaleData.value!.roomId = coop.room!.id;
                                           smartScaleData.value!.startDate = Convert.getStringIso(startWeighingTime);
                                           smartScaleData.value!.executionDate = Convert.getStringIso(DateTime.now());
-                                          smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
+                                        //SCALE TEAR OFF
+                                        //   smartScaleData.value!.expiredDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
 
                                           _pushSmartScaleData(auth, isEdit, smartScaleData.value!);
                                         }
@@ -312,7 +314,8 @@ class SmartScaleWeighingController extends GetxController {
 
   void _saveSmartScaleToDb(SmartScale? data, int flag) {
     if (data != null) {
-      data.flag = flag;
+        //SCALE TEAR OFF
+    //   data.flag = flag;
       SmartScaleImpl().save(data, keyForCheck: 'id');
     }
   }

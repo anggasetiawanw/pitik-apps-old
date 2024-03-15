@@ -21,7 +21,7 @@ scripts:
         description: build_runner build pitik connect app module.
 
     force-build-ppl:
-        run: dart pub global run melos exec --scope="*pitik_ppl_app*" --depends-on="build_runner" "dart run build_runner build -d"
+        run: dart pub global run melos exec --scope="*pitik_ppl_app*" --depends-on="build_runner" "dart run build_runner build --delete-conflicting-outputs"
         description: build_runner build pitik app module.
 
     #Generate Assets
@@ -101,7 +101,7 @@ scripts:
         run: dart pub global run melos exec --scope="*pitik_ppl_app*" "shorebird release android --flavor dev -t lib/main_dev.dart"
         description: Build Dev Bundle ppl module.
     bundle-dev-ppl-ios:
-        run: dart pub global run melos exec --scope="*pitik_ppl_app*" "flutter build ipa --flavor dev -t lib/main_dev.dart"
+        run: dart pub global run melos proc-ppl && dart pub global run melos exec --scope="*pitik_ppl_app*" "flutter build ipa --flavor dev -t lib/main_dev.dart"
         description: Build Dev Bundle ppl module.
 
     #pub get each app

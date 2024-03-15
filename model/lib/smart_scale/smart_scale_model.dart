@@ -3,7 +3,6 @@
 import '../engine_library.dart';
 import '../room_model.dart';
 import 'smart_scale_record_model.dart';
-import 'package:engine/offlinecapability/offline.dart';
 
 /// @author DICKY
 /// @email <dicky.maulana@pitik.id>
@@ -12,7 +11,9 @@ import 'package:engine/offlinecapability/offline.dart';
 @SetupEntity
 @SetupModel
 @Table("t_smart_scale")
-class SmartScale extends Offline {
+//SCALE TEAR OFF
+class SmartScale {
+// class SmartScale extends Offline {
   @Attribute(name: "id", type: "VARCHAR", length: 100, notNull: true)
   String? id;
 
@@ -95,23 +96,23 @@ class SmartScale extends Offline {
         createdDate: map['createdDate'],
         updatedDate: map['updatedDate']);
   }
-
-  @override
-  SmartScale toModelEntity(Map<String, dynamic> map) {
-    return SmartScale(
-        id: map['id'],
-        farmingCycleId: map['farmingCycleId'],
-        day: map['day'],
-        totalCount: map['totalCount'],
-        averageWeight: map['averageWeight'] != null ? map['averageWeight'].toDouble() : map['averageWeight'],
-        avgWeight: map['avgWeight'] != null ? map['avgWeight'].toDouble() : map['avgWeight'],
-        roomId: map['roomId'],
-        records: Mapper.children<SmartScaleRecord>(map['records']),
-        details: Mapper.children<SmartScaleRecord>(map['details']),
-        date: map['date'],
-        startDate: map['startDate'],
-        executionDate: map['executionDate'],
-        createdDate: map['createdDate'],
-        updatedDate: map['updatedDate']);
-  }
+//SCALE TEAR OFF
+//   @override
+//   SmartScale toModelEntity(Map<String, dynamic> map) {
+//     return SmartScale(
+//         id: map['id'],
+//         farmingCycleId: map['farmingCycleId'],
+//         day: map['day'],
+//         totalCount: map['totalCount'],
+//         averageWeight: map['averageWeight'] != null ? map['averageWeight'].toDouble() : map['averageWeight'],
+//         avgWeight: map['avgWeight'] != null ? map['avgWeight'].toDouble() : map['avgWeight'],
+//         roomId: map['roomId'],
+//         records: Mapper.children<SmartScaleRecord>(map['records']),
+//         details: Mapper.children<SmartScaleRecord>(map['details']),
+//         date: map['date'],
+//         startDate: map['startDate'],
+//         executionDate: map['executionDate'],
+//         createdDate: map['createdDate'],
+//         updatedDate: map['updatedDate']);
+//   }
 }

@@ -337,7 +337,8 @@ class SmartScaleWeighingController extends GetxController {
 
   void _saveSmartScaleToDb(int flag) {
     if (smartScaleData.value != null) {
-      smartScaleData.value!.flag = flag;
+        //SCALE TEAR OFF
+    //   smartScaleData.value!.flag = flag;
       SmartScaleImpl().save(smartScaleData.value!, keyForCheck: 'id');
     }
   }
