@@ -13,8 +13,9 @@ class Population {
   int? remaining;
   int? feedConsumed;
   int? culled;
+  int? initialPopulation;
 
-  Population({this.total, this.mortaled, this.mortality, this.harvested, this.remaining, this.feedConsumed, this.culled});
+  Population({this.total, this.mortaled, this.mortality, this.harvested, this.remaining, this.feedConsumed, this.culled, this.initialPopulation});
 
   static Population toResponseModel(Map<String, dynamic> map) {
     return Population(
@@ -25,6 +26,7 @@ class Population {
       remaining: map['remaining'],
       feedConsumed: map['feedConsumed'],
       culled: map['culled'],
+      initialPopulation: map['initialPopulation'],
     );
   }
 }

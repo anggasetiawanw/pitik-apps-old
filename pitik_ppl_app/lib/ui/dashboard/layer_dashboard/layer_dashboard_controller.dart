@@ -229,9 +229,9 @@ class LayerDashboardController extends GetxController {
 
   Widget generateHomeWidget() {
     final DateTime? startDate = coop.startDate == null ? null : Convert.getDatetime(coop.startDate!);
-    final num populationOutstanding = (monitoring.value.population!.total == null ? 0 : monitoring.value.population!.total!) -
-        (monitoring.value.population!.harvested == null ? 0 : monitoring.value.population!.harvested!) -
-        (monitoring.value.population!.mortality == null ? 0 : monitoring.value.population!.mortality!);
+    // final num populationOutstanding = (monitoring.value.population!.total == null ? 0 : monitoring.value.population!.total!) -
+    //     (monitoring.value.population!.harvested == null ? 0 : monitoring.value.population!.harvested!) -
+    //     (monitoring.value.population!.mortality == null ? 0 : monitoring.value.population!.mortality!);
 
     return RefreshIndicator(
         onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => getMonitoringPerformance(coop)),
@@ -456,7 +456,7 @@ class LayerDashboardController extends GetxController {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(monitoring.value.population != null && monitoring.value.population!.total != null ? Convert.toCurrencyWithoutDecimal(monitoring.value.population!.total!.toString(), '', '.') : '-',
+                        Text(monitoring.value.population != null && monitoring.value.population!.total != null ? Convert.toCurrencyWithoutDecimal(monitoring.value.population!.initialPopulation!.toString(), '', '.') : '-',
                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                         const SizedBox(width: 4),
                         Text('Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
@@ -520,7 +520,7 @@ class LayerDashboardController extends GetxController {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(Convert.toCurrencyWithoutDecimal(populationOutstanding.toString(), '', '.'), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
+                          Text(Convert.toCurrencyWithoutDecimal(monitoring.value.population!.total!.toString(), '', '.'), style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                           const SizedBox(width: 4),
                           Text('Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),
                         ],
