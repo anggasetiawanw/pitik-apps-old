@@ -5,6 +5,7 @@ import 'package:engine/request/service.dart';
 import 'package:engine/util/firebase_config.dart';
 import 'package:engine/util/gps_util.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // ignore: unused_import
@@ -19,7 +20,7 @@ import 'route.dart';
 
 void main() async {
   F.appFlavor = Flavor.PROD;
-  ChuckerFlutter.showOnRelease = false;
+  ChuckerFlutter.showOnRelease = kDebugMode ? true : false;
   initializeReflectable();
   await initPlatformState();
   Service.setApiMapping(ApiMapping());
@@ -38,6 +39,7 @@ Future<void> initPlatformState() async {
   // init GPS
   await GpsUtil.onStream();
 
+  // saving firebase token
   final String? token = await FirebaseConfig.setupCloudMessaging(webCertificate: F.webCert, splashActivity: RoutePage.splashPage);
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('firebaseToken', token ?? '-');

@@ -456,7 +456,7 @@ class LayerDashboardController extends GetxController {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(monitoring.value.population != null && monitoring.value.population!.total != null ? Convert.toCurrencyWithoutDecimal(monitoring.value.population!.initialPopulation!.toString(), '', '.') : '-',
+                        Text(monitoring.value.population != null && monitoring.value.population!.total != null ? Convert.toCurrencyWithoutDecimal((monitoring.value.population!.initialPopulation ?? 0).toString(), '', '.') : '-',
                             style: GlobalVar.whiteTextStyle.copyWith(fontSize: 14, fontWeight: GlobalVar.medium, color: GlobalVar.black)),
                         const SizedBox(width: 4),
                         Text('Ekor', style: GlobalVar.whiteTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: GlobalVar.grayText)),

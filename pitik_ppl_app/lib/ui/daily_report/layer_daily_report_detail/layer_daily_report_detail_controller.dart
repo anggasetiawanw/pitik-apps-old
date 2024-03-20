@@ -10,6 +10,7 @@ import 'package:model/coop_model.dart';
 import 'package:model/error/error.dart';
 import 'package:model/product_model.dart';
 import 'package:model/report.dart';
+
 import '../../../api_mapping/api_mapping.dart';
 import '../../../route.dart';
 import '../../../utils/enums/daily_report_enum.dart';
@@ -185,7 +186,7 @@ class LayerDailyReportDetailController extends GetxController {
 
   String getEggQuantity({required String productName}) {
     for (var egg in report.value.harvestedEgg) {
-      if (egg != null && egg.productItem!.name == productName) {
+      if (egg != null && egg.productItem?.name == productName) {
         return '${egg.quantity ?? '-'} butir';
       }
     }
@@ -195,7 +196,7 @@ class LayerDailyReportDetailController extends GetxController {
 
   String getEggWeight({required String productName}) {
     for (var egg in report.value.harvestedEgg) {
-      if (egg != null && egg.productItem!.name == productName) {
+      if (egg != null && egg.productItem?.name == productName) {
         return '${egg.weight ?? '-'} kg';
       }
     }
