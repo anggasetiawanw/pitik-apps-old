@@ -1,5 +1,5 @@
 name: pitik_ppl_app
-version: 1.3.53+513
+version: 1.4.0+514
 publish_to: none
 description: Pitik - Smart Broiler Farming
 environment:
