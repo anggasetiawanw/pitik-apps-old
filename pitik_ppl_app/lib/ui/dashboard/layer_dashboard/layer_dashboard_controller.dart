@@ -234,8 +234,10 @@ class LayerDashboardController extends GetxController {
     //     (monitoring.value.population!.mortality == null ? 0 : monitoring.value.population!.mortality!);
 
     return RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => getMonitoringPerformance(coop)),
-        child: ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
+      onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => getMonitoringPerformance(coop)),
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
           Stack(
             children: [
               SvgPicture.asset('images/banner_layer_dashboard.svg', width: MediaQuery.of(Get.context!).size.width - 32),
@@ -530,7 +532,9 @@ class LayerDashboardController extends GetxController {
                 )
               ])),
           const SizedBox(height: 70)
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget generateHistoryWidget() => Center(

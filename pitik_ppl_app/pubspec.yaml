@@ -69,6 +69,7 @@ dependencies:
 dev_dependencies:
     flutter_launcher_icons: ^0.13.1
     pubspec_dependency_sorter: ^1.0.4
+    flutter_lints: ^2.0.0
     flutter_test:
         sdk: flutter
 flutter_icons:
@@ -76,7 +77,6 @@ flutter_icons:
     image_path: images/pitik_launcher.png
     ios: true
 flavorizr:
-    flutter_lints: ^2.0.0
     app:
         android:
             flavorDimensions: flavor-type

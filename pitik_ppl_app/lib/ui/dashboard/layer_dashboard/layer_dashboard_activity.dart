@@ -18,7 +18,8 @@ class LayerDashboardActivity extends GetView<LayerDashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
+    return Obx(
+      () => Scaffold(
         // backgroundColor: Colors.white,
         key: scaffoldKey,
         extendBody: true,
@@ -97,75 +98,80 @@ class LayerDashboardActivity extends GetView<LayerDashboardController> {
                   }),
             )),
         body: SafeArea(
-            child: Stack(children: <Widget>[
-          Positioned(top: 0, left: 0, right: 0, child: Container(height: 150, decoration: const BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), color: GlobalVar.primaryLight))),
-          Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 6),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, mainAxisSize: MainAxisSize.max, children: [
-                    GestureDetector(
-                      onTap: () => Get.back(),
-                      child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.redBackground),
-                          child: Row(
-                            children: [
-                              Text('${controller.coop.coopName} (${controller.coop.week} Minggu)', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
-                              const SizedBox(width: 16),
-                              SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
-                            ],
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
-                      child: SizedBox(
-                        width: 50,
-                        height: 34,
-                        child: Stack(
-                          children: [
-                            Positioned(left: 16, top: 5, child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)),
-                            Container(
-                              decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: GlobalVar.red),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Obx(() => Text('${controller.countUnreadNotifications.value}', style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white))),
-                              ),
-                            )
-                          ],
+          child: Stack(
+            children: <Widget>[
+              Positioned(top: 0, left: 0, right: 0, child: Container(height: 150, decoration: const BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)), color: GlobalVar.primaryLight))),
+              Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                      padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16, right: 6),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, mainAxisSize: MainAxisSize.max, children: [
+                        GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8)), color: GlobalVar.redBackground),
+                              child: Row(
+                                children: [
+                                  Text('${controller.coop.coopName} (${controller.coop.week} Minggu)', style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: GlobalVar.red)),
+                                  const SizedBox(width: 16),
+                                  SvgPicture.asset('images/arrow_diagonal_red_icon.svg')
+                                ],
+                              )),
                         ),
-                      ),
-                    )
-                  ]))),
-          Positioned(
-            top: 58,
-            left: 16,
-            right: 16,
-            child: controller.profileTab.isTrue ? const SizedBox() : Text('Halo ${GlobalVar.profileUser!.fullName}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
+                        GestureDetector(
+                          onTap: () => Get.toNamed(RoutePage.notification)!.then((value) => controller.refreshData()),
+                          child: SizedBox(
+                            width: 50,
+                            height: 34,
+                            child: Stack(
+                              children: [
+                                Positioned(left: 16, top: 5, child: SvgPicture.asset('images/notification_icon.svg', width: 24, height: 24)),
+                                Container(
+                                  decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: GlobalVar.red),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: Obx(() => Text('${controller.countUnreadNotifications.value}', style: GlobalVar.subTextStyle.copyWith(fontSize: 10, fontWeight: GlobalVar.medium, color: Colors.white))),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ]))),
+              Positioned(
+                top: 58,
+                left: 16,
+                right: 16,
+                child: controller.profileTab.isTrue ? const SizedBox() : Text('Halo ${GlobalVar.profileUser!.fullName}', style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.black)),
+              ),
+              Positioned.fill(
+                  top: 90,
+                  left: controller.historyTab.isFalse ? 16 : 0,
+                  right: controller.historyTab.isFalse ? 16 : 0,
+                  child: controller.isLoading.isTrue
+                      ? Image.asset(
+                          'images/card_height_450_lazy.gif',
+                          height: 400,
+                          width: 450,
+                        )
+                      : (controller.homeTab.isTrue
+                          ? controller.generateHomeWidget()
+                          : // to home
+                          controller.historyTab.isTrue
+                              ? controller.generateHistoryWidget()
+                              : // to history
+                              controller.monitorTab.isTrue
+                                  ? controller.generateMonitorWidgetStock()
+                                  : // to monitor
+                                  DashboardCommon.generateProfileWidget() // to profile
+                      ))
+            ],
           ),
-          Positioned.fill(
-              top: 90,
-              left: controller.historyTab.isFalse ? 16 : 0,
-              right: controller.historyTab.isFalse ? 16 : 0,
-              child: controller.isLoading.isTrue
-                  ? Image.asset(
-                      'images/card_height_450_lazy.gif',
-                      height: 400,
-                      width: 450,
-                    )
-                  : (controller.homeTab.isTrue
-                      ? controller.generateHomeWidget()
-                      : // to home
-                      controller.historyTab.isTrue
-                          ? controller.generateHistoryWidget()
-                          : // to history
-                          controller.monitorTab.isTrue
-                              ? controller.generateMonitorWidgetStock()
-                              : // to monitor
-                              DashboardCommon.generateProfileWidget() // to profile
-                  ))
-        ]))));
+        ),
+      ),
+    );
   }
 }

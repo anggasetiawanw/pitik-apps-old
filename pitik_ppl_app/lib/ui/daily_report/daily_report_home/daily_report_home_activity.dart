@@ -60,31 +60,46 @@ class DailyReportHomeActivity extends GetView<DailyReportHomeController> {
     }
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(120),
-            child: AppBarFormForCoop(
-              title: 'Laporan Harian',
-              coop: controller.coop!,
-              titleStartDate: controller.isPulletIn.isTrue ? 'Pullet In' : 'DOC-In',
-            )),
-        body: Column(children: [
-          Obx(() => controller.isLoading.isTrue
-              ? const Center(child: ProgressLoading())
-              : Expanded(
-                  child: RawScrollbar(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(120),
+          child: AppBarFormForCoop(
+            title: 'Laporan Harian',
+            coop: controller.coop!,
+            titleStartDate: controller.isPulletIn.isTrue ? 'Pullet In' : 'DOC-In',
+          )),
+      body: Column(
+        children: [
+          Obx(
+            () => controller.isLoading.isTrue
+                ? const Center(child: ProgressLoading())
+                : Expanded(
+                    child: RawScrollbar(
                       thumbColor: GlobalVar.primaryOrange,
                       radius: const Radius.circular(8),
                       child: RefreshIndicator(
-                          onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.getDailyReport()),
-                          child: controller.isLoadingList.isTrue
-                              ? Padding(
-                                  padding: const EdgeInsets.only(left: 16, top: 16),
-                                  child: Image.asset('images/card_height_450_lazy.gif'),
-                                )
-                              : Container(
-                                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: ListView.builder(physics: const AlwaysScrollableScrollPhysics(), itemCount: controller.reportList.length, itemBuilder: (context, index) => listCard(controller.reportList[index])))))))
-        ]));
+                        onRefresh: () => Future.delayed(const Duration(milliseconds: 200), () => controller.getDailyReport()),
+                        child: controller.isLoadingList.isTrue
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 16, top: 16),
+                                child: Image.asset('images/card_height_450_lazy.gif'),
+                              )
+                            : Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                child: ListView.builder(
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  itemCount: controller.reportList.length,
+                                  itemBuilder: (context, index) => listCard(
+                                    controller.reportList[index],
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+          )
+        ],
+      ),
+    );
   }
 }

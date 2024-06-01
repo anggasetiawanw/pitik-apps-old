@@ -87,7 +87,7 @@ class SuggestField extends StatelessWidget {
                           }
                         }
 
-                        onTyping(text);
+                        // onTyping(text);
                         onSubmitted(text);
                       },
                       fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {

@@ -17,6 +17,7 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:mobile_number/mobile_number.dart';
 import 'package:model/error/error.dart';
 import 'package:model/response/internal_app/profile_response.dart';
+
 import '../../../api_mapping/api_mapping.dart';
 import '../../../api_mapping/list_api.dart';
 import '../../../flavors.dart';
@@ -70,17 +71,27 @@ class BerandaController extends GetxController {
 
   @override
   Future<void> onReady() async {
-    super.onReady();
-    await checkVersion.check(context);
-    getRole();
-    getUnreadNotif();
+    // super.onReady();
+    // await checkVersion.check(context);
+    // getRole();
+    // getUnreadNotif();
+    addAllModule();
+  }
+
+  void addAllModule() {
+    module.value.clear();
+    for (var element in modules) {
+      module.value.add(element);
+    }
+    isLoading.value = false;
   }
 
   Future<void> refreshHome(BuildContext context) async {
     isLoading.value = true;
-    await checkVersion.check(context);
-    getRole();
-    getUnreadNotif();
+    // await checkVersion.check(context);
+    // getRole();
+    // getUnreadNotif();
+    addAllModule();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

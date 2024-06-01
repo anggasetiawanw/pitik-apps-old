@@ -253,72 +253,79 @@ class CoopController extends GetxController with GetSingleTickerProviderStateMix
 
   void _showCoopAdditionalButtonSheet({required Coop coop, required bool isRestCoop}) {
     showModalBottomSheet(
-        isScrollControlled: true,
-        context: Get.context!,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        )),
-        builder: (context) => ClipRRect(
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-            child: Container(
-                color: Colors.white,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Padding(padding: const EdgeInsets.only(top: 16), child: Container(width: 60, height: 4, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: GlobalVar.outlineColor))),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 24),
-                          child: Align(alignment: Alignment.centerLeft, child: Text('Mau memulai siklus?', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(_isBroiler(coop) ? 'Silahkan lakukan Order DOC in lalu Order dan Penerimaan Pakan-OVK' : 'Silahkan lakukan pengisian form Pullet In untuk memulai siklus',
-                              style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))),
-                      if (_isBroiler(coop)) ...[
-                        Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: ButtonOutline(
-                                controller: GetXCreator.putButtonOutlineController('orderCoopNew'),
-                                label: 'Order',
-                                isHaveIcon: true,
-                                imageAsset: 'images/document_icon.svg',
-                                onClick: () {
-                                  Get.back();
-                                  Get.toNamed(RoutePage.listOrderPage, arguments: [coop, isRestCoop])!.then((value) => _refreshCoopList());
-                                })),
-                        ButtonOutline(
-                            controller: GetXCreator.putButtonOutlineController('docInCoopNew'),
-                            label: 'DOC-In',
-                            isHaveIcon: true,
-                            imageAsset: 'images/calendar_check_icon.svg',
-                            onClick: () {
-                              GlobalVar.track('Click_DOCin_form');
-                              Get.back();
-                              if (isRestCoop) {
-                                GlobalVar.track('Click_DOCin_form_pengajuan');
-                                Get.toNamed(RoutePage.reqDocInPage, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
-                              } else {
-                                Get.toNamed(RoutePage.docInPage, arguments: [coop])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
-                              }
-                            })
-                      ] else ...[
-                        Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: ButtonOutline(
-                                controller: GetXCreator.putButtonOutlineController('pulletInCoopNew'),
-                                label: 'Pullet In',
-                                isHaveIcon: true,
-                                imageAsset: 'images/calendar_check_icon.svg',
-                                onClick: () {
-                                  GlobalVar.track('Click_PulletIn_form');
-                                  Get.back();
-                                  GlobalVar.track('Click_PulletIn_form_pengajuan');
-                                  Get.toNamed(RoutePage.pulletInForm, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
-                                }))
-                      ],
-                      const SizedBox(height: 24)
-                    ])))));
+      isScrollControlled: true,
+      context: Get.context!,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      )),
+      builder: (context) => ClipRRect(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(padding: const EdgeInsets.only(top: 16), child: Container(width: 60, height: 4, decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: GlobalVar.outlineColor))),
+                Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Align(alignment: Alignment.centerLeft, child: Text('Mau memulai siklus?', style: GlobalVar.subTextStyle.copyWith(fontSize: 21, fontWeight: GlobalVar.bold, color: GlobalVar.primaryOrange)))),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(_isBroiler(coop) ? 'Silahkan lakukan Order DOC in lalu Order dan Penerimaan Pakan-OVK' : 'Silahkan lakukan pengisian form Pullet In untuk memulai siklus',
+                        style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.medium, color: const Color(0xFF9E9D9D)))),
+                if (_isBroiler(coop)) ...[
+                  Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController('orderCoopNew'),
+                          label: 'Order',
+                          isHaveIcon: true,
+                          imageAsset: 'images/document_icon.svg',
+                          onClick: () {
+                            Get.back();
+                            Get.toNamed(RoutePage.listOrderPage, arguments: [coop, isRestCoop])!.then((value) => _refreshCoopList());
+                          })),
+                  ButtonOutline(
+                      controller: GetXCreator.putButtonOutlineController('docInCoopNew'),
+                      label: 'DOC-In',
+                      isHaveIcon: true,
+                      imageAsset: 'images/calendar_check_icon.svg',
+                      onClick: () {
+                        GlobalVar.track('Click_DOCin_form');
+                        Get.back();
+                        if (isRestCoop) {
+                          GlobalVar.track('Click_DOCin_form_pengajuan');
+                          Get.toNamed(RoutePage.reqDocInPage, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+                        } else {
+                          Get.toNamed(RoutePage.docInPage, arguments: [coop])!.then((value) => generateCoopList(true)).then((value) => _refreshCoopList());
+                        }
+                      })
+                ] else ...[
+                  Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: ButtonOutline(
+                          controller: GetXCreator.putButtonOutlineController('pulletInCoopNew'),
+                          label: 'Pullet In',
+                          isHaveIcon: true,
+                          imageAsset: 'images/calendar_check_icon.svg',
+                          onClick: () {
+                            GlobalVar.track('Click_PulletIn_form');
+                            Get.back();
+                            GlobalVar.track('Click_PulletIn_form_pengajuan');
+                            Get.toNamed(RoutePage.pulletInForm, arguments: [coop])!.then((value) => generateCoopList(false)).then((value) => _refreshCoopList());
+                          }))
+                ],
+                const SizedBox(height: 24)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   bool _isCoopNew(Coop coop) => coop.isNew != null && coop.isNew!;

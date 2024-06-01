@@ -91,6 +91,20 @@ bundle-prod-ppl-and:
 bundle-prod-ppl-ios:
 	@melos pub-get-ppl && @melos force_build_ppl && @melos generate-assets  && @melos bundle-prod-ppl-ios
 
+#for build patch Production
+patch-prod-internal-and:
+	@melos pub-get-internal && @melos force_build_internal && @melos generate-assets  && @melos patch-prod-internal-and
+patch-prod--internalios:
+	@melos pub-get-internal && @melos force_build_internal && @melos generate-assets  && @melos patch-prod-internal-ios
+patch-prod-connect-and:
+	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos patch-prod-connect-and
+patch-prod-connect-ios:
+	@melos pub-get-connect && @melos force_build_connect && @melos generate-assets  && @melos patch-prod-connect-ios
+patch-prod-ppl-and:
+	make -C pitik_ppl_app/ sb-patch-prod
+patch-prod-ppl-ios:
+	@melos patch-prod-ppl-ios
+
 # for generate assets
 generate-assets:
 	@melos generate-assets

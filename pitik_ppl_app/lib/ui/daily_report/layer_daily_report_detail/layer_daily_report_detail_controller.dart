@@ -53,20 +53,10 @@ class LayerDailyReportDetailController extends GetxController {
           report.value.status = reportArguments.status;
 
           Get.toNamed(RoutePage.layerDailyReportForm, arguments: [coop, report.value])!.then((value) {
-            if (value != null) {
-              Get.back();
-              Get.snackbar(
-                'Pesan',
-                'Berhasil melakukan permintaan edit...',
-                snackPosition: SnackPosition.TOP,
-                colorText: Colors.black,
-                backgroundColor: Colors.white,
-              );
-            } else {
-              getDetailReport();
-            }
+            getDetailReport();
           });
         });
+
     bfRevision = ButtonFill(
         controller: GetXCreator.putButtonFillController('layerDailyDetailRevision'),
         label: 'Permintaan Edit',

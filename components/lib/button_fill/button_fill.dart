@@ -32,38 +32,47 @@ class ButtonFill extends StatelessWidget {
       onInit = false;
       controller.changeLabel(label);
     }
-    return Obx(() => Padding(
+    return Obx(
+      () => Padding(
         padding: const EdgeInsets.only(top: 16),
         child: SizedBox(
-            width: width,
-            height: 50,
-            child: ElevatedButton(
-                onPressed: controller.activeField.isTrue ? onClick : () {},
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
-                  foregroundColor: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: isHaveIcon
-                    ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        Text(
-                          label,
+          width: width,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: controller.activeField.isTrue ? onClick : () {},
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              backgroundColor: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
+              foregroundColor: controller.activeField.isTrue ? GlobalVar.primaryOrange : GlobalVar.gray,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: isHaveIcon
+                ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                    ),
+                    const SizedBox(width: 11),
+                    imageAsset
+                  ])
+                : Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: Obx(
+                        () => Text(
+                          controller.label.value,
                           textAlign: TextAlign.center,
                           style: const TextStyle(color: Colors.white, fontSize: 14),
                         ),
-                        const SizedBox(width: 11),
-                        imageAsset
-                      ])
-                    : Center(
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 16, bottom: 16),
-                            child: Obx(() => Text(
-                                  controller.label.value,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(color: Colors.white, fontSize: 14),
-                                ))))))));
+                      ),
+                    ),
+                  ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:common_page/transaction_success_activity.dart';
 import 'package:components/button_fill/button_fill.dart';
 import 'package:components/button_outline/button_outline.dart';
 import 'package:components/edit_area_field/edit_area_field.dart';
@@ -62,8 +61,16 @@ class LayerDailyReportFormController extends GetxController {
   EditField efWeight =
       EditField(controller: GetXCreator.putEditFieldController('layerDailyFormWeight'), label: 'Bobot', hint: 'Ketik di sini', alertText: 'Harus diisi..!', textUnit: 'gr', maxInput: 100, inputType: TextInputType.number, onTyping: (text, field) {});
 
-  EditField efCulled =
-      EditField(controller: GetXCreator.putEditFieldController('layerDailyFormCulled'), label: 'Afkir', hint: 'Ketik di sini', alertText: 'Harus diisi..!', textUnit: 'Ekor', maxInput: 100, inputType: TextInputType.number, onTyping: (text, field) {});
+  EditField efCulled = EditField(
+    controller: GetXCreator.putEditFieldController('layerDailyFormCulled'),
+    label: 'Afkir',
+    hint: 'Ketik di sini',
+    alertText: 'Harus diisi..!',
+    textUnit: 'Ekor',
+    maxInput: 100,
+    inputType: TextInputType.number,
+    onTyping: (text, field) {}
+  );
 
   SpinnerField spReason = SpinnerField(
       controller: GetXCreator.putSpinnerFieldController('layerDailyFormReason'),
@@ -87,7 +94,7 @@ class LayerDailyReportFormController extends GetxController {
       controller: GetXCreator.putEditFieldController('layerDailyFormFeedQuantity'), label: 'Total', hint: 'Ketik di sini', alertText: 'Total belum diisi..!', textUnit: '', maxInput: 20, inputType: TextInputType.number, onTyping: (text, field) {});
   late MultipleFormField<Product> feedMultipleFormField;
 
-  // for OVK
+  // for OVKla
   late SuggestField ovkSuggestField;
   EditField ovkQuantityField = EditField(
       controller: GetXCreator.putEditFieldController('layerDailyFormOvkQuantity'), label: 'Total', hint: 'Ketik di sini', alertText: 'Total belum diisi..!', textUnit: '', maxInput: 20, inputType: TextInputType.number, onTyping: (text, field) {});
@@ -162,8 +169,8 @@ class LayerDailyReportFormController extends GetxController {
 
                             chickDeadPhotoList.clear();
                             chickDeadPhotoList.add(body.data);
-                            mfChickDead.getController().setInformasiText('File telah terupload');
-                            mfChickDead.getController().showInformation();
+                            mfChickDead.controller.setInformasiText('File telah terupload');
+                            mfChickDead.controller.showInformation();
                             isLoadingChickDead.value = false;
                           },
                           onResponseFail: (code, message, body, id, packet) {
@@ -206,8 +213,8 @@ class LayerDailyReportFormController extends GetxController {
 
                             recordingCardPhotoList.clear();
                             recordingCardPhotoList.add(body.data);
-                            mfRecordingCard.getController().setInformasiText('File telah terupload');
-                            mfRecordingCard.getController().showInformation();
+                            mfRecordingCard.controller.setInformasiText('File telah terupload');
+                            mfRecordingCard.controller.showInformation();
                             isLoadingRecodingCard.value = false;
                           },
                           onResponseFail: (code, message, body, id, packet) {
@@ -244,7 +251,7 @@ class LayerDailyReportFormController extends GetxController {
         validationAdded: () {
           bool isPass = true;
           if (efDead.getInputNumber() == null) {
-            efDead.getController().showAlert();
+            efDead.controller.showAlert();
             isPass = false;
           }
 
@@ -264,7 +271,7 @@ class LayerDailyReportFormController extends GetxController {
       alertText: 'Merek Pakan masih kosong..!',
       suggestList: const [],
       onTyping: (text) => getFeedBrand(keyword: text),
-      onSubmitted: (text) => feedQuantityField.getController().changeTextUnit(_getLatestFeedTextUnit()),
+      onSubmitted: (text) => feedQuantityField.controller.changeTextUnit(_getLatestFeedTextUnit()),
     );
 
     feedMultipleFormField = MultipleFormField<Product>(
@@ -284,13 +291,15 @@ class LayerDailyReportFormController extends GetxController {
         },
         validationAdded: () {
           bool isPass = true;
-          if (feedSuggestField.getController().selectedObject == null) {
-            feedSuggestField.getController().showAlert();
+          if (feedSuggestField.controller.selectedObject == null) {
+            feedSuggestField.controller.showAlert();
             isPass = false;
+            return isPass;
           }
           if (feedQuantityField.getInputNumber() == null) {
-            feedQuantityField.getController().showAlert();
+            feedQuantityField.controller.showAlert();
             isPass = false;
+            return isPass;
           }
 
           return isPass;
@@ -309,7 +318,7 @@ class LayerDailyReportFormController extends GetxController {
       alertText: 'Jenis OVK masih kosong..!',
       suggestList: const [],
       onTyping: (text) => getOvkBrand(keyword: text),
-      onSubmitted: (text) => ovkQuantityField.getController().changeTextUnit(_getLatestOvkTextUnit()),
+      onSubmitted: (text) => ovkQuantityField.controller.changeTextUnit(_getLatestOvkTextUnit()),
     );
 
     ovkQuantityField =
@@ -332,12 +341,12 @@ class LayerDailyReportFormController extends GetxController {
         },
         validationAdded: () {
           bool isPass = true;
-          if (ovkSuggestField.getController().selectedObject == null) {
-            ovkSuggestField.getController().showAlert();
+          if (ovkSuggestField.controller.selectedObject == null) {
+            ovkSuggestField.controller.showAlert();
             isPass = false;
           }
           if (ovkQuantityField.getInputNumber() == null) {
-            ovkQuantityField.getController().showAlert();
+            ovkQuantityField.controller.showAlert();
             isPass = false;
           }
           if (spOvkReason.controller.selectedIndex == -1) {
@@ -358,6 +367,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'Butir',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotal());
 
     efUtuhCoklatTotal = EditField(
@@ -368,6 +378,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'kg',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotalWeight());
 
     efUtuhKrem = EditField(
@@ -378,6 +389,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'Butir',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotal());
 
     efUtuhKremTotal = EditField(
@@ -388,6 +400,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'kg',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotalWeight());
 
     efRetak = EditField(
@@ -398,6 +411,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'Butir',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotal());
 
     efRetakTotal = EditField(
@@ -407,6 +421,7 @@ class LayerDailyReportFormController extends GetxController {
         alertText: 'Harus diisi..!',
         textUnit: 'kg',
         maxInput: 100,
+        action: TextInputAction.next,
         inputType: TextInputType.number,
         onTyping: (text, field) => countTotalWeight());
 
@@ -418,6 +433,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'Butir',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotal());
 
     efPecahTotal = EditField(
@@ -428,6 +444,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'kg',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotalWeight());
 
     efKotor = EditField(
@@ -438,6 +455,7 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'Butir',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotal());
 
     efKotorTotal = EditField(
@@ -448,10 +466,20 @@ class LayerDailyReportFormController extends GetxController {
         textUnit: 'kg',
         maxInput: 100,
         inputType: TextInputType.number,
+        action: TextInputAction.next,
         onTyping: (text, field) => countTotalWeight());
 
     efEggDisposal = EditField(
-        controller: GetXCreator.putEditFieldController('layerDailyFormEggDisposal'), label: 'Pemusnahan', hint: 'Ketik di sini', alertText: 'Harus diisi..!', textUnit: 'kg', maxInput: 100, inputType: TextInputType.number, onTyping: (text, field) {});
+      controller: GetXCreator.putEditFieldController('layerDailyFormEggDisposal'),
+      label: 'Pemusnahan',
+      hint: 'Ketik di sini',
+      alertText: 'Harus diisi..!',
+      textUnit: 'kg',
+      maxInput: 100,
+      inputType: TextInputType.number,
+      onTyping: (text, field) {},
+      action: TextInputAction.done,
+    );
 
     _toChickenProduction();
   }
@@ -490,9 +518,9 @@ class LayerDailyReportFormController extends GetxController {
     if (report.mortalityImage != null && report.mortalityImage!.isNotEmpty) {
       chickDeadPhotoList.add(MediaUploadModel(url: report.mortalityImage));
       if (chickDeadPhotoList.isNotEmpty) {
-        mfChickDead.getController().setInformasiText('File telah terupload');
-        mfChickDead.getController().showInformation();
-        mfChickDead.getController().setFileName(chickDeadPhotoList[0]!.url ?? '-');
+        mfChickDead.controller.setInformasiText('File telah terupload');
+        mfChickDead.controller.showInformation();
+        mfChickDead.controller.setFileName(chickDeadPhotoList[0]!.url ?? '-');
       }
     }
 
@@ -504,15 +532,14 @@ class LayerDailyReportFormController extends GetxController {
     // fill list product feed
     if (report.feedConsumptions != null) {
       for (var product in report.feedConsumptions!) {
-        feedMultipleFormField.getController().addData(child: _createChildAdded(getFeedProductName(product: product), getFeedQuantity(product: product)), object: product, key: getFeedProductName(product: product));
+        feedMultipleFormField.controller.addData(child: _createChildAdded(getFeedProductName(product: product), getFeedQuantity(product: product)), object: product, key: getFeedProductName(product: product));
       }
     }
 
     // fill list product ovk
     if (report.ovkConsumptions != null) {
       for (var product in report.ovkConsumptions!) {
-        ovkMultipleFormField
-            .getController()
+        ovkMultipleFormField.controller
             .addData(child: _createChildAdded(getOvkProductName(product: product), getOvkQuantity(product: product), reason: product != null ? product.remarks ?? '' : ''), object: product, key: getOvkProductName(product: product));
       }
     }
@@ -543,9 +570,9 @@ class LayerDailyReportFormController extends GetxController {
     if (report.recordingImage != null && report.recordingImage!.isNotEmpty) {
       recordingCardPhotoList.add(MediaUploadModel(url: report.recordingImage));
       if (recordingCardPhotoList.isNotEmpty) {
-        mfRecordingCard.getController().setInformasiText('File telah terupload');
-        mfRecordingCard.getController().showInformation();
-        mfRecordingCard.getController().setFileName(recordingCardPhotoList[0]!.url ?? '-');
+        mfRecordingCard.controller.setInformasiText('File telah terupload');
+        mfRecordingCard.controller.showInformation();
+        mfRecordingCard.controller.setFileName(recordingCardPhotoList[0]!.url ?? '-');
       }
     }
 
@@ -691,7 +718,7 @@ class LayerDailyReportFormController extends GetxController {
     } else if (state.value == 1) {
       _toChickenProduction();
     } else {
-      Get.back();
+      Navigator.pop(Get.context!);
     }
   }
 
@@ -747,12 +774,12 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   void getFeedBrand({String? keyword}) {
-    if (keyword != null && keyword.length > 3) {
+    if (keyword != null && keyword.length > 1) {
       if (debounce?.isActive ?? false) {
         debounce?.cancel();
       }
 
-      debounce = Timer(const Duration(milliseconds: 500), () {
+      debounce = Timer(const Duration(milliseconds: 300), () {
         AuthImpl().get().then((auth) => {
               if (auth != null)
                 {
@@ -802,24 +829,24 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   void _setupSuggestBrand({required SuggestField field, required List<Product?> productList, bool isFeed = true}) {
-    field.getController().setupObjects(productList);
+    field.controller.setupObjects(productList);
     final List<String> data = [];
     for (var product in productList) {
       data.add(isFeed
           ? '${product == null || product.subcategoryName == null ? '' : product.subcategoryName} - ${product == null || product.productName == null ? '' : product.productName}'
           : '${product == null || product.productName == null ? '' : product.productName}');
     }
-    field.getController().generateItems(data);
+    field.controller.generateItems(data);
   }
 
   String _getLatestFeedTextUnit() {
-    if (feedSuggestField.getController().selectedObject == null) {
+    if (feedSuggestField.controller.selectedObject == null) {
       return '';
     } else {
-      if ((feedSuggestField.getController().selectedObject as Product).uom != null) {
-        return (feedSuggestField.getController().selectedObject as Product).uom!;
-      } else if ((feedSuggestField.getController().selectedObject as Product).purchaseUom != null) {
-        return (feedSuggestField.getController().selectedObject as Product).purchaseUom!;
+      if ((feedSuggestField.controller.selectedObject as Product).uom != null) {
+        return (feedSuggestField.controller.selectedObject as Product).uom!;
+      } else if ((feedSuggestField.controller.selectedObject as Product).purchaseUom != null) {
+        return (feedSuggestField.controller.selectedObject as Product).purchaseUom!;
       } else {
         return '';
       }
@@ -827,13 +854,13 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   String _getLatestOvkTextUnit() {
-    if (ovkSuggestField.getController().selectedObject == null) {
+    if (ovkSuggestField.controller.selectedObject == null) {
       return '';
     } else {
-      if ((ovkSuggestField.getController().selectedObject as Product).uom != null) {
-        return (ovkSuggestField.getController().selectedObject as Product).uom!;
-      } else if ((ovkSuggestField.getController().selectedObject as Product).purchaseUom != null) {
-        return (ovkSuggestField.getController().selectedObject as Product).purchaseUom!;
+      if ((ovkSuggestField.controller.selectedObject as Product).uom != null) {
+        return (ovkSuggestField.controller.selectedObject as Product).uom!;
+      } else if ((ovkSuggestField.controller.selectedObject as Product).purchaseUom != null) {
+        return (ovkSuggestField.controller.selectedObject as Product).purchaseUom!;
       } else {
         return '';
       }
@@ -841,8 +868,8 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   Product getFeedSelectedObject() {
-    if (feedSuggestField.getController().getSelectedObject() != null) {
-      final Product product = feedSuggestField.getController().getSelectedObject();
+    if (feedSuggestField.controller.getSelectedObject() != null) {
+      final Product product = feedSuggestField.controller.getSelectedObject();
       product.quantity = feedQuantityField.getInputNumber() ?? 0;
 
       return product;
@@ -852,8 +879,8 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   Product getOvkSelectedObject() {
-    if (ovkSuggestField.getController().getSelectedObject() != null) {
-      final Product product = ovkSuggestField.getController().getSelectedObject();
+    if (ovkSuggestField.controller.getSelectedObject() != null) {
+      final Product product = ovkSuggestField.controller.getSelectedObject();
       product.quantity = ovkQuantityField.getInputNumber() ?? 0;
       product.remarks = spOvkReason.controller.textSelected.value;
       product.subcategoryCode = 'OVK';
@@ -866,8 +893,8 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   Product getFeedSelectedObjectWhenIncreased(Product oldProduct) {
-    if (feedSuggestField.getController().getSelectedObject() != null) {
-      final Product product = feedSuggestField.getController().getSelectedObject();
+    if (feedSuggestField.controller.getSelectedObject() != null) {
+      final Product product = feedSuggestField.controller.getSelectedObject();
       product.quantity = (oldProduct.quantity ?? 0) + (feedQuantityField.getInputNumber() ?? 0);
       product.remarks = spOvkReason.controller.textSelected.value;
 
@@ -878,8 +905,8 @@ class LayerDailyReportFormController extends GetxController {
   }
 
   Product getOvkSelectedObjectWhenIncreased(Product oldProduct) {
-    if (ovkSuggestField.getController().getSelectedObject() != null) {
-      final Product product = ovkSuggestField.getController().getSelectedObject();
+    if (ovkSuggestField.controller.getSelectedObject() != null) {
+      final Product product = ovkSuggestField.controller.getSelectedObject();
       product.quantity = (oldProduct.quantity ?? 0) + (ovkQuantityField.getInputNumber() ?? 0);
       product.subcategoryCode = 'OVK';
       product.subcategoryName = 'OVK';
@@ -894,10 +921,10 @@ class LayerDailyReportFormController extends GetxController {
     if (product != null) {
       return '${product.subcategoryName ?? ''} - ${product.productName ?? ''}';
     } else {
-      if (feedSuggestField.getController().selectedObject == null) {
+      if (feedSuggestField.controller.selectedObject == null) {
         return '';
       } else {
-        return '${(feedSuggestField.getController().selectedObject as Product).subcategoryName ?? ''} - ${(feedSuggestField.getController().selectedObject as Product).productName ?? ''}';
+        return '${(feedSuggestField.controller.selectedObject as Product).subcategoryName ?? ''} - ${(feedSuggestField.controller.selectedObject as Product).productName ?? ''}';
       }
     }
   }
@@ -906,10 +933,10 @@ class LayerDailyReportFormController extends GetxController {
     if (product != null) {
       return product.productName ?? '';
     } else {
-      if (ovkSuggestField.getController().selectedObject == null) {
+      if (ovkSuggestField.controller.selectedObject == null) {
         return '';
       } else {
-        return (ovkSuggestField.getController().selectedObject as Product).productName ?? '';
+        return (ovkSuggestField.controller.selectedObject as Product).productName ?? '';
       }
     }
   }
@@ -918,7 +945,7 @@ class LayerDailyReportFormController extends GetxController {
     if (product != null) {
       return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
     } else {
-      return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.getController().textUnit.value}';
+      return '${feedQuantityField.getInputNumber() == null ? '' : feedQuantityField.getInputNumber()!.toStringAsFixed(0)} ${feedQuantityField.controller.textUnit.value}';
     }
   }
 
@@ -926,7 +953,7 @@ class LayerDailyReportFormController extends GetxController {
     if (product != null) {
       return '${product.quantity == null ? '' : product.quantity!.toStringAsFixed(0)} ${product.uom ?? product.purchaseUom ?? ''}';
     } else {
-      return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.getController().textUnit.value}';
+      return '${ovkQuantityField.getInputNumber() == null ? '' : ovkQuantityField.getInputNumber()!.toStringAsFixed(0)} ${ovkQuantityField.controller.textUnit.value}';
     }
   }
 
@@ -1090,9 +1117,17 @@ class LayerDailyReportFormController extends GetxController {
               body: ['Bearer ${auth.token}', auth.id, ListApi.pathAddReport(coop.farmingCycleId!, report.date!), Mapper.asJsonString(bodyReport)],
               listener: ResponseListener(
                   onResponseDone: (code, message, body, id, packet) {
-                    isLoading.value = false;
-                    Get.to(TransactionSuccessActivity(keyPage: 'addReportLayerDaily', message: 'Kamu telah berhasil melakukan laporan harian', showButtonHome: false, onTapClose: () => Get.back(), onTapHome: () {}))!
-                        .then((value) => Get.back(result: true));
+                    // Get.to(TransactionSuccessActivity(keyPage: 'addReportLayerDaily', message: 'Kamu telah berhasil melakukan laporan harian', showButtonHome: false, onTapClose: () => Get.back(), onTapHome: () {}))!
+                    //     .then((value) => Get.back(result: true));
+                    Navigator.pop(Get.context!);
+                    Get.snackbar(
+                      'Selamat!',
+                      'Kamu telah berhasil melakukan laporan harian atau mengubah laporan harian ',
+                      snackPosition: SnackPosition.TOP,
+                      duration: const Duration(seconds: 2),
+                      colorText: Colors.white,
+                      backgroundColor: GlobalVar.green.withOpacity(0.9),
+                    );
                   },
                   onResponseFail: (code, message, body, id, packet) {
                     isLoading.value = false;

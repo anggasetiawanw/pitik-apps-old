@@ -57,26 +57,28 @@ class SplashController extends GetxController {
         final UserGoogle? userGoogle = await UserGoogleImpl().get();
         final Profile? userProfile = await ProfileImpl().get();
         XAppId? xAppId = await XAppIdImpl().get();
-        if (auth == null || userGoogle == null || userProfile == null) {
-          await Get.offNamed(RoutePage.loginPage);
-        } else {
-          Constant.auth = auth;
-          Constant.profileUser = userProfile;
-          final String appId = FirebaseRemoteConfig.instance.getString('appId');
-          if (xAppId != null && (appId.isNotEmpty && xAppId.appId != appId)) {
-            xAppId.appId = appId;
-            await XAppIdImpl().save(xAppId);
-            Constant.xAppId = xAppId.appId;
-          } else if (xAppId != null) {
-            Constant.xAppId = xAppId.appId;
-          } else {
-            xAppId = XAppId();
-            xAppId.appId = appId;
-            await XAppIdImpl().save(xAppId);
-            Constant.xAppId = appId;
-          }
-          await Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
-        }
+
+        await Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
+        // if (auth == null || userGoogle == null || userProfile == null) {
+        //   await Get.offNamed(RoutePage.loginPage);
+        // } else {
+        //   Constant.auth = auth;
+        //   Constant.profileUser = userProfile;
+        //   final String appId = FirebaseRemoteConfig.instance.getString('appId');
+        //   if (xAppId != null && (appId.isNotEmpty && xAppId.appId != appId)) {
+        //     xAppId.appId = appId;
+            //     await XAppIdImpl().save(xAppId);
+        //     Constant.xAppId = xAppId.appId;
+        //   } else if (xAppId != null) {
+        //     Constant.xAppId = xAppId.appId;
+        //   } else {
+        //     xAppId = XAppId();
+        //     xAppId.appId = appId;
+        //     await XAppIdImpl().save(xAppId);
+        //     Constant.xAppId = appId;
+        //   }
+        //   await Get.offNamed(RoutePage.homePage, arguments: pushNotificationPayload);
+        // }
       },
     );
   }

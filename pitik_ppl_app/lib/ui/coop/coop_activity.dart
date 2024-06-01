@@ -27,21 +27,23 @@ class CoopActivity extends GetView<CoopController> {
                   child: controller.searchCoopBarField,
                 ),
                 Flexible(
-                    flex: 1,
-                    child: PopupMenuButton<String>(
-                        icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
-                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                        itemBuilder: (BuildContext context) {
-                          return {'Logout'}.map((String choice) {
-                            return PopupMenuItem<String>(
-                                value: choice,
-                                height: 28,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [const SizedBox(), Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)), const SizedBox()]),
-                                onTap: () => GlobalVar.invalidResponse(showSnackBar: false));
-                          }).toList();
-                        }))
+                  flex: 1,
+                  child: PopupMenuButton<String>(
+                    icon: SvgPicture.asset('images/dot_primary_orange_icon.svg', width: 5, height: 25),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                    itemBuilder: (BuildContext context) {
+                      return {'Logout'}.map((String choice) {
+                        return PopupMenuItem<String>(
+                            value: choice,
+                            height: 28,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [const SizedBox(), Text(choice, style: GlobalVar.subTextStyle.copyWith(fontSize: 12, fontWeight: GlobalVar.bold, color: GlobalVar.black)), const SizedBox()]),
+                            onTap: () => GlobalVar.invalidResponse(showSnackBar: false));
+                      }).toList();
+                    },
+                  ),
+                )
               ])),
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),

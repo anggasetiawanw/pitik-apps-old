@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:global_variable/global_variable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import '../../../flavors.dart';
 import '../../../utils/constant.dart';
 import '../../../utils/route.dart';
@@ -70,7 +71,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${Constant.profileUser!.fullName}',
+                    '${Constant.profileUser?.fullName}',
                     style: AppTextStyle.blackTextStyle.copyWith(fontWeight: AppTextStyle.bold, fontSize: 16),
                     overflow: TextOverflow.clip,
                   ),
@@ -78,7 +79,7 @@ class _ProfileActivityState extends State<ProfileActivity> {
                     height: 4,
                   ),
                   Text(
-                    '${Constant.profileUser!.email}',
+                    '${Constant.profileUser?.email}',
                     style: AppTextStyle.greyTextStyle.copyWith(fontSize: 12),
                     overflow: TextOverflow.clip,
                   ),

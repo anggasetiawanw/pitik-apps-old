@@ -2,8 +2,8 @@
 
 import 'package:engine/util/convert.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:model/coop_model.dart';
+
 import 'global_var.dart';
 
 class AppBarFormForCoop extends StatelessWidget {
@@ -28,7 +28,7 @@ class AppBarFormForCoop extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () => onBackPressed != null ? onBackPressed!() : Get.back(),
+                  onTap: onBackPressed ?? () => Navigator.pop(context),
                   child: const Icon(Icons.arrow_back, color: Colors.white),
                 ),
                 Text(title, style: GlobalVar.subTextStyle.copyWith(fontSize: 16, fontWeight: GlobalVar.medium, color: Colors.white)),
